@@ -4,6 +4,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <errno.h>
 #include <unistd.h>
 
 int main(int argc, char **argv) {
@@ -14,9 +16,9 @@ int main(int argc, char **argv) {
     int fd; // file descriptor
 
     umask(0);
-
     fd = open(new_file, O_WRONLY | O_EXCL | O_CREAT, mode);
     if(-1 == fd) {
+        printf("%s",strerror(errno));
         return EXIT_FAILURE;
     }
 
