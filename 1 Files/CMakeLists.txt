@@ -10,3 +10,6 @@ add_executable(cpy_file cpy_file.c)
 add_executable(backward backward.c)
 
 add_executable(dup_fd dup_fd.c)
+
+add_executable(play_fd play_fd.c)
+
