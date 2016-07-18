@@ -15,3 +15,4 @@ add_executable(play_fd play_fd.c)
 
 add_executable(trash trash.c)
 
+add_executable(sperre sperre.c)
