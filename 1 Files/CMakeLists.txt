@@ -16,3 +16,5 @@ add_executable(play_fd play_fd.c)
 add_executable(trash trash.c)
 
 add_executable(sperre sperre.c)
+
+add_executable(poll_stdin_time poll_stdin_time.c)
