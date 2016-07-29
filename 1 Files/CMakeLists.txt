@@ -21,3 +21,5 @@ add_executable(poll_stdin_time poll_stdin_time.c)
 
 add_executable(write_vec write_vec.c)
 
+add_executable(mymkdir mymkdir.c)
+
