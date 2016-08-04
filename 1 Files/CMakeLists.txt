@@ -23,3 +23,5 @@ add_executable(write_vec write_vec.c)
 
 add_executable(mymkdir mymkdir.c)
 
+add_executable(mychdir mychdir.c)
+
