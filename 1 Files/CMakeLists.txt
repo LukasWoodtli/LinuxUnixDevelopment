@@ -25,3 +25,5 @@ add_executable(mymkdir mymkdir.c)
 
 add_executable(mychdir mychdir.c)
 
+add_executable(list_wd list_wd.c)
+
