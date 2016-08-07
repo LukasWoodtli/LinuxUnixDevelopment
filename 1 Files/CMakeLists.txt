@@ -27,3 +27,4 @@ add_executable(mychdir mychdir.c)
 
 add_executable(list_wd list_wd.c)
 
+add_executable(scan_dir scan_dir.c)
