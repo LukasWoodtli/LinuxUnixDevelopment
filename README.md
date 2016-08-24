@@ -13,24 +13,24 @@ The chapters I read and implemented the examples (most of them).
 
 I won't read all chapters.
 
-| Chapter | Name                                               |   |
-|---------|----------------------------------------------------|---|
-| 1  | Einführung                                              | ✓ |
-| 2  | E/A-Funktionen                                          |   |
-| 3  | Attribute von Dateien und Verzeichnissen                |   |
-| 4  | Zugriff auf Systeminformationen                         |   |
-| 5  | Devices - eine einfache Verbindung zur Hardware         |   |
-| 6  | System- und Benutzerdateien                             |   |
-| 7  | Dämonen, Zombies und Prozesse                           |   |
-| 8  | Signale                                                 |   |
-| 9  | IPC - Interprozesskommunikation                         |   |
-| 10 | Threads                                                 |   |
-| 11 | Netzwerkprogrammierung                                  |   |
-| 12 | MySQL und PostgreSQL                                    | ✗ |
-| 13 | Terminal E/A und Benutzerschnittstellen für die Konsole |   |
-| 14 | Xlib - X Window-Programmierung                          |(✗)|
-| 15 | GTK+                                                    | ✗ |
-| 16 | SDL                                                     |(✗)|
-| 17 | Werkzeuge für Programmierer                             |   |
-| A  | Sicherheit unter Linux                                  |   |
-| B  | Funktionsreferenz                                       |   |
+| Chapter | Name                                               |   | # pages left |
+|---------|----------------------------------------------------|---|--------------|
+| 1  | Einführung                                              | ✓ |   -          |
+| 2  | E/A-Funktionen                                          |   |   20         |
+| 3  | Attribute von Dateien und Verzeichnissen                |   |   16         |
+| 4  | Zugriff auf Systeminformationen                         |(x)|   ?          |
+| 5  | Devices - eine einfache Verbindung zur Hardware         |   |   26         |
+| 6  | System- und Benutzerdateien                             |   |   22         |
+| 7  | Dämonen, Zombies und Prozesse                           |   |   84         |
+| 8  | Signale                                                 |   |   24         |
+| 9  | IPC - Interprozesskommunikation                         |   |   90         |
+| 10 | Threads                                                 |   |  156         |
+| 11 | Netzwerkprogrammierung                                  |   |  133         |
+| 12 | MySQL und PostgreSQL                                    | ✗ |   -          |
+| 13 | Terminal E/A und Benutzerschnittstellen für die Konsole |   |   ?          |
+| 14 | Xlib - X Window-Programmierung                          |(✗)|   -          |
+| 15 | GTK+                                                    | ✗ |   -          |
+| 16 | SDL                                                     |(✗)|   -          |
+| 17 | Werkzeuge für Programmierer                             |   |   89         |
+| A  | Sicherheit unter Linux                                  |   |   26         |
+| B  | Funktionsreferenz                                       |   |   82           |
