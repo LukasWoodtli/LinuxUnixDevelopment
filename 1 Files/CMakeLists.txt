@@ -31,3 +31,5 @@ add_executable(scan_dir scan_dir.c)
 
 add_executable(find_dir find_dir.c)
 
+add_executable(ftwalk ftwalk.c)
+

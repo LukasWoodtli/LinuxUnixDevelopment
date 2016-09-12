@@ -16,7 +16,7 @@ I won't read all chapters.
 | Chapter | Name                                               |   | # pages left |
 |---------|----------------------------------------------------|---|--------------|
 | 1  | Einführung                                              | ✓ |   -          |
-| 2  | E/A-Funktionen                                          |   |   20         |
+| 2  | E/A-Funktionen                                          | ✓ |   -          |
 | 3  | Attribute von Dateien und Verzeichnissen                |   |   16         |
 | 4  | Zugriff auf Systeminformationen                         |(x)|   ?          |
 | 5  | Devices - eine einfache Verbindung zur Hardware         |   |   26         |
@@ -33,4 +33,4 @@ I won't read all chapters.
 | 16 | SDL                                                     |(✗)|   -          |
 | 17 | Werkzeuge für Programmierer                             |   |   89         |
 | A  | Sicherheit unter Linux                                  |   |   26         |
-| B  | Funktionsreferenz                                       |   |   82           |
+| B  | Funktionsreferenz                                       |   |   82         |
