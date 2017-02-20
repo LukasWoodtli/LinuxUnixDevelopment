@@ -37,13 +37,13 @@ int main (int argc, char **argv) {
 
     /* Dateiart abragen */
     if(S_ISREG(attribut.st_mode))
-      printf("Reguläre Datei               : ");
+      printf("Regulaere Datei               : ");
     else if(S_ISDIR(attribut.st_mode))
       printf("Verzeichnis                  : ");
     else if(S_ISCHR(attribut.st_mode))
-      printf("Zeichenorient. Gerätedatei:  : ");
+      printf("Zeichenorient. Geraetedatei:  : ");
     else if(S_ISBLK(attribut.st_mode))
-      printf("Blockorient. Gerätedatei     : ");
+      printf("Blockorient. Geraetedatei     : ");
     else if(S_ISFIFO(attribut.st_mode))
       printf("FIFO oder named Pipe         : ");
     else
