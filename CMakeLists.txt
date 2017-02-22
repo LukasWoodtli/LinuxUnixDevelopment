@@ -7,6 +7,6 @@ set(CMAKE_COLOR_MAKEFILE   ON)
 
 enable_testing()
 
-add_subdirectory("1 Files")
-add_subdirectory("2 Attributes")
+add_subdirectory("01_Files")
+add_subdirectory("02_Attributes")
 
