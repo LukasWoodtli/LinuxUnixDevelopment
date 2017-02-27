@@ -8,3 +8,6 @@ add_executable(ugid ugid.c)
 add_test(ugid ugid)
 
 add_executable(my_link my_link.c)
+
+add_executable(file_size file_size.c)
+
