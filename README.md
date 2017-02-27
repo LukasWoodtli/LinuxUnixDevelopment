@@ -17,7 +17,7 @@ I won't read all chapters.
 |---------|----------------------------------------------------|---|--------------|---------------|
 | 1  | Einführung                                              | ✓ |   -          |       ✓       |
 | 2  | E/A-Funktionen                                          | ✓ |   -          |       ✓       |
-| 3  | Attribute von Dateien und Verzeichnissen                |   |   16         | file_size.c, file_times.c, backward.c |
+| 3  | Attribute von Dateien und Verzeichnissen                |   |   16         |  backward.c |
 | 4  | Zugriff auf Systeminformationen                         |(x)|   ?          | memory.c, myinfo.c, my_getpid.c, kernelinf.c |
 | 5  | Devices - eine einfache Verbindung zur Hardware         |   |   26         | cdrom.c |
 | 6  | System- und Benutzerdateien                             |   |   22         |         |
