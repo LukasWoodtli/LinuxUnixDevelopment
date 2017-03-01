@@ -8,3 +8,9 @@ add_executable(ugid ugid.c)
 add_test(ugid ugid)
 
 add_executable(my_link my_link.c)
+
+add_executable(file_size file_size.c)
+
+add_executable(file_times file_times.c)
+
+add_executable(backward2 backward.c)
