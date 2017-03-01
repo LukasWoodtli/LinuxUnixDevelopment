@@ -7,3 +7,9 @@ add_test(procfs_memory procfs_memory)
 endif (NOT APPLE)
 
 add_executable(myinfo myinfo.c)
+
+add_executable(my_getid my_getid.c)
+if (NOT APPLE)
+add_test(my_getid my_getid)
+endif (NOT APPLE)
+
