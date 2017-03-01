@@ -3,3 +3,5 @@ project (linux_procfs)
 
 add_executable(procfs_memory procfs_memory.c)
 add_test(procfs_memory procfs_memory)
+
+add_executable(myinfo myinfo.c)
