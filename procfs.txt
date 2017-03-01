@@ -8,18 +8,18 @@
 /proc/devices  Devices (zeichen- und blockorientiert), HDs, ports...
 
 
-/proc/dma 	Liste von belegten DMA-Kanälen, die für einen Treiber reserviert sind, und der Name des Treibers
+/proc/dma 	Liste von belegten DMA-KanÃ¤len, die fÃ¼r einen Treiber reserviert sind, und der Name des Treibers
 /proc/interrupts 	Liste der benutzten Interrupts mit Anzahl der passierten Interrupts seit Systemstart, Typ des Interrupts und Angabe, durch welche Module dieser Interrupt verwendet wird
-/proc/ioports 	Eine Liste aller belegten IO-Ports für die Ein-/Ausgabe wie die Festplatte, Ethernet, Soundkarte, Modem, USB etc. (gemappte Hardware-Speicherbereiche finden sich in /proc/iomem).
-/proc/stat 	Allgemeine Informationen über den Status der Prozessoren. Diese Informationen werden vom Programm procinfo verwendet und übersichtlich aufgelistet.
+/proc/ioports 	Eine Liste aller belegten IO-Ports fÃ¼r die Ein-/Ausgabe wie die Festplatte, Ethernet, Soundkarte, Modem, USB etc. (gemappte Hardware-Speicherbereiche finden sich in /proc/iomem).
+/proc/stat 	Allgemeine Informationen Ã¼ber den Status der Prozessoren. Diese Informationen werden vom Programm procinfo verwendet und Ã¼bersichtlich aufgelistet.
 /proc/uptime 	Anzahl der Sekunden, seitdem das System gestartet ist, und wie lange davon die CPU mit dem Nichtstun (HLT) (Leerlaufzeit = engl. idle) verbracht hat
-/proc/scsi/ 	Unterverzeichnis mit Informationen zu SCSI-Geräten
-/proc/scsi/scsi 	Sofern Sie eine SCSI-Schnittstelle besitzten, finden Sie hier eine Auflistung aller Geräte.
-/proc/ide/ 	Unterverzeichnis mit Informationen zu IDE-Geräten
-/proc/apm 	Informationen zum Advanced Power Management (z. B. ein Text wie »AC offline« bedeutet, dass ein Notebook im Batteriebetrieb läuft)
-/proc/mounts 	Liste aller »gemounteten« Dateisysteme
+/proc/scsi/ 	Unterverzeichnis mit Informationen zu SCSI-GerÃ¤ten
+/proc/scsi/scsi 	Sofern Sie eine SCSI-Schnittstelle besitzten, finden Sie hier eine Auflistung aller GerÃ¤te.
+/proc/ide/ 	Unterverzeichnis mit Informationen zu IDE-GerÃ¤ten
+/proc/apm 	Informationen zum Advanced Power Management (z. B. ein Text wie Â»AC offlineÂ« bedeutet, dass ein Notebook im Batteriebetrieb lÃ¤uft)
+/proc/mounts 	Liste aller Â»gemountetenÂ« Dateisysteme
 /proc/net/ 	Unterverzeichnis zu Netzwerkinformationen
-/proc/loadavg 	Duchschnittliche Systemauslastung (eine Minute, drei Minuten, fünf Minuten, aktive Prozesse/Anzahl Prozesse, und zuletzt benutz
+/proc/loadavg 	Duchschnittliche Systemauslastung (eine Minute, drei Minuten, fÃ¼nf Minuten, aktive Prozesse/Anzahl Prozesse, und zuletzt benutz
 
 
 /proc/$pid/cmdline
@@ -28,9 +28,25 @@
 /proc/$pid/fd/
 /proc/$pid/statm
 
-/proc/$pid/status 	Darin finden Sie die formatierten Informationen, die Sie ebenfalls mit /proc/$pid/stat (allerdings nicht formatiert) ermitteln können. Dies sind Informationen wie die Prozess-ID, die reale und effektive User- und Group-ID, Speicherverbrauch, Bitmasken usw.
-/proc/$pid/stat 	Siehe /proc/$pid/status. Dies ist eine etwas kompaktere Datei, die sich besser als »status« mit sscanf() oder fscanf() verwenden lässt.
+/proc/$pid/status 	Darin finden Sie die formatierten Informationen, die Sie ebenfalls mit /proc/$pid/stat (allerdings nicht formatiert) ermitteln kÃ¶nnen. Dies sind Informationen wie die Prozess-ID, die reale und effektive User- und Group-ID, Speicherverbrauch, Bitmasken usw.
+/proc/$pid/stat 	Siehe /proc/$pid/status. Dies ist eine etwas kompaktere Datei, die sich besser als Â»statusÂ« mit sscanf() oder fscanf() verwenden lÃ¤sst.
 /proc/$pid/cwd 	Ein symbolischer Link zum aktuellen Arbeitsverzeichnis des Prozesses
-/proc/$pid/exe 	Ein Verweis auf die ausführbare Programmdatei
-/proc/$pid/root 	Ein Link zum Root-Verzeichnis, das als Wurzelverzeichnis für den Prozess gilt (siehe chroot())
-/proc/$pid/maps 	Beinhaltet Speicher-Mappings zu den verschiedenen laufenden Dateien und Bibliotheken, die mit diesem Prozess zusammenhängen. Die Datei kann sehr lang werden, wenn ein umfangreicher Prozess ausgeführt wird. 
+/proc/$pid/exe 	Ein Verweis auf die ausfÃ¼hrbare Programmdatei
+/proc/$pid/root 	Ein Link zum Root-Verzeichnis, das als Wurzelverzeichnis fÃ¼r den Prozess gilt (siehe chroot())
+/proc/$pid/maps 	Beinhaltet Speicher-Mappings zu den verschiedenen laufenden Dateien und Bibliotheken, die mit diesem Prozess zusammenhÃ¤ngen. Die Datei kann sehr lang werden, wenn ein umfangreicher Prozess ausgefÃ¼hrt wird. 
+
+
+Wollen Sie wissen, mit welchem Befehl der Kernel beim Booten gestartet wurde, kÃ¶nnen Sie ihn mit cmdline erfragen:
+
+$ cat /proc/cmdline
+root=/dev/hda6 vga=0x0314  hdc=ide-scsi hdclun=0 splash=silent
+Oder Linux 2.6 mit LILO 22.3.4:
+
+auto BOOT_IMAGE=2.6.4-HX ro root=301
+Zu den verschiedenen Bootoptionen sei hier der Verweis auf die bootparam(7) Manual Page gegeben. Es gibt noch weitaus mehr zu den Kernel-Informationen zu sagen, aber das wÃ¼rde den Rahmen des Buches bei weitem sprengen und am Thema der Linux-Programmierung vorbeigehen.
+
+
+
+/proc/locks 
+/proc/modules
+
