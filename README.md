@@ -19,7 +19,7 @@ I won't read all chapters.
 | 2  | E/A-Funktionen                                          | ✓ |   -          |       ✓       |
 | 3  | Attribute von Dateien und Verzeichnissen                | ✓ |   -          |       ✓       |
 | 4  | Zugriff auf Systeminformationen                         | ✓ |   -          |       ✓       |
-| 5  | Devices - eine einfache Verbindung zur Hardware         |   |   26         | cdrom.c       |
+| 5  | Devices - eine einfache Verbindung zur Hardware         | ✓ |   -          |       -       |
 | 6  | System- und Benutzerdateien                             |   |   22         | pasname.c, pasname2.c, read_shadow.c, read_shadow2.c, groupname.c, utsname.c |
 | 7  | Dämonen, Zombies und Prozesse                           |   |   84         |         |
 | 8  | Signale                                                 |   |   24         |         |
