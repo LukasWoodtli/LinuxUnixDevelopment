@@ -10,3 +10,5 @@ enable_testing()
 add_subdirectory("02_Files")
 add_subdirectory("03_Attributes")
 add_subdirectory("04_ProcFs")
+add_subdirectory("06_SystemFiles")
+
