@@ -5,7 +5,7 @@ project(LinuxUnixDevelopment)
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_COLOR_MAKEFILE   ON)
 
-set(CMAKE_C_FLAGS ${CMAKE_CXX_FLAGS} "-W -Wall -Wextra -pedantic -Werror")
+set(CMAKE_C_FLAGS ${CMAKE_CXX_FLAGS} "-W -Wall -Wextra  -Werror -std=c99")
 
 enable_testing()
 

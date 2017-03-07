@@ -45,8 +45,8 @@ int main (void) {
     
     
     dup2(fd2, STDOUT_FILENO);
-    test_write("Zeile 6\n"); // writes to file2
-    test_write("Zeile 7\n"); //      "
+    test_write("Zeile 6\n"); /* writes to file2 */
+    test_write("Zeile 7\n"); /*      "          */
     
     close(fd1);
     close(fd2);
