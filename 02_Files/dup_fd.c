@@ -31,17 +31,17 @@ int main (void) {
       return EXIT_FAILURE;
   }
 
-    test_write("Zeile 1\n"); // writes to stdout
-    
+    test_write("Zeile 1\n"); /* writes to stdout */
+
     dup2(fd1, STDOUT_FILENO);
-    test_write("Zeile 2\n"); // writes to file1
+    test_write("Zeile 2\n"); /* writes to file1 */
     
     dup2(fd2, STDOUT_FILENO);
-    test_write("Zeile 3\n"); // writes to file2
-    test_write("Zeile 4\n"); //     "
+    test_write("Zeile 3\n"); /* writes to file2 */
+    test_write("Zeile 4\n"); /*     "           */
     
     dup2(fd1, STDOUT_FILENO);
-    test_write("Zeile 5\n"); // writes to file1
+    test_write("Zeile 5\n"); /* writes to file1 */
     
     
     dup2(fd2, STDOUT_FILENO);
