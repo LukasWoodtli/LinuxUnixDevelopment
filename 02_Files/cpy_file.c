@@ -10,7 +10,7 @@
 
 #include <stdlib.h>
 
-#define BLOCK_SIZE 64 // bytes
+#define BLOCK_SIZE 64 /* bytes */
 
 
 ssize_t write2(int fd, const void *buffer, size_t count);
