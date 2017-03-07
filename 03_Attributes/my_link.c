@@ -20,7 +20,12 @@ static int attribute(const char *name) {
         return -1;
     }
     
+#ifdef __linux__
+    printf("Anzahl Links  : %lu\n", st.st_nlink);
+#else // OS X
     printf("Anzahl Links  : %hu\n", st.st_nlink);
+#endif
+    
     return 1;
 }
 
