@@ -13,7 +13,7 @@ int main(void) {
     mode_t mode = S_ISUID|S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH;
 
     const char * const new_file = "test_file.txt";
-    int fd; // file descriptor
+    int fd; /* file descriptor */
 
     umask(0);
     fd = open(new_file, O_WRONLY | O_EXCL | O_CREAT, mode);
