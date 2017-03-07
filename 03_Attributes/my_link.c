@@ -20,7 +20,7 @@ static int attribute(const char *name) {
         return -1;
     }
     
-    printf("Anzahl Links  : %li\n", st.st_nlink);
+    printf("Anzahl Links  : %hu\n", st.st_nlink);
     return 1;
 }
 

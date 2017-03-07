@@ -30,7 +30,7 @@ int main(int argc, char ** argv) {
     
     if (num_entries) {
         printf("Die Einträge:\n");
-        for (i=0, list=namelist; i<num_entries; i++, *list++) {
+        for (i=0, list=namelist; i<num_entries; i++, list++) {
             printf(" %s\n", (*list)->d_name);
             free(*list);
         }
