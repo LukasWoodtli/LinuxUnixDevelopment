@@ -51,7 +51,7 @@ ssize_t write2(int fd, const void *buffer, size_t count) {
         if (written == -1)
             return -1;
         count -= written;
-        buffer += written;
+        buffer = (char*)buffer + written;
     }
     return 0;
 }

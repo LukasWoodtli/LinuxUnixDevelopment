@@ -8,7 +8,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-int main(int argc, char **argv) {
+int main(void) {
 
     mode_t mode = S_ISUID|S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH;
 

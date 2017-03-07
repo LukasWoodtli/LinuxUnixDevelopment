@@ -9,7 +9,7 @@
 
 #define MAX 3 // num elements
 
-int main(int argc, char** argv) {
+int main(void) {
     mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
     const char *str[] = {"Ein string\n", "Noch einer\n", "Der letzte\n"};
     struct iovec vec[MAX];

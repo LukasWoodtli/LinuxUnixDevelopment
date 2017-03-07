@@ -6,7 +6,7 @@
 
 struct passwd *getpasswd(const char* name) {
 	struct passwd *pas_ptr;
-	while(pas_ptr=getpwent()) {
+	while((pas_ptr=getpwent())) {
 		if(strcmp(pas_ptr->pw_name, name) == 0) {
 			endpwent();
 			return pas_ptr;

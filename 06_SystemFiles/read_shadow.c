@@ -9,7 +9,7 @@
 
 struct spwd *getshadow(const char* name) {
 	struct spwd *shadow_ptr;
-	while(shadow_ptr=getspent()) {
+	while((shadow_ptr=getspent())) {
 		if(strcmp(shadow_ptr->sp_namp, name) == 0) {
 			endspent();
 			return shadow_ptr;

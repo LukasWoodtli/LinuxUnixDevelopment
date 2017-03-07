@@ -15,6 +15,7 @@ static int filesize(const char *name) {
 	}
 
 	printf("Groesse in st_size  : %d Bytes\n", (int)st.st_size);
+	return 1;
 }
 
 int main(int argc, char **argv) {

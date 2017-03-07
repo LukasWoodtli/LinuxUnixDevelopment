@@ -24,10 +24,11 @@ static int fn(const char *pfadname, const struct stat *attribut, int flag) {
     static int first = 1;
     static int deep;
     int i;
+    (void)attribut; // unused
     
     if (!first) {
         for (i = 1; i <= dir_deep(pfadname) - deep; ++i)
-            printf("%2c|", pfadname);
+            printf("%2s|", pfadname);
         printf("---[%s", strchr(pfadname, '/') + 1);
     }
     else {

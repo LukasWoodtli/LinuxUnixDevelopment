@@ -53,7 +53,7 @@ static void locki(int fd, struct flock *lock) {
     }
 }
 
-int main(int argc, char** argv) {
+int main(void) {
     struct flock lock;
     char puffer[100];
     int fd, n;

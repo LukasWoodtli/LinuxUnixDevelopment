@@ -7,7 +7,7 @@
 #include <dirent.h>
 #include <stdlib.h>
 
-int main (int argc, char **argv) {
+int main (void) {
   DIR *dir;
   struct dirent *dirzeiger;
   const char *rwx ="rwxrwxrwx";
