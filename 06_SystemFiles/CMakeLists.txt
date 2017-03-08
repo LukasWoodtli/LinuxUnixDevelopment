@@ -8,3 +8,6 @@ if (NOT APPLE) # no shadow.h available on macOS
 add_executable(read_shadow read_shadow.c)
 add_executable(read_shadow2 read_shadow2.c)
 endif (NOT APPLE)
+
+add_executable(groupname groupname.c)
+
