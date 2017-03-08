@@ -11,3 +11,6 @@ endif (NOT APPLE)
 
 add_executable(groupname groupname.c)
 
+add_executable(utsname utsname.c)
+add_test(utsname utsname)
+
