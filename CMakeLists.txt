@@ -18,5 +18,5 @@ add_subdirectory("02_Files")
 add_subdirectory("03_Attributes")
 add_subdirectory("04_ProcFs")
 add_subdirectory("06_SystemFiles")
-add_subdirectory("07_processes")
+add_subdirectory("07_Processes")
 
