@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.8.7)
-project (linux_procfs)
+project (linux_sysfiles)
 
 add_executable(pasname pasname.c)
 add_executable(pasname2 pasname2.c)
