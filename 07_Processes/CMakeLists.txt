@@ -6,3 +6,12 @@ add_test(environ1 environ1)
 
 add_executable(environ2 environ2.c)
 add_test(environ2 environ2)
+
+add_executable(get_env get_env.c)
+
+add_executable(put_env put_env.c)
+
+add_executable(set_env set_env.c)
+
+add_executable(unset_env unset_env.c)
+
