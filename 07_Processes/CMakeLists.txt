@@ -15,3 +15,7 @@ add_executable(set_env set_env.c)
 
 add_executable(unset_env unset_env.c)
 
+add_executable(my_limit my_limit.c)
+add_test(my_limit my_limit)
+
+
