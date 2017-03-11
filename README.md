@@ -1,9 +1,13 @@
-This repository contains examples for Linux and Unix programming
+This repository contains examples for Linux and Unix programming. Most examples run on Linux and MacOS.
+
 
 # Book
 http://openbook.rheinwerk-verlag.de/linux_unix_programmierung/
 
+
 # Build
+Build on Travis-CI for Linux and MacOS:
+
 [![Build Status](https://travis-ci.org/LukasWoodtli/LinuxDevelopment.svg?branch=master)](https://travis-ci.org/LukasWoodtli/LinuxDevelopment)
 
 
