@@ -8,7 +8,7 @@ http://openbook.rheinwerk-verlag.de/linux_unix_programmierung/
 # Build
 Build on Travis-CI for Linux and MacOS:
 
-[![Build Status](https://travis-ci.org/LukasWoodtli/LinuxDevelopment.svg?branch=master)](https://travis-ci.org/LukasWoodtli/LinuxDevelopment)
+[![Build Status](https://travis-ci.org/LukasWoodtli/LinuxUnixDevelopment.svg?branch=master)](https://travis-ci.org/LukasWoodtli/LinuxUnixDevelopment)
 
 
 # Progress
