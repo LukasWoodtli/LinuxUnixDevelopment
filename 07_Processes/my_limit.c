@@ -8,7 +8,11 @@ static void print_lim(rlim_t const * const lim) {
     if (*lim == RLIM_INFINITY) {
         printf("kein Limit\n");
     } else {
-        printf("%lld \n", *lim);
+#ifdef __APPLE__    
+   	printf("%lld \n", *lim);
+#else /* linux */
+        printf("%ld \n", *lim);
+#endif
     }
 }
 
@@ -49,7 +53,7 @@ static const struct limit_and_name_t all_limits[] = {
     LIM(RLIMIT_NICE),
     LIM(RLIMIT_RTPRIO),
     LIM(RLIMIT_RTTIME),
-    LIM(RLIMIT_SIGPENDING
+    LIM(RLIMIT_SIGPENDING)
 #endif /* __linux__ */
 };
 
