@@ -19,3 +19,6 @@ add_executable(my_limit my_limit.c)
 add_test(my_limit my_limit)
 
 
+add_executable(proc_dat proc_dat.c)
+add_test(proc_dat proc_dat)
+
