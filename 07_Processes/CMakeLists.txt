@@ -24,3 +24,6 @@ add_test(proc_dat proc_dat)
 add_executable(child child.c)
 add_test(child child)
 
+add_executable(child2 child2.c)
+add_test(child2 child2)
+
