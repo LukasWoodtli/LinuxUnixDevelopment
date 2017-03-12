@@ -18,7 +18,9 @@ add_executable(unset_env unset_env.c)
 add_executable(my_limit my_limit.c)
 add_test(my_limit my_limit)
 
-
 add_executable(proc_dat proc_dat.c)
 add_test(proc_dat proc_dat)
+
+add_executable(child child.c)
+add_test(child child)
 
