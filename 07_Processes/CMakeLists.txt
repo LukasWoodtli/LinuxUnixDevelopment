@@ -27,3 +27,8 @@ add_test(child child)
 add_executable(child2 child2.c)
 add_test(child2 child2)
 
+add_executable(child3 child3.c)
+add_test(child3 child3)
+
+add_executable(child4 child4.c)
+add_test(child4 child4)
