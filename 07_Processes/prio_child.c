@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200112L
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
