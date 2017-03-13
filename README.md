@@ -25,7 +25,7 @@ I won't read all chapters.
 | 4  | Zugriff auf Systeminformationen                         | ✓ |   -          |       ✓       |
 | 5  | Devices - eine einfache Verbindung zur Hardware         | ✓ |   -          |       -       |
 | 6  | System- und Benutzerdateien                             | ✓ |   -          |       ✓       |
-| 7  | Dämonen, Zombies und Prozesse                           |   |   84         | waitpid.c, exec1.c, exec2.c, exec3.c, exec4.c, exec5.c, exec6.c, my_programm.c, exec_child.c, my_find.c, logging.c, daemon.c, mydaemon.c, atest.c |
+| 7  | Dämonen, Zombies und Prozesse                           |   |   84         | my_programm.c, exec_child.c, my_find.c, logging.c, daemon.c, mydaemon.c, atest.c |
 | 8  | Signale                                                 |   |   24         | sig.c, ping_pong.c, sig_sync.c |
 | 9  | IPC - Interprozesskommunikation                         |   |   90         |         |
 | 10 | Threads                                                 |   |  156         |         |

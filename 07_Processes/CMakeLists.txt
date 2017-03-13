@@ -42,3 +42,24 @@ add_executable(zombie zombie.c)
 
 add_executable(wait wait.c)
 
+add_executable(waitpid waitpid.c)
+add_test(waitpid waitpid)
+
+
+add_executable(exec1 exec1.c)
+add_test(exec1 exec1)
+
+add_executable(exec2 exec2.c)
+add_test(exec2 exec2)
+
+add_executable(exec3 exec3.c)
+add_test(exec3 exec3)
+
+add_executable(exec4 exec4.c)
+add_test(exec4 exec4)
+
+add_executable(exec5 exec5.c)
+add_test(exec5 exec5)
+
+add_executable(exec6 exec6.c)
+add_test(exec6 exec6)
