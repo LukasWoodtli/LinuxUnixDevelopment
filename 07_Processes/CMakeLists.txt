@@ -63,3 +63,11 @@ add_test(exec5 exec5)
 
 add_executable(exec6 exec6.c)
 add_test(exec6 exec6)
+
+add_executable(my_programm my_programm.c)
+add_executable(exec_child exec_child.c)
+add_dependencies(exec_child my_programm)
+
+add_executable(my_find my_find.c)
+add_test(my_find my_find)
+
