@@ -35,3 +35,6 @@ add_test(child4 child4)
 
 add_executable(prio_child prio_child.c)
 
+add_executable(waise waise.c)
+add_test(waise waise)
+
