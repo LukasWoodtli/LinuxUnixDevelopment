@@ -8,6 +8,6 @@ int main(void) {
 	env[2] = "OSTYPE=LiNuX";
 	env[3] = NULL;
 	
-	return execle("/bin/ls", "ls", "-d", "/proc", "/", NULL, env);
+	return execle("/bin/ls", "ls", "-l", "/", NULL, env);
 }
 
