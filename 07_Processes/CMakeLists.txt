@@ -38,3 +38,7 @@ add_executable(prio_child prio_child.c)
 add_executable(waise waise.c)
 add_test(waise waise)
 
+add_executable(zombie zombie.c)
+
+add_executable(wait wait.c)
+
