@@ -71,3 +71,4 @@ add_dependencies(exec_child my_programm)
 add_executable(my_find my_find.c)
 add_test(my_find my_find)
 
+add_executable(logging logging.c)
