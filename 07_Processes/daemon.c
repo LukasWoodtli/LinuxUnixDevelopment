@@ -64,7 +64,7 @@ int main(void) {
 		syslog(LOG_NOTICE, "Daemon gestartet ...\n");
 		/* put code for daemon here */
 		sleep(time);
-		syslog(LOG_NOTICE, "Daemon läuft %d sek\n", time);
+		syslog(LOG_NOTICE, "Daemon laeuft %d sek\n", time);
 		
 		break;
 	}
