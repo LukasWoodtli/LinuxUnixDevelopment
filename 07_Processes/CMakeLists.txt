@@ -72,3 +72,5 @@ add_executable(my_find my_find.c)
 add_test(my_find my_find)
 
 add_executable(logging logging.c)
+
+add_executable(daemon daemon.c)
