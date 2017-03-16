@@ -19,4 +19,4 @@ add_subdirectory("03_Attributes")
 add_subdirectory("04_ProcFs")
 add_subdirectory("06_SystemFiles")
 add_subdirectory("07_Processes")
-
+add_subdirectory("08_Signals")
