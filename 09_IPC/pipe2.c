@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 		exit(EXIT_FAILURE);
 	}
 	
-	if ((newfile = fopen(argv[1], "a+")) < 0) {
+	if ((newfile = fopen(argv[1], "a+")) == NULL) {
 		perror("fopen()");
 		exit(EXIT_FAILURE);
 	}
