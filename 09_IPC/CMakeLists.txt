@@ -7,3 +7,5 @@ add_executable(pipe2 pipe2.c)
 
 add_executable(pipe3 pipe3.c)
 
+add_executable(filter filter.c)
+
