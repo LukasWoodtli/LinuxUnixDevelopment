@@ -9,3 +9,6 @@ add_executable(pipe3 pipe3.c)
 
 add_executable(filter filter.c)
 
+add_executable(pipe3b pipe3b.c)
+add_dependencies(pipe3b filter)
+
