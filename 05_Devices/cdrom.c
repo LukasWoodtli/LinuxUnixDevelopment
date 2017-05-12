@@ -59,7 +59,51 @@ static void capability_cdrom(int cdrom) {
 		j[!!(caps & CDC_DVD_RAM)]);
 }	
 
-/* static void get_audio_status(int cdrom) { */
+static void get_audio_status(int cdrom) { 
+	struct cdrom_subchnl sub;
+	printf("Audio Status: ");
+	fflush(stdout);
+	sub.cdsc_format = CDROM_MSF;
+
+	if (ioctl(cdrom, CDROMSUBCHNL, sub)) {
+		printf("FAILED!\n");
+	}
+	else {
+		switch (sub.cdsc_audiostatus) {
+		case CDROM_AUDIO_INVALID:
+			printf("Invalid\n");
+			break;
+		case CDROM_AUDIO_PLAY:
+			printf("Playing\n");
+			break;
+		case CDROM_AUDIO_PAUSED:
+			printf("Pause\n");
+			break;
+		case CDROM_AUDIO_COMPLETED:
+			printf("Completed\n");
+			break;
+		case CDROM_AUDIO_ERROR:
+			printf("Error\n");
+			break;
+		case CDROM_AUDIO_NO_STATUS:
+			printf("No status\n");
+			break;
+		default:
+			printf("Oops: unknown\n");
+		}
+
+		if (sub.cdsc_audiostatus == CDROM_AUDIO_PLAY ||		
+		    sub.cdsc_audiostatus == CDROM_AUDIO_PAUSED) {
+			printf("At: %02d:%02d abs/  %02d:%02d track %d\n",
+				sub.cdsc_absaddr.msf.minute,	
+				sub.cdsc_absaddr.msf.second,		
+				sub.cdsc_reladdr.msf.minute,
+				sub.cdsc_reladdr.msf.second,
+				sub.cdsc_trk);
+
+		}
+	}
+}
 
 int main(void) {
 	return 1;
