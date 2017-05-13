@@ -12,3 +12,4 @@ add_executable(filter filter.c)
 add_executable(pipe3b pipe3b.c)
 add_dependencies(pipe3b filter)
 
+add_executable(popen1 popen1.c)
