@@ -15,3 +15,6 @@ add_dependencies(pipe3b filter)
 add_executable(popen1 popen1.c)
 
 add_executable(popen2 popen2.c)
+
+add_executable(printme printme.c)
+
