@@ -18,3 +18,6 @@ add_executable(popen2 popen2.c)
 
 add_executable(printme printme.c)
 
+add_executable(fifo2 fifo2.c)
+add_test(fifo2 fifo2)
+
