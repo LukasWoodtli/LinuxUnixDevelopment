@@ -21,3 +21,6 @@ add_executable(printme printme.c)
 add_executable(fifo2 fifo2.c)
 add_test(fifo2 fifo2)
 
+add_executable(fifo_buf fifo_buf.c)
+add_test(fifo_buf fifo_buf)
+
