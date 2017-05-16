@@ -24,3 +24,5 @@ add_test(fifo2 fifo2)
 add_executable(fifo_buf fifo_buf.c)
 add_test(fifo_buf fifo_buf)
 
+add_executable(fifo4 fifo4.c)
+add_test(fifo4 fifo4)
