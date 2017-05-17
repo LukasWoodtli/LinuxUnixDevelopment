@@ -26,3 +26,6 @@ add_test(fifo_buf fifo_buf)
 
 add_executable(fifo4 fifo4.c)
 add_test(fifo4 fifo4)
+
+add_executable(polling_fifo polling_fifo.c)
+
