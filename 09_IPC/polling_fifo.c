@@ -25,9 +25,8 @@ static void an_den_drucker(const char *text) {
 }
 
 int main(void) {
-	char puffer[BUF], inhalt[BUF];
+	char puffer[BUF];
 	int fd;
-	inhalt[0] = '\0';
 	
 	umask(0);
 	if (mkfifo("fifo.polling", 0666) < 0) {
