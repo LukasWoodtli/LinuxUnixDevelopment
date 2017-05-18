@@ -20,7 +20,9 @@ static void an_den_drucker(const char *text) {
 	}
 	
 	printf("Sende Auftrag an den Drucker\n");
-	fprintf(p, "%s", text);
+	// uncomment this to send text to printer
+	// fprintf(p, "%s", text);
+	printf("%s", text);
 	pclose(p);
 }
 
