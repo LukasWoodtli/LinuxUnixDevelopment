@@ -38,8 +38,6 @@ int main(void) {
         perror("open()");
         exit(EXIT_FAILURE);
     }
-
-    strcmp(delete_fifo, puffer);
     
     printf("Bitte Nachricht eingeben (CTR+D zum Beenden)\n>");
     while (fgets(puffer, BUF, stdin) != NULL) {
