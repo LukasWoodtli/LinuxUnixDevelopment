@@ -27,7 +27,7 @@ I won't read all chapters.
 | 6  | System- und Benutzerdateien                             | ✓ |   -          |       ✓       |
 | 7  | Dämonen, Zombies und Prozesse                           | ✓ |   -          |       ✓       |
 | 8  | Signale                                                 | ✓ |   -          |       ✓       |
-| 9  | IPC - Interprozesskommunikation                         |   |   56         | sender.c, client.c, server.c, key_ftok.c, sem.c, server_msq.c, client_msq.c, server_shm.c, client_shm.c |
+| 9  | IPC - Interprozesskommunikation                         |   |   56         | client.c, server.c, key_ftok.c, sem.c, server_msq.c, client_msq.c, server_shm.c, client_shm.c |
 | 10 | Threads                                                 |   |   66         |         |
 | 11 | Netzwerkprogrammierung                                  |   |  133         |         |
 | 12 | MySQL und PostgreSQL                                    | ✗ |   -          |         |
@@ -36,5 +36,5 @@ I won't read all chapters.
 | 15 | GTK+                                                    | ✗ |   -          |         |
 | 16 | SDL                                                     | ✗ |   -          |         |
 | 17 | Werkzeuge für Programmierer                             |   |   89         |         |
-| A  | Sicherheit unter Linux                                  |   |   26         |         |
+| A  | Sicherheit unter Linux                                  | ✓ |   -          |         |
 | B  | Funktionsreferenz                                       |   |   82         |         |

@@ -29,3 +29,5 @@ add_test(fifo4 fifo4)
 
 add_executable(polling_fifo polling_fifo.c)
 
+add_executable(sender sender.c)
+
