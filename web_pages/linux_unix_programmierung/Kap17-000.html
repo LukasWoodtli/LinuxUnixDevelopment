@@ -1,0 +1,1139 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap17-000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:24 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 17 Werkzeuge f&uuml;r Programmierer</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap16-012.html">
+<link rel="next" href="Kap17-001.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap16-012.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap17-001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a class="navh2" href="#RxxKap17000040005FD1F04C100">17 Werkzeuge f&uuml;r Programmierer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap17000040005FD1F04C1D5">17.1 Make</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap17000040005FD1F04C1E8">17.1.1 Erzeugen eines Makefiles</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap17000040005FD1F04C226">17.1.2 Variablen, Makros und Abk&uuml;rzungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap17000040005FD1F04C253">17.1.3 Implizite Regeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap17000040005FD1F04C262">17.1.4 Musterregeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap17000040005FD1F04C268">17.1.5 make zur Installation verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap17000040005FD1F04C26E">17.1.6 make-Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap17000040005FD1F04C270">17.1.7 Ausblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-001.html#RxxKap170010400061A1F029100">17.2 Bibliotheken erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F029102">17.2.1 Statische Bibliotheken erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F02917F">17.2.2 Dynamische Bibliotheken (Shared Libraries) erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F0291A1">17.2.3 Dynamisches Nachladen von Bibliotheken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-002.html#RxxKap170020400061B1F03E100">17.3 RPM</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E181">17.3.1 Verzeichnisse, die RPM ben&ouml;tigt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E194">17.3.2 Ein eigenes RPM-Paket erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E196">17.3.3 Sources</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E19D">17.3.4 Die Spec-Datei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E1E3">17.3.5 Paket erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E1FB">17.3.6 Das Paket installieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-003.html#RxxKap170030400061C1F047100">17.4 RCS und CVS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-003.html#RxxKap170030400061C1F047102">17.4.1 Software-Configuration-Management-Systeme (SCM)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-003.html#RxxKap170030400061C1F047109">17.4.2 RCS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-003.html#RxxKap170030400061C1F0471C2">17.4.3 CVS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-004.html#RxxKap170040400061D1F040100">17.5 Zeitmessung von Programmen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F040105">17.5.1 Einfache Zeitmessung mit TIME – Laufzeit von Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F04010F">17.5.2 Profiling mit GPROF – Laufzeit von Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F040198">17.5.3 Analyse mit GCOV</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-005.html#RxxKap170050400061E1F02B100">17.6 Debuggen mit gdb und ddd</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-006.html#RxxKap170060400061F1F03C100">17.7 STRACE – Systemaufrufe verfolgen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-007.html#RxxKap17007040006201F02E100">17.8 Memory Leaks und unerlaubte Speicherzugriffe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-007.html#RxxKap17007040006201F02E104">17.8.1 efence</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-007.html#RxxKap17007040006201F02E112">17.8.2 valgrind</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-008.html#RxxKap17008040006211F036100">17.9 Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<h1 class="t1">Kapitel 17 <a id="RxxKap172WerkzeugefurProgrammierer" name="RxxKap172WerkzeugefurProgrammierer"></a>Werkzeuge f&uuml;r Programmier<a id="RxxKap17000040005FD1F04C100" name="RxxKap17000040005FD1F04C100"></a>er</h1>
+<p class="anleser"><i>Am Anfang begn&uuml;gt man sich meistens bei der Erstellung von Anwendungen mit dem Compiler GCC. Aber &uuml;ber l&auml;ngere Zeit, wenn die F&auml;higkeiten besser und die Anwendungen umfangreicher werden, sind weitere Werkzeuge f&uuml;r den Programmierer sinnvoll.</i></p>
+<p><a id="Xxx999249" name="Xxx999249"></a>Gerade weil Sie es mit einem UNIX-artigen System zu tun haben, finden Sie eine enorme Palette an freien Werkzeugen. Meistens handelt es sich hierbei zwar um Konsolenwerkzeuge, wobei allerdings die wichtigsten davon mittlerweile auch zus&auml;tzlich ein grafisches Frontend besitzen.</p>
+<p class="BStandard">Auf den folgenden Seiten werden Sie einige Werkzeuge kennen lernen, die sich im Alltagsgebrauch eines Programmierers mittlerweile unz&auml;hlige Male bew&auml;hrt haben. Hierbei handelt es sich um eine Darstellung der wichtigsten Werkzeuge mit einer anschlie&szlig;enden kurzen Einf&uuml;hrung dazu. Mit den erworbenen Grundkenntnissen sind Sie dann in der Lage, Ihre Aufgaben wesentlich schneller und vor allem wesentlich sicherer und fehlerfreier zu l&ouml;sen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Bemerkung zu</b> <span class="listing">/usr/local/bin<a id="Xxx999254" name="Xxx999254"></a></span> <b>und</b> <span class="listing">/usr/bin<a id="Xxx999255" name="Xxx999255"></a></span>   Die Verzeichnisse <span class="listing">/usr/lib</span> und <span class="listing">/usr/include</span> bzw. eigentlich alle Pfade au&szlig;er <span class="listing">/opt</span>, die nicht irgendwie ein »<span class="listing">local</span>« enthalten, sind eigentlich aus organisatorischen Gr&uuml;nden f&uuml;r das System vorbehalten. Somit kann man immer gleich unterscheiden: <span class="listing">/usr/include/popt.h</span> ist z. B. das RPM-Paket und <span class="listing">/usr/local/include/popt.h</span> ein eigener Weg. Nat&uuml;rlich befolgen nicht alle Sourcepakete unbedingt diese »<span class="listing">local</span>«-Technik. </p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t31"></a><h3 class="t3">17.0.1 Der Compiler gc<a id="RxxKap17000040005FD1F04C106" name="RxxKap17000040005FD1F04C106"></a>c 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h3>
+<p><a id="Xxx999260" name="Xxx999260"></a><a id="Xxx999261" name="Xxx999261"></a>Zwar nehmen Ihnen mittlerweile viele Entwicklungsumgebungen wie Anjuta, Kdevelop oder der Emacs die Arbeit der Eingabe von Compiler- und Linkerflags grundlegend ab, doch wenn es dann darum geht, weitere Pfade zu den Bibliotheken bzw. den Include-Dateien anzugeben, scheitern viele Anf&auml;nger immer noch kl&auml;glich, weil sich das Programm dann nicht einfach mit einem Mausklick &uuml;bersetzen l&auml;sst. Wie dem auch sei, hier soll der Compiler GCC ein wenig genauer beschrieben werden. Au&szlig;erdem werden die Kenntnisse der Kommandozeilenf&uuml;hrung von GCC auch noch f&uuml;r das Bauen von Makefiles ben&ouml;tigt.</p>
+<p>Im Gro&szlig;en und Ganzen wissen Sie wohl, was ein Compiler macht und wozu dieser da ist. Aber immer noch wissen recht wenige, dass hierbei nicht der Compiler alleine ein Programm erstellt, sondern sie denken, dass der Linker im Compiler integriert ist. Doch ganz im Gegenteil, wenn Sie den GCC in der Kommandozeile aufrufen, wird erst der <a id="Xxx999264" name="Xxx999264"></a>Pr&auml;prozessor<a id="Xxx999265" name="Xxx999265"></a> noch vor dem Compiler gestartet. Dieser l&ouml;st erst alle Direktiven, die mit <span class="listing">#</span> beginnen, auf. Erst nach dieser Vorarbeit ist der Compiler an der Reihe und macht aus der vom Pr&auml;prozessor vorbereiteten Datei eine Assemblerdatei. <a id="Xxx999266" name="Xxx999266"></a><a id="Xxx999267" name="Xxx999267"></a>Diese Assemblerdatei wird nicht gespeichert (sofern nicht explizit erw&uuml;nscht), da sofort der Assemblercode in eine Objektdatei &uuml;bersetzt wird. Intern ruft GCC dabei den Assembler GAS (GNU-Assembler<a id="Xxx999268" name="Xxx999268"></a>) oder, falls nicht vorhanden, den systemeigenen Assembler AS<a id="Xxx999269" name="Xxx999269"></a> auf.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Andere Compiler machen diesen Zwischenschritt mit dem Assembler h&auml;ufig nicht und erzeugen direkt eine Objektdatei.</p>
+</td>
+</tr>
+</table><br>
+<p>Anschlie&szlig;end werden, sofern es mehrere Objektdateien gibt, die einzelnen Module an die richtigen Positionen in der ausf&uuml;hrbaren Datei eingef&uuml;gt. Ebenso werden vom Linker die von der Anwendung ben&ouml;tigten Bibliotheksfunktionen eingef&uuml;gt. Daf&uuml;r verwendet der Compiler den Linker<a id="Xxx999275" name="Xxx999275"></a><a id="Xxx999276" name="Xxx999276"></a> ld. Erst jetzt finden Sie die gew&uuml;nschte ausf&uuml;hrbare Datei als das wieder, was Sie kennen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/17_1.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein17_1.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 17.1   
+    </b>Vorgang: von einer Quelldatei zur ausf&uuml;hrbaren Datei</p>
+</td>
+</tr>
+</table><br>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">17.0.2 Standardgebrauch des gcc<a id="RxxKap17000040005FD1F04C10E" name="RxxKap17000040005FD1F04C10E"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Am meisten wird der GCC mit Flag <span class="listing">-o</span> verwendet, womit aus mehreren Quelldateien eine ausf&uuml;hrbare Datei in einem Rutsch erzeugt werden kann.</p>
+<pre>$ gcc -o programmname file1.c file2.c file3.c</pre>
+<p>Hier erzeugen Sie aus den drei Quelldateien <span class="listing">file1.c</span>, <span class="listing">file2.c</span> und <span class="listing">file3.c</span> eine ausf&uuml;hrbare Datei namens <span class="listing">programmname</span>. W&uuml;rde der Name der Anwendung (hier <span class="listing">programmname</span>) nicht verwendet, w&uuml;rde standardm&auml;&szlig;ig eine ausf&uuml;hrbare Datei mit dem Namen <span class="listing">a.out</span> (steht f&uuml;r »Assembler Output«) erstellt.</p>
+<p>Solch ein &Uuml;bersetzen von allen Quelldateien auf einmal hat allerdings beim Auftreten mehrerer Fehler den Nachteil, dass es schnell recht un&uuml;bersichtlich werden kann, auch weil in dieser Aufrufform alle <span class="listing">*.c</span>-Dateien neu &uuml;bersetzt werden, auch wenn einige <span class="listing">*.o</span> noch aktuell sind. Deswegen werden h&auml;ufig auch nur die Quelldateien kompiliert, an denen Sie gerade gearbeitet haben. Haben Sie z. B. die Quelldatei <span class="listing">file2.c</span> soeben ver&auml;ndert, dann k&ouml;nnen Sie diese folgenderma&szlig;en kompilieren:</p>
+<pre>$ gcc -c file2.c</pre>
+<p>Somit befindet sich nun im Verzeichnis Ihres Projektes eine Objektdatei mit dem Namen <span class="listing">file2.o</span>. So gehen Sie im Prinzip auch vor, wenn Sie <span class="listing">file1.c</span> und <span class="listing">file3.c</span> bearbeitet haben. Am Ende m&uuml;ssen Sie nur noch die Objektdateien im Projektverzeichnis zusammenlinken. Hierzu wird allerdings kein extra Aufruf des Linkers mehr ben&ouml;tigt, sondern wieder ein Starten des GCC mit dem Flag <span class="listing">-o</span>. An den Dateiendungen erkennt der GCC selbst, was dieser im n&auml;chsten Schritt veranlassen muss – da ja eine Kompilierung und Assemblierung nicht mehr n&ouml;tig ist.</p>
+<pre>$ gcc -o programmname file1.o file2.o file3.o</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">17.0.3 Linken von Programmbibliotheken<a id="RxxKap17000040005FD1F04C116" name="RxxKap17000040005FD1F04C116"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999293" name="Xxx999293"></a>Eine weitere h&auml;ufig ben&ouml;tigte Option ist das Linken zu einer Programmbibliothek mit dem Flag <span class="listing">-l</span>. Dieses Flag muss allerdings immer hinter der Angabe der Dateinamen stehen. Beispielsweise:</p>
+<pre>$ gcc -o programmname file1.c file2.c file3.c -lm</pre>
+<p>In diesem Beispiel wird mit der Option <span class="listing">-lm</span> die mathematische Bibliothek hinzugelinkt. Diese Bibliotheken finden Sie gew&ouml;hnlich im Verzeichnis <span class="listing">/usr/lib</span> wieder. Im Beispiel wurde also <span class="listing">-lm</span> angegeben, und in der Praxis wird nach <span class="listing">libm.so</span> gesucht. In der Syntax also, wenn Sie <span class="listing">-l</span>name angeben, wird in ausgew&auml;hlten Verzeichnissen (<span class="listing">/lib</span>, <span class="listing">/usr/lib</span> und alle in <span class="listing">/etc/ld.so.conf</span>) nach der Bibliothek <span class="listing">lib</span>name<span class="listing">.so</span> oder, sollte diese nicht existieren, <span class="listing">lib</span>name<span class="listing">.a</span> gesucht. Eine Suche nach <span class="listing">libm</span>:</p>
+<pre>$ ls -l /lib/libm.so /usr/lib/libm.so
+(/bin/ls: /lib/libm.so: No such file or directory)
+lrwxrwxrwx  1 root root 14 May 25 22:28 /usr/lib/libm.so -&gt; /lib/libm.so.6</pre>
+<p>Nun kann es aber doch manchmal vorkommen, dass sich die Bibliothek nicht dort befindet, wo mit dem Flag <span class="listing">-l</span> standardm&auml;&szlig;ig (<span class="listing">/usr/lib</span>, <span class="listing">/usr/local/lib,</span> <span class="listing">/lib</span>) gesucht wird. Dann sollten Sie zus&auml;tzlich noch das Flag <span class="listing">-L</span> mit der entsprechenden Pfadangabe verwenden, wo der Linker nach der Bibliothek suchen soll.</p>
+<p>Hierzu eine etwas detailliertere Beschreibung, welchen Weg GNU-GCC f&uuml;r Sie dabei gehen muss. Es wird zuerst nach einer <span class="listing">.so</span>-Bibliotheksdatei gesucht (sofern nicht das GCC/LD-Flag <span class="listing">-static</span> angegeben ist), und zwar in den Verzeichnissen <span class="listing">/lib</span>, dann <span class="listing">/usr/lib</span>, dann in allen, die unter <span class="listing">/etc/ld.so.conf</span> stehen, und am Ende schlie&szlig;lich im Pfad, den Sie mit <span class="listing">-L</span> auf der GCC/LD-Kommandozeile angegeben haben. Wurde die <span class="listing">.so</span>-Datei gefunden, so wird ein Eintrag in der fertigen Datei (was selbst eine <span class="listing">.so</span>-Datei sein kann) gemacht, entsprechende <span class="listing">.so</span> »mit Namen aber ohne Pfad« zur Ladezeit dynamisch einzulinken.</p>
+<p>Wird w&auml;hrend des Linkens keine <span class="listing">.so</span> gefunden, so wird versucht, eine <span class="listing">.a</span>-Bibliothek zu benutzen (z. B. <span class="listing">/usr/lib/libm.a</span>). Um <span class="listing">.a</span>-Bibliotheken zu suchen, wird nat&uuml;rlich auch <span class="listing">-L</span> verwendet.</p>
+<p>Im Beispiel von MySQL z. B. lautet der Pfad <span class="listing">/usr/lib/mysql</span>. Nat&uuml;rlich kann sich die Bibliothek auch jenseits vom <span class="listing">usr</span>-Verzeichnis befinden. Der Bibliotheksnamen zur Erstellung von MySQL-Clients ist <span class="listing">libmysqlclient.so</span>. Somit lautet die volle Angabe zum &Uuml;bersetzen der Anwendung:</p>
+<pre>$ gcc -o programmname -L/usr/lib/mysql file1.c file2.c file3.c \
+  -lmysqlclient</pre>
+<p>Wahrscheinlich tritt jetzt hierbei ein Fehler beim Compilerlauf auf. Denn neben den Bibliotheken kann sich auch der Pfad f&uuml;r die Include-Dateien woanders als im sonst &uuml;blichen Verzeichnis befinden (eher ungew&ouml;hnlich, aber m&ouml;glich). Gew&ouml;hnlich findet man die Include-Dateien im Verzeichnis <span class="listing">/usr/include</span> oder <span class="listing">/usr/local/include</span>. Doch findet der Pr&auml;prozessor hierbei nichts, m&uuml;ssen Sie mit dem Flag <span class="listing">-I</span> zus&auml;tzlich eine Pfadangabe zum entsprechenden Include-Verzeichnis machen. Um auf das Beispiel von MySQL zur&uuml;ckzukommen, so befinden sich die Include-Dateien im Verzeichnis <span class="listing">/usr/include/mysql</span>, wobei auch hier gilt, dass sich diese Include-Dateien auch jenseits vom <span class="listing">usr</span>-Verzeichnis aufhalten k&ouml;nnten. Um also noch vor dem Hinzuf&uuml;gen der Bibliothek(en) den Compilerlauf zu starten, muss folgenderma&szlig;en vorgegangen werden, um dem Compiler das Include-Verzeichnis mitzuteilen:</p>
+<pre>$ gcc -c -I/usr/include/mysql file1.c file2.c file3.c</pre>
+<p>Jetzt erst k&ouml;nnen Sie die Objektdateien zu einer ausf&uuml;hrbaren Datei zusammenf&uuml;gen:</p>
+<pre>$ gcc -o programmname -L/usr/lib/mysql file1.o file2.o file3.o \ 
+  -lmysqlclient</pre>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">17.0.4 Dateien, die GCC kennt<a id="RxxKap17000040005FD1F04C186" name="RxxKap17000040005FD1F04C186"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999308" name="Xxx999308"></a>Es wurde bereits kurz erw&auml;hnt, dass der GCC anhand der Dateiendung selbst wei&szlig;, wie er diese zu behandeln hat. Anhand der Endung nimmt der GCC dann entsprechende Arbeiten auf. In der folgenden Tabelle sehen Sie, als was der Compiler verschiedene Dateiendungen ansieht und welche Aktion er damit ausf&uuml;hrt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 17.1   
+    </b>Abbildung 17.2: Dateiendungen und deren Behandlung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Dateiname</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Aktion</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>f&uuml;hrt aus</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">datei.c
+</td>
+<td class="tabellentext" bgcolor="#000000">C-Quellcode
+</td>
+<td class="tabellentext" bgcolor="#000000">vor&uuml;bersetzen und &uuml;bersetzen
+</td>
+<td class="tabellentext" bgcolor="#000000">gcc
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">datei.C, datei.cc, datei.cxx
+</td>
+<td class="tabellentext" bgcolor="#000000">C++-Quellcode
+</td>
+<td class="tabellentext" bgcolor="#000000">vor&uuml;bersetzen und &uuml;bersetzen
+</td>
+<td class="tabellentext" bgcolor="#000000">g++
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">datei.i
+</td>
+<td class="tabellentext" bgcolor="#000000">vom Pr&auml;prozessor behandelter C-Quellcode
+</td>
+<td class="tabellentext" bgcolor="#000000">&uuml;bersetzt
+</td>
+<td class="tabellentext" bgcolor="#000000">gcc
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">datei.ii
+</td>
+<td class="tabellentext" bgcolor="#000000">vom Pr&auml;prozessor behandelter C++-Quellcode
+</td>
+<td class="tabellentext" bgcolor="#000000">&uuml;bersetzt
+</td>
+<td class="tabellentext" bgcolor="#000000">g++
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">datei.s
+</td>
+<td class="tabellentext" bgcolor="#000000">Assembler-Quellcode (preprocessed)
+</td>
+<td class="tabellentext" bgcolor="#000000">assembliert
+</td>
+<td class="tabellentext" bgcolor="#000000">as (gas)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">datei.S
+</td>
+<td class="tabellentext" bgcolor="#000000">Assembler-Quellcode
+</td>
+<td class="tabellentext" bgcolor="#000000">preprocess, assemblieren
+</td>
+<td class="tabellentext" bgcolor="#000000">cpp,
+as (gas)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">datei.o
+</td>
+<td class="tabellentext" bgcolor="#000000">&uuml;bersetzte Objektdatei
+</td>
+<td class="tabellentext" bgcolor="#000000">linken
+</td>
+<td class="tabellentext" bgcolor="#000000">ld
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">datei.a
+</td>
+<td class="tabellentext" bgcolor="#000000">Bibliothek von Objektdateien
+</td>
+<td class="tabellentext" bgcolor="#000000">linken
+</td>
+<td class="tabellentext" bgcolor="#000000">ld
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">datei.so
+</td>
+<td class="tabellentext" bgcolor="#000000">Shared Object Library
+</td>
+<td class="tabellentext" bgcolor="#000000">mitlinken
+</td>
+<td class="tabellentext" bgcolor="#000000">ld
+</td>
+</tr>
+</table><br>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">17.0.5 Ausgabedateien bei jedem einzelnen Schritt der &Uuml;bersetzung erstellen<a id="RxxKap17000040005FD1F04C1B5" name="RxxKap17000040005FD1F04C1B5"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999404" name="Xxx999404"></a>Einzelne Zwischenschritte des GCC, etwa zu Debugging-Zwecken, k&ouml;nnen Sie selbstverst&auml;ndlich auch durchf&uuml;hren. Wollen Sie wirklich wissen, wie ein vorgearbeiteter Code nach dem Pr&auml;prozessorlauf aussieht, k&ouml;nnen Sie diesen mit dem Flag <span class="listing">-E</span> auf die Standardausgabe umleiten. Da die Ausgabe aber selbst bei einem einfachen Hallo Welt enorm umfangreich ist, empfiehlt es sich, die Ausgabe umzuleiten:</p>
+<pre>$ gcc -E hallo.c &gt; hallo_pre.txt</pre>
+<p>Wer sich den vorbehandelten Quelltext noch nie angesehen hat, wird &uuml;berrascht sein, was dabei alles noch so hinzugef&uuml;gt wird.</p>
+<p>Wollen Sie stattdessen die Assemblerdatei speichern, m&uuml;ssen Sie nur die Option <span class="listing">-S</span> verwenden.</p>
+<pre>$ gcc -S hallo.c</pre>
+<p>Jetzt finden Sie im Verzeichnis eine Assemblerdatei namens <span class="listing">hallo.s</span>, die Sie durchaus noch ver&auml;ndern bzw. optimieren k&ouml;nnen (sofern Sie des Assemblers m&auml;chtig sind), bevor Sie den GCC oder gar AS (GAS) f&uuml;r weitere Schritte verwenden. GCC ruft intern sowieso den entsprechenden Assembler AS bzw. GAS auf.</p>
+<p>Letztendlich k&ouml;nnen Sie noch den letzten Zwischenschritt mit der Option <span class="listing">-o</span> durchf&uuml;hren, womit Sie eine Objektdatei mit der Dateiendung <span class="listing">*.o</span> erzeugen – wie Sie dies ja bereits mehrfach gemacht haben.</p>
+<p>Dieser Vorgang, den Sie eben schrittweise ausgef&uuml;hrt haben, wird vom Compiler nicht etwa ausgelassen, sondern meistens erledigt dieser alle Aufgaben automatisch f&uuml;r Sie. Dennoch gibt es immer wieder einen Grund, selbst in einen der einzelnen Ausgabeschritte einzugreifen.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">17.0.6 Noch mehr Optionen<a id="RxxKap17000040005FD1F04C1BE" name="RxxKap17000040005FD1F04C1BE"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Wer sich schon die Manual Page von GCC angesehen hat, muss sich erst durch ein paar hundert m&ouml;glicher Optionsangaben des Compilers »durchscrollen«. Damit Sie den &Uuml;berblick hierbei behalten, folgt eine kurze Beschreibung der wichtigsten Compileroptionen f&uuml;r den allt&auml;glichen Gebrauch.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">17.0.7 Optionen f&uuml;r Warnmeldungen<a id="RxxKap17000040005FD1F04C1C0" name="RxxKap17000040005FD1F04C1C0"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999416" name="Xxx999416"></a>Warnmeldungen werden h&auml;ufig gerne ignoriert, denn trotz all dem funktioniert die Anwendung ja scheinbar doch. Wenn Sie so denken, sollten Sie Ihre Philosophie nochmals &uuml;berdenken. Man sollte n&auml;mlich immer bedenken, dass der Compiler nicht nur so zum Spa&szlig; Warnmeldungen ausgibt. In den folgenden Abschnitten finden Sie Compileroptionen, womit Sie die Ausgabe der Warnmeldungen ein wenig gezielter steuern k&ouml;nnen.</p>
+<h4 class="t4">-W; -Wall; -Wtraditional; -Werror</h4>
+<p>Zuerst die <span class="listing">W</span>-Flags, wobei <span class="listing">W</span> f&uuml;r Warning steht. Ben&ouml;tigen Sie Warnmeldungen zu einigen bedenklichen Codestellen im Quellcode, sollten Sie das Flag <span class="listing">-W</span> verwenden. Eine Stufe paranoider ist das Flag <span class="listing">-Wall</span> (Warning all), das ich pers&ouml;nlich ebenfalls gerne verwende, da hierbei auch die nicht verwendeten Variablen als Warnung angegeben werden. Wollen Sie eine Warnmeldung ausgeben, die sowohl f&uuml;r den K&amp;R als auch f&uuml;r den ANSI-Standard der Sprache C zutrifft, worin sich aber beide ein wenig unterscheiden, dann sollten Sie das Flag <span class="listing">-Wtraditional</span> verwenden. Und um den voll paranoiden Warnmodus zu verwenden, k&ouml;nnen Sie das Flag <span class="listing">-Werror</span> nutzen. Damit werden aus Warnungen Fehler gemacht, und somit gibt es im Falle einer Warnung auch keine Objektdatei.</p>
+<h4 class="t4">-ansi; -std=cxx; -pedantic</h4>
+<p>Mit dem Flag <span class="listing">-ansi</span> wird der ANSI-Standard unterst&uuml;tzt. Entspricht etwas diesem Standard nicht, wird eine entsprechende Warnung ausgegeben. Soll der Standard von C89 oder der neue Standard C99 verwendet werden, geben Sie dies mit dem Flag <span class="listing">-std</span> an (<span class="listing">-std=c89</span> oder <span class="listing">-std=c99</span>). Wird z. B. das Kommentarzeichen <span class="listing">//</span> im C89-Standard verwendet, gibt der Compiler eine Fehlermeldung aus, im C99-Standard hingegen nicht mehr. Wollen Sie Warnmeldungen ausgeben, die nur vom ANSI-Standard gefordert werden, k&ouml;nnen Sie auch das Flag <span class="listing">-pendantic</span> verwenden. Die hier erw&auml;hnten Optionen zum Standard sind nat&uuml;rlich nur n&ouml;tig, wenn die Software portiert werden soll.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Am sch&ouml;nsten deckt Folgendes alles ab (Programmiererphobie ;-)): <span class="listing">-Wall</span> <span class="listing">–Waggregate-return</span> <span class="listing">-Wmissing-declarations</span> <span class="listing">-Wmissing-prototypes</span> <span class="listing">-Wredundant-decls</span> <span class="listing">–Wshadow</span> <span class="listing">-Wstrict-prototypes</span> <span class="listing">-Winline</span></p>
+</td>
+</tr>
+</table><br>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">17.0.8 Pr&auml;prozessor-Optionen<a id="RxxKap17000040005FD1F04C1C8" name="RxxKap17000040005FD1F04C1C8"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999427" name="Xxx999427"></a>Auch der Pr&auml;prozessor l&auml;sst sich mit einer enormen Menge an Optionen beeinflussen. In der Praxis werden allerdings gew&ouml;hnlich nur die Optionen <span class="listing">-M</span> und <span class="listing">-C</span> ben&ouml;tigt (und <span class="listing">-D</span> und <span class="listing">-U</span>). Mit der Option <span class="listing">-M</span> k&ouml;nnen Sie aus dem Quellcode herauslesen, welche anderen Quelldateien darin enthalten sind. Die so erzeugte Abh&auml;ngigkeitsliste ist z. B. f&uuml;r MAKE von Bedeutung. Damit lassen sich Makefiles einfacher erstellen. Mit der Option <span class="listing">-C</span> sorgen Sie daf&uuml;r, dass der Pr&auml;prozessor die Kommentare f&uuml;r nach dem Pr&auml;prozessorlauf erst einmal nicht entfernt. Diese Option wird dann meistens mit der Angabe von <span class="listing">-E</span> verwendet, womit man &uuml;berpr&uuml;fen kann, ob der Pr&auml;prozessor das tut, was man sich vorgestellt hat (eben als Kommentar hingeschrieben hat).</p>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">17.0.9 Debuggen und Profiling<a id="RxxKap17000040005FD1F04C1CA" name="RxxKap17000040005FD1F04C1CA"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999430" name="Xxx999430"></a><a id="Xxx999431" name="Xxx999431"></a>Wichtige Optionen des Compilers, die Sie beide in einem sp&auml;teren Kapitel noch verwenden werden, sind die Flags zum Erstellen von Daten f&uuml;r das Debuggen oder das Profiling von Anwendungen.</p>
+<h4 class="t4">-pg; -g</h4>
+<p><a id="Xxx999434" name="Xxx999434"></a><a id="Xxx999435" name="Xxx999435"></a>Das Flag <span class="listing">-pg</span> wird daf&uuml;r verwendet, wenn das Programm zum Profiling mit <span class="listing">gprof</span> gelinkt werden soll. Die mit diesem erstellten Flag auszuf&uuml;hrende Datei mit dem Namen <span class="listing">gmon.out</span> enth&auml;lt Statistiken zur Programmausf&uuml;hrung der &uuml;bersetzten Anwendung. Diese k&ouml;nnen Sie anschlie&szlig;end mit dem Profiler GPROF<a id="Xxx999437" name="Xxx999437"></a> auslesen, um noch detailliertere Informationen zur Anwendung zu erhalten.</p>
+<p>Verwenden Sie hingegen das Flag <span class="listing">-g</span>, wird eine Symboltabelle mit Informationen f&uuml;r das Debuggen mit GDB<a id="Xxx999439" name="Xxx999439"></a> erstellt. Sofern Sie auf einem System arbeiten, auf dem es GDB nicht gibt, m&uuml;ssen Sie entsprechend der Manual Page eine Symboltabelle f&uuml;r einen anderen Debugger erstellen. So wird mit <span class="listing">-gdwarf</span> eine Tabelle f&uuml;r den SVR4-Debugger und mit <span class="listing">–gstabs</span> eine f&uuml;r den Debugger DBX unter BSD-Systemen erstellt. Wer in den vollen Debug-Genuss von GDB kommen will, nutzt <span class="listing">-ggdb3</span>.</p>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">17.0.10 Optimierungsflags<a id="RxxKap17000040005FD1F04C1CF" name="RxxKap17000040005FD1F04C1CF"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999441" name="Xxx999441"></a>Es steht Ihnen auch eine Reihe von Optionen zur Codeoptimierung zur Verf&uuml;gung. Nat&uuml;rlich sollte Ihnen damit auch klar sein, dass die Kompilierung des Quellcodes ein wenig l&auml;nger dauern kann und mehr Speicher in Anspruch nimmt – was allerdings nicht als Nachteil verstanden werden soll, sondern als Hinweis! GCC unterst&uuml;tzt die Kombination -On mit <span class="listing">–g</span> (und <span class="listing">-gdwarf</span> etc.), jedoch wird der Debugger dem User anscheinend hin und her springen (das hat seine Berechtigung). Debug-Genuss ist mit -O0.</p>
+<h4 class="t4">-O; -On</h4>
+<p>Die Option <span class="listing">-O</span> alleine entspricht demselben Aufruf wie die Verwendung der anschlie&szlig;end erkl&auml;rten <span class="listing">-O1</span>-Option. Mit <span class="listing">-O0</span> wird keinerlei Codeoptimierung durchgef&uuml;hrt. Diese Option ist auch die Standardeinstellung des GCC. Daf&uuml;r versucht der GCC Code zu erstellen, der einfacher zum Debuggen ist. Mit <span class="listing">-O1</span> versucht der Compiler, die Gr&ouml;&szlig;e des zu erstellenden Codes zu reduzieren und eventuell auch die Ausf&uuml;hrgeschwindigkeit der Anwendung zu erh&ouml;hen. Mit <span class="listing">-O2</span> wird mittels weiterer Flags versucht, die Option von <span class="listing">-O1</span> nochmals erheblich zu steigern.</p>
+<h4 class="t4">-ffast-math; -finline_functions; -fno-inline; -funroll-loops</h4>
+<p>Mit der Option <span class="listing">-ffast-math</span> wird versucht, eine Floating-Point-Optimierung durchzuf&uuml;hren. Zwar verletzt diese Option den ANSI- als auch den IEEE-Standard, aber die so erzeugten Resultate k&ouml;nnen erheblich schneller sein – leider auch erheblich fehleranf&auml;lliger, daher m&uuml;ssen Sie den Code sorgf&auml;ltig testen. Die Option <span class="listing">-finline_functions</span> f&uuml;gt bei einfachen Funktionen, anstelle eines Funktionsaufrufs, ein Inlining ein (was auch in C/C++ mit dem Schl&uuml;sselwort <span class="listing">inline</span> erreicht wird (C erst seit dem C99-Standard)). Der Compiler entscheidet nat&uuml;rlich weiterhin selbst, welche Funktion er daf&uuml;r verwendet und welche nicht. Meistens erhalten die kleineren Funktionen den Zuschlag. Mit <span class="listing">-fno-inline</span> unterbinden Sie das Inlining – auch in den Zeilen, die Sie im Code explizit mit <span class="listing">inline</span> gekennzeichnet haben. Mit dem Flag <span class="listing">-funroll-loops</span> werden alle Schleifen, die zur &Uuml;bersetzungszeit eine feste Anzahl von Durchl&auml;ufen besitzen, in einzelne Codezeilen aufgel&ouml;st. Dass bei vielen Schleifendurchl&auml;ufen die Objektdatei dadurch gr&ouml;&szlig;er wird, sollte klar sein – was aus der erw&uuml;nschten Optimierung wieder ein Loch machen kann.</p>
+<a name="t21"></a><a name="t2t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">17.1 <a id="RxxKap1767Make" name="RxxKap1767Make"></a>Ma<a id="RxxKap17000040005FD1F04C1D5" name="RxxKap17000040005FD1F04C1D5"></a>ke 
+      <a href="#t2t312"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h2>
+<p><a id="Xxx999450" name="Xxx999450"></a>Wenn Sie sich Programmbeispiele, ganze Programme oder gar den Kernel herunterladen, finden Sie immer eine Makefile dabei. Ich denke, jeder hat schon selbst MAKE verwendet und wei&szlig;, wozu es gut ist. In diesem Buch wird MAKE nur dazu verwendet, Ihre C-Quellcodes automatisch zu einem ausf&uuml;hrbaren Programm zu kompilieren. Nur bedeutet hier, dass MAKE nicht nur f&uuml;r C/C++-Programme verwendet werden kann, sondern es lassen sich damit praktisch beliebige Aktionen ausf&uuml;hren. Dennoch ist das Hauptanwendungsgebiet von MAKE immer noch das &Uuml;bersetzen von Programmen.</p>
+<p>Wenn Sie sich bei einigen Beispielen im Buch immer ge&auml;rgert haben, dass recht lange und immer wiederkehrende Eingaben f&uuml;r den GCC in der Kommandozeile gemacht werden mussten, kann hier ein einzelner Aufruf von MAKE enorm Arbeit und Nerven ersparen – vor allem je umfangreicher das Projekt wird. Bei der Einf&uuml;hrung in MAKE in diesem Buch handelt es sich nur um einen Streifzug zu diesem Werkzeug, die aber f&uuml;r den ersten normalen Hausgebrauch ausreichend sein sollte. F&uuml;r mehr Details kann immer noch die Dokumentation herangezogen werden – da hier leider (wie so oft im Buch) nur die ber&uuml;hmte Spitze des Eisbergs beschrieben wird.</p>
+<p>Um das hier Beschriebene anschlie&szlig;end auch in der Praxis nachzuvollziehen, werden einfachste Codebeispiele verwendet. Folgende Listings sollen dabei erstellt werden:</p>
+<pre>main.c
+test1.c 
+test2.c</pre>
+<p>Alle drei Quelldateien sollen dabei zu einer einzelnen ausf&uuml;hrbaren Datei zusammengef&uuml;hrt werden. Am besten, Sie erstellen sich zum Nachvollziehen selbst drei solcher Dateien ohne irgendwelche komplexen Aufgaben. Als Beispiel, falls Ihnen nichts einf&auml;llt, k&ouml;nnen Sie Folgendes verwenden:</p>
+<pre>/* main.c */
+#include &lt;stdio.h&gt;
+/* Ben&ouml;tigt h&auml;ufig die Angabe f&uuml;r den Linker -lm zur Library */
+#include &lt;math.h&gt;
+extern void test1(void);
+extern void test2(void);
+int main(void) {
+   test1();
+   test2();
+   printf("%f",sqrt(3.43));
+   return 0;
+}
+/* test1.c */
+void test1(void) {
+   printf("Test1\n");
+}
+/* test2.c */
+void test2(void) {
+    printf("Test2\n");
+}</pre>
+<p>Erstellen Sie hierzu extra einen Ordner (in diesem Fall <span class="listing">testmake</span>), und legen Sie die Dateien darin ab.</p>
+<p>Gew&ouml;hnlich, wenn Sie die drei Quelldateien zu einer ausf&uuml;hrbaren Datei gemacht haben, sind Sie vielleicht bisher folgenderma&szlig;en vorgegangen:</p>
+<pre>$ gcc -o mytest main.c test1.c test2.c -lm
+$ ./mytest
+Test1
+Test2
+1.85202 </pre>
+<p>In der Praxis allerdings hat man meistens nur eine Quelldatei modifiziert und m&ouml;chte auch nur diese eine Datei zu den anderen beiden Modulen hinzulinken. So erstellt man gew&ouml;hnlich auch erst drei Objektdateien:</p>
+<pre>$ gcc -c main.c test1.c test2.c</pre>
+<p>Sie haben jetzt drei Objektdateien. Wurde z. B. die Datei <span class="listing">main.c</span> gerade ver&auml;ndert, so m&uuml;ssen Sie auch nur <span class="listing">main.c</span> neu kompilieren:</p>
+<pre>$ gcc -c main.c</pre>
+<p>Wollten Sie jetzt eine ausf&uuml;hrbare Datei daraus erstellen, dann sind Sie gew&ouml;hnlich wie folgt vorgegangen:</p>
+<pre>$ gcc -o mytest main.o test1.o test2.o -lm</pre>
+<p>Nein, mir ist bewusst, dass dies kein Problem mehr f&uuml;r Sie darstellt (darstellen sollte), aber worauf ich hinauswill, ist der Overhead, der dabei betrieben wird. Sie m&uuml;ssen sich immer dar&uuml;ber Gedanken machen, wann Sie die eine oder andere Datei &uuml;bersetzt haben, ob diese nun die aktuellere ist oder welche Bibliothek denn gleich noch hinzugelinkt werden muss oder wie denn gleich noch der Pfad zur Bibliothek lautete.</p>
+<p>Zwar gibt es noch die Fraktion, die den kompletten Quellcode immer gleich komplett neu &uuml;bersetzt – also jedes Mal alles neu erzeugt. Wer schon gr&ouml;&szlig;ere Quelldateien &uuml;bersetzt hat, wei&szlig;, welch unn&ouml;tiger Irrsinn das ist. Wenn Sie diesen Aufwand bei zehn oder mehr Quelldateien betreiben wollen, werden Sie garantiert l&auml;nger daran arbeiten, als Sie eigentlich wollen.</p>
+<p>Und genau dabei springt MAKE f&uuml;r Sie ein. MAKE hilft Ihnen, den Aufwand der &Uuml;bersetzung zu minimieren, und reduziert au&szlig;erdem die Fehleranf&auml;lligkeit bei nicht korrekter &Uuml;bersetzung. Dabei wird Ihnen die Arbeit abgenommen, welche Objektdatei die aktuelle ist oder ob diese &uuml;berhaupt existiert. Daraufhin werden auch nur die &Uuml;bersetzungen ausgef&uuml;hrt, die auch wirklich n&ouml;tig sind. Schlie&szlig;lich muss eine Objektdatei nicht nochmals &uuml;bersetzt werden, wenn diese bereits existiert.</p>
+<a name="t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t312"></a><h3 class="t3">17.1.1 Erzeugen eines Makefile<a id="RxxKap17000040005FD1F04C1E8" name="RxxKap17000040005FD1F04C1E8"></a>s 
+      <a href="#t2t313"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t311"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999471" name="Xxx999471"></a><a id="Xxx999472" name="Xxx999472"></a>Das Makefile ist eine Datei, die beschreibt, wie bestimmte Ziele erzeugt werden. Es wird eine Datei aufgelistet, von der die Ziele oder das Ziel abh&auml;ngig sind. Zus&auml;tzlich wird eine Regel vorgegeben, die zum korrekten &Uuml;bersetzen ben&ouml;tigt wird. Folgende vier Begriffe sollen Ihnen auf den n&auml;chsten Seiten in Bezug auf MAKE verst&auml;ndlicher werden: Makefile, Ziel, Abh&auml;ngigkeit und Regeln.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die Beispiele auf den folgenden Seiten wurden mit GNU-MAKE getestet und ausgef&uuml;hrt.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Makefile</h4>
+<p>Damit Sie MAKE verwenden k&ouml;nnen, ben&ouml;tigen Sie ein Makefile. Das Makefile selbst wird gew&ouml;hnlich in jedem Quellverzeichnis verwendet. Darin steht, wie der oder die Quelltexte in diesem Verzeichnis behandelt werden sollen, um ein oder mehrere Programme korrekt zu erstellen. Das Makefile wird gew&ouml;hnlich unter dem Namen Makefile gespeichert. MAKE sucht nach seinem Aufruf dann nach dieser Datei.</p>
+<p>Als Beispiel soll hier ein einfaches Makefile erstellt werden, das die drei Quelldateien <span class="listing">main.c</span>, <span class="listing">test1.c</span> und <span class="listing">test2.c</span> zu einer ausf&uuml;hrbaren Datei macht.</p>
+<h4 class="t4">Ziel (target)</h4>
+<p><a id="Xxx999482" name="Xxx999482"></a>Was Sie zuerst ben&ouml;tigen, ist ein Ziel. Ein Ziel ist meistens eine Datei – was aber nicht sein muss. Es kann sich dabei auch um einen Namen handeln, der das Ziel beschreibt. Das folgende Makefile verwendet zwei Ziele. Mit dem ersten Ziel (<span class="listing">testprogramm</span>) wird eine gew&ouml;hnlich ausf&uuml;hrbare Datei erstellt. Mit dem zweiten Ziel (<span class="listing">debugprogramm</span>) hingegen wird eine debug-f&auml;hige Version des Programms erzeugt (auf die Details des Debuggens wird noch eingegangen).</p>
+<pre># Ein simples Makefile mit zwei Zielen (targets)
+# Ziel 1:
+testprogramm: 
+# Datei "mytest" wird erzeugt ...
+ gcc -o mytest main.c test1.c test2.c -lm
+# ... fertig
+# Ziel 2:
+debugprogramm:
+# Debug-Version wird erstellt
+ gcc -DDEBUG -ggdb3 -o mytest.db main.c test1.c test2.c -lm
+# ... fertig mit Debug-Version</pre>
+<p>Speichern Sie dieses Makefile nun ebenfalls im Verzeichnis ab, wo sich die drei Quelldateien befinden. Im Beispiel hier sieht es im Verzeichnis wie folgt aus:</p>
+<pre>$ ls -Gl
+insgesamt 16
+-rw-r--r--   1 tot      users      301 2004–04–06 14:11 Makefile
+-rw-r--r--   1 tot      users      101 2004–04–06 07:39 main.c
+-rw-r--r--   1 tot      users       38 2004–04–06 06:37 test1.c
+-rw-r--r--   1 tot      users       38 2004–04–06 06:38 test2.c</pre>
+<p>Jetzt zu einer kurzen Beschreibung der Syntax der folgenden Zeilen:</p>
+<pre># Ziel 1:
+testprogramm: 
+# Datei "mytest" wird erzeugt ...
+ gcc -o mytest main.c test1.c test2.c -lm
+# ... fertig</pre>
+<p><a id="Xxx999489" name="Xxx999489"></a>Alle Zeilen, die mit dem #-Zeichen beginnen, sind Kommentare. Das Ziel (Target) in diesem Fall ist das Label <span class="listing">testprogramm</span>. Enorm von Bedeutung ist das erste Zeichen in der Kommandozeile, was immer ein <b>(ÿ_)</b>-Zeichen <a id="Xxx999491" name="Xxx999491"></a>(Tabulator) sein muss. Es gen&uuml;gt also nicht, mit ein paar Leerzeichen hineinzurutschen, sondern es muss ein Tabulatorzeichen sein! Ist hier kein Tabulatorzeichen, wird MAKE mit einer Fehlermeldung Missing Separator abbrechen.</p>
+<p>MAKE erzeugt also tats&auml;chlich eine neue Shell, um die Kommandos in der Kommandozeile auszuf&uuml;hren. W&uuml;rden Sie praktisch das Ziel <span class="listing">testprogramm</span> um&auml;ndern in</p>
+<pre>testprogramm:
+ ls -l</pre>
+<p>w&uuml;rde tats&auml;chlich das Inhaltsverzeichnis ausgegeben werden, in dem sich das Makefile befindet. Daran k&ouml;nnen Sie erkennen, dass sich MAKE nicht nur zur Programmierung eignet.</p>
+<p>Jetzt k&ouml;nnen Sie MAKE aufrufen. Wollen Sie die normale ausf&uuml;hrbare Datei (<span class="listing">Ziel:testprogramm</span>) erstellen, reicht Folgendes aus:</p>
+<pre>$ make testprogramm
+gcc -o mytest main.c test1.c test2.c -lm
+$ ./mytest</pre>
+<p>Somit lautet die Syntax f&uuml;r MAKE immer:</p>
+<pre>make Ziel</pre>
+<p>Wollen Sie hingegen die Debug-Version der Anwendung von MAKE erzeugen lassen, so geben Sie das Ziel <span class="listing">debugprogramm</span> an:</p>
+<pre>$ make debugprogramm
+gcc -DDEBUG -ggdb3 -o mytest.db main.c test1.c test2.c -lm</pre>
+<p>Geben Sie hingegen nur MAKE alleine in der Kommandozeile an, wird das erste im Makefile aufgelistete Ziel verwendet:</p>
+<pre>$ make
+gcc -o mytest main.c test1.c test2.c -lm</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Auch wenn hier im Beispiel als Ziel ein anderer Name als der der Anwendung verwendet wurde, ist dies in der Praxis eher un&uuml;blich so. Hierbei wird meistens der Name des Programms verwendet. Hier wurde nur ein anderer Name verwendet, damit Sie erkennen k&ouml;nnen, dass das Ziel und die ausf&uuml;hrbare Datei nichts Gemeinsames haben – also das Ziel nichts anderes ist als ein Text-Label.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Abh&auml;ngigkeit (dependency)</h4>
+<p><a id="Xxx999508" name="Xxx999508"></a>Um Ihnen die Abh&auml;ngigkeit zu erkl&auml;ren, sollten Sie das Makefile zun&auml;chst ein wenig umschreiben. Ver&auml;ndern Sie es wie folgt:</p>
+<pre># Ein simples Makefile 
+# Ziel mytest
+mytest: main.o test1.o test2.o
+# Datei "mytest" wird erzeugt ...
+ gcc -o mytest main.o test1.o test2.o -lm
+main.o: main.c
+ gcc -c main.c
+test1.o: test1.c
+ gcc -c test1.c
+test2.o: test2.c
+ gcc -c test2.c</pre>
+<p>F&uuml;hren Sie jetzt, ohne zu verstehen, was hier gemacht wurde, erneut MAKE aus:</p>
+<pre>$ make
+gcc -c main.c
+gcc -c test1.c
+gcc -c test2.c
+gcc -o mytest main.o test1.o test2.o -lm
+$ make
+make: "mytest" ist bereits aktualisiert.</pre>
+<p>MAKE erkennt beim zweiten Aufruf, dass hier nichts mehr zu tun ist. Die Daten sind Up –to date. Ver&auml;ndern Sie jetzt etwas an der Quelldatei <span class="listing">test2.c</span>, und starten Sie MAKE erneut.</p>
+<pre>$ make
+gcc -c test2.c
+gcc -o mytest main.o test1.o test2.o -lm</pre>
+<p>Jetzt wird auch wirklich nur die Datei <span class="listing">test2.c</span> neu kompiliert, da Sie diese ja eben ver&auml;ndert haben. So viel in der Praxis, aber sicherlich wollen Sie das hier auch verstehen.</p>
+<p>In Ihrem ersten Makefile wurden nur die Kommandos verwendet, um das Ziel korrekt zu erzeugen – ohne wirklich den Aufwand daf&uuml;r zu minimieren. Diesen Aufwand k&ouml;nnen Sie erst minimieren, wenn Sie eine bedingte Ausf&uuml;hrung in das Makefile einbringen. Im ersten Makefile hing das Ziel <span class="listing">mytest</span> (bzw. <span class="listing">testprogramm</span>) von den Dateien <span class="listing">main.c</span>, <span class="listing">test1.c</span> und <span class="listing">test2.c</span> ab. Aber in Wirklichkeit, wenn man die Dinge genauer betrachtet, h&auml;ngt das ausf&uuml;hrbare Programm <span class="listing">mytest</span> schon eher von <span class="listing">main.o</span>, <span class="listing">test1.o</span> und <span class="listing">test2.o</span> ab. Das Ziel <span class="listing">mytest</span> h&auml;ngt somit gar nicht von einer Ver&auml;nderung von <span class="listing">test2.c</span> oder <span class="listing">main.c</span> ab, sondern eine Ver&auml;nderung von <span class="listing">test2.c</span> oder <span class="listing">main.c</span> betrifft ja nur die Objektdateien <span class="listing">test2.o</span> bzw. <span class="listing">main.o</span> – was nat&uuml;rlich am Ende <span class="listing">mytest</span> doch wieder beeinflusst. Da Ihnen der GCC diese ganze Abh&auml;ngigkeit der einzelnen Quelldateien hinter dem Linker versteckt, bekommen Sie so gut wie selten etwas davon mit. Aber um effektive Makefiles zu schreiben, m&uuml;ssen Sie sich &uuml;ber diese Abh&auml;ngigkeit bewusst sein. Daher wurden die Makefiles auch so geschrieben, dass die Kompilierung und das Linken getrennt wurden.</p>
+<p>Jetzt zum Makefile:</p>
+<pre>mytest: main.o test1.o test2.o
+# Datei "mytest" wird erzeugt ...
+ gcc -o mytest main.o test1.o test2.o -lm</pre>
+<p>Mit der ersten Zeile geben Sie an, dass das Ziel <span class="listing">mytest</span> von den Objektdateien <span class="listing">main.o</span>, <span class="listing">test1.o</span> und <span class="listing">test2.o</span> abh&auml;ngig ist. In der n&auml;chsten Zeile wird, wenn die Abh&auml;ngigkeit erf&uuml;llt ist, die ausf&uuml;hrbare Datei daraus gemacht. Ist das Ziel <span class="listing">mytest</span> &auml;lter als eines der Dateien in der Abh&auml;ngigkeitsliste, dann wird eine neue ausf&uuml;hrbare Datei durch das Linken der Objektdateien erzeugt. Um also f&uuml;r ein Ziel eine Abh&auml;ngigkeitsliste zu erstellen, muss folgende Syntax verwendet werden:</p>
+<pre>Ziel : Abh&auml;ngigkeitsliste</pre>
+<p>Damit ist <span class="listing">Ziel</span> abh&auml;ngig von allen Dateien in der Liste. Da aber in der eben gezeigten Abh&auml;ngigkeitsliste nur aus Objektdateien eine Zieldatei erzeugt wird, ben&ouml;tigen Sie noch weitere Kommandos f&uuml;r das Kompilieren der Quelldateien zu Objektdateien. Und auch hier hat wieder jede einzelne Objektdatei eine Abh&auml;ngigkeitsliste:</p>
+<pre>main.o: main.c
+ gcc -c main.c
+test1.o: test1.c
+ gcc -c test1.c
+test2.o: test2.c
+ gcc -c test2.c</pre>
+<p>So ist die Objektdatei <span class="listing">main.o</span> z. B. abh&auml;ngig davon, ob der Quelltext <span class="listing">main.c</span> ver&auml;ndert wurde. Die Quelldatei <span class="listing">main.c</span>, <span class="listing">test1.c</span> oder <span class="listing">test2.c</span> wird auch nur dann neu kompiliert und zu einer Objektdatei &uuml;bersetzt, wenn sich diese ver&auml;ndert hat. Wurde, wie es im Beispiel gezeigt wurde, die Quelldatei <span class="listing">test2.c</span> ver&auml;ndert, wird der Compilerlauf auch wirklich nur f&uuml;r <span class="listing">test2.c</span> gemacht und anschlie&szlig;end, da ja <span class="listing">mytest</span> von der Objektdatei <span class="listing">test2.o</span> abh&auml;ngig ist, eine neue ausf&uuml;hrbare Datei daraus erstellt. Nat&uuml;rlich kann es durchaus auch sein, dass <span class="listing">main.c</span> von einer anderen Header- oder Quelldatei abh&auml;ngig ist. Solche Dateien sollten Sie immer auch in Ihr Makefile mit einf&uuml;gen. Z. B. w&uuml;rde mit</p>
+<pre>main.o: main.c mytest_header.h
+ gcc -c main.c
+test1.o: test1.c
+ gcc -c test1.c
+test2.o: test2.c
+ gcc -c test2.c</pre>
+<p>angegeben, dass <span class="listing">main.o</span> jetzt auch noch von der Quelldatei <span class="listing">mytest_header.h</span> abh&auml;ngig ist. Vergessen Sie, dies anzugeben, wird es passieren, dass eine Ver&auml;nderung von Daten in der Quelldatei <span class="listing">mytest_header.h</span> keine Auswirkung auf das Ziel hat. Ver&auml;ndern Sie doch z. B. die Datei <span class="listing">test2.c</span> wie folgt:</p>
+<pre>#include "mytest.h"
+void test2(void) {
+   printf("Test2: %d\n",TEST);
+ }</pre>
+<p>Erstellen Sie jetzt eine Datei namens <span class="listing">mytest.h</span> mit folgendem Inhalt:</p>
+<p><span class="listing">#define</span> <span class="listing">TEST</span> <span class="listing">1</span></p>
+<p>F&uuml;hren Sie jetzt Ihr altes Makefile aus:</p>
+<pre>$ make
+gcc -c test2.c
+gcc -o mytest main.o test1.o test2.o -lm
+$ ./mytest
+Test1
+Test2: 1
+1.852026</pre>
+<p>Es scheint alles in bester Ordnung. &Auml;ndern Sie jetzt den Wert der symbolischen Konstante <span class="listing">TEST</span> in <span class="listing">mytest.h</span> von 1 auf 2 um, und f&uuml;hren Sie MAKE erneut aus.</p>
+<pre>$ make
+make: "mytest" ist bereits aktualisiert.</pre>
+<p>Sie sehen, die Ver&auml;nderung von <span class="listing">mytest.h</span> hatte keine Auswirkung. Wenn Sie Ihr Makefile jetzt anpassen:</p>
+<pre># Ein simples Makefile 
+# Ziel mytest
+mytest: main.o test1.o test2.o
+# Datei "mytest" wird erzeugt ...
+ gcc -o mytest main.o test1.o test2.o -lm
+# Abh&auml;ngigkeitsliste
+main.o: main.c
+ gcc -c main.c
+test1.o: test1.c
+ gcc -c test1.c
+test2.o: test2.c mytest.h
+ gcc -c test2.c</pre>
+<p>Jetzt ist dank der Zeile</p>
+<pre>test2.o: test2.c mytest.h
+ gcc -c test2.c</pre>
+<p>alles beim n&auml;chsten MAKE-Aufruf wieder in Ordnung. Dies sollte hier nicht unerw&auml;hnt bleiben, da neben dem Nichtbeachten eines Tabulatorzeichens am Anfang eines Kommandos das Vergessen einer neu erstellten Quelldatei einer der meist gemachten Fehler mit MAKE ist. Wobei eben gerade der Fehler, eine Quelldatei nicht anzugeben, bei MAKE kein syntaktischer Fehler ist und eventuell nicht gleich entdeckt wird.</p>
+<p>Im Beispiel eben konnten Sie erkennen, dass ein Makefile so geschrieben werden kann, dass jedes Ziel von einer Datei abh&auml;ngig ist, die selbst wiederum ein Ziel ist. Das Beispiel k&ouml;nnte nat&uuml;rlich noch vertieft werden. Au&szlig;erdem hat es den Anschein, dass MAKE von unten nach oben von der Datei arbeitet – dem ist aber nicht so. Es werden immer als Erstes die Ziele auf den neuesten Stand gebracht, die vom eigentlichen Ziel abh&auml;ngig sind. Ist ein Ziel nicht mehr aktuell, wird eine neue Datei davon erzeugt. Der Vorgang wird so lange ausgef&uuml;hrt, bis alle Ziele auf dem neuesten Stand sind, die f&uuml;r das (Haupt-)Ziel n&ouml;tig sind.</p>
+<p>Sicherlich haben Sie schon h&auml;ufiger nach einer Ausf&uuml;hrung von MAKE auch <span class="listing">make</span> <span class="listing">clean</span> verwendet, um das Verzeichnis wieder zu s&auml;ubern. Hierf&uuml;r m&uuml;ssen Sie nur ein Ziel mit dem Namen <span class="listing">clean</span> angeben und ein entsprechendes Kommando setzen:</p>
+<pre># Ziel mytest
+mytest: main.o test1.o test2.o
+# Datei "mytest" wird erzeugt ...
+ gcc -o mytest main.o test1.o test2.o -lm
+# Abh&auml;ngigkeitsliste
+main.o: main.c
+ gcc -c main.c
+test1.o: test1.c
+ gcc -c test1.c
+test2.o: test2.c mytest.h
+ gcc -c test2.c
+ # ...sauber machen ...
+clean:
+ rm *.o mytest</pre>
+<p>F&uuml;hren Sie jetzt in der Kommandozeile <span class="listing">make</span> <span class="listing">clean</span> aus, werden alle Objektdateien und die ausf&uuml;hrbare Datei wieder gel&ouml;scht. Sie k&ouml;nnen <span class="listing">rm</span> zum L&ouml;schen genauso verwenden, wie Sie es aus der Shell kennen.</p>
+<a name="t312"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t313"></a><h3 class="t3">17.1.2 Variablen, Makros und Abk&uuml;rzunge<a id="RxxKap17000040005FD1F04C226" name="RxxKap17000040005FD1F04C226"></a>n 
+      <a href="#t2t314"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t312"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>In der Praxis sieht das Makefile nat&uuml;rlich nicht so aus, wie Sie dieses in den Abschnitten bisher erstellt haben. Auch hierf&uuml;r gibt es wieder eine Menge Abk&uuml;rzungen, die das Schreiben von Makefiles erheblich vereinfachen k&ouml;nnen. &Auml;ndern Sie das Makefile vom Beispiel zuvor wie folgt ab:<a id="Xxx999545" name="Xxx999545"></a><a id="Xxx999546" name="Xxx999546"></a></p>
+<pre># Ziel mytest
+mytest: main.o test1.o test2.o
+# Datei "mytest" wird erzeugt ...
+ gcc -o $@ main.o test1.o test2.o -lm
+# Abh&auml;ngigkeitsliste
+main.o: main.c
+ gcc -c $*.c
+test1.o: test1.c
+ gcc -c $*.c
+test2.o: test2.c mytest.h
+ gcc -c $*.c
+ # ...sauber machen ...
+clean:
+ rm *.o mytest</pre>
+<p>Auff&auml;llig sind hierbei die Zeichen <span class="listing">$@</span> und <span class="listing">$*</span>, was einfache Ersetzungsmakros sind. Mit <span class="listing">$@</span> geben Sie z. B. den vollen Zielnamen an. Im Fall von</p>
+<pre>mytest: main.o test1.o test2.o
+ gcc -o $@ main.o test1.o test2.o -lm</pre>
+<p>bedeutet dies, dass die Zeichenfolge <span class="listing">$@</span> durch den Zielnamen <span class="listing">mytest</span> ersetzt wird. Somit verh&auml;lt sich <span class="listing">$@</span>, als w&uuml;rden Sie</p>
+<pre>gcc -o mytest main.o test1.o test2.o -lm</pre>
+<p>eingeben. Das Makro <span class="listing">$*</span> steht ebenfalls f&uuml;r den Zielnamen, allerdings ohne die Dateiendung. Im Beispiel</p>
+<pre>main.o: main.c
+ gcc -c $*.c</pre>
+<p>wird der Zielname <span class="listing">main.o</span> an der Stelle ersetzt, wo sich das Makro <span class="listing">$*</span> befindet; aber ohne die Endung <span class="listing">.o</span>. Neben den Makros <span class="listing">$@</span> und <span class="listing">$*</span> gibt es noch einige weitere n&uuml;tzliche Makros, von denen in der folgenden Tabelle einige aufgelistet sind.<a id="Xxx999555" name="Xxx999555"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 17.2   
+    </b>N&uuml;tzliche Makros f&uuml;r make</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Makro</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$@
+</td>
+<td class="tabellentext" bgcolor="#000000">Zielname des zu erstellenden Programms
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$*
+</td>
+<td class="tabellentext" bgcolor="#000000">Zielname des zu erstellenden Programms ohne Dateiextension
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$&lt;
+</td>
+<td class="tabellentext" bgcolor="#000000">Name der ersten Abh&auml;ngigkeit der aktuellen Regel
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$^
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle Abh&auml;ngigkeiten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$?
+</td>
+<td class="tabellentext" bgcolor="#000000">Dateiname aller Abh&auml;ngigkeiten einer Regel, die neuer sind als das Ziel
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$(@D)
+</td>
+<td class="tabellentext" bgcolor="#000000">Verzeichnisname von $@
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$(@F)
+</td>
+<td class="tabellentext" bgcolor="#000000">Reiner Dateiname ohne Pfad f&uuml;r $@
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">CURDIR
+</td>
+<td class="tabellentext" bgcolor="#000000">Aktuelles Arbeitsverzeichnis, in dem make gerade aktiv ist
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999601" name="Xxx999601"></a>Neben Makros k&ouml;nnen Sie aber auch Variablen verwenden. Damit k&ouml;nnten Sie z. B. ein Makefile f&uuml;r ein Programm erstellen, was auf vielen anderen Systemen verwendet werden k&ouml;nnte, auf denen z. B. kein GCC als Compiler verwendet wird. Definiert werden Variablen in einem Makefile mit folgender Syntax:</p>
+<pre>Variable = Wert</pre>
+<p><span class="listing">Variable</span> wird anschlie&szlig;end im Makefile bei Auftreten von <span class="listing">$(Variable)</span> oder <span class="listing">${Variable}</span> durch den entsprechenden Wert ersetzt. Verwenden Sie z. B. den GCC, k&ouml;nnen Sie diesen in Ihrem Makefile folgenderma&szlig;en verwenden:</p>
+<pre>CC = gcc
+mytest: main.o test1.o test2.o
+ $(CC) -o $@ main.o test1.o test2.o -lm
+main.o: main.c
+ $(CC) -c $*.c
+test1.o: test1.c
+ $(CC) -c $*.c
+test2.o: test2.c mytest.h
+ $(CC) -c $*.c
+ clean:
+ rm *.o mytest</pre>
+<p>Mit <span class="listing">CC</span> <span class="listing">=</span> <span class="listing">gcc</span> parametrisieren Sie die Variable <span class="listing">CC</span> mit dem Wert <span class="listing">gcc</span>. Somit wird bei jedem Vorkommen im Makefile von <span class="listing">$(CC)</span> oder <span class="listing">${CC}</span> die Zeichenkette durch <span class="listing">gcc</span> ersetzt. Arbeiten Sie jetzt auf einem UNIX-System, das den Compiler CC verwendet und GCC nicht kennt, k&ouml;nnen Sie das Makefile dennoch ausf&uuml;hren, indem Sie MAKE folgenderma&szlig;en verwenden:</p>
+<pre>$ make CC=cc
+cc -c main.c
+cc -o mytest main.o test1.o test2.o -lm</pre>
+<p>Aber die Verwendung von Variablen spezifiziert sich nicht nur auf Kommandos – ganz im Gegenteil –, damit ist es Ihnen m&ouml;glich, besser den &Uuml;berblick zu behalten, indem Sie nur an einer Stelle z.B, alle abh&auml;ngigen Objekt- oder Quelldateien eines Ziels angeben. Hierzu das Makefile, um einige Variablen erweitert:</p>
+<pre>CC      = gcc
+OBJECTS = main.o test1.o test2.o
+LIBS    = -lm
+CFLAGS  = -c
+mytest: $(OBJECTS)
+ $(CC) -o $@ $(OBJECTS) $(LIBS)
+main.o: main.c
+ $(CC) $(CFLAGS) $*.c
+test1.o: test1.c
+ $(CC) $(CFLAGS) $*.c
+test2.o: test2.c mytest.h
+ $(CC) $(CFLAGS) $*.c
+ clean:
+ rm *.o mytest</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Das Flag <span class="listing">-c</span> sollte (in professionellen Makefiles) nicht zu den <span class="listing">CFLAGS</span> getan werden, da <span class="listing">${CFLAGS}</span> »ohne <span class="listing">-c</span>« &ouml;fter verwendbar ist als <span class="listing">CFLAGS</span> mit <span class="listing">-c</span>.</p>
+</td>
+</tr>
+</table><br>
+<p>Mit der Verwendung von Variablen wird die Verwaltung des Makefiles einfacher. Neue Objektdateien, Compiler-Optionen oder zus&auml;tzlich verwendete Bibliotheken m&uuml;ssen nur noch am Anfang hinzugef&uuml;gt werden. Wollen Sie z. B. beim Kompilieren zus&auml;tzlich die Flags <span class="listing">-Wall</span> f&uuml;r eine umfangreichere Warnungsausgabe und <span class="listing">-O</span> f&uuml;r die Optimierung des Codes verwenden, m&uuml;ssen Sie nur noch die Parameter der Variablen <span class="listing">CFLAGS</span> ver&auml;ndern:</p>
+<pre>CFLAGS = -Wall -c –O</pre>
+<p>Oder entsprechende Angaben beim Aufruf von MAKE machen:</p>
+<pre>$ make CFLAGS= -Wall –c -O</pre>
+<a name="t313"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t314"></a><h3 class="t3">17.1.3 Implizite Regel<a id="RxxKap17000040005FD1F04C253" name="RxxKap17000040005FD1F04C253"></a>n 
+      <a href="#t2t315"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t313"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999620" name="Xxx999620"></a>Das Makefile kann aber noch weiter vereinfacht werden (aus der Sicht des Laien wahrscheinlich erschwert). H&auml;ufig werden einzelne Komponente immer wieder auf dieselbe Art und Weise erstellt. In unserem Beispiel werden <span class="listing">main.o</span>, <span class="listing">test1.o</span> und <span class="listing">test2.o</span> immer gleich kompiliert. Diesen Overhead kann man auch noch mithilfe von impliziten Regeln beseitigen. Diese Regeln werden auf eine Menge von Komponenten angewandt, die durch ein bestimmtes Namensmuster – hier die Dateiendung, auch als Suffix bezeichnet – gegeben sind. So besitzen im Beispiel alle drei Ziele <span class="listing">main.o</span>, <span class="listing">test1.o</span> und <span class="listing">test2.o</span> das Suffix <span class="listing">.o</span> (f&uuml;r Objektdateien). Des Weiteren werden all diese Objektdateien mit dem Suffix <span class="listing">.o</span> aus Quelldateien (<span class="listing">main.c</span>, <span class="listing">test1.c</span> und <span class="listing">test2.c</span>) mit dem Suffix <span class="listing">.c</span> erzeugt. Da Sie in diesem Beispiel dreimal den Fall haben, dass aus einer Quelldatei mit dem Suffix <span class="listing">.c</span> eine Objektdatei mit dem Suffix <span class="listing">.o</span> erzeugt wird, k&ouml;nnen Sie dies durch eine implizite Regel folgenderma&szlig;en beschreiben:</p>
+<pre>.c.o:
+ Kommando ...</pre>
+<p>Die Syntax hierzu lautet:</p>
+<pre>.suffix1.suffix2:
+ Kommando ...</pre>
+<p>Damit ist <span class="listing">suffix1</span> das Suffix f&uuml;r die Quelle, und <span class="listing">suffix2</span> ist das Suffix f&uuml;r das Ziel. Somit h&auml;tten Sie eine implizite Regel, womit aus einer C-Quelldatei eine (Ziel-)Objektdatei erstellt wird. Hiermit sieht der Teil, in dem Sie als Zieldatei eine Objektdatei angegeben hatten, folgenderma&szlig;en aus (komplettes Makefile):</p>
+<pre>.SUFFIXES:
+.SUFFIXES: .c .o
+CC      = gcc
+OBJECTS = main.o test1.o test2.o
+LIBS    = -lm
+CFLAGS  = -c -O
+mytest: $(OBJECTS)
+ $(CC) -o $@ $(OBJECTS) $(LIBS)
+.c.o:
+ $(CC) $(CFLAGS) $&lt;
+ clean:
+ rm *.o mytest</pre>
+<p>Sie sollten sich zuerst noch f&uuml;r die Zeilen</p>
+<pre>.c.o:
+ $(CC) $(CFLAGS) $&lt;</pre>
+<p>interessieren. Die erste Zeile kennen Sie ja bereits, und in der zweiten Zeile verwenden Sie bis auf <span class="listing">$&lt;</span> nichts, was Sie nicht kennen. Mit <span class="listing">$&lt;</span> benutzen Sie ein Makro, das den (Datei-) Namen der ersten Abh&auml;ngigkeit der aktuellen Regel verwendet. Diese Regel wird dabei jedes Mal angewendet, wenn MAKE ein Ziel sucht, das mit <span class="listing">.o</span> endet, und eine Datei mit demselben Namen mit der Endung <span class="listing">.c</span> existiert – auch wenn keine extra Regeln f&uuml;r dieses Ziel angegeben wurden.</p>
+<p>Sollen die Dateiendungen in einem Makefile auch wirklich verwendet werden, m&uuml;ssen Sie diese erst zu einer Regel erkl&auml;ren. Dies machen Sie mit der Zeile:</p>
+<pre>.SUFFIXES: .c .o</pre>
+<p>Damit werden alle Quellen des eingebauten Ziels <span class="listing">.SUFFIXES</span> als Dateiendung f&uuml;r implizite Regeln verwendet. Im Beispiel sind dies die Quellen <span class="listing">.c</span> und die Ziele <span class="listing">.o</span>. Die erste Verwendung von</p>
+<pre>.SUFFIXES:</pre>
+<p>l&ouml;scht eventuell vorhandene Suffixe aus der Liste.</p>
+<a name="t314"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t315"></a><h3 class="t3">17.1.4 Musterregel<a id="RxxKap17000040005FD1F04C262" name="RxxKap17000040005FD1F04C262"></a>n 
+      <a href="#t2t316"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t314"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999637" name="Xxx999637"></a>Als effektivere und m&auml;chtigere Alternative zu den impliziten Regeln mit den Dateiendungen bietet MAKE so genannte Musterregeln an. Bei einer Musterregel steht das Prozentzeichen im Ziel f&uuml;r eine beliebige Zeichenkette. Um auf das durchgehende Beispiel in diesem Abschnitt wieder zur&uuml;ckzukommen, wo Sie aus C-Quelldateien Objektdateien gemacht haben, sieht dieser Vorgang mit Musterregeln wie folgt aus (komplettes Makefile):</p>
+<pre>CC      = gcc
+OBJECTS = main.o test1.o test2.o
+LIBS    = -lm
+CFLAGS  = -c -O
+mytest: $(OBJECTS)
+ $(CC) -o $@ $(OBJECTS) $(LIBS)
+%.o: %.c
+ $(CC) $(CFLAGS) $&lt;
+clean:
+ rm *.o mytest</pre>
+<p>Im Beispiel haben Sie mit</p>
+<pre>%.o: %.c</pre>
+<p>ein beliebiges Ziel mit <span class="listing">%.o</span> definiert, das abh&auml;ngig von <span class="listing">%.c</span> ist. Das Prozentzeichen steht also f&uuml;r eine beliebige Zeichenkette und ist im Gegensatz zur impliziten Regel nicht von Suffixen bzw. Pr&auml;fixen abh&auml;ngig. W&uuml;rde z. B. nur das Prozentzeichen angegeben, dann w&uuml;rde diese Regel auf alle Ziele passen.</p>
+<a name="t315"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t316"></a><h3 class="t3">17.1.5 make zur Installation verwende<a id="RxxKap17000040005FD1F04C268" name="RxxKap17000040005FD1F04C268"></a>n 
+      <a href="#t2t317"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t315"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999645" name="Xxx999645"></a>H&auml;ufig wird MAKE auch zur Installation der Software verwendet. Hierzu wird ein Ziel mit dem Namen <span class="listing">install</span> mit entsprechenden Kommandos gesetzt. So l&auml;sst sich das fertige Programm systemweit auf dem Rechner installieren. Meistens wird daf&uuml;r die Anwendung in Verzeichnisse unterhalb von <span class="listing">/usr/bin</span> (oder besser <span class="listing">/usr/local</span>) installiert. Gew&ouml;hnlich werden hierf&uuml;r Superuser-Rechte ben&ouml;tigt. Hierzu ein m&ouml;glicher Vorgang einer solchen Installation:</p>
+<pre>CC      = gcc
+OBJECTS = main.o test1.o test2.o
+LIBS    = -lm
+CFLAGS  = -O2
+PREFIX := /usr
+my_mytest: $(OBJECTS)
+ $(CC) -o $@ $(OBJECTS) $(LIBS)
+%.o: %.c
+ $(CC) -c $(CFLAGS) $&lt;
+install: my_mytest
+ install my_mytest ${PREFIX}/bin/
+clean:
+ rm -f *.o my_mytest</pre>
+<p>Durch die <span class="listing">install</span>-Abh&auml;ngigkeit <span class="listing">mytest</span> stellen Sie au&szlig;erdem sicher, dass <span class="listing">mytest</span> immer aktuell ist.</p>
+<pre>$ make
+gcc -c -O main.c
+gcc -c -O test1.c
+gcc -c -O test2.c
+gcc -o mytest main.o test1.o test2.o -lm
+$ su
+Password:********
+# make install
+install mytest /usr/local/mytest
+# exit
+exit
+$ make clean
+rm –f *.o mytest</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie noch weitere Pseudoziele verwenden. Gew&ouml;hnlich werden dabei Ziele wie <span class="listing">uninstall</span>, <span class="listing">check</span>, <span class="listing">depend</span>, <span class="listing">all</span> und noch einige mehr verwendet. Wie diese Ziele letztendlich arbeiten, ist Ihre Aufgabe. Ich empfehle Ihnen daf&uuml;r, sich gelegentlich das eine oder andere Makefile anzusehen, wenn Sie wieder eine Software heruntergeladen haben und diese mittels MAKE zusammenbauen und installieren. Versuchen Sie sich aber nicht an komplexeren Makefiles wie solche, die von automake oder configure als Input genommen oder als Output geschrieben worden sind (Makefile.in, Makefile mit vielen @@).</p>
+<a name="t316"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t317"></a><h3 class="t3">17.1.6 make-Optione<a id="RxxKap17000040005FD1F04C26E" name="RxxKap17000040005FD1F04C26E"></a>n 
+      <a href="#t2t318"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t316"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Wie Sie MAKE aufrufen k&ouml;nnen, haben Sie jetzt mehrere Male gesehen. MAKE bietet Ihnen aber noch mehr Optionen an, die Sie zus&auml;tzlich in der Kommandozeile mit angeben k&ouml;nnen. Welche dass sind, k&ouml;nnen Sie mit einem Aufruf von <span class="listing">make</span> -<span class="listing">help</span> ermitteln.</p>
+<a name="t317"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t318"></a><h3 class="t3">17.1.7 Ausblic<a id="RxxKap17000040005FD1F04C270" name="RxxKap17000040005FD1F04C270"></a>k 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t317"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Das Kapitel MAKE k&ouml;nnte noch endlos weitergef&uuml;hrt und erweitert werden – denn damit lie&szlig;e sich noch eine Menge mehr anstellen als hier beschrieben. Allerdings sollten Sie mit dem Beschriebenen die Grundlagen beherrschen, so dass Sie nun anhand des Lesens anderer Makefiles diese selbst interpretieren und daraus lernen k&ouml;nnen. Bei all dem sollte man auch nicht &uuml;bersehen, dass MAKE nicht nur f&uuml;r die Programmierung eingesetzt werden kann. So k&ouml;nnen Sie MAKE auch zur Verwaltung gr&ouml;&szlig;erer Dateiarchive oder Dokumentationen verwenden. Wenn Sie wirklich ein sehr komplexes Makefile betrachten wollen, sollten Sie sich das Makefile bekannter und umfangreicher Software ansehen. Empfehlenswert sind die Makefiles von Mozilla, gefolgt vom Kernel und Apache2. Der Hammer ist nat&uuml;rlich Glibc.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap16-012.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap17-001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap17-000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:26 GMT -->
+</html>

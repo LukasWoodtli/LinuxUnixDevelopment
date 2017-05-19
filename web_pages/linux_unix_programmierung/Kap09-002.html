@@ -1,0 +1,1987 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap09-002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:28 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 9.3 Pipes</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap09-001.html">
+<link rel="next" href="Kap09-003.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap09-001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap09-003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap09-000.html#RxxKap09000040002B71F02D100">9 IPC – Interprozesskommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-000.html#RxxKap09000040002B71F02D10B">9.1 Unterschiedliche Interprozesskommunikations-Techniken im &Uuml;berblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D10D">9.1.1 (Namenlose) Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D117">9.1.2 Benannte Pipes (FIFO-Pipes)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D183">9.1.3 Message Queue (Nachrichtenspeicher)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D187">9.1.4 Semaphore</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D18A">9.1.5 Shared Memory (gemeinsamer Speicher)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D18D">9.1.6 STREAMS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D195">9.1.7 Sockets</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D197">9.1.8 Lock Files (Sperrdateien)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D19A">9.1.9 Dateisperren (Record Locking)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-001.html#RxxKap09001040002D41F046100">9.2 Gr&uuml;nde f&uuml;r IPC</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap09002040002D51F049100">9.3 Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F049104">9.3.1 Eigenschaften von Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F049108">9.3.2 Pipes einrichten – pipe()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F049182">9.3.3 Eigenschaften von elementaren E/A-Funktionen bei Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F049188">9.3.4 Standard-E/A-Funktionen mit pipe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F049192">9.3.5 Pipes in einen anderen Prozess umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F04919A">9.3.6 Filterprogramm erstellen mithilfe einer Pipe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F0491A6">9.3.7 Einrichten einer Pipe zu einem anderen Prozess – popen()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F0491B8">9.3.8 Mail versenden mit Pipes und Sendmail</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F0491C2">9.3.9 Drucken &uuml;ber eine Pipe mit lpr</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09002040002D51F0491D5">9.3.10 Benannte Pipes – FIFOs</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-003.html#RxxKap09003040002D61F02A100">9.4 System-V-Interprozesskommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-003.html#RxxKap09003040002D61F02A102">9.4.1 Gemeinsamkeiten der SysV-Mechanismen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-003.html#RxxKap09003040002D61F02A10D">9.4.2 Ein Objekt einrichten, eine Verbindung herstellen und das Objekt wieder l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-003.html#RxxKap09003040002D61F02A111">9.4.3 Datenaustausch zwischen nicht verwandten Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-004.html#RxxKap09004040002D71F017100">9.5 Semaphore</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F017104">9.5.1 Lebenszyklus eines Semaphors</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F017116">9.5.2 Ein Semaphor &ouml;ffnen oder erstellen – semget()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F01717D">9.5.3 Abfragen, &Auml;ndern oder L&ouml;schen der Semaphormenge – semctl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F0171A1">9.5.4 Operationen auf Semaphormengen – semop()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F0171B3">9.5.5 Semaphore im Vergleich mit Sperren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-005.html#RxxKap09005040002D81F03B100">9.6 Message Queues</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-005.html#RxxKap09005040002D81F03B109">9.6.1 Eine Message Queue &ouml;ffnen oder erzeugen – msgget()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-005.html#RxxKap09005040002D81F03B111">9.6.2 Nachrichten versenden – msgsnd()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-005.html#RxxKap09005040002D81F03B176">9.6.3 Eine Nachricht empfangen – msgrcv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-005.html#RxxKap09005040002D81F03B17E">9.6.4 Abfragen, &Auml;ndern oder L&ouml;schen einer Message Queue – msgctl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-006.html#RxxKap09006040002D91F028100">9.7 Shared Memory</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F028102">9.7.1 Ein Shared-Memory-Segment erstellen oder &ouml;ffnen – shmget()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F02810A">9.7.2 Ein Shared-Memory-Segment abfragen, &auml;ndern oder l&ouml;schen – shmctl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F028117">9.7.3 Ein Shared-Memory-Segment anbinden (attach) – shmat()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F02817D">9.7.4 Ein Shared-Memory-Segment losl&ouml;sen – shmdt()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F028181">9.7.5 Client-Server-Beispiel – Shared Memory</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">9.3 <a id="RxxKap0967Pipes" name="RxxKap0967Pipes"></a>Pip<a id="RxxKap09002040002D51F049100" name="RxxKap09002040002D51F049100"></a>es 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a>Die Pipes sind neben den Sockets eine der am h&auml;ufigsten verwendeten Interprozesskommunikations-Techniken – zugleich auch die &auml;lteste und die erste Technik. Daher macht es auch Sinn, diese hier ausf&uuml;hrlicher zu beschreiben.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Um hier nicht immer extra dazuzuschreiben, dass hier von namenlosen Pipes die Rede ist, sei erw&auml;hnt, dass die benannten Pipes (FIFOs) erst im Abschnitt 8.3.10 zu ihrem Einsatz kommen.</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">9.3.1 Eigenschaften von Pipes<a id="RxxKap09002040002D51F049104" name="RxxKap09002040002D51F049104"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999243" name="Xxx999243"></a>Eine Pipe besitzt immer eine der folgenden zwei grundlegenden Eigenschaften:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Bei einer Pipe k&ouml;nnen Daten immer nur in eine Richtung flie&szlig;en. Ein Prozess kann praktisch immer nur in eine Pipe schreiben oder aus einer Pipe lesen. Will man anstatt der Halbduplex-Verbindung eine Vollduplex-Verbindung erstellen, ben&ouml;tigt man dazu zwei Pipes zwischen den Prozessen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Pipes k&ouml;nnen nur von Prozessen eingerichtet werden, die gemeinsame Vorfahren besitzen. Gew&ouml;hnlich wird eine Pipe eingerichtet, indem ein Elternprozess eine Pipe erzeugt und einen Kindprozess mittels <span class="listing">fork()</span> kreiert, der ja dabei ebenfalls diese Pipe erbt. Anschlie&szlig;end steht einer guten Kommunikation zwischen dem Elternprozess und dem Kindprozess nichts mehr im Wege.</td>
+</tr>
+</table>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">9.3.2 Pipes einrichten – pipe()<a id="RxxKap09002040002D51F049108" name="RxxKap09002040002D51F049108"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999248" name="Xxx999248"></a><a id="Xxx999249" name="Xxx999249"></a>Eine Pipe wird mit folgendem Systemaufruf eingerichtet:</p>
+<pre>#include &lt;unistd. h.&gt;
+int pipe( int fd[2] );</pre>
+<p>Mit dieser Funktion erzeugt man bei Erfolg eine Pipe mit folgenden Grundzust&auml;nden:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> fd[0]</span> ist der Filedeskriptor zum Lesen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> fd[1]</span> ist der Filedeskriptor zum Schreiben in die Pipe.</td>
+</tr>
+</table>
+<p>Bei Erfolg liefert diese Funktion 0, ansonsten bei einem Fehler -1 zur&uuml;ck – wobei <span class="listing">errno</span> auf einen entsprechenden Fehlercode gesetzt wird.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_5.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_5.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.5   
+    </b>Erzeugen einer Pipe</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wer es wieder genau wissen will, nach dem Systemaufruf <span class="listing">pipe()</span> werden zwei Eintr&auml;ge der globalen Dateitabelle belegt, deren Indexwerte an <span class="listing">fd[0]</span> und <span class="listing">fd[1]</span> zur&uuml;ckgegeben werden. Beide Eintr&auml;ge in dieser globalen Dateitabelle zeigen aber auf denselben Inode, dessen Referenzz&auml;hler hiermit um zwei hochgez&auml;hlt wird.</p>
+</td>
+</tr>
+</table><br>
+<p>Diese Pipe eignet sich allerdings h&ouml;chstens f&uuml;r Selbstgespr&auml;che, da ja noch kein weiterer Prozess existiert, mit dem kommuniziert werden soll. Gew&ouml;hnlich wird nach dem Erstellen einer Pipe ein Kindprozess mittels <span class="listing">fork()</span> erzeugt. Da der Kindprozess die Pipe des Elternprozesses vererbt bekommt, sieht der Kommunikationsweg schon ein wenig n&uuml;tzlicher aus.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_6.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_6.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.6   
+    </b>Ein weiterer Prozess mit fork() wird erzeugt.</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt m&uuml;ssen Sie den beiden Prozessen noch klar machen, wer was machen soll. Dies geschieht, indem Sie mit den Filedeskriptoren der Pipe durch &Ouml;ffnen bzw. Schlie&szlig;en der Kan&auml;le bestimmen, welcher Prozess in die Pipe schreiben und welcher aus dieser lesen soll. Daf&uuml;r haben Sie bei zwei Prozessen mit jeweils zwei Filedeskriptoren (<span class="listing">fd[0]</span> und <span class="listing">fd[1]</span>) logischerweise auch zwei M&ouml;glichkeiten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Elternprozess liest, Kindprozess schreibt – Elternprozess schlie&szlig;t die Schreibseite (<span class="listing">fd[1]</span>) der Pipe und Kindprozess schlie&szlig;t die Leseseite (<span class="listing">fd[0]</span>).</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_7.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_7.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.7   
+    </b>Daten flie&szlig;en vom Kindprozess zum Elternprozess.</p>
+</td>
+</tr>
+</table><br>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Elternprozess schreibt, Kindprozess liest – Elternprozess schlie&szlig;t die Leseseite (<span class="listing">fd[0]</span>) der Pipe, und Kindprozess schlie&szlig;t die Schreibseite (<span class="listing">fd[1]</span>).</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_8.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_8.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.8   
+    </b>Daten flie&szlig;en vom Elternprozess zum Kindprozess.</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Das Schlie&szlig;en der »&uuml;berfl&uuml;ssigen« Filedeskriptoren w&auml;re hier zwar nicht zwingend notwendig gewesen, nur liefert ein <span class="listing">read()</span> mit einer unvollst&auml;ndigen Anzahl zu lesender Bytes bzw. bei einer leeren Pipe nur dann EOF zur&uuml;ck, wenn alle schreibenden Filedeskriptoren geschlossen wurden.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Notizen zu einer Pipe</h4>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Schreibt einer der Prozesse in eine Pipe, die zum Lesen bestimmt war, wird das Signal <span class="listing">SIGPIPE<a id="Xxx999298" name="Xxx999298"></a></span> ausgel&ouml;st. Sofern Sie dieses Signal nicht abfangen, wird das Programm aufgrund der Standardaktion dieses Signals beendet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Wenn alle Daten aus der Leseseite einer Pipe ausgelesen wurden, liefert <span class="listing">read()</span> EOF zur&uuml;ck.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die maximale Anzahl der Daten, die in eine Pipe geschickt werden k&ouml;nnen, sind mit der Konstante <span class="listing">PIPE_BUF</span> (in <span class="listing">limits.h</span>) definiert.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Wollen Sie die Dateiart einer Pipe mittels <span class="listing">fstat()</span> oder <span class="listing">stat()</span> mit der Strukturkomponenten <span class="listing">st_mode</span> aus <span class="listing">stat()</span> ermitteln, muss auf ein FIFO mit dem Makro <span class="listing">S_ISFIFO<a id="Xxx999302" name="Xxx999302"></a></span> &uuml;berpr&uuml;ft werden.</td>
+</tr>
+</table>
+<p>Hierzu soll ein einfaches Beispiel verwendet werden. Sie starten einen Prozess und geben als erstes Argument in der Kommandozeile eine Datei an, die gelesen werden soll. Anschlie&szlig;end erzeugen Sie eine Pipe und mittels <span class="listing">fork()</span> einen Kindprozess. Der Elternprozess schlie&szlig;t die Leseseite der Pipe, liest aus der Datei und schreibt anschlie&szlig;end diese Daten in die Schreibseite der Pipe. Der Kindprozess hingegen schlie&szlig;t die Schreibseite der Pipe und liest mittels <span class="listing">read()</span> aus der Leseseite der Pipe die Daten ein und gibt diese anschlie&szlig;end auf dem Bildschirm aus. Zugegeben, dies ist ein umst&auml;ndlicher Weg, Daten zu lesen und auszugeben, nur l&auml;sst sich damit recht einfach nachzuvollziehen, wie eine Pipe funktioniert. Hierzu das Beispiel:</p>
+<pre><a id="Xxx999304" name="Xxx999304"></a>/* pipe1. c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;limits.h&gt;
+int main (int argc, char **argv) {
+   int fd[2], fd1, n;
+   pid_t pid;
+   char puffer[PIPE_BUF];
+   if (argc != 2) {
+      printf("Usage: %s Datei\n", *argv);
+      exit (EXIT_FAILURE);
+   }
+   if ((fd1 = open (argv[1], O_RDONLY)) &lt; 0) {
+      perror ("open");
+      exit (EXIT_FAILURE);
+   }
+   /*Wir erstellen eine Pipe*/
+   if (pipe (fd) &lt; 0) {
+      perror ("pipe");
+      exit (EXIT_FAILURE);
+   }
+   /*Wir erzeugen einen neuen Prozess*/
+   if ((pid = fork ()) &lt; 0) {
+      perror ("fork");
+      exit (EXIT_FAILURE);
+   }
+   else if (pid &gt; 0) {   /*Elternprozess */
+      close (fd[0]);   /*Leseseite schlie&szlig;en */
+      /* Datei auslesen (PIPE_BUF Bytes) */
+      n = read (fd1, puffer, PIPE_BUF);
+      /* In die Schreibseite der Pipe schreiben */
+      if ((write (fd[1], puffer, n)) != n) {
+         perror ("write");
+         exit (EXIT_FAILURE);
+      }
+      /* Warten auf den Kindprozess */
+      if ((waitpid (pid, NULL, 0)) &lt; 0) {
+         perror ("waitpid");
+         exit (EXIT_FAILURE);
+      }
+   }
+   else {        /*Kindprozess */
+      close (fd[1]);   /*Schreibseite schlie&szlig;en */
+      /* Leseseite der Pipe auslesen (PIPE_BUF Bytes) */
+      n = read (fd[0], puffer, PIPE_BUF);
+      /* Daten auf Standardausgabe schreiben */
+      if ((write (STDOUT_FILENO, puffer, n)) != n) {
+         perror ("write");
+         exit (EXIT_FAILURE);
+      }
+   }
+   exit (EXIT_SUCCESS);
+}</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">9.3.3 Eigenschaften von elementaren E/A-Funktionen bei Pipes<a id="RxxKap09002040002D51F049182" name="RxxKap09002040002D51F049182"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999307" name="Xxx999307"></a>Da sich die Systemaufrufe <span class="listing">write()</span>, <span class="listing">read()</span> oder <span class="listing">close()</span> bei Pipes anders als sonst &uuml;blich verhalten, folgt hierzu eine kurze Erl&auml;uterung.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> read()</span> – <span class="listing">read()<a id="Xxx999309" name="Xxx999309"></a></span> wird so lange blockiert (vorausgesetzt es wurden nicht die Flags <span class="listing">O_NONBLOCK<a id="Xxx999311" name="Xxx999311"></a></span> und <span class="listing">O_NDELAY<a id="Xxx999312" name="Xxx999312"></a></span> verwendet), bis sich wieder gen&uuml;gend Daten in der Pipe befinden. Schreibt kein Prozess mehr in die Pipe, bleibt <span class="listing">read()</span> so lange stecken, bis der schreibende Prozess den Systemaufruf <span class="listing">close()</span> verwendet hat. Dieses Steckenbleiben von <span class="listing">read()</span> eignet sich prima zum Synchronisieren von Prozessen. Wurde <span class="listing">O_NDELAY</span> gesetzt und ist die Pipe f&uuml;rs Schreiben ge&ouml;ffnet worden, aber momentan leer, liefert <span class="listing">read()</span> 0 (nicht EOF) zur&uuml;ck. Au&szlig;erdem wird immer vom Ende des Puffers der Pipe gelesen (hierbei ist auch keine Verschiebung mit <span class="listing">lseek()</span> m&ouml;glich).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> write()</span> – <span class="listing">write()<a id="Xxx999313" name="Xxx999313"></a></span> schreibt die Daten immer ans Ende des Pipe-Puffers. Ist die Pipe voll, wird der schreibende Prozess so lange blockiert, bis wieder gen&uuml;gend Platz zum Schreiben vorhanden ist. Dieses Verhalten k&ouml;nnten Sie abschalten, indem Sie das Flag <span class="listing">O_NONBLOCK<a id="Xxx999315" name="Xxx999315"></a></span> (und auch <span class="listing">O_NDELAY<a id="Xxx999316" name="Xxx999316"></a></span>) mit z. B. der Funktion <span class="listing">fcntl()<a id="Xxx999317" name="Xxx999317"></a></span> verh&auml;ngen. In diesem Fall liefert der schreibende Prozess bei einem vollen Puffer 0 zur&uuml;ck. Aber gew&ouml;hnlich betreibt man eine Pipe blockierend. Ein Schreiben innerhalb der <span class="listing">PIPE_BUF</span>-Grenze ist au&szlig;erdem immer atomar, sprich, kein anderer Prozess kann dieses schreiben noch unterbrechen, geschweige denn selbst in die Pipe schreiben. Versucht ein Prozess, in eine Pipe zu schreiben, die noch von keinem anderen Prozess zum Lesen ge&ouml;ffnet wurde, wird dem Prozess das Signal <span class="listing">SIGPIPE</span> (broken pipe) gesendet, was standardm&auml;&szlig;ig den Abbruch des schreibw&uuml;tenden Prozesses bedeutet.</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Diese Eigenschaften treffen nat&uuml;rlich sowohl f&uuml;r die namenlosen als auch f&uuml;r die benannten Pipes (FIFOs) zu.</p>
+</td>
+</tr>
+</table><br>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">9.3.4  Standard-E/A-Funktionen mit pipe<a id="RxxKap09002040002D51F049188" name="RxxKap09002040002D51F049188"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999323" name="Xxx999323"></a>Nat&uuml;rlich ist es auch m&ouml;glich, auf Pipes mit den Standard-E/A-Funktionen zuzugreifen. Dazu m&uuml;ssen Sie nur den mit dem <span class="listing">pipe()</span>-Aufruf erhaltenen Filedeskriptoren mithilfe der Funktion <span class="listing">fdopen()</span> einen Dateizeiger (<span class="listing">FILE</span> <span class="listing">*</span>) zuteilen. Nat&uuml;rlich m&uuml;ssen Sie <span class="listing">fdopen()</span> mit dem richtigen Modus verwenden. Denn es ist nicht m&ouml;glich, Folgendes zu verwenden:</p>
+<pre>FILE *f;
+f = fdopen(fd[0], "w"); /* falsch */ </pre>
+<p>Richtig ist dagegen:</p>
+<pre>FILE *rd, *wr;
+rd = fdopen(fd[0], "r");
+wr = fdopen(fd[1], "w"); </pre>
+<p>Beachten Sie, wenn Sie zwei Pipes erstellen, um mit einem Kindprozess Daten auszutauschen, sind »reading« und »writing« dort umgekehrt, d. h. parentRead = childWrite und parentWrite = childRead. Geben Sie Ihrem Dateizeiger einfach einen aussagekr&auml;ftigen Namen, um Verwechslungen auszuschlie&szlig;en.</p>
+<p>Das jetzt folgende Beispiel soll die Verwendung einer Pipe mit den Standard-E/A-Funktionen demonstrieren. Auch hierbei werden wieder (wie schon im Listing zuvor) eine Pipe und ein Kindprozess erzeugt. Eine Datei, die Sie als erstes Argument in der Kommandozeile angeben, wird ebenso versucht anzulegen. Im Elternprozess schlie&szlig;en Sie die Leseseite und weisen der Schreibseite mittels <span class="listing">fdopen()</span> einen <span class="listing">FILE</span>-Stream zu. Mittels <span class="listing">fgets()</span> wird nun etwas von der Standardeingabe eingelesen und mittels <span class="listing">fputs()</span> in die Schreibseite der Pipe geschrieben. Im Kindprozess wird zun&auml;chst die Schreibseite der Pipe geschlossen, und der <span class="listing">FILE</span>-Stream wird mittels <span class="listing">fdopen()</span> der Leseseite der Pipe zugewiesen. Anschlie&szlig;end wird mit <span class="listing">fgets()</span> (aus der Pipe) gelesen und mit <span class="listing">fputs()</span> in die ge&ouml;ffnete Datei geschrieben.</p>
+<pre><a id="Xxx999330" name="Xxx999330"></a>/* pipe2.c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;limits.h&gt;
+int main (int argc, char **argv) {
+   int fd[2];
+   pid_t pid;
+   char puffer[PIPE_BUF];
+   FILE *reading, *writing, *newfile;
+   if (argc != 2) {
+      printf("Usage: %s Datei\n", *argv);
+      exit (EXIT_FAILURE);
+   }
+   if ((newfile = fopen (argv[1], "a+")) &lt; 0) {
+      perror ("fopen");
+      exit (EXIT_FAILURE);
+   }
+   /*Wir erstellen eine Pipe*/
+   if (pipe (fd) &lt; 0) {
+      perror ("pipe");
+      exit (EXIT_FAILURE);
+   }
+   /*Wir erzeugen einen neuen Prozess*/
+   if ((pid = fork ()) &lt; 0) {
+      perror ("fork");
+      exit (EXIT_FAILURE);
+   }
+   else if (pid &gt; 0) {   /*Elternprozess */
+      close (fd[0]);   /*Leseseite schlie&szlig;en */
+      if ((writing = fdopen (fd[1], "w")) == NULL) {
+         perror ("fdopen");
+         exit (EXIT_FAILURE);
+      }
+      /* PIPE_BUF Bytes lesen */
+      fgets (puffer, PIPE_BUF, stdin);
+      /*Wir schreiben in die Pipe */
+      fputs (puffer, writing);   
+   }
+   else {     /*Kindprozess */
+      close (fd[1]);   /*Schreibseite schlie&szlig;en */
+      if ((reading = fdopen (fd[0], "r")) == NULL) {
+         perror ("fdopen");
+         exit (EXIT_FAILURE);
+      }
+      /* Wir lesen aus der Pipe (PIPE_BUF Bytes) */
+      fgets (puffer, PIPE_BUF, reading); 
+      fputs (puffer, newfile);
+   }
+   exit (EXIT_SUCCESS);
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o pipe2 pipe2.c
+$ ./pipe2 new_file.txt
+Hallo Welt in durch die Pipe
+$ cat new_file.txt
+Hallo Welt in durch die Pipe</pre>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">9.3.5 Pipes in einen anderen Prozess umleiten<a id="RxxKap09002040002D51F049192" name="RxxKap09002040002D51F049192"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999335" name="Xxx999335"></a>Am Anfang des Kapitels zu den Pipes haben Sie ein Listing geschrieben, das aus einer Datei im Kindprozess etwas gelesen hat. Das Gelesene haben Sie dann in die Pipe geschrieben, und der Elternprozess hat dies ausgelesen und es an die Standardausgabe auf dem Bildschirm weitergeleitet. Bei etwas l&auml;ngeren Texten wurde diese Ausgabe allerdings etwas un&uuml;bersichtlich, da der komplette Text auf einmal ausgegeben wurde. Jetzt k&ouml;nnen Sie entweder eine Funktion schreiben, mit welcher der Anwender z. B. alle 23 Zeilen aufgefordert wird, eine Taste zu dr&uuml;cken, damit die n&auml;chsten 23 Zeilen gelesen werden, oder Sie verwenden gleich die Betriebsmittel, die Ihnen daf&uuml;r zur Verf&uuml;gung stehen. Hierf&uuml;r stehen Ihnen z. B. Programme wie less, pg, nl, tail, oder more zur Verf&uuml;gung, womit Sie sich zeilen- bzw. seitenweise durch den Text hangeln k&ouml;nnen. Dies wird im nun folgenden Listing anhand des Pagers less demonstriert.</p>
+<pre><a id="Xxx999337" name="Xxx999337"></a>/* pipe3.c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;limits.h&gt;
+#define EXIT(s) {fprintf(stderr, "%s",s); exit(EXIT_FAILURE);}
+// Wenn nicht ausreichend dimensioniert =&gt; 
+// vergr&ouml;&szlig;ern oder ggf. dynamisch machen
+#define BUF PIPE_BUF * 8
+enum{ ERROR = -1, SUCCESS };
+int main (int argc, char **argv) {
+   int fd[2];
+   pid_t pid;
+   FILE *pipe_writer, *file;
+   char puffer[PIPE_BUF];
+   if (argc != 2) {
+     fprintf(stderr, "Usage: %s DateiZumLesen\n",*argv);
+     exit(EXIT_FAILURE);
+   }
+   if ((file = fopen (argv[1], "r")) == NULL)
+      EXIT ("Fehler bei fopen ...\n");
+   if (pipe (fd) == ERROR)
+      EXIT ("Fehler bei pipe ...\n");
+   if ((pid = fork ()) == ERROR)
+      EXIT ("Fehler bei fork ...\n");
+   if (pid &gt; 0) {     /*Elternprozess */
+      close (fd[0]);   /*Wir schlie&szlig;en die Leseseite */
+      if ((pipe_writer = fdopen (fd[1], "w")) == NULL)
+         EXIT ("Fehler bei fdopen ...\n");
+      fread (&amp;puffer, PIPE_BUF, 1, file);
+      /* Wir schreiben in die Pipe */
+      fputs (puffer, pipe_writer); 
+      fclose (pipe_writer);
+      /*Mit dem Schlie&szlig;en der Schreibseite */
+      /*teilen wir dem Kindprozess das Ende */
+      /*des Schreibens in die Pipe mit */
+      if (waitpid (pid, NULL, 0) == ERROR)
+         EXIT ("Fehler bei waitpid ... \n");
+      exit (EXIT_SUCCESS);
+   }
+   else {       /*Kindprozess liest aus der Pipe mit less */
+      sleep (1);
+      close (fd[1]);   /*Schlie&szlig;en der Schreibseite */
+      if (fd[0] != STDIN_FILENO) {/*muss &uuml;berpr&uuml;ft werden */
+         /*duplizieren Standardeingabe */
+         if (dup2 (fd[0], STDIN_FILENO) != STDIN_FILENO)
+            EXIT ("Fehler bei dup2 ...\n");
+         close (fd[0]);   /*Wird nicht mehr ben&ouml;tigt */
+      }
+      if (execl ("/usr/bin/less", "less", NULL) == ERROR) ;
+      EXIT ("Fehler bei execl ...\n");
+   }
+   return EXIT_SUCCESS;
+}</pre>
+<p>Entscheidend im Kindprozess ist das Duplizieren des Filedeskriptors. Wie Sie bei den Funktionen <span class="listing">dup()<a id="Xxx999340" name="Xxx999340"></a></span> und <span class="listing">dup2()<a id="Xxx999341" name="Xxx999341"></a></span> bereits erfahren haben, bleibt mithilfe der <span class="listing">dup()</span>-Funktion das close-on-exec-Flag<a id="Xxx999342" name="Xxx999342"></a> ungesetzt, was dem anschlie&szlig;enden <span class="listing">exec</span>-Aufruf zu Gute kommt (bzw. n&ouml;tig daf&uuml;r ist). Sie verbinden praktisch mit der Funktion <span class="listing">dup2()</span> den Standardeingabekanal mit dem Pipekanal <span class="listing">fd[0]</span>. Wichtig ist in einem solchen Fall, wenn Sie den Kindprozess &uuml;berlagern, die Reihenfolge: <span class="listing">fork()</span>, <span class="listing">close()</span>, <span class="listing">dup()</span> (oder <span class="listing">dup2()</span>), <span class="listing">exec()</span>. Somit kommuniziert der aktuell laufende Elternprozess mit dem Programm <span class="listing">less</span> und gibt den Text zum Scrollen <span class="listing">less</span>-typisch auf dem Bildschirm aus.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_9.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_9.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.9   
+    </b>Pipes in einen anderen Prozess umleiten</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   <a id="Xxx999352" name="Xxx999352"></a></b>Wenn die Datei zum Lesen mehr als <span class="listing">PIPE_BUF</span> <span class="listing">*</span> <span class="listing">8</span> Bytes hat, wird nat&uuml;rlich auch nicht mehr ausgegeben. In diesem Fall m&uuml;ssen Sie entweder die Gr&ouml;&szlig;e des Puffers erh&ouml;hen oder (besser) das ganze Beispiel dynamisch machen. Dies sei hier erw&auml;hnt, da sich die Gr&ouml;&szlig;e von <span class="listing">PIPE_BUF</span> auf den verschiedenen Systemen doch erheblich unterscheidet. Selbiges gilt nat&uuml;rlich auch f&uuml;r alle anderen Beispiel, welche die symbolische Konstante <span class="listing">PIPE_BUF</span> verwenden.</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">9.3.6 Filterprogramm erstellen mithilfe einer Pipe<a id="RxxKap09002040002D51F04919A" name="RxxKap09002040002D51F04919A"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999356" name="Xxx999356"></a>Pipes eignen sich au&szlig;erdem (vor allem auch) ideal f&uuml;r Filterprogramme. Zum Beispiel f&uuml;r einen Druckerfilter, um einen Text formatiert auszugeben oder alle Buchstaben gro&szlig;-/kleinzuschreiben. Hierzu soll ein eigener kleiner Filter geschrieben werden, der bestimmte W&ouml;rter ausfiltert und dabei aus dem urspr&uuml;nglichen Originaltext die Zeichenfolge xxx ausgibt.</p>
+<pre><a id="Xxx999358" name="Xxx999358"></a>/* filter.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAX 255
+/* Filterw&ouml;rter k&ouml;nnen angepasst werden */
+const char *filterwords[] = {
+    "und", "oder", "aber", "ein", NULL 
+};
+const char token[] = " ";
+static void output (char *puffer) {
+   int i = 0, len;
+   static int merker = 0;
+   char *p, tmp[20];
+   /* Trennen die einzelnen W&ouml;rter */
+   p = strtok (puffer, token);  
+   while (p != NULL) {
+      i = 0;
+      merker = 0;
+      while (filterwords[i] != NULL) {
+         /* Wir vergleichen alle W&ouml;rter, die wir */
+         /* ausfiltern wollen, mit dem aktuellen */
+         /* Wort, das auf das p zeigt                */
+         if (strstr (p, filterwords[i]) != NULL) {
+            len = strlen (filterwords[i]);
+            /* L&auml;nge des zu ersetzenden Wortes z&auml;hlen */
+            memset (tmp, 'x', len);
+            tmp[len] = 0;
+            /* Jetzt schreiben wir len x in das Array tmp */
+            /* Nun geben wir len x auf den Bildschirm aus */
+            fputs (tmp, stdout);
+            fputs (" ", stdout);   /*Leerzeichen */
+            /*Merker, ob schon etwas ausgegeben wurde */
+            merker = 1;
+         }
+         i++;
+      }
+      if (merker == 0) {
+         /*Normale Ausgabe, da nichts gefiltert wurde */
+         fputs (p, stdout);
+         fputs (" ", stdout);   /*Leerzeichen */
+      }
+      p = strtok (NULL, token);
+   }
+}
+int main (void) {
+   char pufferin[MAX];
+   while (fgets (pufferin, MAX, stdin) != NULL)
+      output (pufferin);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Hier wurden folgende Filterw&ouml;rter verwendet:</p>
+<pre>const char *filterwords[] = { 
+   "und" , "oder", "aber", "ein", NULL
+};</pre>
+<p>Diese W&ouml;rter werden alle mit xxx ausgegeben. Dieses Programm k&ouml;nnen Sie beliebig anpassen, z. B. zur Vermeidung von Kraftausdr&uuml;cken in Diskussionsforen. Wenn Sie eine ganze Datenbank von Ausfilterungsw&ouml;rtern erstellen wollen, rate ich Ihnen zu einer dynamischen Struktur in Form von Binary Trees oder Hashes. Sie k&ouml;nnten so &auml;hnlich aufgebaut auch ein Fremdsprachen&uuml;bersetzungsprogramm schreiben.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Ich m&ouml;chte Ihre Euphorie hier jetzt nicht stoppen, ein tolles Filterprogramm zu schreiben. Aber schauen Sie sich zuerst um, ob dies nicht bereits vor Ihnen jemand getan hat. Es gibt bestimmt schon eine L&ouml;sung f&uuml;r Ihr Problem. Gerne erstellt (und immer wieder neu erfunden) werden so genannte Konverterprogramme wie html2text, html2ps und noch mehr. Suchen Sie am besten im Internet erst nach [format]2[format]-Programmen, sofern Sie ein solches erstellen wollen. Und au&szlig;erdem eignen sich doch die Pipes prima, um ein solches Programm »dazwischenzuh&auml;ngen«.</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt m&uuml;ssen Sie nur noch das Listing aus dem Abschnitt »Pipes in einen anderen Prozess umleiten« anpassen:</p>
+<pre><a id="Xxx999368" name="Xxx999368"></a>/* pipe3b.c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;limits.h&gt;
+#define EXIT(s) {fprintf(stderr, "%s",s); exit(EXIT_FAILURE);}
+// Wenn nicht ausreichend dimensioniert =&gt; 
+// vergr&ouml;&szlig;ern oder ggf. dynamisch machen
+#define MAX PIPE_BUF * 8
+enum{ ERROR = -1, SUCCESS };
+int main (int argc, char **argv) {
+   int fd[2];
+   pid_t pid;
+   FILE *pipe_writer, *file;
+   char puffer[MAX];
+   if (argc != 2) {
+     fprintf(stderr, "Usage: %s DateiZumLesen\n", *argv);
+     exit(EXIT_FAILURE);
+   }
+   if ((file = fopen (argv[1], "r")) == NULL)
+      EXIT ("Fehler bei fopen ...\n");
+   if (pipe (fd) == ERROR)
+      EXIT ("Fehler bei pipe ...\n");
+   if ((pid = fork ()) == ERROR)
+      EXIT ("Fehler bei fork ...\n");
+   if (pid &gt; 0) {     /*Elternprozess */
+      close (fd[0]);   /*Wir schlie&szlig;en die Leseseite */
+      if ((pipe_writer = fdopen (fd[1], "w")) == NULL)
+         EXIT ("Fehler bei fdopen ...\n");
+      fread (&amp;puffer, MAX, 1, file);
+      /* Wir schreiben in die Pipe */
+      fputs (puffer, pipe_writer); 
+      /*Mit dem Schlie&szlig;en der Schreibseite */
+      /*teilen wir dem Kindprozess das Ende */
+      /*des Schreibens in die Pipe mit */
+      fclose (pipe_writer);
+      if (waitpid (pid, NULL, 0) == ERROR)
+         EXIT ("Fehler bei waitpid ...\n");
+      exit (EXIT_FAILURE);
+   }
+   else {       /*Kindprozess liest aus der Pipe mit less */
+      sleep (1);
+      close (fd[1]);   /*Schlie&szlig;en der Schreibseite */
+      if (fd[0] != STDIN_FILENO) {/*muss &uuml;berpr&uuml;ft werden */
+          /*duplizieren Standardeingabe*/
+         if (dup2 (fd[0], STDIN_FILENO) != STDIN_FILENO)
+            EXIT ("Fehler bei dup2......\n");
+         close (fd[0]);
+      }
+      if (execl ("./filter", "filter", NULL) == ERROR) ;
+      EXIT ("Fehler bei execl ...\n");
+   }
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Filterprogramm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o filter filter.c
+$ gcc -o pipe3b pipe3b.c
+$ ./pipe3b test.txt
+Flusskontrolle
+Da man nicht genau sagen kann, welcher von den Prozessen xxx Daten zuerst an den Zielrechner 
+verschickt xxx wieder zur&uuml;ck, verwendet man xxx so genannte Server-Client-IPCs. 
+Das hei&szlig;t, man verwendet xxx xxxx mehrere Clienten und xxxx xxxx Server. Der Client 
+stellt die Anfrage an den Server xxx der Server antwortet. Der xxxx die ...</pre>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">9.3.7 Einrichten einer Pipe zu einem anderen Prozess – popen()<a id="RxxKap09002040002D51F0491A6" name="RxxKap09002040002D51F0491A6"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999373" name="Xxx999373"></a>Die Funktion <span class="listing">popen()</span> nimmt Ihnen im Gegensatz zu den Beispielen mit dem Systemaufruf <span class="listing">pipe()</span> eine Menge Schreibarbeit ab. Die Syntax zu <span class="listing">popen()</span> lautet:</p>
+<pre>FILE *popen(const char *command, const char *wie);</pre>
+<p>Der Parameter <span class="listing">command</span> entspricht hier einem Funktionsaufruf von <span class="listing">system()</span>. Intern wird dabei aber trotzdem eine Pipe angelegt. Ob Sie mit diesem Prozess lesen oder schreiben wollen, legen Sie mit dem Parameter <span class="listing">wie</span> fest. <span class="listing">"r"</span> steht f&uuml;r Lesen aus der Pipe und <span class="listing">"w"</span> f&uuml;r Schreiben. Im Fehlerfall liefert <span class="listing">popen()</span> <span class="listing">NULL</span> ansonsten bei Erfolg den <span class="listing">FILE</span>-Zeiger zur&uuml;ck. Somit nimmt Ihnen die Funktion <span class="listing">popen()</span> folgende Arbeiten gegen&uuml;ber der Funktion <span class="listing">pipe()</span> ab:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> pipe()</span>-Aufruf</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> fork()</span>-Aufruf (Erzeugung eines Kindprozesses)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> schlie&szlig;en nicht verwendeter Seiten des Kind-/Elternprozesses</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> die &Uuml;berlagerung des Prozesses mit einer <span class="listing">exec</span>-Funktion</td>
+</tr>
+</table>
+<p>Jetzt soll Ihnen mit der Funktion <span class="listing">popen()</span> anhand eines Beispiels demonstriert werden, das im Abschnitt zuvor verwendet wurde, wo Sie Ihr selbst geschriebenes Filterprogramm verwendet haben. Sie werden erkennen, dass die neue Version nun wesentlich k&uuml;rzer und einfacher zu erstellen ist.</p>
+<pre><a id="Xxx999382" name="Xxx999382"></a>/* popen1.c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;limits.h&gt;
+#define EXIT(s) { fprintf(stderr, "%s",s); exit(EXIT_FAILURE); }
+#define MAX PIPE_BUF * 8
+enum { ERROR = -1, SUCCESS };
+int main (int argc, char **argv) {
+   FILE *pipe_writer, *file;
+   char puffer[MAX];
+   if (argc != 2) {
+     fprintf(stderr, "Usage: %s DateiZumLesen\n", *argv);
+     exit(EXIT_FAILURE);
+   }
+   if ((file = fopen (argv[1], "r")) == NULL)
+      EXIT ("Fehler bei fopen ...\n");
+   if ((pipe_writer = popen ("./filter", "w")) == NULL)
+      EXIT ("Fehler bei popen ...\n");
+   while (fgets(puffer, MAX, file) != NULL) {
+      if (fputs (puffer, pipe_writer) == EOF)
+         EXIT ("Fehler bei fputs ...\n");
+   }
+   pclose (pipe_writer);
+   return EXIT_SUCCESS;
+}</pre>
+<p>An dieser Stelle soll die Funktion <span class="listing">popen()</span> nochmals etwas genauer erkl&auml;rt werden. Als erstes Argument der Funktion <span class="listing">popen()</span> geben Sie das Programm/Kommando an, das den Kindprozess &uuml;berlagern soll. Als zweites Argument wird der Modus angegeben, wobei Sie wie schon bei dem klassischen Pipe-Aufruf (<span class="listing">pipe()</span>) zwei M&ouml;glichkeiten haben:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> "w"</span> – Die geschriebenen Daten in der Pipe werden an die Standardeingabe von <span class="listing">command</span> weitergegeben.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> "r"</span> – Die gelesenen Daten aus der Pipe stammen aus der Standardausgabe des Programms/Kommandos <span class="listing">command</span>.</td>
+</tr>
+</table>
+<p>Der Modus f&uuml;r <span class="listing">popen()</span> kann leider nicht <span class="listing">"rw"</span>, <span class="listing">"r+"</span> oder <span class="listing">"w+"</span> sein. Um die Pipe wieder zu schlie&szlig;en, muss folgende Funktion verwendet werden:</p>
+<pre>int pclose(FILE *pipe_zeiger); </pre>
+<p>Diese Funktion wartet auf die Beendigung des Prozesses, den Sie in <span class="listing">command</span> angegeben haben. Konnte die Pipe nicht geschlossen werden, wird -1 zur&uuml;ckgegeben.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Achtung   </b>Wenn Sie bei der Funktion <span class="listing">popen()</span> eine Benutzereingabe f&uuml;r das erste Argument erlauben, seien Sie auf der Hut. Sie sollten die Eingabe auf jeden Fall &uuml;berpr&uuml;fen und vor jedes Sonderzeichen ein Escape-Zeichen setzen. Tun Sie dies nicht, kann ein b&ouml;swilliger Anwender das System gef&auml;hrden, indem dieser spezielle f&uuml;r die Shell reservierte Metazeichen verwendet. Selbiges gilt &uuml;brigens auch f&uuml;r den <span class="listing">system()</span>-Aufruf.</p>
+</td>
+</tr>
+</table><br>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">9.3.8 Mail versenden mit Pipes und Sendmail<a id="RxxKap09002040002D51F0491B8" name="RxxKap09002040002D51F0491B8"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999395" name="Xxx999395"></a><a id="Xxx999396" name="Xxx999396"></a>Eine Mail aus einer Anwendung zu versenden ist nun mit den Pipes kein gro&szlig;es Problem mehr. Ich verwende f&uuml;r das folgende Beispiel das sendmail f&uuml;r das Versenden von Mails, da es bei den meisten Systemen als D&auml;mon im Hintergrund l&auml;uft oder zumindest bei der Distribution dabei ist. sendmail ist eigentlich f&uuml;r ein solches Beispiel unterfordert. Nat&uuml;rlich setzt dieses Beispiel voraus, dass Sie sendmail installiert und richtig konfiguriert haben.</p>
+<p>Da sendmail im Grunde eher ein Monster als ein D&auml;mon ist, ist das Konfigurieren eine ziemliche umfangreiche und komplizierte Geschichte. Aber auch ohne jegliche Konfiguration k&ouml;nnen Sie zu Testzwecken sendmail verwenden. Senden Sie die E-Mails doch einfach an das lokale Postfach (z. B. benutzername@localdomain oder benutzername@linux) – das Sie auch mit einigen Klicks z. B. mit Kmail einrichten und somit empfangen k&ouml;nnen. Generell werden Sie wahrscheinlich auf Ihrem lokalen System die Zugriffsrechte anpassen m&uuml;ssen, um als normaler Benutzer und nicht als Superuser auf sendmail zugreifen zu k&ouml;nnen. sendmail selbst sollte sich im Pfad /usr/sbin/sendmail befinden – am besten ermittelt man diesen Pfad mit dem which-Kommando wie im folgenden Listing geschehen.</p>
+<p>Damit mir sendmail auch im User-Bereich zur Verf&uuml;gung steht, habe ich mir mit einem harten Link beholfen:</p>
+<pre># ln -v /usr/sbin/sendmail /usr/bin/sendmail
+Erzeugen der harten Verkn&uuml;pfung "/usr/bin/sendmail"
+zu "/usr/sbin/sendmail"
+# which sendmail
+/usr/sbin/sendmail
+# exit
+exit
+$ which sendmail
+/usr/bin/sendmail</pre>
+<p>Hier das Listing, um via Pipe auf sendmail zuzugreifen:</p>
+<pre><a id="Xxx999402" name="Xxx999402"></a>/* popen2.c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#define BUF1 255
+#define BUF2 8192
+static void
+sendmail ( const char *to, const char *from, 
+           const char *subject, 
+           /*const char *cc, const char *bcc, */
+           const char *inhalt ) {
+   FILE *pipe, *pfad;
+   char pfad_sendmail[BUF1];
+   /* Wir ermitteln den Pfad zu sendmail           */
+   pfad = popen ("which sendmail", "r");
+   if (pfad == NULL) {
+      perror("popen()");
+      exit (EXIT_FAILURE);
+   }
+   fscanf (pfad, "%s", pfad_sendmail);
+   pclose (pfad);
+   strcat (pfad_sendmail, " -n -oi -t");
+   /*Der Pfad ist meistens /usr/sbin/sendmail */
+   pipe = popen (pfad_sendmail, "w");
+   if (pipe == NULL) {
+      fprintf (stderr,
+          "Konnte keine Verbindung zu sendmail aufbauen!n");
+      exit (EXIT_FAILURE);
+   }
+   /* In sendmail schreiben ... */
+   fprintf(pipe, "From:%s" "To:%s", from, to);
+   /* if(cc != NULL){ fprintf(pipe, "Cc: %s\n", cc); }    */
+   /* if(bcc != NULL){ fprintf(pipe, "Bcc: %s\n", bcc); } */
+   if(subject != NULL) {
+      fprintf(pipe, "Subject:%s", subject);
+   }
+   /* Extra-Newline vorher ist hier wichtig ...-v */
+   if(inhalt != NULL) { fprintf(pipe, "\n%s\n", inhalt); }
+   pclose (pipe);
+   printf ("Mail wurde versendet an : %s\n", to);
+   return;
+}
+int main (int argc, char **argv) {
+   char to[BUF1], from[BUF1], sub[BUF1],
+        inhalt[BUF2], puffer[BUF1];
+   printf ("Mail To   : ");
+   fgets (to, BUF1, stdin);
+   printf ("Mail from : ");
+   fgets (from, BUF1, stdin);
+   printf ("Betreff   : ");
+   fgets (sub, BUF1, stdin);
+   sub[strlen(sub)-1] = '\0';
+   inhalt[0] = '\0';
+   printf ("Inhalt    (beenden mit STRG+D) \n&gt;");
+   while (fgets (puffer, BUF1–1, stdin) != NULL) {
+      if( strlen(inhalt) + strlen(puffer) &lt; BUF2 ) {
+            strcat (inhalt, puffer);
+            printf ("&gt;");
+      }
+      else
+            break;
+   }
+   inhalt[BUF2] = '\0';
+   sendmail (to, from, sub, inhalt);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei seiner Ausf&uuml;hrung:</p>
+<pre>$ ./popen2
+Mail to   : tot@linux
+Mail from : me@mydomain.de
+Betreff   : Eine Mail von mir f&uuml;r mich
+Inhalt    (beenden mit STRG+D)
+&gt;E-Mail wird via Pipe an mein eigenes lokales Postfach
+&gt;geschickt. Wird bspw. K-Mail hiermit richtig konfiguriert,
+&gt;kann man hiermit seine eigenen E-Mails &uuml;ber sendmail 
+&gt;empfangen.
+&gt;
+&gt;Gruss
+&gt;J&uuml;rgen Wolf
+&gt;Mail wurde versendet an : tot@linux
+You have new mail in /var/spool/mail/tot </pre>
+<p>In diesem Beispiel werden zwei Pipes verwendet, eine zum Ermitteln des Pfades von sendmail und die zweite zum Versenden der Mail mittels sendmail. Wenn Sie eine Flat Rrate oder Standleitung ins Internet haben, k&ouml;nnen Sie ja noch eine Funktion f&uuml;r fetchmail schreiben. fetchmail dient zum Abholen von Mails. Filtern Sie dann mithilfe der Pipe die Zeile from aus, und schicken Sie eine Mail an den Absender mit der Information zur&uuml;ck, dass Sie die Mail erhalten haben (Autoresponder). Verwenden Sie den cron-D&auml;mon, und lassen Sie st&uuml;ndlich Ihre Mails abholen.</p>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">9.3.9 Drucken &uuml;ber eine Pipe mit lpr<a id="RxxKap09002040002D51F0491C2" name="RxxKap09002040002D51F0491C2"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999408" name="Xxx999408"></a>Unter Linux werden Ger&auml;te genauso wie Dateien angesprochen. Somit k&ouml;nnen Sie, wenn der Drucker sich beispielsweise am parallelen Port befindet, eine Datei mit dem Aufruf</p>
+<pre>$ cat datei.txt &gt; /dev/lp0</pre>
+<p>oder</p>
+<pre>$ cat datei.txt &gt; /dev/lp1</pre>
+<p>ausdrucken lassen. Dies erweist sich allerdings als nicht sonderlich komfortabel und sicher. Beim Systemstart wird daher der Druckerd&auml;mon lpd aufgerufen, der sich um die Umsetzung der Druckerauftr&auml;ge k&uuml;mmert. Mit dem Druckertool lpr k&ouml;nnen Sie dann Ihre Texte komfortabler aufrufen. Beim Aufruf von lpr ruft der Druckerd&auml;mon lpd einen neuen Prozess mit <span class="listing">fork()</span> auf. Aus diesem Prozess wird anschlie&szlig;end ein Kinderd&auml;mon (lpr), der dann die Arbeit zum Drucken &uuml;bernimmt. Somit k&ouml;nnen Sie mit dem Aufruf</p>
+<pre>$ lpr datei.txt </pre>
+<p>den Text, der sich in datei.txt befindet, ausdrucken. Die unz&auml;hligen Optionen, die Sie hierbei mit lpr verwenden k&ouml;nnen, entnehmen Sie bitte der Manual Page. Weitere interessante Druckertools w&auml;ren:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> lpq – gibt Auskunft zur Druckerwarteschlange.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> lprm – l&ouml;scht Druckauftr&auml;ge.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> lpc – f&uuml;r den Administrator (root); damit kann das ganze Druckersystem gesteuert werden.</td>
+</tr>
+</table>
+<p>Dies soll nur ein kurzer &Uuml;berblick zum Drucken unter Linux sein. Nach den Abschnitten zuvor sollte Ihnen das Drucken &uuml;ber eine Pipe nicht mehr allzu schwer fallen. Hier das Beispiel dazu.</p>
+<pre><a id="Xxx999420" name="Xxx999420"></a>/* printme.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#define BUF 8192
+static void an_den_drucker (const char *text) {
+   FILE *p;
+   /*Pipe zum Tool lpr erstellen zum Schreiben auf lpr*/
+   p = popen ("lpr", "w");
+   if (p == NULL) {
+      perror("popen()");
+      exit (EXIT_FAILURE);
+   }
+   /*An den Drucker schreiben */
+   printf ("Sende Auftrag an den Drucker ...\n");
+   fprintf (p, "%s", text);
+   fflush (p);
+   pclose (p);
+   return;
+}
+int main (void) {
+   char puffer[BUF], inhalt[BUF];
+   inhalt[0] = '\0';
+   printf ("Bitte Text zum Drucken schreiben "
+           " (Beenden mit STRG+D)!\n-&gt; ");
+   while (fgets (puffer, BUF, stdin) != NULL) {
+      if( strlen(inhalt) + strlen(puffer) &lt; BUF ) {
+            strcat (inhalt, puffer);
+            printf ("-&gt;");
+      }
+      else
+            break;
+   }
+   inhalt[BUF] = '\0';
+   an_den_drucker (inhalt);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie nun auch andere Texte mittels</p>
+<pre>$ echo Hallo Welt | ./printme </pre>
+<p>an den Drucker senden. Was in diesem Programmbeispiel noch fehlen w&uuml;rde, ist ein Filterprogramm, das die Druckerausgabe formatiert oder das beispielsweise die Ausgabe nach dem Alphabet sortiert ausgibt, etwa bei einer Dateiverwaltung. So etwas sollten Sie allerdings jetzt mit den Kenntnissen der Pipes ohne Problem selbst implementieren k&ouml;nnen.</p>
+<p>Zum Abschluss soll hier noch das Listing zum Versenden von E-Mails mittels sendmail erweitert werden. Jede Mail, die versendet wird, soll auf einen Drucker mitprotokolliert und ausgegeben werden.</p>
+<pre><a id="Xxx999426" name="Xxx999426"></a>/* printme2.c */
+#include &lt;unistd. h.&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#define BUF1 254
+#define BUF2 8192
+static void an_den_drucker (const char *);
+static void sendmail (const char *, const char *,
+                     const char *, const char *);
+static void
+sendmail ( const char *to, const char *from,
+           const char *subject,
+           /* const char *cc, const char *bcc, */
+           const char *inhalt ) {
+   FILE *pipe, *pfad;
+   char pfad_sendmail[BUF1];
+   char protokoll[BUF2+BUF2];
+   protokoll[0] = '\0';
+   /*Wir ermitteln den Pfad zu sendmail */
+   pfad = popen ("which sendmail", "r");
+   if (pfad == NULL) {
+      perror("popen()");
+      exit (EXIT_FAILURE);
+   }
+   fscanf (pfad, "%s", pfad_sendmail);
+   pclose (pfad);
+   strcat (pfad_sendmail, " -n -oi -t");
+   /*Der Pfad ist meistens /usr/sbin/sendmail */
+   pipe = popen (pfad_sendmail, "w");
+   if (pipe == NULL) {
+      perror("popen()");
+      exit (EXIT_FAILURE);
+   }
+   /* In sendmail schreiben ... */
+   fprintf(pipe, "From:%s" "To:%s", from, to);
+   strcat(protokoll, "From: ");
+   strcat(protokoll, from);
+   strcat(protokoll, "\nTo: ");
+   strcat(protokoll, to);
+   /* if(cc != NULL) {
+       fprintf(pipe, "Cc: %s\n", cc);
+       strcat(protokoll, "\nCc: ");
+       strcat(protokoll, cc);
+   }*/
+   /* if(bcc != NULL) {
+       fprintf(pipe, "Bcc: %s\n", bcc);
+       strcat(protokoll, "\nBcc: ");
+       strcat(protokoll, bcc);
+   }*/
+   if(subject != NULL) {
+       fprintf(pipe, "Subject:%s", subject);
+       strcat(protokoll, "\nSubject: ");
+       strcat(protokoll, subject);
+   }
+   strcat(protokoll, "\n\n");
+   if(inhalt != NULL) {
+       fprintf(pipe, "\n%s\n", inhalt);
+       strcat(protokoll, inhalt);
+       strcat(protokoll, "\n");
+   }
+   pclose (pipe);
+   printf ("Mail wurde erfolgreich versendet an: %s\n", to);
+   an_den_drucker (protokoll);
+   return;
+}
+static void an_den_drucker (const char *text) {
+   FILE *p;
+   /* Pipe zum Tool lpr erstellen zum Schreiben auf lpr */
+   p = popen ("lpr", "w");
+   if (p == NULL) {
+      perror("popen()");
+      exit (EXIT_FAILURE);
+   }
+   /*An den Drucker schreiben */
+   printf ("Sende Auftrag an den Drucker ...\n");
+   fprintf (p, "%s", text);
+   pclose (p);
+   return;
+}
+int main (int argc, char **argv) {
+   char to[BUF1], from[BUF1], sub[BUF1],
+        inhalt[BUF2], puffer[BUF1];
+   printf ("Mail To   : ");
+   fgets (to, BUF1, stdin);
+   printf ("Mail from : ");
+   fgets (from, BUF1, stdin);
+   printf ("Betreff   : ");
+   fgets (sub, BUF1, stdin);
+   sub[strlen(sub)-1] = '\0';
+   inhalt[0] = '\0';
+   printf ("Inhalt    (beenden mit STRG+D) \n&gt;");
+   while (fgets (puffer, BUF1, stdin) != NULL) {
+      if( strlen(inhalt) + strlen(puffer) &lt; BUF2 ) {
+            strcat (inhalt, puffer);
+            printf ("&gt;");
+      }
+      else
+            break;
+   }
+   inhalt[BUF2] = '\0';
+   sendmail (to, from, sub, inhalt);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Mit Pipes k&ouml;nnte man praktisch jedes beliebige Programm einh&auml;ngen. Voraussetzung ist nat&uuml;rlich, dass bei dem Endanwender dieses Programm ebenso installiert ist. Im n&auml;chsten Abschnitt werden Sie sehen, wie Sie mit den benannten Pipes (FIFOs) eine Art Faxempfangsprogramm erstellen k&ouml;nnen.</p>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">9.3.10 Benannte Pipes – FIFOs<a id="RxxKap09002040002D51F0491D5" name="RxxKap09002040002D51F0491D5"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999430" name="Xxx999430"></a><a id="Xxx999431" name="Xxx999431"></a><a id="Xxx999432" name="Xxx999432"></a><a id="Xxx999433" name="Xxx999433"></a>Mit den namenlosen Pipes, die Sie bisher verwendet haben, konnten Sie nur mit den Prozessen kommunizieren, die miteinander verwandt waren. Mit FIFOs (benannten Pipes) haben Sie nun die M&ouml;glichkeit, mit einem v&ouml;llig fremden Prozess zu kommunizieren (Daten austauschen). Der Systemaufruf <span class="listing">mkfifo()</span> bedeutet also nichts anderes, als dass eine Pipe als Filesystem-Objekt repr&auml;sentiert wird (aber das hatten wir ja schon abgekl&auml;rt).</p>
+<p>Auf der Konsole l&auml;sst sich ein FIFO folgenderma&szlig;en erstellen:</p>
+<pre>$ mkfifo fifo1</pre>
+<p>Jetzt befindet sich im aktuellen Verzeichnis ein FIFO, in das Sie etwas schreiben k&ouml;nnen – z. B.:</p>
+<pre>$ echo hallo welt &gt; fifo1 </pre>
+<p>Auslesen k&ouml;nnen Sie dieses FIFO wieder mit einem einfachen:</p>
+<pre>$ cat fifo1 </pre>
+<p>Nat&uuml;rlich m&uuml;ssen Sie auch die Zugriffsrechte des FIFO entsprechend vergeben, wer in dieses FIFO etwas schreiben darf und wer aus ihm lesen kann. FIFOs sind auch eine halbduplexe IPC, was bedeutet, dass auch mit FIFOs, wie schon bei den Pipes, kein mehrfaches Auslesen m&ouml;glich ist.</p>
+<p>FIFOs arbeiten ebenfalls wie Pipes nach dem Prinzip First In First Out. Das hei&szlig;t, dass die Daten, die zuerst geschrieben wurden, auch wieder als Erstes ausgegeben werden. Mit FIFOs werden h&auml;ufig die typischen Client-Server-Anwendungen geschrieben, wie das folgende Bild zeigt.</p>
+<p>Bei diesem Beispiel (Abb. 8.10) k&ouml;nnen Sie einen typischen Anwendungsfall f&uuml;r ein FIFO sehen. Vier Clients, in diesem Fall Uwe, Otto, Franz und Egon, wollen auf zwei Drucker zugreifen. Alle vier Clients schicken nun eine Schreibanforderung an den Drucker. Diese Schreibaufforderung wird zuerst von dem FIFO angenommen und der Reihe nach, wie die Anforderungen eingetroffen sind, sortiert. Der Server liest nun aus diesem FIFO, bearbeitet diese Anforderungen der Reihe nach und leitet sie an den entsprechenden Drucker weiter. Wenn jetzt aber z. B. Uwe und Egon ein 100 Seiten starkes Skript ausdrucken lassen, sollte der Server nat&uuml;rlich an Otto und Franz eine Meldung zur&uuml;ckschicken, dass sich der Auftrag in der Warteschlange befindet und momentan kein Drucker mehr frei ist. Der Server schickt also eine Antwort an den Client, entweder eine Best&auml;tigung des Auftrags oder eine Warteaufforderung.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_10.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_10.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.10   
+    </b>Typisches Client-Server-Beispiel mittels eines FIFO</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_11.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_11.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.11   
+    </b>Server antwortet den Clients</p>
+</td>
+</tr>
+</table><br>
+<p>Hier k&ouml;nnen Sie erkennen, dass der Server in ein FIFO schreibt und die Clients diesmal aus einem FIFO lesen. Dies sollte erst einmal veranschaulichen, worum es bei FIFOs &uuml;berhaupt geht.</p>
+<p>Um ein FIFO zu erstellen, steht Ihnen die folgende Funktion zur Verf&uuml;gung:<a id="Xxx999459" name="Xxx999459"></a></p>
+<pre>#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+int mkfifo(const char *pfadname, mode_t mode);</pre>
+<p>Damit legen Sie eine Datei mit <span class="listing">pfadname</span> an – wobei es sich allerdings nicht um eine normale Dateiart, sondern eben um ein FIFO handelt. F&uuml;r das Argument <span class="listing">modus</span> stehen dieselben Konstanten wie schon bei der Funktion <span class="listing">open()</span> zur Verf&uuml;gung (Kapitel 2). Wenn Sie das FIFO erzeugt haben, k&ouml;nnen Sie damit, wie bei einer normalen Datei, die elementaren E/A-Funktionen (<span class="listing">open()</span>, <span class="listing">read()</span>, <span class="listing">write()</span> etc.) verwenden. Konnte das FIFO erfolgreich angelegt werden, wird 0, ansonsten bei einem Fehler -1 zur&uuml;ckgegeben.</p>
+<p>Dazu ein einfaches Beispiel, das zeigt, wie ein FIFO erzeugt wird und dass es sich bei dem FIFO nicht um eine normale Datei handelt. Dies wird mit der Funktion <span class="listing">stat()</span> und dem Makro <span class="listing">S_ISFIFO<a id="Xxx999464" name="Xxx999464"></a></span> &uuml;berpr&uuml;ft.</p>
+<pre><a id="Xxx999465" name="Xxx999465"></a>/* fifo1.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+#define FIFO "fifo0001"
+int main (void) {
+   struct stat attribut;
+   /*Wir erzeugen ein FIFO*/
+   if ((mkfifo (FIFO,  S_IRUSR | S_IWUSR)) == -1) {
+      /* FIFO bereits vorhanden - kein fataler Fehler */
+      if(errno == EEXIST)
+         perror ("mkfifo()");
+      else {
+         perror("mkfifio()");
+         exit (EXIT_FAILURE);
+      }
+   }
+   if (stat (FIFO, &amp;attribut) == -1) {
+      perror ("stat()");
+      exit (EXIT_FAILURE);
+   }
+   printf("Dateiart von %s ermitteln ...\n",FIFO);
+   if (S_ISREG (attribut.st_mode))
+      printf ("Regul&auml;re Datei\n");
+   else if (S_ISDIR (attribut.st_mode))
+      printf ("Verzeichnis\n");
+#ifdef S_ISSOCK
+   else if (S_ISSOCK (attribut.st_mode))
+      printf ("Socket\n");
+#endif
+   else if (S_ISFIFO (attribut.st_mode))
+      printf ("FIFO\n");
+   else
+      printf ("Unbekannte Dateiart\n");
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o fifo1 fifo1.c
+$ ./fifo1
+Dateiart von fifo0001 ermitteln ...
+FIFO</pre>
+<p>Im n&auml;chsten Beispiel soll ein FIFO erstellt werden, das zum Lesen und Schreiben verwendet wird. Dazu &ouml;ffnen Sie ein erzeugtes FIFO zuerst mittels <span class="listing">open()</span>, um anschlie&szlig;end darin etwas zu schreiben und wieder auszulesen. Wichtig ist dabei auch das Setzen der Zugriffsrechte. Wird dies vergessen, kann/wird es passieren, dass Sie keinen Zugriff auf das FIFO haben.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>I. d. R. wird man Zugriff haben, da man das FIFO ja erstellt hat (und dieses somit dem aktuellen Benutzer geh&ouml;rt). Sicher muss man darauf achten, da die umask den <span class="listing">O_RDWR</span>-Modus fehlschlagen lassen kann (z. B. umask 0222).</p>
+</td>
+</tr>
+</table><br>
+<p>Hier das Beispiel:</p>
+<pre><a id="Xxx999475" name="Xxx999475"></a>/* fifo2.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#define FIFO "fifo0001.1"
+int main (void) {
+   int fd_fifo;      /*Handle f&uuml;r das FIFO */
+   char puffer[] = "Dieser Text ist f&uuml;r das FIFO\n";
+   char buf[100];
+   int n;
+   /*Alle Zugriffsrechte der Dateikreierungsmaske erlauben*/
+   umask(0);
+   /* Wir erzeugen das FIFO*/
+   if ((mkfifo (FIFO, 0666)) == -1) {
+      /* FIFO bereits vorhanden - kein fataler Fehler */
+      if(errno == EEXIST)
+         perror ("mkfifo()");
+      else {
+         perror("mkfifio()");
+         exit (EXIT_FAILURE);
+      }
+   }
+   /* FIFO zum Lesen und Schreiben &ouml;ffnen */
+   if ((fd_fifo = open (FIFO, O_RDWR)) == -1) {
+      perror ("open()");
+      exit (EXIT_FAILURE);
+   }
+   n = write (fd_fifo, puffer, strlen (puffer));
+   if (read (fd_fifo, &amp;buf, n ) == -1) {
+      perror ("read()");
+      exit(EXIT_FAILURE);
+   }
+   buf[n] = '\0';
+   printf ("Gelesen aus dem FIFO : %s\n", buf);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Wenn alles ordnungsgem&auml;&szlig; ablief, wird der String »Dieser Text ist f&uuml;r das FIFO« ausgegeben.</p>
+<p>Nat&uuml;rlich muss man auf Deadlocks und volle Pipes achten, denn <span class="listing">write(fd,</span> <span class="listing">string,</span> <span class="listing">8192)</span> blockiert (sofern die Pipegr&ouml;&szlig;e mittels ulimit nicht hochgesetzt wurde).</p>
+<p>Auf einigen Systemen kann es sein, dass die Funktion <span class="listing">mkfifo()</span> nicht vorhanden ist. Sollte dies bei Ihnen der Fall sein, muss man anstatt <span class="listing">mkfifo()</span> die Funktion <span class="listing">mknod()</span> verwenden. Die Syntax dazu lautet<a id="Xxx999480" name="Xxx999480"></a>:</p>
+<pre>int mknod(char *pfadname, int mode, int dev); </pre>
+<p>Als <span class="listing">pfadname</span> geben Sie auch hier die regul&auml;re UNIX-Verzeichnisangabe und den Namen des FIFO an. F&uuml;r <span class="listing">mode</span> m&uuml;ssen Sie hier die Konstante <span class="listing">S_IFIFO</span> aus der Headerdatei <span class="listing">&lt;sys/stat.h&gt;</span> mit den Zugriffsrechten verwenden. Der Parameter <span class="listing">dev</span> wird nicht ben&ouml;tigt. Die Verwendung von <span class="listing">mknod()</span> sieht so aus:</p>
+<pre>if( mknod ( "/tmp/fifo0001.1", 
+            S_IFIFO|S_IRUSR|S_IWUSR, 0 ) == - 1) {
+   /* Kann kein FIFO erzeugen --- Fehler */ 
+ }</pre>
+<p>Der R&uuml;ckgabewert bei Erfolg ist 0 und bei Fehler -1. Das erzeugte FIFO kann anschlie&szlig;end ebenso verwendet werden wie ein mit <span class="listing">mkfifo()</span> erzeugtes FIFO.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>H&auml;ufig wird ein Fehler zur&uuml;ckgegeben, weil beim Anlegen eines FIFO dieses bereits existiert. Hier ist es sinnvoll, die Fehlervariable <span class="listing">errno</span> <span class="listing">zu</span> &uuml;berpr&uuml;fen.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Was bei einem FIFO zu beachten ist</h4>
+<p>Bevor Sie ein Client-Server-Beispiel programmieren werden, m&uuml;ssen Sie noch einiges wissen, worauf Sie beim Zugriff auf FIFOs achten m&uuml;ssen:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Wenn Sie beim &Ouml;ffnen des FIFO mit <span class="listing">open()</span> nicht den Modus <span class="listing">O_NONBLOCK<a id="Xxx999491" name="Xxx999491"></a></span> verwenden, wird die &Ouml;ffnung des FIFO sowohl zum Schreiben als auch zum Lesen blockiert (nicht bei <span class="listing">O_RDWR</span>). Beim Schreiben wird so lange blockiert, bis ein anderer Prozess das FIFO zum Lesen ge&ouml;ffnet hat. Beim Lesen wiederum wird ebenfalls so lange blockiert, bis ein anderer Prozess in das FIFO schreibt.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Das Flag <span class="listing">O_NONBLOCK</span> kann nur bei Lesezugriffen verwendet werden. Wird mit <span class="listing">O_NONBLOCK</span> versucht, das FIFO mit Schreibzugriff zu &ouml;ffnen, f&uuml;hrt dies zu einem Fehler beim &Ouml;ffnen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Wenn Sie ein FIFO zum Schreiben mit <span class="listing">close()</span> oder <span class="listing">fclose()</span> schlie&szlig;en, bedeutet dies f&uuml;r das FIFO zum Lesen ein EOF.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Wie schon bei den Pipes gilt, falls mehrere Prozesse auf dasselbe FIFO schreiben, muss darauf geachtet werden, dass niemals mehr als <span class="listing">PIPE_BUF<a id="Xxx999496" name="Xxx999496"></a></span> Bytes auf einmal geschrieben werden. Dies daher, damit die Daten nicht durcheinander gemischt werden. Die Anzahl der Bytes und gleichzeitig ge&ouml;ffneter FIFOs k&ouml;nnen Sie mit dem folgenden Listing ermitteln:</td>
+</tr>
+</table>
+<pre><a id="Xxx999497" name="Xxx999497"></a>/* fifo_buf.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+int main (void) {
+   /*Wir erzeugen das FIFO*/
+   if ((mkfifo ("fifo0001",  S_IRUSR | S_IWUSR)) == -1) {
+      /* FIFO bereits vorhanden - kein fataler Fehler */
+      if(errno == EEXIST)
+         perror ("mkfifo()");
+      else {
+         perror("mkfifio()");
+         exit (EXIT_FAILURE);
+      }
+   }
+   printf("Es k&ouml;nnen max. %ld Bytes in das FIFO geschrieben"
+          "werden\n", pathconf ("fifo0001", _PC_PIPE_BUF));
+   printf ("Au&szlig;erdem k&ouml;nnen max %ld FIFOs ge&ouml;ffnet sein\n",
+            sysconf (_SC_OPEN_MAX));
+   return EXIT_SUCCESS;
+}</pre>
+<p>Jetzt m&ouml;chte ich Ihnen noch ein Beispiel zeigen, wie sich Eltern- und Kindprozess miteinander &uuml;ber ein FIFO unterhalten k&ouml;nnen. Der Kindprozess soll etwas in das FIFO schreiben, was der Elternprozess dann ausliest. Ein einfaches Server-Client-Beispiel (Eltern/Kind) eben.</p>
+<pre><a id="Xxx999500" name="Xxx999500"></a>/* fifo4.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;errno.h&gt;
+#define FIFO "/tmp/fifo0001.1"
+int main (void) {
+   int r_fifo, w_fifo;
+   char puffer[] = 
+      "Der Text f&uuml;r das FIFO an den Elternprozess\n";
+   char buf[100];
+   pid_t pid;
+   if ((mkfifo (FIFO, S_IRUSR | S_IWUSR)) == -1) {
+      /* FIFO bereits vorhanden - kein fataler Fehler */
+      if(errno == EEXIST)
+         perror ("mkfifo()");
+      else {
+         perror("mkfifio()");
+         exit (EXIT_FAILURE);
+      }
+   }
+   pid = fork ();
+   if (pid == -1) {
+      perror ("fork()");
+      exit (EXIT_FAILURE);
+   }
+   else if (pid &gt; 0) { /*Elternprozess liest aus dem FIFO */
+      if ((r_fifo = open (FIFO, O_RDONLY)) &lt; 0) {
+         perror ("open()");
+         exit (EXIT_FAILURE);
+      }
+      /*Wir warten auf das Ende vom Kindprozess */
+      while (wait (NULL) != pid);
+      /*Lesen aus dem FIFO */
+      read (r_fifo, buf, strlen (puffer));
+      buf[strlen(puffer)] = '\0';
+      printf(" --- Elternprozess ---\n");
+      printf ("%s", buf);
+      close (r_fifo);
+   }
+   else {       /*Kindprozess schreibt in das FIFO */
+      printf(" --- Kindprozess ---\n");
+      if ((w_fifo = open (FIFO, O_WRONLY)) &lt; 0) {
+         perror ("open()");
+         exit (EXIT_FAILURE);
+      }
+      /*Schreiben in das FIFO */
+      write (w_fifo, puffer, strlen (puffer));
+      close (w_fifo);   /* EOF */
+      exit (EXIT_SUCCESS);
+   }
+   printf(" --- Ende ---\n");
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o fifo4.c fifo4.c
+$ ./fifo4
+ --- Kindprozess ---
+ --- Elternprozess ---
+Der Text f&uuml;r das FIFO an den Elternprozess
+ --- Ende ---</pre>
+<h4 class="t4">Kommunikation zwischen zwei nicht verwandten Prozessen</h4>
+<p><a id="Xxx999505" name="Xxx999505"></a>Jetzt ist es an der Zeit, Ihnen ein echtes Client-Server-Beispiel zu zeigen. Als Aufgabenstellung sei folgendes bekannte Bild gegeben:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_10.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_10.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.12   
+    </b>Vier Anwender und zwei Drucker …</p>
+</td>
+</tr>
+</table><br>
+<p>Kurz und b&uuml;ndig, hier sind vier Anwender, die auf zwei Drucker zugreifen wollen. Sollten im Fall der F&auml;lle alle vier Anwender zur gleichen Zeit drucken wollen, was ja rein praktisch nicht geht, soll das FIFO das Problem f&uuml;r uns &uuml;bernehmen und eine Warteschlange einrichten. Zugegeben, das Problem l&ouml;st ja im echten Leben normalerweise der Druckerd&auml;mon lpd, aber zum Verst&auml;ndnis ist dies genau das Richtige. Dieses Beispiel setzt auch voraus, dass der Drucker fix und fertig konfiguriert ist. Ich denke, dass ein Drucker heutzutage zur Standardausr&uuml;stung eines einfachen PC-Anwenders geh&ouml;rt.</p>
+<pre><a id="Xxx999515" name="Xxx999515"></a>/* polling_fifo.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+#define BUF 4096
+static void an_den_drucker (const char *text) {
+   FILE *p;
+   /*Pipe zum Tool lpr erstellen zum Schreiben auf lpr*/
+   p = popen ("lpr", "w");
+   if (p == NULL) {
+      perror ("popen()");
+      exit (EXIT_FAILURE);
+   }
+   /*An den Drucker schreiben */
+   printf ("Sende Auftrag an den Drucker ...\n");
+   fprintf (p, "%s", text);
+   pclose (p);
+}
+int main (void) {
+   char puffer[BUF], inhalt[BUF];
+   int fd;
+   inhalt[0] = '\0';
+   umask(0);
+   if (mkfifo ("fifo1.1", 0666) &lt; 0) {
+      /* FIFO bereits vorhanden - kein fataler Fehler */
+      if(errno == EEXIST)
+         printf ("Versuche, vorh. FIFO zu verwenden\n");
+      else {
+         perror("mkfifio()");
+         exit (EXIT_FAILURE);
+      }
+   }
+   /*Empf&auml;nger liest nur aus dem FIFO */
+   fd = open ("fifo1.1", O_RDONLY);
+   if (fd == -1) {
+      perror ("open()");
+      exit (EXIT_FAILURE);
+   }
+   while (1) {      /*Endlosschleife */
+      if ( read (fd, puffer, BUF) )
+         an_den_drucker (puffer);
+      sleep (2);
+   }
+   return EXIT_SUCCESS;
+}</pre>
+<p>&Uuml;bersetzen Sie das Listing, und starten Sie es als einen Hintergrundprozess:</p>
+<pre>$ gcc -o polling_fifo polling_fifo.c
+$ ./polling_fifo&amp;
+[1] 3146</pre>
+<p>Das Programm l&auml;uft nun in einer Endlosschleife und liest etwas aus dem FIFO, sofern dort etwas steht. Ansonsten wird der Prozess durch die Funktion <span class="listing">read()</span> blockiert. Das Programm <span class="listing">polling_fifo</span> dient also als Empf&auml;nger oder auch als Server, wenn Sie so wollen. Jetzt soll das FIFO auch etwas zum Lesen bekommen, z. B. mit:</p>
+<pre>$ echo hallo Welt &gt; fifo1.1 
+$ cat datei.txt &gt; fifo1.1 </pre>
+<p>Sie k&ouml;nnen aus beliebig (nicht ganz) vielen Fenstern und Terminals Nachrichten in das FIFO schreiben. Das Programm liest anschlie&szlig;end aus dem FIFO und leitet das Gelesene mithilfe einer Pipe an den Drucker weiter.</p>
+<p>Man k&ouml;nnte das Ganze als eine Art Faxempfangsprogramm in einem lokalen Netzwerk sehen. Da nicht jeder mit der Kommandozeile vertraut ist, soll noch ein weiteres Programm geschrieben werden, mit dem Sie Daten in dieses FIFO schreiben k&ouml;nnen, also das Sendeprogramm (Client). Jeder, der nun auf seinem Rechner dieses Programm hat, kann auf dieses FIFO schreiben (sofern die Zugriffsrechte richtig gesetzt sind). Nat&uuml;rlich ist auch ohne dieses Programm ein Senden, wie oben mit der Ausgabeumleitung auf das FIFO demonstriert, m&ouml;glich.</p>
+<pre><a id="Xxx999523" name="Xxx999523"></a>/* sender.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#define BUF 4096
+int main (void) {
+   char puffer[BUF], inhalt[BUF];
+   int fd;
+   inhalt[0] = '\0';
+   /*Der Sender schreibt nur in das FIFO */
+   fd = open ("fifo1.1", O_WRONLY);
+   if (fd == -1) {
+      perror ("open()");
+      exit (EXIT_FAILURE);
+   }
+   printf ("Bitte geben Sie Ihre Nachricht f&uuml;r das FIFO ein"
+           " (Mit STRG+D beenden)\n&gt;");
+      while (fgets (puffer, BUF, stdin) != NULL) {
+      if( strlen(inhalt) + strlen(puffer) &lt; BUF ) {
+            strcat (inhalt, puffer);
+            printf ("&gt;");
+      }
+      else
+            break;
+   }
+   inhalt[BUF] = '\0';
+   write (fd, inhalt, strlen (inhalt) + 1);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o sender sender.c
+$ ./polling_fifo&amp;
+[1] 3195
+$ ./sender
+Bitte geben Sie Ihre Nachricht f&uuml;r das FIFO ein 
+(Mit STRG+D beenden)
+Hallo Fifo!
+STRG+D</pre>
+<p>Jetzt sollte Ihr Drucker losrattern und »Hallo Fifo!« ausdrucken.</p>
+<p>Solche FIFOs in einfacher Richtung sind oft ausreichend zur Datenerfassung f&uuml;r Statistiken, z. B. wie diese in der Abrechnung der Mobilkommunikation eingesetzt werden - nur dass dort um einiges mehr Clients etwas in das FIFO schreiben und der Server damit wohl recht stark besch&auml;ftigt ist. Wenn man bedenkt, was das f&uuml;r den Server bedeutet, wenn die Telefoneinheiten im Sekundentakt berechnet werden! Kaum zu glauben, dass man das noch richtig bewerkstelligen kann.</p>
+<h4 class="t4">Der Empf&auml;nger antwortet dem Sender</h4>
+<p>Wie es sich f&uuml;r eine ordentliche Serveranwendung geh&ouml;rt, sollten Sie dem Empf&auml;nger (Client) seine Anfrage auch best&auml;tigen. Folgendes Bild zeigt einen solchen Vorgang:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_11.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_11.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.13   
+    </b>Antwort vom Server</p>
+</td>
+</tr>
+</table><br>
+<p>Die erste Frage beim Betrachten des Bildes d&uuml;rfte wohl folgende sein: Wie sollen die einzelnen Clients wissen, welche Antwort f&uuml;r sie bestimmt ist?</p>
+<p>Zuerst muss sich jeder einzelne Client (Sender) ein eigenes FIFO einrichten, aus dem dieser eine Antwort vom Server lesen kann. Damit der Server auch wei&szlig;, wohin mit der Antwort, muss jeder Client dem Server eine eindeutige Identifikation mitschicken. Am besten sind Sie in einem solchem Fall mit der PID des Prozesses beraten. Mit dieser PID soll der Client das Antwort-FIFO erstellen. Hat ein Client beispielsweise die PID 1001, erstellt dieser ein FIFO namens fifo.1001, wohin der Server dann anschlie&szlig;end seine Antwort zur&uuml;ckschickt.</p>
+<p>F&uuml;r das Beispiel soll als Erstes die Client-Anwendung erstellt werden:</p>
+<pre><a id="Xxx999541" name="Xxx999541"></a>/* client.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#define BUF 4096
+int main (void) {
+   char puffer[BUF], inhalt[BUF], delete_fifo[BUF];
+   int fd, fdx;
+   sprintf (puffer, "fifo.%d", getpid ());
+   inhalt[0] = '\0';
+   /*Erste Zeile der Nachricht enth&auml;lt die PID */
+   sprintf (inhalt, "%d\n", getpid ());
+   /*Alle Zugriffsrechte der Dateikreierungsmaske erlauben*/
+   umask(0);
+   if (mkfifo (puffer, O_RDWR | 0666) &lt; 0) {
+      /* FIFO bereits vorhanden - kein fataler Fehler */
+      if(errno == EEXIST)
+         printf ("Versuche; vorh. FIFO zu verwenden\n");
+      else {
+         perror("mkfifio()");
+         exit (EXIT_FAILURE);
+      }
+   }
+   fd = open ("fifo1.1", O_WRONLY);
+   fdx = open (puffer, O_RDWR);
+   if (fd == -1 || fdx == -1) {
+      perror ("open()");
+      exit (EXIT_FAILURE);
+   }
+   strcmp (delete_fifo, puffer);
+   printf ("Bitte geben Sie Ihre Nachricht ein"
+           " (Mit STRG+D beenden)\n&gt;");
+   while (fgets (puffer, BUF, stdin) != NULL) {
+      if( strlen(inhalt) + strlen(puffer) &lt; BUF ) {
+            strcat (inhalt, puffer);
+            printf ("&gt;");
+      }
+      else
+            break;
+   }
+   inhalt[BUF] = '\0';
+   write (fd, inhalt, BUF);
+   if (read (fdx, puffer, BUF))
+      printf ("%s\n", puffer);
+   /*Antwort-FIFO wieder l&ouml;schen */
+   unlink (delete_fifo);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Da der Server (gew&ouml;hnlich) selbst gen&uuml;gend zu tun hat und dieser m&ouml;glichst das tun soll, wof&uuml;r er gedacht ist, nimmt der Client auch selbst wieder das Saubermachen (das L&ouml;schen des FIFO) in die Hand.</p>
+<p>Jetzt folgt noch die Server-Anwendung, die alle Nachrichten von den Clients annimmt und an den Drucker &uuml;ber eine namenlose Pipe weiterleitet. Anschlie&szlig;end wertet der Server die erste Zeile der Nachricht aus und sendet eine Best&auml;tigung an den Client, der ihm diese Nachricht geschickt hat. In der ersten Zeile befindet sich die PID des Clients. Hierzu der Quellcode der Server-Anwendung:</p>
+<pre><a id="Xxx999545" name="Xxx999545"></a>/* server.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#define BUF 4096
+#define TEXT "Habe Ihre Anfrage soeben erhalten\n"
+static void an_den_drucker (const char *text) {
+   FILE *p;
+   /*Pipe zum Tool lpr erstellen zum Schreiben auf lpr*/
+   p = popen ("lpr", "w");
+   if (p == NULL) {
+      perror ("popen()");
+      exit (EXIT_FAILURE);
+   }
+   /*An den Drucker schreiben */
+   printf ("Sende Auftrag an den Drucker ...\n");
+   fprintf (p, "%s", text);
+   fflush (p);
+   pclose (p);
+   return;
+}
+int main (void) {
+   char puffer[BUF], inhalt[BUF], antwort[BUF], pid[6];
+   int r_fd, w_fd, n, i;
+   inhalt[0] = '\0';
+   /*Alle Zugriffsrechte der Dateikreierungsmaske erlauben*/
+   umask(0);
+   if (mkfifo ("fifo1.1", O_RDWR | 0666) &lt; 0) {
+      /* FIFO bereits vorhanden - kein fataler Fehler */
+      if(errno == EEXIST)
+         printf ("Versuche, vorh. FIFO zu verwenden\n");
+      else {
+         perror("mkfifio()");
+         exit (EXIT_FAILURE);
+      }
+   }
+   /*Empf&auml;nger liest nur aus dem FIFO */
+   r_fd = open ("fifo1.1", O_RDONLY);
+   if (r_fd == -1) {
+      perror ("open(1)");
+      exit (EXIT_FAILURE);
+   }
+   while (1) {      /*Endlosschleife */
+      if (read (r_fd, puffer, BUF) != 0) {
+         an_den_drucker (puffer);
+         /*PID des aufrufenden Prozesses ermitteln */
+         n = 0, i = 0;
+         while (puffer[n] != '\n')
+            pid[i++] = puffer[n++];
+         pid[++i] = '\n';
+         strcpy (antwort, "fifo.");
+         strncat (antwort, pid, i);
+         w_fd = open (antwort, O_WRONLY);
+         if (w_fd == -1) {
+            perror ("open(2)");
+            exit (EXIT_FAILURE);
+         }
+         write (w_fd, TEXT, sizeof(TEXT));
+         close (w_fd);
+      }
+      sleep(1);
+   }
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Beispiel im Einsatz:</p>
+<pre>$ gcc -o client client.c
+$ gcc -o server server.c
+$./server&amp;
+[1] 2047
+$ ./client
+Bitte geben Sie Ihre Nachricht ein (Mit STRG+D beenden)
+Hallo, eine Nachricht an das FIFO
+STRG+D
+Sende Auftrag an den Drucker ...
+Habe Ihre Anfrage soeben erhalten
+$
+[andere Konsole]
+$ ./client
+Bitte geben Sie Ihre Nachricht ein (Mit STRG+D beenden)
+Noch eine Nachricht :-)
+STRG+D
+Habe Ihre Anfrage soeben erhalten</pre>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap09-001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap09-003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap09-002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:42 GMT -->
+</html>

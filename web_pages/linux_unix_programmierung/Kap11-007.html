@@ -1,0 +1,870 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap11-007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:54 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 11.8 Aufbau des Serverprogramms</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap11-006.html">
+<link rel="next" href="Kap11-008.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap11-006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap11-008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap11-000.html#RxxKap11000040003691F041100">11 Netzwerkprogrammierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-000.html#RxxKap11000040003691F041102">11.1 Einf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-001.html#RxxKap11001040003861F042100">11.2 Aufbau von Netzwerken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-001.html#RxxKap11001040003861F042102">11.2.1 ISO/OSI und TCP/IP – Referenzmodell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-001.html#RxxKap11001040003861F042117">11.2.2 Das World Wide Web (Internet)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-002.html#RxxKap11002040003871F03C100">11.3 TCP/IP – Aufbau und Struktur</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-002.html#RxxKap11002040003871F03C107">11.3.1 Netzwerkschicht (Daten&uuml;bertragung)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-002.html#RxxKap11002040003871F03C109">11.3.2 Internetschicht</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-002.html#RxxKap11002040003871F03C10B">11.3.3 Transportschicht (TCP, UDP)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-002.html#RxxKap11002040003871F03C10E">11.3.4 Anwendungsschicht</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-003.html#RxxKap11003040003881F040100">11.4 TCP Socket</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-004.html#RxxKap11004040003891F04F102">11.5 Kommunikationsmodell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-005.html#RxxKap110050400038A1F01B100">11.6 Grundlegende Funktionen zum Zugriff auf die Socket-Schnittstelle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B102">11.6.1 Ein Socket anlegen – socket()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1A4">11.6.2 Verbindungsaufbau – connect()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1BB">11.6.3 Socket mit einer Adresse verkn&uuml;pfen – bind()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1C0">11.6.4 Auf Verbindungen warten – listen() und accept()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1C8">11.6.5 Senden und Empfangen von Daten (1) – write() und read()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1CC">11.6.6 Senden und Empfangen von Daten (2) – send() und recv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1D4">11.6.7 Verbindung schlie&szlig;en – close()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-006.html#RxxKap110060400038B1F02F100">11.7 Aufbau eines Clientprogramms</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-006.html#RxxKap110060400038B1F02F177">11.7.1 Zusammenfassung: Clientanwendung und Quellcode</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap110070400038C1F03A100">11.8 Aufbau des Serverprogramms</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap110070400038C1F03A107">11.8.1 Zusammenfassung: Serveranwendung und Quellcode</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-008.html#RxxKap110080400038D1F039100">11.9 IP-Adressen konvertieren, manipulieren und extrahieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F039102">11.9.1 inet_aton(), inet_pton() und inet_addr()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F03910E">11.9.2 inet_ntoa() und inet_ntop()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F039116">11.9.3 inet_network()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F039178">11.9.4 inet_netof()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F03917C">11.9.5 inet_lnaof()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F039180">11.9.6 inet_makeaddr()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-009.html#RxxKap110090400038E1F042100">11.10 Namen und IP-Adressen umwandeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-009.html#RxxKap110090400038E1F042108">11.10.1 Name-Server</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-009.html#RxxKap110090400038E1F04210A">11.10.2 Informationen zum Rechner im Netz – gethostbyname und gethostbyaddr</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-009.html#RxxKap110090400038E1F04219F">11.10.3 Service-Informationen – getservbyname() und getservbyport()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-010.html#RxxKap110100400038F1F02E100">11.11 Der Puffer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-011.html#RxxKap11011040003901F01F100">11.12 Standard-E/A-Funktionen verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-011.html#RxxKap11011040003901F01F10D">11.12.1 Pufferung von Standard-E/A-Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-012.html#RxxKap11012040003911F030100">11.13 Parallele Server</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-013.html#RxxKap11013040003921F03B100">11.14 Syncrones Multiplexing – select()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-014.html#RxxKap11014040003931F044100">11.15 POSIX-Threads und Netzwerkprogrammierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-015.html#RxxKap11015040003941F043100">11.16 Optionen f&uuml;r Sockets setzen bzw. erfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-015.html#RxxKap11015040003941F043102">11.16.1 setsockopt()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-015.html#RxxKap11015040003941F043108">11.16.2 getsockopt()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-015.html#RxxKap11015040003941F04310D">11.16.3 Socket-Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-016.html#RxxKap11016040003951F04F100">11.17 UDP</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-016.html#RxxKap11016040003951F04F10C">11.17.1 Clientanwendung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-016.html#RxxKap11016040003951F04F112">11.17.2 Serveranwendung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-016.html#RxxKap11016040003951F04F114">11.17.3 recvfrom() und sendto()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-016.html#RxxKap11016040003951F04F17B">11.17.4 bind() verwenden oder weglassen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-017.html#RxxKap11017040003961F026100">11.18 UNIX-Domain-Sockets (IPC)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-017.html#RxxKap11017040003961F026105">11.18.1 Die Adressstruktur von UNIX-Domain-Sockets</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-017.html#RxxKap11017040003961F02610F">11.18.2 Lokale Sockets erzeugen – socketpair()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-018.html#RxxKap11018040003971F01A100">11.19 Multicast-Socket</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-018.html#RxxKap11018040003971F01A180">11.19.1 Anwendungsgebiete von Multicast-Verbindungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-019.html#RxxKap11019040003981F017100">11.20 Nicht blockierende I/O-Sockets</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-020.html#RxxKap11020040003991F010100">11.21 Etwas zu Streams und TLI, Raw Socket, XTI</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-020.html#RxxKap11020040003991F010102">11.21.1 Raw Socket</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-020.html#RxxKap11020040003991F010106">11.21.2 TLI und XTI</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-020.html#RxxKap11020040003991F010109">11.21.3 RPC (Remote Procedure Call)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-021.html#RxxKap110210400039A1F048100">11.22 IPv4 und IPv6</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-021.html#RxxKap110210400039A1F048105">11.22.1 IPv6 – ein wenig genauer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-022.html#RxxKap110220400039B1F03D100">11.23 Netzwerksoftware nach IPv6 portieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-022.html#RxxKap110220400039B1F03D103">11.23.1 Konstanten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-022.html#RxxKap110220400039B1F03D107">11.23.2 Strukturen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-022.html#RxxKap110220400039B1F03D10B">11.23.3 Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-023.html#RxxKap110230400039C1F02F100">11.24 Sicherheit und Verschl&uuml;sselung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">11.8 <a id="RxxKap11181AufbaudesServerprogramms" name="RxxKap11181AufbaudesServerprogramms"></a>Aufbau des Serverprogram<a id="RxxKap110070400038C1F03A100" name="RxxKap110070400038C1F03A100"></a>ms 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a><a id="Xxx999237" name="Xxx999237"></a>Jetzt ben&ouml;tigen Sie die Verbindung zur Gegenseite, zum Server. Der Unterschied zum Clientprogramm besteht im Wesentlichen nur darin, wie eine Verbindung zustande kommt. Daher wird ein Server immer in einen Wartezustand versetzt, um Verbindungsw&uuml;nsche von Clientprogrammen entgegenzunehmen. Die Daten&uuml;bertragung hingegen verl&auml;uft genauso wie beim Client.</p>
+<p>Das Serverprogramm muss auch zun&auml;chst herausfinden, an welchem Port es auf Verbindungsw&uuml;nsche warten soll. In unserem Beispiel wird die Portnummer erst fest im Quellcode einkompiliert. Ansonsten k&ouml;nnten Sie hierf&uuml;r die Funktion <span class="listing">getservbyname()<a id="Xxx999240" name="Xxx999240"></a></span> zur Ermittlung eines Ports mittels dessen Namen verwenden (mehr dazu sp&auml;ter).</p>
+<p>Zuerst m&uuml;ssen Sie auch beim Server ein Socket mit <span class="listing">socket()</span> erzeugen, um &uuml;berhaupt mit den Clientprogrammen kommunizieren zu k&ouml;nnen. (Oder: Was n&uuml;tzt der Rasierapparat ohne eine Stromsteckdose?)</p>
+<p>Anschlie&szlig;end ist es an der Zeit, dem Betriebssystem mit der Funktion <span class="listing">bind()</span> mitzuteilen, welchem Port das Socket zugewiesen werden soll. Wenn hierbei ein Datenpaket empfangen wird, wei&szlig; das System anhand der Portnummer, f&uuml;r welches Socket das Paket gedacht ist. Sie k&ouml;nnen sich die Portnummer hierbei als Durchwahl einer Telefonnummer vorstellen, wie dies bei gr&ouml;&szlig;eren Firmen der Fall ist. Hat eine Firma z. B. die Nummer 12345 und Herr Huber die Nummer 134, dann w&auml;re die komplette Nummer mit Durchwahl 12345–134, und Herr Huber ist am Apparat. Umgesetzt auf die Socket-Programmierung ist die IP-Adresse die Nummer zur Firma und die Durchwahl die Nummer des Ports. Zur&uuml;ck zum Thema. Die Aufgabe von <span class="listing">bind()</span> ist es, das neu erzeugte Socket mit dem Port zu binden. Mit der Funktion <span class="listing">bind()</span> geben Sie die Endpunktadresse (IP-Adresse: Portnummer) an, unter der das Socket erreichbar sein soll. Das hei&szlig;t, dass ein Socket, das mit <span class="listing">bind(192.168.201.1,</span> <span class="listing">8000)</span> gebunden wurde, NIE aus dem Internet ansprechbar ist, w&auml;hrend es mit <span class="listing">bind(134.76.13.21,</span> <span class="listing">8000)</span> NIE aus dem internen Netzwerk erreichbar ist. Aber mit <span class="listing">bind(INADDR_ANY,</span> <span class="listing">8000)</span> ist es &uuml;berall erreichbar. An welche Adresse richtet sich dann die Anfrage? F&uuml;r solch einen Fall (was meistens immer der Fall ist) wird die Konstante <span class="listing">INADDR_ANY</span> anstelle einer festen IP-Adresse verwendet. Dadurch wird der Server angewiesen, Verbindungen f&uuml;r jede IP-Adresse anzunehmen (die dem Server auch geh&ouml;rt).</p>
+<pre>struct sockaddr_in address;
+...
+address.sin_family = AF_INET;
+address.sin_addr.s_addr = INADDR_ANY;
+address.sin_port = htons (15000);
+if (bind ( create_socket,
+           (struct sockaddr *) &amp;address,
+           sizeof (address)) == 0)
+   printf ("Binding Socket erfolgreich\n");</pre>
+<p>Jetzt, da der Server bereit ist, auf eingehende Verbindungsw&uuml;nsche zu reagieren, k&ouml;nnen Sie mit der Funktion <span class="listing">listen()</span> eine Warteschlange einrichten, um mehreren Verbindungsw&uuml;nschen Einlass zu gew&auml;hren. Anschlie&szlig;end wird die Funktion <span class="listing">accept()</span> aufgerufen. Die Adressinformationen &uuml;ber den Client befinden sich danach im zweiten Parameter der Funktion <span class="listing">accept()</span>. Diese ben&ouml;tigen Sie, damit Sie &uuml;berhaupt wissen, mit wem Sie es zu tun haben. Wichtig hierbei ist, dass die Verbindung von nun an &uuml;ber das neu erstellte Socket, das <span class="listing">accept()</span> als R&uuml;ckgabewert bei Erfolg liefert, abgewickelt wird. Das »alte« Socket steht weiterhin f&uuml;r die weiteren Verbindungsaufbauw&uuml;nsche zur Verf&uuml;gung. Allerdings k&ouml;nnen Sie mit der jetzigen Codeform nur eine Verbindung zur gleichen Zeit bearbeiten. Wie Sie theoretisch mehrere Verbindungen parallel abarbeiten k&ouml;nnen, erfahren Sie ein paar Seiten sp&auml;ter (geht auch mit einer CPU). Gew&ouml;hnlich werden Sie auch wollen, dass der Server sich nach einem Durchlauf nicht beendet. Daher sollten Sie hierf&uuml;r <span class="listing">accept()</span> meistens in eine Endlosschleife verpacken, womit der Server dauerhaft Verbindungsw&uuml;nsche eingehen kann.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">11.8.1 Zusammenfassung: Serveranwendung und Quellcode<a id="RxxKap110070400038C1F03A107" name="RxxKap110070400038C1F03A107"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Zusammengefasst besteht eine Serveranwendung gew&ouml;hnlich aus den folgenden Einzelteilen:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> einen Socket erzeugen – <span class="listing">socket()</span></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> den eigenen Port festlegen – <span class="listing">bind()</span></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> auf Verbindungsw&uuml;nsche warten – <span class="listing">listen()</span></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Verbindung annehmen – <span class="listing">accept()</span></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Kommunikation – was auch immer (Daten empfangen oder versenden)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Verbindung schlie&szlig;en – <span class="listing">close()</span></td>
+</tr>
+</table>
+<p>Hierzu der Quellcode des Servers:</p>
+<pre><a id="Xxx999254" name="Xxx999254"></a>/* server.c */
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;netinet/in.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#define BUF 1024
+int main (void) {
+  int create_socket, new_socket;
+  socklen_t addrlen;
+  char *buffer = malloc (BUF);
+  ssize_t size;
+  struct sockaddr_in address;
+  const int y = 1;
+  printf ("\e[2J");
+  if ((create_socket=socket (AF_INET, SOCK_STREAM, 0)) &gt; 0)
+    printf ("Socket wurde angelegt\n");
+  setsockopt( create_socket, SOL_SOCKET,
+              SO_REUSEADDR, &amp;y, sizeof(int));
+  address.sin_family = AF_INET;
+  address.sin_addr.s_addr = INADDR_ANY;
+  address.sin_port = htons (15000);
+  if (bind ( create_socket,
+             (struct sockaddr *) &amp;address,
+             sizeof (address)) != 0) {
+    printf( "Der Port ist nicht frei – belegt!\n");
+  }
+  listen (create_socket, 5);
+  addrlen = sizeof (struct sockaddr_in);
+  while (1) {
+     new_socket = accept ( create_socket,
+                           (struct sockaddr *) &amp;address,
+                           &amp;addrlen );
+     if (new_socket &gt; 0)
+      printf ("Ein Client (%s) ist verbunden ...\n",
+         inet_ntoa (address.sin_addr));
+     do {
+        printf ("Nachricht zum Versenden: ");
+        fgets (buffer, BUF, stdin);
+        send (new_socket, buffer, strlen (buffer), 0);
+        size = recv (new_socket, buffer, BUF-1, 0);
+        if( size &gt; 0)
+           buffer[size] = '\0';
+        printf ("Nachricht empfangen: %s\n", buffer);
+     } while (strcmp (buffer, "quit\n") != 0);
+     close (new_socket);
+  }
+  close (create_socket);
+  return EXIT_SUCCESS;
+}</pre>
+<p>Jetzt wird es Zeit, das Client-Server-Beispiel zu testen. Hier die Client-Server-Anwendung bei der Ausf&uuml;hrung. Da ich davon ausgehe, dass Sie dieses Beispiel auf dem lokalen Rechner testen wollen, sollten Sie den Client mit der IP-Adresse Ihres Heimrechners starten – was gew&ouml;hnlich 127.0.0.1 (localhost) ist. Falls Sie die Serveranwendung allerdings woanders eingerichtet haben als die Clientanwendung, so geben Sie hierf&uuml;r eben die entsprechende IP-Adresse des Servers an. Sie unterhalten sich im Beispiel quasi &uuml;ber dieselbe IP-Adresse (127.0.0.1).</p>
+<pre>[tty1]$ gcc -o client client.c
+[tty1]$ gcc -o server server.c
+[tty1] $ ./server
+Socket wurde angelegt
+---[Terminal wechseln]---
+[tty2]$ ./client 127.0.0.1
+Socket wurde angelegt
+Verbindung mit dem Server (127.0.0.1) hergestellt
+---[tty1]---
+Socket wurde angelegt
+Der Client 127.0.0.1 ist verbunden ...
+Nachricht zum Versenden: Hallo Client
+---[tty2]---
+Socket wurde angelegt
+Verbindung mit dem Server (127.0.0.1) hergestellt
+Nachricht erhalten: Hallo Client
+Nachricht zum Versenden: Hallo Server
+---[tty1]---
+Socket wurde angelegt
+Der Client 127.0.0.1 ist verbunden ...
+Nachricht zum Versenden: Hallo Client
+Nachricht empfangen: Hallo Server
+Nachricht zum Versenden: Beende dich mit quit
+---[tty2]---
+Socket wurde angelegt
+Verbindung mit dem Server (127.0.0.1) hergestellt
+Nachricht erhalten: Hallo Client
+Nachricht zum Versenden: Hallo Server
+Nachricht erhalten: Beende dich mit quit
+Nachricht zum Versenden: quit
+$
+---[tty1]---
+Socket wurde angelegt
+Der Client 127.0.0.1 ist verbunden ...
+Nachricht zum Versenden: Hallo Client
+Nachricht empfangen: Hallo Server
+Nachricht zum Versenden: Beende dich mit quit
+Nachricht empfangen: quit
+[tty3] $ ./client 127.0.0.1
+Socket wurde angelegt
+Die Verbindung wurde "accepted" mit dem Server 127.0.0.1
+---[tty1]---
+...
+Nachricht zum Versenden: Beende dich mit quit
+Nachricht empfangen: quit
+Der Client 127.0.0.1 ist verbunden ...
+Nachricht zum Versenden:
+...</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Mit der Funktion <span class="listing">setsockopt()<a id="Xxx999260" name="Xxx999260"></a></span> richten Sie das Socket so ein, dass mehrere Prozesse (Clients) denselben Port teilen – sprich: Mehrere Clients k&ouml;nnen innerhalb k&uuml;rzester Zeit mit dem Server in Verbindung treten. Au&szlig;erdem l&ouml;sen Sie damit auch das Problem, dass der Server beim Neustart seinen lokalen Port erst nach zwei Minuten Wartezeit wieder benutzen kann. Dies werden Sie in fast allen Beispielen wieder finden. Mehr zur Funktion <span class="listing">setsockopt()</span> finden Sie in einem sp&auml;teren Abschnitt (10.15) wieder.</p>
+</td>
+</tr>
+</table><br>
+<p>Sie haben hier praktisch eine einfache Client-Server-Anwendung erstellt, womit Sie einfachen Text miteinander austauschen k&ouml;nnen. Nat&uuml;rlich habe ich es mir bei diesem Beispiel sehr leicht gemacht. F&uuml;r solch ein Beispiel h&auml;tten Sie sich kein Buch kaufen m&uuml;ssen – aber zur Einf&uuml;hrung ist dies genau das Richtige. Daher soll jetzt auf den folgenden Seiten noch tiefer in die Materie vorgedrungen werden. Jetzt haben Sie zwar eine Menge Sitzfleisch f&uuml;r das Kapitel aufwenden m&uuml;ssen – daf&uuml;r haben Sie sich allerdings die Grundlagen zur Netzwerkprogrammierung gelegt. Daher wird auf den folgenden Seiten der Praxis-Anteil wieder gesteigert.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/11_5.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein11_5.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 11.5   
+    </b>Grundlegendes Client-Server-Prinzip bei den TCP-Sockets</p>
+</td>
+</tr>
+</table><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap11-006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap11-008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap11-007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:56 GMT -->
+</html>

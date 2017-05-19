@@ -1,0 +1,1740 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap12-003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:45:17 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 12.4 MySQL</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap12-002.html">
+<link rel="next" href="Kap12-004.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap12-002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap12-004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap12-000.html#RxxKap12000040004161F04F100">12 MySQL und PostgreSQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-000.html#RxxKap12000040004161F04F103">12.1 Relationales Datenbanksystem</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-001.html#RxxKap12001040004331F01E100">12.2 Relationaler Datenbankserver</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-002.html#RxxKap12002040004341F03B100">12.3 SQL-Server im &Uuml;berblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap12003040004351F038100">12.4 MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F038105">12.4.1 Anwendungsgebiete von MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F03810C">12.4.2 Schnittstellen von MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F03810F">12.4.3 Installation von MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F038114">12.4.4 MySQL-Server starten und stoppen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F03817A">12.4.5 Konfigurationsdatei my.cnf</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F03818C">12.4.6 Kommandozeilenwerkzeuge f&uuml;r und von mysql</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F0381B6">12.4.7 Grafische Clients</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F0381BE">12.4.8 MySQL-Crashkurs</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F0381C8">12.4.9 Datentypen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F038251">12.4.10 Datenbank anlegen, verwenden und l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F038275">12.4.11 Tabelle anlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F038281">12.4.12 Schl&uuml;sselfelder (Tabellen anlegen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F038286">12.4.13 Indizes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F03828F">12.4.14 Tabellentypen (Tabellen anlegen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F038291">12.4.15 Autowerte definieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F038294">12.4.16 Tabellen umbenennen und &auml;ndern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F0382A5">12.4.17 Daten einf&uuml;gen, &auml;ndern und l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F0382BB">12.4.18 Daten importieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F0382C1">12.4.19 Datenausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F0382D4">12.4.20 NULL ist 0 oder undefiniert?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap12003040004351F0382D6">12.4.21 Unscharfe Suche</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-004.html#RxxKap12004040004361F03F100">12.5 MySQL C-API</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F175">12.5.1 Verbindung mit dem MySQL-Server aufbauen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F199">12.5.2 Aufgetretene Fehler ermitteln – mysql_errno() und mysql_error()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1A0">12.5.3 Schlie&szlig;t die Verbindung zum Server – mysql_close()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1A4">12.5.4 Erstes Beispiel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1AF">12.5.5 Verschiedene Informationen ermitteln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1C8">12.5.6 Datenbanken, Tabellen und Felder ausgeben (MYSQL_RES)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1DF">12.5.7 Ergebnismenge zeilenweise bearbeiten (MYSQL_ROW)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1F7">12.5.8 Ergebnismenge spaltenweise einlesen (und ausgeben) (MYSQL_FIELD)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F267">12.5.9 Ein Beispiel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F26C">12.5.10 Ergebnismenge – weitere Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F276">12.5.11 Befehle an den Server – mysql_query() und mysql_real_query()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F2A4">12.5.12 Weitere Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F2F8">12.5.13 Veraltete Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F308">12.5.14 Neue Funktionen ab Version 4.1.x</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-005.html#RxxKap12005040004371F021100">12.6 Beispiel eines Newssystems mit MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F02110B">12.6.1 Die Headerdatei my_cgi.h</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F02110E">12.6.2 (Pseudo-)Planung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F021114">12.6.3 Datenbank und Tabellen anlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F0211AA">12.6.4 MySQL-Clients mit GUI</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F0211AC">12.6.5 Randnotiz</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-006.html#RxxKap12006040004381F04D100">12.7 Neue SQL-Funktionen f&uuml;r die Shell – MySQL erweitern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-007.html#RxxKap12007040004391F02B100">12.8 MySQL-Funktionen mit der UDF-Schnittstelle entwerfen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B17D">12.8.1 UDF-Sequenzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B187">12.8.2 UDF_INIT-Struktur</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B18D">12.8.3 UDF_ARGS-Struktur</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B19C">12.8.4 R&uuml;ckgabewert</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B1A1">12.8.5 Benutzerdefinierte Funktionen erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B1A9">12.8.6 Benutzerdefinierte Funktion kompilieren, installieren und ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-008.html#RxxKap120080400043A1F017100">12.9 PostgreSQL – objektrelationales Datenbankverwaltungssystem</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-008.html#RxxKap120080400043A1F017104">12.9.1 PostgreSQL im Vergleich zu MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-008.html#RxxKap120080400043A1F017116">12.9.2 Unterschiede in der Syntax zwischen MySQL und PostgreSQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-008.html#RxxKap120080400043A1F01717A">12.9.3 PostgreSQL installieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-008.html#RxxKap120080400043A1F017183">12.9.4 Konfigurationsdateien bei PostgreSQL – (postgresql.conf, pg_hba_conf)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-008.html#RxxKap120080400043A1F017195">12.9.5 CRASHKURS PostgreSQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-008.html#RxxKap120080400043A1F017247">12.9.6 PostgreSQL C-API – libpg</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-008.html#RxxKap120080400043A1F017304">12.9.7 Umgebungsvariablen und Passwortdatei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-008.html#RxxKap120080400043A1F017312">12.9.8 PostgreSQL und Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-008.html#RxxKap120080400043A1F017316">12.9.9 Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">12.4 <a id="RxxKap1238MySQL" name="RxxKap1238MySQL"></a>My<a id="RxxKap12003040004351F038100" name="RxxKap12003040004351F038100"></a>SQL 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999237" name="Xxx999237"></a>Beginnen wir zuerst mit der MySQL-Datenbank. Ich habe mich f&uuml;r MySQL entschieden, nicht nur weil es frei ist, sondern weil es zum einen gute Schnittstellen (API) zu vielen verschiedenen Programmiersprachen bietet und weil zum anderen mit MySQL auch m&ouml;glich ist, ein TCP/IP-Netz zu kontaktieren, ohne gleich zus&auml;tzlich noch die Socket-Programmierung zu verwenden. Die API von MySQL nimmt Ihnen diese Arbeit ab. MySQL bietet eine Reihe von Vorteilen gegen&uuml;ber anderen Datenbanksystemen. Au&szlig;er dass MySQL frei verf&uuml;gbar und (unter UNIX) in allen Hinsichten kostenlos ist, sind die Datenbankzugriffe sehr schnell, der Server kann als absolut stabil und sicher gelten, es werden wenig Ressourcen vom System verschwendet (sowohl CPU-Zeit als auch RAM), und MySQL ist auf fast allen Betriebssystemen erh&auml;ltlich. Sollte das nicht der Fall sein, kann immer noch der Quellcode hergenommen und kompiliert werden.</p>
+<p>Ein eventueller Nachteil von MySQL ist, dass sich dieses nicht an ANSI SQL h&auml;lt, sondern viele eigene Erweiterungen nutzt. Das ist gerade im Open-Source-Bereich von ziemlicher Bedeutung. MySQL l&auml;sst sich aber auch im ANSI-Modus nutzen, in dem man den Server mit der Option –<span class="listing">ansi</span> startet.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die Beispiele in diesem Kapitel wurden getestet unter FreeBSD-4.10-STABLE mit mysql-4.0.20(ports build), unter Debian(mixed) mit mysql-4.0.15(source build) und unter SUSE-Linux 8.1 mit mysql-3.23.55-log.</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">12.4.1 Anwendungsgebiete von MySQ<a id="RxxKap12003040004351F038105" name="RxxKap12003040004351F038105"></a>L 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999246" name="Xxx999246"></a>Das Anwendungsgebiet von MySQL ist nat&uuml;rlich sehr umfassend. Dennoch sollen hierbei ein paar Hauptanwendungsgebiete von MySQL aufgez&auml;hlt werden.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Einsatz als Internet Service Provider (ISP) – Da MySQL absolut kostenlos ist, l&auml;uft diese Datenbank bei sehr vielen ISPs. H&auml;ufig wird dabei die Kombination Linux, Apache, MySQL und PHP oder/und Perl eingesetzt – kurz auch als LAMP bekannt.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Einsatz bei Internet-Anwendungen – Wird gerne verwendet, da sich, wie schon beim ISP, serverseitige Technologien wie Perl oder PHP einfach anwenden lassen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> CMS (Content Management Systems) – Die meisten (fast alle) CMS bieten eine Schnittstelle zur Datenbank MySQL an. Vor allem auch weil wieder viele ISPs diese Datenbank verwenden, was wiederum die Nutzung des CMS f&uuml;r jedermann bedeutet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Einsatz zur Schulung – Zum einen sind wie schon beim ISP recht geringe Anschaffungskosten n&ouml;tig, zum anderen muss auch kein gro&szlig;er Aufwand bei der Installation und der Konfiguration betrieben werden. Und es l&auml;sst sich mit MySQL auch das Standard-SQL darstellen.</td>
+</tr>
+</table>
+<p>Anhand dieser Auflistung f&auml;llt allerdings auch auf, dass das Hauptanwendungsgebiet von MySQL eindeutig das Internet und somit auch ied Internet-Programmierung ist.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">12.4.2 Schnittstellen von MySQ<a id="RxxKap12003040004351F03810C" name="RxxKap12003040004351F03810C"></a>L 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999255" name="Xxx999255"></a>Dank vieler Schnittstellen, was auch der Grund zur Vorstellung dieser Datenbank im Buch war, kann MySQL fast &uuml;berall in der IT-Welt integriert werden. Im Schnittstellen-Konzept ist eine so genannte MySQL client library implementiert, womit sowohl die Werkzeuge von MySQL als auch die Programmierschnittstelle bedient werden.</p>
+<p>MySQL bietet ein Menge Schnittstellen f&uuml;r uns Programmierer; wobei die Schnittstellen f&uuml;r C, Java, PHP und Perl wohl die am h&auml;ufigsten verwendeten Schnittstellen sein sollten. Die meisten Kommandozeilenwerkzeuge von MySQL wurden z. B. in C geschrieben. Den Quellcode der einzelnen Clientanwendungen finden Sie in der Source-Distribution von MySQL im Verzeichnis client.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">12.4.3 Installation von MySQ<a id="RxxKap12003040004351F03810F" name="RxxKap12003040004351F03810F"></a>L 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999260" name="Xxx999260"></a>Gew&ouml;hnlich sollte MySQL Ihrer Linux-Distribution beiliegen – weshalb sich die Installation als nicht sehr schwierig erweisen sollte. Bei der Suche nach den Paketen Ihrer Linux-Distribution wird Ihnen sicherlich noch eine Reihe weiterer Pakete zu MySQL auffallen. Um allerdings die Listings im Buch selbst nachzuschreiben, reichen die Pakete mysql, mysql-client, mysql-devel (enth&auml;lt die Include-Dateien), mysql-bench und mysql-shared aus.</p>
+<p>Wollen Sie MySQL herunterladen und dieses Paket installieren oder gar die Source-Distribution neu &uuml;bersetzen, dann sollten Sie hierzu einen Blick auf die gute Dokumentation werfen, die Ihnen die weiteren Schritte genau beschreibt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nat&uuml;rlich finden Sie auch hierzu wieder Info-Material auf der Buch-CD.</p>
+</td>
+</tr>
+</table><br>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">12.4.4 MySQL-Server starten und stoppe<a id="RxxKap12003040004351F038114" name="RxxKap12003040004351F038114"></a>n 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999269" name="Xxx999269"></a>Nachdem Sie MySQL erfolgreich installiert haben, k&ouml;nnen Sie den Server starten. Sollte dies bei Ihnen nicht funktionieren, dann sollten Sie sich die mitgelieferte Dokumentation durchlesen oder der Webseite von MySQL einen Besuch abstatten. Gew&ouml;hnlich ben&ouml;tigen Sie dazu Superuser-Rechte.</p>
+<p>Unter der Red Hat- und Debian-Distribution l&auml;sst sich der MySQL-Server wie folgt starten:</p>
+<pre>$ /etc/rc.d/init.d/mysql start
+Starting service MySQL</pre>
+<p>Ebenso einfach l&auml;sst sich der Server unter Red Hat auch wieder stoppen:</p>
+<pre>$ /etc/rc.d/init.d/mysql stop
+Starting service MySQL</pre>
+<p>Bei der SUSE-Distribution kann der MySQL-Server auch mit folgendem Befehl vom Superuser gestartet bzw. gestoppt werden:</p>
+<pre>$ rcmysql start
+Starting service MySQL                                  done
+$  rcmysql stop
+Shutting down service mysql                             done</pre>
+<p>Mit dem Befehl <span class="listing">restart</span> am Ende, anstatt <span class="listing">start</span> oder <span class="listing">stop</span>, k&ouml;nnen Sie den MySQL-Server neu starten lassen.</p>
+<p>Wollen Sie, dass der MySQL-Server bei jedem Start von Linux aktiv ist, k&ouml;nnen Sie bei Red Hat einen Eintrag in chkconfig und bei SUSE einen in rc.config oder in /etc/init.d/mysql machen. Darauf soll aber hier nicht genauer eingegangen werden.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">12.4.5 Konfigurationsdatei my.cn<a id="RxxKap12003040004351F03817A" name="RxxKap12003040004351F03817A"></a>f 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999281" name="Xxx999281"></a><a id="Xxx999282" name="Xxx999282"></a>Mit MySQL haben Sie auch die M&ouml;glichkeit, mit der Konfigurationsdatei <span class="listing">my.cnf</span> verschiedene Einstellungen vorzunehmen. Diese Konfiguration kann dabei auf der System-, Datenbank- oder der Benutzerebene vorgenommen werden. Sie finden folgende drei Konfigurationsdateien f&uuml;r den MySQL-Server:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Systemweite Einstellungen in <span class="listing">/etc/my.cnf</span></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Globale Servereinstellungen in &lt;Datenverzeichnis&gt;<span class="listing">/my.cnf</span> – Da auf einem Rechner mehrere MySQL-Server (in verschiedenen Datenverzeichnissen) ausgef&uuml;hrt werden k&ouml;nnen, sind hiermit Einstellungen f&uuml;r diese Server m&ouml;glich. Dies eignet sich bei mehreren Server besser als <span class="listing">/etc/my.cnf</span>, da hierbei die Einstellungen f&uuml;r alle Server des Systems gelten w&uuml;rden. Die Konfigurationsdatei kann dem Server beim Start &uuml;bergeben werden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Benutzerspezifische Einstellungen in <span class="listing">~./my.cnf</span> – Diese Konfigurationsdatei wird verwendet, wenn der MySQL-Server unter einer abweichenden Einstellung arbeiten soll.</td>
+</tr>
+</table>
+<p>Die Konfigurationsdatei ist eine gew&ouml;hnliche Textdatei und l&auml;sst sich mit jedem ASCII-f&auml;higen Editor betrachten und mit entsprechenden Rechten modifizieren. Da Sie den Server soeben als Superuser starten mussten, k&ouml;nnen Sie sich gleich als solcher die Konfigurationsdatei in der Kommandozeile ansehen:</p>
+<pre>$ less -MSi /etc/my.cnf</pre>
+<p>Die Ausgabe kann nun von System zu System variieren. Die Syntax der Konfigurationsdatei k&ouml;nnen Sie der Online-Dokumentation entnehmen. Folgende globale Einstellungen sind allerdings gew&ouml;hnlich immer anzutreffen:</p>
+<pre>[client]
+#password       = your_password
+#user           = username
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+# Here follows entries for some specific programs
+# The MySQL server
+[mysqld]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock</pre>
+<p>Alle Zeilen, die mit # beginnen, sind Kommentare und werden vom MySQL-Server ignoriert. Anschlie&szlig;end folgt in den eckigen Klammern das Programm, wof&uuml;r die nachfolgenden Parameter gelten. Au&szlig;er <span class="listing">mysqld</span> (der MySQL-Server (D&auml;mon)) k&ouml;nnen noch weitere MySQL-Clientprogramme wie u. a. <span class="listing">mysql</span>, <span class="listing">mysqladmin</span>, <span class="listing">mysqldump</span> usw. verwendet werden. Anschlie&szlig;end werden die einzelnen Einstellungen f&uuml;r das Programm mit der Angabe</p>
+<pre>option = wert (bspw. port = 3306)</pre>
+<p>eingestellt. Selbiges gilt f&uuml;r die Einstellung von Variablen mit</p>
+<pre>set-variable =      Variablenbezeichnung=Wert</pre>
+<p>Zum Beispiel:</p>
+<pre># The MySQL server
+[mysqld]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+set-variable    =  max_connections = 200</pre>
+<p>Hier wurde dem MySQL-Server die Anzahl der maximalen gleichzeitigen Verbindungen (<span class="listing">max_connections</span>) &uuml;bergeben. Eine Konfiguration einzustellen ist somit recht einfach. Es muss lediglich das Programm in eckigen Klammern gefolgt von den einzelnen Parametern angegeben werden.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Tipp   </b>Um die Geschwindigkeit Ihrer Datenbank ein wenig zu optimieren, k&ouml;nnen Sie die Variable <span class="listing">query_cache_size</span>, ein Speicher zur Zwischenspeicherung, verwenden. Setzen Sie diese Variable einfach beim Programm <span class="listing">[mysqld]</span> auf einen bestimmten Wert, je nachdem, wie gro&szlig; dieser Cache sein soll. Um den Query-Cache zu aktivieren, m&uuml;ssen Sie au&szlig;erdem die Variable <span class="listing">query_cache_startup_type</span> aktivieren.</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">12.4.6 Kommandozeilenwerkzeuge f&uuml;r und von mysq<a id="RxxKap12003040004351F03818C" name="RxxKap12003040004351F03818C"></a>l 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999304" name="Xxx999304"></a>Es gibt zwar mittlerweile eine umfangreiche Auswahl an grafischen Tools und Programmen f&uuml;r Administrationsaufgaben von MySQL, aber in vielen F&auml;llen reichen die Kommandozeilenwerkzeuge von MySQL aus. Am h&auml;ufigsten sind dabei die <span class="listing">mysql</span>-Clientanwendung (auch gerne mysql-Shell genannt; offiziell MySQL Monitor) und <span class="listing">phpMyAdmin</span> (grafischer Client f&uuml;r den Browser) anzutreffen.</p>
+<h4 class="t4">mysql</h4>
+<p><a id="Xxx999307" name="Xxx999307"></a>Der Client (oder besser die SQL-Shell) <span class="listing">mysql</span> ist im Standardumfang von MySQL enthalten und quasi das wichtigste Werkzeug, um mit MySQL in der Kommandozeile zu arbeiten. Die MySQL-Shell soll jetzt aufgerufen werden. Starten Sie hierf&uuml;r, falls noch nicht geschehen, den MySQL-Server. Da das Werkzeug <span class="listing">mysql</span> eine gewaltige Anzahl von Optionen besitzt, k&ouml;nnen Sie es auch mit dem Flag –<span class="listing">help</span> aufrufen, um sich einen &Uuml;berblick zu verschaffen.</p>
+<pre>$ mysql -uroot –hlocalhost -p
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2 to server version: 3.23.55-log
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.</pre>
+<p>Sie starten hierbei die MySQL-Shell mit dem User <span class="listing">root</span> und dem Host <span class="listing">localhost</span>. Sie k&ouml;nnen sich von Haus aus als Benutzer <span class="listing">root</span> mit dem MySQL-Server verbinden. Sollte eigentlich auch logisch sein, denn sonst h&auml;tten Sie keinen Zugriff auf den MySQL-Server. Aus Sicherheitsgr&uuml;nden sollten Sie dies nat&uuml;rlich &auml;ndern. Verlassen Sie die MySQL-Shell erst wieder mit dem Aufruf von <span class="listing">quit</span> (oder auch mit <span class="listing">exit</span> (ein Alias f&uuml;r <span class="listing">quit</span>)).</p>
+<pre>mysql&gt; quit
+Bye</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie auf die MySQL-Shell, wie es sich f&uuml;r eine Shell eben geh&ouml;rt, auch im Batch-Modus zugreifen. Z. B. k&ouml;nnen Sie die mysql-Anweisungen in ein Skript schreiben und mit folgendem Befehl ausf&uuml;hren lassen:</p>
+<pre>$ mysql -u root -h localhost -p datenbank &lt; skript.sql</pre>
+<p>Damit werden alle Befehle, die Sie in <span class="listing">skript.sql</span> angegeben haben, ausgef&uuml;hrt. Weiterhin k&ouml;nnen Sie die Ausgabe auch in eine andere Datei umleiten lassen:</p>
+<pre>$ mysql -u root -h localhost -p datenbank &lt; skript.sql &gt; \
+&gt; ausgabe.txt</pre>
+<p>Der Batch-Modus ist sehr gut f&uuml;r Cron-Jobs geeignet, um regelm&auml;&szlig;ige Aufgaben (wie z. B. Backups) zu automatisieren.</p>
+<h4 class="t4">mysqladmin</h4>
+<p><a id="Xxx999318" name="Xxx999318"></a>Damit jetzt nicht jedermann auf die Datenbanken zugreifen kann, sollten Sie wenigstens ein Passwort vergeben. Da ich davon ausgehe, dass Sie der Chef am Rechner sind, soll hierf&uuml;r ein Passwort f&uuml;r Sie eingerichtet werden. Dies k&ouml;nnen Sie recht komfortabel mit dem Client <span class="listing">mysqladmin</span> realisieren.<a id="Xxx999320" name="Xxx999320"></a></p>
+<pre>$ mysqladmin -uroot password juergen</pre>
+<p>Hiermit haben Sie sich als <span class="listing">root</span> das Passwort juergen gegeben. Sie sollten sich nat&uuml;rlich ein anderes Passwort einfallen lassen. Wollen Sie das Passwort wieder &auml;ndern, k&ouml;nnen Sie folgenderma&szlig;en vorgehen:</p>
+<pre>$ mysqladmin -uroot -pjuergen password k4p6m3o3</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Man kann dies auch ohne <span class="listing">-p</span> machen, wodurch man interaktiv gefragt wird. Das ist auch vorteilhafter, weil man sonst &uuml;ber »<span class="listing">ps</span> <span class="listing">aufwwx</span>« die Passw&ouml;rter sehen kann.</p>
+</td>
+</tr>
+</table><br>
+<p>Es empfiehlt sich allerdings, auf Produktivsystemen nicht diesen Befehl abzusetzen. Falls es jemand schafft, <span class="listing">root</span>-Rechte auf dem Server zu erlangen, kann er somit das Hauptpasswort f&uuml;r die DB aus der <span class="listing">/root/.bash_history</span> auslesen (erste Anlaufstelle f&uuml;r Cracker). Es ist sinnvoller, das Passwort im <span class="listing">mysql-</span>Monitor mit den Grant-Funktionen zu &auml;ndern. Oder mit einem</p>
+<pre>mysql &gt; USE mysql;
+mysql &gt; UPDATE user SET Password=PASSWORD('neues_password')
+      &gt; WHERE User='root';</pre>
+<p>und danach mit</p>
+<pre>mysql &gt; FLUSH PRIVILEGES;</pre>
+<p>die User-Datenbank neu einzulesen.</p>
+<p>Somit haben Sie das Passwort juergen umge&auml;ndert zu k4p6m3o3. Wenn Sie sich jetzt wieder in die MySQL-Shell einloggen wollen, m&uuml;ssen Sie das Passwort mit angeben:</p>
+<pre>$ mysql -uroot -hlocalhost -pk4p6m3o3
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9 to server version: 3.23.55-log
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+mysql&gt; exit
+Bye</pre>
+<p>Zur Verwaltung des Zugriffs der verschiedenen Anwender auf die Datenbank verwendet MySQL (wenn wundert‘s) auch eine Datenbank mit entsprechendem Namen – mysql. Sie sollten daher immer darauf achten, dass Sie f&uuml;r diese Datenbank entsprechende Rechte vergeben haben (Schreibschutz). Denn was hilft die Verteilung von Zugriffsrechten zu Datenbanken, einzelnen Tabellen oder einzelnen Spalten, wenn sich der Anwender die Rechte selbst vergeben kann. <a id="Xxx999336" name="Xxx999336"></a><a id="Xxx999337" name="Xxx999337"></a>Neue Benutzer k&ouml;nnen Sie mit dem SQL-Befehl <a id="Xxx999338" name="Xxx999338"></a><span class="listing">GRANT</span> hinzuf&uuml;gen und mit <a id="Xxx999339" name="Xxx999339"></a><span class="listing">REVOKE</span> wieder entfernen. Hierf&uuml;r sei allerdings die Online-Dokumentation empfohlen, da hierauf das Buch nicht eingeht.</p>
+<p>Weitere, gerne verwendete Aktionen, die mit <span class="listing">mysqladmin</span> durchgef&uuml;hrt werden, sind das &Uuml;berwachen des Serverzustands. Hierzu k&ouml;nnen Sie die Optionen <span class="listing">status</span> und <span class="listing">extended-status</span> verwenden:</p>
+<pre>$ mysqladmin -uroot -pk4p6m3o3 status
+Uptime: 22476  Threads: 1  Questions: 41  Slow queries: 0  Opens: 12  Flush tables: 1  
+        Open tables: 6 Queries per second avg: 0.002
+$ mysqladmin -uroot -pk4p6m3o3 extended-status
++--------------------------+-------+
+| Variable_name            | Value |
++--------------------------+-------+
+| Aborted_clients          | 0     |
+| Aborted_connects         | 7     |
+| Bytes_received           | 1361  |
+| Bytes_sent               | 4586  |
+| Com_admin_commands       | 0     |
+...
+[schnipp]
+...
+| Threads_created          | 21    |
+| Threads_connected        | 1     |
+| Threads_running          | 1     |
+| Uptime                   | 22488 |
++--------------------------+-------+</pre>
+<p>Einige weitere wichtige Information erhalten Sie mit <span class="listing">processlist</span>. Damit erfahren Sie, wo der Server seine meiste Zeit verbringt oder gar vergeudet:</p>
+<pre>$ mysqladmin -uroot -pk4p6m3o3 processlist
++--+----+---------+--+-------+----+-----+------------------+
+|Id|User|Host     |db|Command|Time|State| Info             |
++--+----+---------+--+-------+----+-----+------------------+
+|22|root|localhost|  |Query  |0   |     | show processlist |
++--+----+---------+--+-------+----+-----+------------------+</pre>
+<p>Mehr zu <span class="listing">mysqladmin</span> erfahren Sie au&szlig;erdem mit der Option –<span class="listing">help</span>.</p>
+<h4 class="t4">mysqlshow</h4>
+<p><a id="Xxx999346" name="Xxx999346"></a>Mit dem Programm <span class="listing">mysqlshow</span> k&ouml;nnen Sie sich Informationen &uuml;ber eine Datenbank, Tabelle, Spalten oder Indizes ansehen. So k&ouml;nnen Sie sich mit folgender Eingabe die Passwortdatei des MySQL-Servers, in der die User eingetragen werden, ausgeben lassen:</p>
+<pre>$ mysqlshow -uroot -pk4p6m3o3 -hlocalhost mysql user</pre>
+<p>Die Syntax dazu lautet:</p>
+<pre>mysqlshow [OPTIONEN] [Datenbank [Tabelle [Spalte] ] ]</pre>
+<h4 class="t4">mysqldump</h4>
+<p><a id="Xxx999352" name="Xxx999352"></a>Mit dem Programm <span class="listing">mysqldump</span> erzeugen Sie eine komplette Kopie Ihrer Datenbank oder auch Teile davon. Diese Datei enth&auml;lt dann s&auml;mtliche Befehle, die Sie zur Wiederherstellung Ihrer Datenbank ben&ouml;tigen, wenn der Fall eintreffen sollte. Bei der Kopie handelt es sich um eine im ASCII-Text gespeicherte Datei mit vollst&auml;ndiger SQL-Syntax. Auch ich habe das Thema »Backup« von MySQL selten beachtet, bis ich eines Besseren belehrt wurde und ein paar Tage Arbeit weg waren. Beispiel eines solchen Dumps:</p>
+<pre>$ mysqldump -uroot -pk4p6m3o3 -hlocalhost datenbankname &gt; \
+  backup_datenbankname.sql</pre>
+<p>Hiermit wird z. B. ein Dump von der Datenbank <span class="listing">datenbankname</span> gemacht. Die Ausgabe wird in die Datei <span class="listing">backup_datenbankname.sql</span> umgeleitet, worin sich jetzt ein komplettes Backup von <span class="listing">datenbankname</span> befindet. Wiederherstellen k&ouml;nnen Sie diese Sicherung ganz einfach mit:</p>
+<pre>$ mysql -uroot -pk4p6m3o3 -hlocalhost datenbankname &lt; \
+  backup_datenbankname.sql</pre>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">12.4.7 Grafische Client<a id="RxxKap12003040004351F0381B6" name="RxxKap12003040004351F0381B6"></a>s 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999359" name="Xxx999359"></a>Alle Aufgaben lassen sich mit den mitgelieferten Mitteln von MySQL sehr effektiv realisieren. Aber h&auml;ufig fehlt einem bei etwas gr&ouml;&szlig;eren Projekten der &Uuml;berblick zu den Datenbanken, Tabellen, Spalten und den Daten selbst. Hier kann man sich mit grafischen MySQL-Clients behelfen. Meistens handelt es sich dabei einfach um Frontends zu den Kommandozeilenwerkzeugen.</p>
+<h4 class="t4">phpMyAdmin</h4>
+<p><a id="Xxx999362" name="Xxx999362"></a>phpMyAdmin d&uuml;rfte wohl der bekannteste und meistverwendete Vertreter der grafischen Clients zu MySQL sein. Dabei kommt dieser Client ganz ohne Installation von Software aus. phpMyAdmin ben&ouml;tigt lediglich einen Server, auf dem es m&ouml;glich ist, PHP-Skripte auszuf&uuml;hren. Meistens findet man phpMyAdmin bei den Internet Service Providern unter dem Einsatz von LAMP (Linux, Apache, MySQL, PHP/Perl). Sofern Sie z. B. Ihre Webseite auf einem Internet Service Provider haben, ist dies h&auml;ufig die einzige M&ouml;glichkeit, direkt auf die einzelnen Tabellen, Zeilen, Spalten und Daten zuzugreifen. Denn nicht jeder ISP bietet einen Kommandozeilenzugang via SSH (Secure Shell). Allerdings bedarf es bei phpMyAdmin der gleichen Kenntnisse wie bei der Verwendung der MySQL-Shell.</p>
+<h4 class="t4">MySQLCC</h4>
+<p><a id="Xxx999365" name="Xxx999365"></a>MySQLCC steht f&uuml;r MySQL Control Center und ist seit Mitte 2003 als installierbare Software verf&uuml;gbar. Damit lassen sich dieselben Arbeiten wie bei der MySQL-Shell oder dem grafischen Frontend phpMyAdmin durchf&uuml;hren. MySQLCC ist kostenlos und steht unter GNU GPL-Lizenz.</p>
+<h4 class="t4">KSQL und Knoda</h4>
+<p>Unter dem KDE-Desktop stehen Ihnen gleich zwei hervorragende grafische MySQL-Clients zur Verf&uuml;gung, zum einen Knoda, den der Autor des Buchs gerne verwendet, und KSQL. Beide Clients bieten eine umfangreiche Funktionspalette, wobei es mit beiden Clients auch m&ouml;glich ist, mit anderen Datenbanken als MySQL eine Verbindung aufzubauen. Ein weiteres interessantes Feature ist u. a. der Export von HTML und XML.</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">12.4.8 MySQL-Crashkur<a id="RxxKap12003040004351F0381BE" name="RxxKap12003040004351F0381BE"></a>s 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Sofern Sie noch keine MySQL-Kenntnisse besitzen, folgt hier ein kleiner Crashkurs zu MySQL mit einigen grundlegenden Befehlen. Diese Einf&uuml;hrung erhebt keinerlei Anspruch, eine komplette Einf&uuml;hrung in MySQL zu sein. Trotz eines gewissen Umfangs entspricht dieser Crashkurs aus der Sicht des Autors nicht mehr als dem ber&uuml;hmten Tropfen auf dem hei&szlig;en Stein. Wenn Sie der Datenbank MySQL m&auml;chtig sind, k&ouml;nnen Sie diesen Abschnitt auch ein wenig &uuml;berfliegen.</p>
+<p>Um mit Datenbanken zu arbeiten, sind mehrere Schritte n&ouml;tig. Logischerweise muss zuerst eine Datenbank angelegt werden, anschlie&szlig;end wird eine Tabelle ben&ouml;tigt, worin die Daten gespeichert werden. Hierzu ein schematischer Ablauf vom Anlegen der Datenbank bis zum Ausgeben von Daten:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/12_1.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein12_1.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 12.1   
+    </b>Schematischer Ablauf vom Anlegen der DB bis zur Ausgabe</p>
+</td>
+</tr>
+</table><br>
+<p>Um diese Schritte in MySQL zu realisieren, ben&ouml;tigen Sie Kenntnisse zu den MySQL-Befehlen, die Sie in den folgenden Kapiteln n&auml;her kennen lernen werden. Ich werde Ihnen diese Befehle anhand der MySQL-Shell (dem <span class="listing">mysql</span>-Client) n&auml;her bringen. Sie k&ouml;nnen, wenn Sie wollen, nat&uuml;rlich auch eines der grafischen Clientprogramme verwenden, um die SQL-Befehle auszuf&uuml;hren. Es wird empfohlen, die einzelnen Schritte, wie sie auf den folgenden Seiten dargestellt werden, auch selbst in der Praxis zu testen, um das Beschriebene nachvollziehen zu k&ouml;nnen.</p>
+<p>Aufgeteilt werden die Befehle in zwei Kategorien – die DDL- und die DML-Befehle:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><b> DDL</b> (Datendefinitionssprache) – Die Datendefinitionssprache wird genutzt, um die Struktur der abzuspeichernden Datenobjekte zu beschreiben – sprich: Datenbanken oder Tabellen anlegen, ver&auml;ndern, umbenennen usw. Ebenfalls geh&ouml;rt die Administration (Benutzer anlegen, Rechte verteilen ...) zum Bereich der DDL.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><b> DML</b> (Datenmanipulationssprache) – Die Datenmanipulationssprache dient zum Einf&uuml;gen, &Auml;ndern, L&ouml;schen und Lesen des Inhalts aller Datenbankobjekte. Dabei wird zwischen der Anfragesprache (Query Language) und der eigentlichen Datenmanipulationssprache, mit der abgespeicherte Datens&auml;tze manipuliert werden k&ouml;nnen, unterschieden.</td>
+</tr>
+</table>
+<p>Mit einem Satz: DDL beschreibt die Struktur und DML den Inhalt dieser Struktur.</p>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">12.4.9 Datentype<a id="RxxKap12003040004351F0381C8" name="RxxKap12003040004351F0381C8"></a>n 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999389" name="Xxx999389"></a>Wie in C und in vielen anderen Sprachen gibt es auch in MySQL Datentypen. Datentypen sind die kleinste Einheit, die mit SQL-Befehlen manipuliert werden k&ouml;nnen. Die Datentypen werden dabei als Spaltenwert (Attribut) einer Tabelle zwingend verwendet. Und, wie ebenfalls in vielen anderen Sprachen, gibt es hierbei unterschiedliche Datentypen. Zum Gl&uuml;ck sind Sie ja bereits (mindestens) einer Sprache m&auml;chtig, somit kann ich mir einige Erkl&auml;rungen zu den Datentypen ersparen. Aufgeteilt werden die Datentypen in folgende Kategorien:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Zeichen und Zeichenketten (einzelne Zeichen, Strings)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Nummerische Werte (Zahlen (Ganzzahlen, Gleitpunktzahlen))</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Datums- und Zeitdatentypen</td>
+</tr>
+</table>
+<p>Zeichen(-ketten) und nummerische Werte als Datentypen sollten bei Ihnen eigentlich keine Wimper mehr zucken lassen. Aber anders als in vielen Programmiersprachen bietet MySQL auch einige Datentypen f&uuml;r Datums- und Zeitangaben.</p>
+<p>Logischerweise m&uuml;ssen Sie sich auch bei MySQL Gedanken &uuml;ber den Sinn eines Datentyps machen. Zu klein gew&auml;hlte Datentypen k&ouml;nnen bei &Uuml;berschreitung der Typengrenze zur falschen Darstellung f&uuml;hren, und zu gro&szlig; gew&auml;hlte Datentypen verschwenden nur unn&ouml;tig Platz und machen zudem noch die Datenbank erheblich langsamer.</p>
+<p>In der folgenden Abbildung finden Sie einen kurzen &Uuml;berblick zu den g&auml;ngigsten Datentypen in MySQL:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/12_2.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein12_2.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 12.2   
+    </b>Datentypen von MySQL im &Uuml;berblick</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt noch eine genauere Zusammenfassung zu den einzelnen Datentypen in MySQL:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.1   
+    </b>Nummerische Datentypen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Datentyp</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bereich</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Speicherbedarf</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">TINYINT
+</td>
+<td class="tabellentext" bgcolor="#000000">sehr kleine Ganzzahl
+</td>
+<td class="tabellentext" bgcolor="#000000">-128 bis 127
+(0 bis 255)
+</td>
+<td class="tabellentext" bgcolor="#000000">1 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SMALLINT
+</td>
+<td class="tabellentext" bgcolor="#000000">kleine Ganzzahl
+</td>
+<td class="tabellentext" bgcolor="#000000">-32768 bis 32767
+(0 bis 65535)
+</td>
+<td class="tabellentext" bgcolor="#000000">2 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">MEDIUMINT
+</td>
+<td class="tabellentext" bgcolor="#000000">mittelgro&szlig;e Ganzzahl
+</td>
+<td class="tabellentext" bgcolor="#000000">-8388608 bis 8388607 
+(0 bis 16777215)
+</td>
+<td class="tabellentext" bgcolor="#000000">3 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">INT
+</td>
+<td class="tabellentext" bgcolor="#000000">Ganzzahl (Standard)
+</td>
+<td class="tabellentext" bgcolor="#000000">-2147283648 bis 2147283647 
+(0 bis 4294967295)
+</td>
+<td class="tabellentext" bgcolor="#000000">4 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">BIGINT
+</td>
+<td class="tabellentext" bgcolor="#000000">gro&szlig;e Ganzzahl
+</td>
+<td class="tabellentext" bgcolor="#000000">-9223372036854775808
++9223372036854775807 
+(0 bis
+18446744073709551615)
+</td>
+<td class="tabellentext" bgcolor="#000000">8 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FLOAT
+</td>
+<td class="tabellentext" bgcolor="#000000">Flie&szlig;kommazahl, einfache Genauigkeit
+</td>
+<td class="tabellentext" bgcolor="#000000">-3,402823466<sup>38 
+    </sup> bis -1,175494351<sup>38 
+    </sup>, 0 und 1,175494351<sup>38 
+    </sup> bis 3,402823466<sup>38 
+    </sup>
+</td>
+<td class="tabellentext" bgcolor="#000000">4 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">DOUBLE
+</td>
+<td class="tabellentext" bgcolor="#000000">Flie&szlig;kommazahl, doppelte Genauigkeit
+</td>
+<td class="tabellentext" bgcolor="#000000">~ -1,798<sup>308 
+    </sup> bis ~ -2,225<sup>– 
+    </sup><sup>308 
+    </sup>, 0 und ~ 2,225<sup>– 
+    </sup><sup>308 
+    </sup> bis ~ 1,798<sup>308 
+    </sup>
+</td>
+<td class="tabellentext" bgcolor="#000000">8 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">DECIMAL(G,N)
+</td>
+<td class="tabellentext" bgcolor="#000000">Flie&szlig;kommazahl derL&auml;nge G mit n Nachkommastellen 
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">G+2 Byte
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.2   
+    </b>Datums- und Uhrzeit-Datentypen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Datentyp</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bereich</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Format</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Speicherbedarf</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">DATE
+</td>
+<td class="tabellentext" bgcolor="#000000">Datum
+</td>
+<td class="tabellentext" bgcolor="#000000">1.1.1000 bis 31.12.9999
+</td>
+<td class="tabellentext" bgcolor="#000000">YYYY-MM-DD
+</td>
+<td class="tabellentext" bgcolor="#000000">3 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">DATETIME
+</td>
+<td class="tabellentext" bgcolor="#000000">Datum und Uhrzeit
+</td>
+<td class="tabellentext" bgcolor="#000000">1.1.1000, 0:00:00 Uhr, bis 31.12.9999, 23:59:59
+</td>
+<td class="tabellentext" bgcolor="#000000">YYYY-MM-DD hh:mm:ss
+</td>
+<td class="tabellentext" bgcolor="#000000">8 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">TIMESTAMP
+</td>
+<td class="tabellentext" bgcolor="#000000">UNIX-Zeit
+</td>
+<td class="tabellentext" bgcolor="#000000">1.1.1970 bis 19.01.2038
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">4 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">TIME
+</td>
+<td class="tabellentext" bgcolor="#000000">Uhrzeit
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">hh:mm:ss
+</td>
+<td class="tabellentext" bgcolor="#000000">3 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">YEAR
+</td>
+<td class="tabellentext" bgcolor="#000000">Jahreszahl
+</td>
+<td class="tabellentext" bgcolor="#000000">1901 bis 2155
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">1 Byte
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.3   
+    </b>Zeichenketten-Datentypen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Datentyp</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>L&auml;nge</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Speicherbedarf</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">CHAR(G)
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichenkette mit fester Gr&ouml;&szlig;e G
+</td>
+<td class="tabellentext" bgcolor="#000000">max. 255 Zeichen
+</td>
+<td class="tabellentext" bgcolor="#000000">Gr&ouml;&szlig;e G Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">VARCHAR(G)
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichenkette mit variabler Gr&ouml;&szlig;e G
+</td>
+<td class="tabellentext" bgcolor="#000000">max. 255 Zeichen
+</td>
+<td class="tabellentext" bgcolor="#000000">Gr&ouml;&szlig;e G Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">TINYTEXT,
+TINYBLOB
+</td>
+<td class="tabellentext" bgcolor="#000000">Sehr kleine Zeichenkette
+</td>
+<td class="tabellentext" bgcolor="#000000">max. 255 Byte
+</td>
+<td class="tabellentext" bgcolor="#000000">2E8 – 1 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">TEXT, BLOB
+</td>
+<td class="tabellentext" bgcolor="#000000">Kleine Zeichenkette
+</td>
+<td class="tabellentext" bgcolor="#000000">max. 65535 Byte
+</td>
+<td class="tabellentext" bgcolor="#000000">2E16 - 1 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">MEDIUMTEXT,
+MEDIUMBLOB
+</td>
+<td class="tabellentext" bgcolor="#000000">Mittelgro&szlig;e Zeichenkette
+</td>
+<td class="tabellentext" bgcolor="#000000">max. 16777215 Byte
+</td>
+<td class="tabellentext" bgcolor="#000000">2E24 - 1 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LONGTEXT,
+LONGBLOB
+</td>
+<td class="tabellentext" bgcolor="#000000">Gro&szlig;e Zeichenkette
+</td>
+<td class="tabellentext" bgcolor="#000000">max. 4294967295 Byte
+</td>
+<td class="tabellentext" bgcolor="#000000">2E32 - 1 Byte
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">ENUM
+</td>
+<td class="tabellentext" bgcolor="#000000">Auflistung
+</td>
+<td class="tabellentext" bgcolor="#000000">Auswahl nur eines Feldes
+</td>
+<td class="tabellentext" bgcolor="#000000">65535 Elemente
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SET
+</td>
+<td class="tabellentext" bgcolor="#000000">Auflistung
+</td>
+<td class="tabellentext" bgcolor="#000000">Mehrfachauswahl
+</td>
+<td class="tabellentext" bgcolor="#000000">64 Elemente
+</td>
+</tr>
+</table><br>
+<p>(»BLOB«: Abk. f. »Binary Large Object«, z. B. Fotos oder Musikdateien)</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>In MySQL ist es &uuml;brigens egal, ob Sie Gro&szlig;- oder Kleinschreibung verwenden. Es hat sich aber etabliert, die Statements gro&szlig;zuschreiben und die Feldnamen klein. Dadurch wird eine bessere &Uuml;bersichtlichkeit erreicht.</p>
+</td>
+</tr>
+</table><br>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">12.4.10 Datenbank anlegen, verwenden und l&ouml;sche<a id="RxxKap12003040004351F038251" name="RxxKap12003040004351F038251"></a>n 
+      <a href="#t2t312"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999662" name="Xxx999662"></a><a id="Xxx999663" name="Xxx999663"></a><a id="Xxx999664" name="Xxx999664"></a>Jetzt soll mit den SQL-Befehlen begonnen werden. Als Beispiel wird eine einfache Datenbank verwendet, womit sich Adressen verwalten lassen – ist zwar ein wenig &ouml;de, aber zum Lernen genau das Richtige. Sie k&ouml;nnen (sollten) dabei die einzelnen SQL-Befehle nach Herzenslust testen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wie in C m&uuml;ssen Sie das Ende eines MySQL-Befehls auf dem Monitor mit einem Semikolon (oder aber auch mit dem Zeichen <span class="listing">\g</span>) abschlie&szlig;en.</p>
+</td>
+</tr>
+</table><br>
+<p>Der erste Schritt ist das Anlegen einer neuen Datenbank. Starten Sie die MySQL-Shell, und gehen Sie dabei wie folgt vor:</p>
+<pre>$ mysql -uroot -hlocalhost -pk4p6m3o3
+Welcome to the MySQL monitor. Commands end with ; or \g.
+Your MySQL connection id is 1 to server version: 3.23.55-log
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+mysql&gt; CREATE DATABASE adressen;
+Query OK, 1 row affected (0.06 sec)</pre>
+<p><a id="Xxx999672" name="Xxx999672"></a>Mit dem Befehl <span class="listing">CREATE</span> <span class="listing">DATABASE</span> legen Sie eine neue Datenbank ohne Tabelle an. Idealerweise &uuml;berpr&uuml;ft man, ob nicht schon eine Datenbank mit dem Namen existiert. Dies k&ouml;nnen Sie folgenderma&szlig;en abfragen:</p>
+<pre>mysql&gt; CREATE DATABASE IF NOT EXISTS adressen;
+Query OK, 0 rows affected (0.00 sec)</pre>
+<p>Mit <span class="listing">IF</span> <span class="listing">NOT</span> <span class="listing">EXISTS</span> wird &uuml;berpr&uuml;ft, ob eine Datenbank mit dem Namen bereits existiert. Bedenken Sie aber auch, dass hierbei die Fehlermeldung (Database exists) nicht ausgegeben wird. Die L&auml;nge des Namens darf max. 64 Zeichen betragen – als Zeichen sind alle erlaubt, die auch f&uuml;r die Angabe von Dateien erlaubt sind.</p>
+<p>Wollen Sie sich jetzt einen &Uuml;berblick &uuml;ber die vorhandenen Datenbanken auf Ihrem System machen, steht Ihnen folgender Befehl zur Verf&uuml;gung:<a id="Xxx999677" name="Xxx999677"></a></p>
+<pre>mysql&gt; SHOW DATABASES;
++-------------+
+| Database    |
++-------------+
+| adressen    |
+| dvd_archiv  |
+| mail_archiv |
+| mein_test   |
+| mysql       |
+| test        |
++-------------+
+6 rows in set (0.26 sec)</pre>
+<p>Wenn Sie auf eine Datenbank zugreifen wollen, m&uuml;ssen Sie die gew&uuml;nschte Datenbank erst ausw&auml;hlen. Auch dieser Vorgang l&auml;sst sich recht einfach realisieren:<a id="Xxx999680" name="Xxx999680"></a></p>
+<pre>mysql&gt; USE adressen;
+Database changed</pre>
+<p>Wenn Sie jetzt eine Datenbank wieder l&ouml;schen wollen, k&ouml;nnen Sie hierf&uuml;r den SQL-Befehl <span class="listing">DROP</span> <span class="listing">DATABASE</span> verwenden:<a id="Xxx999683" name="Xxx999683"></a></p>
+<pre>mysql&gt; DROP DATABASE IF EXISTS adressen;
+Query OK, 0 rows affected (0.00 sec)</pre>
+<p>Bitte beachten Sie dabei, dass Sie hiermit die Datenbank mitsamt den Tabellen unwiderruflich l&ouml;schen.</p>
+<p>Hierzu nochmals eine &Uuml;bersicht zu den SQL-Befehlen zum Anlegen, Ausw&auml;hlen und L&ouml;schen einer Datenbank:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.4   
+    </b>SQL-Befehle zum Anlegen, Ausw&auml;hlen und L&ouml;schen einer DB</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Befehl</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">CREATE DATABASE &lt;datenbankname&gt;;
+</td>
+<td class="tabellentext" bgcolor="#000000">Legt eine neue Datenbank an.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">CREATE DATABASE IF NOT EXISTS &lt;datenbankname&gt;;
+</td>
+<td class="tabellentext" bgcolor="#000000">Legt eine neue Datenbank an, wenn diese noch nicht existiert.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">DROP DATABASE &lt;datenbankname&gt;;
+</td>
+<td class="tabellentext" bgcolor="#000000">L&ouml;scht eine Datenbank.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SHOW DATABASES;
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeigt alle Datenbanken auf dem System an.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">USE &lt;datenbankname&gt;;
+</td>
+<td class="tabellentext" bgcolor="#000000">W&auml;hlt eine Datenbank aus.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">mysqladmin CREATE &lt;datenbankname&gt;
+</td>
+<td class="tabellentext" bgcolor="#000000">Legt eine Datenbank mit dem Kommandozeilenwerkzeug mysqladmin an.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">mysqladmin DROP &lt;datenbankname&gt;
+</td>
+<td class="tabellentext" bgcolor="#000000">L&ouml;scht eine Datenbank mit dem Kommandozeilenwerkzeug mysqladmin.
+</td>
+</tr>
+</table><br>
+<a name="t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t312"></a><h3 class="t3">12.4.11 Tabelle anlege<a id="RxxKap12003040004351F038275" name="RxxKap12003040004351F038275"></a>n 
+      <a href="#t2t313"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t311"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999730" name="Xxx999730"></a><a id="Xxx999731" name="Xxx999731"></a>Nach dem Anlegen einer Datenbank k&ouml;nnen Sie die Tabellenstruktur festlegen. Neue Tabellen lassen sich recht einfach mit dem SQL-Befehl <span class="listing">CREATE</span> <span class="listing">TABLE</span> erzeugen. Als Parameter m&uuml;ssen Sie dabei Datenbankfelder und die Definitionen der Datentypen angeben. F&uuml;r Sie als C-Programmierer sieht dies &auml;hnlich aus wie bei der Definition eines Funktionsprototypen. Ein Unterschied in der Definition, im Gegensatz zu C, liegt darin, dass der Variablennamen vor dem Datentyp steht. Hierzu das Anlegen einer einfachen Tabellenstruktur:</p>
+<pre>mysql&gt; CREATE DATABASE IF NOT EXISTS adressen;
+Query OK, 1 row affected (0.00 sec)
+mysql&gt; CREATE TABLE privat(
+    -&gt; vname VARCHAR(25),
+    -&gt; nname VARCHAR(25),
+    -&gt; plz   INT,
+    -&gt; ort   VARCHAR(100),
+    -&gt; strasse VARCHAR(100),
+    -&gt; hausnr INT
+    -&gt; );
+Query OK, 0 rows affected (0.25 sec)</pre>
+<p>Mehr ist nicht n&ouml;tig, um eine einfache Tabelle zu definieren. Im Beispiel haben Sie auch gesehen, dass es ohne Probleme m&ouml;glich ist, SQL-Befehle &uuml;ber mehrere Zeilen zu schreiben. Entscheidend ist letztendlich das Semikolon am Ende einer SQL-Anweisung.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die Zeichenfolge »<span class="listing">-&gt;</span>« geh&ouml;rt &uuml;brigens zur Eingabeaufforderung des MySQL-Monitors und nicht zum Befehl! Anders als in einer Shell kann sich hierbei ein Befehl &uuml;ber mehrere Zeilen erstrecken, wobei allerdings dann auch nicht der ganze Befehl in die History &uuml;bernommen wird.</p>
+</td>
+</tr>
+</table><br>
+<p>Die allgemeine Syntax zur Erstellung einer neuen Tabelle sieht wie folgt aus:</p>
+<pre>CREATE TABLE &lt;tabellennamen&gt; ( &lt;spaltennamen&gt; &lt;datentype&gt;, ... );</pre>
+<p>H&auml;ufig wird die Frage gestellt, wie man eine neue Tabelle mit dem Inhalt einer anderen Tabelle anlegen kann. Dies ist einfacher, als Sie denken:</p>
+<pre>CREATE TABLE neue_Tabelle SELECT * FROM andere_Tabelle;</pre>
+<p>Schon finden Sie in <span class="listing">neue_Tabelle</span> dieselben Tabellen und denselben Inhalt vor wie bei <span class="listing">andere_Tabelle</span> (ein so genannter subquery). Auf <span class="listing">SELECT</span> wird noch ausf&uuml;hrlich eingegangen.</p>
+<p>Nat&uuml;rlich sind beim Anlegen einer neuen Tabelle noch viel mehr Angaben m&ouml;glich: U. a. Erstellungsanweisungen, Tabellenoptionen oder Auswahlanweisungen sind eine Reihe von Parametern, die zus&auml;tzlich verwendet werden k&ouml;nnen. Wenn ich allerdings dar&uuml;ber schriebe, k&ouml;nnte ich gleich ein Buch zu MySQL schreiben – und muss mich somit bremsen –, wie zu Beginn schon erw&auml;hnt. F&uuml;r noch mehr Details sei entsprechende Literatur (oder die Buch-CD) empfohlen. Dennoch sollen hierzu einige Dinge kurz beschrieben werden.</p>
+<a name="t312"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t313"></a><h3 class="t3">12.4.12 Schl&uuml;sselfelder (Tabellen anlegen<a id="RxxKap12003040004351F038281" name="RxxKap12003040004351F038281"></a>) 
+      <a href="#t2t314"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t312"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999747" name="Xxx999747"></a>Schl&uuml;sselfelder werden ben&ouml;tigt, wenn Sie eine relationale Verkn&uuml;pfung zwischen verschiedenen Tabellen herstellen wollen. Mit solch einem Schl&uuml;ssel kann jeder Datensatz in der Tabelle eindeutig identifiziert werden. Man bezeichnet diesen als Prim&auml;rschl&uuml;ssel. Die einfachste und gew&ouml;hnlichste Methode, einen solchen Schl&uuml;ssel f&uuml;r eine Tabelle zu definieren, ist es, in jeder Tabelle ein Feld mit einem Integer zu definieren. Wobei darauf geachtet werden sollte, dass solche Felder keine <span class="listing">NULL</span>-Werte (nicht mit <span class="listing">NULL</span> in C zu verwechseln) oder doppelte Eintr&auml;ge zulassen. Daf&uuml;r werden die Erstellungsanweisungen vom <span class="listing">CREATE</span> <span class="listing">TABLE</span>-Befehl verwendet. Dies wird mit folgenden Vorgaben erledigt:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> NOT</span> <span class="listing">NULL</span> – Vorgabe, dass keine leeren Werte gespeichert werden d&uuml;rfen; folgt hinter der Angabe der Definition des Datentyps (z. B. <span class="listing">plz</span> <span class="listing">INT</span> <span class="listing">NOT</span> <span class="listing">NULL</span>).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> UNIQUE</span> oder <span class="listing">PRIMARY</span> <span class="listing">KEY</span> – Vorgabe, dass keine doppelten Eintr&auml;ge f&uuml;r das Feld vorgenommen werden d&uuml;rfen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> AUTO_INCREMENT</span> – Der Integer-Wert wird automatisch bei einem Neueintrag inkrementiert und hinzugef&uuml;gt, falls er nicht angegeben wurde.</td>
+</tr>
+</table>
+<a name="t313"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t314"></a><h3 class="t3">12.4.13 Indize<a id="RxxKap12003040004351F038286" name="RxxKap12003040004351F038286"></a>s 
+      <a href="#t2t315"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t313"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999754" name="Xxx999754"></a>Eine weitere M&ouml;glichkeit beim Anlegen einer Datenbank sind Indizes. Damit k&ouml;nnen die Suche und die Geschwindigkeit positiv verbessert werden. Vorwiegend werden Indizes verwendet, um folgende Vorg&auml;nge zu beschleunigen:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> die Suche nach Informationen von Daten</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Tabellen sortieren</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> die Suche nach den gr&ouml;&szlig;ten und kleinsten Werten einer Tabelle</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> die Abfrage &uuml;ber unterschiedliche Tabellen</td>
+</tr>
+</table>
+<p>Mit Indizes werden die Daten in einer Form aufbereitet, die es erm&ouml;glicht, sie bei der Suche schneller zu finden. Dazu wird eine extra Index-Datei (standardm&auml;&szlig;ig mit der Endung <span class="listing">*.MYI</span> f&uuml;r MyISAM) angelegt, die bei jedem Hinzuf&uuml;gen, L&ouml;schen bzw. &Auml;ndern von Daten in der Tabelle aktualisiert wird. Bedenken Sie allerdings, dass beim Anwachsen des Index gleichzeitig auch die Arbeit der Aktualisierung aufw&auml;ndiger wird und somit die Performance darunter leiden kann. Um einen Index anzulegen, wird das Schl&uuml;sselwort <span class="listing">INDEX</span> verwendet. Wollen Sie z. B. einen Index f&uuml;r eine bestehende Tabelle erstellen, k&ouml;nnten Sie wie folgt vorgehen:</p>
+<pre>mysql&gt; CREATE TABLE privat(
+    -&gt; vname VARCHAR(25),
+    -&gt; nname VARCHAR(25),
+    -&gt; plz   INT,
+    -&gt; ort   VARCHAR(100),
+    -&gt; strasse VARCHAR(100),
+    -&gt; hausnr INT
+    -&gt; INDEX meinindex (nname));
+    -&gt; );</pre>
+<p>So w&uuml;rde hiermit ein Index f&uuml;r den Nachnamen <span class="listing">nname</span> angelegt, der &uuml;ber den Namen <span class="listing">meinindex</span> angesprochen werden kann.</p>
+<a name="t314"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t315"></a><h3 class="t3">12.4.14 Tabellentypen (Tabellen anlegen<a id="RxxKap12003040004351F03828F" name="RxxKap12003040004351F03828F"></a>) 
+      <a href="#t2t316"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t314"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999765" name="Xxx999765"></a>Die Daten von MySQL werden nicht einfach in einer ASCII-Form auf die Festplatte gespeichert, was den gleichzeitigen Zugriff auf die Daten erheblich verlangsamen w&uuml;rde. Vielmehr werden die Daten in einem bestimmten Tabellentyp gespeichert, der daf&uuml;r verantwortlich ist, wie die Daten physikalisch auf der Festplatte gespeichert werden. Es gibt dabei eine Menge Tabellentypen, womit Sie sich in der Praxis allerdings recht selten auseinander setzen m&uuml;ssen. Gedanken machen m&uuml;ssen Sie sich, wenn Sie Transaktionen mit MySQL machen wollen – aber dies steht hier nicht zur Diskussion. Gew&ouml;hnliche Tabellentypen sind HEAP, HASH, ISAM oder BTREE. Sofern Sie also standardm&auml;&szlig;ig mit MySQL arbeiten, wie in diesem Buch, verwenden Sie den Tabellentyp MyISAM, der f&uuml;r MySQL konzipiert ist.</p>
+<a name="t315"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t316"></a><h3 class="t3">12.4.15 Autowerte definiere<a id="RxxKap12003040004351F038291" name="RxxKap12003040004351F038291"></a>n 
+      <a href="#t2t317"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t315"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999769" name="Xxx999769"></a>Mit der Option <span class="listing">AUTO_INCREMENT</span> k&ouml;nnen Sie (wie der Name schon aussagen sollte) Zahlenwerte beim Anlegen eines neuen Datensatzes automatisch inkrementieren (hochz&auml;hlen). Autowerte werden nicht selten zusammen mit Prim&auml;rschl&uuml;sseln verwendet, um einen eindeutigen Wert automatisch zu erzeugen. Es sollte auch klar sein, dass Autowerte nur bei Integern verwendet werden k&ouml;nnen. Hier ein Beispiel, wie Sie solche automatischen Werte verwenden k&ouml;nnen.</p>
+<pre>CREATE TABLE eine_Tabelle( wert INT NOT NULL AUTO_INCREMENT,
+                           name VARCHAR(100) );</pre>
+<a name="t316"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t317"></a><h3 class="t3">12.4.16 Tabellen umbenennen und &auml;nder<a id="RxxKap12003040004351F038294" name="RxxKap12003040004351F038294"></a>n 
+      <a href="#t2t318"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t316"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999774" name="Xxx999774"></a><a id="Xxx999775" name="Xxx999775"></a>Wenn Sie eine Tabelle umbenennen, Felder, Indizes oder Schl&uuml;ssel hinzuf&uuml;gen, l&ouml;schen oder den Datentyp eines Feldes ver&auml;ndern wollen, dann steht Ihnen der Befehl <span class="listing">ALTER</span> <span class="listing">TABLE</span> zur Verf&uuml;gung. Bevor Sie etwas ver&auml;ndern wollen, werden Sie sich sicherlich die Struktur der Tabellen zuvor ansehen wollen. Dies k&ouml;nnen Sie mit einem einfachen <span class="listing">EXPLAIN</span> <span class="listing">&lt;datenbankname&gt;</span> machen:<a id="Xxx999777" name="Xxx999777"></a></p>
+<pre>mysql&gt; USE adressen;
+Database changed
+mysql&gt; EXPLAIN privat;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| vname   | varchar(25)  | YES  |     | NULL    |       |
+| nname   | varchar(25)  | YES  |     | NULL    |       |
+| plz     | int(11)      | YES  |     | NULL    |       |
+| ort     | varchar(100) | YES  |     | NULL    |       |
+| strasse | varchar(100) | YES  |     | NULL    |       |
+| hausnr  | int(11)      | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)</pre>
+<p>Den Namen der Tabelle k&ouml;nnen Sie mit folgendem Befehl umbenennen:</p>
+<pre>ALTER TABLE &lt;tabellenname&gt; RENAME &lt;neuer_tabellenname&gt;;</pre>
+<p>Zum Umbenennen einer Tabelle k&ouml;nnen Sie auch alternativ <span class="listing">RENAME</span> alleine wie folgt verwenden:</p>
+<pre>RENAME TABLE &lt;tabellenname&gt; TO &lt;neuer_tabellenname&gt;;</pre>
+<p>Neue Felder k&ouml;nnen Sie mit <span class="listing">ALTER</span> <span class="listing">TABLE</span> und dem Befehl <span class="listing">ADD</span> hinzuf&uuml;gen:<a id="Xxx999783" name="Xxx999783"></a></p>
+<pre>mysql&gt; ALTER TABLE privat ADD COLUMN telefon INT;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql&gt; EXPLAIN privat;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| vname   | varchar(25)  | YES  |     | NULL    |       |
+| nname   | varchar(25)  | YES  |     | NULL    |       |
+| plz     | int(11)      | YES  |     | NULL    |       |
+| ort     | varchar(100) | YES  |     | NULL    |       |
+| strasse | varchar(100) | YES  |     | NULL    |       |
+| hausnr  | int(11)      | YES  |     | NULL    |       |
+| telefon | int(11)      | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)</pre>
+<p>Hier haben Sie zur Adressverwaltung das Feld f&uuml;r die Telefonnummer hinzugef&uuml;gt. H&auml;tten Sie die Telefonnummer an einer anderen Stelle platzieren wollen, h&auml;tten Sie den Befehl <span class="listing">AFTER</span> verwenden m&uuml;ssen:</p>
+<pre>mysql&gt; ALTER TABLE privat ADD COLUMN test INT AFTER nname;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql&gt; EXPLAIN privat;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| vname   | varchar(25)  | YES  |     | NULL    |       |
+| nname   | varchar(25)  | YES  |     | NULL    |       |
+| test    | int(11)      | YES  |     | NULL    |       |
+| plz     | int(11)      | YES  |     | NULL    |       |
+| ort     | varchar(100) | YES  |     | NULL    |       |
+| strasse | varchar(100) | YES  |     | NULL    |       |
+| hausnr  | int(11)      | YES  |     | NULL    |       |
+| telefon | int(11)      | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)</pre>
+<p>Hier wurde die Variable <span class="listing">test</span> hinter der Spalte <span class="listing">nname</span> hinzugef&uuml;gt. Wollen Sie einen neuen Eintrag am Anfang vornehmen, k&ouml;nnen Sie das Gegenst&uuml;ck <span class="listing">FIRST</span> verwenden. Wollen Sie den Eintrag von <span class="listing">test</span> in der Tabelle wieder l&ouml;schen, ben&ouml;tigen Sie <span class="listing">DROP</span>:</p>
+<pre>mysql&gt; ALTER TABLE privat DROP COLUMN test;
+Query OK, 0 rows affected (0.00 sec)
+Records: 0  Duplicates: 0  Warnings: 0</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie auch nachtr&auml;glich neue Indexfelder (<span class="listing">ADD</span> <span class="listing">INDEX</span>), Unique-Felder (<span class="listing">ADD</span> <span class="listing">UNIQUE</span>) und Prim&auml;rschl&uuml;ssel (<span class="listing">ADD</span> <span class="listing">PRIMARY</span>) hinzuf&uuml;gen bzw. l&ouml;schen (<span class="listing">DROP</span>). Eine genauere Beschreibung erspare ich mir hierzu.</p>
+<p>Zum Ver&auml;ndern von bestehenden Feldern einer Tabelle stehen Ihnen <span class="listing">CHANGE</span> und <span class="listing">MODIFY</span> zur Verf&uuml;gung. Das &Auml;ndern des Datentyps und/oder des Variablennamens k&ouml;nnen Sie mit <span class="listing">CHANGE</span> folgenderma&szlig;en durchf&uuml;hren:</p>
+<pre>mysql&gt; ALTER TABLE privat CHANGE COLUMN telefon phone BIGINT;
+Query OK, 0 rows affected (0.00 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql&gt; EXPLAIN privat;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| vname   | varchar(25)  | YES  |     | NULL    |       |
+| nname   | varchar(25)  | YES  |     | NULL    |       |
+| plz     | int(11)      | YES  |     | NULL    |       |
+| ort     | varchar(100) | YES  |     | NULL    |       |
+| strasse | varchar(100) | YES  |     | NULL    |       |
+| hausnr  | int(11)      | YES  |     | NULL    |       |
+| phone   | bigint(20)   | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)</pre>
+<p>Hiermit haben Sie den Variablennamen <span class="listing">telefon</span> in <span class="listing">phone</span> umbenannt und als neuen Datentyp <span class="listing">BIGINT</span> anstatt <span class="listing">INT</span> verwendet. Mit dem SQL-Befehl <a id="Xxx999794" name="Xxx999794"></a><span class="listing">MODIFY</span> hingegen k&ouml;nnen Sie nur den Datentypen ver&auml;ndern. Die Existenzberechtigung von <span class="listing">MODIFY</span> basiert auf Oracle-Kompatibilit&auml;t, da <span class="listing">CHANGE</span> alle Anwendungsf&auml;lle des Ver&auml;nderns bestehender Felder in Tabellen abdeckt.</p>
+<a name="t317"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t318"></a><h3 class="t3">12.4.17 Daten einf&uuml;gen, &auml;ndern und l&ouml;sche<a id="RxxKap12003040004351F0382A5" name="RxxKap12003040004351F0382A5"></a>n 
+      <a href="#t2t319"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t317"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Jetzt, nachdem die DDL-Elemente f&uuml;r die strukturelle Definition der Datenbank abgeschlossen ist, kann mit der eigentlichen Arbeit (wof&uuml;r Datenbanken eben existieren) einer Datenbank begonnen werden.</p>
+<p>An dieser Stelle sind eigentlich auch Sie als Programmierer angesprochen. Denn zur Arbeit mit den Daten werden Benutzerwerkzeuge und Schnittstellen verwendet. Im Beispiel werden Sie das Kommandozeilenwerkzeug <span class="listing">mysql</span> dazu verwenden. Alternativ k&ouml;nnen Sie hierf&uuml;r auch einen grafischen Client verwenden, oder – das ist ja auch der Sinn dieses Kapitels – Sie programmieren eine eigene Benutzerschnittstelle (Client) zur MySQL-Datenbank (Server). Dabei k&ouml;nnen Sie sowohl Desktop-Anwendungen entwerfen als auch eigene Webapplikationen, die mit dem Browser zusammenarbeiten (in diesem Kapitel), verwenden.</p>
+<p>Um aber jetzt eigene Clientanwendungen f&uuml;r MySQL zu entwickeln, ben&ouml;tigen Sie (vor allem) auch noch Kenntnisse der DML-Elemente zum Manipulieren von Daten.</p>
+<p>Als Erstes wollen Sie wohl Datens&auml;tze in die Tabelle einf&uuml;gen. Sie haben dabei mehrere M&ouml;glichkeiten – wobei Sie hier die einfachste verwenden werden, das Kommandozeilenwerkzeug <span class="listing">mysql</span> (wie gehabt). Auch hierbei k&ouml;nnen Sie gerne einen der grafischen Clients verwenden.</p>
+<p><a id="Xxx999801" name="Xxx999801"></a>Datens&auml;tze einf&uuml;gen k&ouml;nnen Sie mit dem SQL-Kommando <span class="listing">INSERT</span>. Zur Demonstration soll der erste Datensatz in die Tabelle <span class="listing">adressen</span> eingef&uuml;gt werden:<a id="Xxx999803" name="Xxx999803"></a></p>
+<pre>mysql&gt; USE adressen;
+mysql&gt; INSERT INTO privat(
+    -&gt; vname, nname, plz, ort, strasse, hausnr, phone )
+    -&gt; VALUES (
+    -&gt; 'J&uuml;rgen', 'Wolf', 86316, 'Friedberg', 'Musterweg',
+    -&gt; 123, 821123456 );
+Query OK, 1 row affected (0.26 sec)</pre>
+<p>Es wird also der Tabellenname angegeben, gefolgt von den Tabellenspalten und den Werten (<span class="listing">VALUES</span>), die in den einzelnen Spalten gespeichert werden sollen. Beim Datentyp <span class="listing">VARCHAR</span> muss der String in einfache Hochkommata gesetzt werden. Die Tabellenspalten und Werte werden dabei durch Kommata getrennt. Wichtig dabei ist, dass Sie die Reihenfolge der Tabellenspalten auch bei den Werten einhalten. Dabei m&uuml;ssen Sie die Reihenfolge nicht stur so einhalten, wie Sie die Tabellenstruktur definiert haben. Sie k&ouml;nnen z. B. auch alles in der umgekehrten Reihenfolge schreiben:</p>
+<pre>INSERT INTO privat(
+    -&gt; phone, hausnr, strasse, ort, plz, nname, vname)
+    -&gt; VALUES (
+    -&gt; 0821123456,  123, 'Musterweg', 'Friedberg', 86316,
+    -&gt; 'Wolf', 'J&uuml;rgen');</pre>
+<p>Wichtig ist einfach nur, dass die Reihe der Spalten und Werte eingehalten wird und die Namen der Tabellenstruktur in den Spalten auch existieren. MySQL erlaubt auch – entgegen dem SQL-Standard –, dass mehrere Datens&auml;tze auf einmal eingef&uuml;gt werden k&ouml;nnen:</p>
+<pre>mysql&gt; INSERT INTO privat(
+    -&gt; vname, nname, plz, ort, strasse, hausnr, phone )
+    -&gt; VALUES (
+    -&gt; 'Jonathan', 'Wolf', 12345, 'Musterhausen', 
+    -&gt; 'Strassenweg', 1, 9112341 ),
+    -&gt; ('Fatma', 'Wolf', 34344, 'Schlumpfhausen', 
+    -&gt; 'Schlumpfweg',33, 7122343 );
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0</pre>
+<p>Nat&uuml;rlich lassen sich hier mithilfe von <span class="listing">SELECT</span> Subquery-Datens&auml;tze von anderen Tabellen &uuml;bernehmen:</p>
+<pre>INSERT INTO &lt;tabellenname&gt; ( &lt;spaltenname&gt;, ...) 
+    SELECT &lt;auswahlbedingung&gt;;</pre>
+<p>Nat&uuml;rlich gibt es auch beim Einf&uuml;gen einiges zu beachten. Vor allem Probleme beim Einf&uuml;gen doppelter Datens&auml;tze gilt es, Herr zu werden. Aber hierauf soll nicht n&auml;her eingegangen werden.</p>
+<p><a id="Xxx999812" name="Xxx999812"></a>Wenn eine Person umgezogen ist, m&uuml;ssen Sie deren Daten ver&auml;ndern. Der SQL-Befehl hierf&uuml;r lautet <span class="listing">UPDATE</span>. Hier ein Beispiel dazu:<a id="Xxx999814" name="Xxx999814"></a></p>
+<pre>mysql&gt; UPDATE privat
+    -&gt; SET plz=23456, ort='M&uuml;nchen', strasse='Schleichweg',
+    -&gt; hausnr=12, phone=89123412
+    -&gt; WHERE vname='Jonathan' AND nname='Wolf' LIMIT 1;
+Query OK, 0 rows affected (0.27 sec)
+Rows matched: 0  Changed: 0  Warnings: 0</pre>
+<p>Hier wurde die Adresse von Jonathan Wolf ge&auml;ndert. Gesprochen hei&szlig;t dies: Aktualisiere in der Datenbank <span class="listing">privat</span> (<span class="listing">UPDATE</span> <span class="listing">privat</span>), ver&auml;ndere/setze neue Werte (<span class="listing">SET</span>) f&uuml;r <span class="listing">plz</span> <span class="listing">23456</span>, <span class="listing">ort</span> ist <span class="listing">M&uuml;nchen</span> etc., &auml;ndere aber nur dort, wo (<span class="listing">WHERE</span>) die Daten <span class="listing">nname=Wolf</span> und (<span class="listing">AND</span>) <span class="listing">vname=Jonathan</span> sind. Der Zusatz <span class="listing">LIMIT</span> <span class="listing">1</span> weist den Datenbankserver an, den Befehl nach dem ersten Treffer abzubrechen, was bei gro&szlig;en Datenbest&auml;nden erhebliche Performance bringen kann. Nat&uuml;rlich k&ouml;nnen Sie auch mehrere Daten in einem Rutsch ver&auml;ndern:</p>
+<pre>mysql&gt; UPDATE privat
+    -&gt; SET hausnr=1
+    -&gt; WHERE nname='Wolf';
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 3  Changed: 2  Warnings: 0</pre>
+<p>Somit haben Sie bei allen Werten, wo die Spalte <span class="listing">nname</span> den Wert <span class="listing">'Wolf'</span> hat, die Hausnummer (<span class="listing">hausnr</span>) auf 1 gesetzt. Mit <span class="listing">SET</span> k&ouml;nnen Sie also einer gew&uuml;nschten Spalte einen neuen Wert setzen.</p>
+<p><a id="Xxx999819" name="Xxx999819"></a>Daten l&ouml;schen k&ouml;nnen Sie mit dem SQL-Befehl <span class="listing">DELETE</span> folgenderma&szlig;en:<a id="Xxx999820" name="Xxx999820"></a></p>
+<pre>mysql&gt; DELETE FROM privat WHERE ort='Friedberg';
+Query OK, 1 row affected (0.00 sec)</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie hierbei auch mehrere Bedingungen mit <span class="listing">AND</span> oder <span class="listing">OR</span> verkn&uuml;pfen.</p>
+<a name="t318"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t319"></a><h3 class="t3">12.4.18 Daten importiere<a id="RxxKap12003040004351F0382BB" name="RxxKap12003040004351F0382BB"></a>n 
+      <a href="#t2t320"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t318"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999826" name="Xxx999826"></a>Ein h&auml;ufiger Anwendungsfall ist es, die Daten aus einer anderen Anwendung nach MySQL zu importieren. H&auml;ufig handelt es sich dabei um eine sehr wackelige Angelegenheit, die schon einiges an Erfahrung fordert. Eine falsche Feldzuordnung, und Sie haben den (Daten-)Salat. Denn gew&ouml;hnlich sind die Tabellen der Datenbanken nicht so einfach aufgebaut, wie dies im Buch demonstriert wird. Um Daten zu importieren, haben Sie folgende M&ouml;glichkeiten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Import &uuml;ber den SQL-Befehl <span class="listing">INSERT</span>. Dabei m&uuml;ssen die Daten in einem SQL-String vorliegen, so wie dieser z. B. bei einem Dump mit <span class="listing">mysqldump</span> zur&uuml;ckgegeben wird.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Import &uuml;ber so genannte Delimited-ASCII-Dateien (z. B. CSV-Datei aus einer Tabellenkalkulation). F&uuml;r den Import solcher Dateien wird der SQL-Befehl <a id="Xxx999830" name="Xxx999830"></a><span class="listing">LOAD</span> <span class="listing">DATA</span> <span class="listing">INFILE</span> oder das Kommandozeilenwerkzeug <span class="listing">mysqlimport</span> verwendet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die ODBC-Schnittstelle.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left">  ... und nat&uuml;rlich die vielen Tools, die f&uuml;r den Dateiimport entwickelt wurden.</td>
+</tr>
+</table>
+<a name="t319"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t320"></a><h3 class="t3">12.4.19 Datenausgab<a id="RxxKap12003040004351F0382C1" name="RxxKap12003040004351F0382C1"></a>e 
+      <a href="#t2t321"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t319"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999835" name="Xxx999835"></a>Jetzt fehlt Ihnen nur noch die Kenntnis zur Ausgabe von Daten. Dabei bedienen Sie sich des m&auml;chtigen Befehls <span class="listing">SELECT</span>, der Ihnen je nach Inhalt kein, ein oder mehrere Ergebnisse zur&uuml;ckliefert. Um Ihnen die Vielseitigkeit von <span class="listing">SELECT</span> zu beschreiben, m&uuml;ssten noch mindestens 50 Seiten mehr f&uuml;r das Buch reserviert werden. Daher hierzu nur die grundlegenden <span class="listing">SELECT</span>-Operationen. Wollen Sie alle Daten einer Tabelle ausgeben lassen, gehen Sie wie folgt vor:<a id="Xxx999837" name="Xxx999837"></a></p>
+<pre>mysql&gt; SELECT * FROM privat;
++--------+-----+-----+--------------+-----------+------+-------+
+|vname   |nname|plz  |ort           |strasse    |hausnr| phone |    
++--------+-----+-----+--------------+-----------+------+-------+
+|J&uuml;rgen  |Wolf |86316|Friedberg     |Musterweg  |   123| …     |
+|Jonathan|Wolf |12345|Musterhausen  |Strassenweg|     1| …     |
+|Fatma   |Wolf |34344|Schlumpfhausen|Schlumpfweg|     1| …     |
++--------+-----+-----+--------------+-----------+------+-------+
+3 rows in set (0.00 sec)</pre>
+<p>Das Sternchen (Wildcard) wird hierbei als Platzhalter f&uuml;r alle in der Tabelle vorhandenen Spalten verwendet. Mit <span class="listing">FROM</span> geben Sie an, welche Tabelle Sie selektieren wollen. Ben&ouml;tigen Sie nur Daten von einer einzelnen Spalte, gehen Sie so vor:</p>
+<pre>mysql&gt; SELECT ort FROM privat;
++----------------+
+| ort            |
++----------------+
+| Friedberg      |
+| Musterhausen   |
+| Schlumpfhausen |
++----------------+
+3 rows in set (0.00 sec)</pre>
+<p>Sind Sie nur an ganz speziellen Inhalten von Spalten interessiert, k&ouml;nnen Sie auch hier wieder den SQL-Befehl <span class="listing">WHERE</span> verwenden:</p>
+<pre>mysql&gt; SELECT * FROM privat WHERE vname='J&uuml;rgen';
++--------+-----+-----+--------------+-----------+------+-------+
+|vname   |nname|plz  |ort           |strasse    |hausnr| phone |    
++--------+-----+-----+--------------+-----------+------+-------+
+|J&uuml;rgen  |Wolf |86316|Friedberg     |Musterweg  |   123| …     |
++--------+-----+-----+--------------+-----------+------+-------+
+1 row in set (0.00 sec)</pre>
+<p>Sie k&ouml;nnen mit <span class="listing">SELECT</span> nat&uuml;rlich noch viel mehr und genauere Anfragen stellen. Die Abfrage kann sich dabei &uuml;ber mehrere verschiedene Tabellen des relationalen Datenbankmodells beziehen. Hierzu eine vollst&auml;ndige Syntax von <span class="listing">SELECT</span>:</p>
+<pre>SELECT &lt;ausdruck&gt; 
+   FROM &lt;tabellennamen&gt;
+   WHERE &lt;bedingung&gt;
+   GROUP BY &lt;feldname&gt;
+   HAVING &lt;bedingung&gt;
+   ORDER BY &lt;feldname&gt;;</pre>
+<p>Es m&uuml;ssen dabei nicht alle Angaben verwendet werden, allerdings muss die Reihenfolge eingehalten werden. Sie k&ouml;nnen somit nicht erst <span class="listing">ORDER</span> <span class="listing">BY</span> verwenden und anschlie&szlig;end <span class="listing">WHERE</span>.</p>
+<p>Die Ausgabe sortieren k&ouml;nnen Sie mit:</p>
+<pre>mysql&gt; SELECT * FROM privat ORDER BY vname;
++--------+-----+-----+--------------+-----------+------+-------+
+|vname   |nname|plz  |ort           |strasse    |hausnr| phone |    
++--------+-----+-----+--------------+-----------+------+-------+
+|Fatma   |Wolf |34344|Schlumpfhausen|Schlumpfweg|     1| …     |
+|Jonathan|Wolf |12345|Musterhausen  |Strassenweg|     1| …     |
+|J&uuml;rgen  |Wolf |86316|Friedberg     |Musterweg  |   123| …     |
++--------+-----+-----+--------------+-----------+------+-------+
+3 rows in set (0.00 sec)</pre>
+<p>Wobei standardm&auml;&szlig;ig in aufsteigender Reihenfolge sortiert wird. Nat&uuml;rlich k&ouml;nnen Sie auch nach zwei Kriterien sortieren:</p>
+<pre>mysql&gt; SELECT * FROM privat ORDER BY nname, vname;
++--------+-----+-----+--------------+-----------+------+-------+
+|vname   |nname|plz  |ort           |strasse    |hausnr| phone |    
++--------+-----+-----+--------------+-----------+------+-------+
+|Fatma   |Wolf |34344|Schlumpfhausen|Schlumpfweg|     1| …     |
+|Jonathan|Wolf |12345|Musterhausen  |Strassenweg|     1| …     |
+|J&uuml;rgen  |Wolf |86316|Friedberg     |Musterweg  |   123| …     |
++--------+-----+-----+--------------+-----------+------+-------+
+3 rows in set (0.00 sec)</pre>
+<p>Hier wird erst nach Nachnamen und anschlie&szlig;end nach dem Vornamen sortiert, wie dies z. B. auch in Telefonb&uuml;chern der Fall ist. Schlie&szlig;lich gibt es von einem Nachnamen meistens mehrere, weshalb ein Sortieren nach dem Vornamen auch sinnvoll erscheint. Wollen Sie hingegen in absteigender Form sortieren, m&uuml;ssen Sie am Ende <span class="listing">DESC</span> hinzuf&uuml;gen:</p>
+<pre>mysql&gt; SELECT * FROM privat ORDER BY nname, vname DESC;
++--------+-----+-----+--------------+-----------+------+-------+
+|vname   |nname|plz  |ort           |strasse    |hausnr| phone |    
++--------+-----+-----+--------------+-----------+------+-------+
+|J&uuml;rgen  |Wolf |86316|Friedberg     |Musterweg  |   123| …     |
+|Jonathan|Wolf |12345|Musterhausen  |Strassenweg|     1| …     |
+|Fatma   |Wolf |34344|Schlumpfhausen|Schlumpfweg|     1| …     |
++--------+-----+-----+--------------+-----------+------+-------+
+3 rows in set (0.00 sec)</pre>
+<p>Wollen Sie den Inhalt der Daten f&uuml;r andere Programme exportieren, wie dies z. B. f&uuml;r Tabellenkalkulationsprogramme gerne gemacht wird, bietet sich folgender L&ouml;sungsweg an:</p>
+<pre>mysql&gt; SELECT * INTO OUTFILE 'test.csv'
+    -&gt; FIELDS TERMINATED BY ';' LINES TERMINATED BY '%'
+    -&gt; FROM privat;
+Query OK, 3 rows affected (0.00 sec)</pre>
+<p>Jetzt k&ouml;nnen Sie die Datei <span class="listing">test.csv</span> in einer tabellenkalkulations&uuml;blichen Form mit z. B. Open Office Calc oder Kspread &ouml;ffnen.</p>
+<a name="t320"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t321"></a><h3 class="t3">12.4.20 NULL ist 0 oder undefiniert<a id="RxxKap12003040004351F0382D4" name="RxxKap12003040004351F0382D4"></a>? 
+      <a href="#t2t322"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t320"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999857" name="Xxx999857"></a>Die <span class="listing">NULL</span>-Marke hat bei MySQL eine andere Bedeutung. <span class="listing">NULL</span> bedeutet, dass ein Wert f&uuml;r das Feld fehlt – sprich: Der Wert ist unbekannt oder leer. <span class="listing">NULL</span> ist somit nicht 0 und auch, im Falle eines Strings, kein leerer String.</p>
+<a name="t321"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t322"></a><h3 class="t3">12.4.21 Unscharfe Such<a id="RxxKap12003040004351F0382D6" name="RxxKap12003040004351F0382D6"></a>e 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t321"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999861" name="Xxx999861"></a>Manchmal f&auml;llt einem partout nicht der genaue Name oder die genaue Ortschaft ein. Oder wie hat sich <span class="listing">'Wolf'</span> <span class="listing">'Jonathan'</span> gleich wieder geschrieben – war es jetzt <span class="listing">'Wolff'</span> oder <span class="listing">'Wolf'</span> ... – oder wie kann ich E-Mail-Adressen von einem bestimmten Provider ausfiltern? F&uuml;r solche und viele weitere M&ouml;glichkeiten gibt es die unscharfe Suche mit den SQL-Befehlen <span class="listing">LIKE</span> und <span class="listing">IN</span>.</p>
+<p>Sie suchen z. B. nach einer bestimmten Postleitzahl:</p>
+<pre>mysql&gt; SELECT * FROM privat WHERE plz LIKE '%63 %';
++--------+-----+-----+--------------+-----------+------+-------+
+|vname   |nname|plz  |ort           |strasse    |hausnr| phone |    
++--------+-----+-----+--------------+-----------+------+-------+
+|J&uuml;rgen  |Wolf |86316|Friedberg     |Musterweg  |   123| …     |
++--------+-----+-----+--------------+-----------+------+-------+
+1 row in set (0.00 sec)</pre>
+<p>Hier wird eine Postleitzahl ausgegeben, welche die Zahlenfolge <span class="listing">63</span> enth&auml;lt. <span class="listing">%</span> wird als Wildcard verwendet. Oder wie lautete denn nun gleich wieder die Ortschaft, die mit …berg endete?</p>
+<pre>mysql&gt; SELECT * FROM privat WHERE ort LIKE '%berg';
++--------+-----+-----+--------------+-----------+------+-------+
+|vname   |nname|plz  |ort           |strasse    |hausnr| phone |    
++--------+-----+-----+--------------+-----------+------+-------+
+|J&uuml;rgen  |Wolf |86316|Friedberg     |Musterweg  |   123| …     |
++--------+-----+-----+--------------+-----------+------+-------+
+1 row in set (0.00 sec)</pre>
+<p>Soll dabei auf Gro&szlig;- und Kleinschreibung geachtet werden, m&uuml;ssen Sie nur vor <span class="listing">LIKE</span> das Schl&uuml;sselwort <span class="listing">BINARY</span> setzen.</p>
+<p>Schluss, aus und Ende. Da der Crashkurs eh schon l&auml;nger geworden ist, muss jetzt Schluss damit sein. Sie wollen schlie&szlig;lich auch etwas programmieren. Und sofern Sie bereits Kenntnisse in MySQL haben, m&ouml;chte ich Ihre Geduld nicht &uuml;berstrapazieren.</p>
+<p>Sie kennen jetzt die grundlegenden Befehle, um recht gut mit der MySQL-Datenbank zu arbeiten und um eigene Clientprogramme zu entwickeln – daher soll jetzt auch damit begonnen werden.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap12-002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap12-004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap12-003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:45:21 GMT -->
+</html>

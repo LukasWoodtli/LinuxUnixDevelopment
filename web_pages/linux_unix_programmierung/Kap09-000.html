@@ -1,0 +1,732 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap09-000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:11 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 9 IPC – Interprozesskommunikation</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap08-012.html">
+<link rel="next" href="Kap09-001.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap08-012.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap09-001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a class="navh2" href="#RxxKap09000040002B71F02D100">9 IPC – Interprozesskommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap09000040002B71F02D10B">9.1 Unterschiedliche Interprozesskommunikations-Techniken im &Uuml;berblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09000040002B71F02D10D">9.1.1 (Namenlose) Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09000040002B71F02D117">9.1.2 Benannte Pipes (FIFO-Pipes)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09000040002B71F02D183">9.1.3 Message Queue (Nachrichtenspeicher)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09000040002B71F02D187">9.1.4 Semaphore</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09000040002B71F02D18A">9.1.5 Shared Memory (gemeinsamer Speicher)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09000040002B71F02D18D">9.1.6 STREAMS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09000040002B71F02D195">9.1.7 Sockets</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09000040002B71F02D197">9.1.8 Lock Files (Sperrdateien)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09000040002B71F02D19A">9.1.9 Dateisperren (Record Locking)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-001.html#RxxKap09001040002D41F046100">9.2 Gr&uuml;nde f&uuml;r IPC</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-002.html#RxxKap09002040002D51F049100">9.3 Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049104">9.3.1 Eigenschaften von Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049108">9.3.2 Pipes einrichten – pipe()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049182">9.3.3 Eigenschaften von elementaren E/A-Funktionen bei Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049188">9.3.4 Standard-E/A-Funktionen mit pipe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049192">9.3.5 Pipes in einen anderen Prozess umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F04919A">9.3.6 Filterprogramm erstellen mithilfe einer Pipe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F0491A6">9.3.7 Einrichten einer Pipe zu einem anderen Prozess – popen()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F0491B8">9.3.8 Mail versenden mit Pipes und Sendmail</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F0491C2">9.3.9 Drucken &uuml;ber eine Pipe mit lpr</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F0491D5">9.3.10 Benannte Pipes – FIFOs</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-003.html#RxxKap09003040002D61F02A100">9.4 System-V-Interprozesskommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-003.html#RxxKap09003040002D61F02A102">9.4.1 Gemeinsamkeiten der SysV-Mechanismen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-003.html#RxxKap09003040002D61F02A10D">9.4.2 Ein Objekt einrichten, eine Verbindung herstellen und das Objekt wieder l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-003.html#RxxKap09003040002D61F02A111">9.4.3 Datenaustausch zwischen nicht verwandten Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-004.html#RxxKap09004040002D71F017100">9.5 Semaphore</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F017104">9.5.1 Lebenszyklus eines Semaphors</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F017116">9.5.2 Ein Semaphor &ouml;ffnen oder erstellen – semget()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F01717D">9.5.3 Abfragen, &Auml;ndern oder L&ouml;schen der Semaphormenge – semctl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F0171A1">9.5.4 Operationen auf Semaphormengen – semop()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F0171B3">9.5.5 Semaphore im Vergleich mit Sperren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-005.html#RxxKap09005040002D81F03B100">9.6 Message Queues</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-005.html#RxxKap09005040002D81F03B109">9.6.1 Eine Message Queue &ouml;ffnen oder erzeugen – msgget()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-005.html#RxxKap09005040002D81F03B111">9.6.2 Nachrichten versenden – msgsnd()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-005.html#RxxKap09005040002D81F03B176">9.6.3 Eine Nachricht empfangen – msgrcv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-005.html#RxxKap09005040002D81F03B17E">9.6.4 Abfragen, &Auml;ndern oder L&ouml;schen einer Message Queue – msgctl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-006.html#RxxKap09006040002D91F028100">9.7 Shared Memory</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F028102">9.7.1 Ein Shared-Memory-Segment erstellen oder &ouml;ffnen – shmget()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F02810A">9.7.2 Ein Shared-Memory-Segment abfragen, &auml;ndern oder l&ouml;schen – shmctl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F028117">9.7.3 Ein Shared-Memory-Segment anbinden (attach) – shmat()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F02817D">9.7.4 Ein Shared-Memory-Segment losl&ouml;sen – shmdt()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F028181">9.7.5 Client-Server-Beispiel – Shared Memory</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<h1 class="t1">Kapitel 9 <a id="RxxKap092IPCInterprozesskommunikation" name="RxxKap092IPCInterprozesskommunikation"></a>IPC – Interprozesskommunikati<a id="RxxKap09000040002B71F02D100" name="RxxKap09000040002B71F02D100"></a>on</h1>
+<p class="anleser"><i>Wenn Prozesse untereinander kommunizieren, aufeinander warten oder Daten und Ressourcen austauschen m&uuml;ssen, werden so genannte Interprozesskommunikationen verwendet.</i></p>
+<p><a id="Xxx999237" name="Xxx999237"></a>Dass Linux ein Multitasking-System ist, d&uuml;rften/sollten Sie (sp&auml;testens seit dem Kapitel &uuml;ber Prozesse) bereits erfahren und verstanden haben. Dazu geh&ouml;rt auch, dass die meisten der vielen Prozesse, die nebeneinander herlaufen, so gut wie nichts voneinander dar&uuml;ber wissen, welche Daten diese z. B. enthalten. Realisiert wird das Ganze durch einen Speicherschutz. Dieser dient zum Schutz des Betriebssystems, denn w&uuml;rde ein Prozess auf die Speichersegmente eines anderen Prozesses zugreifen, so beeintr&auml;chtigt dies nur die Stabilit&auml;t der Programme (Absturz/Programmierfehler) oder gar des Gesamtsystems. Voraussetzung (hardwarem&auml;&szlig;ig) ist daf&uuml;r eine Speicherverwaltungseinheit (MMU). In der Regel ist diese Voraussetzung bis auf wenige Ausnahmen auf allen Betriebssystemen gegeben. Ausnahmen stellen meistens so genannte embedded Systeme dar, auf denen h&auml;ufig nur einzelne Anwendungen laufen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Dieser Speicherschutz wird allerdings (besonders bei x86-Prozessoren) immer h&auml;ufiger unterlaufen. Einige Viren nutzen z. B. den Fehler einiger Anwendungen bzw. des Betriebssystems aus, um einen Buffer Overflow zu erzeugen, um den Speicherschutz (schlimmstenfalls) ganz au&szlig;er Kraft zu setzen.</p>
+</td>
+</tr>
+</table><br>
+<p>Dennoch gibt es Anwendungsf&auml;lle, wo man sich gerne einen »Tunnel« zu einem anderen Prozess graben muss. Einige Gr&uuml;nde hierf&uuml;r w&auml;ren:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Mehrere Prozesse m&uuml;ssen spezielle Daten gemeinsam verwenden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die Prozesse sind untereinander abh&auml;ngig und m&uuml;ssen aufeinander warten.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Daten m&uuml;ssen von einem Prozess zu einem anderen weitergereicht werden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die Verwendung von Systemressourcen muss koordiniert werden.</td>
+</tr>
+</table>
+<p>F&uuml;r solche Anwendungsf&auml;lle wurden bereits im System V (SysV) schon vor l&auml;ngerer Zeit zuverl&auml;ssige und bew&auml;hrte Techniken entwickelt, die heute in vielen UNIXen (u. a. auch Linux) implementiert sind. Diese Mechanismen werden unter dem Begriff »Interprozesskommunikation« (kurz IPC) zusammengefasst. Da auch der Betriebssystemkern selbst (vor allem auf Mehrprozessorsystemen) mit Problemen, die eben aufgez&auml;hlt wurden, zu k&auml;mpfen hat, wurden einige dieser Mechanismen in den Kernel implementiert.</p>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">9.1 <a id="RxxKap0912UnterschiedlicheInterprozesskommunikationsTechnikenimUberblick" name="RxxKap0912UnterschiedlicheInterprozesskommunikationsTechnikenimUberblick"></a>Unterschiedliche Interprozesskommunikations-Techniken im &Uuml;berbli<a id="RxxKap09000040002B71F02D10B" name="RxxKap09000040002B71F02D10B"></a>ck 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p>Eine Technik, wenn auch sehr beschr&auml;nkt, haben Sie bereits ein Kapitel zuvor anhand der Signale kennen gelernt. Im folgenden Abschnitt sollen die wichtigsten Interprozesskommunikations-Mechanismen erl&auml;utert werden. Viele dieser Techniken werden Sie im Verlaufe des Kapitels bzw. des Buchs noch n&auml;her kennen lernen.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">9.1.1 (Namenlose) Pipes<a id="RxxKap09000040002B71F02D10D" name="RxxKap09000040002B71F02D10D"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999254" name="Xxx999254"></a><a id="Xxx999255" name="Xxx999255"></a>Pipes, wie auch FIFOs (named Pipes), sind die einzigen beiden IPCs, die garantiert auf jedem System vorhanden sind. Sie sind sowohl POSIX-, SVR4-, XPG3- als auch BSD-konform.</p>
+<p>Eine Pipe ist ein unidirektionaler Kommunikationskanal zwischen zwei verwandten Prozessen (sie kann auch innerhalb eines einzigen Prozesses genutzt werden – inwiefern das sinnvoll ist, ist eine andere Frage). Sie haben Pipes sicherlich schon des &Ouml;fteren in der Konsole verwendet. Beispielsweise:</p>
+<pre>$ ps ax | less</pre>
+<p>Hiermit haben Sie in der Shell zwei Prozesse gestartet. Ein Prozess f&uuml;hrt das Kommando ps ax aus und schreibt das Ergebnis gew&ouml;hnlich an die Standardausgabe. Durch die Pipe (<span class="listing">|</span>) wird allerdings diese Standardausgabe an den Prozess less weitergeleitet. less liest hierbei die Daten von der Standardeingabe ein und gibt aus, was ihm das Kommando ps durch die Pipe so schickt. Nat&uuml;rlich erfolgt die Ausgabe mit dem gew&ouml;hnlichen Komfort, den less ihnen auch sonst bietet.</p>
+<p>Wenn die Daten in beide Richtungen ausgetauscht werden sollen, muss eine zweite Pipe dazu verwendet werden. Sie d&uuml;rfen sich eine Pipe gerne wie ein Rohr vorstellen, wo die Daten in die eine Seite (Prozess A) hineingesteckt werden und bei Prozess B wieder herauskommen.</p>
+<p>Eine Pipe dient au&szlig;er zur Kommunikation zwischen zwei Prozessen hervorragend zur Flusskontrolle. Dies daher, weil eine Pipe nur eine bestimmte Menge an Daten aufnehmen kann (normalerweise 4 KB, 8 KB oder AIX 32 KB; siehe Konstante <span class="listing">PIPE_BUF</span> in <span class="listing">limits.h</span> oder auch ulimit -p). Ist die Pipe (bzw. deren Puffer) voll, wird ein Prozess mindestens so lange angehalten, bis mindestens ein Byte aus der vollen Pipe gelesen wurde und wieder Platz vorhanden ist, um die Pipe wieder mit Daten zu bef&uuml;llen. Andersherum dasselbe Bild, ist die Pipe leer, wird der lesende Prozess so lange angehalten, bis der schreibende Prozess etwas in diese Pipe schickt.</p>
+<p>Es gibt also eine Schreibseite und eine Leseseite bei einer Pipe. Somit ist also nur eine Kommunikation in einer Richtung m&ouml;glich (half-duplex). Sie k&ouml;nnen sich das Beispiel oben so vorstellen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_1.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_1.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.1   
+    </b>Kommunikation zwischen zwei Prozessen &uuml;ber eine Pipe</p>
+</td>
+</tr>
+</table><br>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">9.1.2 Benannte Pipes (FIFO-Pipes)<a id="RxxKap09000040002B71F02D117" name="RxxKap09000040002B71F02D117"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999271" name="Xxx999271"></a><a id="Xxx999272" name="Xxx999272"></a><a id="Xxx999273" name="Xxx999273"></a>Mit den Pipes k&ouml;nnen Sie allerdings nur mit den Prozessen kommunizieren, die miteinander verwandt sind. Also nur zwischen geforkten Prozessen. Mit FIFOs (benannten Pipes) haben Sie nun die M&ouml;glichkeit, mit einem v&ouml;llig fremden Prozess zu kommunizieren (Daten austauschen), da solche Pipes &uuml;ber einen Dateinamen angesprochen werden k&ouml;nnen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Ich verwende hier vorwiegend den Begriff FIFO statt »benannte Pipe«, da hierbei gerne ein Durcheinander im Gehirn mit der namenlosen Pipe entsteht.</p>
+</td>
+</tr>
+</table><br>
+<p>Intern (wenn man den Kernel betrachtet) ist ein FIFO (FIFO = First In First Out) tats&auml;chlich nichts anderes als die Implementierung einer namenlosen Pipe. Der Systemaufruf <span class="listing">mkfifo()</span> bedeutet also nichts anderes, als dass eine Pipe als Filesystem-Objekt repr&auml;sentiert wird. Wer mittels <span class="listing">pipe()</span> eine Pipe erstellt, kreiert auch eine Datei wie mit <span class="listing">mkfifo()</span>! Diese sieht man zwar nicht, weil sie in einem Dateisystem versteckt ist, das man nicht mounten kann – aber wer in /proc/1234567/fd nachgesehen hat, sieht bei einigen »pipe:[1692]« mit <span class="listing">pipe()</span>-generierten Pipes. &Auml;hnliches gilt &uuml;brigens auch f&uuml;r Sockets (TCP, auch <span class="listing">PF_UNIX</span>) (»socket:[456789]«). FIFOs werden wie erwartet mit z. B. /dev/initctl angezeigt (siehe /proc/1/fd/). <span class="listing">PF_UNIX</span>-Sockets werden ebenfalls als socket:[]-Objekt dargestellt, auch wenn diese eigentlich einen Dateinamen besitzen.</p>
+<p>Auf der Shell l&auml;sst sich ein FIFO folgenderma&szlig;en erstellen:</p>
+<pre>$ mkfifo fifo1</pre>
+<p>Bei einem Blick ins aktuelle Arbeitsverzeichnis finden Sie das FIFO unter folgendem Eintrag:</p>
+<pre>$ ls -l
+prw-r--r--    1 tot      users      0 2003–12–07 10:53 fifo1 </pre>
+<p>Am <span class="listing">p</span> am Anfang erkennen Sie das FIFO. Sie k&ouml;nnten jetzt etwas in das FIFO schreiben:</p>
+<pre>[tty1]
+$ echo Der erste Eintrag in das FIFO &gt; fifo1
+[tty2]
+$ echo Der zweite Eintrag in das FIFO &gt; fifo1 </pre>
+<p>Beide Dialogstationen blockieren im Augenblick und warten, bis die Daten im FIFO ausgelesen werden. Wir &ouml;ffnen eine dritte Konsole und lesen ihn aus:</p>
+<pre>[tty3]
+$ cat fifo1
+Der zweite Eintrag in das FIFO
+Der erste Eintrag in das FIFO </pre>
+<p>Nat&uuml;rlich m&uuml;ssen Sie auch die Zugriffsrechte f&uuml;r das FIFO vergeben, wer in dieses FIFO etwas schreiben und wer aus ihm lesen darf. FIFOs sind auch eine halbduplexe IPC, was bedeutet, dass auch bei FIFOs, wie schon bei namenlosen Pipes, kein mehrfaches Auslesen m&ouml;glich ist. Benannte Pipes werden daher auch nur dort eingesetzt, wo eine »Einbahnstra&szlig;e« gew&uuml;nscht ist.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_2.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_2.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.2   
+    </b>Kommunikationsmodell eines FIFO (First In First Out)</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">9.1.3 Message Queue (Nachrichtenspeicher)<a id="RxxKap09000040002B71F02D183" name="RxxKap09000040002B71F02D183"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999297" name="Xxx999297"></a><a id="Xxx999298" name="Xxx999298"></a>Mit diesem Mechanismus k&ouml;nnen Sie zwischen mehreren Prozessen Nachrichten austauschen. Die Nachrichten werden dabei von einem Prozess an einen Speicher (der Message Queue = Nachrichtenschlange) geschickt und k&ouml;nnen dort von einem anderen Prozess abgeholt werden. Die Gr&ouml;&szlig;e und Anzahl der Nachrichten werden vom System festgelegt. Die Nachricht selbst besteht aus einem Text und einem Nachrichtentyp – wobei es f&uuml;r den Nachrichtentyp keine festen Regeln gibt, so dass es dem Programmierer &uuml;berlassen bleibt, welche Funktion dem Nachrichtentyp zugeordnet werden soll. Die Nachrichten werden in der Reihenfolge, in der diese eintreffen, auch wieder ausgelesen. Fordert ein Prozess eine Nachricht an, so kann &uuml;ber eine Option angegeben werden, dass dieser entweder so lange angehalten wird, bis eine Nachricht eingeht, oder sofort zur Programmausf&uuml;hrung zur&uuml;ckkehrt und eventuell einen Fehlercode ausgibt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_3.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_3.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.3   
+    </b>Prinzip der Message Queue</p>
+</td>
+</tr>
+</table><br>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">9.1.4 Semaphore<a id="RxxKap09000040002B71F02D187" name="RxxKap09000040002B71F02D187"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999308" name="Xxx999308"></a><a id="Xxx999309" name="Xxx999309"></a>Semaphore sind Zugriffsvariablen, auf die nur mit bestimmten Funktionen zugegriffen werden kann. Ein Semaphor kann mehrere Werte annehmen und ist nicht von bin&auml;rer Natur. Mit den Prozessen k&ouml;nnen Sie ein Semaphor abfragen und &uuml;berpr&uuml;fen, ob dieses einen bestimmten Wert hat. Es ist auch m&ouml;glich, dass mit einer Funktion auf mehrere Semaphore gleichzeitig zugegriffen wird. Gew&ouml;hnlich verwendet man Semaphore zur Synchronisation beim Zugriff auf kritische Betriebsmittel/Datenstrukturen oder einen kritischen Codeausschnitt. Wenn z. B. der gemeinsame Speicher (Shared Memory) von zwei oder mehreren Prozessen gleichzeitig verwendet wird, muss verhindert werden, dass diese gleichzeitig schreiben oder dass ein Prozess liest, w&auml;hrend ein anderer zur gleichen Zeit schreibt.</p>
+<p>Das Prinzip ist recht einfach. Will man mit einem Semaphor einen bestimmten Abschnitt sch&uuml;tzen, wird ein vorhandener Z&auml;hler getestet, ob der Wert gr&ouml;&szlig;er als 0 ist, und anschlie&szlig;end dekrementiert. Ist der Wert nicht gr&ouml;&szlig;er als 0, wird der Prozess in einen Wartezustand versetzt, da sich scheinbar ein anderer Prozess gerade in diesem kritischen Codeausschnitt befindet. Wenn ein Prozess einen kritischen Codebereich verlassen will, muss dieser wiederum den Z&auml;hler inkrementieren, damit der kritische Bereich f&uuml;r andere Prozesse wieder zur Verf&uuml;gung steht.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">9.1.5 Shared Memory (gemeinsamer Speicher)<a id="RxxKap09000040002B71F02D18A" name="RxxKap09000040002B71F02D18A"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999313" name="Xxx999313"></a><a id="Xxx999314" name="Xxx999314"></a>Mit dem Shared-Memory-Mechanismus k&ouml;nnen Sie mit mehreren Prozessen auf einen gemeinsamen Datenspeicherbereich zugreifen. Um dies zu realisieren, muss zuerst ein Prozess diesen gemeinsamen Datenspeicher anlegen. Anschlie&szlig;end m&uuml;ssen alle anderen Prozesse, die ebenfalls darauf zugreifen sollen, mit diesem Datenspeicher bekannt gemacht werden. Dies geschieht, indem der Speicherbereich im Adressraum der entsprechenden Prozesse eingef&uuml;gt wird. Ebenfalls muss hierbei den Prozessen mitgeteilt werden, wie diese auf den Speicherbereich zugreifen k&ouml;nnen (lesend/schreibend). Wurde all dies erledigt, kann der Datenspeicherbereich wie ein gew&ouml;hnlicher Speicherbereich verwendet werden. Da die Struktur der Speicherverwaltungseinheit von der Kernelkonfiguration abh&auml;ngig ist, so dass die Gr&ouml;&szlig;e und Aufteilung variieren kann, sollte man vorsichtig sein, wenn man einen allzu gro&szlig;en gemeinsamen Speicher verwendet.</p>
+<p>Leider wurde mit dem Shared Memory IPC keine explizite Synchronisation zur Verf&uuml;gung gestellt, weshalb man diese Kontrolle selbst noch mit z. B. Sperren oder Semaphoren herstellen muss.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">9.1.6 STREAMS<a id="RxxKap09000040002B71F02D18D" name="RxxKap09000040002B71F02D18D"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999318" name="Xxx999318"></a><a id="Xxx999319" name="Xxx999319"></a>STREAMS (nicht zu verwechseln mit den Streams der Standard-E/A-Funktionen) wurden urspr&uuml;nglich unter UNIX als Teil von als Network Support Services bezeichneten Funktionen eingef&uuml;hrt. Da sich STREAMS aber auch hervorragend zur Kommunikation zwischen Prozessen einsetzen lassen, sollten diese nicht unerw&auml;hnt bleiben. Ein Stream ist eine Art Treiber im Kernel, der allerdings keinem physikalischen Ger&auml;t zugeordnet wird. Es handelt sich dabei um eine Schnittstelle zwischen der Applikation und dem Betriebssystem zum Austausch von Daten. Die Datenstr&ouml;me stehen bei den Streams in beiden Richtungen zur Verf&uuml;gung und sind somit Vollduplex. Auf STREAMS k&ouml;nnen neben den daf&uuml;r implementierten Funktionen <span class="listing">putmsg</span>, <span class="listing">getmsg</span> und <span class="listing">poll</span> auch die Systemfunktionen <span class="listing">open</span>, <span class="listing">close</span>, <span class="listing">read</span>, <span class="listing">write</span> und <span class="listing">ioctl</span> verwendet werden. Ein STREAM-Mechanismus wird aus folgenden Komponenten aufgebaut:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> STREAM-Kopf – Hier werden die Systemaufrufe der Message bzw. der Messages in Byte-Streams und Returnwerte verarbeitet. Ein Message-STREAM kann Daten oder/und Statusinformationen enthalten. Der Kopf beinhaltet wie jede STREAM-Komponente eine Lese- und eine Schreib-Queue.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> STREAM-Module – STREAM -Module sind optional. Es gibt eine Menge vorhandener Module, deren Aufgabe es u. a. sein kann, Transformationen der Nachrichten durchzuf&uuml;hren. Eingetragen werden die Module mit der Funktion <span class="listing">ioctl()</span>. Nat&uuml;rlich k&ouml;nnen (fast) beliebig viele Steuermodule eingetragen werden – wobei die Eintragung eines neuen Moduls nach dem Stack-Prinzip vorgeht.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> STREAM-End – Besteht aus Ger&auml;tetreibern, was ein Ger&auml;tetreiber sein kann, ein Pseudotreiber, ein Terminalger&auml;tetreiber oder ein Multiplexer.</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_4.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_4.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.4   
+    </b>Kommunikationsmodell eines STREAMS</p>
+</td>
+</tr>
+</table><br>
+<p>Die STREAMS werden allerdings im Buch nicht behandelt.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">9.1.7 Sockets<a id="RxxKap09000040002B71F02D195" name="RxxKap09000040002B71F02D195"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999333" name="Xxx999333"></a><a id="Xxx999334" name="Xxx999334"></a>Da die Netzwerkprogrammierung ein eigenes Kapitel erh&auml;lt, sei das Socket hier nur kurz der Vollst&auml;ndigkeit halber erw&auml;hnt. Sockets wurden im Berkeley-UNIX-System (BSD) als Kommunikation zwischen verschiedenen Rechnern &uuml;ber ein Netzwerk eingef&uuml;hrt. Allerdings ist es mit den Sockets ebenso wie mit STREAMS m&ouml;glich, eine Kommunikation zwischen Prozessen auf demselben Rechner auszuf&uuml;hren. Sockets k&ouml;nnen zur Kommunikation verschiedenste Protokolle benutzen, z. B. TCP/IP, UDP/IP oder UNIX Domain Sockets.</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">9.1.8 Lock Files (Sperrdateien)<a id="RxxKap09000040002B71F02D197" name="RxxKap09000040002B71F02D197"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999337" name="Xxx999337"></a><a id="Xxx999338" name="Xxx999338"></a><a id="Xxx999339" name="Xxx999339"></a>Eine recht primitive Form der IPC sind so genannte Lock Files (Sperrdateien), nicht zu verwechseln mit den Dateisperren (Record Locking). Dabei werden mehrere Prozesse mithilfe einer einfachen (Sperr-)Datei synchronisiert. Es wird praktisch eine Datei (meist im Verzeichnis /tmp) angelegt, worauf ein Prozess nur Schreibrechte hat. Die Synchronisation erfolgt jetzt durch einen anderen Prozess, der ebenfalls versucht, dieselbe Datei mit Schreibrechten anzulegen. Schl&auml;gt dieser Versuch fehl, existiert gerade eine entsprechende Datei. Dieses Fehlschlagen stellt praktisch die Sperre f&uuml;r den Prozess dar. Jetzt wartet der abgewiesene Prozess eine gewisse Zeit (meistens mit einem simplen <span class="listing">sleep</span>-Aufruf), bevor dieser erneut versucht, eine Datei mit entsprechenden Namen und mit Schreibrechten anzulegen. Die Freigabe dieser Sperre erfolgt dann durch den entsprechenden Prozess, der diese Datei erzeugt hat, &uuml;ber das Freigeben der Sperrdatei mit <span class="listing">unlink()</span>.</p>
+<p>So toll sich dies in der Theorie anh&ouml;ren mag, in der Praxis ist diese Form der IPC nur bedingt tauglich. Zum einen ist das Problem, sobald der Superuser hier mitspielen will, funktioniert die Synchronisation nicht mehr, da dieser immer schreiben darf. Und zum anderen wird hier mit dem aktiven Warten durch das Verschwenden von Prozessorzyklen (mit z. B. <span class="listing">sleep()</span>) nicht garantiert, welcher Prozess als n&auml;chster Zugriff auf die Sperrdatei hat. So kann es passieren, dass ein Prozess eventuell nie zum Zuge kommt.</p>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">9.1.9 Dateisperren (Record Locking)<a id="RxxKap09000040002B71F02D19A" name="RxxKap09000040002B71F02D19A"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999343" name="Xxx999343"></a><a id="Xxx999344" name="Xxx999344"></a><a id="Xxx999345" name="Xxx999345"></a>Ebenso wie mit den eben vorgestellten Sperrdateien kann man auch mit den Dateisperren eine IPC einrichten. Auf die Dateisperren (Record Locking) wurde bereits eingegangen, weshalb das Thema hier nur kurz angerissen wird.</p>
+<p>Man unterscheidet generell zwischen Pflichtsperren (Mandatory Locks) und Kooperationssperren (Advisory Locks). Bei den Pflichtsperren werden die Zugriffsrechte einer Datei so gesetzt, dass hierbei jeder <span class="listing">read()</span>- und <span class="listing">write()</span>-Systemaufruf pr&uuml;fen muss, ob dieser unter den gegenw&auml;rtig gesetzten Sperren seinen lesenden oder schreibenden Zugriff durchf&uuml;hren kann. Dieser Vorgang verlangsamt logischerweise den Zugriff.</p>
+<p>Mit den Kooperationssperren hingegen verwendet man eine Funktionsbibliothek mit Zugriffsfunktionen, die Ihnen z. B. Informationen zu einer Sperre liefern und/oder den Zugriff auf gemeinsame Datenbest&auml;nde »regeln«. Im Wesentlichen werden diese Sperren mit dem Systemaufruf <span class="listing">fcntl()</span> oder der Bibliotheksfunktion <span class="listing">lockf()</span> geregelt. Beide Funktionen wurden bereits in Kapitel 2 erw&auml;hnt und z. T. verwendet.</p>
+<p>Zwar ist diese Form der IPC immer noch besser als die Sperrdateien, aber auch hierbei gibt es einige Nachteile zu beklagen. Zum einen sind die Sperrarten wenig genormt – POSIX z. B. kennt keine Mandatory Locks. Des Weiteren funktionieren die Sperren nicht bei <span class="listing">open()</span>- und <span class="listing">unlink()</span>-Aufrufen. Und das Schlimmste: Ist ein Anwender nicht gut gelaunt, kann dieser mit Absicht durch Setzen und Halten einer Lesesperre auf die komplette Datei den schreibenden Zugriff aller anderen Anwender blockieren.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap08-012.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap09-001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap09-000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:21 GMT -->
+</html>

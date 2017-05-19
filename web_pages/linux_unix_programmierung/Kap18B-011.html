@@ -1,0 +1,824 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap18B-011.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:47:45 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – A.12 Threadprogrammierung</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap18B-010.html">
+<link rel="next" href="Kap18B-012.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap18B-010.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap18B-012.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap18B-000.html#RxxKap18B000040006D31F040100">A Funktionsreferenz</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-000.html#RxxKap18B000040006D31F040103">B.1 ANSI C</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-001.html#RxxKap18B001040006F01F048100">B.2 ANSI C99</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-002.html#RxxKap18B002040006F11F027100">B.3 Elementare E/A-Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-003.html#RxxKap18B003040006F21F025100">B.4 Fortgeschrittene Ein-/Ausgabe-Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-004.html#RxxKap18B004040006F31F046100">B.5 Verzeichnisse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-005.html#RxxKap18B005040006F41F034100">B.6 Attribute von Dateien und Verzeichnissen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-006.html#RxxKap18B006040006F51F043100">B.7 Links</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-007.html#RxxKap18B007040006F61F016100">B.8 Prozess und Prozessverwaltungsfunktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-008.html#RxxKap18B008040006F71F017100">B.9 Signale – Das neue Signalkonzept</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-009.html#RxxKap18B009040006F81F04C100">B.10 Interprozesskommunikationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-010.html#RxxKap18B010040006F91F034100">B.11 Sys-V-Interprozesskommnunikationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap18B011040006FA1F027100">B.12 Threadprogrammierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-012.html#RxxKap18B012040006FB1F029100">B.13 Netzwerkprogrammierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-013.html#RxxKap18B013040006FC1F04F100">B.14 MySQL C-API</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-014.html#RxxKap18B014040006FD1F049100">B.15 PostgreSQL C-API</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-015.html#RxxKap18B015040006FE1F030100">B.16 Weitere Funktionsreferenzen auf der Buch-CD</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">B.12 Threadprogrammierung<a id="RxxKap18B011040006FA1F027100" name="RxxKap18B011040006FA1F027100"></a> 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p>Anhand des Pr&auml;fix der Pthread-Funktionen lassen sich diese ordentlich in eine Gruppe einsortieren. Hier ein schneller &Uuml;berblick dazu.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.60   
+    </b>Verschieden Pr&auml;fixe von Threadfunktionen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Pr&auml;fix</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Gruppe</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pthread_
+</td>
+<td class="tabellentext" bgcolor="#000000">Threads selbst mit verschiedenen Unterfunktionen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pthread_attr_
+</td>
+<td class="tabellentext" bgcolor="#000000">Thread-Eigenschaften
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pthread_mutex_
+</td>
+<td class="tabellentext" bgcolor="#000000">Mutexe
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pthread_mutexattr_
+</td>
+<td class="tabellentext" bgcolor="#000000">Mutex-Eigenschaften
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pthread_cond_
+</td>
+<td class="tabellentext" bgcolor="#000000">Condition Variablen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pthread_condattr_
+</td>
+<td class="tabellentext" bgcolor="#000000">Eigenschaften von Condition Variablen 
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pthread_key_
+</td>
+<td class="tabellentext" bgcolor="#000000">spezifische Thread-Daten-Schl&uuml;ssel
+</td>
+</tr>
+</table><br>
+<p>Insgesamt beinhaltet die Pthread-API &uuml;ber 60 Funktionen und zum &Uuml;bersetzen m&uuml;ssen Sie die Headerdatei <span class="listing">&lt;pthread. h.&gt;<a id="Xxx999289" name="Xxx999289"></a></span> einbinden und die Bibliothek (<span class="listing">-lpthread</span>) hinzulinken.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">B.12.1 Thread-Verwaltung<a id="RxxKap18B011040006FA1F027116" name="RxxKap18B011040006FA1F027116"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.61   
+    </b>Funktionen zur gew&ouml;hnlichen Thread-Verwaltung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Syntax</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_create<a id="Xxx999297" name="Xxx999297"></a>(
+   pthread_t * thread,
+   pthread_attr_t * attr,
+   void * (*start_routine)
+      (void *),
+   void * arg);
+</td>
+<td class="tabellentext" bgcolor="#000000">Thread erzeugen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">void pthread_exit<a id="Xxx999302" name="Xxx999302"></a>(void *retval);
+</td>
+<td class="tabellentext" bgcolor="#000000">Thread beenden
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_join<a id="Xxx999307" name="Xxx999307"></a>(
+     pthread_t th,
+     void **thread_return);
+</td>
+<td class="tabellentext" bgcolor="#000000">Auf die Beendigung von Threads warten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pthread_t pthread_self<a id="Xxx999312" name="Xxx999312"></a>(void);
+</td>
+<td class="tabellentext" bgcolor="#000000">Threads identifizieren
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_equal<a id="Xxx999317" name="Xxx999317"></a>(
+    pthread_t thread1,
+    pthread_t thread2);
+</td>
+<td class="tabellentext" bgcolor="#000000">Threads vergleichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_detach<a id="Xxx999322" name="Xxx999322"></a>(
+     pthread_t th);
+</td>
+<td class="tabellentext" bgcolor="#000000">Einen Thread von den anderen Absondern in dem dieser anhand der Leistung und Performance ein wenig optimiert wird. Dies wird erreicht, indem dieser Thread bei Beendigung sofort terminiert und freigegeben wird. Allerdings kann dieser Thread nicht mehr mit pthread_join() synchronisiert werden.
+</td>
+</tr>
+</table><br>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">B.12.2 Attribute von Threads und das Scheduling erfragen<a id="RxxKap18B011040006FA1F02718A" name="RxxKap18B011040006FA1F02718A"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.62   
+    </b>Attribute und Scheduling von Threads ermitteln</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Syntax</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_init<a id="Xxx999341" name="Xxx999341"></a>(
+    pthread_attr_t *attr);
+</td>
+<td class="tabellentext" bgcolor="#000000">Attributvariable initialisieren
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_getdetachstate<a id="Xxx999346" name="Xxx999346"></a>(
+   const pthread_attr_t *attr,
+   int *detachstate);
+</td>
+<td class="tabellentext" bgcolor="#000000">Abfragen ob der Thread PTHREAD_CREATE_DETACHED ist, also b. Beendigung sofort freigegeben wird oder ob PTHREAD_CREATE_JOINABLE (Standard) gesetzt ist, womit sich der Thread besser synchronisieren l&auml;sst.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_getschedpolicy<a id="Xxx999351" name="Xxx999351"></a>(
+   const pthread_attr_t *attr,
+   int *policy );
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Priorit&auml;ten eines Threads abfragen. M&ouml;gliche Werte: SCHED_OTHER (normal, keine Echtzeit), SCHED_FIFO (hoch, Echtzeit) und SCHED_RR (hoch, Echtzeit Round-Robin)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_getinheritsched<a id="Xxx999356" name="Xxx999356"></a>(
+   const pthread_attr_t *attr,
+   int *inherit);
+</td>
+<td class="tabellentext" bgcolor="#000000">Werden die Scheduling-Eigenschaften des Vaterthreads, beim Erzeugen eines neuen Threads &uuml;bernommen (PTHREAD_INHERIT_SCHED) oder nicht (PTHREAD_EXPLICIT_SCHED).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_destroy<a id="Xxx999361" name="Xxx999361"></a>(
+  pthread_attr_t *attr);
+</td>
+<td class="tabellentext" bgcolor="#000000">Attributvariable wieder freigeben
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">B.12.3 Attribute und das Scheduling von Threads setzen<a id="RxxKap18B011040006FA1F02719A" name="RxxKap18B011040006FA1F02719A"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.63   
+    </b>Attribute und Scheduling von Threads setzen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Syntax</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_init<a id="Xxx999380" name="Xxx999380"></a>(
+     pthread_attr_t *attr);
+</td>
+<td class="tabellentext" bgcolor="#000000">Attributvariable initialisieren
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_setdetachstate<a id="Xxx999385" name="Xxx999385"></a>(
+    pthread_attr_t *attr,
+    int detachstate);
+</td>
+<td class="tabellentext" bgcolor="#000000">Setzen der Eigenschaft PTHREAD_CREATE_DETACHED oder PTHREAD_CREATE_JOINABLE (Standard) f&uuml;r einen Thread.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_setschedpolicy<a id="Xxx999390" name="Xxx999390"></a>(
+    pthread_attr_t *attr,
+    int policy);
+</td>
+<td class="tabellentext" bgcolor="#000000">Priorit&auml;ten f&uuml;r einen Thread setzen. M&ouml;gliche Werte: SCHED_OTHER (normal, keine Echtzeit), SCHED_FIFO (hoch, Echtzeit) und SCHED_RR (hoch, Echtzeit Round-Robin)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_setinheritsched<a id="Xxx999395" name="Xxx999395"></a>(
+    pthread_attr_t *attr,
+    int inherit);
+</td>
+<td class="tabellentext" bgcolor="#000000">Einstellen, ob, die Scheduling-Eigenschaften vom Vaterthread an den Kindthread vererbt werden soll (PTHREAD_INHERIT_SCHED) oder nicht (PTHREAD_EXPLICIT_SCHED).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_attr_destroy<a id="Xxx999400" name="Xxx999400"></a>(
+    pthread_attr_t *attr);
+</td>
+<td class="tabellentext" bgcolor="#000000">Attributvariable wieder freigeben
+</td>
+</tr>
+</table><br>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">B.12.4 Mutex-Variablen<a id="RxxKap18B011040006FA1F0271AA" name="RxxKap18B011040006FA1F0271AA"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.64   
+    </b>Funktionen zum Arbeiten mit Mutex</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Syntax</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_mutex_lock<a id="Xxx999419" name="Xxx999419"></a>(
+    pthread_mutex_t *mutex);
+</td>
+<td class="tabellentext" bgcolor="#000000">Mutex anlegen (initialisieren)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_mutex_lock<a id="Xxx999424" name="Xxx999424"></a>(
+    pthread_mutex_t *mutex);
+</td>
+<td class="tabellentext" bgcolor="#000000">Mutex sperren (blockiert ggf. bis Mutex frei wird – falls gesperrt)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_mutex_trylock<a id="Xxx999429" name="Xxx999429"></a>(
+    pthread_mutex_t *mutex);
+</td>
+<td class="tabellentext" bgcolor="#000000">Mutex sperren (ohne blockieren – ist Mutex nicht frei, wird Fehlercode EBUSY zur&uuml;ckgegeben)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_mutex_unlock<a id="Xxx999434" name="Xxx999434"></a>(
+    pthread_mutex_t *mutex);
+</td>
+<td class="tabellentext" bgcolor="#000000">gesperrten Mutex wieder freigeben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_mutex_destroy<a id="Xxx999439" name="Xxx999439"></a>(
+    pthread_mutex_t *mutex);
+</td>
+<td class="tabellentext" bgcolor="#000000">Mutex l&ouml;schen (freigeben)
+</td>
+</tr>
+</table><br>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">B.12.5 Attribute von Mutexe<a id="RxxKap18B011040006FA1F0271BA" name="RxxKap18B011040006FA1F0271BA"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.65   
+    </b>Attribute f&uuml;r Mutexe setzen oder abfragen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Syntax</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_mutexattr_init<a id="Xxx999458" name="Xxx999458"></a>(
+   pthread_mutexattr_t *attr);
+</td>
+<td class="tabellentext" bgcolor="#000000">Attributvariable f&uuml;r Mutexe initialisieren
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int
+pthread_mutexattr_setkind_np<a id="Xxx999464" name="Xxx999464"></a>(
+   pthread_mutexattr_t *attr,
+   int kind );
+</td>
+<td class="tabellentext" bgcolor="#000000">Attribute f&uuml;r Mutex setzen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int
+pthread_mutexattr_getkind_np<a id="Xxx999469" name="Xxx999469"></a>(
+   pthread_mutexattr_t *attr,
+   int *kind );
+</td>
+<td class="tabellentext" bgcolor="#000000">Attribute f&uuml;r Mutex abfragen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_mutexattr_destroy<a id="Xxx999473" name="Xxx999473"></a>(
+   pthread_mutexattr_t *attr);
+</td>
+<td class="tabellentext" bgcolor="#000000">Attributvariable f&uuml;r Mutex wieder freigeben
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die Funktionen <span class="listing">pthread_mutexattr_setkind_np()</span> und <span class="listing">pthread_mutexattr_getkind_np()</span> sind keine portablen POSIX-Funktionen. Das gilt auch f&uuml;r die drei Attribute <span class="listing">PTHREAD_MUTEX_FAST_NP</span>, <span class="listing">PTHREAD_MUTEX_ERRORCHECK_NP</span> und <span class="listing">PTHREAD_MUTEX_RECURSIVE_NP</span>, von denen Linux offiziell nur <span class="listing">PTHREAD_MUTEX_FAST_NP</span> unters&uuml;tzt – obwohl auch diese Konstanten nicht portable sind (Endung <span class="listing">_NP</span>). </p>
+</td>
+</tr>
+</table><br>
+<p>Alternativ gibt es noch die Funktionen</p>
+<pre>int pthread_mutexattr_settype<a id="Xxx999490" name="Xxx999490"></a> (
+   pthread_mutexattr_t *attr, int kind );
+int pthread_mutexattr_gettype<a id="Xxx999492" name="Xxx999492"></a> (
+   const pthread_mutexattr_t *attr, int *kind );</pre>
+<p>welche zwar keine <span class="listing">_np</span>-Endung besitzten. Wobei sich dies allerdings wieder aufhebt, weil die Attribute (symbolische Konstanten) wieder dieselben m&ouml;glichen sind, wie die schon eben erw&auml;hnten <span class="listing">_NP</span>-Konstanten.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">B.12.6 Condition Variablen<a id="RxxKap18B011040006FA1F0271CD" name="RxxKap18B011040006FA1F0271CD"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.66   
+    </b>Funktionen f&uuml;r Condition Variablen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Syntax</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_cond_init<a id="Xxx999501" name="Xxx999501"></a>(
+ pthread_cond_t *cond,
+ pthread_condattr_t *cond_attr);
+</td>
+<td class="tabellentext" bgcolor="#000000">Initialisieren einer Condition Variable
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_cond_wait<a id="Xxx999506" name="Xxx999506"></a>(
+   pthread_cond_t *cond,
+   pthread_mutex_t *mutex);
+</td>
+<td class="tabellentext" bgcolor="#000000">Wartet auf die Condition Variable
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_cond_timewait<a id="Xxx999511" name="Xxx999511"></a>(
+pthread_cond_t *cond,
+pthread_mutex_t *mutex,
+const struct timespec *abstime);
+</td>
+<td class="tabellentext" bgcolor="#000000">Wartet eine bestimmte Zeit auf die Condition Variable
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_cond_signal<a id="Xxx999516" name="Xxx999516"></a>(
+     pthread_cond_t *cond);
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Funktion weckt einen wartenden Thread auf. Bei mehreren wartenden Threads, liegt dies leider nicht in Ihrer Hand.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_cond_broadcast<a id="Xxx999521" name="Xxx999521"></a>(
+     pthread_cond_t *cond);
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Funktion weckt alle wartende Threads auf.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_cond_destroy<a id="Xxx999526" name="Xxx999526"></a>(
+     pthread_cond_t *cond);
+</td>
+<td class="tabellentext" bgcolor="#000000">Freigeben einer Condition Variable
+</td>
+</tr>
+</table><br>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">B.12.7 Threads beenden<a id="RxxKap18B011040006FA1F0271DF" name="RxxKap18B011040006FA1F0271DF"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.67   
+    </b>Erweiterte M&ouml;glichkeiten, einen Thread zu beenden</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Syntax</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beschreibung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_cancel<a id="Xxx999545" name="Xxx999545"></a>(
+    pthread_t thread);
+</td>
+<td class="tabellentext" bgcolor="#000000">Thread mit der ID thread beenden
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_setcancelstate<a id="Xxx999550" name="Xxx999550"></a>(
+     int state,
+     int *oldstate);
+</td>
+<td class="tabellentext" bgcolor="#000000">Hiermit l&auml;sst sich einstellen, ob sich der Thread mit pthread_cancel() aus einem zweiten Thread beenden l&auml;sst (Standardeinstellung (state=PTHREAD_CANCEL_ENABLE)) oder nicht (state=PTHREAD_CANCEL_DISABLE)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int pthread_setcanceltype<a id="Xxx999555" name="Xxx999555"></a>(
+     int type,
+     int *oldtype);
+</td>
+<td class="tabellentext" bgcolor="#000000">Soll ein Thread sofort nach einem Aufruf von pthread_cancel() beendet werden muss hier f&uuml;r type PTHREAD_CANCEL_ASYNCHRONOUS angegeben werden. Ansonsten mit PTHREAD_CANCEL_DEFERRED (Standardeinstellung) l&auml;uft der Thread noch bis zum Ende bzw. n&auml;chsten Abbruchpunkt weiter.
+</td>
+</tr>
+</table><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap18B-010.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap18B-012.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap18B-011.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:47:45 GMT -->
+</html>

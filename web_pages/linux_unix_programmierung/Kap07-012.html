@@ -1,0 +1,1043 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap07-012.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:28 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 7.13 Rund um die Ausf&uuml;hrung von Prozessen</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap07-011.html">
+<link rel="next" href="Kap07-013.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap07-011.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap07-013.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap07-000.html#RxxKap07000040001DB1F02D100">7 D&auml;monen, Zombies und Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-000.html#RxxKap07000040001DB1F02D103">7.1 Was ist ein Prozess?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-001.html#RxxKap07001040001F81F033100">7.2 Prozesskomponente</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033114">7.2.1 Prozessnummer (PID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033175">7.2.2 Prozessnummer des Vaterprozesses (PPID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033177">7.2.3 Benutzer- und Gruppennummer eines Prozesses (UID, EUID, GID, EGID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F03317F">7.2.4 Prozessstatus</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033194">7.2.5 Prozesspriorit&auml;t</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033197">7.2.6 Timesharing-Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F0331B4">7.2.7 Prozessauslagerung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F0331B8">7.2.8 Steuerterminal</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-002.html#RxxKap07002040001F91F041100">7.3 Prozesse &uuml;berwachen – ps, top, kpm</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-003.html#RxxKap07003040001FA1F021100">7.4 Lebenszyklus eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-004.html#RxxKap07004040001FB1F030100">7.5 Umgebungsvariablen eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F030108">7.5.1 Einzelne Umgebungsvariablen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F03010F">7.5.2 Umgebungsvariable ver&auml;ndern oder hinzuf&uuml;gen – putenv() und setenv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F030197">7.5.3 L&ouml;schen von Umgebungsvariablen – unsetenv() und clearenv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-005.html#RxxKap07005040001FC1F039100">7.6 Ressourcenlimits eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-005.html#RxxKap07005040001FC1F039192">7.6.1 Mehr Sicherheit mit Ressourcenlimits</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-006.html#RxxKap07006040001FD1F02A100">7.7 Prozesserkennung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-007.html#RxxKap07007040001FE1F021100">7.8 Erzeugung von Prozessen – fork()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F021111">7.8.1 Pufferung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F02117D">7.8.2 Was wird vererbt und was nicht?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F02118F">7.8.3 Einen Prozess mit ver&auml;nderter Priorit&auml;t erzeugen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-008.html#RxxKap07008040001FF1F022100">7.9 Warten auf einen Prozess</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-009.html#RxxKap07009040002001F028100">7.10 Die exec-Familie</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028112">7.10.1 execl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028118">7.10.2 execve()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028177">7.10.3 execv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F02817A">7.10.4 execle()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F02817D">7.10.5 execlp()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028180">7.10.6 execvp()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028183">7.10.7 Kindprozesse mit exec-Aufruf &uuml;berlagern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-010.html#RxxKap07010040002011F016100">7.11 Kommandoaufrufe aus dem Programm – system()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-011.html#RxxKap07011040002021F048100">7.12 D&auml;monprozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F04810A">7.12.1 Wie ein Prozess zum D&auml;mon wird ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F048110">7.12.2 D&auml;mon, sprich mit uns ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F048112">7.12.3 Protokollieren von D&auml;monen – syslog()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F0481CA">7.12.4 syslog() in der Praxis</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F0481E1">7.12.5 Den D&auml;mon, den ich rief ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap07012040002031F04A100">7.13 Rund um die Ausf&uuml;hrung von Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07012040002031F04A102">7.13.1 Einen D&auml;mon beim Booten mit einem init-Skript starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07012040002031F04A19D">7.13.2 Hintergrundprozesse und Jobkontrolle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07012040002031F04A1CD">7.13.3 Prozesse zeitgesteuert ausf&uuml;hren (cron-Jobs)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-013.html#RxxKap07013040002041F025100">7.14 Zusammenfassung und Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">7.13 <a id="RxxKap07404RundumdieAusfuhrungvonProzessen" name="RxxKap07404RundumdieAusfuhrungvonProzessen"></a>Rund um die Ausf&uuml;hrung von Prozesse<a id="RxxKap07012040002031F04A100" name="RxxKap07012040002031F04A100"></a>n 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999235" name="Xxx999235"></a>Jetzt haben Sie zwar eine Menge zu den Prozessen erfahren, aber h&auml;ufig fehlt es noch ein wenig am Detail. Hiermit ist nicht mehr der programmtechnische Aspekt gemeint, sondern alles rund um die Ausf&uuml;hrung von Prozessen. Hier war die Rede von einem Hintergrundprozess, dann wieder von einem init-Skript oder einem cron-Job. Eine Menge Know-how, das man hier einfach nicht als gotgegeben stehen lassen kann, weshalb darauf in den n&auml;chsten Seiten bis zum Schluss dieses Kapitels eingegangen werden soll.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">7.13.1 Einen D&auml;mon beim Booten mit einem init-Skript starten<a id="RxxKap07012040002031F04A102" name="RxxKap07012040002031F04A102"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999238" name="Xxx999238"></a><a id="Xxx999239" name="Xxx999239"></a><a id="Xxx999240" name="Xxx999240"></a><a id="Xxx999241" name="Xxx999241"></a><a id="Xxx999242" name="Xxx999242"></a>Sobald der Kernel gestartet wurde, kann dieser erst nur lesend auf die Root-Partition zugreifen. Der erste Prozess, den der Kernel dann startet, ist »init« (/sbin/init), der Prozess mit der Prozessidentifikation (PID) 1. »init« wurde bereits in diesem Kapitel erw&auml;hnt und ist somit der Elternteil aller noch folgenden Prozesse. »init« k&uuml;mmert sich beim Start zun&auml;chst um die Konfigurationen des Systems und das Ausf&uuml;hren vieler D&auml;monprozesse.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Hier muss gleich darauf hingewiesen werden, dass ich &uuml;ber »init« keine 100 %ige Aussagen machen lassen. Hier kochen die jeweiligen Distributionen h&auml;ufig ihr eigenes S&uuml;ppchen. Die Unterschiede beziehen sich wieder insbesondere auf die Verzeichnisse, wo sich die Init-Dateien befinden, und darauf, welche Konfigurationsdateien hierbei ber&uuml;cksichtigt werden. Nat&uuml;rlich soll das auch hei&szlig;en, dass die Init-Pakete verschiedener Distributionen gew&ouml;hnlich g&auml;nzlich inkompatibel sind und nicht untereinander ausgetauscht werden k&ouml;nnen. Daher folgt hier zun&auml;chst ein allgemeiner &Uuml;berblick &uuml;ber den Init-Prozess (genauer System-V-init).</p>
+</td>
+</tr>
+</table><br>
+<p>Nachdem der Kernel »init« gestartet hat, wertet »init« zuallererst die Konfigurationsdatei  /etc/inittab aus. Anschlie&szlig;end f&uuml;hrt »init« ein Shellscript zur Systeminitialisierung aus. Der Pfad und der Name des Shellscripts ist wieder abh&auml;ngig von der Distribution. Als N&auml;chstes wird mit <span class="listing">rc</span> ein weiteres Shellscript gestartet, das sich wiederum abh&auml;ngig von der Distribution auf unterschiedlichen Verzeichnissen befinden kann.</p>
+<p><span class="listing">rc</span> startet jetzt die einzelnen Shellscripts, die sich in den Verzeichnissen rc[n].d befinden, wobei n hier f&uuml;r den Runlevel steht. Die Skriptdateien (auch Startup-Skripte genannt) in diesem Verzeichnis wiederum starten jetzt die D&auml;monen (Systemdienste). Der Ort der rc[n].d-Verzeichnisse ist wieder stark abh&auml;ngig von der Distribution, aber meistens sollten Sie diese unter /etc oder /etc/init.d finden.</p>
+<h4 class="t4"><a id="Xxx999250" name="Xxx999250"></a><a id="Xxx999251" name="Xxx999251"></a>Runlevel</h4>
+<p>»init« verwendet gew&ouml;hnlich sieben Runlevels, wobei jeder Runlevel jeweils eine Gruppe von Diensten beinhaltet, die das System beim Starten oder Beenden ausf&uuml;hren soll. Es gibt in /etc/inittab auch einen »default runlevel«, der wiederum von den Distributionen abh&auml;ngt. Welcher Runlevel jetzt welche Dienste startet, ist von symbolischen Links in den Verzeichnissen rc[n].d abh&auml;ngig. Diese symbolischen Links verweisen meistens auf die Startup-Skripte der Dienste, die in /etc/init.d abgelegt werden. Hierzu nun ein kurzer &Uuml;berblick der unterschiedlichen Runlevels und auf deren Bedeutung (bei den g&auml;ngigsten Distributionen zumindest):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.13   
+    </b>Runlevels und deren Bedeutung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Runlevel</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">Dieser Runlevel h&auml;lt das System komplett an (Shutdown mit Halt).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1 oder S
+</td>
+<td class="tabellentext" bgcolor="#000000">Dies stellt den Single-User-Modus (Einzelbenutzermodus) dar.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">2 oder M
+</td>
+<td class="tabellentext" bgcolor="#000000">Multi-User-Modus (Mehrbenutzermodus) ohne Netzwerk.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">3
+</td>
+<td class="tabellentext" bgcolor="#000000">Multi-User-Modus (Mehrbenutzermodus) mit einem Netzwerk, aber ohne einen X-Start.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+<td class="tabellentext" bgcolor="#000000">Dieser Runlevel wird gew&ouml;hnlich nicht verwendet und steht somit zur freien Verf&uuml;gung dar.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">5
+</td>
+<td class="tabellentext" bgcolor="#000000">Multi-User-Modus (Mehrbenutzermodus) mit einem Netzwerk und einem grafischen Login (X-Start). Nach dem Login wird gew&ouml;hnlich die grafische Oberfl&auml;che gestartet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">6
+</td>
+<td class="tabellentext" bgcolor="#000000">Dieser Runlevel startet das System neu (Shutdown mit Reboot).
+</td>
+</tr>
+</table><br>
+<p>Bei den Runlevels 0 und 6 handelt es sich um spezielle F&auml;lle, in denen sich ein System nicht lange aufhalten wird. In diesem Runlevel wird das System heruntergefahren bzw. neu gestartet. Generell werden am h&auml;ufigsten die Runlevels 2 und 3, die Mehrbenutzer-Levels und 5, womit eine X-Anmeldeprozedur (mit z. B. xdm, kdm, gdm etc) gestartet wird, verwendet. Runlevel 1 bzw. S sind h&auml;ufig unterschiedlich bei den Systemen definiert. Runlevel 4 wird nicht benutzt.</p>
+<h4 class="t4">Runlevel 1</h4>
+<p>Im Runlevel 1 bzw. S, dem Einzelbenutzermodus, werden gew&ouml;hnlich alle Mehrbenutzer- und Anmeldeprozesse beendet. Somit geht man sicher, dass das System mit geringem Aufwand ausgef&uuml;hrt wird. Nat&uuml;rlich bietet Runlevel 1 einen vollen root-Zugriff auf das System. Damit ein System in Runlevel 1 auch nach einem root-Passwort abfragt, wurde der Runlevel S entwickelt. Unter System-V-init gibt es keinen echten Runlevel S, es dient daher hierbei nur dazu, eben das root-Passwort abzufragen. Dieser Runlevel ist gew&ouml;hnlich dazu gedacht, dass Administratoren diverse Patches einspielen k&ouml;nnen.</p>
+<h4 class="t4"><a id="Xxx999298" name="Xxx999298"></a>Die Datei /etc/inittab</h4>
+<p>In /etc/inittab steht, was »init« in den entsprechenden Runlevels zu tun hat, da »init« beim Start des Systems immer von Runlevel 0 bis zum »default runlevel« durchl&auml;uft. Damit der &Uuml;bergang von einem Level zum n&auml;chsten reibungslos abl&auml;uft, f&uuml;hrt »init« die in /etc/inittab angegebenen Aktionen aus. Dasselbe geschieht nat&uuml;rlich auch im umgekehrten Fall, beim Herunterfahren bzw. Neustarten des Systems.</p>
+<p>Die Verwendung von inittab alleine macht noch keinen Sommer, weshalb man hierbei noch zus&auml;tzliche Schichten in Form eines Skripts f&uuml;r das Wechseln der Runlevels eingebaut hat. Dieses Skript (rc zu finden meistens unter /etc/init.d/rc oder /etc/rc.d/rc) wird gew&ouml;hnlich aus inittab aufgerufen. Dieses Skript (rc) f&uuml;hrt wiederum weitere Skripte in einem vom Runlevel abh&auml;ngigen Verzeichnis aus, um das System in seinen neuen (Runlevel-)Zustand zu bringen.</p>
+<h4 class="t4">Startup-Skripte erstellen und ausf&uuml;hren</h4>
+<p><a id="Xxx999303" name="Xxx999303"></a><a id="Xxx999304" name="Xxx999304"></a>Zuerst m&uuml;ssen Sie suchen, wo sich die Kopien der Startup-Skripte befinden. Meistens sollte dies im Verzeichnis /etc/init.d sein:</p>
+<pre>$ ls -l /etc/init.d/
+insgesamt 308
+-rwxr-xr-x  1 root root  2570 2005–03–02 18:45 acpid
+-rwxr-xr-x  1 root root  1098 2005–02–24 10:29 acpi-support
+-rwxr-xr-x  1 root root 11038 2005–03–25 23:08 alsa
+-rwxr-xr-x  1 root root  1015 2004–11–26 12:36 anacron
+-rwxr-xr-x  1 root root  1388 2005–03–01 04:11 apmd
+-rwxr-xr-x  1 root root  1080 2005–02–18 11:37 atd
+-rw-r--r--  1 root root  2805 2005–01–07 19:35 bootclean.sh
+-rwxr-xr-x  1 root root  1168 2004–10–29 18:05 cron
+...</pre>
+<p>Jede dieser Dateien in /etc/init.d ist meistens ein Shellscript, das f&uuml;r einen D&auml;mon oder sonstige Konfiguration im System verantwortlich ist. Um zu erfahren, wie diese Skripte arbeiten, rufen Sie doch am besten eines auf, z. B. den cron-D&auml;mon:</p>
+<pre># /etc/init.d/cron
+ * Usage: /etc/init.d/cron start|stop|restart|reload|force</pre>
+<p>Hier haben Sie versucht, das Skript »cron«, das f&uuml;r die Ausf&uuml;hrung und Beendung des cron-D&auml;mons verantwortlich ist, aufzurufen. Sie bekommen hierbei die m&ouml;glichen Argumente mit, wie Sie das Skript aufrufen k&ouml;nnen. Neben »start« und »stop« finden Sie hierbei h&auml;ufig auch noch »restart«, was im Prinzip dasselbe bewirkt wie ein »stop« mit anschlie&szlig;endem »start«. Des Weiteren findet man gew&ouml;hnlich auch eine Option »reload«, die den Dienst nicht beendet, sondern ihn auffordert, seine Konfiguration neu einzulesen (meist per Signal <span class="listing">SIGHUP</span>).</p>
+<p>Damit das Beispiel nicht allzu schwer wird, werden wir einen einfachen D&auml;mon erstellen, der nichts anderes macht, als sich in einer Endlosschleife alle 15 Sekunden schlafen zu legen. Wie man D&auml;monen schreibt, wurde ja schon ein Kapitel zuvor demonstriert. Hier das Programm (D&auml;mon), das wir automatisch mit einem Startup-Skript beim Booten des Systems starten wollen und beim Herunterfahren wieder beenden:</p>
+<pre>/* mydaemon.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;syslog.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;stdlib.h&gt;
+typedef void (*sighandler_t)(int);
+static sighandler_t 
+handle_signal (int sig_nr, sighandler_t signalhandler) {
+   struct sigaction neu_sig, alt_sig;
+   neu_sig.sa_handler = signalhandler;
+   sigemptyset (&amp;neu_sig.sa_mask);
+   neu_sig.sa_flags = SA_RESTART;
+   if (sigaction (sig_nr, &amp;neu_sig, &amp;alt_sig) &lt; 0)
+      return SIG_ERR;
+   return alt_sig.sa_handler;
+}
+static void start_daemon (const char *log_name,
+                          int facility) {
+   int i;
+   pid_t pid;
+   /* Elternprozess beenden, somit haben wir einen Waisen */
+   /* dessen sich jetzt vorerst init annimmt              */
+   if ((pid = fork ()) != 0)
+      exit (EXIT_FAILURE);
+  /* Unser Kindprozess wird zum Sessionf&uuml;hrer. Misslingt */
+  /* dies, kann der Fehler daran liegen, dass der Prozess   */
+  /* bereits Sessionf&uuml;hrer ist                             */
+   if (setsid() &lt; 0) {
+      printf("%s kann nicht Sessionf&uuml;hrer werden!\n", 
+                log_name);
+      exit (EXIT_FAILURE);
+   }
+   /* Signal SIGHUP ignorieren */
+   handle_signal (SIGHUP, SIG_IGN);
+   /* Oder einfach: signal(SIGHUP, SIG_IGN) ... */
+   /* Das Kind terminieren */
+   if ((pid = fork ()) != 0)
+      exit (EXIT_FAILURE);
+   /* Gr&uuml;nde f&uuml;r das Arbeitsverzeichnis:
+    * + core-Datei wird im aktuellen Arbeitsverzeichnis 
+    *   hinterlegt.
+    * + Damit bei Beendigung mit umount das Dateisystem 
+    *   sicher abgeh&auml;ngt werden kann 
+    */
+   chdir ("/");
+   /* Damit wir nicht die Bitmaske vom Elternprozess     */
+   /* erben bzw. diese bleibt, stellen wir diese auf 0  */
+   umask (0);
+   /*Wir schlie&szlig;en alle ge&ouml;ffneten Filedeskriptoren.... */
+   for (i = sysconf (_SC_OPEN_MAX); i &gt; 0; i--)
+      close (i);
+   /* Da unser D&auml;monprozess selbst kein Terminal f&uuml;r */
+   /* die Ausgabe hat....                            */
+   openlog (log_name, LOG_PID | LOG_CONS| LOG_NDELAY,
+            facility);
+}
+int main (int argc, char **argv) {
+   int time   = 15;
+   start_daemon ("mydaemon", LOG_LOCAL0);
+   while (1) {
+      /* Enlosschleifen: Hier sollte nun der Code f&uuml;r den
+       * Daemon stehen, was immer er auch tun soll. */
+      sleep(time);
+   }
+   syslog( LOG_NOTICE, "Daemon hat sich beendet\n");
+   closelog();
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm &uuml;bersetzen:</p>
+<pre>$ gcc -o mydaemon mydaemon.c</pre>
+<p>Nat&uuml;rlich muss es sich hierbei nicht zwangsl&auml;ufig um ein bin&auml;res Programm handeln, Sie k&ouml;nnen nat&uuml;rlich auch Shell- oder Perl-Skripte mit den Startup-Skripten starten. Als N&auml;chstes sollten Sie das Programm »mydaemon« nach /usr/sbin (oder auch /usr/local/sbin) kopieren. F&uuml;r diese Aktion ben&ouml;tigen Sie wohl die Superuser-root-Rechte.</p>
+<pre># cp mydaemon /usr/sbin
+# ls -l /usr/sbin/my*
+-rwxr-xr-x  1 root root 12992 /usr/sbin/mydaemon</pre>
+<p>Jetzt folgt das Startup-Skript, womit Sie diesen D&auml;mon »mydaemon« beim Booten starten und beim Shutdown wieder beenden k&ouml;nnen. Zwar handelt es sich um ein Shellscript, aber im Prinzip m&uuml;ssen Sie nur die Variable <span class="listing">DAEMON</span> anpassen (mit entsprechendem Pfad und Namen). Sofern Sie weitere Optionen wie hier mit »start«, »stop« und »restart« ben&ouml;tigen, m&uuml;ssen Sie sich einfach nur den Quellcode von anderen Startup-Skripten ansehen (die im Prinzip immer &auml;hnlich aufgebaut sind).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Ist Ihr Interesse an der Shellscript-Programmierung geweckt? Auch hierzu finden Sie beim selben Verlag ein umfangreiches Werk aus meiner Feder ;-)</p>
+</td>
+</tr>
+</table><br>
+<p>Folgenderma&szlig;en sieht nun das Startup-Skript (»start_i_daemon«) aus, womit Sie »mydaemon« starten, beenden und neu starten k&ouml;nnen:</p>
+<pre>#!/bin/sh
+# Name : start_i_daemon
+DAEMON="/usr/sbin/mydaemon"
+test -f $DAEMON || exit 0
+case "$1" in
+   start)
+        echo -n "Starte mydaemon"
+        $DAEMON
+        echo "....[DONE]"
+        ;;
+    stop)
+        echo -n "Stoppe mydaemon"
+        killall mydaemon
+        echo "....[DONE]"
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        echo "....[DONE]"
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac</pre>
+<p>Dieses Startup-Skript »start_i_daemon« sollten Sie jetzt in das Verzeichnis /etc/init.d verschieben und ausf&uuml;hrbar machen.</p>
+<pre># mv start_i_daemon /etc/init.d
+# chmod u+x /etc/init.d/start_i_daemon</pre>
+<p>Theoretisch k&ouml;nnen Sie diesen Dienst jetzt auch schon von Hand starten und wieder beenden.</p>
+<pre># /etc/init.d/start_i_daemon
+Usage: /etc/init.d/start_i_daemon {start|stop|restart}
+# /etc/init.d/start_i_daemon start
+Starte mydaemon....[DONE]
+# /etc/init.d/start_i_daemon restart
+Stoppe mydaemon....[DONE]
+Starte mydaemon....[DONE]
+# /etc/init.d/start_i_daemon stop
+Stoppe mydaemon....[DONE]</pre>
+<p>Damit das Ganze aber jetzt auch automatisch beim Booten bzw. Beenden des Systems in einem bestimmten Runlevel passiert, ben&ouml;tigt das von »init« gestartete Master-Kontrollskript (rc) weitere Informationen, welche Prozesse ausgef&uuml;hrt werden sollen. Das Master-Kontrollskript sieht hierzu in einem der Verzeichnisse rc[n].d (z. B. rc1.d; rc2.d ... rc6.d) nach, wann bei welchem Runlevel ein Prozess gestartet wird. n steht hier wieder f&uuml;r den entsprechenden Runlevel. Ein Blick auf mein System (Ubuntu Linux) im Verzeichnis rc2.d (bei mir der »default runlevel«) sieht wie folgt aus:</p>
+<pre># ls -l /etc/rc2.d/
+lrwxrwxrwx  1 root root 17 K11anacron -&gt; ../init.d/anacron
+lrwxrwxrwx  1 root root 17 S05vbesave -&gt; ../init.d/vbesave
+lrwxrwxrwx  1 root root 18 S10sysklogd -&gt; ../init.d/sysklogd
+lrwxrwxrwx  1 root root 15 S11klogd -&gt; ../init.d/klogd
+lrwxrwxrwx  1 root root 14 S12alsa -&gt; ../init.d/alsa
+lrwxrwxrwx  1 root root 13 S14ppp -&gt; ../init.d/ppp
+lrwxrwxrwx  1 root root 16 S19cupsys -&gt; ../init.d/cupsys
+lrwxrwxrwx  1 root root 15 S20acpid -&gt; ../init.d/acpid
+lrwxrwxrwx  1 root root 14 S20apmd -&gt; ../init.d/apmd
+...</pre>
+<p>Hierbei f&auml;llt gleich auf, dass alle Eintr&auml;ge hier symbolische Links auf die Startup-Skripte, die im init.d-Verzeichnis liegen, sind. Dies sieht in den anderen Runlevels genauso aus. Bei allen symbolischen Links f&auml;llt au&szlig;erdem der Anfangsbuchstabe »S« oder »K« gefolgt von einer Nummer und dem eigentlichen Dienst auf (z. B. K11anacron). Die Bedeutung ist hierbei folgende: Steigt »init« einen Runlevel h&ouml;her, werden alle Startup-Skripte, die mit »S« beginnen, ausgef&uuml;hrt, also mit dem Argument »start«. Genauso sieht dies in der umgekehrten Reihenfolge aus, wenn »init« von einem h&ouml;heren Runlevel in den n&auml;chst niedrigeren wechselt, werden alle Startup-Skripte ausgef&uuml;hrt, die mit »K« beginnen. Gew&ouml;hnlich bedeutet dies, dass die Skripte mit dem Argument »stop« ausgef&uuml;hrt werden. Die Nummern haben eine Art Priorit&auml;tsbedeutung. Die Skripte im Runlevel-Verzeichnis werden bei der Option »start« in alphabetischer Reihenfolge ausgef&uuml;hrt und bei »stop« in umgekehrter Reihenfolge. Somit bedient man sich einer Nummerierung, um die Reihenfolge der Ausf&uuml;hrung zu beeinflussen.</p>
+<p>In diesem Verzeichnis (hier z. B. /etc/rc2.d = Runlevel 2) wollen wir nun auch unser Startup-Skript einf&uuml;gen, das unseren D&auml;mon »mydaemon« (beim Booten) starten soll. Hierzu m&uuml;ssen Sie ebenfalls einen symbolischen Link in das entsprechende Verzeichnis setzen (hier nach /etc/init.d/). Weitere symbolische Links werden Sie auch im Runlevel 0 (/etc/rc0.d) und 6 (/etc/rc6.d) eintragen m&uuml;ssen. Da viele Systeme zwischen einem Shutdown und einem Reboot unterscheiden, sollte man immer auch einen Eintrag in Runlevel 6 machen, um sicherzugehen, dass sich der D&auml;mon beim Neustart auch beendet hat. Hierzu nun die Eintr&auml;ge (symbolischen Links) f&uuml;r die /etc/rc[n].d-Verzeichnisse:</p>
+<pre># ln -s /etc/init.d/start_i_daemon \
+&gt; /etc/rc2.d/S23start_i_daemon
+# ln -s /etc/init.d/start_i_daemon \
+&gt; /etc/rc0.d/k23start_i_daemon
+# ln -s /etc/init.d/start_i_daemon \
+&gt; /etc/rc6.d/k23start_i_daemon</pre>
+<p>Mit der ersten Zeile weisen Sie das System nun an, dass das Startup-Skript /etc/init.d/start_i_daemon den D&auml;mon »mydaemon« mit dem Argument »start« ausf&uuml;hren wird, wenn es im Runlevel 2 angelangt ist. Mit der zweiten Zeile legen Sie fest, dass mit /etc/init.d/start_i_daemon der D&auml;mon »mydaemon« beim Herunterfahren des Systems mit dem Argument »stop« beendet wird, wenn es in das Runlevel 0 gekommen ist. Selbiges machen Sie auch mit der dritten Zeile, nur eben f&uuml;r den Neustart des Systems im Runlevel 6.</p>
+<p>Wenn Sie jetzt das System beenden und wieder hochfahren, k&ouml;nnen Sie in der Startup-Sitzung (sofern diese sichtbar ist) Ihren Dienst beim Starten beobachten. Hier werden Sie irgendwann eine Zeile wie</p>
+<pre>Starte mydaemon....[DONE]</pre>
+<p>wiederfinden. Beim Beenden bzw. Neustarten des Systems ergibt sich selbige Meldung, nur dass eben »mydaemon« beendet wurde. Ein Blick mit dem Kommando <span class="listing">pstree</span> zeigt auch, dass »mydaemon« von »init« gestartet wurde, also »init« der Elternprozess davon ist.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">7.13.2 Hintergrundprozesse und Jobkontrolle<a id="RxxKap07012040002031F04A19D" name="RxxKap07012040002031F04A19D"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999337" name="Xxx999337"></a><a id="Xxx999338" name="Xxx999338"></a><a id="Xxx999339" name="Xxx999339"></a><a id="Xxx999340" name="Xxx999340"></a>Wollen Sie einen Prozess im Hintergrund setzen, m&uuml;ssen Sie dem Kommando oder Programm am Ende das Amperesand-Zeichen (<span class="listing">&amp;</span>) hinzuf&uuml;gen, z. B.:</p>
+<pre>$ sleep 10 &amp;
+[1] 7538</pre>
+<p>In diesem Beispiel haben Sie das Kommando <span class="listing">sleep</span> mit dem Argument 10 aufgerufen und im Hintergrund ausgef&uuml;hrt. W&uuml;rden Sie dieses Beispiel ohne das Amperesand-Zeichen ausf&uuml;hren, also normal im »Vordergrund«, m&uuml;ssten Sie hier zehn Sekunden oder &uuml;berhaupt immer auf das Ende des Prozesses warten, bis Ihnen der Eingabeprompt der Shell wieder zur Verf&uuml;gung steht. Dadurch dass Sie einen Prozess im Hintergrund ausf&uuml;hren, k&ouml;nnen Sie ohne weiteres weitere Prozesse »parallel« starten.</p>
+<h4 class="t4">Jobverwaltung</h4>
+<p>Damit Sie Prozesse, die Sie in den Hintergrund gestellt haben, auch noch kontrollieren, gibt es eine Jobverwaltung (Job-Control-System). Damit k&ouml;nnen Sie z. B. Prozesse, die Sie in den Hintergrund gestellt haben, wieder nach »vorne« holen und ggf. wieder in den Hintergrund schicken. Dies kann z. B. sinnvoll sein, wenn ein Prozess die kompletten Systemressourcen (besonders die CPU) aufbraucht oder etwa eine Eingabe vom Benutzer erwartet. Wenn Sie einen Hintergrundprozess starten, wird eine Nummer zwischen eckigen Klammern und die Prozessidentifikationsnummer angezeigt. Bei der Nummer zwischen den eckigen Klammern handelt es sich um die Jobnummer.</p>
+<pre>$ sleep 10 &amp;
+[1] 8204
+$ sleep 10 &amp;
+[2] 8205</pre>
+<p>Hier haben Sie zweimal das Kommando <span class="listing">sleep</span> im Hintergrund gestartet. Der Prozess mit der Nummer 8204 hat dabei die Jobnummer 1 und 8205 die Jobnummer 2. Damit Sie sich einen &Uuml;berblick zu allen sich im Hintergrund befindlichen Prozessen verschaffen k&ouml;nnen, wird das Kommando <span class="listing">jobs</span> verwendet:</p>
+<pre>$ jobs
+[1]-  Running                 sleep 10 &amp;
+[2]+  Running                 sleep 10 &amp;</pre>
+<p>Hier k&ouml;nnen Sie an »Running« erkennen, dass beide Prozesse im Hintergrund noch aktiv sind. Eine halbe Minute sp&auml;ter sieht dies schon ganz anders aus:</p>
+<pre>$ jobs
+[1]-  Done                    sleep 10
+[2]+  Done                    sleep 10</pre>
+<p><span class="listing">jobs</span> sagt uns hier mit »Done«, dass die beiden ehemaligen Hintergrundprozesse ihre Arbeit verrichtet haben. Jetzt wollen wir nochmals <span class="listing">sleep</span> aufrufen und dann aber mit der Tastenkombination <b>(STRG)</b>+<b>(Z)</b> f&uuml;r Stopp (Signal <span class="listing">SIGTSTP</span>) den Prozess anhalten.</p>
+<pre>$ sleep 10
+STRG+Z
+[1]+  Stopped                 sleep 10</pre>
+<p>Ein Blick in die Jobverwaltung zeigt uns mit »Stopped«, dass der Prozess angehalten wurde:</p>
+<pre>$ jobs
+[1]+  Stopped                 sleep 10</pre>
+<p>H&auml;ufig wird ein Prozess gestoppt, wenn die Ausf&uuml;hrung verd&auml;chtig lange dauert oder der Prozess den Rechner erheblich ausbremst. Auch ein Blick in der Prozessliste zeigt uns den gestoppten Prozess anhand des »T« (f&uuml;r Traced):</p>
+<pre>$ ps -l | grep sleep
+0 T  1000 8461 7042 0 76  0–831 finish pts/2 00:00:00 sleep</pre>
+<p>Um dem gestoppten Prozess doch noch sein »Happy End« zu g&ouml;nnen, stehen Ihnen mehrere M&ouml;glichkeiten zur Verf&uuml;gung. Sie senden dem gestoppten Prozess das Signal <span class="listing">SIGCONT</span>, womit dieser seine Ausf&uuml;hrung, wenn m&ouml;glich, fortsetzt. Hierbei ben&ouml;tigen Sie nicht zwangsl&auml;ufig die PID des Prozesses, sondern k&ouml;nnen auch das Prozentzeichen, gefolgt von der Jobnummer, verwenden. In unserem Beispiel w&auml;re dies:</p>
+<pre>$ kill -SIGCONT %1
+$ jobs
+[1]+  Done                    sleep 10</pre>
+<p>Hiermit haben Sie den angehaltenen Job mit der Nummer 1 wieder fortgesetzt. Wollen Sie den angehaltenen Prozess hingegen nicht mehr fortsetzen, sondern komplett beenden, dann m&uuml;ssen Sie nur stattdessen die Signale <span class="listing">SIGCONT</span>, <span class="listing">SIGTERM</span> oder, wenn es damit nicht mehr klappt, <span class="listing">SIGKILL</span> senden.</p>
+<p><a id="Xxx999360" name="Xxx999360"></a><a id="Xxx999361" name="Xxx999361"></a>Wieder zur&uuml;ck in die Vergangenheit, der Prozess <span class="listing">sleep</span> befindet sich wieder im gestoppten Zustand. Die n&auml;chste M&ouml;glichkeit, den Prozess weiter auszuf&uuml;hren, w&auml;re es, diesen mit dem Kommando <span class="listing">bg</span> (f&uuml;r background) und der entsprechenden Jobnummer (mit vorangestelltem Prozentzeichen) wieder in den Hintergrund zu schicken, wo dieser weiter ausgef&uuml;hrt wird.</p>
+<pre>$ bg %1
+[1]+ sleep 10 &amp;</pre>
+<p>Geben Sie <span class="listing">bg</span> ohne das Prozentzeichen an, wird der einzige Job, der m&ouml;glich ist, in den Hintergrund geschickt. Verwenden Sie das Prozentzeichen ohne Jobnummer, bezieht sich die Angabe immer auf den aktuellen Job (current job).</p>
+<p><a id="Xxx999365" name="Xxx999365"></a><a id="Xxx999366" name="Xxx999366"></a>Jetzt nochmals zur&uuml;ck in die Vergangenheit, und <span class="listing">sleep</span> ist wieder angehalten. Eine weitere M&ouml;glichkeit, den Prozess weiter auszuf&uuml;hren, w&auml;re es, das Kommando <span class="listing">fg</span> (f&uuml;r foreground) zu verwenden. Die Verwendung von <span class="listing">fg</span> entspricht exakt der von <span class="listing">bg</span>. Auch hierbei gibt man nach dem Prozentzeichen die entsprechende Jobnummer an von dem Prozess, von dem man will, dass dieser im Vordergrund weiter ausgef&uuml;hrt wird. <span class="listing">fg</span> entspricht demselben Anwendungsfall wie schon die Verwendung des Signals <span class="listing">SIGCONT</span>.</p>
+<pre>$ fg %1
+sleep 10</pre>
+<p>Hier nochmals ein &Uuml;berblick der Funktionen der Jobverwaltung:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.14   
+    </b>Kommandos zur Jobverwaltung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Jobbefehl</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">fg %jobnr
+</td>
+<td class="tabellentext" bgcolor="#000000">Holt sich einen Job in den Vordergrund, wo dieser weiterl&auml;uft.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">bg %jobnr
+</td>
+<td class="tabellentext" bgcolor="#000000">Schiebt einen angehaltenen Job in den Hintergrund, wo dieser weiterl&auml;uft.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><b>(CTRL)</b>+<b>(Z)</b>
+</td>
+<td class="tabellentext" bgcolor="#000000">H&auml;lt einen sich im Vordergrund aufhaltenden Prozess auf (suspendiert diesen).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">kill %jobnr
+</td>
+<td class="tabellentext" bgcolor="#000000">Beendet einen Prozess.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">kill -SIGCONT %jobnr
+</td>
+<td class="tabellentext" bgcolor="#000000">Setzt die Ausf&uuml;hrung eines angehaltenen Prozesses fort (egal ob im Hinter- bzw. Vordergrund).
+</td>
+</tr>
+</table><br>
+<p>Mit dem folgenden Beispiel soll die Anwendung von <span class="listing">fg</span> etwas deutlicher demonstriert werden:</p>
+<pre>/* atest.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main(void) {
+   int wert;
+   printf("Bitte Wert eingeben: ");
+   scanf("%d", &amp;wert);
+   printf("Der Wert lautet: %d\n", wert);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung (im Hintergrund):</p>
+<pre>$ gcc -o atest atest.c
+$ ./atest &amp;
+Bitte Wert eingeben:
+[1] 10240
+[1]+  Stopped                 ./atest
+$ jobs
+[1]+  Stopped                 ./atest
+$ fg %1
+./atest
+10 ENTER
+Der Wert lautet: 10
+$</pre>
+<p>Hier hat sich das im Hintergrund gestartete Programm »atest« von selbst angehalten, weil sich darin eine Eingabeaufforderung f&uuml;r den Benutzer befand. Anschlie&szlig;end wurde das Programm mit <span class="listing">fg</span> in den Vordergrund geholt, um dieser Eingabeaufforderung nachzukommen, und das Programm wurde bis zum Ende fortgesetzt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Zwar werden wohl die meisten mit der Korn-Shell (ksh) oder der Bourne-again-Shell (bash) arbeiten, aber sofern Sie mit der Ur-Shell, der Bourne-Shell (sh), arbeiten, sollte gesagt sein, dass die »echte« Bourne-Shell keine Jobkontrolle bietet. Unter Linux ist ein Aufruf der Bourne-Shell nichts anderes als ein symbolischer Link zur Bash.</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">7.13.3 Prozesse zeitgesteuert ausf&uuml;hren (cron-Jobs)<a id="RxxKap07012040002031F04A1CD" name="RxxKap07012040002031F04A1CD"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999413" name="Xxx999413"></a><a id="Xxx999414" name="Xxx999414"></a><a id="Xxx999415" name="Xxx999415"></a>H&auml;ufiger werden Sie die Programme, die Sie schreiben, auch zeitgesteuert ausf&uuml;hren wollen und nicht immer von Hand. F&uuml;r solche Aufgaben wurde der cron-D&auml;mon geschaffen. Hierbei definieren Sie einmal eine Aufgabe und delegieren diese dann an den cron-D&auml;mon. Dies wird mit einem Eintrag in der crontab-Datei gemacht. Da es besonders bei Heimrechnern nicht immer m&ouml;glich ist, dass ein entsprechender cron-Job ausgef&uuml;hrt wird (hierzu muss der PC immer an sein), gibt es auch noch einen D&auml;mon namens »anacron«, der vers&auml;umte cron-Jobs nachholt.</p>
+<p>Einmal gestartet (gew&ouml;hnlich von »init« mit einem Startup-Skript) liest der cron-D&auml;mon standardm&auml;&szlig;ig jede Minute die crontab-Datei ein und schaut, ob ein Job f&uuml;r ihn vorhanden ist. Bevor Sie erfahren, wie Sie Ihr Programm zu einer bestimmten Zeit starten k&ouml;nnen, hierzu noch einige Anmerkungen. Bedenken Sie bitte, wenn Sie einen Prozess &uuml;ber cron starten, dass keine Verbindung mehr zum Bildschirm und zu der Tastatur besteht. Sie m&uuml;ssen sich vor Augen halten, dass eine Benutzereingabeaufforderung sowie eine Ausgabe auf dem Bildschirm recht sinnlos in Ihrem Programm sind. In beiden F&auml;llen sollten Sie die Ein- bzw. Ausgabe(n) umleiten. In der Praxis l&auml;sst man sich h&auml;ufig die Ausgabe per E-Mail an den Eigent&uuml;mer der crontab senden.</p>
+<p>Die Eintr&auml;ge der crontab-Datei vom Superuser root befinden sich meistens im /etc-Verzeichnis. Die crontab-Dateien f&uuml;r den Benutzer sollten sich im Verzeichnis /var/spool/cron befinden. Zum Bearbeiten der crontab-Datei gen&uuml;gt gew&ouml;hnlich ein einfaches <span class="listing">crontab</span> mit der Option <span class="listing">-e</span> (f&uuml;r edit). Hiermit wird <span class="listing">crontab</span> mit dem Standardeditor (meistens <span class="listing">vi</span>) gestartet. Beim ersten Aufruf (als normaler Nutzer) wird die crontab-Datei leer sein.</p>
+<p>Einen Eintrag in die crontab-Datei macht man mit der folgenden Syntax:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.15   
+    </b>Ein Eintrag in die crontab-Datei</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Minuten</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Stunden</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Tage</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Monate</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Wochentage</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>[User]</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Befehl</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0-59 
+</td>
+<td class="tabellentext" bgcolor="#000000">0-23 
+</td>
+<td class="tabellentext" bgcolor="#000000">1-31
+</td>
+<td class="tabellentext" bgcolor="#000000">1-12 
+</td>
+<td class="tabellentext" bgcolor="#000000">0-7 
+</td>
+<td class="tabellentext" bgcolor="#000000">Name
+</td>
+<td class="tabellentext" bgcolor="#000000">programm
+</td>
+</tr>
+</table><br>
+<p>Praktisch besteht jede einzelne Zeile aus sechs (bzw. sieben) Spalten, worin ein Auftrag festgelegt wird. Jede Spalte wird durch ein Leerzeichen bzw. ein Tabulator-Zeichen voneinander getrennt. In der ersten Spalte werden hierbei die Minuten (0-59), in der zweiten die Stunden (0-23), in der dritten die Tage (1-31), in der vierten die Monate (1-12), in der f&uuml;nften die Wochentage (0-7; 0 und 7 stehen hierbei f&uuml;r Sonntag) und in der sechsten Spalte das Kommando bzw. Skript angegeben, das zum gegebenen Zeitpunkt ausgef&uuml;hrt werden soll. In der Syntax finden Sie hierbei noch eine Spalte User (die sechste), die allerdings beim normalen User entf&auml;llt. Diese Spalte ist dem root vorbehalten, worin dieser einen cron-Job f&uuml;r bestimmte User einrichten kann. Somit besteht eine Zeile (Auftrag) einer crontab-Datei f&uuml;r den normalen Benutzer aus sechs und f&uuml;r den root aus sieben Spalten.</p>
+<p>Nat&uuml;rlich k&ouml;nnen Sie auch Kommentare bei der crontab-Datei hinzuf&uuml;gen. Diese werden mit dem f&uuml;r das Shellscript &uuml;blichen # eingeleitet. Sie k&ouml;nnen bei den Zeitangaben anstatt Zahlen auch einen Stern (*) verwenden, was f&uuml;r »Erster und Letzter« steht – also »immer«. Somit w&uuml;rde folgender Eintrag das Programm »meinProgramm« jede Minute ausf&uuml;hren:</p>
+<pre># F&uuml;hrt das Programm jede Minute aus
+* * * * * $HOME/meinProgramm</pre>
+<p>Es sind auch Zahlenbereiche erlaubt, z. B. ein Bereich wird mit einem Bindestrich von einem anderen getrennt. Die Zahlen zwischen den Bereichen sind immer inklusive. Somit bedeutet folgender Eintrag, dass das Programm »meinProgramm« jeden Tag um 10, 11, 12, 13 und 14 Uhr ausgef&uuml;hrt wird:</p>
+<pre>0 10–14 * * * $HOME/meinProgramm</pre>
+<p>Es k&ouml;nnen aber auch Listen verwendet werden, womit Nummern oder auch ein Zahlenbereich von Nummern durch Kommata getrennt werden:</p>
+<pre>0 10–12,16,20–23 * * * $HOME/meinProgramm</pre>
+<p>Hier w&uuml;rde jeden Tag um 10, 11, 12, 16, 20, 21, 22 und 23 Uhr das Programm »meinProgramm« ausgef&uuml;hrt. Hierbei muss darauf geachtet werden, dass keine Leerzeichen in der Liste vorkommen d&uuml;rfen, da das Leerzeichen ja das Trennzeichen f&uuml;r den n&auml;chsten Eintrag ist.</p>
+<p>Es sind au&szlig;erdem Auftr&auml;ge in bestimmten Schritten m&ouml;glich. Somit k&ouml;nnten Sie anstatt der Angabe, alle vier Stunden ein bestimmtes Programm auszuf&uuml;hren, mit</p>
+<pre>0 0,4,8,12,16,20 * * * $HOME/meinProgramm</pre>
+<p>dies mit 0–23/4 oder */4 verk&uuml;rzen:</p>
+<pre>0 */4 * * * $HOME/meinProgramm</pre>
+<p>Hierzu einige Beispiele zum besseren Verst&auml;ndnis:</p>
+<pre># Jeden Tag um 11 Uhr das Skript meinProgramm ausf&uuml;hren
+0 11 * * * $HOME/meinProgramm
+# Jeden Dienstag und Freitag um 23 Uhr das 
+# Programm meinProgramm ausf&uuml;hren
+0 23 * * 2,5 $HOME/meinProgramm
+# Jeden zweiten Tag das Programm meinProgramm 
+# um 23 Uhr ausf&uuml;hren
+0 23 * * 0–6/2 $HOME/meinProgramm
+# Achtung: Das Programm wird jeden 15. eines 
+# Monats UND jeden Samstag um 23 Uhr ausgef&uuml;hrt
+0 23 15 * 6 $HOME/meinProgramm</pre>
+<p>Gew&ouml;hnlich wird Ihre crontab-Datei auf Dauer immer umfangreicher. Sofern Sie crontab zur Fernwartung einsetzen, k&ouml;nnen Sie sich die Ausgabe Ihres Skripts per E-Mail zuschicken lassen. Hierzu m&uuml;ssen Sie die Variable MAILTO (per Standard meist auf user@host gesetzt) in crontab mit Ihrer E-Mail-Adresse versehen. Mit einem leeren MAILTO (»«) k&ouml;nnen Sie dies wieder abschalten. Hierzu soll eine einfache crontab-Datei erstellt werden:</p>
+<pre>$ crontab -e
+[ ---vi startet--- ]
+# Alle zwei Minuten die Ausgabe von meinProgramm 
+# an testdatei h&auml;ngen
+*/2 * * * * $HOME/meinProgramm &gt;&gt; $HOME/testdatei
+[ --- Abspeichern und Quit (:wq)--- ]
+crontab: installing new crontab
+$</pre>
+<p>Weitere Optionen zu crontab finden Sie in der folgenden Tabelle:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.16   
+    </b>Optionen f&uuml;r crontab und deren Bedeutung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Aufruf</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">crontab -e
+</td>
+<td class="tabellentext" bgcolor="#000000">Die crontab-Datei editieren
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">crontab -l
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle cron-Jobs auflisten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">crontab -r
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle cron-Jobs l&ouml;schen
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bitte beachten Sie, dass es drei Versionen von cron-D&auml;monen gibt (BSD, SYSV und Linux), so dass es hier und da zu einigen Differenzen kommen kann. Die Manual Page veschafft Ihnen die absolute Sicherheit.</p>
+</td>
+</tr>
+</table><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap07-011.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap07-013.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap07-012.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:28 GMT -->
+</html>

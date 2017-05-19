@@ -1,0 +1,1690 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap13-002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:45:43 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 13.3 ncurses – Halbgrafik</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap13-001.html">
+<link rel="next" href="Kap14-000.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap13-001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap14-000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap13-000.html#RxxKap13000040004691F01E100">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap13-000.html#RxxKap13000040004691F01E103">13.1 termios</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap13-000.html#RxxKap13000040004691F01E111">13.1.1 Terminalattribute bearbeiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap13-000.html#RxxKap13000040004691F01E1FF">13.1.2 Flags setzen und l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap13-000.html#RxxKap13000040004691F01E214">13.1.3 Terminalidentifizierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap13-000.html#RxxKap13000040004691F01E224">13.1.4 Geschwindigkeitskontrolle – Baudrate von Terminals einstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap13-001.html#RxxKap13001040004861F025100">13.2 terminfo</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap13-001.html#RxxKap13001040004861F025108">13.2.1 terminfo verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap13-001.html#RxxKap13001040004861F0251A8">13.2.2 terminfo initialisieren – setupterm()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap13-001.html#RxxKap13001040004861F0251AC">13.2.3 Eigenschaften eines Terminals (Finden von capnames) – tigetflag(), tigetnum() und tigetstr()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap13-001.html#RxxKap13001040004861F0251D7">13.2.4 Mit terminfo-Eigenschaften arbeiten – putp(), tputs(), tparm()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap13002040004871F010100">13.3 ncurses – Halbgrafik</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap13002040004871F010105">13.3.1 ncurses initialisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap13002040004871F010110">13.3.2 Tastaturmodus und Ein- und Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap13002040004871F0101BB">13.3.3 Eigenschaft der Fenster</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap13002040004871F0101CD">13.3.4 Scrolling</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap13002040004871F0101DB">13.3.5 Attribute und Farben setzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap13002040004871F010219">13.3.6 Fensterroutinen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap13002040004871F010243">13.3.7 Mausprogrammierung mit ncurses</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">13.3 <a id="RxxKap13170ncursesHalbgrafik" name="RxxKap13170ncursesHalbgrafik"></a>ncurses – Halbgraf<a id="RxxKap13002040004871F010100" name="RxxKap13002040004871F010100"></a>ik 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a><a id="Xxx999237" name="Xxx999237"></a><a id="Xxx999238" name="Xxx999238"></a><a id="Xxx999239" name="Xxx999239"></a><a id="Xxx999240" name="Xxx999240"></a><a id="Xxx999241" name="Xxx999241"></a><a id="Xxx999242" name="Xxx999242"></a>In diesem Kapitel erhalten Sie eine Einf&uuml;hrung zu ncurses – einer freien Implementierung der klassischen Bildschirmsteuerung der UNIX-Bibliothek curses. ncurses ist eine Bibliothek der h&ouml;heren Ebene und eine Schnittstelle zur Kontrolle und Manipulation der Bildschirmausgabe. Weiterhin beinhaltet ncurses Funktionen zur Behandlung der Tastatur- und Mauseingabe, zur Behandlung und Erzeugung mehrerer Fenster – ja es gibt sogar Funktionen f&uuml;r Panels, Men&uuml;steuerung und Forms. Eine vollst&auml;ndige Beschreibung w&uuml;rde hier allerdings den Rahmen des Buchs sprengen – und ich war der Auffassung, mehr Platz f&uuml;r die Programmierung von grafischen Oberfl&auml;chen zu lassen. Ben&ouml;tigen Sie eine umfangreichere Lekt&uuml;re zu ncurses, dann ist die Manual Page wieder das Nonplusultra (oder ein Blick auf die Buch-CD).</p>
+<p><a id="Xxx999244" name="Xxx999244"></a>ncurses ist sozusagen die Antwort von den Bekehrten des »B&ouml;sen«, die zum »Guten« gewechselt sind und sich die Frage stellen: Wo ist conio? – und auch als gute Alternative zur niedrigeren Fraktion termcap und terminfo.</p>
+<p>Ihnen wird au&szlig;erdem auffallen, dass mit ncurses ein gewisser Overhead entf&auml;llt, den Sie mit termios und terminfo zuvor betrieben haben. Meistens werden ungem&uuml;tliche Aufgaben bei ncurses mit einer Funktion erledigt – wozu Sie zuvor eine ganze Routine haben schreiben m&uuml;ssen.</p>
+<p>Da Sie ncurses nicht standardm&auml;&szlig;ig auf jedem System vorfinden, muss diese Bibliothek dem Linker mit dem Flag <span class="listing">-lncurses</span> oder (unter UNIX-artigem <span class="listing">-curses</span>) hinzugelinkt werden (eventuell muss die entsprechende Bibliothek nachinstalliert werden).</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">13.3.1 ncurses initialisieren<a id="RxxKap13002040004871F010105" name="RxxKap13002040004871F010105"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999249" name="Xxx999249"></a>Bei ncurses f&auml;llt relativ oft der Begriff Window und dann wieder der Begriff Screen, was beides allerdings nicht ganz dasselbe bedeutet. Der Screen ist der physische Terminalbildschirm, der im Zeichen- oder Konsolenmodus ausgef&uuml;hrt wird, und als Window bezeichnet man den rechteckigen Bereich auf dem Bildschirm, der sich innerhalb des Screens befindet. Das erste Window, das ncurses auf dem Bildschirm ausgibt, wird als <span class="listing">stdscr</span> bezeichnet. Alle anderen Windows, die darauf folgen, k&ouml;nnen Sie unter Angabe des Typs <span class="listing">WINDOW</span> selbst benennen. Schlie&szlig;lich k&ouml;nnen Sie mit ncurses mit mehr als einem Window arbeiten.</p>
+<p>Um &uuml;berhaupt mit ncurses arbeiten zu k&ouml;nnen, m&uuml;ssen Sie erst eine Initialisierung machen. Dies wird mit der folgenden Funktion erledigt:<a id="Xxx999252" name="Xxx999252"></a></p>
+<pre>#include &lt;curses.h&gt;
+WINDOW *initscr(void);</pre>
+<p>Konnte ncurses erfolgreich initialisiert werden, gibt <span class="listing">initscr()</span> einen Zeiger auf <span class="listing">stdscr</span> zur&uuml;ck, ansonsten im Fehlerfall wird <span class="listing">NULL</span> zur&uuml;ckgegeben. Nach der Initialisierung von ncurses k&ouml;nnen Sie weitere Funktionen aufrufen.</p>
+<p>Wenn Sie das Programm beenden wollen, sollten Sie ncurses ebenfalls davon in Kenntnis setzen.<a id="Xxx999256" name="Xxx999256"></a><a id="Xxx999257" name="Xxx999257"></a></p>
+<pre>#include &lt;curses.h&gt;
+int endwin(void);</pre>
+<p>Damit wird das aktuelle Terminal wieder freigegeben. Bei Erfolg liefert <span class="listing">endwin()</span> die symbolische Konstante <span class="listing">OK</span>, ansonsten bei einem Fehler <span class="listing">ERR</span> zur&uuml;ck.</p>
+<p>Somit sieht das Grundger&uuml;st zur ncurses-Programmierung folgenderma&szlig;en aus:</p>
+<pre><a id="Xxx999261" name="Xxx999261"></a>/* cur1.c */
+#include &lt;curses.h&gt;
+int main (void) {
+   /* curses initialisieren */
+   initscr ();
+   /* curses-Funktionen usw. */
+   /* curses beenden         */
+   endwin ();
+   return 0;
+}</pre>
+<p>Logischerweise passiert nach dem &Uuml;bersetzen und Starten des Programms noch gar nichts.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">13.3.2 Tastaturmodus und Ein- und Ausgabe<a id="RxxKap13002040004871F010110" name="RxxKap13002040004871F010110"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bei den meisten Funktionen, die einen Integer zur&uuml;ckgeben, wird bei einem Fehler immer <span class="listing">ERR</span>, ansonsten bei Erfolg ein anderer Wert als <span class="listing">ERR</span> (<span class="listing">!ERR</span>) zur&uuml;ckgegeben. Funktionen, die einen Zeiger verwenden, geben bei einem Fehler immer <span class="listing">NULL</span> zur&uuml;ck.</p>
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999269" name="Xxx999269"></a>Im n&auml;chsten Abschnitt lernen Sie einige (der vielen) M&ouml;glichkeiten kennen, wie Sie Zeichen von der Tastatur einlesen und wieder ausgeben k&ouml;nnen.</p>
+<h4 class="t4">Der Tastaturmodus</h4>
+<p>Um den Puffer (zeilenweise) abzustellen bzw. wieder einzuschalten, stehen Ihnen bei ncurses folgende Funktionen zur Verf&uuml;gung:<a id="Xxx999273" name="Xxx999273"></a><a id="Xxx999274" name="Xxx999274"></a></p>
+<pre>#include &lt;curses.h&gt; 
+int cbreak(void);
+int nobreak(void);</pre>
+<p>Mit der Funktion <span class="listing">cbreak()</span> stellen Sie den Puffer ab, und mit der Funktion <span class="listing">nobreak()</span> k&ouml;nnen Sie dies wieder r&uuml;ckg&auml;ngig machen. Wurde der Puffer abgeschaltet, werden die einzelnen Zeichen sofort ohne Bet&auml;tigung von <b>(ENTER)</b> eingelesen. Mit der Funktion <span class="listing">cbreak()</span> bearbeitet der Tastaturtreiber au&szlig;erdem nur noch die Tastenkombinationen <b>(CTRL)</b>+<b>(S)</b>, <b>(CTRL)</b>+<b>(Q)</b> und <b>(CTRL)</b>+<b>(C)</b>. Standardm&auml;&szlig;ig ist unter Linux logischerweise (auch unter ncurses) die (zeilenweise) Pufferung eingeschaltet.</p>
+<p>Ebenso k&ouml;nnen Sie mit ncurses das Terminal auch in den <span class="listing">raw()</span>-Modus setzen bzw. wieder zur&uuml;cksetzen. Dies erledigen Sie mit den entsprechenden Funktionen:<a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a><a id="Xxx999280" name="Xxx999280"></a></p>
+<pre>#include &lt;curses.h&gt;
+// raw-Modus an
+int raw(void); 
+// raw-Modus aus
+int noraw(void);</pre>
+<p>Um bei einer Eingabe von der Tastatur die anschlie&szlig;enden Zeichen oder Steuercodes nicht am Bildschirm anzuzeigen, kann die Funktion <span class="listing">noecho()</span> verwendet werden. R&uuml;ckg&auml;ngig gemacht wird dies wieder mit der Funktion <span class="listing">echo()</span>.<a id="Xxx999283" name="Xxx999283"></a><a id="Xxx999284" name="Xxx999284"></a></p>
+<pre>#include &lt;curses.h&gt;
+int noecho(void);
+int echo(void);</pre>
+<p>Wollen Sie testen, ob bestimmte Tasten wie Cursor up, Page down, Home, Cursor down, Ende, F1 usw. bet&auml;tigt wurden, dann verwenden Sie am besten die folgende Funktion:<a id="Xxx999287" name="Xxx999287"></a></p>
+<pre>#include &lt;curses.h&gt;
+int keypad(WINDOW *win, bool bf);</pre>
+<p>Der Parameter <span class="listing">win</span> wird (wurde) bereits zu Beginn mit <span class="listing">initscr()</span> initialisiert (<span class="listing">stdscr<a id="Xxx999289" name="Xxx999289"></a></span>). Mit <span class="listing">bf</span> k&ouml;nnen Sie das Verhalten des Bildschirms festlegen. Geben Sie hierf&uuml;r <span class="listing">TRUE</span> an und der Anwender dr&uuml;ckt eine Funktionstaste, dann gibt die Funktion <span class="listing">wgetch()<a id="Xxx999291" name="Xxx999291"></a></span> z. B. einen Wert zur&uuml;ck, den die Funktionstaste repr&auml;sentiert. Falls Sie hierf&uuml;r <span class="listing">FALSE</span> angeben, werden die Funktionstasten nicht gesondert behandelt, und die Anwendung interpretiert die Escape-Sequenzen selbst.</p>
+<h4 class="t4">Ein- und Ausgabe</h4>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Eine Besonderheit bei der Ausgabe gleich zu Beginn. Damit die anschlie&szlig;enden Ausgabefunktionen von ncurses auch wirklich etwas auf dem Bildschirm wiedergeben, muss nach jeder Ver&auml;nderung des Bildschirms die Funktion <span class="listing">refresh()</span> aufgerufen werden. Dazu in K&uuml;rze mehr.</p>
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999297" name="Xxx999297"></a>Bei ncurses haben fast alle Routinen zur Ein- und Ausgabe zwei Varianten, zum einen die »normale« Variante, zum anderen eine, die mit einem <span class="listing">mv</span>-Pr&auml;fix beginnt. Beide Schreibweisen bedeuten dasselbe, nur dass Sie mit dem <span class="listing">mv</span>-Pr&auml;fix (mv=move) den Cursor erst noch auf die Position y, x stellen k&ouml;nnen. Achtung, falls Sie die Koordinaten von <span class="listing">conio</span> im Kopf haben (<span class="listing">x,</span> <span class="listing">y</span>), bei ncurses geben Sie zuerst die <span class="listing">y</span>- und dann die <span class="listing">x</span>-Koordinate an.</p>
+<p>Um einzelne Zeichen von der Tastatur einzulesen, stehen Ihnen folgende Funktionen zur Verf&uuml;gung:<a id="Xxx999300" name="Xxx999300"></a><a id="Xxx999301" name="Xxx999301"></a></p>
+<pre>#include &lt;curses.h&gt;
+int getch(void);
+int mvgetch(int y, int x);</pre>
+<p>Mit der Funktion <span class="listing">getch()</span> lesen Sie ein Zeichen von der Tastatur ein. <span class="listing">mvgetch(y,x)</span> macht dasselbe, nur mit den Koordinaten <span class="listing">y</span> und <span class="listing">x</span> (Zeile und Spalte). Die Funktion <span class="listing">getch()</span> ist nat&uuml;rlich auch abh&auml;ngig von den Funktionen <span class="listing">cbreak()</span>, <span class="listing">raw()</span>, <span class="listing">nocbreak()</span> und <span class="listing">noraw()</span>. Au&szlig;erdem werden mit <span class="listing">getch()</span> auch Werte jenseits von 0 bis 255 zur&uuml;ckgegeben. Damit k&ouml;nnen Sie sich, wenn Sie die Funktionstastenerkennung <span class="listing">keypad(stdscr,TRUE)</span> aktiviert haben, den Integerwert der Funktionstasten ausgeben lassen. Hier ein Beispiel dazu:</p>
+<pre><a id="Xxx999304" name="Xxx999304"></a>/* cur2.c */
+#include &lt;curses.h&gt;
+int main (void) {
+  int c;
+  initscr ();      
+  keypad (stdscr, TRUE);
+  noecho();
+  while ((c = getch ()) != 'q') {
+    switch (c) {
+    case KEY_DOWN:
+      printw ("KEY_DOWN : %d\n", c);
+      break;
+    case KEY_UP:
+      printw ("KEY_UP   : %d\n", c);
+      break;
+    case KEY_LEFT:
+      printw ("KEY_LEFT : %d\n", c);
+      break;
+    case KEY_RIGHT:
+      printw ("KEY_RIGHT: %d\n", c);
+      break;
+    default:
+      printw ("Tastaturcode %d\n", c);
+    }
+  }
+  endwin ();
+  return 0;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o cur2 cur2.c -lncurses
+$ ./cur2
+---[Bildschirm wird geleert]---
+KEY_UP   : 259
+KEY_LEFT : 260
+KEY_DOWN : 258
+KEY_RIGHT: 261
+Tastaturcode 265
+Tastaturcode 266
+Tastaturcode 267 
+Tastaturcode 339
+Tastaturcode 97 
+Tastaturcode 99
+...
+q</pre>
+<p><a id="Xxx999308" name="Xxx999308"></a><a id="Xxx999309" name="Xxx999309"></a><a id="Xxx999310" name="Xxx999310"></a><a id="Xxx999311" name="Xxx999311"></a>Wenn Sie das Programm ausf&uuml;hren, aktivieren Sie mit <span class="listing">keypad(stdscr,TRUE)</span> die Cursor- und Funktionstasten – sprich, diese werden ber&uuml;cksichtigt. Im Beispiel k&ouml;nnen so lange Tasten gedr&uuml;ckt werden, bis Sie <span class="listing">q</span> bet&auml;tigen. Sie sehen au&szlig;erdem, wie Sie einzelne Funktionstasten explizit abfragen k&ouml;nnen (<span class="listing">KEY_DOWN</span>, <span class="listing">KEY_UP</span>, <span class="listing">KEY_RIGHT</span>, <span class="listing">KEY_LEFT</span>). Weitere symbolische Konstanten, die in der Headerdatei <span class="listing">curses.h</span> definiert sind und abgefragt werden k&ouml;nnen, sind:</p>
+<pre>#define KEY_BREAK 0401        /* Break (unzuverl&auml;ssig )        */
+#define KEY_DOWN 0402         /* Pfeil-nach-unten              */
+#define KEY_UP 0403           /* Pfeil-nach-oben               */
+#define KEY_LEFT 0404         /* Pfeil-nach-links              */
+#define KEY_RIGHT 0405        /* Pfeil-nach-rechts             */
+#define KEY_HOME 0406         /* Home                          */
+#define KEY_BACKSPACE 0407    /* Backspace (unzuverl&auml;ssig)     */
+#define KEY_F0 0410           /* Funktionstasten (Platz f&uuml;r 64)*/
+#define KEY_F(n) (KEY_F0+(n)) /* Wert f&uuml;r Funktionstaste n     */
+#define KEY_DL 0510           /* Delete Zeile                  */
+#define KEY_IL 0511           /* Insert Zeile                  */
+#define KEY_DC 0512           /* Delete Zeichen                */
+#define KEY_CLEAR 0515        /* Screen l&ouml;schen                */
+#define KEY_EOS 0516          /* L&ouml;schen bis Ende des Screens  */
+#define KEY_EOL 0517          /* L&ouml;schen zum Ende der Zeile    */
+#define KEY_SF 0520           /* 1 Zeile herunterscrollen      */
+#define KEY_SR 0521           /* 1 Zeile heraufscrollen        */
+#define KEY_NPAGE 0522        /* N&auml;chste Seite                 */
+#define KEY_PPAGE 0523        /* Vorherige Seite               */
+#define KEY_STAB 0524         /* TAB gesetzt                   */
+#define KEY_CTAB 0525         /* TAB losgel&ouml;st                 */
+#define KEY_ENTER 0527        /* Enter                         */
+#define KEY_PRINT 0532        /* Print                         */</pre>
+<p>Nat&uuml;rlich sind das noch lange nicht alle Konstanten. Weitere Funktionstasten und deren symbolische Konstanten k&ouml;nnen Sie unter <span class="listing">/usr/include/curses.h</span> finden.</p>
+<p>Zum Einlesen von Strings werden folgende Funktionen verwendet:<a id="Xxx999315" name="Xxx999315"></a><a id="Xxx999316" name="Xxx999316"></a><a id="Xxx999317" name="Xxx999317"></a></p>
+<pre>#include &lt;curses.h&gt;
+int getstr(char *string);
+int getnstr(char *string, int n);</pre>
+<p>Beide Funktionen k&ouml;nnen Sie als Gegenst&uuml;ck zu <span class="listing">gets()</span> <span class="listing">-&gt;</span> <span class="listing">getstr()</span> und <span class="listing">fgets()</span> <span class="listing">-&gt;</span> <span class="listing">getnstr()</span> sehen. Auch hier kann nur von <span class="listing">getstr()</span> abgeraten werden (wie im Falle von <span class="listing">gets()</span>), da keine L&auml;ngenpr&uuml;fung vorgenommen wird. Beide Funktionen lesen von der Standardeingabe einen String in die Adresse von <span class="listing">string</span>. Bei <span class="listing">getnstr()</span> wird mit <span class="listing">n</span> noch eine zus&auml;tzliche L&auml;ngenangabe gemacht. Beide Funktionen gibt es nat&uuml;rlich auch als <span class="listing">mv</span>-Alternative zur Positionierung des Cursors:<a id="Xxx999321" name="Xxx999321"></a><a id="Xxx999322" name="Xxx999322"></a></p>
+<pre>#include &lt;curses.h&gt;
+int mvgetstr(int y, int x, char *string);
+int mvgetnstr(int y, int x, char *string, int n);</pre>
+<p>Hierzu ein einfaches Beispiel zum Einlesen von Strings:</p>
+<pre><a id="Xxx999325" name="Xxx999325"></a>/* cur3.c */
+#include &lt;curses.h&gt;
+#define MAX 100
+int main (void) {
+   char string[MAX];
+   char string2[MAX];
+   initscr ();
+   printw("Bitte Eingabe machen : ");
+   getnstr (string, MAX);
+   mvprintw( 5, 10 ,"Eingabe machen : ");
+   mvgetnstr (5, 30, string2, MAX);
+   endwin ();  
+   printf ("Die 1. Eingabe lautet : %s \n", string);
+   printf ("Die 2. Eingabe lautet : %s \n", string2);
+   return 0;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o cur3 cur3.c -lncurses
+$ ./cur3
+---[Bildschirm leeren]---
+Bitte Eingabe machen : Hallo Welt
+          Eingabe machen :    Hallo Welt
+...</pre>
+<p>Um ein einzelnes Zeichen wieder in den Eingabepuffer zur&uuml;ckzuschieben, kann folgende Funktion verwendet werden:<a id="Xxx999330" name="Xxx999330"></a></p>
+<pre>#include &lt;curses.h&gt;
+int ungetch(char zeichen);</pre>
+<p><a id="Xxx999332" name="Xxx999332"></a>Jetzt werden die wichtigsten Ausgabefunktionen von ncurses behandelt. Wie schon erw&auml;hnt, muss nach einem Aufruf von ncurses-Ausgabefunktionen wie <span class="listing">printw()</span>, <span class="listing">addstr()</span> etc. die Funktion <span class="listing">refresh()</span> aufgerufen werden, damit alle Ver&auml;nderungen auch wirklich am Bildschirm angezeigt werden.<a id="Xxx999334" name="Xxx999334"></a></p>
+<pre>#include &lt;curses.h&gt;
+int refresh(void);</pre>
+<p>Um die Ausgabe an einer bestimmten Position des Terminals vorzunehmen, kann der Cursor mit der Funktion <span class="listing">move()</span> platziert werden.<a id="Xxx999337" name="Xxx999337"></a><a id="Xxx999338" name="Xxx999338"></a><a id="Xxx999339" name="Xxx999339"></a></p>
+<pre>#include &lt;curses.h&gt;
+int move(int y, int x);</pre>
+<p>Damit platzieren Sie den Cursor auf dem Bildschirm in der <span class="listing">y</span>-ten Zeile und der <span class="listing">x</span>-ten Spalte.</p>
+<p>Wenn Sie eine Zeile l&ouml;schen oder eine Zeile einf&uuml;gen wollen, stehen folgende Funktionen zur Verf&uuml;gung:<a id="Xxx999343" name="Xxx999343"></a><a id="Xxx999344" name="Xxx999344"></a></p>
+<pre>#include &lt;curses.h&gt;
+int deleteln(void);
+int insertln(void);
+int insdelln(int anzahl);</pre>
+<p>Mit <span class="listing">deleteln()</span> l&ouml;schen Sie die Zeile, in der sich der Cursor gerade befindet. Die unteren Zeilen werden dabei nach oben gezogen. Mit <span class="listing">insertln()</span> f&uuml;gen Sie eine Leerzeile an der Position ein, wo sich der Cursor im Augenblick befindet. Die letzte Zeile geht dabei verloren! Mit <span class="listing">insdelln()</span> f&uuml;gen Sie <span class="listing">anzahl</span> Zeilen &uuml;ber die aktuelle Cursorposition ein und schieben die unteren Zeilen nach unten. Dadurch gehen die letzten <span class="listing">anzahl</span> Zeilen verloren.</p>
+<p>Weitere ebenb&uuml;rtige Funktionen, die Sie in &auml;hnlicher Form aus der Standard-C-Bibliothek her kennen, sind:<a id="Xxx999348" name="Xxx999348"></a><a id="Xxx999349" name="Xxx999349"></a></p>
+<pre>#include &lt;curses.h&gt;
+int printw(char *format, ...);
+int mvprintw(int y, int x, char *format, ...);</pre>
+<p>Zu <span class="listing">printw()</span> gibt es nichts zu sagen, da diese wie <span class="listing">printf()</span> zu verwenden ist. Mit <span class="listing">mvprintw()</span> k&ouml;nnen Sie noch zus&auml;tzlich die Ausgabe an der <span class="listing">y</span>-ten Zeile und der <span class="listing">x</span>-ten Spalte positionieren. <a id="Xxx999352" name="Xxx999352"></a><a id="Xxx999353" name="Xxx999353"></a>Mit beiden Funktionen lassen sich au&szlig;erdem keine <span class="listing">ACS_</span> Sonderzeichen darstellen, da ein <span class="listing">char</span> meistens 8 Bit breit ist. Was <span class="listing">ACS_</span> Sonderzeichen sind, erfahren Sie in K&uuml;rze. Ein Listing demonstriert Ihnen die hier vorgestellten Funktionen:</p>
+<pre><a id="Xxx999354" name="Xxx999354"></a>/* cur4.c */
+#include &lt;curses.h&gt;
+#define MAX 100
+int main (void) {
+  char string[MAX];
+  char string2[MAX];
+  const char string3[] = "Dies ist der neue String3\n";
+  int c;
+  initscr ();
+  printw ("Bitte Eingabe f&uuml;r String machen: ");
+  getnstr (string, MAX);
+  mvprintw (3, 0, "Bitte Eingabe f&uuml;r 2. String machen: ");
+  getnstr (string2, MAX);
+  mvprintw (7, 20, "String ist gleich: %s\n", string);
+  mvprintw (8, 20, "Diese Zeile wird mit deleteln() gel&ouml;scht\n");
+  mvprintw (9, 20, "String 2 ist gleich: %s\n", string2);
+  mvprintw (14, 20, "Weiter mit TASTE");
+  noecho ();
+  c = getch ();
+  move (8, 20);
+  // Zeile l&ouml;schen
+  deleteln ();
+  noecho ();
+  c = getch ();
+  move (8, 20);
+  // (Leer-)Zeile einf&uuml;gen
+  insertln (); 
+  mvprintw (8, 20, string3);
+  noecho ();
+  c = getch ();
+  // Bildschirm l&ouml;schen
+  clear (); 
+  refresh ();
+  mvprintw (12, 38, "ENDE");
+  // Wartet 20 Zehntelsek. auf getch()
+  halfdelay (20);  
+  // ... ansonsten beendet sich das Progr. selbst
+  c = getch ();
+  endwin ();
+  return 0;
+}</pre>
+<p>Das Beispiel sollte eigentlich f&uuml;r sich selbst sprechen. Zuerst werden Sie aufgefordert, zwei Strings einzugeben. Anschlie&szlig;end wird eine Zeile gel&ouml;scht und dann wieder eine hinzugef&uuml;gt. Auf die Funktion <span class="listing">halfdelay()<a id="Xxx999357" name="Xxx999357"></a></span> wird noch eingegangen.</p>
+<p>Mit der Funktion <span class="listing">addch()</span> k&ouml;nnen Sie ein einzelnes Zeichen an der aktuellen Cursorposition ausgeben.<a id="Xxx999359" name="Xxx999359"></a><a id="Xxx999360" name="Xxx999360"></a></p>
+<pre>#include &lt;curses.h&gt;
+int addch(chtype zeichen);</pre>
+<p>Wie Sie an dem Datentyp <span class="listing">chtype<a id="Xxx999362" name="Xxx999362"></a></span> erkennen k&ouml;nnen, handelt es sich hierbei nicht um ein »normales« <span class="listing">char</span>-Zeichen. Der Datentyp <span class="listing">chtype</span> ist ein 32-Bit-Wert. Damit lassen sich auch ganz andere Zeichen als nur ASCII-Zeichen darstellen. Folgende Sonderzeichen k&ouml;nnen Sie u. a. damit darstellen:<a id="Xxx999364" name="Xxx999364"></a><a id="Xxx999365" name="Xxx999365"></a></p>
+<pre>#define ACS_ULCORNER (acs_map['l']) /* Ecke links oben         */
+#define ACS_LLCORNER (acs_map['m']) /* Ecke links unten        */
+#define ACS_URCORNER (acs_map['k']) /* Ecke rechts oben        */
+#define ACS_LRCORNER (acs_map['j']) /* Ecke rechts unten       */
+#define ACS_LTEE (acs_map['t'])     /* T-St&uuml;ck nach rechts     */
+#define ACS_RTEE (acs_map['u'])     /* T-St&uuml;ck nach links      */
+#define ACS_BTEE (acs_map['v'])     /* T-St&uuml;ck nach oben       */
+#define ACS_TTEE (acs_map['w'])     /* T-St&uuml;ck nach unten      */
+#define ACS_HLINE (acs_map['q'])    /* horizontale Linie       */
+#define ACS_VLINE (acs_map['x'])    /* vertikale Linie         */
+#define ACS_PLUS (acs_map['n'])     /* gro&szlig;es Pluszeichen      */
+#define ACS_S1 (acs_map['o'])       /* Scan-Linie 1            */
+#define ACS_S9 (acs_map['s'])       /* Scan-Linie 2            */
+#define ACS_DIAMOND (acs_map['`'])  /* Diamant                 */
+#define ACS_CKBOARD (acs_map['a'])  /* checker board (stipple) */
+#define ACS_DEGREE (acs_map['f'])   /* Symbol f&uuml;r Grad         */
+#define ACS_PLMINUS (acs_map['g'])  /* Plus/Minus              */
+#define ACS_BULLET (acs_map['~'])   /* Bullet                  */</pre>
+<p>Bei den folgenden Typen kann es passieren, dass diese nicht richtig dargestellt werden. Als Alternative werden dann stattdessen einfache ASCII-Zeichen dargestellt. Z. B. f&uuml;r Pfeil-nach-links wird hierbei einfach <span class="listing">&lt;</span> ausgegeben oder f&uuml;r den Pfeil-nach-rechts das Zeichen <span class="listing">&gt;</span>.</p>
+<pre>#define ACS_LARROW (acs_map[','])    /* Pfeil-nach-links     */
+#define ACS_RARROW (acs_map['+'])    /* Pfeil-nach-rechts    */
+#define ACS_DARROW (acs_map['.'])    /* Pfeil-nach-unten     */
+#define ACS_UARROW (acs_map['-'])    /* Pfeil-nach-oben      */
+#define ACS_BOARD (acs_map['h'])     /* Tafel mit Quadraten  */
+#define ACS_LANTERN (acs_map['i'])   /* Laternen-Symbol      */
+#define ACS_BLOCK (acs_map['0'])     /* W&uuml;rfel-Block         */</pre>
+<p>Zur Demonstration ein einfaches Beispiel. Es wird ein einfacher Rahmen »gezeichnet«, bei dem sich im Zentrum ein String befindet.</p>
+<pre><a id="Xxx999370" name="Xxx999370"></a>/* cur5.c */
+#include &lt;curses.h&gt;
+int main (void) {
+  int i, j;
+  initscr ();
+  // Ecke links oben
+  addch (ACS_ULCORNER);
+  // Eine horizontale Linie
+  for (i = 0; i &lt; 20; i++)
+     addch (ACS_HLINE);
+  // Ecke rechts oben
+  addch (ACS_URCORNER);
+  addch ('\n');
+  // vertikale Linie rechts und links (21 Zeilen)
+  for (i = 0; i &lt; 10; i++)
+    for (j = 0; j &lt;= 21; j++)
+      if (j == 0)
+        addch (ACS_VLINE);
+      else if (j == 21) {
+        addch (ACS_VLINE);
+        addch ('\n');
+      } 
+      else
+        addch (' ');
+  // Ecke links unten
+  addch (ACS_LLCORNER);
+  // Eine horizontale Linie
+  for (i = 0; i &lt; 20; i++)
+    addch (ACS_HLINE);
+  // Ecke rechts unten
+  addch (ACS_LRCORNER);
+  addch ('\n');
+  mvprintw (5, 7, "&lt;TASTE&gt;");
+  getch ();
+  endwin ();
+  return 0;
+}</pre>
+<p>So sieht‘s aus:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/13_1.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein13_1.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 13.1   
+    </b>Ein einfacher Rahmen mithilfe von addch()</p>
+</td>
+</tr>
+</table><br>
+<p>Zur zeichenweisen Ausgabe mittels <span class="listing">addch()</span> gibt es auch eine Version f&uuml;r Strings:<a id="Xxx999380" name="Xxx999380"></a><a id="Xxx999381" name="Xxx999381"></a><a id="Xxx999382" name="Xxx999382"></a></p>
+<pre>#include &lt;curses.h&gt;
+int addstr(char *string);
+int addnstr(char *string, int anzahlzeichen);</pre>
+<p>Angewendet werden diese Funktionen so:</p>
+<pre>addstr("Hallo Welt");
+addnstr("Hallo Welt",5);    /* Wird nur Hallo ausgegeben */</pre>
+<p>Nat&uuml;rlich gibt es auch bei diesen Funktionen weitere Versionen mit dem vorangestellten <span class="listing">mv</span>-Pr&auml;fix zum Positionieren. Es sind au&szlig;erdem noch eine Menge mehr Funktionen dieser Art vorhanden. Hierf&uuml;r sind, bei Bedarf, die Manual Pages von ncurses heranzuziehen.</p>
+<p>Wollen Sie den Bildschirm von der aktuellen Position des Cursors aus l&ouml;schen, k&ouml;nnen Sie folgende Funktion verwenden:<a id="Xxx999389" name="Xxx999389"></a><a id="Xxx999390" name="Xxx999390"></a><a id="Xxx999391" name="Xxx999391"></a></p>
+<pre>#include &lt;curses.h&gt;
+int clrtobot(void);</pre>
+<p>Sie l&ouml;schen damit alles, was sich hinter dem Cursor befindet – alles, was davor steht, bleibt erhalten. Selbige Funktion gibt es auch f&uuml;r eine Zeile:<a id="Xxx999394" name="Xxx999394"></a><a id="Xxx999395" name="Xxx999395"></a></p>
+<pre>#include &lt;curses.h&gt;
+int clrtoeol(void);</pre>
+<p>Mit der Funktion <span class="listing">clrtoeol()</span> l&ouml;schen Sie den Rest (nicht die ganze Zeile) der Zeile ab der Position, an der sich der Cursor gerade befindet. Es geht auch noch kleiner:<a id="Xxx999398" name="Xxx999398"></a><a id="Xxx999399" name="Xxx999399"></a><a id="Xxx999400" name="Xxx999400"></a></p>
+<pre>#include &lt;curses.h&gt;
+int delch(void);
+int mvdelch(int y, int x);</pre>
+<p>Mit diesen beiden Funktionen k&ouml;nnen Sie das Zeichen an der Stelle l&ouml;schen, an der sich der Cursor im Augenblick befindet. Mit <span class="listing">mvdelch()</span> k&ouml;nnen Sie dazu den Cursor exakt positionieren. Alle weiteren Zeichen in dieser Zeile werden dabei um eine Position nach links versetzt. Dazu ein Beispiel:</p>
+<pre><a id="Xxx999403" name="Xxx999403"></a>/* cur6.c */
+#include &lt;curses.h&gt;
+int main (void) {
+   initscr ();
+   mvprintw (5, 5, "Diese Zeile enth&auml;lt einen Fehhler");
+   mvprintw (6, 5, "Bitte Taste dr&uuml;cken f&uuml;r Fehlerkorrektur");
+   getch ();
+   mvdelch (5, 33);
+   mvprintw (7, 5, "Fehler wurde korrigiert! "
+                   " Bitte Taste dr&uuml;cken!");
+   getch ();
+   endwin ();
+   return 0;
+}</pre>
+<p>In diesem Programm wurde das Wort 'Fehhler' mit zwei 'h' geschrieben, und mittels <span class="listing">mvdelch(y,x)</span> wird der Fehler behoben.</p>
+<p>Zum L&ouml;schen des Bildschirms stehen Ihnen folgende Funktionen zur Verf&uuml;gung:<a id="Xxx999406" name="Xxx999406"></a><a id="Xxx999407" name="Xxx999407"></a><a id="Xxx999408" name="Xxx999408"></a><a id="Xxx999409" name="Xxx999409"></a></p>
+<pre>#include &lt;curses.h&gt;
+int erase(void);
+int clear(void);</pre>
+<p>Beide Funktionen l&ouml;schen den Bildschirm und setzen den Cursor auf die linke obere Ecke (0,0). Mit <span class="listing">clear()</span> wird bei dem n&auml;chsten <span class="listing">refresh()</span>-Aufruf der Bildschirm komplett neu ausgegeben.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">13.3.3 Eigenschaft der Fenster<a id="RxxKap13002040004871F0101BB" name="RxxKap13002040004871F0101BB"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999414" name="Xxx999414"></a>Um den kompletten Bildschirm beim n&auml;chsten Aufruf der Funktion <span class="listing">refresh()</span> auch wirklich neu zu zeichnen, steht Ihnen die Funktion <span class="listing">clearok()</span> zur Verf&uuml;gung.<a id="Xxx999416" name="Xxx999416"></a></p>
+<pre>#include &lt;curses.h&gt;
+int clearok(WINDOW *win, bool bf);</pre>
+<p>Wird <span class="listing">bf</span> auf <span class="listing">TRUE</span> gesetzt, dann wird der Bildschirm <span class="listing">win</span> beim n&auml;chsten <span class="listing">refresh()</span> komplett neu gezeichnet. Wird hingegen <span class="listing">FALSE</span> verwendet, dann wird nur die &Auml;nderung seit dem letzten <span class="listing">refresh()<a id="Xxx999419" name="Xxx999419"></a></span> neu ausgegeben.</p>
+<p>Damit am Ende der letzten Zeile beim Einf&uuml;gen einer neuen Zeile weiter nach unten gescrollt wird, sollten Sie folgende Funktion verwenden:<a id="Xxx999421" name="Xxx999421"></a><a id="Xxx999422" name="Xxx999422"></a></p>
+<pre>#include &lt;curses.h&gt;
+int scrollok(WINDOW *win,bool bf);</pre>
+<p>Falls der Parameter <span class="listing">bf=TRUE</span> ist, k&ouml;nnen Sie noch eine weitere Zeile nach unten scrollen, auch wenn der Cursor schon in der letzten Zeile steht und durch ein Newline oder ein weiteres Zeichen in die n&auml;chste Zeile springt. Wenn Sie den Parameter <span class="listing">bf</span> auf <span class="listing">FALSE</span> setzten, bleibt der Cursor in der letzten Zeile stehen und l&auml;sst sich nicht mehr weiter nach unten scrollen. Folgendes Beispiel demonstriert Ihnen den Effekt einmal ohne und einmal mit <span class="listing">scrollok()</span>.</p>
+<pre><a id="Xxx999425" name="Xxx999425"></a>/* cur7.c */
+#include &lt;curses.h&gt;
+int main (void) {
+  int i;
+  initscr ();
+  for (i = 0; i &lt; 30; i++) {
+    printw ("%d: Ohne Funktion scrollok()\n", i);
+    halfdelay (2);
+    getch ();
+  }
+  clear ();
+  refresh ();
+  scrollok (stdscr, TRUE);
+  for (i = 0; i &lt; 30; i++) {
+    printw ("%d: Mit Funktion scrollok()\n", i);
+    halfdelay (2);
+    getch ();
+  }
+  getch ();
+  endwin ();
+  return 0;
+}</pre>
+<p>Im ersten Durchlauf ohne <span class="listing">scrollok()</span> wird die Ausgabe keinen Schritt tiefer gehen als bis in Zeile 25. Die restlichen f&uuml;nf Zeilen werden einfach auf der gleichen Zeile ausgegeben. Beim zweiten Durchlauf wurde mit <span class="listing">scrollok(stdsrc,TRUE)</span> das Scrollen eingeschaltet – was bei der Ausgabe auch dazu f&uuml;hrt, dass ab der Zeile 25 weiter in die Zeilen 26, 27, 28 und 29 »gesprungen« wird.</p>
+<p>Was als erste und letzte Zeile betrachtet werden soll, k&ouml;nnen Sie mit der Funktion <span class="listing">setscrreg()</span> angeben.<a id="Xxx999429" name="Xxx999429"></a></p>
+<pre>#include &lt;curses.h&gt;
+int setscrreg(int oben, int unten);</pre>
+<p>Das Argument <span class="listing">oben</span> ist die Zeile, ab der gescrollt wird, und <span class="listing">unten</span> stellt die letzte Zeile dar, wie weit gescrollt wird. Die oberste Zeile hat im Programm dann den Wert 0. Hierzu wird das Listing von eben um <span class="listing">setscrreg()</span> erweitert:</p>
+<pre><a id="Xxx999432" name="Xxx999432"></a>/* cur8.c */
+#include &lt;curses.h&gt;
+int main (void) {
+  int i;
+  initscr ();
+  setscrreg (5, 10);
+  for (i = 0; i &lt; 30; i++) {
+    printw ("%d: Ohne Funktion scrollok()\n", i);
+    halfdelay (2);
+    getch ();
+  }
+  clear ();
+  refresh ();
+  scrollok (stdscr, TRUE);
+  for (i = 0; i &lt; 30; i++) {
+    printw ("%d: Mit Funktion scrollok()\n", i);
+    halfdelay (2);
+    getch ();
+  }
+  getch ();
+  endwin ();
+  return 0;
+}</pre>
+<p>Mit <span class="listing">setscrreg(5,10)</span> legen Sie die Bildschirmgr&ouml;&szlig;e auf f&uuml;nf Zeilen fest. Die Bildschirmgr&ouml;&szlig;e im Beispiel beginnt in Zeile f&uuml;nf und endet in Zeile zehn.</p>
+<p>Wollen Sie die Position des Cursors auf dem Bildschirm erfragen, dann steht folgende Funktion daf&uuml;r zur Verf&uuml;gung:<a id="Xxx999436" name="Xxx999436"></a><a id="Xxx999437" name="Xxx999437"></a><a id="Xxx999438" name="Xxx999438"></a></p>
+<pre>#include &lt;curses.h&gt;
+void getyx(WINDOW *win, int y, int x);</pre>
+<p>Die Koordinaten des Cursors in <span class="listing">win</span> werden in den Parametern <span class="listing">y</span> und <span class="listing">x</span> abgelegt. Es muss hier nicht der Adressoperator <span class="listing">&amp;</span> an den beiden Koordinatenstellen &uuml;bergeben werden. Das Beispiel von zuvor wird (noch) ein weiteres Mal um die Funktion <span class="listing">getyx()</span> erweitert:</p>
+<pre><a id="Xxx999441" name="Xxx999441"></a>/* cur9.c */
+#include &lt;curses.h&gt;
+int main (void) {
+  int i, y, x;
+  initscr ();
+  setscrreg (0, 10);
+  for (i = 0; i &lt; 30; i++) {
+    getyx (stdscr, y, x);
+    printw ("%d. (%d/%d) Ohne Funktion scrollok()\n", i, y, x);
+    halfdelay (2);
+    getch ();
+  }
+  clear ();
+  refresh ();
+  scrollok (stdscr, TRUE);
+  for (i = 0; i &lt; 30; i++) {
+    getyx (stdscr, y, x);
+    printw ("%d. (%d/%d) Mit Funktion scrollok()\n", i, y, x);
+    halfdelay (2);
+    getch ();
+  }
+  getch ();
+  endwin ();
+  return 0;
+}</pre>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">13.3.4 Scrolling<a id="RxxKap13002040004871F0101CD" name="RxxKap13002040004871F0101CD"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999444" name="Xxx999444"></a>Damit Sie das Scrolling einsetzen k&ouml;nnen, m&uuml;ssen Sie es mit der Funktion <span class="listing">scrollok()</span>, die Sie bereits kennen gelernt haben, aktivieren. Um jetzt daf&uuml;r zu sorgen, dass der Bildschirm automatisch von oben nach unten gescrollt wird, m&uuml;ssen Sie folgende Funktion verwenden:<a id="Xxx999446" name="Xxx999446"></a></p>
+<pre>#include &lt;curses.h&gt;
+int scroll(WINDOW *win);</pre>
+<p>Mit dieser Funktion schieben Sie den durch <span class="listing">win</span> angegebenen Bildschirm um eine Zeile nach oben. Im Falle von <span class="listing">stdscr</span> wird der gesamte Bildschirm gescrollt.</p>
+<p>In welche Richtung (nach oben oder unten) und um wie viele Zeilen auf einmal gescrollt werden soll, geben Sie mit folgender Funktion an:<a id="Xxx999450" name="Xxx999450"></a></p>
+<pre>#include &lt;curses.h&gt;
+int scrl(int anzahl);</pre>
+<p>Mit <span class="listing">scrl()</span> schieben Sie den Bildschirm mittels <span class="listing">anzahl&gt;0</span>, <span class="listing">anzahl</span> Zeilen nach oben und mit <span class="listing">anzahl&lt;0</span>, <span class="listing">anzahl</span> Zeilen nach unten. Mit der Funktion <span class="listing">setscrreg()</span> (siehe den Abschnitt zuvor) k&ouml;nnen Sie den Scrollbereich definieren.</p>
+<p>Auch hierzu ein kurzes Beispiel, das die Funktionen <span class="listing">scroll()</span>, <span class="listing">scrl()</span> und weitere bisher kennen gelernte ncurses-Funktionen demonstriert. Ein kleines Raumschiff soll durch die unendlichen Weiten des Universums gleiten. Mit den Tasten Pfeil-nach-links und Pfeil-nach-rechts k&ouml;nnen Sie das Raumschiff steuern. Mit <span class="listing">q</span> wird das Programm beendet. Wenn Sie flei&szlig;ig sind, k&ouml;nnen Sie gerne eine Kollisionskontrolle einbauen, um das Raumschiff bei Kontakt mit einem Stern explodieren zu lassen. Mit Arrays l&auml;sst sich so etwas recht einfach realisieren.</p>
+<pre><a id="Xxx999454" name="Xxx999454"></a>/* cur10.c */
+#include &lt;curses.h&gt;
+#include &lt;stdlib.h&gt;
+#define QUIT 113   /*'q'*/
+#define LEFT 260   /* '&lt;-'*/
+#define RIGHT 261  /* '-&gt;'*/
+static void print_raumschiff (int x) {
+  mvdelch (9, x + 2);
+  mvdelch (9, x + 1);
+  mvdelch (9, x);
+  mvdelch (9, x - 1);
+  mvdelch (9, x - 2);
+  mvaddch (10, x - 1, ACS_LLCORNER);
+  mvaddch (10, x + 1, ACS_LRCORNER);
+  mvaddch (10, x, ACS_TTEE);
+}
+int main (void) {
+  int x = 40, zufall, c, i;
+  srand (79);
+  initscr ();
+  // Cursor und Funktionstasten ein
+  keypad (stdscr, TRUE); 
+  // keine Ausgabe
+  noecho ();   
+  // Scrolling ein
+  scrollok (stdscr, TRUE);
+  scroll (stdscr);
+  while (c != QUIT) {
+    // Eine Zeile nach unten scrollen
+    scrl (1);
+    for (i = 0; i &lt; 5; i++) {
+      zufall = rand () % 79;
+      mvaddch (20, zufall, '*');
+      mvprintw (0, 0,
+                "'q' dr&uuml;cken f&uuml;r Quit | Taste f&uuml;r Start | "
+                "&lt;- nach links -&gt; nach rechts");
+      mvprintw(1,0, "Position Raumschiff %d",x);
+    }
+    c = getch ();
+    halfdelay (3);
+    switch (c) {
+    case LEFT:
+      if (x &lt; 1)
+        x = 79;
+      else
+        x--;
+      break;
+    case RIGHT:
+      if (x &gt; 79)
+        x = 1;
+      else
+        x++;
+      break;
+    default:
+      break;
+    }
+    print_raumschiff (x);
+  }
+  endwin ();
+  return 0;
+}</pre>
+<p>So sieht es aus:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/13_2.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein13_2.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 13.2   
+    </b>Raumschiff im Weltall mit ncurses</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>In diesem Listing wird davon ausgegangen, dass Sie eine gew&ouml;hnliche 80 x 24 cm gro&szlig;e Konsole (z. B. VT100) verwenden. Andernfalls kann die Anwendung nicht richtig laufen (es sei denn, Sie passen die Breite der Konsole dem Listing an).</p>
+</td>
+</tr>
+</table><br>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">13.3.5 Attribute und Farben setzen<a id="RxxKap13002040004871F0101DB" name="RxxKap13002040004871F0101DB"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999469" name="Xxx999469"></a>Nat&uuml;rlich ist es auch m&ouml;glich, die Attribute (Schrift fett, unterstrichen etc.) und Farben zu ver&auml;ndern. Um die Attribute des Textes zu aktivieren bzw. zu deaktivieren, stehen Ihnen folgende Funktionen zur Verf&uuml;gung:<a id="Xxx999471" name="Xxx999471"></a><a id="Xxx999472" name="Xxx999472"></a><a id="Xxx999473" name="Xxx999473"></a></p>
+<pre>#include &lt;curses.h&gt;
+int attroff(int attribut);
+int attron(int attribut);
+int attrset(int attribut);</pre>
+<p>Mit der Funktion <span class="listing">attron()</span> k&ouml;nnen Sie das Attribut <span class="listing">attribut</span> setzen. Mit <span class="listing">attron(A_BLINK)</span> wird zum Beispiel der Text blinkend ausgegeben (bei Erfolg). Mit <span class="listing">attroff()</span> wird das Attribut <span class="listing">attribut</span> deaktiviert. Mit der Funktion <span class="listing">attrset()</span> hingegen k&ouml;nnen Sie jedes beliebige Attribut setzen. Mithilfe des bitweisen ODER-Operators lassen sich dabei mehrere Attribute auf einmal setzen, z. B.:</p>
+<pre>attrset(A_BOLD | A_BLINK);
+printw("Dieser Text wird FETT und BLINKEND angezeigt");</pre>
+<p>In der folgenden Tabelle finden Sie einen &Uuml;berblick zu den Attributen, die Sie setzen bzw. deaktivieren k&ouml;nnen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 13.8   
+    </b>Attribute f&uuml;r die Textdarstellung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Attribut</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_NORMAL
+</td>
+<td class="tabellentext" bgcolor="#000000">Normale Darstellung (Standardeinstellung)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_STANDOUT
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichen st&auml;rkste Helligkeit
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_UNDERLINE
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichen unterstreichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_REVERSE
+</td>
+<td class="tabellentext" bgcolor="#000000">Invers
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_BLINK
+</td>
+<td class="tabellentext" bgcolor="#000000">Blinken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_DIM
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichen werden dunkler
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_BOLD
+</td>
+<td class="tabellentext" bgcolor="#000000">Fette Zeichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_PROTECT
+</td>
+<td class="tabellentext" bgcolor="#000000">Gesch&uuml;tzter Modus
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_INVIS
+</td>
+<td class="tabellentext" bgcolor="#000000">Unsichtbar
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_ALTCHARSET
+</td>
+<td class="tabellentext" bgcolor="#000000">Umschalten auf Zeichengrafik
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">A_CHARTEXT
+</td>
+<td class="tabellentext" bgcolor="#000000">Macht aus dem 32-Bit-Wert (chtype) durch eine &amp;-Verkn&uuml;pfung einen 8-Bit-Wert (ASCII)
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999535" name="Xxx999535"></a><a id="Xxx999536" name="Xxx999536"></a><a id="Xxx999537" name="Xxx999537"></a>Wenn Sie mit den Farben spielen wollen, m&uuml;ssen Sie &uuml;berpr&uuml;fen, ob Farben in dem aktuellen Terminaltyp verf&uuml;gbar sind. Hierzu wird folgende Funktion verwendet:<a id="Xxx999539" name="Xxx999539"></a></p>
+<pre>#include &lt;curses.h&gt;
+bool has_colors( void );</pre>
+<p>Verwenden l&auml;sst sich die Funktion recht einfach:</p>
+<pre>if(has_colors==TRUE) {
+     // Wir haben Farbe*/
+}
+else {
+    // Wir haben keine Farbe
+}</pre>
+<p>Eine weitere Anwendung zu den Farben w&auml;re die Funktion zur Abfrage, ob die Farben des aktuellen Terminaltyps &uuml;berhaupt ver&auml;ndert werden d&uuml;rfen:<a id="Xxx999544" name="Xxx999544"></a></p>
+<pre>#include &lt;curses.h&gt;
+bool can_change_colors(void);</pre>
+<p>Sofern Ihnen also Farben f&uuml;r den Terminaltyp zur Verf&uuml;gung stehen, m&uuml;ssen Sie als N&auml;chstes die Farben initialisieren:<a id="Xxx999547" name="Xxx999547"></a></p>
+<pre>#include &lt;curses.h&gt;
+int start_color(void);</pre>
+<p>Diese Funktion sollten Sie nach der Funktion <span class="listing">initscr()</span> aufrufen. Mit <span class="listing">start_color()</span> initialisieren Sie die Farben und gleichzeitig auch die globalen Variablen <span class="listing">COLORS</span> und <span class="listing">COLOR_PAIRS</span>. <span class="listing">COLOR_PAIRS</span> ist ein Farbenpaar, das sich aus dem Hintergrund und der Schriftfarbe zusammensetzt. Folgende Farben sind dabei in der Headerdatei <span class="listing">curses.h</span> definiert:</p>
+<pre>#define COLOR_BLACK    0
+#define COLOR_RED      1
+#define COLOR_GREEN    2
+#define COLOR_YELLOW   3
+#define COLOR_BLUE     4
+#define COLOR_MAGENTA  5
+#define COLOR_CYAN     6
+#define COLOR_WHITE    7</pre>
+<p>Um ein Farbenpaar (Schrift und Hintergrundfarbe) festzulegen, wird die folgende Funktion verwendet:<a id="Xxx999552" name="Xxx999552"></a><a id="Xxx999553" name="Xxx999553"></a></p>
+<pre>#include &lt;curses.h&gt;
+int init_pair(short paarnummer, int zeichen, int hintergrund);</pre>
+<p>Mit der Funktion <span class="listing">init_pair()</span> legen Sie mit der Angabe der Zeichenfarbe und der Hintergrundfarbe eine Paarnummer (<span class="listing">paarnummer</span>) fest, die Sie dann mit der Funktion <span class="listing">attrset()</span> verwenden k&ouml;nnen, z. B.:</p>
+<pre>init_pair(1,COLOR_RED,COLOR_GREEN);</pre>
+<p>Damit legen Sie ein Farbenpaar mit roter Schrift und gr&uuml;nem Hintergrund fest. Das Paar hat die Nummer 1. Dies setzen Sie jetzt wie folgt in die Praxis um:</p>
+<pre>attrset(COLOR_PAIR(1));
+printfw("Dieser Text wird mit roten Zeichen auf gr&uuml;nem"
+        " Hintergrund ausgegeben.");
+/* Eine weitere Farbe wird definiert */
+init_pair(2,COLOR_BLUE,COLOR_BLACK);
+attrset(A_BOLD|COLOR_PAIR(2));
+printw("Dieser Text wird mit fetter blauer Schrift "
+       "und schwarzem Hintergrund ausgegeben.");</pre>
+<p>Die Funktion <span class="listing">COLOR_PAIR(n)<a id="Xxx999559" name="Xxx999559"></a></span> setzt die Farbenpaare zusammen (Hintergrund und Schrift). Mit <span class="listing">init_pair()</span> k&ouml;nnen Sie gew&ouml;hnlich insgesamt 64 (8 * 8) verschiedene Farbkombinationen festlegen. Nur das Farbpaar mit dem Index 0 (<span class="listing">COLOR_PAIR(0)</span>) kann nie ge&auml;ndert werden. Dieser Wert entspricht immer einem wei&szlig;en Text auf schwarzem Hintergrund – und dient f&uuml;r den Fall der F&auml;lle dazu, Ihren Terminal wieder zur&uuml;ckzusetzen.</p>
+<p>Wollen Sie ermitteln, welche Farben in einem bestimmten Farbenpaar definiert wurden, dann k&ouml;nnen Sie folgende Funktion verwenden:<a id="Xxx999562" name="Xxx999562"></a></p>
+<pre>#include &lt;curses.h&gt;
+int pair_content( short paarnummer,
+                  short *zeichenfarbe,
+                  short *hintergrundfarbe);</pre>
+<p><span class="listing">pair_content()</span> eignet sich hervorragend, um mehrere Farbenpaare auf einmal zu definieren, wie der folgende Codeausschnitt demonstrieren soll:</p>
+<pre>int farbe1,farbe2,i=1;
+if(has_color==TRUE) {
+     start_color();
+     // WHITE=7 =&gt; BLACK=0 
+     for(farbe1=COLOR_WHITE; farbe1&gt;=COLOR_BLACK; farbe1--)
+       for(farbe2=COLOR_BLACK; farbe2&lt;=COLOR_WHITE; farbe2++)
+         init_pair(i++, farbe1, farbe2);
+   }</pre>
+<p>Damit werden alle 64 Farbenpaare auf einmal definiert. Um jetzt zu ermitteln, welchen Farbwert das Paar 50 hat, m&uuml;ssen Sie die Funktion <span class="listing">pair_content()</span> aufrufen:</p>
+<pre>pair_content(50, &amp;zeichenfarbe, &amp;hintergrundfarbe);</pre>
+<p>Jetzt befindet sich in der Adresse von <span class="listing">zeichenfarbe</span> und in der Adresse von <span class="listing">hintergrundfarbe</span> ein entsprechender Farbeintrag des Farbenpaars mit der Nummer 50.</p>
+<p>Die Attribute und Farben werden jetzt im Listing des fliegenden Raumschiffs im Weltall eingesetzt.</p>
+<pre><a id="Xxx999570" name="Xxx999570"></a>/* cur11.c */
+#include &lt;curses.h&gt;
+#include &lt;stdlib.h&gt;
+#define QUIT 113  // 'q'
+#define LEFT 260  // '&lt;-'
+#define RIGHT 261 // -&gt; 
+static void print_raumschiff (int x) {
+  mvdelch (9, x + 2);
+  mvdelch (9, x + 1);
+  mvdelch (9, x);
+  mvdelch (9, x - 1);
+  mvdelch (9, x - 2);
+  /*Raumschiff fette Schrift */
+  attrset (A_BOLD | COLOR_PAIR (2));
+  mvaddch (10, x - 1, ACS_LLCORNER);
+  mvaddch (10, x + 1, ACS_LRCORNER);
+  attrset (A_BOLD | COLOR_PAIR (3));
+  mvaddch (10, x, ACS_TTEE);
+}
+int main (void) {
+  int x = 40, zufall, c, i;
+  srand (79);
+  initscr ();
+  if (has_colors () == TRUE)
+    start_color ();
+  else
+    exit (EXIT_FAILURE);
+  keypad (stdscr, TRUE);   
+  noecho ();      
+  scrollok (stdscr, TRUE);   
+  scroll (stdscr);
+  // Farbenpaar Nummer 1
+  init_pair (1, COLOR_YELLOW, COLOR_BLACK);
+  // Paar Nummer 2
+  init_pair (2, COLOR_RED, COLOR_RED);
+  // Farbenpaar Nummer 3
+  init_pair (3, COLOR_GREEN, COLOR_BLACK);
+  // Farbenpaar Nummer 4
+  init_pair (4, COLOR_BLACK, COLOR_GREEN);
+  while (c != QUIT) {
+    scrl (1);   
+    for (i = 0; i &lt; 5; i++) {
+      zufall = rand () % 79;
+      // Sterne dunkel ausgegeben
+      attrset (A_DIM | COLOR_PAIR (1));
+      mvaddch (20, zufall, '*');
+      attrset (A_UNDERLINE | A_BOLD | COLOR_PAIR (4));
+      mvprintw (0, 0,
+                "'q' dr&uuml;cken f&uuml;r Quit | Taste f&uuml;r Start | "
+                "&lt;- nach links -&gt; nach rechts");
+    }
+    c = getch ();
+    halfdelay (3);
+    switch (c) {
+    case LEFT:
+      if (x &lt; 1)
+        x = 79;
+      else
+        x--;
+      break;
+    case RIGHT:
+      if (x &gt; 79)
+        x = 1;
+      else
+        x++;
+      break;
+    default:
+      break;
+    }
+    print_raumschiff (x);
+  }    
+  endwin ();
+  return 0;
+}</pre>
+<p>Ein Screenshot kann ich mir hierbei ersparen, da dieser ohnehin schwarz-wei&szlig; ist.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Auch in diesem Listing wird davon ausgegangen, dass Sie eine gew&ouml;hnliche 80 × 24 cm gro&szlig;e Konsole (z. B. VT100) verwenden. Andernfalls kann die Anwendung nicht richtig laufen (es sei denn, Sie passen die Breite der Konsole dem Listing an).</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">13.3.6 Fensterroutinen<a id="RxxKap13002040004871F010219" name="RxxKap13002040004871F010219"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999578" name="Xxx999578"></a>Fensterroutinen funktionieren genauso wie schon die im Abschnitt zuvor besprochenen Funktionen, nur wird diesen immer ein Zeiger auf eine <span class="listing">WINDOW</span>-Struktur &uuml;bergeben. Zus&auml;tzlich bekommen die Funktionen, die sich auf ein bestimmtes Fenster beziehen, noch das Pr&auml;fix <span class="listing">w</span>. Aus <span class="listing">printw()</span> wird dann z. B.<a id="Xxx999580" name="Xxx999580"></a></p>
+<pre>wprintw(WINDOW *win, char *format, ...);</pre>
+<p>und aus den Funktionen mit den <span class="listing">mv</span>-Pr&auml;fixen wird ein <span class="listing">mvw</span>-Pr&auml;fix:<a id="Xxx999582" name="Xxx999582"></a></p>
+<pre>mvwprintw(WINDOW *win, int y, int x, char *format, ...);</pre>
+<p>Bei allen Funktionen, die Sie bereits kennen, m&uuml;ssen Sie also zus&auml;tzlich das <span class="listing">w</span> oder <span class="listing">mvw</span> und die <span class="listing">WINDOW</span>-Struktur verwenden. Falls Sie sich nicht sicher sind, sehen Sie sich einfach die entsprechende Manual Page dazu an. Geben Sie zum Beispiel man getch ein, so werden Sie auch die Routine <span class="listing">wgetch()</span>, die sich auf das Fenster bezieht, finden. Da alle bisher beschriebenen Funktionen somit genauso funktionieren, erspare ich mir die genauere Beschreibung dazu.</p>
+<p>Um ein weiteres Fenster zu erzeugen, wird die Funktion <span class="listing">newwin()</span> verwendet:<a id="Xxx999586" name="Xxx999586"></a><a id="Xxx999587" name="Xxx999587"></a></p>
+<pre>#include &lt;curses.h&gt;
+WINDOW *newwin( int anzahl_zeilen, int anzah_Spalten,
+                int cursor_y, int cursor_X );</pre>
+<p>Mit <span class="listing">newwin</span> erstellen Sie ein neues Fenster mit <span class="listing">anzahl_zeilen</span> und <span class="listing">anzahl_spalten</span>. Zus&auml;tzlich k&ouml;nnen Sie den Cursor gleich an entsprechender <span class="listing">y-</span> und <span class="listing">x</span>-Position festlegen (0,0 bedeutet die linke obere Seite des neuen Fensters).</p>
+<p>Um ein neues Fenster auch ein wenig hervorzuheben, sollten Sie einen Rahmen darum legen. Einen Rahmen um ein bestimmtes Fenster k&ouml;nnen Sie mit der Funktion <span class="listing">box()</span> ausgeben:<a id="Xxx999592" name="Xxx999592"></a><a id="Xxx999593" name="Xxx999593"></a></p>
+<pre>#include &lt;curses.h&gt;
+int box( WINDOW *win,
+         chtype zeichenvertikal,
+         chtype zeichenhorizontal );</pre>
+<p>Damit legen Sie einen Rahmen um das Fenster, worauf <span class="listing">win</span> mit den Zeichen <span class="listing">zeichenvertikal</span> und <span class="listing">zeichenhorizontal</span> zeigt, die beide vom Typ <span class="listing">chtype</span> sind, womit Sie also auch Zeichen jenseits der <span class="listing">char</span>-Grenze ausgeben k&ouml;nnen. Hierzu ein kurzer Codeausschnitt, wie Sie einen Rahmen um ein Fenster legen k&ouml;nnen:</p>
+<pre>// Fenster mit dem Namen fenster 10 Zeilen und 79 Spalten gro&szlig;
+fenster=newwin(10,79,0,0);
+// Linien um den Fensterbereich ziehen eine Box
+box(fenster,ACS_VLINE,ACS_HLINE);</pre>
+<p>Die <span class="listing">ACS_</span>-Zeichen und den Datentyp <span class="listing">chtype</span> haben Sie ja bereits kennen gelernt.</p>
+<p>Gleiches wie mit der Funktion <span class="listing">box()</span> k&ouml;nnen Sie auch mit den folgenden Funktionen machen:<a id="Xxx999599" name="Xxx999599"></a><a id="Xxx999600" name="Xxx999600"></a><a id="Xxx999601" name="Xxx999601"></a></p>
+<pre>#include &lt;curses.h&gt;
+// n-Zeichen horizontal ab akt. Cursorposition
+int hline(chtype zeichen, int n);
+// n-Zeichen vertikal ab akt. Cursorposition
+int vline(chtype zeichen, int n); </pre>
+<p>Sie k&ouml;nnen ein Fenster auch duplizieren. Das erledigen Sie mit der Funktion:<a id="Xxx999603" name="Xxx999603"></a><a id="Xxx999604" name="Xxx999604"></a><a id="Xxx999605" name="Xxx999605"></a><a id="Xxx999606" name="Xxx999606"></a></p>
+<pre>#include &lt;curses.h&gt;
+WINDOW *dupwin(WINDOW *win);
+int delwin(WINDOW *win);</pre>
+<p>Der R&uuml;ckgabewert von <span class="listing">dupwin()</span> ist eine exakte Kopie des Fensters <span class="listing">win</span>. Wenn Sie dieses Fenster nicht mehr ben&ouml;tigen, sollten Sie den nicht mehr ben&ouml;tigten Speicherplatz, den dieses Fenster belegt, mit der Funktion <span class="listing">delwin()</span> wieder freigeben, z. B.:</p>
+<pre>// Fenster fenster1 duplizieren
+fenster2=dupwin(fenster1);
+...
+// Nach vielen Zeilen Code wird die Kopie nicht mehr ben&ouml;tigt
+delwin(fenster2);</pre>
+<p>Verschieben k&ouml;nnen Sie ein Fenster mit der Funktion:<a id="Xxx999611" name="Xxx999611"></a><a id="Xxx999612" name="Xxx999612"></a></p>
+<pre>#include &lt;curses.h&gt;
+int mvwin(WINDOW *win, int y, int x);</pre>
+<p>Als Ausgangspunkt zum Verschieben wird immer die linke obere Ecke genommen. Diese ermitteln Sie, falls Ihnen diese nicht bekannt ist, mit der Funktion:<a id="Xxx999616" name="Xxx999616"></a><a id="Xxx999617" name="Xxx999617"></a></p>
+<pre>#include &lt;curses.h&gt;
+void getbegyx(WINDOW *win, int y, int x);</pre>
+<p>Achtung! Auch hier gilt es, nicht den Adressoperator <span class="listing">&amp;</span> f&uuml;r die Variablen <span class="listing">y</span> und <span class="listing">x</span> einzusetzen. Wollen Sie beispielsweise den Bildschirm von der aktuellen Position drei Zeilen tiefer und zehn Spalten nach rechts setzen, dann funktioniert dies so:</p>
+<pre>int y,x;
+...
+getbegyx(fenster1,y,x);
+mvwin(fenster1,y+3,x+10);</pre>
+<p>Ben&ouml;tigen Sie die gesamte Gr&ouml;&szlig;e eines Fensters, dann verwenden Sie die Funktion<a id="Xxx999621" name="Xxx999621"></a><a id="Xxx999622" name="Xxx999622"></a></p>
+<pre>#include &lt;curses.h&gt;
+int getmaxyx(WINDOW *win, int y, int x);</pre>
+<p>Auch hier ben&ouml;tigen Sie f&uuml;r die Variablen <span class="listing">y</span> und <span class="listing">x</span> keinen Adressoperator.</p>
+<p>Manchmal, wenn Sie die Funktion <span class="listing">refresh()</span> ben&ouml;tigen, um den gesamten Fensterinhalt neu zu zeichnen, ben&ouml;tigen Sie eine Funktion, die ein Fenster als ver&auml;ndert markiert. Denn <span class="listing">refresh()</span> zeichnet nur dann neu, wenn sich auf dem Bildschirm auch etwas ver&auml;ndert hat. Ein Fenster als ver&auml;ndert markieren k&ouml;nnen Sie mit der Funktion<a id="Xxx999627" name="Xxx999627"></a><a id="Xxx999628" name="Xxx999628"></a></p>
+<pre>#include &lt;curses.h&gt;
+int touchwin(WINDOW *win);</pre>
+<p>Der Standardbildschirm <span class="listing">stdscr</span> kann nun mittels <span class="listing">refresh()</span> neu gezeichnet werden. Bei anderen Fenstern ben&ouml;tigen Sie folgende Funktion:<a id="Xxx999631" name="Xxx999631"></a></p>
+<pre>#include &lt;curses.h&gt;
+wrefresh(WINDOW *win);</pre>
+<p>Falls Sie &uuml;berpr&uuml;fen wollen, ob sich auf dem Fenster etwas ver&auml;ndert hat, k&ouml;nnen Sie dies mit der Funktion <span class="listing">is_wintouched()</span> abfragen.<a id="Xxx999634" name="Xxx999634"></a></p>
+<pre>#include &lt;curses.h&gt;
+int is_wintouched(WINDOW *win);</pre>
+<p>Ein kurzer Codeausschnitt, der dies demonstrieren soll:</p>
+<pre>// wurde Fenster ver&auml;ndert?
+if(is_wintouched(fenster1)) 
+    // dann zeichne neu
+    wrefresh(fenster1);   
+else {
+   // tu so, als ob das Fenster ver&auml;ndert wurde
+   touchwin(fenster1); 
+   // ... und zeichne dann neu
+   wrefresh(fenster1);    
+}</pre>
+<p>Wollen Sie einzelne Zeichen von einem Fenster in das andere Fenster kopieren, dann steht Ihnen folgende Funktionen zur Verf&uuml;gung:<a id="Xxx999639" name="Xxx999639"></a><a id="Xxx999640" name="Xxx999640"></a><a id="Xxx999641" name="Xxx999641"></a></p>
+<pre>#include &lt;curses.h&gt;
+int overwrite(const WINDOW *quelle, WINDOW *ziel);
+int overlay(const WINDOW *quelle, WINDOW *ziel);</pre>
+<p>Diese beiden Funktionen kopieren (nur) die Zeichen vom Fenster <span class="listing">quelle</span> ins Fenster <span class="listing">ziel</span>. Der Unterschied der beiden Funktionen liegt daran, dass <span class="listing">overlay()</span> kein Leerzeichen mitkopiert.</p>
+<p>Jetzt folgt wieder ein f&uuml;r sich selbst sprechendes Programm, das Ihnen die meisten Fensterroutinen in der Praxis demonstrieren soll. Die Anwendung h&auml;lt nach jedem Beispiel an, die Sie aber mit einem Tastendruck weiter ausf&uuml;hren k&ouml;nnen.</p>
+<pre><a id="Xxx999645" name="Xxx999645"></a>/* cur12.c */
+#include &lt;curses.h&gt;
+#define schwarz  0
+#define rot      1
+#define gruen    2
+#define gelb     3
+#define blau     4
+#define lila     5
+#define hblau    6
+#define weiss    7
+// zeigt uns alle m&ouml;glichen Farbpaare an
+static void show_all_pairs(void) {
+  int farbe1, farbe2, i=1, c;
+  mvprintw(1,1,"Darstellung aller Farbpaare: \n");
+  if(has_colors() == TRUE) {
+    start_color();
+    for(farbe1=weiss; farbe1 &gt;= schwarz; farbe1--)
+      for(farbe2=schwarz; farbe2 &lt;= weiss; farbe2++) {
+        init_pair(i, farbe1, farbe2);
+        attrset(COLOR_PAIR(i));
+        printw(" %d ",i++);
+      }
+  }
+  noecho();
+  c=getch();
+}
+// Erzeugen ein neues Fenster mit s&auml;mtlichen Attributen
+static WINDOW *create_new_window( 
+     WINDOW *neues_fenster, int zeilen,int spalten, int hinterg,
+     int vorderg,int begin_y, int begin_x, char *text,
+     int text_y, int text_x ) {
+  neues_fenster = newwin(zeilen, spalten, begin_y, begin_x);
+  init_pair(1, hinterg, vorderg);
+  wattrset(neues_fenster, COLOR_PAIR(1));
+  box(neues_fenster, ACS_VLINE, ACS_HLINE);
+  mvwprintw(neues_fenster, text_y, text_x, text);
+  return neues_fenster;
+}
+int main(void) {
+  WINDOW *fenster1,*fenster2;
+  int y,x;
+  initscr();
+  raw();
+  keypad(stdscr,TRUE);
+  if(has_colors() == TRUE)
+    start_color();
+  show_all_pairs();
+  clear();
+  refresh();
+  fenster1=create_new_window( fenster1,11,50,blau,weiss,0,0,
+                              "Hallo Welt",5,20 );
+  keypad(fenster1,TRUE);
+  wrefresh(fenster1);
+  wgetch(fenster1);
+  fenster2=create_new_window( fenster2,10,50,rot,gruen,11,30,
+                              "Fenster 2",1,1);
+  keypad(fenster2,TRUE);
+  wrefresh(fenster2);
+  wgetch(fenster2);
+  mvwprintw(fenster1,5,5,"Wir verschieben Fenster 2"
+            " mit mvwin()");
+  wrefresh(fenster1);
+  wgetch(fenster1);
+  // Wo ist das Fenster 2 genau?
+  getbegyx(fenster2,y,x); 
+  // stdscr neuzeichnen
+  touchwin(stdscr);
+  refresh();
+  // Fenster 3 Zeilen tiefer und 20 Spalten nach links
+  mvwin(fenster2,y+3,x-20);
+  // Fenster 1 wurde nicht ver&auml;ndert ...
+  // ... aber wir wollen trotzdem neu zeichnen ...
+  touchwin(fenster1);
+  wrefresh(fenster1);
+  wrefresh(fenster2);
+  wgetch(fenster2);
+  mvwprintw(fenster1,5,5," Wir l&ouml;schen Fenster 2 mit delwin() ");
+  wrefresh(fenster1);
+  wgetch(fenster1);
+  // Fenster 2 l&ouml;schen
+  delwin(fenster2);
+  touchwin(stdscr);
+  refresh();
+  mvwin(fenster1,0,0);
+  wrefresh(fenster1);
+  wgetch(fenster1);
+  mvwprintw(fenster1,5,5,"Wir kopieren dieses Fenster "
+            "mit dupwin()");
+  wrefresh(fenster1);
+  wgetch(fenster1);
+  fenster2=dupwin(fenster1);
+  mvwin(fenster2,12,0);
+  wrefresh(fenster2);
+  wgetch(fenster2);
+  mvwprintw(fenster1,5,1," Fenster 1 wird nun geloescht ");
+  wrefresh(fenster1);
+  wgetch(fenster1);
+  delwin(fenster1);
+  touchwin(stdscr);
+  refresh();
+  touchwin(fenster2);
+  wrefresh(fenster2);
+  wgetch(fenster2);
+  attrset(COLOR_PAIR(0));
+  mvprintw(1,1,"Nun wird das letzte Fenster auch noch beendet");
+  refresh();
+  wgetch(fenster2);
+  delwin(fenster2);
+  touchwin(stdscr);
+  refresh();
+  mvprintw(1,1,"Jetzt ist nur noch das Fenster stdscr"
+           " in Betrieb!");
+  getch();
+  endwin();
+  return 0;
+}</pre>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">13.3.7 Mausprogrammierung mit ncurses<a id="RxxKap13002040004871F010243" name="RxxKap13002040004871F010243"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999648" name="Xxx999648"></a><a id="Xxx999649" name="Xxx999649"></a><a id="Xxx999650" name="Xxx999650"></a>Mit ncurses ist es auch m&ouml;glich, die Maus mit einzubeziehen. Gemeint sind damit allerdings jetzt hier nicht die Funktionen der Bibliothek gpm. Der Vorteil der Mausroutinen von ncurses ist, dass diese sowohl im Textmodus als auch im XTerm laufen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Zur Mausprogrammierung mit der gpm-Library finden Sie etwas auf der Buch-CD.</p>
+</td>
+</tr>
+</table><br>
+<p>Folgende Struktur wurde f&uuml;r die Mausprogrammierung mit ncurses definiert:</p>
+<pre>typedef struct {
+  short ID;         // ID, falls mehrere M&auml;use angeschlossen sind 
+  int x,y,z;        // Koordinaten, z nicht ben&ouml;tigt
+  mmask_t bstate;   // Bitmaske f&uuml;r Mauskn&ouml;pfe
+} MEVENT;</pre>
+<p>Der Datentyp <span class="listing">mmask_t</span> ist ein primitiver Datentyp, der meistens als <span class="listing">unsigned</span> <span class="listing">long</span> dargestellt wird.</p>
+<p>Damit ncurses &uuml;berhaupt eine Mauseingabe zur Kenntnis nimmt, muss die Funktion <span class="listing">mousemask()</span> aufgerufen werden.<a id="Xxx999660" name="Xxx999660"></a></p>
+<pre>#include &lt;curses.h&gt;
+mmask_t mousemask(mmask_t neuemaske, mmask_t *altemaske);</pre>
+<p>Mit dem Parameter <span class="listing">neuemaske</span> geben Sie an, welche Mausereignisse bearbeitet werden sollen. Folgende Mausereignisse sind dabei in ncurses definiert:</p>
+<pre>#define BUTTON1_RELEASED        000000000001L
+#define BUTTON1_PRESSED         000000000002L
+#define BUTTON1_CLICKED         000000000004L
+#define BUTTON1_DOUBLE_CLICKED  000000000010L
+#define BUTTON1_TRIPLE_CLICKED  000000000020L
+#define BUTTON1_RESERVED_EVENT  000000000040L
+#define BUTTON2_RELEASED        000000000100L
+#define BUTTON2_PRESSED         000000000200L
+#define BUTTON2_CLICKED         000000000400L
+#define BUTTON2_DOUBLE_CLICKED  000000001000L
+#define BUTTON2_TRIPLE_CLICKED  000000002000L
+#define BUTTON2_RESERVED_EVENT  000000004000L
+#define BUTTON3_RELEASED        000000010000L
+#define BUTTON3_PRESSED         000000020000L
+#define BUTTON3_CLICKED         000000040000L
+#define BUTTON3_DOUBLE_CLICKED  000000100000L
+#define BUTTON3_TRIPLE_CLICKED  000000200000L
+#define BUTTON3_RESERVED_EVENT  000000400000L
+#define BUTTON4_RELEASED        000001000000L
+#define BUTTON4_PRESSED         000002000000L
+#define BUTTON4_CLICKED         000004000000L
+#define BUTTON4_DOUBLE_CLICKED  000010000000L
+#define BUTTON4_TRIPLE_CLICKED  000020000000L
+#define BUTTON4_RESERVED_EVENT  000040000000L
+#define BUTTON_CTRL             000100000000L
+#define BUTTON_SHIFT            000200000000L
+#define BUTTON_ALT              000400000000L
+#define ALL_MOUSE_EVENTS
+#define REPORT_MOUSE_POSITION</pre>
+<p>Wollen Sie jetzt z. B. &uuml;berpr&uuml;fen, ob die linke Maustaste gedr&uuml;ckt wurde, m&uuml;ssen Sie folgende Maske einrichten:</p>
+<pre>int maske = mousemask(BUTTON1_PRESSED, NULL);</pre>
+<p>Das Mausereignis k&ouml;nnen Sie mit <span class="listing">wgetch()</span> »einlesen«:</p>
+<pre>chtype button;
+button = wgetch(stdscr);</pre>
+<p><a id="Xxx999668" name="Xxx999668"></a>Wurde eine Mausaktivit&auml;t (z. B. eine Maustaste wurde bet&auml;tigt) registriert, so gibt <span class="listing">wgetch()</span> die symbolische Konstante <span class="listing">KEY_MOUSE</span> zur&uuml;ck:</p>
+<pre>if(button == KEY_MOUSE) {
+   //Mausaktivit&auml;ten
+ }</pre>
+<p>Welche Aktivit&auml;t das jetzt genau war, l&auml;sst sich mit der folgenden Funktion herausfinden:<a id="Xxx999671" name="Xxx999671"></a></p>
+<pre>#include &lt;curses.h&gt;
+int getmouse(MEVENT *event);</pre>
+<p>Ein Codeausschnitt dazu sieht so aus:</p>
+<pre>MEVENT event;
+...
+if(getmouse(&amp;event) == OK) {
+   // Konnte Mausereignis lesen
+ }</pre>
+<p>Der R&uuml;ckgabewert der Funktion <span class="listing">getmouse()</span> lautet <span class="listing">OK</span> bei erfolgreichem Lesen, ansonsten bei einem Fehler <span class="listing">ERR</span>.</p>
+<p>Jetzt, da mit der Funktion <span class="listing">getmouse()</span> die Strukturvariablen von <span class="listing">MEVENT</span> mit den entsprechenden Werten »belegt« wurden, k&ouml;nnen Sie diese wie folgt auswerten:</p>
+<pre>// y-Position des Mausereignisses
+y-Koordinate = event.y;
+// x-Position des Mausereignisses
+x-Koordinate = event.x;    
+// (eventuell) Mausknopf, wenn bet&auml;tigt
+bitmaske = event.bstate;
+// Maus-ID, falls mehrere "M&auml;use" vorhanden  
+ID = event.id;</pre>
+<p>Wollen Sie z. B. auf Doppelklick testen, m&uuml;ssen Sie eigentlich nur die Strukturvariable <span class="listing">bstate</span> wie folgt &uuml;berpr&uuml;fen:</p>
+<pre>If(event.bstate == BUTTON1_DOUBLE_CLICK) {
+   //der linke Mausbutton wurde doppelt geklickt 
+ }</pre>
+<p>Um zu &uuml;berpr&uuml;fen, wo und ob im zul&auml;ssigen Fenster die Mauskoordinate (<span class="listing">y</span>, <span class="listing">x</span>) liegt, ben&ouml;tigen Sie die Funktion:<a id="Xxx999682" name="Xxx999682"></a></p>
+<pre>#include &lt;curses.h&gt;
+bool wenclose(WINDOW *win, int y, int x);</pre>
+<p>Der R&uuml;ckgabewert dieser Funktion lautet, falls das Mausereignis an einer g&uuml;ltigen Position im Fenster <span class="listing">win</span> auftrat, <span class="listing">TRUE</span>, ansonsten <span class="listing">FALSE</span>. F&uuml;r <span class="listing">x</span> und <span class="listing">y</span> werden gew&ouml;hnlich die ermittelten Werte der Strukturvariablen <span class="listing">x</span> und <span class="listing">y</span> von <span class="listing">MEVENT</span> verwendet.</p>
+<p>Ein kleines Programmbeispiel soll Ihnen die Verwendung der Maus mit ncurses demonstrieren. Sie klicken in einen Bereich des Fensters <span class="listing">stdscr</span>, und es werden die Werte zur&uuml;ckgegeben, an welcher Position genau Sie im Fenster den linken Mausbutton bet&auml;tigt haben.</p>
+<pre><a id="Xxx999686" name="Xxx999686"></a>/* cur13.c */
+#include &lt;curses.h&gt;
+#include &lt;stdlib.h&gt;
+int main (void) {
+  MEVENT pos;
+  int l_maus;
+  chtype button;
+  initscr ();
+  noecho ();
+  keypad (stdscr, TRUE);
+  l_maus = mousemask (BUTTON1_PRESSED, NULL);
+  while (1) {
+    button = wgetch (stdscr);
+    if (button == KEY_MOUSE) {
+      if (getmouse (&amp;pos) == OK) {
+        wenclose (stdscr, pos.y, pos.x);
+        mvwprintw (stdscr, 1, 0, "y = %2d x = %2d",
+                   pos.y, pos.x);
+      }
+    }
+    wrefresh (stdscr);
+  }
+  endwin ();
+  return 0;
+}</pre>
+<p>Dieses Beispiel soll jetzt noch durch die zus&auml;tzliche &Uuml;berpr&uuml;fung erweitert werden, an welcher Stelle im Fenster <span class="listing">stdscr</span> die Maustaste gedr&uuml;ckt wurde (<span class="listing">y,x</span>) und an welcher Stelle die Maustaste im Fenster wieder losgelassen wurde:</p>
+<pre><a id="Xxx999689" name="Xxx999689"></a>/* cur14.c */
+#include &lt;curses.h&gt;
+#include &lt;stdlib.h&gt;
+int main (void) {
+  MEVENT pos;
+  int l_maus;
+  chtype button;
+  initscr ();
+  noecho ();
+  keypad (stdscr, TRUE);
+  l_maus = mousemask 
+   ( BUTTON1_RELEASED | BUTTON1_PRESSED | BUTTON1_CLICKED, NULL);
+  while (1) {
+    button = wgetch (stdscr);
+    clear ();
+    if (button == KEY_MOUSE) {
+      if (getmouse (&amp;pos) == OK) {
+        // linke Maustaste gedr&uuml;ckt ...
+        if (pos.bstate == BUTTON1_PRESSED) {
+          wenclose (stdscr, pos.y, pos.x);
+          mvwprintw (stdscr, 1, 0,
+                  "linke Maustaste gedr&uuml;ckt bei y = %2d x = %2d",
+                  pos.y, pos.x);
+        }
+        // linke Maustaste losgelassen ...
+        if (pos.bstate == BUTTON1_RELEASED) {
+          // Reaktionszeit eine Tausendstelsekunde setzen
+          mouseinterval (1);
+          wenclose (stdscr, pos.y, pos.x);
+          mvwprintw (stdscr, 2, 0,
+                   "linke Maustaste losgelassen y = %2d x = %2d",
+                   pos.y, pos.x);
+        }
+      }
+    }
+    wrefresh (stdscr);
+  }
+  endwin ();
+  return 0;
+}</pre>
+<p>Wenn die Maustaste zu schnell oder zu langsam reagiert, k&ouml;nnen Sie (wie im Beispiel eben gesehen) die folgende Funktion zur &Auml;nderung benutzen:<a id="Xxx999692" name="Xxx999692"></a></p>
+<pre>#include &lt;curses.h&gt;
+int mouseinterval(int Tausendstelsekunde);</pre>
+<p>Zum Abschluss des Kapitels werden die Mausroutinen etwas praxisn&auml;her eingesetzt. Sie erzeugen ein Fenster (<span class="listing">WINDOW</span> <span class="listing">*fenster</span>) und geben dieses auf dem Bildschirm aus. Sie k&ouml;nnen jetzt in jedem beliebigen Bereich im <span class="listing">stdscr</span> mit der linken Maus dr&uuml;cken, und das Fenster wird an diesem Punkt, falls m&ouml;glich, versetzt. Als Ausgangspunkt dient die linke obere Ecke von <span class="listing">stdscr</span>. Weiterhin befindet sich an der linken oberen Ecke der Buchstabe '<span class="listing">S</span>' und an der rechten oberen Ecke der Buchstabe '<span class="listing">M</span>'. Mit '<span class="listing">S</span>' f&uuml;r »Schlie&szlig;en« schlie&szlig;en Sie das Fenster und mit '<span class="listing">M</span>' f&uuml;r »Maximieren« maximieren Sie es. Ein erneutes Klicken auf '<span class="listing">M</span>' bewirkt wieder das Minimieren zur normalen Gr&ouml;&szlig;e.</p>
+<pre><a id="Xxx999695" name="Xxx999695"></a>/* cur15.c */
+#include &lt;curses.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAXSIZE 1
+#define MINSIZE 0
+static int y_click, x_click;
+static int y_click2, x_click2;
+static int size = MINSIZE;
+static void 
+where_clicked (WINDOW * win, WINDOW * win2, MEVENT pos) {
+  // linke obere Ecke von win2
+  getbegyx (win2, y_click2, x_click2);
+  mouseinterval (1);
+  // wo in win wurde geklickt
+  wenclose (win, pos.y, pos.x);
+  y_click = pos.y;
+  x_click = pos.x;
+  // wurde auf die linke obere Ecke von win2
+  if (y_click == y_click2 &amp;&amp; x_click == x_click2) {
+    endwin ();
+    exit (EXIT_FAILURE);
+  }
+  // ... oder wurde auf die rechte obere Ecke geklickt 
+  else if (y_click == y_click2 &amp;&amp; x_click == x_click2 + 39 ||
+           x_click == x_click2 + 78) {
+    touchwin (stdscr);
+    refresh ();
+    if (size == MINSIZE) {
+      delwin (win2);
+      size = MAXSIZE;
+    } 
+    else if (size == MAXSIZE) {
+      delwin (win2);
+      size = MINSIZE;
+    }
+  }
+}
+/* Verschieben des Fensters an Position der globalen Variablen  */
+/* x_click und y_click, die zuvor mit where_clicked() ermittelt */
+/* wurden                                                       */
+static void move_win_to (WINDOW * win) {
+  touchwin (stdscr);
+  wrefresh (stdscr);
+  mvwin (win, y_click + 1, x_click + 1);
+  touchwin (win);
+  wrefresh (win);
+}
+static WINDOW *create_new_window (
+      WINDOW * neues_fenster, int zeilen, int spalten,
+      int hinterg, int vordergr, int begin_y, int begin_x ) {
+  neues_fenster = newwin (zeilen, spalten, begin_y, begin_x);
+  init_pair (1, hinterg, vordergr);
+  wattrset (neues_fenster, COLOR_PAIR (1));
+  box (neues_fenster, ACS_VLINE, ACS_HLINE);
+  return neues_fenster;
+}
+int main (void) {
+  MEVENT pos;
+  int l_maus;
+  chtype button;
+  WINDOW *fenster;
+  initscr ();
+  if (has_colors () == TRUE)
+    start_color ();
+  noecho ();
+  keypad (stdscr, TRUE);
+  fenster = create_new_window (
+    fenster, 10, 40, COLOR_RED, COLOR_BLUE, 5, 15);
+  init_pair (2, COLOR_BLACK, COLOR_YELLOW);
+  wattrset (fenster, COLOR_PAIR (2));
+  mvwaddch (fenster, 0, 0, 'S');
+  mvwaddch (fenster, 0, 39, 'M');
+  wattrset (fenster, COLOR_PAIR (0));
+  mvwprintw (fenster, 2, 10, "S=Fenster schliessen");
+  mvwprintw (fenster, 6, 10, "M=Fenster maximieren");
+  wrefresh (fenster);
+  l_maus = mousemask (BUTTON1_RELEASED | BUTTON1_PRESSED, NULL);
+  while (1) {
+    button = wgetch (stdscr);
+    if (button == KEY_MOUSE) {
+      if (getmouse (&amp;pos) == OK) {
+        where_clicked (stdscr, fenster, pos);
+        // move_win_to(fenster); 
+        if (size == MAXSIZE) {
+          fenster =
+            create_new_window (fenster,
+                               24, 79,
+                               COLOR_RED,
+                               COLOR_BLUE,
+                               0, 0);
+          wattrset (fenster, COLOR_PAIR (2));
+          mvwaddch (fenster, 0, 0, 'S');
+          mvwaddch (fenster, 0, 78, 'M');
+          wattrset (fenster, COLOR_PAIR (0));
+          mvwprintw (fenster, 10, 30,
+                     "S=Fenster schliessen");
+          mvwprintw (fenster, 14, 30,
+                     "M=Fenster minimieren");
+          wrefresh (fenster);
+        } else if (size == MINSIZE) {
+          fenster =
+            create_new_window (fenster,
+                               10, 40,
+                               COLOR_RED,
+                               COLOR_BLUE,
+                               5, 15);
+          init_pair (2, COLOR_BLACK,
+                     COLOR_YELLOW);
+          wattrset (fenster, COLOR_PAIR (2));
+          mvwaddch (fenster, 0, 0, 'S');
+          mvwaddch (fenster, 0, 39, 'M');
+          wattrset (fenster, COLOR_PAIR (0));
+          mvwprintw (fenster, 2, 10,
+                     "S=Fenster schliessen");
+          mvwprintw (fenster, 6, 10,
+                     "M=Fenster maximieren");
+          wrefresh (fenster);
+          move_win_to (fenster);
+        }
+      }
+    }
+  }
+  endwin ();
+  return 0;
+}</pre>
+<p>So sieht‘s aus:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/13_3.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein13_3.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 13.3   
+    </b>Eine einfache Dialogbox f&uuml;r die Konsole</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>In diesem Listing wird ebenfalls davon ausgegangen, dass Sie eine gew&ouml;hnliche 80 x 24 cm gro&szlig;e Konsole (z. B. VT100) verwenden. Andernfalls kann die Anwendung nicht richtig laufen (es sei denn, Sie passen die Breite der Konsole dem Listing an).</p>
+</td>
+</tr>
+</table><br>
+<p>Mit diesem Grundwissen k&ouml;nnen Sie jetzt eine passable Benutzeroberfl&auml;che f&uuml;r die Konsole bauen. Zwei weitere Funktionen zur Mausprogrammierung mit ncurses, die es noch gibt, hier aber nicht durchgenommen wurden, w&auml;ren:<a id="Xxx999710" name="Xxx999710"></a><a id="Xxx999711" name="Xxx999711"></a></p>
+<pre>int ungetmouse(MEVENT *event);
+bool wmouse_trafo(WINDOW *win, int *Py, int *Px);</pre>
+<p>F&uuml;r n&auml;here Informationen lesen Sie bitte die Manual Page (man mouse).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Urspr&uuml;nglich h&auml;tte ich hier gerne noch ein etwas umfangreicheres Beispiel demonstriert. Es handelt sich dabei um ein Videoverwaltungsprogramm mit ncurses und den verketteten Listen. Da das Listing allein mehrere Seiten im Buch verschlungen h&auml;tte und ich Ihnen das nicht zumuten will, finden Sie das Beispiel auf der Buch-CD wieder.</p>
+</td>
+</tr>
+</table><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap13-001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap14-000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap13-002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:45:53 GMT -->
+</html>

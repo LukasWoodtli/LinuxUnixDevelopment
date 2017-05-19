@@ -1,0 +1,951 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap15-012.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:46:51 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 15.13 Events</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap15-011.html">
+<link rel="next" href="Kap15-013.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap15-011.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap15-013.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap15-000.html#RxxKap15000040005211F024100">15 GTK+</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-000.html#RxxKap15000040005211F024102">15.1 Was ist GTK+?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F024108">15.1.1 Was sind GDK und Glib?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F02410E">15.1.2 Schnittstellen von GTK+ zu anderen Programmiersprachen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F024110">15.1.3 GTK+ und GNOME</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F024115">15.1.4 GTK+ Version 1.2 und 2.x</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F024175">15.1.5 GTK+-Aufbau des Kapitels</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-001.html#RxxKap150010400053E1F049100">15.2 GTK+-Anwendungen &uuml;bersetzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-002.html#RxxKap150020400053F1F013100">15.3 Eine Einf&uuml;hrung in die Glib-Bibliothek</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013103">15.3.1 Datentypen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013187">15.3.2 Routinen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013195">15.3.3 Assertions-Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F0131A4">15.3.4 Speicherverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F0131D6">15.3.5 Stringbearbeitung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013201">15.3.6 Selbstverwaltender Stringpuffer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013218">15.3.7 Timer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F01322F">15.3.8 Dynamische Arrays</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013243">15.3.9 Listen, Hashtabellen und bin&auml;re B&auml;ume</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F01324A">15.3.10 Ausblick Glib</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-003.html#RxxKap15003040005401F028100">15.4 Grundlagen der GTK+-Programmierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F028109">15.4.1 Die Umgebung initialisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F02810F">15.4.2 Widgets erzeugen und ggf. die Attribute setzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F02817C">15.4.3 Eine Callback-Funktion einrichten, um Events abzufangen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F028190">15.4.4 Eine GTK+-Anwendung beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F02819D">15.4.5 Die hierarchische Anordnung der Widgets definieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F0281A8">15.4.6 Widgets anzeigen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F0281B0">15.4.7 Signale und Events abfangen und bearbeiten – (Events-)Verarbeitungsschleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F0281B9">15.4.8 GTK+ und Umlaute (Zeichenkodierung)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-004.html#RxxKap15004040005411F03E100">15.5 Fenster – GtkWindow</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-004.html#RxxKap15004040005411F03E19A">15.5.1 Dialogfenster (Dialogboxen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-004.html#RxxKap15004040005411F03E1BB">15.5.2 GtkMessageDialog</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-005.html#RxxKap15005040005421F03D100">15.6 Anzeige-Elemente</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D10A">15.6.1 Text – GtkLabel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D194">15.6.2 Trennlinie – GtkSeparator</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D196">15.6.3 Grafiken – GtkImage</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D19A">15.6.4 Statusleiste – GtkStatusbar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D1A1">15.6.5 Fortschrittsbalken – GtkProgressBar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-006.html#RxxKap15006040005431F023100">15.7 Beh&auml;lter</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-006.html#RxxKap15006040005431F023102">15.7.1 Boxen – GtkBox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-006.html#RxxKap15006040005431F02317A">15.7.2 Aufteilungen, Register und Button-Box</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-006.html#RxxKap15006040005431F0231CB">15.7.3 Tabellen – GtkTable</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-006.html#RxxKap15006040005431F0231F6">15.7.4 Ausrichtung – GtkAlignment</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-007.html#RxxKap15007040005441F037100">15.8 Buttons und Toogled-Buttons</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-007.html#RxxKap15007040005441F03710A">15.8.1 Buttons allgemein</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-007.html#RxxKap15007040005441F03717A">15.8.2 Radio-Buttons (GtkRadioButton)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-007.html#RxxKap15007040005441F037182">15.8.3 GtkRadioButton, GtkCheckButton und GtkToggleButton</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-007.html#RxxKap15007040005441F037191">15.8.4 Signale f&uuml;r Buttons (GtkButton)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-008.html#RxxKap15008040005451F023100">15.9 Dateneingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F02310A">15.9.1 Textfelder – GtkEntry</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F0231A0">15.9.2 Schieberegler – GtkScale</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F0231C1">15.9.3 Zahlenfelder – GtkSpinButton</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F0231E0">15.9.4 Einstellungen – GtkAdjustment</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F0231F1">15.9.5 GtkEditable</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-009.html#RxxKap15009040005461F035100">15.10 Men&uuml; und Toolbar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-009.html#RxxKap15009040005461F03510A">15.10.1 Men&uuml; – GtkItemFactory</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-009.html#RxxKap15009040005461F0351C3">15.10.2 Toolbar – GtkToolbar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-009.html#RxxKap15009040005461F0351F0">15.10.3 Options-Men&uuml; – GtkOptionsMenu</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-009.html#RxxKap15009040005461F0351FA">15.10.4 Combo-Boxen – GtkCombo</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-010.html#RxxKap15010040005471F030100">15.11 Mehrzeiliger Text</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-010.html#RxxKap15010040005471F030111">15.11.1 Text(editor) – GtkTextView, GtkTextBuffer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-010.html#RxxKap15010040005471F0301D9">15.11.2 Scrollendes Fenster – GtkScrolledWindow</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-011.html#RxxKap15011040005481F04B100">15.12 Ausw&auml;hlen (Selection)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-011.html#RxxKap15011040005481F04B10D">15.12.1 Dateiauswahl – GtkFileSelection</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap15012040005491F04C100">15.13 Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-013.html#RxxKap150130400054A1F03E100">15.14 Weitere Widget- und GTK+-Elemente im &Uuml;berblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">15.13 <a id="RxxKap15669Events" name="RxxKap15669Events"></a>Even<a id="RxxKap15012040005491F04C100" name="RxxKap15012040005491F04C100"></a>ts 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a><a id="Xxx999237" name="Xxx999237"></a>Die Einf&uuml;hrung in GTK+ ist fast zu Ende, und es wurde kaum ein Wort &uuml;ber Events und deren Bearbeitung erw&auml;hnt. Sie haben bisher immer Ihre GTK+-Anwendungen erstellt und sich beim Einrichten der Callback-Funktion das ausgesucht, was Sie ben&ouml;tigt haben (<span class="listing">clicked</span>, <span class="listing">activate</span> ...), das war’s. Mehr ist im Prinzip eigentlich auch gar nicht n&ouml;tig, wenn Sie mit GTK+ Programme schreiben wollen. Die Events in GTK+ werden mit Wrapper von den GDK-Events verwendet und machen Ihnen das Leben recht einfach. GTK+ &uuml;bernimmt alles f&uuml;r Sie. Die GDK-Events sind in der GTK+Bibliothek als Signale vorhanden. In der Regel k&ouml;nnten Sie es also dabei belassen und so weiterarbeiten.</p>
+<p>Was ist aber, wenn Sie z. B. bei einem Mausklick im Fenster die exakte Position ben&ouml;tigen, wo und welcher Mausbutton gedr&uuml;ckt wurde – wie bei einem Zeichenprogramm? Sie haben zwar daf&uuml;r die Signale <span class="listing">button-press-event</span>, <span class="listing">button-release-event</span> oder <span class="listing">clicked</span>, aber keine genaue Positionsangaben. In solch einem Fall m&uuml;ssen Sie tats&auml;chlich ein wenig in die niedrigere Ebene von GDK einsteigen. In diesem Fall geht es zwar vorwiegend um die Maus-Events. Aber wenn das Thema verstanden wurde, l&auml;sst sich dieses genauso gut auf die anderen Events &uuml;bertragen.</p>
+<p>Sie haben h&auml;ufig in Callback-Funktionen den Parameter (genauer die Struktur) <span class="listing">GdkEvent</span> verwendet, ohne eigentlich gewusst zu haben, was Sie da eigentlich nutzen. Im Prinzip konnte Ihnen das auch egal sein, da Ihnen ja GTK+ die ganze Arbeit abgenommen hat. Ein Beispiel einer solchen Callback-Funktion:</p>
+<pre>gboolean
+callback(GtkWidget * widget, GdkEvent* event, GtkWidget * label);</pre>
+<p>Es wird jetzt davon ausgegangen, dass ein Mausbutton an einer bestimmten Position im Fenster bet&auml;tigt wurde und die Callback-Funktion <span class="listing">show_pos</span> mit dem Signal <span class="listing">button-press-event</span> aufgerufen wurde. Jetzt ben&ouml;tigen Sie erst die Struktur von <span class="listing">GdkEvent</span>. Da in der Regel nur ein Event auf einmal auftritt, wird hierzu eine <span class="listing">union</span> verwendet:</p>
+<pre>union GdkEvent {
+  GdkEventType              type;
+  GdkEventAny               any;
+  GdkEventExpose            expose;
+  GdkEventNoExpose          no_expose;
+  GdkEventVisibility        visibility;
+  GdkEventMotion            motion;
+  GdkEventButton            button;
+  GdkEventScroll            scroll;
+  GdkEventKey               key;
+  GdkEventCrossing          crossing;
+  GdkEventFocus             focus_change;
+  GdkEventConfigure         configure;
+  GdkEventProperty          property;
+  GdkEventSelection         selection;
+  GdkEventProximity         proximity;
+  GdkEventClient            client;
+  GdkEventDND               dnd;
+  GdkEventWindowState       window_state;
+  GdkEventSetting           setting;
+};</pre>
+<p>In dieser <span class="listing">union</span> finden Sie jetzt alle m&ouml;glichen Event-Strukturen, die bei einer Anwenderaktion zur&uuml;ckgegeben werden k&ouml;nnen. In diesem Fall interessiert uns das Event der Mausbuttons, das Sie an <span class="listing">GdkEventButton</span> erkennen k&ouml;nnen. Die Spur soll nun weiterverfolgt werden. Ein Blick in die Dokumentation bringt folgende Struktur ans Tageslicht:</p>
+<pre>struct GdkEventButton {
+  GdkEventType type;
+  GdkWindow *window;
+  gint8 send_event;
+  guint32 time;
+  gdouble x;
+  gdouble y;
+  gdouble *axes;
+  guint state;
+  guint button;
+  GdkDevice *device;
+  gdouble x_root, y_root;
+};</pre>
+<p>Und schon haben Sie alles, was Sie f&uuml;r die Event-_Bearbeitung der Maus ben&ouml;tigen. Im Gro&szlig;en und Ganzen sind wir hier ja nur an <span class="listing">x</span>, <span class="listing">y</span> und <span class="listing">button</span> interessiert – aber ein wenig Weiterbildung kann nicht schaden. <span class="listing">type</span> beinhaltet die Art des Mausereignisses (<span class="listing">GDK_BUTTON_PRESS</span>, <span class="listing">GDK_2BUTTON_PRESS</span> (Doppelklick), <span class="listing">GDK_3BUTTON_PRESS</span> (Dreifachklick) oder <span class="listing">GDK_BUTTON_RELEASE</span>. <span class="listing">window</span> ist das Fenster, welches das Event erhalten hat. <span class="listing">time</span> enth&auml;lt die Zeit des Events in Millisekunden. <span class="listing">x</span> und <span class="listing">y</span> sind die relativen Koordinaten des Mauszeigers im Fenster. Mit <span class="listing">axes</span> werden die x-, y-Achsen des Ger&auml;tes &uuml;bersetzt. Im Falle einer Maus ist der Wert <span class="listing">NULL</span>. <span class="listing">state</span> ist eine Bitmaske, die den Zustand der modifizierten Tasten (wie <b>(Ctrl)</b>, <b>(ª)</b>oder <b>(Alt)</b>) und den Zeigerbutton anzeigt. Welche Maustaste gedr&uuml;ckt wurde, finden Sie in <span class="listing">button</span>. Der Wert wird von 1 bis 5 nummeriert und entspricht denselben Werten wie schon beim X Window. <span class="listing">device</span> macht eine Aussage zum Ger&auml;t, welches das Event ausgel&ouml;st hat (es muss nicht immer eine Maus sein). <span class="listing">x_root</span> und <span class="listing">y_root</span> sind relative Koordinaten des Zeigers vom Ursprung des Bildschirms.</p>
+<p>Somit ergibt sich folgende Callback-Funktion:</p>
+<pre>gboolean show_pos ( GtkWidget * widget,
+                    GdkEvent * event,
+                    GtkWidget * label );</pre>
+<p>Wollen Sie jetzt hier ermitteln, welcher Button gedr&uuml;ckt wurde, k&ouml;nnen Sie dies mit folgender Angabe machen:</p>
+<pre>gint z = event-&gt;button.button;</pre>
+<p><span class="listing">event</span> ist der Zeiger auf die Struktur <span class="listing">GdkEvent</span> in der Callback-Funktionsdefinition, <span class="listing">button</span> ist vom Typ <span class="listing">GdkEventButton</span> in <span class="listing">union</span> <span class="listing">GdkEvent</span>, und der zweite <span class="listing">button</span> ist eine Strukturvariable in <span class="listing">GdkEventButton</span>. Sie k&ouml;nnen dies aber abk&uuml;rzen, indem Sie bei dem Funktionsprototypen der Callback-Funktion gleich <span class="listing">GdkEventButton</span> verwenden:</p>
+<pre>static gboolean show_pos ( GtkWidget * widget,
+                           GdkEventButton * event, 
+                           GtkWidget * label );</pre>
+<p>Der R&uuml;ckgabewert der Callback-Funktion sollte <span class="listing">TRUE</span> sein, wenn alles beim Behandeln des Events glatt verlief – bei einem Fehler sollten Sie <span class="listing">FALSE</span> zur&uuml;ckgeben.</p>
+<p>Wie schon mit dem Xt-Toolkit m&uuml;ssen Sie die Events, die Sie bearbeiten wollen, selektieren – denn auch hier macht es wenig Sinn, von vornherein auf alle Events reagieren zu wollen. Der X-Server w&auml;re nur noch mit den Events besch&auml;ftigt. Die Events, die Sie speziell bearbeiten wollen, selektieren Sie mit der Funktion <span class="listing">gtk_widget_set_event()<a id="Xxx999255" name="Xxx999255"></a></span>. Die Syntax dazu:</p>
+<pre>void gtk_widget_set_events (GtkWidget *widget,  gint events);</pre>
+<p>Damit f&uuml;gen Sie zu einem Widget eine oder mehrere Eventmasken hinzu, die Sie bearbeiten wollen. Mehrere Masken werden mit dem bitweisen ODER-Operator getrennt. Hierzu einige der wichtigsten GDK-Eventmasken:<a id="Xxx999258" name="Xxx999258"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 15.29   
+    </b>Einige Eventmasken und deren Signale</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Eventmaske</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Signal</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_EXPOSURE_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">expose-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Fenster oder Teil davon wurde sichtbar.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_BUTTON_MOTION_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">motion-notify-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Maus wurde bewegt, w&auml;hrend gleichzeitig ein Button gedr&uuml;ckt wurde.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_BUTTON1_MOTION_MASK
+GDK_BUTTON2_MOTION_MASK
+GDK_BUTTON3_MOTION_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">motion-notify-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Maus wurde bewegt, w&auml;hrend gleichzeitig ein spezieller Button gedr&uuml;ckt wurde.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_BUTTON_PRESS_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">button-press-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Button wird gedr&uuml;ckt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_BUTTON_RELEASE_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">button-release-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Button wird losgelassen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_KEY_PRESS_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">key-press-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Taste wird gedr&uuml;ckt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_KEY_RELEASE_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">key-release-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Taste wird losgelassen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_ENTER_NOTIFY_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">enter-notify-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeiger ist in das Fenster gekommen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_LEAVE_NOTIFY_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">leave-notify-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeiger hat das Fenster verlassen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_FOCUS_CHANGE_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">focus-in-event
+focus-out-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Tastaturfokus zwischen den Fenstern wurde gewechselt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GDK_PROPERTY_CHANGE_MASK
+</td>
+<td class="tabellentext" bgcolor="#000000">property-notify-event
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Fenstereigenschaft wurde ver&auml;ndert.
+</td>
+</tr>
+</table><br>
+<p>Hierzu nun ein einfaches Beispiel, das sich vorwiegend um die Events <span class="listing">GDK_BUTTON_PRESS_MASK</span> und <span class="listing">GDK_BUTTON_RELEASE_MASK</span> k&uuml;mmert, aber auch die Eventmasken <span class="listing">GDK_ENTER_NOTIFY_MASK</span>, <span class="listing">GDK_LEAVE_NOTIFY_MASK</span> und <span class="listing">GDK_KEY_PRESS_MASK</span> verwendet, ohne allerdings Wichtigeres damit zu machen.</p>
+<pre><a id="Xxx999343" name="Xxx999343"></a>/* gtk9.c */
+#include &lt;gtk/gtk.h&gt;
+#define LEFTBUT   1
+#define MIDDLEBUT 2
+#define RIGHTBUT  3
+static gint
+delete_Event(GtkWidget *widget, GdkEvent *event, gpointer data) {
+  return FALSE;
+}
+static void exitCB (GtkButton * clicked, gpointer data) {
+  gtk_main_quit ();
+}
+static gboolean show_pos (
+  GtkWidget *widget, GdkEventButton *event, GtkWidget *label ) {
+  const gchar *button[] = {
+     NULL, "linker Button", "mittlerer Button","rechter Button"
+   };
+  gint x = event-&gt;x;
+  gint y = event-&gt;y;
+  gint z = event-&gt;button;
+  gchar *pos = g_strdup_printf ("Event: %d, %d (%s)\n",
+                  x, y, button[z]);
+  gtk_label_set_text (GTK_LABEL (label), pos);
+  return TRUE;
+}
+static gboolean change_label1 ( 
+  GtkWidget* widget, GdkEventButton* event, GtkWidget *label ) {
+  const gchar *new_label = {
+     "Event : Mauscursor tritt ins Fenster ein\n" 
+  };
+  gtk_label_set_text (GTK_LABEL (label), new_label);
+  return TRUE;
+}
+static gboolean change_label2 ( 
+ GtkWidget * widget, GdkEventButton * event, GtkWidget * label) {
+  const gchar *new_label = {
+     "Event : Mauscursor hat Fenster verlassen\n" 
+   };
+  gtk_label_set_text (GTK_LABEL (label), new_label);
+  return TRUE;
+}
+static gboolean key_press ( 
+  GtkWidget * widget, GdkEventKey * event, GtkWidget * label) {
+  gchar *new_label = g_strdup_printf (
+     "Event : Taste '%s' (Wert:%d) wurde gedrueckt\n",
+     event-&gt;string, event-&gt;keyval);
+  gtk_label_set_text (GTK_LABEL (label), new_label);
+  return TRUE;
+}
+int main (int argc, char **argv) {
+  GtkWidget *fenster;
+  GtkWidget *label;
+  /*Gtk initialisieren */
+  gtk_init (&amp;argc, &amp;argv);
+  /*Ein neues Fenster erstellen */
+  fenster = g_object_new( GTK_TYPE_WINDOW,
+                         "title", "Verschiedene Anzeigeelemente",
+                         "default-width",  300,
+                         "default-height", 200,
+                         "resizable", TRUE,
+                         "window-position", GTK_WIN_POS_CENTER,
+                         "border-width", 5,
+                         NULL );
+  label = g_object_new( GTK_TYPE_LABEL, NULL);
+  /* Versuch, &uuml;ber den Window-Manager zu beenden */
+  g_signal_connect ( GTK_OBJECT (fenster), "delete-event",
+                     G_CALLBACK (delete_Event), NULL);
+  g_signal_connect ( GTK_OBJECT (fenster), "destroy",
+                     G_CALLBACK (exitCB), NULL);
+  /* Callbacks f&uuml;r die Events einrichten */
+  g_signal_connect (GTK_OBJECT (fenster), "button-press-event",
+                    G_CALLBACK (show_pos), label);
+  g_signal_connect ( GTK_OBJECT (fenster), "enter-notify-event",
+                     G_CALLBACK(change_label1), label);
+  g_signal_connect ( GTK_OBJECT (fenster), "leave-notify-event",
+                     G_CALLBACK (change_label2), label);
+  g_signal_connect ( GTK_OBJECT (fenster), "key-press-event",
+                     G_CALLBACK (key_press), label);
+  gtk_widget_set_events (fenster,
+             GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
+           | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK
+           | GDK_KEY_PRESS_MASK);
+  gtk_container_add (GTK_CONTAINER (fenster), label);
+  /* Zeigs uns ... */
+  gtk_widget_show_all (fenster);
+  gtk_main ();
+  return 0;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -Wall -o gkt9 gtk9.c `pkg-config gtk+-2.0 --cflags --libs`
+$ ./gkt9</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_19.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_19.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.19   
+    </b>GDK-Events</p>
+</td>
+</tr>
+</table><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap15-011.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap15-013.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap15-012.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:46:55 GMT -->
+</html>

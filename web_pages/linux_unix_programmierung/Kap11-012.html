@@ -1,0 +1,1198 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap11-012.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:56 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 11.13 Parallele Server</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap11-011.html">
+<link rel="next" href="Kap11-013.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap11-011.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap11-013.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap11-000.html#RxxKap11000040003691F041100">11 Netzwerkprogrammierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-000.html#RxxKap11000040003691F041102">11.1 Einf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-001.html#RxxKap11001040003861F042100">11.2 Aufbau von Netzwerken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-001.html#RxxKap11001040003861F042102">11.2.1 ISO/OSI und TCP/IP – Referenzmodell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-001.html#RxxKap11001040003861F042117">11.2.2 Das World Wide Web (Internet)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-002.html#RxxKap11002040003871F03C100">11.3 TCP/IP – Aufbau und Struktur</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-002.html#RxxKap11002040003871F03C107">11.3.1 Netzwerkschicht (Daten&uuml;bertragung)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-002.html#RxxKap11002040003871F03C109">11.3.2 Internetschicht</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-002.html#RxxKap11002040003871F03C10B">11.3.3 Transportschicht (TCP, UDP)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-002.html#RxxKap11002040003871F03C10E">11.3.4 Anwendungsschicht</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-003.html#RxxKap11003040003881F040100">11.4 TCP Socket</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-004.html#RxxKap11004040003891F04F102">11.5 Kommunikationsmodell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-005.html#RxxKap110050400038A1F01B100">11.6 Grundlegende Funktionen zum Zugriff auf die Socket-Schnittstelle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B102">11.6.1 Ein Socket anlegen – socket()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1A4">11.6.2 Verbindungsaufbau – connect()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1BB">11.6.3 Socket mit einer Adresse verkn&uuml;pfen – bind()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1C0">11.6.4 Auf Verbindungen warten – listen() und accept()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1C8">11.6.5 Senden und Empfangen von Daten (1) – write() und read()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1CC">11.6.6 Senden und Empfangen von Daten (2) – send() und recv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-005.html#RxxKap110050400038A1F01B1D4">11.6.7 Verbindung schlie&szlig;en – close()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-006.html#RxxKap110060400038B1F02F100">11.7 Aufbau eines Clientprogramms</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-006.html#RxxKap110060400038B1F02F177">11.7.1 Zusammenfassung: Clientanwendung und Quellcode</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-007.html#RxxKap110070400038C1F03A100">11.8 Aufbau des Serverprogramms</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-007.html#RxxKap110070400038C1F03A107">11.8.1 Zusammenfassung: Serveranwendung und Quellcode</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-008.html#RxxKap110080400038D1F039100">11.9 IP-Adressen konvertieren, manipulieren und extrahieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F039102">11.9.1 inet_aton(), inet_pton() und inet_addr()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F03910E">11.9.2 inet_ntoa() und inet_ntop()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F039116">11.9.3 inet_network()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F039178">11.9.4 inet_netof()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F03917C">11.9.5 inet_lnaof()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-008.html#RxxKap110080400038D1F039180">11.9.6 inet_makeaddr()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-009.html#RxxKap110090400038E1F042100">11.10 Namen und IP-Adressen umwandeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-009.html#RxxKap110090400038E1F042108">11.10.1 Name-Server</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-009.html#RxxKap110090400038E1F04210A">11.10.2 Informationen zum Rechner im Netz – gethostbyname und gethostbyaddr</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-009.html#RxxKap110090400038E1F04219F">11.10.3 Service-Informationen – getservbyname() und getservbyport()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-010.html#RxxKap110100400038F1F02E100">11.11 Der Puffer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-011.html#RxxKap11011040003901F01F100">11.12 Standard-E/A-Funktionen verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-011.html#RxxKap11011040003901F01F10D">11.12.1 Pufferung von Standard-E/A-Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap11012040003911F030100">11.13 Parallele Server</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-013.html#RxxKap11013040003921F03B100">11.14 Syncrones Multiplexing – select()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-014.html#RxxKap11014040003931F044100">11.15 POSIX-Threads und Netzwerkprogrammierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-015.html#RxxKap11015040003941F043100">11.16 Optionen f&uuml;r Sockets setzen bzw. erfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-015.html#RxxKap11015040003941F043102">11.16.1 setsockopt()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-015.html#RxxKap11015040003941F043108">11.16.2 getsockopt()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-015.html#RxxKap11015040003941F04310D">11.16.3 Socket-Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-016.html#RxxKap11016040003951F04F100">11.17 UDP</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-016.html#RxxKap11016040003951F04F10C">11.17.1 Clientanwendung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-016.html#RxxKap11016040003951F04F112">11.17.2 Serveranwendung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-016.html#RxxKap11016040003951F04F114">11.17.3 recvfrom() und sendto()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-016.html#RxxKap11016040003951F04F17B">11.17.4 bind() verwenden oder weglassen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-017.html#RxxKap11017040003961F026100">11.18 UNIX-Domain-Sockets (IPC)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-017.html#RxxKap11017040003961F026105">11.18.1 Die Adressstruktur von UNIX-Domain-Sockets</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-017.html#RxxKap11017040003961F02610F">11.18.2 Lokale Sockets erzeugen – socketpair()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-018.html#RxxKap11018040003971F01A100">11.19 Multicast-Socket</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-018.html#RxxKap11018040003971F01A180">11.19.1 Anwendungsgebiete von Multicast-Verbindungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-019.html#RxxKap11019040003981F017100">11.20 Nicht blockierende I/O-Sockets</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-020.html#RxxKap11020040003991F010100">11.21 Etwas zu Streams und TLI, Raw Socket, XTI</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-020.html#RxxKap11020040003991F010102">11.21.1 Raw Socket</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-020.html#RxxKap11020040003991F010106">11.21.2 TLI und XTI</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-020.html#RxxKap11020040003991F010109">11.21.3 RPC (Remote Procedure Call)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-021.html#RxxKap110210400039A1F048100">11.22 IPv4 und IPv6</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-021.html#RxxKap110210400039A1F048105">11.22.1 IPv6 – ein wenig genauer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-022.html#RxxKap110220400039B1F03D100">11.23 Netzwerksoftware nach IPv6 portieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-022.html#RxxKap110220400039B1F03D103">11.23.1 Konstanten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-022.html#RxxKap110220400039B1F03D107">11.23.2 Strukturen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap11-022.html#RxxKap110220400039B1F03D10B">11.23.3 Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap11-023.html#RxxKap110230400039C1F02F100">11.24 Sicherheit und Verschl&uuml;sselung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">11.13 <a id="RxxKap11319ParalleleServer" name="RxxKap11319ParalleleServer"></a>Parallele Serv<a id="RxxKap11012040003911F030100" name="RxxKap11012040003911F030100"></a>er 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a><a id="Xxx999237" name="Xxx999237"></a><a id="Xxx999238" name="Xxx999238"></a>F&uuml;r einige Anwendungen mag ein Beispiel, wie das erste Client-Server-Beispiel, das Sie in diesem Kapitel geschrieben haben, reichen. Der Server wird gestartet, und jeweils ein Client kann mit diesem kommunizieren. Alle anderen Clientprogramme, die ebenfalls mit dem Server kommunizieren wollen, m&uuml;ssen warten. Bei manchen Client-Server-Anwendungen kann dies sogar so gewollt sein. Den Server, den Sie bisher kennen, nennt man einen iterativen Server.</p>
+<p>Wenn aber die Bearbeitung der Clientanfragen mehr Zeit in Anspruch nimmt oder mehrere Anfragen gleichzeitig (nach dem Multitasking-Prinzip) abgearbeitet werden m&uuml;ssen, dann ist es nicht sehr sinnvoll, wenn sich der Server immer nur mit einem Client besch&auml;ftigt.</p>
+<p>Wenn Sie mehrere Clients gleichzeitig bedienen wollen, m&uuml;ssen Sie einen parallelen Server schreiben. Dies k&ouml;nnen Sie unter Linux recht einfach mittels <span class="listing">fork()<a id="Xxx999242" name="Xxx999242"></a></span> erledigen. Dabei legt der Server f&uuml;r jede Clientbedienung einen eigenen Kindprozess an. Und das ist einfacher, als Sie vielleicht denken werden. Parallele Server k&ouml;nnen Sie aber auch mit pthread entwickeln – aber dazu kommen wir noch.</p>
+<p>Im folgenden Beispiel soll ein einfaches Netzwerkprogramm entwickelt werden, womit Sie Daten in einem Netzwerk kopieren k&ouml;nnen. Der Server wartet dabei auf eine Anforderung eines Clients. Zun&auml;chst liest der Server den Namen des zu kopierenden Programms aus, das ihm der Client gesendet hat, dann wird in einem entsprechenden Verzeichnis der Serveranwendung (hier lokal beim Server) eine Datei mit dem Namen angelegt. Anschlie&szlig;end schickt der Client dem Server den Inhalt der Datei zum Kopieren. Kopiert werden k&ouml;nnen dabei alle Dateien, auch ausf&uuml;hrbare Dateien und Grafiken. Die Serveranwendung kann auf jedem beliebigen Rechner laufen. Das Beispiel ist eigentlich recht simpel und entspricht im Prinzip dem einfachen Kopiervorgang auf dem lokalen Rechner (abgesehen davon, dass hierbei Sockets verwendet werden).</p>
+<p>Bevor ich Ihnen diesen Vorgang anhand eines parallelen Servers zeige, folgt erst die lineare einfache Version, die im n&auml;chsten Schritt erst parallelisiert werden soll.</p>
+<p>Hier die Serveranwendung, die am Port <span class="listing">1234</span> auf eine Anfrage wartet:</p>
+<pre><a id="Xxx999246" name="Xxx999246"></a>/* server.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;netinet/in.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;errno.h&gt;
+#define  MAX_ZEICHEN  1024
+#define  PORT_NUMMER  1234
+int main (void) {
+  int sockfd, connfd, fd, j, n, ngesamt;
+  struct sockaddr_in adresse;
+  socklen_t adrlaenge = sizeof (struct sockaddr_in);
+  char puffer[MAX_ZEICHEN];
+  char path_file[MAX_ZEICHEN];
+  const int y = 1;
+  if ((sockfd = socket (PF_INET, SOCK_STREAM, 0)) &lt; 0) {
+     printf ("Fehler bei socket() ... (%s)\n",
+        strerror(errno));
+     exit (EXIT_FAILURE);
+  }
+  printf("Socket erfolgreich angelegt\n");
+  adresse.sin_family = AF_INET;
+  adresse.sin_port = htons (PORT_NUMMER);
+  memset (&amp;adresse.sin_addr, 0, sizeof (adresse.sin_addr));
+  setsockopt( sockfd, SOL_SOCKET, 
+              SO_REUSEADDR, &amp;y, sizeof(int) );
+  if (bind ( sockfd,
+             (struct sockaddr *) &amp;adresse,
+             sizeof (adresse) ) ) {
+     printf ("Fehler bei bind() ... (%s)\n",
+        strerror(errno));
+     exit (EXIT_FAILURE);
+  }
+  printf("Server ist bereit und wartet ...\n");
+  if (listen (sockfd, SOMAXCONN) != 0) {
+     printf ("Fehler bei listen() ... (%s)\n",
+        strerror(errno));
+     exit (EXIT_FAILURE);
+  }
+  while ((connfd = accept ( sockfd,
+                            (struct sockaddr *) &amp;adresse,
+                            &amp;adrlaenge)) &gt;= 0) {
+     printf (" ... Daten empfangen\n");
+     /* Dateiname */
+     j = 0;
+     while ((n = read (connfd, &amp;puffer[j], 1)) &gt; 0) {
+        if (puffer[j] == '\n') {
+           puffer[j] = 0;
+           break;
+        }
+        j++;
+     }
+     if (n &lt; 0) {
+        printf ("Fehler bei read() ...\n");
+        exit (EXIT_FAILURE);
+     }
+     printf ("Dateiname \"%s\" wird kopiert nach ",
+        puffer);
+     strcpy( path_file, getenv("HOME"));
+     strcat( path_file, "/tmp/");
+     strcat( path_file, puffer );
+     printf("%s\n",path_file);
+     /* Datei zum Lesen &ouml;ffnen */
+     if (( fd = open( path_file, 
+             O_WRONLY | O_CREAT | O_TRUNC, 0644 ) ) &lt; 0 ) {
+        printf ("... kann %s nicht &ouml;ffnen (%s)\n",
+           puffer, strerror(errno));
+        close (connfd);
+        continue;
+     }
+     /* Datei aus dem Socket lesen und in lokale */
+     /* Kopie schreiben                          */
+     ingesamt = 0;
+     while((n=read (connfd, puffer, sizeof (puffer))) &gt; 0) {
+        if (write (fd, puffer, n) != n) {
+           printf("Fehler bei write()...(%s)\n",
+              strerror(errno));
+           exit (EXIT_FAILURE);
+        }
+        ingesamt += n;
+     }
+     if (n &lt; 0) {
+         printf ("Fehler bei read() ...\n");
+         exit (EXIT_FAILURE);
+     }
+     printf (".beendet (%d Bytes)\n", ngesamt);
+     close (fd);
+     close (connfd);
+   }
+   if (connfd &lt; 0) {
+       printf ("Fehler bei accept() ...\n");
+       exit (1);
+   }
+   close (sockfd);
+   exit (EXIT_SUCCESS);
+}</pre>
+<p>Als N&auml;chstes die Clientanwendung, die eine Anforderung an den Server stellt und den Namen und anschlie&szlig;end den Inhalt der zu kopierenden Datei sendet.</p>
+<pre><a id="Xxx999249" name="Xxx999249"></a>/* client.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;netinet/in.h&gt;
+#include &lt;netdb.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;errno.h&gt;
+#define  MAX_ZEICHEN 1024
+#define  PORT_NUMMER   1234
+int main (int argc, char **argv) {
+  int sockfd, i, n, fd;
+  ssize_t name_len;
+  struct sockaddr_in adresse;
+  struct in_addr inadr;
+  struct hostent *rechner;
+  char puffer[MAX_ZEICHEN];
+  char *help;
+  if (argc &lt; 3) {
+     printf ("Usage: %s rechner datei(en)\n", *argv);
+     exit (EXIT_FAILURE);
+  }
+  if (inet_aton (argv[1], &amp;inadr))
+     rechner = gethostbyaddr ( (const void*) &amp;inadr,
+                               sizeof (inadr),
+                               AF_INET );
+  else
+     rechner = gethostbyname (argv[1]);
+  if (rechner == NULL) {
+    herror ("Fehler beim Suchen des Rechners\n");
+    exit (EXIT_FAILURE);
+  }
+  adresse.sin_family = AF_INET;
+  adresse.sin_port   = htons (PORT_NUMMER);
+  memcpy ( &amp;adresse.sin_addr,
+           rechner-&gt;h_addr_list[0],
+           sizeof (adresse.sin_addr) );
+  for (i = 2; i &lt; argc; i++) {
+     if ((sockfd = socket (PF_INET, SOCK_STREAM, 0)) &lt; 0) {
+        printf("Fehler bei socket() ...(%s)\n",
+           strerror(errno));
+        exit (EXIT_FAILURE);
+     }
+     if (connect ( sockfd,
+                  (struct sockaddr *) &amp;adresse,
+                  sizeof (adresse) ) ) {
+        printf("Fehler bei connect() ...(%s)\n",
+           strerror(errno));
+        exit (EXIT_FAILURE);
+     }
+     /* Datei, die kopiert wird, soll zum Lesen &ouml;ffnen */
+     if ((fd = open (argv[i], O_RDONLY)) &lt; 0) {
+        printf ("kann Datei (%s) nicht oeffnen (%s)\n",
+           argv[i], strerror(errno));
+        continue;
+     }
+     strcpy (puffer, argv[i]);
+     strcat (puffer, "\n");
+     /* Server ben&ouml;tigt den Dateinamen ohne Pfadangabe */
+     help = strrchr(puffer,'/');
+     if( help == NULL )
+        help = puffer;
+     else
+        *(help++);
+     name_len = strlen (help);
+     /* Dateinamen an den Server */
+     if (write (sockfd, help, name_len) != name_len) {
+        printf ("Konnte \"%s\" nicht versenden?\n",
+           argv[i]);
+        close (fd);
+        close (sockfd);
+        continue;
+     }
+     /* Inhalt der Datei auslesen und an Server senden */
+     while ((n = read (fd, puffer, sizeof (puffer))) &gt; 0) {
+        /* puffer[n] = 0 ist sehr wichtig, wenn die zu */
+        /* versendende Datei keine lesbare Datei ist  */
+        /* (Ausf&uuml;hrbare Datei, Grafik ...) - ohne      */
+        /* w&uuml;rde nur Datensalat entstehen              */
+        puffer[n]= 0;
+        if (write (sockfd, puffer, n) != n) {
+           printf("Fehler bei write()...(%s)\n",
+              strerror(errno));
+           exit (EXIT_FAILURE);
+        }
+     }
+     if (n &lt; 0) {
+        printf ("Fehler bei read() ...\n");
+        exit (EXIT_FAILURE);
+    }
+    close (sockfd);
+    sleep(2); /* Kurze Unterbrechung ggf. entfernen */
+  }
+  printf("Datei(en) erfolgreich versendet\n");
+  exit (EXIT_SUCCESS);
+}</pre>
+<p>Jetzt das Programm bei der Ausf&uuml;hrung. Bitte beachten Sie dabei, welche Adresse Sie angeben, um mit der Serveranwendung in Kontakt zu treten. Sollten Sie Ihre Serveranwendung erst auf dem lokalen Rechner testen (was meistens der Fall sein d&uuml;rfte), dann ist die IP-Adresse 127.0.0.1 oder der Name »localhost«. Ansonsten, wenn Sie die Serveranwendung extern testen wollen, geben Sie die entsprechende IP-Adresse bzw. den Domainnamen an. Nach der Angabe, wo sich die Serveranwendung (IP-Adresse bzw. Domainname) befindet, k&ouml;nnen Sie als weitere Argumente in der Kommandozeile Dateien (mitsamt Pfad) angeben, die dann an den Server geschickt werden sollen.</p>
+<pre>$ gcc -o server server.c
+$ gcc -o client client.c
+[Rechner mit der Serveranwendung]
+$ ./server
+Socket erfolgreich angelegt
+Server ist bereit und wartet ..
+[Rechner mit der Clientanwendung]
+$ ./client localhost home/tot/libproc_DE.pdf \
+  home/sicherheit/Race_Conditions.pdf ~/Yast2.tif test.c
+Datei(en) erfolgreich versendet
+[Rechner mit der Serveranwendung]
+...Daten empfangen
+Dateiname "libproc_DE.pdf"  wird kopiert nach /home/tot/tmp/libproc_DE.pdf
+..beendet (341518 Bytes)
+ ...Daten empfangen
+Dateiname "Race_Conditions.pdf"  wird kopiert nach
+/home/tot/tmp/Race_Conditions.pdf
+..beendet (3886508 Bytes)
+ ...Daten empfangen
+Dateiname "Yast2.tif"  wird kopiert nach /home/tot/tmp/Yast2.tif
+..beendet (845658 Bytes)
+ ...Daten empfangen
+Dateiname "test.c"  wird kopiert nach /home/tot/tmp/test.c
+..beendet (6512 Bytes)</pre>
+<p>So weit, so gut. Solange Sie alleine diese Client-Server-Anwendung ausf&uuml;hren, d&uuml;rften Sie recht zufrieden damit sein. Was aber, wenn Sie diese Serveranwendung als eine Art Backup-Server-Programm in einem gro&szlig;en Unternehmen einsetzen wollen, wo in Sto&szlig;zeiten zu Feierabend bis zu hundert solcher Clientanfragen anstehen? Und dabei handelt es sich meistens nicht nur um ein paar KB gro&szlig;e Dateien. Sie ben&ouml;tigen also einen parallelen Server, der mehrere Anfragen gleichzeitig abarbeitet.</p>
+<p>Lassen wir das ganze Netzwerkzeugs au&szlig;er Acht – um die Gedanken nicht allzu sehr zu strapazieren. Ein paralleler Server ist hierbei ja nichts anderes als ein neuer Prozess, der die Arbeit verrichtet. Was ben&ouml;tigen Sie also, um einen vern&uuml;nftigen Prozess vom Start bis zum Ende zu erstellen? Bevor Sie jetzt zur&uuml;ckbl&auml;ttern, hier die einzelnen Punkte:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><b>1.</b></td>
+<td valign="top" width="100%" align="left"> Einen Signalhandler f&uuml;r das Signal SIGCHLD einrichten. Der Signalhandler muss auch waitpid() verwenden, um Zombies zu vermeiden.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><b>2.</b></td>
+<td valign="top" width="100%" align="left"> Mit fork() einen neuen Kindprozess starten</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><b>3.</b></td>
+<td valign="top" width="100%" align="left"> Kindprozess beenden</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<p>Um mir die anschlie&szlig;ende Erkl&auml;rung zu erleichtern und Ihnen eine trockene Theorie zu ersparen, folgt hierzu die Client-Server-Anwendung des vorherigen Beispiels, wobei die Clientanwendung dieselbe geblieben ist, weshalb ich mir eine Auflistung hier ersparen kann. Sie k&ouml;nnen also dieselbe Clientanwendung wie im iterativen Server-Beispiel zuvor verwenden. Hierzu die parallele Serveranwendung mit anschlie&szlig;ender Erkl&auml;rung:</p>
+<pre><a id="Xxx999261" name="Xxx999261"></a>/* pserver.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;netinet/in.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;signal.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;errno.h&gt;
+#define  MAX_ZEICHEN 1024
+#define  PORT_NUMMER  1234
+typedef void (*sighandler_t)(int);
+static sighandler_t
+my_signal(int sig_nr, sighandler_t signalhandler) {
+   struct sigaction neu_sig, alt_sig;
+   neu_sig.sa_handler = signalhandler;
+   sigemptyset (&amp;neu_sig.sa_mask);
+   neu_sig.sa_flags = SA_RESTART;
+   if (sigaction (sig_nr, &amp;neu_sig, &amp;alt_sig) &lt; 0)
+      return SIG_ERR;
+   return alt_sig.sa_handler;
+}
+static void no_zombie (int signr) {
+  pid_t pid;
+  int ret;
+  while ((pid = waitpid (-1, &amp;ret, WNOHANG)) &gt; 0)
+    printf ("Child-Server mit pid=%d hat sich beendet\n",
+       pid );
+  return;
+}
+int main (void) {
+  int sockfd, connfd, fd, j, n, ngesamt;
+  struct sockaddr_in adresse;
+  const int y = 1;
+  size_t adrlaenge = sizeof (struct sockaddr_in);
+  char puffer[MAX_ZEICHEN];
+  char path_file[MAX_ZEICHEN];
+  pid_t pid;
+  if ((sockfd = socket (PF_INET, SOCK_STREAM, 0)) &lt; 0) {
+     printf ("Fehler bei socket() ...(%s)\n",
+        strerror(errno));
+     exit (EXIT_FAILURE);
+  }
+  printf ("Socket erfolgreich angelegt\n");
+  adresse.sin_family = AF_INET;
+  adresse.sin_port = htons (PORT_NUMMER);
+  memset (&amp;adresse.sin_addr, 0, sizeof (adresse.sin_addr));
+  setsockopt( sockfd, SOL_SOCKET, 
+              SO_REUSEADDR, &amp;y, sizeof(int) );
+  if (bind ( sockfd,
+             (struct sockaddr *) &amp;adresse,
+             sizeof (adresse) ) ) {
+     printf ("Fehler bei bind() ...(%s)\n",
+        strerror(errno));
+     exit (EXIT_FAILURE);
+  }
+  printf ("Server ist bereit und wartet ...\n");
+  if (listen (sockfd, 5) ) {
+     printf ("Fehler bei listen() ...(%s)\n",
+        strerror(errno));
+     exit (EXIT_FAILURE);
+  }
+  my_signal (SIGCHLD, no_zombie);
+  while(1) {
+     connfd = accept ( sockfd,
+                       (struct sockaddr *) &amp;adresse,
+                       &amp;adrlaenge );
+     if( connfd &lt; 0 ) {
+        if( errno == EINTR )
+           continue;
+        else {
+           printf("Fehler bei accept() (%s)\n",
+              strerror(errno));
+           exit(EXIT_FAILURE);
+        }
+     }
+     printf (" ...Daten empfangen\n");
+     /* Neuen Kindprozess-Server starten */
+     if ((pid = fork ()) == 0) {
+        close (sockfd);
+        /* Dateiname */
+        j = 0;
+        while ((n = read (connfd, &amp;puffer[j], 1)) &gt; 0) {
+           if (puffer[j] == '\n') {
+              puffer[j] = 0;
+              break;
+           }
+           j++;
+        }
+        if (n &lt; 0) {
+           printf ("Fehler bei read() ...\n");
+           exit (EXIT_FAILURE);
+        }
+        printf("(%d): Dateiname \"%s\"  wird kopiert nach ",
+           getpid(),puffer);
+        strcpy (path_file, getenv ("HOME"));
+        strcat (path_file, "/tmp/");
+        strcat (path_file, puffer);
+        printf ("%s\n", path_file);
+        /* Datei zum Lesen &ouml;ffnen */
+        if ((fd = open ( path_file, 
+              O_WRONLY | O_CREAT | O_TRUNC, 0644 ) ) &lt; 0 ) {
+           printf ("... kann %s nicht &ouml;ffnen\n", puffer);
+           close (connfd);
+           continue;
+        }
+        /* Datei aus dem Socket lesen und in lokale */
+        /*  Kopie schreiben                         */
+        ingesamt = 0;
+        while((n=read(connfd, puffer, sizeof (puffer)))&gt;0) {
+           if (write (fd, puffer, n) != n) {
+              printf ("Fehler bei write() ...\n");
+              exit (EXIT_FAILURE);
+           }
+           ingesamt += n;
+        }
+        if (n &lt; 0) {
+           printf ("Fehler bei read() ...\n");
+           exit (EXIT_FAILURE);
+        }
+        printf ("..beendet (%d Bytes)\n", ingesamt);
+        close (fd);
+        exit(EXIT_SUCCESS);
+        /* Ende Kindprozess */
+     } //Ende fork()
+     close (connfd);
+  }//Ende while(1)
+  close (sockfd);
+  exit (EXIT_SUCCESS);
+}</pre>
+<p>Wenn Sie den Server jetzt starten und mehrere Clientanwendungen zum Kopieren, merken Sie, dass neben einer etwas ge&auml;nderten Ausgabe die Daten&uuml;bertragung &uuml;ber verschiedene Rechner wesentlich schneller vor sich geht (nat&uuml;rlich sollten Sie <span class="listing">sleep()</span> aus der Clientanwendung entfernen). Nat&uuml;rlich interessiert es Sie erst einmal, was hier hinter den Kulissen vor sich geht.</p>
+<p>Wenn der Server bereit ist und mit <span class="listing">listen()</span> am Socket lauscht, f&auml;llt erst auf, dass hier ein Signalhandler eingerichtet wurde:</p>
+<pre>static void no_zombie (int signr) {
+   pid_t pid;
+   int ret;
+   while ((pid = waitpid (-1, &amp;ret, WNOHANG)) &gt; 0)
+      printf ("Child-Server mit pid=%d hat sich beendet\n",
+         pid);
+   return;
+}
+...
+...
+/* in main() */
+my_signal (SIGCHLD, no_zombie);
+...</pre>
+<p>Bei der Signalbehandlung geht es prim&auml;r darum, Zombieprozesse auf dem Server zu beenden. Denn anders als auf einem Einzelplatzrechner, auf dem einem wohl die Prozesse nicht so schnell ausgehen, kann eine stetig anwachsende Zombiefraktion auf einem Server daf&uuml;r sorgen, dass kein Platz mehr f&uuml;r neue Prozesseintr&auml;ge vorhanden ist. Wie Sie das vermeiden, haben Sie ja bereits mit <span class="listing">waitpid()</span> gesehen. Dabei wird <span class="listing">waitpid()</span> in einer Schleife aufgerufen, womit der Status von jedem beendeten Kindprozess geholt wird. Mit der Option <span class="listing">WNOHANG<a id="Xxx999267" name="Xxx999267"></a></span> geben Sie an, dass <span class="listing">waitpid()</span> nicht blockiert, solange es noch unbeendete Kindprozesse gibt. Bitte beachten Sie auch, dass das Einrichten des Signalhandlers nur einmal erfolgt, denn wie Sie im Kapitel &uuml;ber Prozesse erfahren haben, erbt ja der Kindprozess auch alle eingerichteten Signalhandler. Dies sorgt h&auml;ufig f&uuml;r Missverst&auml;ndnisse. Gew&ouml;hnlich wird der Signalhandler nach dem Aufruf von <span class="listing">listen()</span> und vor <span class="listing">accept()</span> eingebaut.</p>
+<p>Der Vorgang zum Einrichten eines typischen parallelen Servers sieht gew&ouml;hnlich so aus:</p>
+<pre>   while(1) {
+      connfd = accept ( sockfd,
+                        (struct sockaddr *) &amp;adresse,
+                        &amp;adrlaenge );
+      if( connfd &lt; 0 ) {   
+         if( errno == EINTR )
+            continue;
+         else {
+            printf("Fehler bei accept() ...\n");
+            exit(EXIT_FAILURE);
+         }
+      }
+      printf (" ...Daten empfangen\n");
+      /* Neuen Kindprozess-Server starten */
+      if ((pid = fork ()) == 0) {
+         close (sockfd);
+         /* Arbeit des Kindprozesses steht hier */
+         close(connfd);
+         exit(EXIT_SUCCESS);
+         /* Ende Kindprozess */
+      }
+    /* Elternprozess */   
+    close (connfd);
+  }</pre>
+<p>Sobald ein Client mit <span class="listing">connect()</span> eine Verbindung zum Server herstellt, kehrt die Funktion <span class="listing">accept()</span> zur&uuml;ck.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/11_6.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein11_6.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 11.6   
+    </b>Der Client baut mit connect() eine Verbindung auf.</p>
+</td>
+</tr>
+</table><br>
+<p>In Abbildung 9.6 k&ouml;nnen Sie den Zustand sehen, wenn der Client mit <span class="listing">connect()</span> ein Verbindung zum Server anfordert. Direkt nach dieser Anforderung kehrt die Funktion <span class="listing">accept()</span> zur&uuml;ck – wie folgende Abbildung demonstriert:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/11_7.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein11_7.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 11.7   
+    </b>Server best&auml;tigt die Verbindung.</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt kann der Server mit <span class="listing">fork()</span> einen neuen Kindprozess aufrufen, um dem Client zu dienen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/11_8.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein11_8.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 11.8   
+    </b>Ein neuer Serverprozess wird erzeugt.</p>
+</td>
+</tr>
+</table><br>
+<p>Im n&auml;chsten Schritt kann der (Server-)Kindprozess das horchende Socket schlie&szlig;en und der Elternprozess das verbundene Socket – das ja wie das horchende Socket bei <span class="listing">fork()</span> mit dupliziert wurde (siehe Abbildung 11.9).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/11_9.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein11_9.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 11.9   
+    </b>Nicht mehr ben&ouml;tigte Sockets schlie&szlig;en</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt haben Sie den gew&uuml;nschten Status, dass der Kindprozess die Anforderungen des Client abarbeiten kann, und der Elternprozess kann sich wieder dem horchenden Socket mittels <span class="listing">accept()</span> widmen, um neue Anforderungen entgegenzunehmen. Wenn der Kindprozess mit der Abarbeitung des Clients fertig ist, schlie&szlig;t auch dieser das Socket mit <span class="listing">close()</span> und beendet sich selbst (<span class="listing">exit()</span>). Durch die Beendigung des Kindprozesses mittels <span class="listing">exit()</span> wird der Signalhandler aktiviert, da dabei das Signal <span class="listing">SIGCHLD</span> gesendet wird.</p>
+<p>Das war im Grunde auch schon alles, mehr ist nicht n&ouml;tig, um einen parallelen Server zu erstellen. Etwas Wichtiges sollte aber noch erw&auml;hnt werden. Nach <span class="listing">accept()</span> &uuml;berpr&uuml;fen wir ja auf die Fehlervariable <span class="listing">EINTR</span>. Dies wurde deshalb gemacht, weil <span class="listing">accept()</span> ein so genannter langsamer Systemaufruf ist. Dies bedeutet, <span class="listing">accept()</span> kann f&uuml;r immer blockieren und muss nicht (unmittelbar) zur&uuml;ckkehren. </p>
+<p>Es gibt somit auch keine Garantie, dass <span class="listing">accept()</span> zur&uuml;ckkehrt, wenn kein Client eine Verbindung mit dem Server aufbaut. Damit kann der Zustand auftreten, dass ein Prozess von einem langsamen Systemaufruf blockiert wird und dieser Prozess ein Signal abf&auml;ngt und der Signalhandler mit seiner Ausf&uuml;hrung fertig ist und somit <span class="listing">accept()</span> den Fehler <span class="listing">EINTR</span> zur&uuml;ckgibt – obwohl eigentlich kein akuter Fehler vorliegt. Es ist zwar durchaus m&ouml;glich, dass manche Systeme solche unterbrochenen Systemaufrufe selbstst&auml;ndig neu starten, aber verlassen k&ouml;nnen Sie sich nicht darauf, wenn Ihre Anwendung auf mehreren Systemen laufen soll. Daher wird ja auch <span class="listing">SA_RESTART</span> in den Flags benutzt.</p>
+<p>Sie haben jetzt gesehen, wie einfach es unter Linux/UNIX ist, aus einem laufenden iterativen Server einen parallelen Server zu machen. Ein einfaches <span class="listing">fork()</span> gen&uuml;gt, und der neue Prozess &uuml;bernimmt alle Variablen und offenen Socket-Deskriptoren. Ein Manko hat diese Vorgehensweise allerdings bei der Skalierbarkeit. Ein &uuml;bliches Betriebssystem ist in der Regel f&uuml;r bis zu hundert laufende Prozesse optimiert. Nun kann es aber vorkommen, bei stark frequentierten Servern, wo ein paar tausend Clients gleichzeitig eine Anfrage starten, dass eine Menge an bedeutendem Systemspeicher ben&ouml;tigt wird. Zwangsl&auml;ufig wird der Server dann zum Swappen von Speicher gezwungen, was die Performance erheblich einbremsen kann. Unter Solaris z. B. dauert au&szlig;erdem eine neue Prozesserzeugung mittels <span class="listing">fork()</span> erheblich lange. Und ein weiterer Nachteil an unserem Modell ist bisher, wenn ein Client eine Verbindung zum Server aufgebaut hat und sich f&uuml;r l&auml;ngere Zeit nicht mehr »meldet«, sollte der Server dem Client ein Timeout senden.</p>
+<p>Des Weiteren kommt hinzu, dass der Kontextwechsel zwischen den einzelnen Prozessen (Wechsel vom einem zum anderem Prozess) ebenfalls ein ziemlich langsamer Vorgang ist – wobei es allerdings auch einen Support speziell f&uuml;r die Hardware gibt. Selbst der Speicherbedarf eines leeren Prozesses ist im Linux-System ziemlich gro&szlig; (nicht wirklich, libc.so.6 ist doch ein Shared Object und wird daher nur einmal im System geladen sein) – was allerdings die Schuld der Glibc und nicht von Linux ist. Es kann sich daher lohnen, eine eigene Bibliothek dazu zu entwickeln (was h&auml;ufig auch gemacht wird).</p>
+<p>Mein Ziel ist es &uuml;brigens nicht, hier etwas schlecht zu reden, sondern Sie zum Denken anzuregen, wenn Sie eine Netzwerkanwendung schreiben. F&uuml;r einfache und gew&ouml;hnliche Server, wie diese z. B. im Intranet verwendet werden, werden Sie wahrscheinlich niemals an die Grenzen des Systems sto&szlig;en (vorausgesetzt, der Server ist »nicht« entsprechend best&uuml;ckt). Daher werden Sie jetzt auf den folgenden Seiten noch einige flottere Techniken kennen lernen.</p>
+<p>Aber ein Beispiel, das gerne in der Praxis eingesetzt wird, soll hier nicht unerw&auml;hnt bleiben. Denn h&auml;ufig lohnt es sich, schon mehrere Serverprozesse im Voraus zu erzeugen und in dem Moment, wo eine Connection stattfindet, im Background einen neuen Server zu starten, der wiederum die n&auml;chste Anfrage bearbeiten kann. Diese Technik wird &uuml;brigens auch beim Webserver Apache eingesetzt (genannt Apache-MPM prefork). Sie ist f&uuml;r Angebote geeignet, die aus Kompatibilit&auml;tsgr&uuml;nden mit nicht thread-sicheren Bibliotheken Threading vermeiden m&uuml;ssen. Sie ist au&szlig;erdem das geeignetste MPM (Multi-Processing-Modul), um jede Anfrage isoliert zu bearbeiten, so dass Probleme mit einem einzelnen Prozess keinen anderen beeinflussen.</p>
+<h4 class="t4">Datenformat</h4>
+<p><a id="Xxx999311" name="Xxx999311"></a>H&auml;ufig m&uuml;ssen Sie sich auch bei der &Uuml;bertragung von Daten um das vorliegende Format von Daten k&uuml;mmern. Wollen Sie z. B. Ganzzahlen oder Gleitkommazahlen an den Server verschicken oder der Server an den Client, dann sind die Funktionen <span class="listing">sscanf()</span> und <span class="listing">sprintf()</span> bzw. <span class="listing">snprintf()</span> bestens daf&uuml;r geeignet. Ebenso sieht es mit der &Uuml;bergabe von bin&auml;ren Strukturen aus. Auch hierbei wird gerne auf die Konvertierung in einen String zum Versenden der Daten zur&uuml;ckgegriffen. Sicherlich werden Sie sich fragen, warum Sie dabei so vergehen sollten? Wenn Sie nicht sicher sein k&ouml;nnen, auf was f&uuml;r einen Rechner die Daten &uuml;bertragen werden, kann es zu Problemen kommen, wenn ein Client Daten im Little Endian-Format schickt, der Server aber auf einem Big Endian-System l&auml;uft. Wenn es sich dabei z. B. um Integer handelt, sind Probleme vorprogrammiert. Dasselbe Problem k&ouml;nnte auftreten, wenn Sie einen Wert vom Datentyp <span class="listing">int</span> versenden, der auf Ihrem System 64 Bit besitzt, aber auf dem Zielrechner nur 32 Bit. Sie wissen also nie genau, welche Gr&ouml;&szlig;e die Datentypen <span class="listing">int</span>, <span class="listing">long</span> und <span class="listing">short</span> auf der Gegenseite haben. Zwar gibt es (seit der Einf&uuml;hrung des C99-Standards) die unabh&auml;ngigen Typen wie z. B. <span class="listing">int8_t</span>, <span class="listing">int16_t</span> etc. und <span class="listing">uint8_t</span> etc. in der Headerdatei <span class="listing">stdint.h</span>, was aber recht wenig n&uuml;tzt, weil dieser Standard von einigen Compiler-Herstellern (insbes. auf Windows-Systemen) &uuml;berhaupt nicht beachtet wird (mehr zum C99-Standard siehe Anhang).</p>
+<p>Daher die Empfehlung: Um Probleme zu vermeiden, senden Sie nummerische Daten immer im Textformat an die Gegenseite. Nat&uuml;rlich setzt dies voraus, dass die Gegenseite denselben Zeichensatz verwendet. Wenn Sie einen String an einen Rechner schicken, worauf sich nur japanische Schriftarten befinden, kommt nichts dabei raus. Der Nachteil: Es wird Bandbreite verschwendet. Eine 64-Bit-Nummer z. B. kann n&auml;mlich &uuml;ber 20 Zeichen lang sein, w&auml;hrend im Bin&auml;rformat gerade mal acht Zeichen daf&uuml;r ben&ouml;tigt werden.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap11-011.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap11-013.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap11-012.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:45:04 GMT -->
+</html>

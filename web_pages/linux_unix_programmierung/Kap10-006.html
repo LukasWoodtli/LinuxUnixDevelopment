@@ -1,0 +1,1310 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap10-006.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:44 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 10.7 Threads synchronisieren</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap10-005.html">
+<link rel="next" href="Kap10-007.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap10-005.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap10-007.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap10-000.html#RxxKap10000040002FE1F043100">10 Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-000.html#RxxKap10000040002FE1F043106">10.1 Unterschiede zwischen Threads und Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-001.html#RxxKap100010400031B1F04C100">10.2 Thread-Bibliotheken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-002.html#RxxKap100020400031C1F04E100">10.3 Kernel- und User-Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-003.html#RxxKap100030400031D1F024100">10.4 Scheduling und Zust&auml;nde von Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-004.html#RxxKap100040400031E1F04A100">10.5 Die grundlegenden Funktionen zur Thread–Programmierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A103">10.5.1 pthread_create – einen neuen Thread erzeugen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A108">10.5.2 pthread_exit – einen Thread beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A114">10.5.3 pthread_join – auf das Ende eines Threads warten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A175">10.5.4 pthread_self – die ID von Threads ermitteln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A186">10.5.5 pthread_equal – die ID von zwei Threads vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A18D">10.5.6 pthread_detach – einen Thread unabh&auml;ngig machen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-005.html#RxxKap100050400031F1F030100">10.6 Die Attribute von Threads und das Scheduling</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap10006040003201F028100">10.7 Threads synchronisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap10006040003201F028109">10.7.1 Mutexe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap10006040003201F02818E">10.7.2 Condition-Variablen (Bedingungsvariablen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap10006040003201F0281B2">10.7.3 Semaphore</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap10006040003201F0281BD">10.7.4 Weitere Synchronisationstechniken im &Uuml;berblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-007.html#RxxKap10007040003211F03E100">10.8 Threads abbrechen (canceln)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-008.html#RxxKap10008040003221F025100">10.9 Erzeugen von Thread-spezifischen Daten (TSD-Data)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-009.html#RxxKap10009040003231F04A100">10.10 pthread_once – Codeabschnitt einmal ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-010.html#RxxKap10010040003241F048100">10.11 Thread-safe (thread-sichere Funktionen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-011.html#RxxKap10011040003251F036100">10.12 Threads und Signale</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-012.html#RxxKap10012040003261F020100">10.13 Zusammenfassung und Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">10.7 <a id="RxxKap10111Threadssynchronisieren" name="RxxKap10111Threadssynchronisieren"></a>Threads synchronisiere<a id="RxxKap10006040003201F028100" name="RxxKap10006040003201F028100"></a>n 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999235" name="Xxx999235"></a>In vielen F&auml;llen, eigentlich bei Threads fast immer, werden ja mehrere parallel laufende Prozesse ben&ouml;tigt, die gemeinsame Daten verwenden und/oder austauschen. Einfachstes Beispiel, ein Thread schreibt gerade etwas in eine Datei, w&auml;hrend ein anderer Thread daraus etwas liest. Selbes Problem haben Sie auch beim Zugriff auf globale Variablen. Wenn mehrere Threads darauf zugreifen m&uuml;ssen und Sie hierbei keine Vorkehrungen getroffen haben, ist nicht vorherzusagen, welcher Thread die Variable gerade bearbeitet. Sind hierbei z. B. mathematische Arbeiten auf mehreren Threads aufgeteilt, kann man mit fast 100 %iger Sicherheit sagen, dass das Ergebnis nicht richtig sein wird.</p>
+<p>Hierf&uuml;r sei folgendes einfaches Beispiel gegeben. Zwei Threads greifen auf eine globale Variable zu – hier auf einen ge&ouml;ffneten <span class="listing">FILE</span>-Zeiger. Ein Thread wird erzeugt, um etwas in diese Datei zu schreiben, und ein weiterer Thread soll diese wieder auslesen. Ein simples Beispiel, wie es scheint, nur dass es hierbei schon zu Synchronisationsproblemen (Race Conditions) kommt. Aber testen Sie selbst.</p>
+<pre>/* thread5.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;pthread. h.&gt;
+#define MAX_THREADS 2
+#define BUF 255
+#define COUNTER 10000000
+/* Globale Variable */
+static FILE *fz;
+static void open_file(const char *file) {
+   fz = fopen( file, "w+" );
+   if( fz == NULL ) {
+      printf("Konnte Datei %s nicht &ouml;ffnen\n", file);
+      exit(EXIT_FAILURE);
+   }
+}
+static void thread_schreiben(void *name) {
+   char string[BUF];
+   printf("Bitte Eingabe machen: ");
+   fgets(string, BUF, stdin);
+   fputs(string, fz);
+   fflush(fz);
+   /* Thread-Ende */
+   pthread_exit((void *)pthread_self());
+}
+static void thread_lesen(void *name) {
+   char string[BUF];
+   rewind(fz);
+   fgets(string, BUF, fz);
+   printf("Ausgabe Thread %ld: ", pthread_self());
+   fputs(string, stdout);
+   fflush(stdout);
+   /* Thread-Ende */
+   pthread_exit((void *)pthread_self());
+}
+int main (void) {
+   static pthread_t th1, th2;
+   static int ret1, ret2;
+   printf("-&gt;Haupt-Thread (ID:%ld) gestartet ...\n",
+      pthread_self());
+   open_file("testfile");
+   /* Threads erzeugen */
+   if (pthread_create( &amp;th1, NULL,
+                       &amp;thread_schreiben, NULL)!=0) {
+      fprintf (stderr, "Konnte keinen Thread erzeugen\n");
+      exit (EXIT_FAILURE);
+   }
+   /* Threads erzeugen */
+   if (pthread_create(&amp;th2,NULL,&amp;thread_lesen,NULL) != 0) {
+      fprintf (stderr, "Konnte keinen Thread erzeugen\n");
+      exit (EXIT_FAILURE);
+   }
+   pthread_join(th1, &amp;ret1);
+   pthread_join(th2, &amp;ret2);
+   printf("&lt;-Thread %ld fertig\n", th1);
+   printf("&lt;-Thread %ld fertig\n", th1);
+   printf("&lt;-Haupt-Thread (ID:%ld) fertig ...\n",
+      pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread5 thread5.c -lpthread
+$ ./thread5
+-&gt;Haupt-Thread (ID:-1209412512) gestartet...
+Bitte Eingabe machen: Ausgabe Thread -1217807440: Hallo, das ist ein Test
+&lt;-Thread -1209414736 fertig
+&lt;-Thread -1209414736 fertig
+&lt;-Haupt-Thread (ID:-1209412512) fertig ...
+$ cat testfile
+Hallo, das ist ein Test</pre>
+<p>Bei der Eingabe k&ouml;nnen Sie schon erkennen, dass der Thread »thread_lesen« schon mit seiner Ausgabe begonnen hat und sich schon wieder beendet hat, bevor Sie etwas von der Tastatur eingeben konnten. Richtig ausgef&uuml;hrt sollte hier folgende Ausgabe bei der Programmausf&uuml;hrung entstehen:</p>
+<pre>$ ./thread5
+-&gt;Haupt-Thread (ID:-1209412512) gestartet ...
+Bitte Eingabe machen: Hallo Welt
+Ausgabe Thread -1217807440: Hallo Welt
+&lt;-Thread -1209414736 fertig
+&lt;-Thread -1209414736 fertig
+&lt;-Haupt-Thread (ID:-1209412512) fertig ...</pre>
+<p>Zugegeben, als echter C-Guru w&uuml;rde Ihnen jetzt hier schon etwas einfallen, z. B. eine »pollende« Schleife mit einem <span class="listing">sleep()</span> um den Lese-Thread herumzubauen, die immer wieder abfragt, ob <span class="listing">fgets()</span> etwas eingelesen hat. Na ja, das w&auml;re wohl nicht im Sinne des Erfinders, und wenn Sie wirklich die Threads f&uuml;r Echtzeitanwendungen verwenden wollen, ist das wohl auch das Ende Ihrer Programmiererkarriere, wenn die Weichenschaltung einer U-Bahn »in einer pollenden Schleife« warten muss, bevor diese gestellt werden kann! Und au&szlig;erdem gibt es f&uuml;r solche F&auml;lle einige Synchronisationsm&ouml;glichkeiten, die Ihnen die Thread-Bibliothek anbietet.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">10.7.1 Mutexe<a id="RxxKap10006040003201F028109" name="RxxKap10006040003201F028109"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999245" name="Xxx999245"></a><a id="Xxx999246" name="Xxx999246"></a>Wenn Sie mehrere Threads starten und diese quasi parallel ablaufen, k&ouml;nnen Sie nicht erkennen, wie weit welcher Thread gerade mit der Verarbeitung von Daten ist. Wenn mehrere Threads beispielsweise an ein und derselben Aufgabe abh&auml;ngig voneinander arbeiten, wird eine Synchronisation erforderlich. Genauso ist dies erforderlich, wenn Threads globale Variablen oder die Hardware wie z. B. die Tastatur (<span class="listing">stdin</span>) verwenden, da sonst ein Thread diese Variable einfach &uuml;berschreiben w&uuml;rde, bevor sie noch verwendet wird.</p>
+<p>Um Threads zu synchronisieren, haben Sie zwei M&ouml;glichkeiten, zum einen mit so genannten Locks, die Sie in diesem Kapitel mit den Mutexen durchgehen werden, und zum anderen mit einem Monitor. Mit dem Monitor werden so genannte Condition-Variablen verwendet.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Der Begriff »Mutex« steht f&uuml;r »Mutual Exclusion Device« (= gegenseitiger Ausschluss). Ein Mutex ist somit ohne Besitzer oder geh&ouml;rt genau einem Thread.</p>
+</td>
+</tr>
+</table><br>
+<p>Die Funktionsweise von Mutexen &auml;hnelt den Semaphoren bei den Prozessen. Genauer noch: Ein Mutex ist nichts weiter als ein Semaphor, was wiederum nur eine atomare Operation auf eine Variable ist. Trotzdem lassen sich diese aber wesentlich einfacher erstellen. Das Prinzip ist simpel. Ein Thread arbeitet mit einer globalen oder statischen Variablen, die f&uuml;r alle anderen Threads von einem Mutex blockiert (gesperrt) wird. Ben&ouml;tigt der Thread diese Variable nicht mehr, gibt er diese frei.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/10_2.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein10_2.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 10.2   
+    </b>Nur ein Thread kann einen Mutex sperren.</p>
+</td>
+</tr>
+</table><br>
+<p>Anhand dieser Erkl&auml;rung d&uuml;rfte auch klar sein, dass man selbst daf&uuml;r verantwortlich ist, keinen Deadlock zu erzeugen. In folgenden F&auml;llen k&ouml;nnten auch bei Threads Deadlocks auftreten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Threads k&ouml;nnen Ressourcen anfordern, obwohl sie bereits Ressourcen besitzen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Ein Thread gibt seine Ressource nicht mehr frei.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Eine Resource ist frei oder im Besitz eines »exklusiven« Threads.</td>
+</tr>
+</table>
+<p>Im Falle eines Deadlocks kann keiner der beteiligten Threads seine Arbeit mehr fortsetzen, und somit ist meist keine normale Beendigung mehr m&ouml;glich. Datenverlust kann die Folge sein.</p>
+<h4 class="t4">Statische Mutexe</h4>
+<p><a id="Xxx999267" name="Xxx999267"></a>Um eine Mutex-Variable als statisch zu definieren, m&uuml;ssen Sie diese mit der Konstante <span class="listing">PTHREAD_MUTEX_INITIALIZER<a id="Xxx999269" name="Xxx999269"></a></span> initialisieren. Folgende Funktionen stehen Ihnen zur Verf&uuml;gung, um Mutexe zu sperren und wieder freizugeben:</p>
+<pre>#include &lt;pthread. h.&gt;
+int pthread_mutex_lock<a id="Xxx999271" name="Xxx999271"></a>(pthread_mutex_t *mutex);
+int pthread_mutex_trylock<a id="Xxx999272" name="Xxx999272"></a>(pthread_mutex_t *mutex);
+int pthread_mutex_unlock<a id="Xxx999273" name="Xxx999273"></a>(pthread_mutex_t *mutex);</pre>
+<p>Mit <span class="listing">pthread_mutex_lock()</span> sperren Sie einen Mutex. Wenn hierbei z. B. ein Thread versucht, mit demselben Mutex ebenfalls eine Sperre einzurichten, so wird dieser so lange blockiert, bis der Mutex von einem anderen Thread wieder mittels <span class="listing">pthread_mutex_unlock()</span> freigegeben wird.</p>
+<p>Die Funktion <span class="listing">pthread_mutex_trylock()</span> ist &auml;hnlich wie <span class="listing">pthread_mutex_lock()</span>, nur dass diese Funktion den aufrufenden Thread nicht blockiert, wenn ein Mutex durch einen anderen Thread blockiert wird. <span class="listing">pthread_mutex_trylock()</span> kehrt stattdessen mit dem Fehlercode (<span class="listing">errno</span>) <span class="listing">EBUSY</span> zur&uuml;ck und macht mit der Ausf&uuml;hrung des aufrufenden Threads weiter.</p>
+<p>Das folgende Beispiel ist dasselbe, wie Sie es schon vom Listing »thread5.c« her kennen, nur dass jetzt das Synchronisationsproblem mithilfe eines Mutex behoben wird. Zuerst wird global der Mutex mit der Konstante <span class="listing">PTHREAD_MUTEX_INITIALIZER</span> statisch initialisiert, und anschlie&szlig;end werden im Beispiel die Sperren dort gesetzt und wieder freigegeben, wo dies sinnvoll ist.</p>
+<pre>/* thread6.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;pthread. h.&gt;
+#define MAX_THREADS 2
+#define BUF 255
+#define COUNTER 10000000
+static FILE *fz;
+/* Statische Mutex-Variable */
+pthread_mutex_t fz_mutex=PTHREAD_MUTEX_INITIALIZER;
+static void open_file(const char *file) {
+   fz = fopen( file, "w+" );
+   if( fz == NULL ) {
+      printf("Konnte Datei %s nicht &ouml;ffnen\n", file);
+      exit(EXIT_FAILURE);
+   }
+}
+static void thread_schreiben(void *name) {
+   char string[BUF];
+   printf("Bitte Eingabe machen: ");
+   fgets(string, BUF, stdin);
+   fputs(string, fz);
+   fflush(fz);
+   /* Mutex wieder freigeben */
+   pthread_mutex_unlock( &amp;fz_mutex );
+   /* Thread-Ende */
+   pthread_exit((void *)pthread_self());
+}
+static void thread_lesen(void *name) {
+   char string[BUF];
+   /* Mutex sperren */
+   pthread_mutex_lock( &amp;fz_mutex );
+   rewind(fz);
+   fgets(string, BUF, fz);
+   printf("Ausgabe Thread %ld: ", pthread_self());
+   fputs(string, stdout);
+   fflush(stdout);
+   /* Mutex wieder freigeben */
+   pthread_mutex_unlock( &amp;fz_mutex );
+   /* Thread-Ende */
+   pthread_exit((void *)pthread_self());
+}
+int main (void) {
+   static pthread_t th1, th2;
+   static int ret1, ret2;
+   printf("-&gt;Haupt-Thread (ID:%ld) gestartet ...\n",
+      pthread_self());
+   open_file("testfile");
+   /* Mutex sperren */
+   pthread_mutex_lock( &amp;fz_mutex );   
+   /* Threads erzeugen */
+   if( pthread_create( &amp;th1, NULL, &amp;thread_schreiben,
+                       NULL)!=0) {
+      fprintf (stderr, "Konnte keinen Thread erzeugen\n");
+      exit (EXIT_FAILURE);
+   }
+   /* Threads erzeugen */
+   if(pthread_create(&amp;th2,NULL, &amp;thread_lesen, NULL) != 0) {
+      fprintf (stderr, "Konnte keinen Thread erzeugen\n");
+      exit (EXIT_FAILURE);
+   }
+   pthread_join(th1, &amp;ret1);
+   pthread_join(th2, &amp;ret2);
+   printf("&lt;-Thread %ld fertig\n", th1);
+   printf("&lt;-Thread %ld fertig\n", th1);
+   printf("&lt;-Haupt-Thread (ID:%ld) fertig ...\n",
+      pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread6 thread6.c -lpthread
+$ ./thread6
+-&gt;Haupt-Thread (ID:-1209412512) gestartet ...
+Bitte Eingabe machen: Hallo Welt mit Mutexe
+Ausgabe Thread -1217807440: Hallo Welt mit Mutexe
+&lt;-Thread -1209414736 fertig
+&lt;-Thread -1209414736 fertig
+&lt;-Haupt-Thread (ID:-1209412512) fertig ...</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie den Lese-Thread mit <span class="listing">pthread_mutex_trylock()</span> als eine nicht blockierende Mutex-Anforderung ausf&uuml;hren. Hierzu m&uuml;ssten Sie nur die Funktion »thread_lesen« ein wenig um&auml;ndern. Hier ein solcher m&ouml;glicher Ansatz:</p>
+<pre>static void thread_lesen(void *name) {
+   char string[BUF];
+   /* Versuche Mutex zu sperren */
+   while( (pthread_mutex_trylock( &amp;fz_mutex )) == EBUSY) {
+      sleep(10);
+      printf("Lese-Thread wartet auf Arbeit ...\n");
+      printf("Bitte Eingabe machen: ");
+      fflush(stdout);
+   }
+   rewind(fz);
+   fgets(string, BUF, fz);
+   printf("Ausgabe Thread %ld: ", pthread_self());
+   fputs(string, stdout);
+   fflush(stdout);
+   /* Mutex wieder freigeben */
+   pthread_mutex_unlock( &amp;fz_mutex );
+   /* Thread-Ende */
+   pthread_exit((void *)pthread_self());
+}</pre>
+<p>Hierbei wird versucht, alle zehn Sekunden den Mutex zu sperren. Solange <span class="listing">EBUSY</span> zur&uuml;ckgegeben wird, ist der Mutex noch von einem anderen Thread gesperrt. W&auml;hrend dieser Zeit k&ouml;nnte der wartende Thread ja andere Arbeiten ausf&uuml;hren (es gibt immer was zu tun). Das Programm bei der Ausf&uuml;hrung mit <span class="listing">pthread_mutex_trylock()</span>:</p>
+<pre>$ gcc -o thread7 thread7.c -lpthread
+$ ./thread7
+-&gt;Haupt-Thread (ID:-1209412512) gestartet ...
+Bitte Eingabe machen: Lese-Thread wartet auf Arbeit ...
+Bitte Eingabe machen: Lese-Thread wartet auf Arbeit ...
+Bitte Eingabe machen: Hallo Mutex, Du bist frei
+Ausgabe Thread -1217807440: Hallo Mutex, Du bist frei
+&lt;-Thread -1209414736 fertig
+&lt;-Thread -1209414736 fertig
+&lt;-Haupt-Thread (ID:-1209412512) fertig ...</pre>
+<h4 class="t4">Dynamische Mutexe</h4>
+<p><a id="Xxx999285" name="Xxx999285"></a>Wenn Sie Mutexe in einer Struktur verwenden wollen, was durchaus eine g&auml;ngige Praxis ist, k&ouml;nnen Sie dynamische Mutexe verwenden. Dies sind dann Mutexe, f&uuml;r die zur Laufzeit mit z. B. <span class="listing">malloc()</span> Speicher angefordert wird. F&uuml;r dynamische Mutexe stehen folgende Funktionen zur Verf&uuml;gung:</p>
+<pre>#include &lt;pthread. h.&gt;
+int  pthread_mutex_init<a id="Xxx999288" name="Xxx999288"></a>( 
+   pthread_mutex_t  *mutex,
+   const  pthread_mutex_attr_t *mutexattr );
+int pthread_mutex_destroy<a id="Xxx999289" name="Xxx999289"></a>(pthread_mutex_t *mutex);</pre>
+<p>Mit <span class="listing">pthread_mutex_init()</span> initialisieren Sie das Mutex <span class="listing">mutex</span>. Mit dem Parameter <span class="listing">mutexattr</span> k&ouml;nnen Sie Attribute f&uuml;r das Mutex verwenden. Wird hierbei <span class="listing">NULL</span> angegeben, werden die Standardattribute verwendet. Auf die Attribute von Mutexen wird in K&uuml;rze eingegangen. Freigeben k&ouml;nnen Sie einen solchen dynamisch angelegten Mutex wieder mit <span class="listing">pthread_mutex_destroy()</span>. Hierzu nochmals dasselbe Beispiel wie eben mit »thread6.c«, nur mit dynamisch angelegtem Mutex.</p>
+<pre>/* thread8.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;errno.h&gt;
+#include &lt;pthread. h.&gt;
+#define BUF 255
+struct data {
+   FILE *fz;
+   char filename[BUF];
+   pthread_mutex_t mutex;
+};
+static void thread_schreiben(void *arg) {
+   char string[BUF];
+   struct data *d=(struct data *)arg;
+   printf("Bitte Eingabe machen: ");
+   fgets(string, BUF, stdin);
+   fputs(string, d-&gt;fz);
+   fflush(d-&gt;fz);
+   /* Mutex wieder freigeben */
+   pthread_mutex_unlock( &amp;d-&gt;mutex );
+   /* Thread-Ende */
+   pthread_exit((void *)pthread_self());
+}
+static void thread_lesen(void *arg) {
+   char string[BUF];
+   struct data *d=(struct data *)arg;
+   /* Mutex sperren */
+   while( (pthread_mutex_trylock( &amp;d-&gt;mutex )) == EBUSY) {
+      sleep(10);
+      printf("Lese-Thread wartet auf Arbeit ...\n");
+      printf("Bitte Eingabe machen: ");
+      fflush(stdout);
+   }
+   rewind(d-&gt;fz);
+   fgets(string, BUF, d-&gt;fz);
+   printf("Ausgabe Thread %ld: ", pthread_self());
+   fputs(string, stdout);
+   fflush(stdout);
+   /* Mutex wieder freigeben */
+   pthread_mutex_unlock( &amp;d-&gt;mutex );
+   /* Thread-Ende */
+   pthread_exit((void *)pthread_self());
+}
+int main (void) {
+   static pthread_t th1, th2;
+   static int ret1, ret2;
+   struct data *d;
+   /* Speicher f&uuml;r die Struktur reservieren */
+   d = malloc(sizeof(struct data));
+   if(d == NULL) {
+      printf("Konnte keinen Speicher reservieren ...!\n");
+      exit(EXIT_FAILURE);
+   }
+   printf("-&gt;Haupt-Thread (ID:%ld) gestartet ...\n", 
+      pthread_self());
+   strncpy(d-&gt;filename, "testfile", BUF);
+   d-&gt;fz = fopen( d-&gt;filename, "w+" );
+   if( d-&gt;fz == NULL ) {
+      printf("Konnte Datei %s nicht &ouml;ffnen\n", d-&gt;filename);
+      exit(EXIT_FAILURE);
+   }
+   /* Mutex initialisieren */
+   pthread_mutex_init( &amp;d-&gt;mutex, NULL );
+   /* Mutex sperren */
+   pthread_mutex_lock( &amp;d-&gt;mutex );      
+   /* Threads erzeugen */
+   if(pthread_create (&amp;th1,NULL,&amp;thread_schreiben,d) != 0) {
+      fprintf (stderr, "Konnte keinen Thread erzeugen\n");
+      exit (EXIT_FAILURE);
+   }
+   /* Threads erzeugen */
+   if (pthread_create (&amp;th2,NULL, &amp;thread_lesen, d) != 0) {
+      fprintf (stderr, "Konnte keinen Thread erzeugen\n");
+      exit (EXIT_FAILURE);
+   }
+   pthread_join(th1, &amp;ret1);
+   pthread_join(th2, &amp;ret2);
+   /* Dynamisch angelegten Mutex l&ouml;schen */
+   pthread_mutex_destroy( &amp;d-&gt;mutex );
+   printf("&lt;-Thread %ld fertig\n", th1);
+   printf("&lt;-Thread %ld fertig\n", th1);
+   printf("&lt;-Haupt-Thread (ID:%ld) fertig ...\n",
+      pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung kann ich mir hier ersparen, da es exakt dem Beispiel »thread6.c« entspricht, nur dass hierbei eben ein dynamischer Mutex statt eines statischen verwendet wurde.</p>
+<h4 class="t4">Mutex-Attribute</h4>
+<p><a id="Xxx999294" name="Xxx999294"></a>Mit den folgenden Funktionen k&ouml;nnen Sie Mutex-Attribute ver&auml;ndern oder abfragen:</p>
+<pre>#include &lt;pthread. h.&gt;
+int pthread_mutexattr_init<a id="Xxx999297" name="Xxx999297"></a>( pthread_mutexattr_t *attr );
+int pthread_mutexattr_destroy<a id="Xxx999298" name="Xxx999298"></a>( pthread_mutexattr_t *attr );
+int pthread_mutexattr_settype<a id="Xxx999299" name="Xxx999299"></a>( pthread_mutexattr_t *attr,
+                               int kind );
+int pthread_mutexattr_gettype<a id="Xxx999300" name="Xxx999300"></a>(
+   const  pthread_mutexattr_t  *attr,   int *kind );</pre>
+<p>Mit dem Mutex-Attribut legen Sie fest, was passiert, wenn ein Thread versuchen sollte, einen Mutex nochmals zu sperren, obwohl dieser bereits mit <span class="listing">pthread_mutex_lock()</span> gesperrt wurde. Mit der Funktion <span class="listing">pthread_mutexattr_init()</span> initialisieren Sie zun&auml;chst das Mutex-Attributobjekt <span class="listing">attr</span>. Zun&auml;chst wird hierbei die Standardeinstellung (<span class="listing">PTHREAD_MUTEX_FAST_NP</span>) verwendet. &Auml;ndern k&ouml;nnen Sie dieses Attribut mit <span class="listing">pthread_mutexattr_settype()</span>. Damit setzen Sie die Attribute des Mutex-Attributobjekts auf <span class="listing">kind</span>. Folgende Konstanten k&ouml;nnen Sie hierbei f&uuml;r <span class="listing">kind</span> verwenden:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PTHREAD_MUTEX_FAST_NP<a id="Xxx999302" name="Xxx999302"></a></span> (Standardeinstellung) – <span class="listing">pthread_mutex_lock()</span> blockiert den aufrufenden Thread f&uuml;r immer. Also ein Deadlock.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PTHREAD_MUTEX_RECURSIVE_NP<a id="Xxx999304" name="Xxx999304"></a></span> – <span class="listing">pthread_mutex_lock()</span> blockiert nicht und kehrt sofort erfolgreich zur&uuml;ck. Wird ein Thread mit diesem Mutex gesperrt, so wird ein Z&auml;hler f&uuml;r jede Sperrung um den Wert 1 erh&ouml;ht. Damit die Sperrung eines rekursiven Mutex aufgehoben wird, muss dieser ebenso oft freigegeben werden, wie er gesperrt wurde.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PTHREAD_MUTEX_ERRORCHECK_NP<a id="Xxx999306" name="Xxx999306"></a></span> – <span class="listing">pthread_mutex_lock()</span> kehrt sofort wieder mit dem Fehlercode <span class="listing">EDEADLK</span> zur&uuml;ck, also &auml;hnlich wie mit <span class="listing">pthread_mutex_trylock()</span>, nur dass hier eben <span class="listing">EBUSY</span> zur&uuml;ckgegeben wird.</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Da die Variablen hierbei mit dem Suffix <span class="listing">_NP</span> (non-portable) verbunden sind, sind diese nicht mit dem POSIX-Standard vereinbar und somit nicht geeignet f&uuml;r portable Programme. </p>
+</td>
+</tr>
+</table><br>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">10.7.2 Condition-Variablen (Bedingungsvariablen)<a id="RxxKap10006040003201F02818E" name="RxxKap10006040003201F02818E"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999313" name="Xxx999313"></a><a id="Xxx999314" name="Xxx999314"></a><a id="Xxx999315" name="Xxx999315"></a>Bedingungsvariablen werden dazu verwendet, auf das Eintreffen einer bestimmten Bedingung zu warten bzw. die Erf&uuml;llung oder den Eintritt einer Bedingung zu zeigen. Bedingungsvariablen werden au&szlig;erdem mit den Mutexen verkn&uuml;pft. Dabei wird beim Warten auf eine Bedingung eine Sperre zu einem dazu verkn&uuml;pften Mutex freigegeben (nat&uuml;rlich musste zuvor eine Sperre auf den Mutex erfolgt sein).</p>
+<p>Andersherum sollte vor einem Eintreffen auf einer Bedingung eine Sperre auf den verkn&uuml;pften Mutex erfolgen, so dass nach dem Warten auf diesen Mutex auch die Sperre auf den Mutex wieder vorhanden ist. Erfolgte keine Sperre vor dem Signal, wartet ein Thread wieder, bis eine Sperre auf den Mutex m&ouml;glich ist.</p>
+<h4 class="t4">Statische Bedingungsvariablen</h4>
+<p><a id="Xxx999319" name="Xxx999319"></a>F&uuml;r die Bedingungsvariablen wird der Datentyp <span class="listing">pthread_cont_t</span> verwendet. Damit eine solche Bedingungsvariable &uuml;berhaupt als statisch definiert ist, muss diese mit der Konstante <span class="listing">PTHREAD_COND_INITIALIZER<a id="Xxx999321" name="Xxx999321"></a></span> initialisiert werden. Hier die Funktionen, womit Sie mit Condition-Variablen operieren k&ouml;nnen:</p>
+<pre>#include &lt;pthread. h.&gt;
+int pthread_cond_signal<a id="Xxx999323" name="Xxx999323"></a>( pthread_cond_t *cond );
+int pthread_cond_broadcast<a id="Xxx999324" name="Xxx999324"></a>( pthread_cond_t *cond );
+int pthread_cond_wait<a id="Xxx999325" name="Xxx999325"></a>( pthread_cond_t *cond,
+                       pthread_mutex_t *mutex );
+int pthread_cond_timedwait<a id="Xxx999326" name="Xxx999326"></a>( pthread_cond_t   *cond,
+                            pthread_mutex_t *mutex,
+                            const struct timespec *abstime);</pre>
+<p>Bevor Sie zun&auml;chst die Funktion <span class="listing">pthread_cond_wait()</span> verwenden, m&uuml;ssen Sie beim aufrufenden Thread das Mutex <span class="listing">mutex</span> sperren. Mit einem anschlie&szlig;enden <span class="listing">pthread_cond_wait()</span> wird der Mutex dann freigegeben, und der Thread wird mit der Bedingungsvariablen <span class="listing">cond</span>, bis zum Eintreffen einer bestimmten Bedingung, blockiert. Bei einem erfolgreichen Aufruf von <span class="listing">pthread_cond_wait()</span> wird auch f&uuml;r den Mutex automatisch die Sperre wieder eingerichtet – oder einfach, es herrscht wieder der Zustand wie vor dem <span class="listing">pthread_cond_wait</span>-Aufruf.</p>
+<p>Threads, die auf die Bedingungsvariable <span class="listing">cond</span> warten, k&ouml;nnen Sie mit <span class="listing">phtread_cond_signal()</span> wieder aufwecken und weiter ausf&uuml;hren. Bei mehreren Threads, die auf die Bedingungsvariable <span class="listing">cond</span> warten, bekommt der Thread mit der h&ouml;chsten Priorit&auml;t den Zuschlag.</p>
+<p>Wollen Sie hingegen alle Threads aufwecken, die auf die Bedingungsvariable <span class="listing">cond</span> warten, k&ouml;nnen Sie die Funktion <span class="listing">pthread_cond_signal()</span> verwenden.</p>
+<p>Nat&uuml;rlich gibt es auch noch eine Funktion, womit Sie, im Gegensatz zu <span class="listing">phtread_cond_wait()</span>, nur eine gewisse Zeit auf die Bedingungsvariable <span class="listing">cond</span> warten, bevor sie zum aufrufenden Thread zur&uuml;ckkehrt und wieder automatisch die Sperre von Mutex einrichtet – <span class="listing">pthread_cond_timewait()</span>. Als Zeit k&ouml;nnen Sie hierbei <span class="listing">abstime</span> verwenden, womit Sie eine absolute Zeit in Sekunden und Nanosekunden angeben, die seit dem 1.1.1970 vergangen sind.</p>
+<pre>struct timespec {
+   time_t tv_sec;   // Sekunden
+   long   tv_nsec;  // Nanosekunden
+};</pre>
+<p>Hierzu ein recht einfaches Beispiel, das rein die Funktionalit&auml;t von Bedingungsvariablen und vor allem deren Verwendung demonstriert.</p>
+<pre>/* thread9.c */
+#include &lt;stdio.h&gt;
+#include &lt;pthread. h.&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;stdlib.h&gt;
+#define THREAD_MAX 3
+pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+static void *threads (void *arg) {
+   printf("\t-&gt;Thread %ld wartet auf Bedingung\n",
+      pthread_self());
+   pthread_mutex_lock(&amp;mutex);
+   pthread_cond_wait(&amp;cond, &amp;mutex);
+   printf("\t-&gt;Thread %ld hat Bedingung erhalten\n",
+      pthread_self());
+   printf("\t-&gt;Thread %ld: Sende wieder die "
+          "Bedingungsvariable\n", pthread_self());
+   pthread_cond_signal(&amp;cond);
+   pthread_mutex_unlock(&amp;mutex);
+   return NULL;
+}
+int main (void) {
+   int i;
+   pthread_t th[THREAD_MAX];
+   printf("-&gt;Main-Thread %ld gestartet\n", pthread_self());
+   for(i=0; i&lt;THREAD_MAX; i++) 
+      if (pthread_create (&amp;th[i],NULL, &amp;threads, NULL)!=0) {
+         printf ("Konnte keinen Thread erzeugen\n");
+         exit (EXIT_FAILURE);
+      }
+   printf("-&gt;Main-Thread: habe soeben %d Threads erzeugt\n",
+      THREAD_MAX);
+   /* Kurz ruhig legen, damit der Main-Thread als Erstes die
+    * Bedingungsvariable sendet */
+   sleep(1);
+   printf("-&gt;Main-Thread: Sende die Bedingungsvariable\n");
+   pthread_cond_signal(&amp;cond);
+   for(i=0; i&lt;THREAD_MAX; i++) 
+      pthread_join (th[i], NULL);
+   printf("-&gt;Main-Thread %ld beendet\n", pthread_self());
+   pthread_exit(NULL);
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread9 thread9.c -lpthread
+$ ./thread9
+-&gt;Main-Thread -1209416608 gestartet
+-&gt;Main-Thread: habe soeben 3 Threads erzeugt
+        -&gt;Thread -1209418832 wartet auf Bedingung
+        -&gt;Thread -1217811536 wartet auf Bedingung
+        -&gt;Thread -1226204240 wartet auf Bedingung
+-&gt;Main-Thread: Sende die Bedingungsvariable
+        -&gt;Thread -1209418832 hat Bedingung erhalten
+        -&gt;Thread -1209418832: Sende wieder die Bedingungsvariable
+        -&gt;Thread -1217811536 hat Bedingung erhalten
+        -&gt;Thread -1217811536: Sende wieder die Bedingungsvariable
+        -&gt;Thread -1226204240 hat Bedingung erhalten
+        -&gt;Thread -1226204240: Sende wieder die Bedingungsvariable
+-&gt;Main-Thread -1209416608 beendet</pre>
+<p>Sie sehen hierbei, dass, sobald der Haupt-Thread eine Bedingungsvariable »sendet«, eine Kettenreaktion der weiteren Threads entsteht. Hier werden die Threads, entsprechend wie sie in der Queue angelegt wurden, abgearbeitet.</p>
+<p>Dazu ein simples Beispiel. In diesem Beispiel wartet der Thread Nummer 2 auf die Condition-Variable von Thread 1. Thread 1 weist einem globalen Zahlenarray <span class="listing">werte</span> zehn Werte zu, die Thread 2 anschlie&szlig;end berechnet. Dies ist nat&uuml;rlich auch wieder ein primitives Beispiel und soll nur die Funktion von Condition-Variablen demonstrieren.</p>
+<pre>/* thread10.c */
+#include &lt;stdio.h&gt;
+#include &lt;pthread. h.&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;stdlib.h&gt;
+static int werte[10];
+pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+static void thread1 (void *arg) {
+   int ret, i;
+   printf ("\t-&gt;Thread %ld gestartet ...\n",
+      pthread_self ());
+   sleep (1);
+   ret = pthread_mutex_lock (&amp;mutex);
+   if (ret != 0) {
+      printf ("Fehler bei lock in Thread:%ld\n",
+         pthread_self());
+      exit (EXIT_FAILURE);
+   }
+   /* Kritischer Codeabschnitt */
+   for (i = 0; i &lt; 10; i++)
+      werte[i] = i;
+   /* Kritischer Codeausschnitt Ende */
+   printf ("\t-&gt;Thread %ld sendet Bedingungsvariable\n",
+      pthread_self());
+   pthread_cond_signal (&amp;cond);
+   ret = pthread_mutex_unlock (&amp;mutex);
+   if (ret != 0) {
+      printf ("Fehler bei unlock in Thread: %ld\n",
+         pthread_self ());
+      exit (EXIT_FAILURE);
+   }
+   printf ("\t-&gt;Thread %ld ist fertig\n",pthread_self());
+   pthread_exit ((void *) 0);
+}
+static void thread2 (void *arg) {
+   int i;
+   int summe = 0;
+   printf ("\t-&gt;Thread %ld wartet auf Bedingungsvariable\n",
+      pthread_self ());
+   pthread_cond_wait (&amp;cond, &amp;mutex);
+   printf ("\t-&gt;Thread %ld gestartet ...\n",
+      pthread_self ());
+   for (i = 0; i &lt; 10; i++)
+      summe += werte[i];
+   printf ("\t-&gt;Thread %ld fertig\n",pthread_self());
+   printf ("Summe aller Zahlen betr&auml;gt: %d\n", summe);
+   pthread_exit ((void *) 0);
+}
+int main (void) {
+   pthread_t th[2];
+   printf("-&gt;Main-Thread %ld gestartet\n", pthread_self());
+   pthread_create (&amp;th[0], NULL, thread1, NULL);
+   pthread_create (&amp;th[1], NULL, thread2, NULL);
+   pthread_join (th[0], NULL);
+   pthread_join (th[1], NULL);
+   printf("-&gt;Main-Thread %ld beendet\n", pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread10 thread10.c -lpthread
+$ ./thread10
+-&gt;Main-Thread -1209416608 gestartet
+        -&gt;Thread -1209418832 gestartet ...
+        -&gt;Thread -1217811536 wartet auf Bedingungsvariable
+        -&gt;Thread -1209418832 sendet Bedingungsvariable
+        -&gt;Thread -1209418832 ist fertig
+        -&gt;Thread -1217811536 gestartet ...
+        -&gt;Thread -1217811536 fertig
+Summe aller Zahlen betr&auml;gt: 45
+-&gt;Main-Thread -1209416608 beendet</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>In diesem und auch in vielen anderen Beispielen wurde das eine oder andere Mal auf eine Fehler&uuml;berpr&uuml;fung verzichtet, was man in der Praxis nat&uuml;rlich tunlichst vermeiden sollte. Allerdings w&uuml;rde ein »perfekt« geschriebenes Programm zu viele Buchseiten in Anspruch nehmen.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Dynamische Bedingungsvariablen</h4>
+<p><a id="Xxx999346" name="Xxx999346"></a>Nat&uuml;rlich steht Ihnen hierzu auch die M&ouml;glichkeit zur Verf&uuml;gung, Bedingungsvariablen dynamisch anzulegen, wie dies h&auml;ufig mit Datenstrukturen der Fall ist. Hierzu stehen Ihnen die folgenden Funktionen zur Verf&uuml;gung:</p>
+<pre>#include &lt;pthread. h.&gt;
+int pthread_cond_init<a id="Xxx999349" name="Xxx999349"></a>( pthread_cond_t *cond,
+                       pthread_condattr_t *cond_attr );
+int pthread_cond_destroy<a id="Xxx999350" name="Xxx999350"></a>( pthread_cond_t *cond );</pre>
+<p>Mit <span class="listing">pthread_cond_init()</span> initialisieren Sie die Bedingungsvariable <span class="listing">cond</span> mit den &uuml;ber <span class="listing">attr</span> festgelegten Attributen (hierauf wird im n&auml;chsten Abschnitt eingegangen). Verwenden Sie f&uuml;r <span class="listing">attr</span> <span class="listing">NULL</span>, werden die standardm&auml;&szlig;ig voreingestellten Bedingungsvariablen verwendet. Freigeben k&ouml;nnen Sie die dynamisch angelegte Bedingungsvariable <span class="listing">cond</span> wieder mit der Funktion <span class="listing">pthread_cond_destroy()</span>.</p>
+<p>Hierzu dasselbe Beispiel wie schon im Beispiel »thread10.c« zuvor, nur eben als dynamische Variante.</p>
+<pre>/* thread11.c */
+#include &lt;stdio.h&gt;
+#include &lt;pthread. h.&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;stdlib.h&gt;
+struct data {
+   int werte[10];
+   pthread_mutex_t mutex;
+   pthread_cond_t cond;
+};
+static void thread1 (void *arg) {
+   struct data *d=(struct data *)arg;
+   int ret, i;
+   printf ("\t-&gt;Thread %ld gestartet ...\n", 
+      pthread_self ());
+   sleep (1);
+   ret = pthread_mutex_lock (&amp;d-&gt;mutex);
+   if (ret != 0) {
+      printf ("Fehler bei lock in Thread:%ld\n",
+         pthread_self());
+      exit (EXIT_FAILURE);
+   }
+   /* Kritischer Codeabschnitt */
+   for (i = 0; i &lt; 10; i++)
+      d-&gt;werte[i] = i;
+   /* Kritischer Codeausschnitt Ende */
+   printf ("\t-&gt;Thread %ld sendet Bedingungsvariable\n",
+      pthread_self());
+   pthread_cond_signal (&amp;d-&gt;cond);
+   ret = pthread_mutex_unlock (&amp;d-&gt;mutex);
+   if (ret != 0) {
+      printf ("Fehler bei unlock in Thread: %ld\n",
+         pthread_self ());
+      exit (EXIT_FAILURE);
+   }
+   printf ("\t-&gt;Thread %ld ist fertig\n", pthread_self());
+   pthread_exit ((void *) 0);
+}
+static void thread2 (void *arg) {
+   struct data *d=(struct data *)arg;
+   int i;
+   int summe = 0;
+   printf ("\t-&gt;Thread %ld wartet auf Bedingungsvariable\n",
+      pthread_self ());
+   pthread_cond_wait (&amp;d-&gt;cond, &amp;d-&gt;mutex);
+   printf ("\t-&gt;Thread %ld gestartet ...\n", 
+      pthread_self ());
+   for (i = 0; i &lt; 10; i++)
+      summe += d-&gt;werte[i];
+   printf ("\t-&gt;Thread %ld fertig\n",pthread_self());
+   printf ("Summe aller Zahlen betr&auml;gt: %d\n", summe);
+   pthread_exit ((void *) 0);
+}
+int main (void) {
+   pthread_t th[2];
+   struct data *d;
+   /* Speicher f&uuml;r die Struktur reservieren */
+   d = malloc(sizeof(struct data));
+   if(d == NULL) {
+      printf("Konnte keinen Speicher reservieren ...!\n");
+      exit(EXIT_FAILURE);
+   }
+   /* Bedingungsvariablen initialisieren */
+   pthread_cond_init(&amp;d-&gt;cond, NULL);
+   printf("-&gt;Main-Thread %ld gestartet\n", pthread_self());
+   pthread_create (&amp;th[0], NULL, thread1, d);
+   pthread_create (&amp;th[1], NULL, thread2, d);
+   pthread_join (th[0], NULL);
+   pthread_join (th[1], NULL);
+   /* Bedingungsvariable freigeben */
+   pthread_cond_destroy(&amp;d-&gt;cond);
+   printf("-&gt;Main-Thread %ld beendet\n", pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Hierzu noch ein typisches Anwendungsbeispiel. Wir simulieren ein Programm, das Daten empf&auml;ngt, und erzeugen dabei zwei Threads. Jeder dieser beiden Threads wird mit <span class="listing">pthread_cond_wait()</span> in einen Wartezustand geschickt und wartet auf das Signal <span class="listing">pthread_cond_signal()</span> vom Haupt-Thread. Ein einfaches Server-Client-Prinzip also. Der Haupt-Thread simuliert dann, er w&uuml;rde zwei Datenpakete an einen Client-Thread verschicken. Der Client-Thread simuliert anschlie&szlig;end, er w&uuml;rde die Datenpakete bearbeiten. Im Beispiel wurden statische Bedingungsvariablen verwendet. Die Ausgabe und der Ablauf des Programms sollten den Sachverhalt au&szlig;erdem von selbst erkl&auml;ren:</p>
+<pre>/* thread12.c */
+#define _MULTI_THREADED
+#include &lt;pthread. h.&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd. h.&gt;
+#define NUMTHREADS 2
+static void checkResults (const char *string, int val) {
+   if (val) {
+      printf ("Fehler mit %d bei %s", val, string);
+      exit (EXIT_FAILURE);
+   }
+}
+static pthread_mutex_t dataMutex =
+   PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t DatenVorhandenCondition =
+   PTHREAD_COND_INITIALIZER;
+static int DatenVorhanden = 0;
+static int geteilteDaten  = 0;
+static void *theThread (void *parm) {
+   int rc;
+   // Datenpaket in zwei Verarbeitungsschritten
+   int retries = 2;
+   printf ("\t-&gt;Client %ld: gestartet\n", pthread_self ());
+   rc = pthread_mutex_lock (&amp;dataMutex);
+   checkResults ("pthread_mutex_lock()\n", rc);
+   while (retries--) {
+      while (!DatenVorhanden) {
+         printf ("\t-&gt;Client %ld: Warte auf Daten ...\n",
+            pthread_self ());
+         rc = pthread_cond_wait ( &amp;DatenVorhandenCondition, 
+                                  &amp;dataMutex);
+         if (rc) {
+            printf ("Client %ld: pthread_cond_wait()"
+                    " Fehler rc=%d\n", rc, pthread_self ());
+            pthread_mutex_unlock (&amp;dataMutex);
+            exit (EXIT_FAILURE);
+         }
+      }
+      printf("\t-&gt;Client %ld: Daten wurden gemeldet ---&gt;\n"
+              "\t----&gt; Bearbeite die Daten, solange sie "
+              "gesch&uuml;tzt sind (lock)\n", pthread_self ());
+      if (geteilteDaten == 0) {
+         DatenVorhanden = 0;
+      }
+   }//Ende while(retries--)
+   printf ("Client %ld: Alles erledigt\n", 
+      pthread_self ());
+   rc = pthread_mutex_unlock (&amp;dataMutex);
+   checkResults ("pthread_mutex_unlock()\n", rc);
+   return NULL;
+}
+int main (int argc, char **argv) {
+   pthread_t thread[NUMTHREADS];
+   int rc = 0;
+   // Gesamtanzahl der Datenpakete
+   int anzahlDaten = 4;
+   int i;
+   printf ("-&gt;Main-Thread %ld gestartet ...\n");
+   for (i = 0; i &lt; NUMTHREADS; ++i) {
+      rc=pthread_create (&amp;thread[i], NULL, theThread, NULL);
+      checkResults ("pthread_create()\n", rc);
+   }
+   /* Server-Schleife */
+   while (anzahlDaten--) {
+      sleep (3); // Eine Bremse zum "Mitverfolgen"
+      printf ("-&gt;Server: Daten gefunden\n");
+      /* Sch&uuml;tze geteilte (shared) Daten und Flags */
+      rc = pthread_mutex_lock (&amp;dataMutex);
+      checkResults ("pthread_mutex_lock()\n", rc);
+      printf ("-&gt;Server: Sperre die Daten und gib eine "
+              "Meldung an Consumer\n");
+      ++geteilteDaten;     /* F&uuml;ge "shared" Daten hinzu  */
+      DatenVorhanden = 1;  /* ein vorhandenes Datenpaket */
+      /* Client wieder aufwecken */
+      rc = pthread_cond_signal (&amp;DatenVorhandenCondition);
+      if (rc) {
+         pthread_mutex_unlock (&amp;dataMutex);
+         printf ("Server: Fehler beim Aufwecken von "
+                 "Client, rc=%d\n", rc);
+         exit (EXIT_FAILURE);
+      }
+      printf("-&gt;Server: Gibt die gesperrten Daten"
+             " wieder frei\n");
+      rc = pthread_mutex_unlock (&amp;dataMutex);
+      checkResults ("pthread_mutex_lock()\n", rc);
+   }//Ende while(anzahlDaten--)
+   for (i = 0; i &lt; NUMTHREADS; ++i) {
+      rc = pthread_join (thread[i], NULL);
+      checkResults ("pthread_join()\n", rc);
+   }
+   printf ("-&gt;Main-Thread ist fertig\n");
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread12 thread12.c -lpthread
+$ ./thread12
+-&gt;Main-Thread -1073743916 gestartet...
+        -&gt;Client -1209418832: gestartet
+        -&gt;Client -1209418832: Warte auf Daten ...
+        -&gt;Client -1217811536: gestartet
+        -&gt;Client -1217811536: Warte auf Daten ...
+-&gt;Server: Daten gefunden
+-&gt;Server: Sperre die Daten und gib eine Meldung an Consumer
+-&gt;Server: Gibt die gesperrten Daten wieder frei
+        -&gt;Client -1209418832: Daten wurden gemeldet ---&gt;
+        ----&gt; Bearbeite die Daten, solange sie gesch&uuml;tzt sind (lock)
+        -&gt;Client -1209418832: Daten wurden gemeldet ---&gt;
+        ----&gt; Bearbeite die Daten, solange sie gesch&uuml;tzt sind (lock)
+Client -1209418832: Alles erledigt
+-&gt;Server: Daten gefunden
+-&gt;Server: Sperre die Daten und gib eine Meldung an Consumer
+-&gt;Server: Gibt die gesperrten Daten wieder frei
+        -&gt;Client -1217811536: Daten wurden gemeldet ---&gt;
+        ----&gt; Bearbeite die Daten, solange sie gesch&uuml;tzt sind (lock)
+        -&gt;Client -1217811536: Daten wurden gemeldet ---&gt;
+        ----&gt; Bearbeite die Daten, solange sie gesch&uuml;tzt sind (lock)
+Client -1217811536: Alles erledigt
+-&gt;Server: Daten gefunden
+-&gt;Server: Sperre die Daten und gib eine Meldung an Consumer
+-&gt;Server: Gibt die gesperrten Daten wieder frei
+-&gt;Server: Daten gefunden
+-&gt;Server: Sperre die Daten und gib eine Meldung an Consumer
+-&gt;Server: Gibt die gesperrten Daten wieder frei
+-&gt;Main-Thread ist fertig</pre>
+<h4 class="t4">Condition-Variablen-Attribute</h4>
+<p><a id="Xxx999359" name="Xxx999359"></a>F&uuml;r die Attribute von Bedingungsvariablen stehen Ihnen folgende Funktionen zur Verf&uuml;gung:</p>
+<pre>#include &lt;pthread. h.&gt;
+int pthread_condattr_init<a id="Xxx999362" name="Xxx999362"></a>( pthread_condattr_t *attr );
+int pthread_condattr_destroy<a id="Xxx999363" name="Xxx999363"></a>( pthread_condattr_t *attr );</pre>
+<p>Allerdings machen diese Funktionen noch keinen Sinn, da Linux-Threads noch keine Attribute f&uuml;r Bedingungsvariablen anbieten. Diese Funktionen wurden dennoch implementiert, um den POSIX-Standard zu erf&uuml;llen.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">10.7.3 Semaphore<a id="RxxKap10006040003201F0281B2" name="RxxKap10006040003201F0281B2"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999366" name="Xxx999366"></a><a id="Xxx999367" name="Xxx999367"></a>Threads k&ouml;nnen auch mit Semaphoren synchronisiert werden. Wie Sie bereits aus dem Kapitel zur Interprozesskommunikation erfahren haben, sind Semaphore nichts anderes als nicht negative Z&auml;hlvariablen, die man beim Eintritt in einen kritischen Bereich dekrementiert und beim Verlassen wieder inkrementiert. Hierzu stehen Ihnen folgende Funktionen zur Verf&uuml;gung:</p>
+<pre>#include &lt;semaphore.h&gt;
+int sem_init<a id="Xxx999370" name="Xxx999370"></a>( sem_t *sem, int pshared, unsigned int value );
+int sem_wait<a id="Xxx999371" name="Xxx999371"></a>( sem_t * sem );
+int sem_trywait<a id="Xxx999372" name="Xxx999372"></a>( sem_t * sem );
+int sem_post<a id="Xxx999373" name="Xxx999373"></a>( sem_t * sem );
+int sem_getvalue<a id="Xxx999374" name="Xxx999374"></a>( sem_t * sem, int * sval );
+int sem_destroy<a id="Xxx999375" name="Xxx999375"></a>( sem_t * sem );</pre>
+<p>Alle Funktionen geben bei Erfolg 0 oder bei einem Fehler -1 zur&uuml;ck. Mit der Funktion <span class="listing">sem_init()</span> initialisieren Sie das Semaphor <span class="listing">sem</span> mit dem Anfangswert <span class="listing">value</span>. Geben Sie f&uuml;r den zweiten Parameter <span class="listing">pshared</span> einen Wert ungleich 0 an, kann das Semaphor gemeinsam von mehreren Prozessen und deren Threads verwendet werden, oder aber, wenn gleich 0 verwendet wird, das Semaphor kann nur »lokal« f&uuml;r die Threads des aktuellen Prozesses verwendet werden.</p>
+<p>Die Funktion <span class="listing">sem_wait()</span> wird zum Suspendieren eines aufrufenden Threads verwendet. <span class="listing">sem_wait()</span> wartet so lange, bis der Z&auml;hler <span class="listing">sem</span> einen Wert ungleich 0 besitzt. Sobald der Wert von <span class="listing">sem</span> ungleich 0 ist, also z. B. um 1 inkrementiert wurde, kann der suspendierende Thread mit seiner Ausf&uuml;hrung fortfahren. Des Weiteren dekrementiert <span class="listing">sem_wait</span>, wenn diese Funktion »aufgeweckt« wurde, den Z&auml;hler des Semaphors wieder um 1. Im Gegensatz zu <span class="listing">sem_wait()</span> blockiert <span class="listing">sem_trywait()</span> nicht, wenn <span class="listing">sem</span> gleich 0 ist, und kehrt sofort mit dem R&uuml;ckgabewert -1 zur&uuml;ck.</p>
+<p>Den Z&auml;hler des Semaphors <span class="listing">sem</span> k&ouml;nnen Sie mit der Funktion <span class="listing">sem_post()</span> um 1 erh&ouml;hen. Wollen Sie also einen anderen Thread, der mit <span class="listing">sem_wait()</span> suspendiert wurde, aufwecken, m&uuml;ssen Sie nur <span class="listing">sem_post()</span> aus einem anderen Thread aufrufen. <span class="listing">sem_post()</span> ist eine nicht blockierende Funktion.</p>
+<p>Wollen Sie &uuml;berpr&uuml;fen, welchen Wert das Semaphor gerade hat, k&ouml;nnen Sie die Funktion <span class="listing">sem_getvalue()</span> verwenden. Mit der Funktion <span class="listing">sem_destroy()</span> l&ouml;schen Sie das Semaphor <span class="listing">sem</span> wieder.</p>
+<p>Das folgende Beispiel entspricht dem Listing »thread10.c«, nur dass hier anstatt Bedingungsvariablen und Mutexen eben ein Semaphor verwendet wird. Mithilfe der Semaphore l&auml;sst sich eine Synchronisation (meiner Meinung nach) erheblich einfacher realisieren.</p>
+<pre>/* thread13.c */
+#include &lt;stdio.h&gt;
+#include &lt;pthread. h.&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;semaphore.h&gt;
+static int werte[10];
+sem_t sem;
+static void thread1 (void *arg) {
+   int ret, i, val;
+   printf ("\t-&gt;Thread %ld gestartet ...\n", 
+      pthread_self ());
+   /* Kritischer Codeabschnitt */
+   for (i = 0; i &lt; 10; i++)
+      werte[i] = i;
+   /* Kritischer Codeausschnitt Ende */
+   /* Semaphor um 1 inkrementieren */
+   sem_post(&amp;sem);
+   /* Aktuellen Wert ermitteln */
+   sem_getvalue(&amp;sem, &amp;val);
+   printf("\t-&gt;Semaphor inkrementiert (Wert: %d)\n", val);
+   printf ("\t-&gt;Thread %ld ist fertig\n\n",pthread_self());
+   pthread_exit ((void *) 0);
+}
+static void thread2 (void *arg) {
+   int i;
+   int summe = 0;
+   /* Semaphor suspendiert, bis der Wert ungleich 0 ist */
+   sem_wait(&amp;sem);
+   printf ("\t-&gt;Thread %ld gestartet ...\n", 
+      pthread_self ());
+   for (i = 0; i &lt; 10; i++)
+      summe += werte[i];
+   printf ("\t-&gt;Summe aller Zahlen betr&auml;gt: %d\n", summe);
+   printf ("\t-&gt;Thread %ld fertig\n\n",pthread_self());
+   pthread_exit ((void *) 0);
+}
+int main (void) {
+   pthread_t th[2];
+   int val;
+   printf("-&gt;Main-Thread %ld gestartet\n", pthread_self());   
+   /* Semaphor initialisieren */
+   sem_init(&amp;sem, 0, 0);
+   /* Aktuellen Wert abfragen */
+   sem_getvalue(&amp;sem, &amp;val);
+   printf("-&gt;Semaphor initialisiert (Wert: %d)\n\n", val);
+   /* Mit Absicht anders herum */
+   pthread_create (&amp;th[1], NULL, thread2, NULL);
+   pthread_create (&amp;th[0], NULL, thread1, NULL);
+   pthread_join (th[0], NULL);
+   pthread_join (th[1], NULL);
+   /* Aktuellen Wert abfragen */
+   sem_getvalue(&amp;sem, &amp;val);
+   printf("-&gt;Semaphor (Wert: %d)\n", val);
+   /* Semphor l&ouml;schen */
+   sem_destroy(&amp;sem);
+   printf("-&gt;Semaphor gel&ouml;scht\n");
+   printf("-&gt;Main-Thread %ld beendet\n", pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread13 thread13.c -lpthread
+$ ./thread13
+-&gt;Main-Thread -1209416608 gestartet
+-&gt;Semaphor initialisiert (Wert: 0)
+        -&gt;Thread -1217811536 gestartet ...
+        -&gt;Thread -1209418832 gestartet ...
+        -&gt;Summe aller Zahlen betr&auml;gt: 45
+        -&gt;Thread -1209418832 fertig
+        -&gt;Semaphor inkrementiert (Wert: 0)
+        -&gt;Thread -1217811536 ist fertig
+-&gt;Semaphor (Wert: 0)
+-&gt;Semaphor gel&ouml;scht
+-&gt;Main-Thread -1209416608 beendet</pre>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">10.7.4 Weitere Synchronisationstechniken im &Uuml;berblick<a id="RxxKap10006040003201F0281BD" name="RxxKap10006040003201F0281BD"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Neben den hier vorgestellten Synchronisationsmechanismen bietet Ihnen die phtread-Bibliothek noch drei weitere an, worauf hier allerdings nur kurz eingegangen werden soll.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> RW-Locks – Mit RW-Locks (Read-Write-Locks) k&ouml;nnen Sie es einrichten, dass mehrere Threads aus einem (shared) Datenbereich lesen, aber nur ein Thread zum selben Zeitpunkt darin etwas schreiben darf (one-writer, many-reader). Alle Funktionen dazu beginnen mit dem Pr&auml;fix <span class="listing">pthread_rwlock_</span>.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Barrier – Als Barrier bezeichnet man einen Punkt, der als (un&uuml;berwindbare) Barriere verwendet wird, die erst &uuml;berwunden werden kann, wenn eine bestimmte Anzahl von Threads an diese Barriere kommt, eben das Prinzip der hohen Mauer bei den Pfadpfindern, die man nur im Team (mit einer gewissen Anzahl von Personen) &uuml;berwinden kann. Solange eine gewisse Anzahl von Threads nicht vorhanden ist, m&uuml;ssen eben alle Threads vor der Barriere warten. Soll z. B. ein bestimmter Thread erst ausgef&uuml;hrt werden, wenn viele andere Threads parallel mehrere Teilaufgaben erledigt haben, sind Barriers eine prima Synchronisationsm&ouml;glichkeit. Alle Funktionen zu den Barriers beginnen mit dem Pr&auml;fix <span class="listing">pthread_barrier_</span>.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Spinlocks – Spinlocks sind nur f&uuml;r Multiprozessorsystemen interessant. Das Prinzip ist dasselbe wie bei den Mutexen, nur dass - anders als bei den Mutexen - ein Thread, der auf einen Spinlock wartet, nicht die CPU freigibt, sondern eine so genannte »busy Loop« (Schleife) ausf&uuml;hrt, bis der Spinlock frei ist. Dadurch bleibt ein Kontexwechsel (Contex Switch) erspart. Contex Switch: Beim Kontexwechsel wird der Thread blockiert, und alle Informationen, die f&uuml;r das Weiterlaufen ben&ouml;tigt werden, m&uuml;ssen gespeichert werden. Bei vielen Kontexwechseln ist dies ein Menge ersparter Zeit, die man mit Spinlocks gewinnen kann. Alle Funktionen zu den Spinlocks beginnen mit dem Pr&auml;fix <span class="listing">pthread_spin_</span>.</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap10-005.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap10-007.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap10-006.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:46 GMT -->
+</html>

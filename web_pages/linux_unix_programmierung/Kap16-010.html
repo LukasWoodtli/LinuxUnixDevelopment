@@ -1,0 +1,1521 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap16-010.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:47:15 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 16.11 Eingabe- und Ereignisverarbeitung</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap16-009.html">
+<link rel="next" href="Kap16-011.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap16-009.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap16-011.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap16-000.html#RxxKap16000040005921F031100">16 SDL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-000.html#RxxKap16000040005921F031102">16.1 Was ist und kann SDL?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-001.html#RxxKap16001040005AF1F026100">16.2 SDL installieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-002.html#RxxKap16002040005B01F049100">16.3 SDL-Anwendungen erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-003.html#RxxKap16003040005B11F049100">16.4 SDL initialisieren und Videomodus einstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-003.html#RxxKap16003040005B11F0491A5">16.4.1 Programmbeispiel – SDL initialisieren und Videomodus einstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-004.html#RxxKap16004040005B21F03B100">16.5 Direkt auf den Bildschirm zeichnen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-004.html#RxxKap16004040005B21F03B117">16.5.1 Programmbeispiel – direkt auf den Bildschirm zeichnen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-005.html#RxxKap16005040005B31F029100">16.6 Bitmap laden und anzeigen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-005.html#RxxKap16005040005B31F02910A">16.6.1 Programmbeispiel – Bitmap laden und anzeigen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-006.html#RxxKap16006040005B41F030100">16.7 Ein anderes Grafikformat laden und anzeigen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-007.html#RxxKap16007040005B51F036100">16.8 Der rechteckige Bildbereich von SDL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-008.html#RxxKap16008040005B61F047100">16.9 Farbenschl&uuml;ssel, Transparenz und Alpha-Blending</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-008.html#RxxKap16008040005B61F047107">16.9.1 Alpha-Blending</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-009.html#RxxKap16009040005B71F04F100">16.10 Animation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-009.html#RxxKap16009040005B71F04F117">16.10.1 Programmbeispiel – Animation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap16010040005B81F033100">16.11 Eingabe- und Ereignisverarbeitung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap16010040005B81F033102">16.11.1 SDL-Event-Struktur</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap16010040005B81F03318B">16.11.2 Maus-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap16010040005B81F0331A1">16.11.3 Programmbeispiel – Maus-Event</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap16010040005B81F0331AA">16.11.4 Tastatur-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap16010040005B81F03321B">16.11.5 Programmbeispiel – Tastatur-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap16010040005B81F033221">16.11.6 Joystick-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap16010040005B81F033251">16.11.7 Programmbeispiel – Joystick-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap16010040005B81F033256">16.11.8 Weitere Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-011.html#RxxKap16011040005B91F049100">16.12 Audio</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-011.html#RxxKap16011040005B91F049184">16.12.1 Programmbeispiel – Audio</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-012.html#RxxKap16012040005BA1F037100">16.13 Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">16.11 <a id="RxxKap16149EingabeundEreignisverarbeitung" name="RxxKap16149EingabeundEreignisverarbeitung"></a>Eingabe- und Ereignisverarbeitu<a id="RxxKap16010040005B81F033100" name="RxxKap16010040005B81F033100"></a>ng 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a><a id="Xxx999237" name="Xxx999237"></a>Wenn Sie vorhaben sollten, Spiele oder sonstige interaktive Anwendungen zu erstellen, dann ben&ouml;tigen Sie auch eine Verarbeitung der Eingabe wie die Maus, die Tastatur oder den Joystick. Da Sie ja bereits die M&ouml;glichkeit hatten oder noch haben, sich in diesem Buch mit der Ereignisverarbeitung unter X oder mit der GTK+-Bibliothek n&auml;her vertraut zu machen, d&uuml;rfte Ihnen das Kapitel relativ einfach fallen. Im Prinzip ist dies wieder nur eine Wiederholung des Themas mit neuen Namen und neuer Syntax. Aber auch ohne diese Vorkenntnisse rei&szlig;t der Abschnitt keinen mehr vom Hocker.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">16.11.1 SDL-Event-Struktur<a id="RxxKap16010040005B81F033102" name="RxxKap16010040005B81F033102"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Am besten arbeiten Sie sich von ganz oben nach unten durch. Ganz oben steht das Event, das bei SDL in einer Struktur namens <span class="listing">SDL_Event</span> verpackt wurde. Diese Struktur ist der Anfang der Ereignisverarbeitung bei einem Eintreffen eines Ereignisses, woran alle vorbei m&uuml;ssen, sei dies nun das Neuzeichnen eines Bildschirms, ein Tastendruck, ein Mausereignis oder der Knopfdruck eines Joysticks. Hier die Mutter aller <span class="listing">SDL-Events</span> im &Uuml;berblick:<a id="Xxx999241" name="Xxx999241"></a></p>
+<pre>typedef union {
+  Uint8 type;
+  SDL_ActiveEvent active;
+  SDL_KeyboardEvent key;
+  SDL_MouseMotionEvent motion;
+  SDL_MouseButtonEvent button;
+  SDL_JoyAxisEvent jaxis;
+  SDL_JoyBallEvent jball;
+  SDL_JoyHatEvent jhat;
+  SDL_JoyButtonEvent jbutton;
+  SDL_ResizeEvent resize;
+  SDL_ExposeEvent expose;
+  SDL_QuitEvent quit;
+  SDL_UserEvent user;
+  SDL_SysWMEvent syswm;
+} SDL_Event;</pre>
+<p>Anhand der Namen l&auml;sst sich schon so einiges herauslesen, um was f&uuml;r Events es sich handelt. Denn letztendlich sind hier alle Strukturvariablen, die mit <span class="listing">SDL_</span> beginnen, auch wieder Strukturen, die exakte Daten eines entsprechenden Events beinhalten.</p>
+<p>Intern wird dabei f&uuml;r jedes auftretendes Event ein neues <span class="listing">SDL_Event</span> erzeugt und in einen FIFO-Puffer (FIFO = First in First out) abgelegt. Dieser Puffer ist n&ouml;tig, da sonst bei sehr vielen auf einmal auftretenden Events einige verloren gehen k&ouml;nnten – was bei einem Spiel unangenehme Folgen haben k&ouml;nnte.</p>
+<p>Bevor Sie Funktionen kennen lernen, die von diesem FIFO Gebrauch machen, um die Events zu lesen, m&uuml;ssen Sie erst einmal wissen, was f&uuml;r ein Event &uuml;berhaupt aufgetreten ist. Anhand der Struktur <span class="listing">SDL_Event</span> k&ouml;nnen Sie erkennen, dass es davon eine Menge gibt. Was f&uuml;r ein Event letztendlich aufgetreten ist, findet sich in der Strukturvariablen <span class="listing">type</span> von <span class="listing">SDL_Event</span>. Dabei m&uuml;ssen Sie nur <span class="listing">type</span> auswerten und k&ouml;nnen anschlie&szlig;end eine der entsprechenden Strukturen auslesen. Welchen Wert (symbolische Konstante) <span class="listing">type</span> dabei besitzen kann und auf welche Struktur sich dieser Wert dann bezieht, k&ouml;nnen Sie der folgenden Tabelle entnehmen:<a id="Xxx999246" name="Xxx999246"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 16.3   
+    </b>Event-type und die entsprechenden Strukturen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Event-type</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Event-Struktur</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_ACTIVEEVENT
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_ActiveEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_KEYDOWN
+SDL_KEYUP
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_KeyboardEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_MOUSEMOTION
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_MouseMotionEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_MOUSEBUTTONDOWN
+SDL_MOUSEBUTTONUP
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_MouseButtonEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_JOYAXISMOTION
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_JoyAxisEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_JOYBALLMOTION
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_JoyBallEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_JOYHATMOTION
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_JoyHatEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_JOYBUTTONDOWN
+SDL_JOYBUTTONUP
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_JoyButtonEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_QUIT
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_QuitEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_SYSWMEVENT
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_SysWMEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_VIDEORESIZE
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_ResizeEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_VIDEOEXPOSE
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_ExposeEvent
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_USEREVENT
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_UserEvent
+</td>
+</tr>
+</table><br>
+<p>Bevor Sie jetzt den Typ des Events abfragen k&ouml;nnen, m&uuml;ssen Sie dieses erst noch vom FIFO abholen. Hierf&uuml;r gibt es zwei g&auml;ngige Funktionen, die sich von der Funktionalit&auml;t erheblich unterscheiden.<a id="Xxx999313" name="Xxx999313"></a><a id="Xxx999314" name="Xxx999314"></a><a id="Xxx999315" name="Xxx999315"></a></p>
+<pre>int SDL_WaitEvent(SDL_Event *event);
+int SDL_PollEvent(SDL_Event *event);</pre>
+<p>Mit <span class="listing">SDL_WaitEvent()</span> wird gewartet, bis sich ein Event im FIFO befindet. Befindet sich ein Event im FIFO, wird es von <span class="listing">SDL_WaitEvent()</span> abgeholt und aus dem FIFO entfernt. <span class="listing">SDL_WaitEvent()</span> gibt bei Erfolg 1 zur&uuml;ck oder 0, wenn beim Warten auf ein Event ein Fehler aufgetreten ist.</p>
+<p>Bei der Funktion <span class="listing">SDL_PollEvent()</span> hingegen werden die Events abgefragt. Befindet sich ein Event im FIFO, wird es auch hiermit entfernt, und die Funktion <span class="listing">SDL_PollEvent()</span> gibt 1 zur&uuml;ck. Befindet sich kein Event im FIFO, wird 0 zur&uuml;ckgegeben und mit der Programmausf&uuml;hrung fortgefahren.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Da die beiden eben erw&auml;hnten Funktionen immer das n&auml;chste Event aus dem FIFO entfernen, k&ouml;nnen Sie, falls n&ouml;tig, auch die Funktion <span class="listing">SDL_PeepEvents()<a id="Xxx999322" name="Xxx999322"></a></span> und das Flag <span class="listing">SDL_PEEKEVENT</span> verwenden, um nur einen Blick auf die Events im FIFO zu werfen, ohne diese zu entfernen. Des Weiteren ist es auch m&ouml;glich, wie es f&uuml;r einen FIFO typisch ist, eigene Events dem FIFO hinzuzuf&uuml;gen. </p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard">Dies k&ouml;nnen Sie mit der Funktion <span class="listing">SDL_PushEvent()<a id="Xxx999324" name="Xxx999324"></a></span> erledigen. Beides wird allerdings in diesem Buch nicht ben&ouml;tigt – daher sei hierf&uuml;r die Dokumentation von SDL zurate gezogen.</p>
+<p class="BStandard"><b>Hinweis   </b>Neben den hier erw&auml;hnten Funktionen gibt es noch eine ganze Palette anderer, die sich auf die Events beziehen.</p>
+</td>
+</tr>
+</table><br>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">16.11.2 Maus-Events<a id="RxxKap16010040005B81F03318B" name="RxxKap16010040005B81F03318B"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999329" name="Xxx999329"></a>Angefangen wird mit den Events der Maus. Um jetzt ein Event mit der Funktion <span class="listing">SDL_PollEvent()</span> oder <span class="listing">SDL_WaitEvent()</span>aus dem FIFO zu holen und auszulesen, m&uuml;ssen Sie erst eine leere Event-Struktur erzeugen. Dies geht recht einfach mit einer simplen Deklaration von:</p>
+<pre>SDL_Event event;</pre>
+<p>Als Beispiel wird zum Entnehmen eines Events aus dem FIFO die Funktion <span class="listing">SDL_PollEvents()</span> in einer Schleife verwendet:</p>
+<pre>while(SDL_PollEvent(&amp;event)) {
+   ...
+}</pre>
+<p>Tritt jetzt ein Event auf, f&uuml;llt die Funktion <span class="listing">SDL_PollEvent()</span> (oder auch die Funktion <span class="listing">SDL_WaitEvent()</span>) die <span class="listing">SDL_event</span>-Struktur mit Informationen. Welche Art von Informationen dies sind, erfahren Sie mit der Strukturvariablen <span class="listing">type</span> von <span class="listing">SDL_Event</span> (wurde eben besprochen). Hierzu verwenden Sie am besten (ist so &uuml;blich, aber nicht die Regel) eine <span class="listing">switch()</span>-Fallunterscheidung:</p>
+<pre>switch(event.type) {
+   case ... : 
+   case ... :
+   ...
+}</pre>
+<p>Welche Typen (<span class="listing">type</span>) von Events hierbei auftreten k&ouml;nnen, haben Sie bereits in der Tabelle 15.3 sehen k&ouml;nnen. Da uns in diesem Abschnitt vorerst einmal die Mausereignisse interessieren, w&auml;ren dies die Event-Typen <span class="listing">SDL_MOUSEMOTION</span>, <span class="listing">SDL_MOUSEBUTTONDOWN</span> und <span class="listing">SDL_MOUSEBUTTONUP</span>. <span class="listing">SDL_MOUSEMOTION</span> wird z. B. ausgel&ouml;st, wenn eine Bewegung der Maus auf dem Fenster registriert wurde, und die Events <span class="listing">SDL_MOUSEBUTTONDOWN</span> oder <span class="listing">SDL_MOUSEBUTTONUP</span> werden ausgel&ouml;st, wenn ein Maus-Button bet&auml;tigt bzw. losgelassen wurde.</p>
+<pre>switch(event.type) {
+   case SDL_MOUSEMOTON :  /* Die Maus hat sich bewegt ;-) */
+}</pre>
+<p>Ein Blick auf die Tabelle der <span class="listing">type</span> von Events zeigt Ihnen, dass sich <span class="listing">SDL_MOUSEMOTION</span> (ganz wichtiges Event f&uuml;r Ego-Shooter) auf die Struktur <span class="listing">SDL_MouseMotionEvent</span> bezieht. Wenn Sie sich jetzt die Struktur dazu ansehen, dann wissen Sie, welche Informationen Sie hieraus ermitteln k&ouml;nnen:</p>
+<pre>typedef struct {
+  Uint8 type;
+  Uint8 state;
+  Uint16 x, y;
+  Sint16 xrel, yrel;
+} SDL_MouseMotionEvent;</pre>
+<p>Die ersten beiden Strukturvariablen haben im Prinzip dieselbe Bedeutung und enthalten den Typen des Ereignisses – in <span class="listing">type</span> befindet sich <span class="listing">SDL_MOUSEMOTION</span> und in <span class="listing">state</span> der Status des Buttons, wenn dieser gerade gedr&uuml;ckt wurde. Die aktuellen Koordinaten finden Sie in <span class="listing">x</span>, <span class="listing">y</span>, und die relativen Koordinaten zu <span class="listing">x</span>, <span class="listing">y</span> finden Sie in <span class="listing">xrel</span> und <span class="listing">yrel</span>.</p>
+<p>Nat&uuml;rlich wollen Sie jetzt auch noch wissen, wie Sie an diese Informationen herankommen. Hierzu nochmals ein Ausschnitt der Struktur <span class="listing">SDL_Event</span> (schlie&szlig;lich ist die Struktur <span class="listing">SDL_MouseMotionEvent</span> ehrenvolles Mitglied):</p>
+<pre>typedef union {
+  Uint8 type;
+  SDL_ActiveEvent active;
+  SDL_KeyboardEvent key;
+  SDL_MouseMotionEvent motion;  /* Danach suchen wir ... */
+  SDL_MouseButtonEvent button;
+   ...
+   ...
+  SDL_SywWMEvent syswm;
+} SDL_Event;</pre>
+<p>Mithilfe der Strukturvariablen <span class="listing">motion</span> k&ouml;nnen Sie jetzt auf die einzelnen Mitglieder der Struktur <span class="listing">SDL_MouseMotionEvent</span> zugreifen:</p>
+<pre>switch(event.type) {
+      case SDL_MOUSEMOTION:
+      printf ("Mouse-Motion: ");
+      printf ("Neue Position (x:%d,y:%d). ",
+         event.motion.x, event.motion.y);
+      printf ("Ver&auml;nderung zur alten Pos.:(%i,%i)\n",
+         event.motion.xrel, event.motion.yrel);
+      break;
+}</pre>
+<p>Und &auml;hnlich einfach k&ouml;nnen Sie die Informationen des <span class="listing">type</span> <span class="listing">SDL_MOUSEBUTTONDOWN</span> und <span class="listing">SDL_MOUSEBUTTONUP</span> abfragen.</p>
+<pre>switch(event.type) {
+   case SDL_MOUSEBUTTONDOWN :  /* Die Maus wurde geklickt */
+ }</pre>
+<p>Das Mitglied der Struktur <span class="listing">SDL_Event</span> hierf&uuml;r ist die Struktur <span class="listing">SDL_MouseButtonEvent</span> und folgenderma&szlig;en definiert:</p>
+<pre>typedef struct {
+  Uint8 type;
+  Uint8 button;
+  Uint8 state;
+  Uint16 x, y;
+} SDL_MouseButtonEvent;</pre>
+<p>In <span class="listing">type</span> finden Sie die Information des Events, ob es sich hierbei um <span class="listing">SDL_MOUSEBUTTONDOWN</span> oder <span class="listing">SDL_MOUSEBUTTONUP</span> handelt. <span class="listing">button</span> enth&auml;lt den Button, der gedr&uuml;ckt wurde (linker, mittlerer, rechter). Hierf&uuml;r gibt es auch die symbolischen Konstanten <span class="listing">SDL_BUTTON_LEFT</span>, <span class="listing">SDL_BUTTON_MIDDLE</span>, <span class="listing">SDL_BUTTON_RIGHT</span>. Mit <span class="listing">state</span> erfahren Sie, ob die Maus gedr&uuml;ckt oder losgelassen wurde (<span class="listing">SDL_PRESSED</span> oder <span class="listing">SDL_RELEASED</span>) – was im Endeffekt <span class="listing">type</span> entspricht. Und in <span class="listing">x</span> und <span class="listing">y</span> stehen die x-, y-Koordinaten, wo der Button (vom linken oberen Fenstereck aus) gedr&uuml;ckt wurde. Der Mitgliedsname von <span class="listing">SDL_MouseButtonEvent</span> in der Struktur <span class="listing">SDL_Event</span> lautet <span class="listing">button</span>. Somit k&ouml;nnen Sie die Informationen zum Klicken eines Buttons folgenderma&szlig;en ermitteln:</p>
+<pre>switch(event.type) {
+   case SDL_MOUSEBUTTONDOWN :  /* Die Maus wurde geklickt */
+           printf ("[Button (%d) an Position (x:%d,y:%d)]\n",
+           event.button.button, event.button.x, event.button.y);
+           break;
+}</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">16.11.3 Programmbeispiel – Maus-Event<a id="RxxKap16010040005B81F0331A1" name="RxxKap16010040005B81F0331A1"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Genug der Theorie. Im folgenden Beispiel finden Sie einen leeren Weltraum, durch den Sie sich durch Anklicken der Pfeiltasten scrollen k&ouml;nnen. Anbei werden die Informationen der Maus auch auf der Konsole ausgegeben. Lassen Sie sich von dem vielen Drumherum nicht st&ouml;ren, und befassen Sie sich ausschlie&szlig;lich mit dem Abfangen der Maus-Events in der Funktion <span class="listing">eventloop()</span>.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Auch wenn Ihnen der Code recht komplex erscheinen mag, in Sachen SDL finden Sie dabei nichts Neues – abgesehen davon, dass der Code ein wenig modularer aufgebaut wurde.</p>
+</td>
+</tr>
+</table><br>
+<pre><a id="Xxx999357" name="Xxx999357"></a>/* sdl7.c */
+#include &lt;SDL/SDL.h&gt;
+#include &lt;SDL/SDL_image.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+/* Wie viele Universen sind auf dem Bildschirm? */
+#define UNIVERSES 50
+struct universum {
+  int x, y; /* Koordinaten des Universums */
+  int type; /* Welches Bild wird f&uuml;r die Universen verwendet? */
+};
+struct universum univ[UNIVERSES];
+/* Verschiedene Surfaces */
+static SDL_Surface *screen;
+static SDL_Surface *left, *up, *right, *down, *background;
+/* Farbwert Schwarz */
+static Uint32 black;
+static int y_scrolling = 0, x_scrolling = 0;
+static void RandBackground () {
+  int i;
+  int num_types;
+  num_types = background-&gt;w / 16;
+  for (i = 0; i &lt; UNIVERSES; i++) {
+    univ[i].x = rand () &amp; 1023;
+    univ[i].y = rand () &amp; 511;
+    univ[i].type = rand () % num_types;
+  }
+}
+static void DrawBackground (int xn, int yn) {
+  int i;
+  for (i = 0; i &lt; UNIVERSES; i++) {
+    SDL_Rect src;
+    SDL_Rect dest;
+    src.x = univ[i].type * 16;
+    src.y = 0;
+    src.w = 16;
+    src.h = 16;
+    dest.x = (univ[i].x - xn) &amp; 1023 - 16;
+    dest.y = (univ[i].y - yn) &amp; 511 - 16;
+    SDL_BlitSurface (background, &amp;src, screen, &amp;dest);
+  }
+}
+static void RS_Blit (SDL_Surface * bitmap, Sint16 x, Sint16 y) {
+  SDL_Rect dest, src;
+  dest.x = x;
+  dest.y = y;
+  dest.w = bitmap-&gt;w;
+  dest.h = bitmap-&gt;h;
+  src.x = 0;
+  src.y = 0;
+  src.w = bitmap-&gt;w;
+  src.h = bitmap-&gt;h;
+  SDL_BlitSurface (bitmap, &amp;src, screen, &amp;dest);
+  SDL_UpdateRects (screen, 1, &amp;dest);
+}
+static SDL_Surface *load_image (char *file) {
+  static SDL_Surface *image, *temp;
+  temp = IMG_Load (file);
+  image = SDL_DisplayFormat (temp);
+  if (image == NULL) {
+    printf ("Konnte Grafik nicht laden: %s\n",SDL_GetError ());
+    return NULL;
+  }
+  SDL_FreeSurface (temp);
+  return (image);
+}
+static int eventloop (void) {
+  SDL_Event event;
+  while (SDL_PollEvent (&amp;event) != 0) {
+    switch (event.type) {
+    case SDL_MOUSEBUTTONDOWN:
+      if ((event.button.x &gt; up-&gt;w)
+            &amp;&amp; (event.button.x &lt; up-&gt;w * 2)
+            &amp;&amp; (event.button.y &gt; 0)
+            &amp;&amp; (event.button.y &lt; up-&gt;w)) {
+        y_scrolling -= 12;
+        printf ("Pfeil nach oben angeklickt ");
+        printf ("[Button (%d) an Position (x:%d,y:%d)]\n",
+           event.button.button, event.button.x, event.button.y);
+      } 
+      else if ((event.button.x &gt; 0)
+            &amp;&amp; (event.button.x &lt; left-&gt;w)
+            &amp;&amp; (event.button.y &gt; left-&gt;h)
+            &amp;&amp; (event.button.y &lt; left-&gt;h * 2)) {
+        x_scrolling -= 12;
+        printf ("Pfeil nach links angeklickt\n");
+        printf ("[Button (%d) an Position (x:%d,y:%d)]\n",
+           event.button.button, event.button.x, event.button.y);
+      } 
+      else if ((event.button.x &gt; down-&gt;w)
+            &amp;&amp; (event.button.x &lt; down-&gt;w * 2)
+            &amp;&amp; (event.button.y &gt; down-&gt;h * 2)
+            &amp;&amp; (event.button.y &lt; down-&gt;h * 3)) {
+        y_scrolling += 12;
+        printf ("Pfeil nach unten angeklickt\n");
+        printf ("[Button (%d) an Position (x:%d,y:%d)]\n",
+           event.button.button, event.button.x, event.button.y);
+      } 
+      else if ((event.button.x &gt; right-&gt;w * 2)
+            &amp;&amp; (event.button.x &lt; right-&gt;w * 3)
+            &amp;&amp; (event.button.y &gt; right-&gt;h)
+            &amp;&amp; (event.button.y &lt; right-&gt;h * 2)) {
+        x_scrolling += 12;
+        printf ("Pfeil nach rechts angeklickt\n");
+        printf ("[Button (%d) an Position (x:%d,y:%d)]\n",
+           event.button.button, event.button.x, event.button.y);
+      } 
+      else {
+        printf ("Maus-Button (%d) gedr&uuml;ckt an Position "
+            " (x:%d,y:%d)]\n",
+            event.button.button, event.button.x, event.button.y);
+      }
+      break;
+    case SDL_MOUSEMOTION:
+      printf ("Mouse-Motion: ");
+      printf ("Neue Position (x:%d,y:%d). ",
+         event.motion.x, event.motion.y);
+      printf ("Ver&auml;nderung zur alten Pos.:(%i,%i)\n",
+         event.motion.xrel, event.motion.yrel);
+      break;
+    case SDL_QUIT:
+      printf ("Quit event. Bye.\n");
+      exit (EXIT_SUCCESS);
+    }
+  }
+  return 1;
+}
+int main (void) {
+  int done = 1;
+  if (SDL_Init (SDL_INIT_VIDEO) != 0) {
+    printf ("Konnte SDL nicht initialisieren: %s\n",
+       SDL_GetError ());
+    return EXIT_FAILURE;
+  }
+  atexit (SDL_Quit);
+  screen = SDL_SetVideoMode (640, 480, 16,
+                             SDL_DOUBLEBUF | SDL_HWSURFACE);
+  if (screen == NULL) {
+    printf ("Kann Videomodus nicht setzen: %s\n",
+       SDL_GetError ());
+    return EXIT_FAILURE;
+  }
+  srand (time (0));
+  up = load_image ("up.png");
+  right = load_image ("right.png");
+  down = load_image ("down.png");
+  left = load_image ("left.png");
+  background = load_image ("background1.png");
+  RandBackground ();
+  black = SDL_MapRGB (screen-&gt;format, 0, 0, 0);
+  SDL_FillRect (screen, 0, black);
+  DrawBackground (0, 0);
+  RS_Blit (up, up-&gt;h, 0);
+  RS_Blit (left, 0, left-&gt;w);
+  RS_Blit (down, down-&gt;h, down-&gt;w * 2);
+  RS_Blit (right, down-&gt;h * 2, left-&gt;w);
+  SDL_UpdateRect (screen, 0, 0, 0, 0);
+  while (done) {
+    done = eventloop ();
+    SDL_FillRect (screen, 0, black);
+    DrawBackground (x_scrolling, y_scrolling);
+    RS_Blit (up, up-&gt;h, 0);
+    RS_Blit (left, 0, left-&gt;w);
+    RS_Blit (down, down-&gt;h, down-&gt;w * 2);
+    RS_Blit (right, down-&gt;h * 2, left-&gt;w);
+    SDL_Flip (screen);
+  }
+  /* Ressourcen wieder freigeben */
+  SDL_FreeSurface (up);
+  SDL_FreeSurface (down);
+  SDL_FreeSurface (right);
+  SDL_FreeSurface (left);
+  SDL_FreeSurface (background);
+  SDL_FreeSurface (screen);
+  return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc `sdl-config --libs` `sdl-config --cflags` -o \
+  sdl7 sdl7.c -lSDL_image
+$ ./sdl7
+...
+Mouse-Motion: Neue Position (x:20,y:391). Ver&auml;nderung zur alten Pos.:(-1,0)
+Mouse-Motion: Neue Position (x:19,y:391). Ver&auml;nderung zur alten Pos.:(-1,0)
+Maus-Button (1) gedr&uuml;ckt an Position (x:19,y:391)]
+Maus-Button (3) gedr&uuml;ckt an Position (x:19,y:391)]
+Maus-Button (1) gedr&uuml;ckt an Position (x:19,y:391)]
+Mouse-Motion: Neue Position (x:17,y:391). Ver&auml;nderung zur alten Pos.:(-2,0)
+Mouse-Motion: Neue Position (x:16,y:391). Ver&auml;nderung zur alten Pos.:(-1,0)
+Mouse-Motion: Neue Position (x:15,y:391). Ver&auml;nderung zur alten Pos.:(-1,0)
+Maus-Button (3) gedr&uuml;ckt an Position (x:15,y:391)]
+Maus-Button (3) gedr&uuml;ckt an Position (x:15,y:391)]
+Mouse-Motion: Neue Position (x:16,y:392). Ver&auml;nderung zur alten Pos.:(1,1)
+...</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/16_5.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein16_5.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 16.5   
+    </b>Mit Mausklick auf den Pfeilen durchs Universum scrollen</p>
+</td>
+</tr>
+</table><br>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">16.11.4 Tastatur-Events<a id="RxxKap16010040005B81F0331AA" name="RxxKap16010040005B81F0331AA"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999369" name="Xxx999369"></a>&Auml;hnlich wie bei den Maus-Events k&ouml;nnen Sie auch bei den Events von der Tastatur vorgehen. Ein solches Event ist aufgetreten, wenn in der Strukturvariablen <span class="listing">type</span> mit <span class="listing">SDL_KEYDOWN</span> oder <span class="listing">SDL_KEYUP</span> gesetzt ist. <span class="listing">SDL_KEYDOWN</span> steht f&uuml;r das Dr&uuml;cken einer Taste und <span class="listing">SDL_KEYUP</span> f&uuml;r das Loslassen.</p>
+<pre>switch(event.type) {
+   case SDL_KEYDOWN :  /* Eine Taste wurde gedr&uuml;ckt */
+}</pre>
+<p>Ist also z. B. das Event <span class="listing">SDL_KEYDOWN</span> aufgetreten, finden Sie in der Struktur <span class="listing">SDL_Event</span> eine Strukturvariable namens <span class="listing">SDL_KeyboardEvent</span>, die folgende Mitglieder beinhaltet:</p>
+<pre>typedef struct {
+  Uint8 type;
+  Uint8 state;
+  SDL_keysym keysym;
+} SDL_KeyboardEvent;</pre>
+<p>In <span class="listing">type</span> befindet sich der Event des Tastaturereignisses (<span class="listing">SDL_KEYDOWN</span> oder <span class="listing">SDL_KEYUP</span>). <span class="listing">state</span> entspricht hierbei auch wieder demselben wie <span class="listing">type</span>, worin sich im Grunde dieselben Informationen (<span class="listing">SDL_PRESSED</span> oder <span class="listing">SDL_RELEASED</span>) befinden. Anders sieht es schon mit der Strukturvariablen <span class="listing">keysym</span> vom Typ <span class="listing">SDL_Keysym</span> aus – was letztendlich eine weitere Struktur darstellt.</p>
+<p>Somit m&uuml;ssen Sie bei den Tastatur-Events noch eine Etage tiefer forschen. In der Struktur <span class="listing">SDL_Keysym</span> befinden sich wiederum folgende Mitglieder:</p>
+<pre>typedef struct {
+  Uint8 scancode;
+  SDLKey sym;
+  SDLMod mod;
+  Uint16 unicode;
+} SDL_keysym;</pre>
+<p>Der erste Wert ist der <span class="listing">Scancode</span> – was ein Wert von der Hardware ist, den Sie aber im Grunde nicht ben&ouml;tigen. In <span class="listing">sym</span> werden die ASCII-Werte des Tastendrucks gespeichert. Wurde zus&auml;tzlich eine Modifier-Taste (<b>(ª)</b>, <b>(Alt)</b>, <b>(º_)</b> ...) gedr&uuml;ckt, finden Sie diesen Wert in <span class="listing">mod</span> wieder. Mehrere Tastenwerte eines Modifiers k&ouml;nnen nat&uuml;rlich mit einem bitweisen ODER verkn&uuml;pft werden. F&uuml;r einen internationalen Zeichensatz steht Ihnen noch die Variable <span class="listing">unicode</span> zur Verf&uuml;gung.</p>
+<p>Die Werte f&uuml;r <span class="listing">SDLKey</span> und <span class="listing">SDLMod</span> sind in der Headerdatei <span class="listing">SDL_Keysym.h</span> definiert. Werte von <span class="listing">SDLKey</span> beginnen alle mit dem Pr&auml;fix <span class="listing">SDLK_</span> und Werte von <span class="listing">SDLMod</span> mit dem Pr&auml;fix <span class="listing">KMOD_</span>. Einige Beispiele f&uuml;r den ASCII-Wert eines Tastendrucks finden Sie in der folgenden Tabelle (mehr entnehmen Sie bitte der Headerdatei <span class="listing">SDL_Keysym.h</span>):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 16.4   
+    </b>Einige Werte f&uuml;r SDLKey aus der Headerdatei SDL_Keysym.h</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>SDLKey</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>ASCII-Wert</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bezeichnung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_BACKSPACE
+</td>
+<td class="tabellentext" bgcolor="#000000">'\b'
+</td>
+<td class="tabellentext" bgcolor="#000000">backspace
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_TAB
+</td>
+<td class="tabellentext" bgcolor="#000000">'\t'
+</td>
+<td class="tabellentext" bgcolor="#000000">tabulator
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_CLEAR
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">clear
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_RETURN
+</td>
+<td class="tabellentext" bgcolor="#000000">'\r'
+</td>
+<td class="tabellentext" bgcolor="#000000">return
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_PAUSE
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">pause
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_ESCAPE
+</td>
+<td class="tabellentext" bgcolor="#000000">'^['
+</td>
+<td class="tabellentext" bgcolor="#000000">escape
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_SPACE
+</td>
+<td class="tabellentext" bgcolor="#000000">' '
+</td>
+<td class="tabellentext" bgcolor="#000000">space
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_EXCLAIM
+</td>
+<td class="tabellentext" bgcolor="#000000">'!'
+</td>
+<td class="tabellentext" bgcolor="#000000">exclaim
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_QUOTEDBL
+</td>
+<td class="tabellentext" bgcolor="#000000">'"'
+</td>
+<td class="tabellentext" bgcolor="#000000">quotedbl
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_0
+</td>
+<td class="tabellentext" bgcolor="#000000">'0'
+</td>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_1
+</td>
+<td class="tabellentext" bgcolor="#000000">'1'
+</td>
+<td class="tabellentext" bgcolor="#000000">1
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_2
+</td>
+<td class="tabellentext" bgcolor="#000000">'2'
+</td>
+<td class="tabellentext" bgcolor="#000000">2
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_a
+</td>
+<td class="tabellentext" bgcolor="#000000">'a'
+</td>
+<td class="tabellentext" bgcolor="#000000">a
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_b
+</td>
+<td class="tabellentext" bgcolor="#000000">'b'
+</td>
+<td class="tabellentext" bgcolor="#000000">b
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_c
+</td>
+<td class="tabellentext" bgcolor="#000000">'c'
+</td>
+<td class="tabellentext" bgcolor="#000000">c
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_UP
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">up arrow
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_DOWN
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">down arrow
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_RIGHT
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">right arrow
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDLK_LEFT
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">left arrow
+</td>
+</tr>
+</table><br>
+<p>Nat&uuml;rlich k&ouml;nnen Sie z. B. auch den ASCII-Wert der linken <b>(Ctrl)</b>-Taste mit <span class="listing">SDLK_LCTRL</span> ermitteln. Um aber bestimmte Modifier-Abfragen (<span class="listing">SDLMod</span>) zu machen, k&ouml;nnen Sie folgende symbolische Konstanten verwenden:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 16.5   
+    </b>SDL Modifier und ihre Bedeutung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>SDL Modifier</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_NONE
+</td>
+<td class="tabellentext" bgcolor="#000000">keine Modifiers ausgef&uuml;hrt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_NUM
+</td>
+<td class="tabellentext" bgcolor="#000000">Numlock gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_CAPS
+</td>
+<td class="tabellentext" bgcolor="#000000">Capslock gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_LCTRL
+</td>
+<td class="tabellentext" bgcolor="#000000">linke Control-Taste gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_RCTRL
+</td>
+<td class="tabellentext" bgcolor="#000000">rechte Control-Taste gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_RSHIFT
+</td>
+<td class="tabellentext" bgcolor="#000000">rechte Shift-Taste gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_LSHIFT
+</td>
+<td class="tabellentext" bgcolor="#000000">linke Shift-Taste gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_RALT
+</td>
+<td class="tabellentext" bgcolor="#000000">rechte Alt-Taste gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_LALT
+</td>
+<td class="tabellentext" bgcolor="#000000">linke Alt-Taste gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_CTRL
+</td>
+<td class="tabellentext" bgcolor="#000000">eine Control-Taste gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_SHIFT
+</td>
+<td class="tabellentext" bgcolor="#000000">eine Shift-Taste gedr&uuml;ckt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">KMOD_ALT
+</td>
+<td class="tabellentext" bgcolor="#000000">eine Alt-Taste gedr&uuml;ckt
+</td>
+</tr>
+</table><br>
+<p>Wollen Sie jetzt wissen, ob die Pfeil-nach-links-Taste gedr&uuml;ckt wurde, k&ouml;nnen Sie folgenderma&szlig;en vorgehen:</p>
+<pre>SDL_keysym keysym;
+switch (event.type) {
+case SDL_KEYDOWN:
+   keysym = event.key.keysym;
+   switch (keysym.sym) {
+   case SDLK_LEFT: /* ASCII-Wert f&uuml;r Pfeil-nach-links gelesen */
+                      ...
+    }
+...</pre>
+<p>Nat&uuml;rlich m&uuml;ssen Sie den Typ <span class="listing">SDL_keysym</span> nicht extra deklarieren. Sie k&ouml;nnen auch &uuml;ber – angefangen von der Struktur <span class="listing">SDL_Event</span>, worin der Name von <span class="listing">SDL_KeyboardEvent</span> <span class="listing">key</span> lautet, worin sich wiederum die Strukturvariable <span class="listing">SDL_keysym</span> namens <span class="listing">keysym</span> befindet – <span class="listing">SDL_keysym</span> auf den ASCII-Wert von <span class="listing">SDL_key</span> namens <span class="listing">sym</span> zugreifen (ziemlich tief greifend, aber dennoch &uuml;bersichtlich) – was in der Praxis so aussieht:</p>
+<pre>switch(event.type) {
+    case SDL_KEYDOWN:
+        if(event.key.keysym.sym == SDLK_LEFT)
+         /* ASCII-Wert f&uuml;r Pfeil-nach-links gelesen */</pre>
+<p>Bei den Modifiers k&ouml;nnen Sie ganz &auml;hnlich vorgehen. Wollen Sie z. B. wissen, ob die linke <b>(ª)</b>-Taste gedr&uuml;ckt wurde, w&auml;hrend gleichzeitig eine andere ASCII-Taste gedr&uuml;ckt wurde (bitte nicht verwechseln – bei den Modifiers gilt <b>nicht</b> <b>nur</b> das Dr&uuml;cken einer Modifier-Taste!), gehen Sie folgenderma&szlig;en vor:</p>
+<pre>if(event.key.keysym.mod &amp; KMOD_LSHIFT)
+/* die linke Shift-Taste wurde in Kombination mit einer */
+/* anderen ASCII-Taste gedr&uuml;ckt                    */</pre>
+<p>Ben&ouml;tigen Sie den Namen einer Taste, die gedr&uuml;ckt wurde, k&ouml;nnen Sie die Funktion</p>
+<pre>char *SDL_GetKeyName(SDLKey key);</pre>
+<p>verwenden. Diese gibt Ihnen bei Erfolg den SDL-Namen des Tastendrucks wieder.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">16.11.5 Programmbeispiel – Tastatur-Events<a id="RxxKap16010040005B81F03321B" name="RxxKap16010040005B81F03321B"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Zu den Tastatur-Events soll jetzt das Anwendungsbeispiel, das schon bei den Maus-Events verwendet wurde, erweitert werden. Ver&auml;ndert wurde in diesem Beispiel eigentlich nur die Funktion <span class="listing">eventloop()</span> – weshalb auch nur diese hier abgedruckt wird. Erweitern Sie einfach diese Funktion vom Beispiel zuvor um die Tastatur-Events (oder verwenden Sie einfach den Code von der Buch-CD, wenn Sie keine Lust zum Tippen haben). F&uuml;gen Sie au&szlig;erdem in der <span class="listing">main()</span>-Funktion noch vor der Event-Schleife Folgendes ein:</p>
+<pre>...
+   SDL_EnableKeyRepeat (SDL_DEFAULT_REPEAT_DELAY,
+                        SDL_DEFAULT_REPEAT_INTERVAL);
+   while (done) {
+      done = eventloop ();
+      SDL_FillRect (screen, 0, black);
+      DrawBackground (x_scrolling, y_scrolling);
+      RS_Blit (up, up-&gt;h, 0);
+      RS_Blit (left, 0, left-&gt;w);
+      RS_Blit (down, down-&gt;h, down-&gt;w * 2);
+      RS_Blit (right, down-&gt;h * 2, left-&gt;w);
+      SDL_Flip (screen);
+   }
+...</pre>
+<p>Damit schalten Sie die Wiederholungsrate der Tastatur ein. Mit dem ersten Parameter geben Sie an, wie lange eine Taste gedr&uuml;ckt werden muss, bevor die Wiederholung des Tastendrucks beginnt. Mit dem zweiten Parameter geben Sie das Intervall an, womit die Wiederholung ausgef&uuml;hrt wird. Beide Angaben erfolgen in Millisekunden. Im Beispiel werden allerdings jeweils Standardwerte verwendet. Mit dieser Funktion sorgen Sie beim Scrollen in einer Richtung daf&uuml;r, dass beim dauerhaften Dr&uuml;cken der Taste auch weiterhin gescrollt wird und Sie nicht wie wild auf Ihre Pfeiltasten h&auml;mmern m&uuml;ssen. Die Tastendr&uuml;cke, bei denen keine Pfeiltaste gedr&uuml;ckt wurde, werden wieder auf der Konsole ausgegeben.</p>
+<pre><a id="Xxx999585" name="Xxx999585"></a>static int eventloop (void) {
+   SDL_Event event;
+   while (SDL_PollEvent (&amp;event) != 0) {
+      SDL_keysym keysym;
+      switch (event.type) {
+      case SDL_KEYDOWN:
+         keysym = event.key.keysym;
+         switch (keysym.sym) {
+         case SDLK_LEFT:
+            x_scrolling -= 12;
+            break;
+         case SDLK_RIGHT:
+            x_scrolling += 12;
+            break;
+         case SDLK_UP:
+            y_scrolling -= 12;
+            break;
+         case SDLK_DOWN:
+            y_scrolling += 12;
+            break;
+         default:
+            printf ("Taste gedr&uuml;ckt. ");
+            printf ("SDL keysym ist %i. ", keysym.sym);
+            printf ("(%s) ", SDL_GetKeyName (keysym.sym));
+            printf ("linke Umschalttaste %s gedr&uuml;ckt\n",
+            (event.key.keysym. mod &amp; KMOD_LSHIFT) ?
+            "ist" : "nicht");
+            if (keysym.sym == SDLK_ESCAPE) {
+               printf ("ESCAPE f&uuml;r Ende gedr&uuml;ckt .\n");
+               exit (EXIT_FAILURE);
+            }
+         }
+         break;
+      case SDL_MOUSEBUTTONDOWN:
+         if ((event.button.x &gt; up-&gt;w)
+               &amp;&amp; (event.button.x &lt; up-&gt;w * 2)
+               &amp;&amp; (event.button.y &gt; 0)
+               &amp;&amp; (event.button.y &lt; up-&gt;w)) {
+            y_scrolling -= 12;
+            printf ("Pfeil nach oben angeklickt ");
+            printf ("[Button (%d) an Position (x:%d,y:%d)]\n",
+            event.button.button, event.button.x, event.button.y);
+         }
+         else if ((event.button.x &gt; 0)
+               &amp;&amp; (event.button.x &lt; left-&gt;w)
+               &amp;&amp; (event.button.y &gt; left-&gt;h)
+               &amp;&amp; (event.button.y &lt; left-&gt;h * 2)) {
+            x_scrolling -= 12;
+            printf ("Pfeil nach links angeklickt\n");
+            printf ("[Button (%d) an Position (x:%d,y:%d)]\n",
+            event.button.button, event.button.x, event.button.y);
+         }
+         else if ((event.button.x &gt; down-&gt;w)
+               &amp;&amp; (event.button.x &lt; down-&gt;w * 2)
+               &amp;&amp; (event.button.y &gt; down-&gt;h * 2)
+               &amp;&amp; (event.button.y &lt; down-&gt;h * 3)) {
+            y_scrolling += 12;
+            printf ("Pfeil nach unten angeklickt\n");
+            printf ("[Button (%d) an Position (x:%d,y:%d)]\n",
+            event.button.button, event.button.x, event.button.y);
+         }
+         else if ((event.button.x &gt; right-&gt;w * 2)
+               &amp;&amp; (event.button.x &lt; right-&gt;w * 3)
+               &amp;&amp; (event.button.y &gt; right-&gt;h)
+               &amp;&amp; (event.button.y &lt; right-&gt;h * 2)) {
+            x_scrolling += 12;
+            printf ("Pfeil nach rechts angeklickt\n");
+            printf ("[Button (%d) an Position (x:%d,y:%d)]\n",
+            event.button.button, event.button.x, event.button.y);
+         }
+         else {
+            printf ("Maus-Button (%d) gedr&uuml;ckt an Position " 
+                    " (x:%d,y:%d)]\n",
+            event.button.button, event.button.x, event.button.y);
+         }
+         break;
+      case SDL_MOUSEMOTION:
+         printf ("Mouse-Motion: ");
+         printf ("Neue Position (x:%d,y:%d). ",
+            event.motion.x, event.motion.y);
+         printf ("Ver&auml;nderung zur alten Pos.:(%i,%i)\n",
+            event.motion.xrel, event.motion.yrel);
+         break;
+      case SDL_QUIT:
+         printf ("Quit event. Bye.\n");
+         exit (EXIT_FAILURE);
+      }
+   }
+   return 1;
+}</pre>
+<p>Einen Screenshot kann ich mir hierzu ersparen, da das Bild dasselbe ist wie schon bei der Event-Behandlung der Maus, nur dass Sie sich hier jetzt auch mit der Tastatur durch den Weltraum scrollen k&ouml;nnen.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">16.11.6 Joystick-Events<a id="RxxKap16010040005B81F033221" name="RxxKap16010040005B81F033221"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999589" name="Xxx999589"></a>Joysticks sind bei vielen Spielen nicht wegzudenken. Daher unterst&uuml;tzt SDL auch diese Eingabeger&auml;te – mitsamt den Achsen POV Hats und Trackballs. Um allerdings Joysticks zu verwenden, m&uuml;ssen Sie beim Initialisieren mit <span class="listing">SDL_Init()</span> das Flag <span class="listing">SDL_INIT_JOYSTICK</span> mit angeben (und nat&uuml;rlich auch entsprechende Kernel-Module laden!).</p>
+<h4 class="t4">Joystick-Informationen</h4>
+<p>Um einen Joystick &uuml;berhaupt verwenden zu k&ouml;nnen, m&uuml;ssen Sie diesen erst mit der Funktion <span class="listing">SDL_JoystickOpen()</span> &ouml;ffnen.</p>
+<pre>SDL_Joystick *SDL_JoystickOpen(int index);</pre>
+<p>Mit dem <span class="listing">index</span> geben Sie die Nummer des Joysticks (beginnend bei 0) an – da es ja hier auch mehrere Joysticks auf dem System geben kann. Bei Erfolg erhalten Sie einen Zeiger auf die <span class="listing">SDL_Joystick</span>-Struktur, bei einem Fehler erhalten Sie <span class="listing">NULL</span> zur&uuml;ck.</p>
+<p>Jetzt k&ouml;nnen Sie sich einige Informationen zum Joystick auslesen lassen.</p>
+<pre>const char *SDL_JoystickName<a id="Xxx999596" name="Xxx999596"></a>(int index);
+int SDL_JoystickNumAxes<a id="Xxx999598" name="Xxx999598"></a>(SDL_Joystick *joystick);
+int SDL_JoystickNumBalls<a id="Xxx999599" name="Xxx999599"></a>(SDL_Joystick *joystick);
+int SDL_JoystickNumHats<a id="Xxx999600" name="Xxx999600"></a>(SDL_Joystick *joystick);
+int SDL_JoystickNumButtons<a id="Xxx999601" name="Xxx999601"></a>(SDL_Joystick *joystick);</pre>
+<p>Anhand der Namen l&auml;sst sich schon erkennen, um was f&uuml;r Informationen es sich hierbei handelt. Einen Zeiger auf den Namen des Joysticks gibt Ihnen die Funktion <span class="listing">SDL_JoystickName()</span> unter Angabe des entsprechenden Joystick-Index (erster Joystick = 0; ...) zur&uuml;ck. Die Anzahl der Achsen bekommen Sie mit <span class="listing">SDL_JoystickAxes()</span>, die Anzahl der Trackballs mit <span class="listing">SDL_JoystickBalls()</span>, die Anzahl der Hats mit <span class="listing">SDLJoystickHats()</span> und die Anzahl der Buttons mit <span class="listing">SDL_JoystickButtons()</span> zur&uuml;ck. Wobei all diese Funktionen als Parameter einen Zeiger auf die Struktur von <span class="listing">SDL_Joystick</span> ben&ouml;tigen, den Sie zuvor mit <span class="listing">SDL_JoystickOpen()</span> erhalten haben.</p>
+<p>Wenn Sie mit dem Arbeiten (besser dem Spielen) des Joysticks fertig sind, dann sollten Sie diesen mit <span class="listing">SDL_JoystickClose()<a id="Xxx999604" name="Xxx999604"></a></span> wieder schlie&szlig;en.</p>
+<pre>void SDL_JoystickClose(SDL_Joystick *joystick);</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bei einem Blick in die Dokumentation d&uuml;rften Ihnen weitere Joystick-Funktionen auffallen. Mit diesen Funktionen besteht die M&ouml;glichkeit, den Joystick auch ohne eine Event-Schleife zu behandeln. Allerdings m&uuml;ssen Sie dabei immer selbst die Funktion <span class="listing">SDL_JoystickUpdate()</span> aufrufen, was Ihnen bei einer Event-Behandlung abgenommen wird. In der Praxis wird die Joystick-Behandlung via Events empfohlen.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Joystick-Events</h4>
+<p>Am besten kann man mit den Eingabedaten eines Joysticks arbeiten, indem man Events dazu verwendet. Bei einem Blick auf die <span class="listing">SDL_Event</span>-Struktur finden Sie hierf&uuml;r gleich mehrere Eintr&auml;ge:</p>
+<pre>typedef union {
+  Uint8 type;
+  ... 
+  SDL_JoyAxisEvent jaxis;
+  SDL_JoyBallEvent jball;
+  SDL_JoyHatEvent jhat;
+  SDL_JoyButtonEvent jbutton;
+  ...
+} SDL_Event;</pre>
+<p>Je nach <span class="listing">type</span> der Events, die auftreten k&ouml;nnen, k&ouml;nnen Sie das Ereignis des Joysticks auslesen. Da diese Tabelle schon ein paar Seiten zur&uuml;ckliegt, hier nochmals die Auflistung der Joystick-Events:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 16.6   
+    </b>Events, die in Verbindung mit einem Joystick stehen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Event-type</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Event-Struktur</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_JOYAXISMOTION
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_JoyAxisEvent
+</td>
+<td class="tabellentext" bgcolor="#000000">Achse des Joysticks wurde bewegt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_JOYBALLMOTION
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_JoyBallEvent
+</td>
+<td class="tabellentext" bgcolor="#000000">Trackball wurde bewegt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_JOYHATMOTION
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_JoyHatEvent
+</td>
+<td class="tabellentext" bgcolor="#000000">Hat des Joysticks wurde bet&auml;tigt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SDL_JOYBUTTONDOWN
+SDL_JOYBUTTONUP
+</td>
+<td class="tabellentext" bgcolor="#000000">SDL_JoyButtonEvent
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Button des Joysticks wurde bet&auml;tigt bzw. losgelassen.
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Um auch Events vom Joystick verarbeiten zu k&ouml;nnen, muss dieser zuvor mit <span class="listing">SDL_JoystickOpen()</span> ge&ouml;ffnet werden!</p>
+</td>
+</tr>
+</table><br>
+<p>Wurden z. B. die Achsen (oder auch das Steuerkreuz) des Joysticks bet&auml;tigt, so tritt das Event <span class="listing">SDL_JOYAXISMOTION</span> auf.</p>
+<pre>switch (event.type) {
+     case SDL_JOYAXISMOTION: /* Achse bewegt */
+   }</pre>
+<p>Die jetzt ben&ouml;tigten Informationen finden Sie in der Struktur <span class="listing">SDL_JoyAxisEvent</span>, die wie folgt aussieht:</p>
+<pre>typedef struct {
+  Uint8 type;
+  Uint8 which;
+  Uint8 axis;
+  Sint16 value;
+} SDL_JoyAxisEvent;</pre>
+<p>In <span class="listing">type</span> finden Sie wie immer das Event, das aufgetreten ist (<span class="listing">SDL_JOYAXISMOTION</span>). Auf welchen Joystick sich das Event bezieht, finden Sie in <span class="listing">which</span>. Die Nummer des Index der Joystick-Achse befindet sich in <span class="listing">axis</span> und der Wert (variiert zwischen –32768 und 32767) in <span class="listing">value</span>. Somit k&ouml;nnen Sie die Informationen aus der Achse folgenderma&szlig;en auslesen:</p>
+<pre>while (SDL_PollEvent (&amp;event)) {
+   switch (event.type) {
+     case SDL_JOYAXISMOTION:
+         printf ("Joystick %d, Achse  %d bewegt nach  %d\n",
+         event.jaxis.which, event.jaxis.axis, event.jaxis.value);
+   }
+}</pre>
+<p>&Auml;hnlich verl&auml;uft dies bei Bet&auml;tigung eines Buttons des Joysticks (feuert aus allen Rohren), was den Event-Typ <span class="listing">SDL_JOYBUTTONUP</span> oder <span class="listing">SDL_JOYBUTTONDOWN</span> hervorruft. Dieses Event speichert seine Informationen in der Struktur <span class="listing">SDL_JoyButtonEvent</span>.</p>
+<pre>typedef struct {
+  Uint8 type;
+  Uint8 which;
+  Uint8 button;
+  Uint8 state;
+} SDL_JoyButtonEvent;</pre>
+<p><span class="listing">type</span> und <span class="listing">state</span> entsprechend wieder im Grunde demselben. Darin befindet sich die Information, was f&uuml;r ein Event aufgetreten ist (gedr&uuml;ckt oder nicht gedr&uuml;ckt). Von welchem Joystick der Button-Druck kam, befindet sich in <span class="listing">which</span>, und welcher Button gedr&uuml;ckt wurde, steht in <span class="listing">button</span>.</p>
+<p>Auf die andern beiden Events <span class="listing">SDL_JOYBALLMOTION</span> und <span class="listing">SDL_JOYHATMOTION</span> wird nicht mehr eingegangen, da sich der Vorgang immer recht &auml;hnlich abspielt.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">16.11.7 Programmbeispiel – Joystick-Events<a id="RxxKap16010040005B81F033251" name="RxxKap16010040005B81F033251"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Das folgende Programmbeispiel zeigt, wie Sie auf einfache Joystick-Events wie die Achse und die Buttons reagieren k&ouml;nnen. Im Beispiel habe ich ein einfaches Joypad an den USB-Port gest&ouml;pselt.</p>
+<pre><a id="Xxx999671" name="Xxx999671"></a>/* sdl9.c */
+#include &lt;SDL/SDL.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+static SDL_Joystick *js;
+static void Joystick_Info (void) {
+  int num_js, i;
+  num_js = SDL_NumJoysticks ();
+  printf ("Es wurde(n) %d Joystick(s) auf dem System gefunden\n",
+     num_js);
+  if (num_js == 0) {
+    printf ("Es wurde kein Joystick gefunden\n");
+    return;
+  }
+  /* Informationen zum Joystick */
+  for (i = 0; i &lt; num_js; i++) {
+    js = SDL_JoystickOpen (i);
+    if (js == NULL) {
+      printf ("Kann Joystick %d nicht &ouml;ffnen\n", i);
+    } 
+    else {
+      printf ("Joystick %d\n", i);
+      printf ("\tName:       %s\n", SDL_JoystickName(i));
+      printf ("\tAxen:       %i\n", SDL_JoystickNumAxes(js));
+      printf ("\tTrackballs: %i\n", SDL_JoystickNumBalls(js));
+      printf ("\tButtons:   %i\n",SDL_JoystickNumButtons(js));
+      SDL_JoystickClose (js);
+    }
+  }
+}
+static int eventloop_joystick (void) {
+  SDL_Event event;
+  while (SDL_PollEvent (&amp;event)) {
+    switch (event.type) {
+    case SDL_KEYDOWN:
+      if (event.key.keysym.sym == SDLK_ESCAPE) {
+        printf ("ESCAPE f&uuml;r Ende bet&auml;tigt\n");
+        return 0;
+      }
+      break;
+    case SDL_JOYAXISMOTION:
+      printf ("Joystick %d, Achse %d bewegt nach %d\n",
+         event.jaxis.which, event.jaxis.axis, event.jaxis.value);
+      break;
+    case SDL_JOYBUTTONUP:
+    case SDL_JOYBUTTONDOWN:
+      printf ("Joystick %i Button %i: %i\n",
+         event.jbutton.which, event.jbutton.button,
+         event.jbutton.state);
+      break;
+    case SDL_QUIT:
+      return 0;
+    }
+  }
+  return 1;
+}
+int main (void) {
+  int done = 1;
+  if (SDL_Init (SDL_INIT_JOYSTICK | SDL_INIT_VIDEO) != 0) {
+    printf ("Fehler: %s\n", SDL_GetError ());
+    return 1;
+  }
+  atexit (SDL_Quit);
+  if (SDL_SetVideoMode (256, 256, 16, 0) == NULL) {
+    printf ("Fehler: %s\n", SDL_GetError ());
+    return EXIT_FAILURE;
+  }
+  Joystick_Info ();
+  js = SDL_JoystickOpen (0);
+  if (js == NULL) {
+    printf("Konnte Joystick nicht &ouml;ffnen:%s\n",SDL_GetError());
+  }
+  while( done ) {
+    done = eventloop_joystick ();
+    SDL_Delay(10);
+  }
+  SDL_JoystickClose (js);
+  return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc `sdl-config --libs` `sdl-config --cflags` -o sdl9 sdl9.c 
+$ ./sdl9
+Es wurde(n) 1 Joystick(s) auf dem System gefunden
+Joystick 0
+        Name:       0603:6875
+        Axen:       2
+        Trackballs: 0
+        Buttons:    8
+Joystick 0 Button 0: 0
+Joystick 0 Button 1: 0
+Joystick 0 Button 2: 0
+Joystick 0 Button 3: 0
+Joystick 0 Button 4: 0
+Joystick 0 Button 5: 0
+Joystick 0 Button 6: 0
+Joystick 0 Button 7: 0
+Joystick 0, Achse 0 bewegt nach -32767
+Joystick 0, Achse 1 bewegt nach -32767
+Joystick 0 Button 0: 1
+Joystick 0 Button 3: 1
+Joystick 0, Achse 1 bewegt nach 0
+Joystick 0 Button 0: 0
+Joystick 0 Button 3: 0
+Joystick 0, Achse 1 bewegt nach 32767
+Joystick 0, Achse 1 bewegt nach 0
+Joystick 0, Achse 0 bewegt nach 0
+Joystick 0 Button 2: 1
+Joystick 0, Achse 1 bewegt nach -32767
+Joystick 0, Achse 0 bewegt nach 32767
+Joystick 0, Achse 0 bewegt nach -32767
+Joystick 0, Achse 0 bewegt nach 32767
+Joystick 0, Achse 1 bewegt nach 32767
+Joystick 0, Achse 0 bewegt nach -32767
+...</pre>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">16.11.8 Weitere Events<a id="RxxKap16010040005B81F033256" name="RxxKap16010040005B81F033256"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Es gibt noch einige weitere Events, worauf hier allerdings nicht mehr eingegangen wird. Wie Sie an entsprechende Informationen herankommen k&ouml;nnen, haben Sie jetzt bereits einige Male gesehen. Fangen Sie immer mit der Struktur <span class="listing">SDL_Event</span> an, und graben Sie sich anschlie&szlig;end durch. In den Beispielen wurde recht h&auml;ufig der Event-Typ <span class="listing">SDL_QUIT</span> verwendet, der, wie ich meine, f&uuml;r sich selbst spricht.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap16-009.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap16-011.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap16-010.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:47:19 GMT -->
+</html>

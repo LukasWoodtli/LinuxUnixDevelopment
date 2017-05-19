@@ -1,0 +1,883 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap07-008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:26 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 7.9 Warten auf einen Prozess</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap07-007.html">
+<link rel="next" href="Kap07-009.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap07-007.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap07-009.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap07-000.html#RxxKap07000040001DB1F02D100">7 D&auml;monen, Zombies und Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-000.html#RxxKap07000040001DB1F02D103">7.1 Was ist ein Prozess?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-001.html#RxxKap07001040001F81F033100">7.2 Prozesskomponente</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033114">7.2.1 Prozessnummer (PID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033175">7.2.2 Prozessnummer des Vaterprozesses (PPID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033177">7.2.3 Benutzer- und Gruppennummer eines Prozesses (UID, EUID, GID, EGID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F03317F">7.2.4 Prozessstatus</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033194">7.2.5 Prozesspriorit&auml;t</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033197">7.2.6 Timesharing-Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F0331B4">7.2.7 Prozessauslagerung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F0331B8">7.2.8 Steuerterminal</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-002.html#RxxKap07002040001F91F041100">7.3 Prozesse &uuml;berwachen – ps, top, kpm</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-003.html#RxxKap07003040001FA1F021100">7.4 Lebenszyklus eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-004.html#RxxKap07004040001FB1F030100">7.5 Umgebungsvariablen eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F030108">7.5.1 Einzelne Umgebungsvariablen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F03010F">7.5.2 Umgebungsvariable ver&auml;ndern oder hinzuf&uuml;gen – putenv() und setenv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F030197">7.5.3 L&ouml;schen von Umgebungsvariablen – unsetenv() und clearenv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-005.html#RxxKap07005040001FC1F039100">7.6 Ressourcenlimits eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-005.html#RxxKap07005040001FC1F039192">7.6.1 Mehr Sicherheit mit Ressourcenlimits</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-006.html#RxxKap07006040001FD1F02A100">7.7 Prozesserkennung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-007.html#RxxKap07007040001FE1F021100">7.8 Erzeugung von Prozessen – fork()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F021111">7.8.1 Pufferung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F02117D">7.8.2 Was wird vererbt und was nicht?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F02118F">7.8.3 Einen Prozess mit ver&auml;nderter Priorit&auml;t erzeugen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap07008040001FF1F022100">7.9 Warten auf einen Prozess</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-009.html#RxxKap07009040002001F028100">7.10 Die exec-Familie</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028112">7.10.1 execl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028118">7.10.2 execve()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028177">7.10.3 execv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F02817A">7.10.4 execle()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F02817D">7.10.5 execlp()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028180">7.10.6 execvp()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028183">7.10.7 Kindprozesse mit exec-Aufruf &uuml;berlagern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-010.html#RxxKap07010040002011F016100">7.11 Kommandoaufrufe aus dem Programm – system()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-011.html#RxxKap07011040002021F048100">7.12 D&auml;monprozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F04810A">7.12.1 Wie ein Prozess zum D&auml;mon wird ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F048110">7.12.2 D&auml;mon, sprich mit uns ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F048112">7.12.3 Protokollieren von D&auml;monen – syslog()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F0481CA">7.12.4 syslog() in der Praxis</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F0481E1">7.12.5 Den D&auml;mon, den ich rief ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-012.html#RxxKap07012040002031F04A100">7.13 Rund um die Ausf&uuml;hrung von Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-012.html#RxxKap07012040002031F04A102">7.13.1 Einen D&auml;mon beim Booten mit einem init-Skript starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-012.html#RxxKap07012040002031F04A19D">7.13.2 Hintergrundprozesse und Jobkontrolle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-012.html#RxxKap07012040002031F04A1CD">7.13.3 Prozesse zeitgesteuert ausf&uuml;hren (cron-Jobs)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-013.html#RxxKap07013040002041F025100">7.14 Zusammenfassung und Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">7.9 <a id="RxxKap07245WartenaufeinenProzess" name="RxxKap07245WartenaufeinenProzess"></a>Warten auf einen Proze<a id="RxxKap07008040001FF1F022100" name="RxxKap07008040001FF1F022100"></a>ss 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a>Wenn es n&ouml;tig ist, auf die Beendigung eines Prozesses zu warten, z. B. einer Server-Client-Anwendung, dann stehen zu diesem Zweck die beiden Funktionen <span class="listing">wait()</span> und <span class="listing">waitpid()</span> zur Verf&uuml;gung. Beendet sich der Elternprozess vor dem Kindprozess, entsteht ein »verwaister« Kindprozess. Dessen nimmt sich der init-Prozess an, der (Urgro&szlig;-)Vater aller Prozesse. Hier ein Beispiel, worauf ich hinauswill:</p>
+<pre><a id="Xxx999238" name="Xxx999238"></a>/* waise.c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main (void) {
+   pid_t pid;
+   switch (pid = fork ()) {
+   case -1:
+      printf ("Fehler bei fork()\n");
+      break;
+   case 0:
+      printf ("--- Im Kindprozess (%d) ---\n",getpid());
+      printf("Elternprozess : %d\n", getppid());
+      sleep(2);
+      printf ("--- Im Kindprozess (%d) ---\n",getpid());
+      printf("Elternprozess : %d\n", getppid());
+      break;
+   default:
+      printf ("--- Im Elternprozess (%d) ---\n",getpid());
+      sleep(1);
+      printf(" --- Elternprozess endet vorzeitig ---\n");
+      exit(0);  /* Sofort beenden */
+   }
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o waise waise.c
+$ ./waise
+--- Im Kindprozess (3356) ---
+Elternprozess : 3355
+--- Im Elternprozess (3355) ---
+ --- Elternprozess endet vorzeitig ---
+ --- Im Kindprozess (3356) ---
+Elternprozess : 1</pre>
+<p>Die Ausgabe zeigt, wie nach vorzeitiger Beendigung des Elternprozesses init (<span class="listing">PPID</span> = 1) der neue Elternprozess geworden ist.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/7_1.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein7_1.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 7.1   
+    </b>Elternprozess beendet sich vor dem Kindprozess.</p>
+</td>
+</tr>
+</table><br>
+<p>Anders hingegen sieht die Sache schon aus, wenn sich der Kindprozess verabschiedet, ohne dass der Elternprozess davon in Kenntnis gesetzt wurde. Ein Beispiel zu diesem Fall:</p>
+<pre><a id="Xxx999251" name="Xxx999251"></a>/* zombie.c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main (void) {
+   pid_t pid;
+   switch (pid = fork ()) {
+   case -1:
+      printf ("Fehler bei fork()\n");
+      break;
+   case 0:
+      printf("--- Im Kindprozess (%d) ---\n",getpid());
+      printf("Elternprozess : %d\n", getppid());
+      printf("--- Kindprozess beendet sich ---\n");
+      exit(0);
+   default:
+      printf("--- Im Elternprozess (%d) ---\n",getpid());
+      printf("--- Beenden mit &lt;STRG&gt;+&lt;C&gt; ---\n");
+      while(1); /* Endlosschleife */
+   }
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o zombie zombie.c
+$ ./zombie
+--- Im Kindprozess (3457) ---
+Elternprozess : 3456
+--- Kindprozess beendet sich ---
+--- Im Elternprozess (3456) ---
+--- Beenden mit &lt;STRG&gt;+&lt;C&gt; ---</pre>
+<p>&Ouml;ffnen Sie nun eine weitere Konsole, und lassen Sie sich die laufenden Prozesse mit <span class="listing">ps</span> bzw. in einer X-Konsole mit <span class="listing">ps</span> <span class="listing">x</span> anzeigen:</p>
+<pre>$ ps f
+...
+ PID TTY      STAT   COMMAND
+ 3456 pts/2    R      0:04 ./zombie
+ 3457 pts/2    Z      0:00   \_ [zombie] &lt;defunct&gt;
+ 3458 pts/1    R      0:00 ps
+...</pre>
+<p>Der Kindprozess, der sich beendet hat, ohne dass der Elternprozess sich bereits darum gek&uuml;mmert hat, wird als Zombie bezeichnet. Der Zustand wird hier bei <span class="listing">ps</span> mit <span class="listing">Z</span> angezeigt. Bei den verwaisten Prozessen, die zuvor besprochen wurden, &uuml;bernahm <span class="listing">init</span> die Aufgabe, die Sie jetzt in solch einem Fall selbst &uuml;bernehmen m&uuml;ssen. Wenn Sie schon Kinder auf die Welt bringen, m&uuml;ssen Sie auch daf&uuml;r geradestehen. Init macht n&auml;mlich nichts anderes mit dem Waisenprozess, als eine <span class="listing">wait()</span>-Funktion aufzurufen, um auf den Beendigungsstatus zu warten.</p>
+<p>Hierzu die Syntax der beiden Funktionen, womit Sie auf die Beendigung des Kindprozesses warten k&ouml;nnen<a id="Xxx999259" name="Xxx999259"></a><a id="Xxx999260" name="Xxx999260"></a>:</p>
+<pre>#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+pid_t wait( int *status );
+pid_t waitpid( pid_t pid, int *status, int optionen );</pre>
+<p>Die Funktion <span class="listing">wait()</span> wartet, bis sich ein Kindprozess beendet, und gibt dessen PID als R&uuml;ckgabewert zur&uuml;ck. Bei Fehler wird -1 zur&uuml;ckgegeben. Die Funktion <span class="listing">waitpid()</span> hingegen wartet auf einen bestimmten Kindprozess mit der in <span class="listing">pid</span> als erstes Argument angegebenen Prozess-ID. Sofern beim Argument <span class="listing">status</span> nicht der <span class="listing">NULL</span>-Zeiger angegeben wurde, wird hier die Statusinformation zu dem beendeten Prozess gespeichert. Um diesen Status auszuwerten, sind in der Headerdatei <span class="listing">&lt;sys/wait.h&gt;</span> folgende Makros definiert:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.6   
+    </b>Makros in &lt;sys/wait.h&gt;</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Makro</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">WIFEXITED<a id="Xxx999269" name="Xxx999269"></a>( status )
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist TRUE, wenn sich ein Kindprozess normal beendet hat. Wollen Sie dabei den genauen R&uuml;ckgabewert vom Kindprozess erfragen, dann k&ouml;nnen Sie dies mit dem Makro WEXITSTATUS(status) abfragen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">WIFSIGNALED<a id="Xxx999274" name="Xxx999274"></a>( status )
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist TRUE, wenn der Kindprozess durch ein Signal terminiert wurde, das dieser nicht abgefangen hat.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">WTERMSIG<a id="Xxx999279" name="Xxx999279"></a>( status )
+</td>
+<td class="tabellentext" bgcolor="#000000">Damit k&ouml;nnen Sie die Nummer des Signals erfahren, die den Prozessabbruch bewirkt hat.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">WCOREDUMP<a id="Xxx999284" name="Xxx999284"></a>( status )
+</td>
+<td class="tabellentext" bgcolor="#000000">In BSD und SVR4 k&ouml;nnen Sie damit erfahren, ob das Signal, das den Kindprozess abgebrochen hat, eine Core-Datei angelegt hat.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">WIFSTOPPED<a id="Xxx999289" name="Xxx999289"></a>( status )
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist TRUE, wenn ein Kindprozess angehalten wurde.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">WSTOPSIG<a id="Xxx999294" name="Xxx999294"></a>( status )
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Nummer des Signals, die den Kindprozess gestoppt hat.
+</td>
+</tr>
+</table><br>
+<p>Um den Status auszuwerten, schreibt man am besten extra eine Funktion dazu. Hierzu ein Beispiel mit der Funktion <span class="listing">wait()</span>. Es wird ein Kindprozess erzeugt und abgefragt, wie dieser beendet werden soll (normal oder anormal). Der Elternprozess wartet in der Zwischenzeit auf den Kindprozess mit <span class="listing">wait()</span>. Sobald sich der Kindprozess beendet, f&auml;hrt auch der Elternprozess mit der Auswertung des Status &uuml;ber die Beendigung des Kindprozesses mit der selbst geschriebenen Funktion <span class="listing">child_status()</span> fort. Auf den Status <span class="listing">WCOREDUMP()</span> wurde aus Portabilit&auml;tsgr&uuml;nden verzichtet. Sofern auf Ihrem System vorhanden, k&ouml;nnen Sie dies gerne selbst nachholen. Hier das Beispiel dazu:</p>
+<pre><a id="Xxx999307" name="Xxx999307"></a>/* wait.c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;errno.h&gt;
+static void child_status (int status) {
+   if (WIFEXITED (status)) {
+      printf ("Kind normal beendet mit R&uuml;ckgabewert %d\n",
+         WEXITSTATUS(status));
+   }
+   else if (WIFSIGNALED (status)) {
+      printf ("Kind mit Signalnummer %d beendet\n",
+         WTERMSIG(status));
+      /* WCOREDUMP k&ouml;nnte hier stehen */
+   }
+   else if (WIFSTOPPED (status)) {
+      printf ("Kind wurde angehalten mit Signalnummer %d\n",
+         WSTOPSIG(status));
+      /* I.d.R. wird dies SIGSTOP sein, aber es gibt */
+      /* ja auch noch das ptrace()-Interface.        */
+   }
+}
+int main (void) {
+   pid_t pid;
+   int status;
+   int end;
+   switch (pid = fork ()) {
+   case -1:
+      perror("fork()");
+      return EXIT_FAILURE;
+   case 0:
+      printf (" --- Im Kindprozess ---\n");
+      printf ("Wie wollen Sie den Prozess beenden?\n\n");
+      printf ("- 1 - WIFEXITED   (normal)\n");
+      printf ("- 2 - WIFSIGNALED (anormal)\n");
+      printf ("Ihre Auswahl : ");
+      scanf ("%d", &amp;end);
+      if (end == 1)
+         exit (66);
+      else if (end == 2)
+         abort ();  /* Entspricht kill(0, SIGABRT); */
+      else
+         printf ("Was den nun? -&gt;%d&lt;- ???\n", end);
+      break;     /* Normale Beendigung mit 0 */
+   default:      /* Elternprozess wartet auf Kind mit pid */
+      if (wait (&amp;status) != pid) {
+         perror("wait()");
+         return EXIT_FAILURE;
+      }
+      /* Status vom Kind auswerten */
+      child_status (status);
+   }
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o wait wait.c
+$ ./wait
+ --- Im Kindprozess ---
+Wie wollen Sie den Prozess beenden?
+- 1 - WIFEXITED   (normal)
+- 2 - WIFSIGNALED (abnormal)
+Ihre Auswahl : 1
+Kindprozess normal beendet mit R&uuml;ckgabewert 66
+$ ./wait
+ --- Im Kindprozess ---
+Wie wollen Sie den Prozess beenden?
+- 1 - WIFEXITED   (normal)
+- 2 - WIFSIGNALED (abnormal)
+Ihre Auswahl : 2
+Kindprozess mit Signalnummer 6 beendet</pre>
+<p>Zu den Signalen erfahren Sie in Kapitel 6 noch mehr. Also erspare ich mir hierzu erst einmal eine Erl&auml;uterung.</p>
+<p>Mit <span class="listing">wait()</span> k&ouml;nnen Sie allerdings nur auf die Beendigung des n&auml;chsten Prozesses warten. Wollen Sie hingegen auf die Beendigung eines bestimmten Prozesses warten, dann ist <span class="listing">waitpid()</span> Ihr Fall. Mit dem ersten Argument von <span class="listing">waitpid()<a id="Xxx999313" name="Xxx999313"></a></span> legen Sie fest, worauf Sie warten wollen. Dazu haben Sie vier M&ouml;glichkeiten:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.7   
+    </b>M&ouml;gliche Angaben f&uuml;r das erste Argument von waitpid()</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>pid</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–1
+</td>
+<td class="tabellentext" bgcolor="#000000">Auf beliebigen Prozess warten – &auml;quivalent zu wait().
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pid
+</td>
+<td class="tabellentext" bgcolor="#000000">Auf die Beendigung von pid warten.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">Auf Beendigung warten, deren Prozessgruppen-ID gleich der Prozessgruppen-ID des aufrufenden Prozesses ist.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">&lt; – 1
+</td>
+<td class="tabellentext" bgcolor="#000000">Auf Beendigung warten, deren Prozessgruppen-ID dem absoluten Wert von pid entspricht.
+</td>
+</tr>
+</table><br>
+<p>Des Weiteren k&ouml;nnen Sie &uuml;ber das dritte Argument, <span class="listing">optionen</span>, das Verhalten von <span class="listing">waitpid()</span> beeinflussen. Folgende Konstanten k&ouml;nnen dabei verwendet werden:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.8   
+    </b>Zus&auml;tzliche Optionen f&uuml;r das dritte Argument von waitpid()</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Konstante</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beschreibung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">WNOHANG<a id="Xxx999350" name="Xxx999350"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Der aufrufende Prozess wird nicht blockiert, wenn der Prozess »pid« noch nicht beendet wurde bzw. noch nicht im Zombie-Status ist. waitpid() liefert in diesem Fall 0 zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">WUNTRACED<a id="Xxx999355" name="Xxx999355"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Status des angehaltenen Kindprozesses, der mit pid spezifiziert wurde. Das Makro WIFSTOPPED liefert 1 zur&uuml;ck, wenn es sich beim R&uuml;ckgabewert um die PID des angehaltenen Kindprozesses handelt.
+</td>
+</tr>
+</table><br>
+<p>Unter SVR4 gibt es au&szlig;erdem noch die Optionen <span class="listing">WNOWAIT<a id="Xxx999367" name="Xxx999367"></a></span> und <span class="listing">WCONTIUED<a id="Xxx999368" name="Xxx999368"></a></span>, die hier nicht besprochen werden. Geben Sie hingegen 0 an, wird keine Option gesetzt.</p>
+<p>Das folgende Listing zu <span class="listing">waitpid()</span> zeigt die Funktion mit der Option <span class="listing">WNOHANG</span> im Einsatz. Diese Option sorgt daf&uuml;r, dass der Elternprozess nicht, wie z. B. mit <span class="listing">wait()</span>, zwingend auf die Beendigung des Kindprozesses warten muss. Somit k&ouml;nnen Sie im Elternprozess ebenfalls weitere Anweisungen ausf&uuml;hren.</p>
+<pre><a id="Xxx999371" name="Xxx999371"></a>/* waitpid.c */
+#include &lt;unistd. h.&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+int main (void) {
+   pid_t pid;
+   switch (pid = fork ()) {
+   case -1:
+      perror("fork()");
+      return EXIT_FAILURE;
+   case 0:
+      printf (" --- Im Kindprozess ---\n");
+      sleep (5);
+      printf(" --- Kindprozess ist fertig ---\n");
+      break;      
+   default:
+       if (waitpid (pid, NULL, WNOHANG) != 0) {
+          perror("waitpid()");
+          return EXIT_FAILURE;
+       }
+       // Hier k&ouml;nnte weiterer Code ausgef&uuml;hrt werden
+       printf (" --- Elternprozess blockiert nicht ---\n");
+   }
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o waitpid waitpid.c
+$ ./waitpid
+--- Im Kindprozess ---
+--- Elternprozess blockiert nicht ---
+--- Kindprozess ist fertig ---</pre>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap07-007.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap07-009.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap07-008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:28 GMT -->
+</html>

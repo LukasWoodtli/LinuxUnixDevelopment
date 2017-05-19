@@ -1,0 +1,1091 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap07-011.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:28 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 7.12 D&auml;monprozesse</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap07-010.html">
+<link rel="next" href="Kap07-012.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap07-010.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap07-012.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap07-000.html#RxxKap07000040001DB1F02D100">7 D&auml;monen, Zombies und Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-000.html#RxxKap07000040001DB1F02D103">7.1 Was ist ein Prozess?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-001.html#RxxKap07001040001F81F033100">7.2 Prozesskomponente</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033114">7.2.1 Prozessnummer (PID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033175">7.2.2 Prozessnummer des Vaterprozesses (PPID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033177">7.2.3 Benutzer- und Gruppennummer eines Prozesses (UID, EUID, GID, EGID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F03317F">7.2.4 Prozessstatus</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033194">7.2.5 Prozesspriorit&auml;t</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F033197">7.2.6 Timesharing-Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F0331B4">7.2.7 Prozessauslagerung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-001.html#RxxKap07001040001F81F0331B8">7.2.8 Steuerterminal</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-002.html#RxxKap07002040001F91F041100">7.3 Prozesse &uuml;berwachen – ps, top, kpm</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-003.html#RxxKap07003040001FA1F021100">7.4 Lebenszyklus eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-004.html#RxxKap07004040001FB1F030100">7.5 Umgebungsvariablen eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F030108">7.5.1 Einzelne Umgebungsvariablen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F03010F">7.5.2 Umgebungsvariable ver&auml;ndern oder hinzuf&uuml;gen – putenv() und setenv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F030197">7.5.3 L&ouml;schen von Umgebungsvariablen – unsetenv() und clearenv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-005.html#RxxKap07005040001FC1F039100">7.6 Ressourcenlimits eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-005.html#RxxKap07005040001FC1F039192">7.6.1 Mehr Sicherheit mit Ressourcenlimits</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-006.html#RxxKap07006040001FD1F02A100">7.7 Prozesserkennung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-007.html#RxxKap07007040001FE1F021100">7.8 Erzeugung von Prozessen – fork()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F021111">7.8.1 Pufferung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F02117D">7.8.2 Was wird vererbt und was nicht?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F02118F">7.8.3 Einen Prozess mit ver&auml;nderter Priorit&auml;t erzeugen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-008.html#RxxKap07008040001FF1F022100">7.9 Warten auf einen Prozess</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-009.html#RxxKap07009040002001F028100">7.10 Die exec-Familie</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028112">7.10.1 execl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028118">7.10.2 execve()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028177">7.10.3 execv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F02817A">7.10.4 execle()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F02817D">7.10.5 execlp()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028180">7.10.6 execvp()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028183">7.10.7 Kindprozesse mit exec-Aufruf &uuml;berlagern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-010.html#RxxKap07010040002011F016100">7.11 Kommandoaufrufe aus dem Programm – system()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap07011040002021F048100">7.12 D&auml;monprozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07011040002021F04810A">7.12.1 Wie ein Prozess zum D&auml;mon wird ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07011040002021F048110">7.12.2 D&auml;mon, sprich mit uns ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07011040002021F048112">7.12.3 Protokollieren von D&auml;monen – syslog()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07011040002021F0481CA">7.12.4 syslog() in der Praxis</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07011040002021F0481E1">7.12.5 Den D&auml;mon, den ich rief ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-012.html#RxxKap07012040002031F04A100">7.13 Rund um die Ausf&uuml;hrung von Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-012.html#RxxKap07012040002031F04A102">7.13.1 Einen D&auml;mon beim Booten mit einem init-Skript starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-012.html#RxxKap07012040002031F04A19D">7.13.2 Hintergrundprozesse und Jobkontrolle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-012.html#RxxKap07012040002031F04A1CD">7.13.3 Prozesse zeitgesteuert ausf&uuml;hren (cron-Jobs)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-013.html#RxxKap07013040002041F025100">7.14 Zusammenfassung und Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">7.12 <a id="RxxKap07322Damonprozesse" name="RxxKap07322Damonprozesse"></a>D&auml;monprozes<a id="RxxKap07011040002021F048100" name="RxxKap07011040002021F048100"></a>se 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a><a id="Xxx999237" name="Xxx999237"></a>Als D&auml;monprozesse werden Prozesse bezeichnet, die ihre Arbeit unabh&auml;ngig von der Steuerung des Terminals im Hintergrund ausf&uuml;hren – sprich den Prozessen ist nicht unbedingt ein Controlling Terminal (<span class="listing">CTTY</span>) zugeordnet. Auf Ihrem Rechner laufen mindestens ein gutes Dutzend solcher Prozesse. Einige sehr bekannte D&auml;monen sollen hier nicht unerw&auml;hnt bleiben – ohne n&auml;her darauf einzugehen (f&uuml;r weitergehende Informationen verwenden Sie bitte entsprechende Manual Pages).</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> cron<a id="Xxx999239" name="Xxx999239"></a> – Mit dem cron-D&auml;mon k&ouml;nnen Sie andere Prozesse (vor allem auch D&auml;monprozesse) zu einer von Ihnen bestimmten Zeit starten. Der »kleine Bruder« von cron ist atd, der Einmalprozesse behandelt, w&auml;hrend cron vorwiegend f&uuml;r wiederkehrende Ereignisse genutzt wird.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> xinetd<a id="Xxx999241" name="Xxx999241"></a> – Dies ist ein D&auml;mon, der andere Netzwerkd&auml;monen startet. (Wird daher auch »Superd&auml;mon« genannt.) Wird mit xinetd.conf, /etc/xinet.d/* gesteuert.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> lpd, cupsd – der Drucker-D&auml;mon</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> syslogd, blogd – D&auml;mon zum Protokollieren von Systemmeldungen von anderen D&auml;monen</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> klogd – D&auml;mon, der Kernel-Meldungen protokolliert</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> ftpd, httpd, named, dhcpd, smbd, sshd, NFS – verschiedene Netzwerkd&auml;monen</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Eigentlich ist es nicht richtig, von »D&auml;monen« zu sprechen, da es normalerweise »daemons« lauten m&uuml;sste. daemons ist ein Abk&uuml;rzung f&uuml;r <b>d</b>isk <b>a</b>nd <b>e</b>xecution <b>mon</b>itor<b>s</b>. Aber hierzulande hat sich der D&auml;mon schon als solcher bildhaft eingepr&auml;gt, so dass wir weiterhin bei diesem bleiben.</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">7.12.1 Wie ein Prozess zum D&auml;mon wird ...<a id="RxxKap07011040002021F04810A" name="RxxKap07011040002021F04810A"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Nachdem Sie gelernt haben, Zombies nicht zu vergessen, werden Sie jetzt einen D&auml;mon erzeugen. Wenn Ihr Nachbar Sie fragt, was Sie den ganzen Tag vor der Kiste machen, erz&auml;hlen Sie ihm das doch einmal. Bevor Sie erfahren werden, wie Sie programmtechnisch einen eigenen D&auml;monprozess erzeugen k&ouml;nnen (ist ganz leicht), sollten Sie sich erst Gedanken machen, wie Sie den D&auml;mon starten wollen. Daf&uuml;r gibt es ausnahmsweise keine Funktion in C. Angestrebt ist hierf&uuml;r ein D&auml;monprozess, der m&ouml;glichst unabh&auml;ngig vom Terminal ist und auch so konzipiert sein muss. Denn trifft z. B. ein Unterbrechungssignal in einem Terminal ein, von dem der D&auml;monprozess gestartet wurde, darf der D&auml;mon davon nicht beeinflusst werden. Somit stehen Ihnen folgende M&ouml;glichkeiten zur Verf&uuml;gung, einen D&auml;monprozess zu starten – deren Anwendung Sie selbst einsch&auml;tzen und in Erfahrung bringen m&uuml;ssen.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sie k&ouml;nnen selbst von einem Terminal aus einen D&auml;monprozess im Vorder- oder Hintergrund starten. Dies eignet sich zum Beispiel hervorragend f&uuml;r Probel&auml;ufe des D&auml;mons, aber nur bedingt f&uuml;r den Dauereinsatz in einem Mehrbenutzersystem.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sie k&ouml;nnen den D&auml;monprozess auch vom cron-D&auml;mon starten lassen. Ein D&auml;mon ruft also einen D&auml;mon auf. Sie k&ouml;nnen nat&uuml;rlich auch den at-Befehl verwenden, um den D&auml;mon erst zu einem bestimmten Zeitpunkt zu starten.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> &Uuml;ber das Netzwerk k&ouml;nnen Sie den (x)inetd-Superserver verwenden. Dieser wartet auf Netzwerkanforderungen – die Sie ihm stellen –, worauf dieser tats&auml;chlich den entsprechenden D&auml;monprozess startet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Last but not least – das Systeminitialisierungsskript, das beim Booten des Systems s&auml;mtliche D&auml;monen startet. Dieses Skript finden Sie h&auml;ufig im Verzeichnis /etc, /etc/rc, /etc/init.d usw. – das h&auml;ngt von der Linux-Distribution ab.</td>
+</tr>
+</table>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">7.12.2 D&auml;mon, sprich mit uns ...<a id="RxxKap07011040002021F048110" name="RxxKap07011040002021F048110"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Wenn Sie sich entschieden haben, wie Sie den D&auml;mon starten wollen, m&uuml;ssen Sie noch wissen, wann Ihr D&auml;mon etwas zu sagen hat, wo Sie die Nachrichten »ausgeben« k&ouml;nnen. Da ein D&auml;monprozess kein Ausgabeterminal hat, f&auml;llt der normale Weg &uuml;ber die Standardausgabe aus. F&uuml;r solche Zwecke ist der syslog-D&auml;mon zust&auml;ndig. Der syslog-D&auml;mon wird gew&ouml;hnlich ebenfalls beim Booten des Systems &uuml;ber das Initialisierungsskript gestartet und erst wieder beendet, wenn Sie das System (oder syslogd separat) herunterfahren.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">7.12.3 Protokollieren von D&auml;monen – syslog()<a id="RxxKap07011040002021F048112" name="RxxKap07011040002021F048112"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999264" name="Xxx999264"></a>Um an die Informationen des syslogd zu kommen, m&uuml;ssen Sie die Funktion <span class="listing">syslog()</span> verwenden. <span class="listing">syslog()</span> ist zwar keine POSIX-konforme Funktion, doch bieten heute die meisten Linux-/UNIX-Systeme diese Funktion an.</p>
+<pre>#include &lt;syslog.h&gt;
+void syslog(int priority, const char *message, ...);</pre>
+<p>Das erste Argument <span class="listing">priority</span> ist eine Kombination aus dem <span class="listing">level</span> und <span class="listing">facility</span>. Dabei kann eine Log-Nachricht einen <span class="listing">level</span> zwischen einschlie&szlig;lich 0 und 7 haben. Wird kein <span class="listing">level</span> angegeben, wird standardm&auml;&szlig;ig <span class="listing">LOG_NOTICE</span> (Level 5) verwendet. Es folgen die m&ouml;glichen <span class="listing">level</span> einer Log-Nachricht.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.10   
+    </b>Priorit&auml;t der Nachricht</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Level</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Konstante</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">LOG_EMERG<a id="Xxx999278" name="Xxx999278"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">System ist unbrauchbar.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1
+</td>
+<td class="tabellentext" bgcolor="#000000">LOG_ALERT<a id="Xxx999285" name="Xxx999285"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Dringend irgendwelche Aktionen einleiten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">2
+</td>
+<td class="tabellentext" bgcolor="#000000">LOG_CRIT<a id="Xxx999292" name="Xxx999292"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Kritische Nachrichten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">3
+</td>
+<td class="tabellentext" bgcolor="#000000">LOG_ERR<a id="Xxx999299" name="Xxx999299"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Normaler Fehler
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+<td class="tabellentext" bgcolor="#000000">LOG_WARNING<a id="Xxx999306" name="Xxx999306"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Warnung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">5
+</td>
+<td class="tabellentext" bgcolor="#000000">LOG_NOTICE<a id="Xxx999313" name="Xxx999313"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Normale, bedeutende Nachricht (Standard)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">6
+</td>
+<td class="tabellentext" bgcolor="#000000">LOG_INFO<a id="Xxx999320" name="Xxx999320"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Normale Nachricht
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">7
+</td>
+<td class="tabellentext" bgcolor="#000000">LOG_DEBUG<a id="Xxx999327" name="Xxx999327"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Unwichtige Nachricht
+</td>
+</tr>
+</table><br>
+<p>Der zweite Teil der Kombination von <span class="listing">priority</span> ist <span class="listing">facility</span>, die zur Identifizierung des Prozesstyps dient, der die Log-Nachricht verschickt hat. Wird hier kein Wert verwendet, gilt als Standardeinstellung <span class="listing">LOG_USER</span>. Hier ein &Uuml;berblick zu den <span class="listing">facility</span>s der Log-Nachrichten.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.11   
+    </b>Identifizierung, wer die Log-Nachricht verschickt hat</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>facility</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_AUTH<a id="Xxx999348" name="Xxx999348"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Autorisierung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_AUTHPRIV<a id="Xxx999353" name="Xxx999353"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Autorisierung (privat)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_FTP<a id="Xxx999358" name="Xxx999358"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">FTP-D&auml;mon
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_KERN<a id="Xxx999363" name="Xxx999363"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Kernel-Nachrichten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_USER<a id="Xxx999368" name="Xxx999368"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Nachricht von Usern
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_MAIL<a id="Xxx999373" name="Xxx999373"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">E-Mail-Subsystem
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_DAEMON<a id="Xxx999378" name="Xxx999378"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Verschiedene D&auml;monen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_SYSLOG<a id="Xxx999383" name="Xxx999383"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">syslog-interne Nachrichten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_LPR<a id="Xxx999388" name="Xxx999388"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Drucker-Subsystem
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_NEWS<a id="Xxx999393" name="Xxx999393"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">News-Subsystem
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_UUCP<a id="Xxx999398" name="Xxx999398"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">UUCP-Subsystem
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_CRON<a id="Xxx999403" name="Xxx999403"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Cron-D&auml;mon
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_LOCAL0<a id="Xxx999408" name="Xxx999408"></a>...7 
+</td>
+<td class="tabellentext" bgcolor="#000000">Reserviert f&uuml;r lokale Verwendung (Eigenbedarf)
+</td>
+</tr>
+</table><br>
+<p>Da bei weitem nicht f&uuml;r jedes Programm und jeden D&auml;mon eine extra Konstante zugewiesen werden kann (aus Platzgr&uuml;nden innerhalb des level integers), versehen die meisten Anwendungen ihre Log-Einr&auml;ge sowieso mit dem eigenen Namen, z. B. mit <span class="listing">openlog()</span>, siehe unten.</p>
+<p>Mit dem Parameter <span class="listing">message</span> geben Sie die Nachricht bei <span class="listing">syslog()</span> als eine <span class="listing">printf()</span>-typische Formatzeichenkette an.</p>
+<p>Wenn ein Prozess die Funktion <span class="listing">syslog()</span> aufruft, wird ein UNIX Domain Datagram Socket angelegt und mittels <span class="listing">connect()</span> mit dem Pfadnamen des angelegten Sockets (meistens <span class="listing">  /var/run/log</span>) verbunden. Das Socket bleibt bis zum Ende des Prozesses offen oder bis <span class="listing">closelog()</span> aufgerufen wird.</p>
+<p>Optional kann auch die Funktion <span class="listing">openlog()</span> vor dem ersten Aufruf von <span class="listing">syslog()</span> aufgerufen werden<a id="Xxx999424" name="Xxx999424"></a>:</p>
+<pre>#include &lt;syslog.h&gt;
+void openlog(const char *ident, int option, int facility);</pre>
+<p>Mit <span class="listing">ident</span> legen Sie eine Zeichenkette fest, gew&ouml;hnlich der Programmname, die als Indikator f&uuml;r erzeugte Syslog-Nachrichten dient. Folgende <span class="listing">option</span>en und deren Bedeutung k&ouml;nnen Sie verwenden (es kann auch eine ODER-Verkn&uuml;pfung f&uuml;r mehrere Optionen verwendet werden).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.12   
+    </b>Optionen f&uuml;r openlog()</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Options</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_CONS<a id="Xxx999433" name="Xxx999433"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausgabe erfolgt direkt auf die Konsole, sollte ein Fehler mit der Verbindung zum D&auml;mon auftreten.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_NDELAY<a id="Xxx999438" name="Xxx999438"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Verbindung zum Login-D&auml;mon wird sofort aufgebaut (das ist ja implizit bei einer Verbindung). Nicht, wie normalerweise, wenn die erste Nachricht geschrieben wurde.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_PERROR<a id="Xxx999443" name="Xxx999443"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Nachricht wird au&szlig;er an den syslog-D&auml;mon noch zus&auml;tzlich an den Fehlerkanal (stderr) geschickt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOG_PID<a id="Xxx999448" name="Xxx999448"></a> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Wird ein Programm mehrfach gestartet, ist es sinnvoll, diese Option zu verwenden, da jede syslog-Nachricht eine PID enth&auml;lt. Sie k&ouml;nnen damit genau ermitteln, welcher Prozess diese Nachricht geschickt hat. Beispielsweise wenn Sie mit fork() einen Kindprozess zur Erledigung bestimmter Aufgaben erzeugen.
+</td>
+</tr>
+</table><br>
+<p>Da beim Aufruf von <span class="listing">openlog()</span> gew&ouml;hnlich kein UNIX Domain Socket angelegt wird (sondern erst beim ersten <span class="listing">syslog()</span>-Aufruf), k&ouml;nnen Sie mit der Option <span class="listing">LOG_NDELAY</span> ein Socket beim Aufruf von <span class="listing">openlog()</span> erzeugen. Die Syslog-Typen f&uuml;r den Parameter <span class="listing">facility</span> haben Sie bereits kennen gelernt (<span class="listing">LOG_KERN,LOG_USER,LOG_MAIL,LOG_DAEMON</span> ...).</p>
+<p>In der Praxis k&ouml;nnte somit ein <span class="listing">openlog()</span>-Aufruf folgenderma&szlig;en aussehen:</p>
+<pre>openlog("lpd-daemon", LOG_PID, LOG_LPR); </pre>
+<p>Hier dient als Kennung »<span class="listing">lpd-daemon</span>«. Es wird au&szlig;erdem immer die Prozess-ID mit ausgegeben (<span class="listing">LOG_PID</span>), und als Einrichtung wird das Druckersystem verwendet.</p>
+<p>Wenn die Anwendung das Senden der Log-Nachrichten beendet hat, wird <span class="listing">closelog()</span> aufgerufen<a id="Xxx999465" name="Xxx999465"></a>.</p>
+<pre>#include &lt;syslog.h&gt;
+void closelog( void );</pre>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">7.12.4 syslog() in der Praxis<a id="RxxKap07011040002021F0481CA" name="RxxKap07011040002021F0481CA"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Ihnen das ganze Thema zum syslogd zu pr&auml;sentieren, w&uuml;rde hier zu weit gehen. Hierf&uuml;r sei ein umfassender Blick in die entsprechende Manual Page empfohlen. Aber dennoch will ich Ihnen das Konzept anhand eines einfachen Beispiels demonstrieren. Zu diesem Zwecke ben&ouml;tigen Sie allerdings vollen Zugriff auf den Rechner als root. Sofern Sie (noch) nicht ganz bewandert im Umgang mit Linux sind, rate ich Ihnen, diesen Text zur Sicherheit erst zu lesen. Machen Sie ggf. ein Backup von der Datei <span class="listing">/etc/syslog.conf<a id="Xxx999469" name="Xxx999469"></a></span>.</p>
+<p>&Ouml;ffnen Sie zuerst die Datei <span class="listing">/etc/syslog.conf</span> mit einem Editor. In meinem Fall gehe ich wie folgt vor:</p>
+<pre>$su
+Passwort:******* 
+# mcedit /etc/syslog.conf
+...
+# Mail logging
+mail.=debug;mail.=info;mail.=notice  -/var/log/mail/info
+mail.=warn                           -/var/log/mail/warnings
+mail.err                             -/var/log/mail/errors
+...</pre>
+<p>Sie bekommen nun die komplette Datei in <span class="listing">/etc/syslog.conf</span> zu Gesicht. In gek&uuml;rzter Form soll hier der Log-Eintrag f&uuml;r Mail verwendet werden, z. B. der Eintrag:</p>
+<pre>mail.=debug;mail.=info;mail.=notice</pre>
+<p>Dies bedeutet nun, falls der syslog-D&auml;mon eine Nachricht mit der Priorit&auml;t <span class="listing">LOG_DEBUG</span>, <span class="listing">LOG_INFO</span> oder <span class="listing">LOG_NOTICE</span> und <span class="listing">facility=LOG_MAIL</span> erh&auml;lt, wird diese in die Datei <span class="listing">/var/log/mail/info</span> geschrieben.</p>
+<p>Liest syslog die Nachricht mit der Priorit&auml;t <span class="listing">LOG_WARNING</span>, wie dies in der n&auml;chsten Zeile mit <span class="listing">mail.=warn</span> angegeben ist, wird die Ausgabe in <span class="listing">/var/log/mail/warnings</span> geschrieben.</p>
+<p>Hierzu soll nun ein eigener Typ erstellt werden, der eine einfache Textausgabe auf ein Terminal macht. In diesem Fall auf <span class="listing">/dev/tty1</span> – passen Sie die Angabe bitte Ihren Bed&uuml;rfnissen an. Ein einfaches »<span class="listing">tty</span>« auf der Kommandozeile gibt Ihnen Auskunft dar&uuml;ber, welches Ihr aktueller Terminal ist. Eine eigene Routine k&ouml;nnen Sie mit <span class="listing">LOG_LOCALx</span> (<span class="listing">x</span> ist 0 bis 7) verwenden. Nach einer Neuinstallation sollte hierf&uuml;r noch keiner dieser Eintr&auml;ge belegt sein. Schreiben Sie nun ans Ende der Datei <span class="listing">/etc/syslog.conf</span> folgenden Eintrag, und speichern Sie die Datei anschlie&szlig;end ab:</p>
+<pre>#Testroutine,
+local0.=notice                             -/dev/tty1</pre>
+<p>Das Programm, das zur Identifizierung des Prozesstyps jetzt <span class="listing">LOG_LOCAL0</span> und die Priorit&auml;t <span class="listing">LOG_NOTICE</span> verschickt, kann seine Ausgabe auf das Terminal <span class="listing">/dev/tty1</span> machen. In der Praxis sollten Sie nur Nachrichten mit h&ouml;chster Priorit&auml;t (<span class="listing">LOG_EMERG</span>) auf ein Terminal ausgeben – wor&uuml;ber Sie letztendlich selbst entscheiden. Idealer ist es, in jedem Fall, die Nachricht in eine Log-Datei zu schreiben, je nach Priorit&auml;t der Nachricht. Wie Sie die <span class="listing">syslog.conf</span>-Datei dementsprechend konfigurieren, entnehmen Sie bitte der Manual Page zu syslogd. Jetzt ein Programmbeispiel, das die eben eingerichtete Identifizierung <span class="listing">LOG_LOCAL0</span> mit der Priorit&auml;t <span class="listing">LOG_NOTICE</span> verwendet.</p>
+<pre><a id="Xxx999479" name="Xxx999479"></a>/* logging.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;syslog.h&gt;
+int main(int argc, char **argv) {
+   openlog( "logging",
+            LOG_PID | LOG_CONS | LOG_NDELAY, LOG_LOCAL0 );
+   /* Viel Code */
+   /*  Etwas ist passiert -&gt; Schick es an /dev/tty1 */
+   syslog(LOG_NOTICE, "Hallo Welt mit syslog\n");
+   /* Ende */
+   closelog();
+   return EXIT_SUCCESS;
+}</pre>
+<p>Vorher m&uuml;ssen Sie den syslog-D&auml;mon neu starten, damit die neue Konfiguration in <span class="listing">syslog.conf</span> &uuml;bernommen wird. Dies k&ouml;nnen Sie folgenderma&szlig;en erledigen (<span class="listing">su</span>):</p>
+<pre># kill -SIGTERM `cat /var/run/syslogd.pid`
+# syslogd </pre>
+<p>Oder einfacher:</p>
+<pre># kill -HUP `pidof syslogd`</pre>
+<p>Jetzt k&ouml;nnen Sie das Listing &uuml;bersetzen und starten. Von wo Sie die Anwendung starten, ist letztendlich egal. Auf jeden Fall sollten Sie jetzt im Terminal <span class="listing">/dev/tty1</span> (in X zu erreichen mit der Tastenkombination <b>(STRG)</b>+<b>(ALT)</b>+<b>(F1)</b>) etwa folgende Ausgabe erhalten haben:</p>
+<pre>[Datum] [Uhrzeit] test2[12345]: Hallo Welt mit syslog</pre>
+<p>Die Ausgabe haben Sie lediglich mit dem Aufruf</p>
+<pre>syslog(LOG_NOTICE, "Hallo Welt mit syslog\n");</pre>
+<p>aktiviert. In der Praxis kann <span class="listing">syslog()</span> auf der Suche nach Fehlern in Programmen (insbesondere in Programmen, die kein Terminal haben) sehr helfen – was &uuml;brigens auch mit dem Debugger GDB m&ouml;glich ist. Sie k&ouml;nnen zum Beispiel &uuml;berwachen, wer gerade wann auf ein bestimmtes Programm zugreift (und wieder Murks gemacht hat):</p>
+<pre> openlog("myprogramm", LOG_PID | LOG_CONS, LOG_LOCAL0);
+ if( (strcmp(nam1, login_name)) == 0)
+   syslog(LOG_NOTICE, "Bing hat sich gerade eingeloggt");
+ else if( (strcmp(nam2, login_name)) == 0)
+   syslog(LOG_NOTICE, "Bong hat sich gerade eingeloggt");</pre>
+<p>Bedenken Sie aber, wenn Sie dies auf dem Bildschirm ausgeben wollen, wer das eventuell auch lesen k&ouml;nnte. Linux selbst gibt normalerweise Nachrichten auf dem Bildschirm nur mit der allerh&ouml;chsten Priorit&auml;t aus. Nat&uuml;rlich und vor allem anderen k&ouml;nnen Sie den syslog-D&auml;mon zum Log(gen) eines selbst geschriebenen D&auml;mons verwenden.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">7.12.5 Den D&auml;mon, den ich rief ...<a id="RxxKap07011040002021F0481E1" name="RxxKap07011040002021F0481E1"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999493" name="Xxx999493"></a>Jetzt, da Sie wissen, wie Sie der Ausgabe von D&auml;monen Herr werden, sind Sie so weit, selbst welche zu beschw&ouml;ren. Einen fast kompletten D&auml;monprozess k&ouml;nnen Sie in den folgenden sieben Schritten einrichten (programmiertechnisch gesehen):</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> fork()</span> – Erst starten Sie mit <span class="listing">fork()</span> einen neuen Kindprozess, worauf Sie anschlie&szlig;end den Elternprozess beenden. Da die Shell nun »glaubt«, dass sich der Elternprozess beendet hat, »denkt« diese, dass die Anwendung fertig ist, und es wird der Kindprozess automatisch im Hintergrund ausgef&uuml;hrt. Die weiteren Schritte beziehen sich jetzt auf den »Kindprozess«.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> setsid()</span> – Als N&auml;chstes legen Sie mit der Funktion <span class="listing">setsid()</span> eine neue Session (Sitzung) an. Damit wird der Prozess Sessionf&uuml;hrer der Session und der Prozessgruppenf&uuml;hrer einer neuen Gruppe. Anschlie&szlig;end hat der Prozess kein Terminal (<span class="listing">CTTY</span>) mehr. Die Syntax zu <span class="listing">setsid()<a id="Xxx999497" name="Xxx999497"></a></span>:</td>
+</tr>
+</table>
+#include &lt;unistd. h.&gt;
+pid_t setsid(void);
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Signal <span class="listing">SIGHUP</span> ignorieren – Da wir jetzt gleich nochmals einen Kindprozess starten und den Elternprozess beenden, m&uuml;ssen Sie das Signal <span class="listing">SIGHUP</span> ignorieren, da der zu beendende Prozess der Sessionf&uuml;hrer ist und allen anderen Prozessen in der aktuellen Session ein <span class="listing">SIGHUP</span>-Signal senden w&uuml;rde. Zwei weitere Signale, die ein D&auml;mon nicht erhalten sollte, sind <span class="listing">SIGINT</span> und <span class="listing">SIGWINCH</span>.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> fork()</span>, die Zweite – Mit einem erneuten <span class="listing">fork()</span>-Aufruf gehen Sie sicher, dass der Elternprozess der erste Kindprozess ist, der beendet wird. Dadurch sorgt man daf&uuml;r, dass ein D&auml;mon nicht automatisch ein Steuerterminal erh&auml;lt, falls dieser eins &ouml;ffnen w&uuml;rde. Gerade unter SVR4 kann der Sessionf&uuml;hrer ein Terminal &ouml;ffnen, so dass dieses Terminal zum Steuerterminal wird – genau das wollen Sie ja bei D&auml;monprozessen vermeiden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> chdir()</span> (und <span class="listing">chroot()</span>) – Das Arbeitsverzeichnis des Prozesses sollte nun auf das Root-Verzeichnis abge&auml;ndert werden – wobei es hierbei auch D&auml;monen gibt, die ein anderes Arbeitsverzeichnis verwenden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> umask()</span> – Die Dateimodus-Erstellungsmaske m&uuml;ssen Sie jetzt auf 0 setzen. Damit stellen Sie sicher, wenn der D&auml;mon eine Datei anlegen sollte, dass die Berechtigungsbits der geerbten Dateimodus-Erstellungsmaske keine Auswirkungen auf die neue Datei haben. Manchmal ist aber eine gewisse umask erw&uuml;nscht ..., es muss also nicht unbedingt <span class="listing">umask(0)</span> sein, sondern kann auch <span class="listing">umask(022)</span> sein – nat&uuml;rlich vom D&auml;mon selbst zu setzen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Schlie&szlig;en aller ge&ouml;ffneten Filedeskriptoren mit <span class="listing">close()</span>. Ein Elternprozess k&ouml;nnte Ihnen n&auml;mlich noch einen st&ouml;renden Filedeskriptor vererbt haben. Und zur Sicherheit schlie&szlig;en Sie in einer Schleife alle Filedeskriptoren. Wobei hier das Problem entsteht, wie viele Filedeskriptoren verwendet werden. So m&uuml;ssen Sie die Anzahl fast selbst festlegen, da die ge&ouml;ffnete Anzahl unendlich sein kann. Gute Werte sind 32, 64 oder 128 Filedeskriptoren – auch wenn diese nicht offen sind. Eventuell k&ouml;nnen Sie auch die symbolische Konstante <span class="listing">_SC_OPEN_MAX</span> (falls vorhanden) oder <span class="listing">OPEN_MAX</span> aus <span class="listing">stdio.h</span> (garantiert vorhanden) verwenden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> syslogd mit <span class="listing">openlog()</span> aufrufen</td>
+</tr>
+</table>
+<p>Hierzu das Listing, das die einzelnen Schritte demonstriert. Im Beispiel wird auch davon ausgegangen, dass Sie die Schritte im Kapitel zuvor mit dem syslog-D&auml;mon und der Funktion <span class="listing">syslog()</span> gemacht haben und sich in der Datei <span class="listing">/etc/syslog.conf</span> folgender Eintrag befindet:</p>
+<pre>#Testroutine,
+local0.=notice                             -/dev/tty1</pre>
+<p>&Uuml;ber Sinn und Unsinn der Ausgabe auf eine Konsole wurde bereits gesprochen. Sie k&ouml;nnen gerne auch testweise andere Eintr&auml;ge in der Datei <span class="listing">/etc/syslog.conf</span> machen. Eine gute Dokumentation k&ouml;nnen Sie auf der Manual Page von <span class="listing">syslogd(8)</span> und <span class="listing">syslog.conf(5)</span> nachlesen. Sollten Sie ein anderes Terminal zur Ausgabe verwendet haben, dann verwenden Sie eben dies. Das anschlie&szlig;ende Listing startet einen D&auml;mon – legt sich f&uuml;r 15 Sekunden schlafen und beendet diesen wieder – nicht sehr sinnvoll. Alle Ausgaben werden im Beispiel auf das Terminal gemacht, das Sie in der Datei <span class="listing">/etc/syslog.conf</span> eingetragen haben.</p>
+<pre><a id="Xxx999511" name="Xxx999511"></a>/* daemon.c */
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;syslog.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;stdlib.h&gt;
+typedef void (*sighandler_t)(int);
+static sighandler_t 
+handle_signal (int sig_nr, sighandler_t signalhandler) {
+   struct sigaction neu_sig, alt_sig;
+   neu_sig.sa_handler = signalhandler;
+   sigemptyset (&amp;neu_sig.sa_mask);
+   neu_sig.sa_flags = SA_RESTART;
+   if (sigaction (sig_nr, &amp;neu_sig, &amp;alt_sig) &lt; 0)
+      return SIG_ERR;
+   return alt_sig.sa_handler;
+}
+static void start_daemon (const char *log_name, int facility) {
+   int i;
+   pid_t pid;
+   /* Elternprozess beenden, somit haben wir einen Waisen */
+   /* dessen sich jetzt vorerst init annimmt              */
+   if ((pid = fork ()) != 0)
+      exit (EXIT_FAILURE);
+   /* Kindprozess wird zum Sessionf&uuml;hrer. Misslingt */
+   /* dies, kann der Fehler daran liegen, dass der     */
+   /* Prozess bereits Sessionf&uuml;hrer ist               */
+   if (setsid() &lt; 0) {
+      printf("%s kann nicht Sessionf&uuml;hrer werden!\n",
+         log_name);
+      exit (EXIT_FAILURE);
+   }
+   /* Signal SIGHUP ignorieren */
+   handle_signal (SIGHUP, SIG_IGN);
+   /* Oder einfach: signal(SIGHUP, SIG_IGN) ... */
+   /* Das Kind terminieren */
+   if ((pid = fork ()) != 0)
+      exit (EXIT_FAILURE);
+   /* Gr&uuml;nde f&uuml;r das Arbeitsverzeichnis:
+    * + core-Datei wird im aktuellen Arbeitsverzeichnis 
+    *   hinterlegt.
+    * + Damit bei Beendigung mit umount das Dateisystem 
+    *   sicher abgeh&auml;ngt werden kann 
+    */
+   chdir ("/");
+   /* Damit wir nicht die Bitmaske vom Elternprozess     */
+   /* erben bzw. diese bleibt, stellen wir diese auf 0  */
+   umask (0);
+   /* Wir schlie&szlig;en alle ge&ouml;ffneten Filedeskriptoren ... */
+   for (i = sysconf (_SC_OPEN_MAX); i &gt; 0; i--)
+      close (i);
+   /* Da unser D&auml;monprozess selbst kein Terminal f&uuml;r */
+   /* die Ausgabe hat....                            */
+   openlog ( log_name, 
+             LOG_PID | LOG_CONS| LOG_NDELAY, facility );
+}
+int main (int argc, char **argv) {
+   int time   = 15;
+   start_daemon ("meinDaemon", LOG_LOCAL0);
+   while (1) {
+      /* Enlosschleifen: Hier sollte nun der Code f&uuml;r den
+       * Daemon stehen, was immer er auch tun soll.
+       * Bspw. E-Mails abholen, versenden (was kein 
+       * Verweis sein soll, um mit dem Spammen anzufangen); 
+       * Bei Fehlermeldungen beispielsweise:
+       * if(dies_ist_passiert)
+       *    syslog(LOG_WARNING, "dies_ist_Passiert");
+       * else if(das_ist_Passiert)
+       *    syslog(LOG_INFO, "das_ist_Passiert"); 
+       */
+      syslog( LOG_NOTICE, "Daemon gestartet ...\n");
+      sleep(time);
+      syslog( LOG_NOTICE, 
+              "Daemon l&auml;uft bereits %d Sekunden\n", time );
+      break;
+   }
+   syslog( LOG_NOTICE, "Daemon hat sich beendet\n");
+   closelog();
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o daemon daemon.c
+$ ./daemon</pre>
+<p>Ein Blick auf das Terminal (bei mir <span class="listing">/dev/tty1</span>):</p>
+<pre>Mar 10 07:06:26 linux meinDaemon[2684]: Daemon gestartet ...
+Mar 10 07:06:41 linux meinDaemon[2684]: Daemon l&auml;uft bereits 15 Sekunden
+Mar 10 07:06:41 linux meinDaemon[2684]: Daemon hat sich beendet</pre>
+<p>W&auml;hrend der Ausf&uuml;hrung d&uuml;rfen Sie gerne die Prozess&uuml;berwachung auflisten. Sie finden den D&auml;monprozess f&uuml;r gew&ouml;hnlich mit folgendem Eintrag in der Prozesstabelle:</p>
+<pre>$ ps xj
+ PPID   PID  PGID   SID TTY   TPGID STAT  UID  TIME COMMAND
+...
+    1  2691  2690  2690 ?        -1 S     500  0:00 ./daemon
+...</pre>
+<p>Sie erkennen den D&auml;mon speziell daran, dass dieser kein Steuerterminal (<span class="listing">TTY=?</span>) und als Erkennung des Elternprozesses die <span class="listing">PPID</span> 1 (init) hat.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap07-010.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap07-012.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap07-011.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:44:28 GMT -->
+</html>
