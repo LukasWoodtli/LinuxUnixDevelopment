@@ -1,0 +1,745 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap17-007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 20:00:27 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 17.8 Memory Leaks und unerlaubte Speicherzugriffe</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap17-006.html">
+<link rel="next" href="Kap17-008.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap17-006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap17-008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap17-000.html#RxxKap17000040005FD1F04C100">17 Werkzeuge f&uuml;r Programmierer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-000.html#RxxKap17000040005FD1F04C1D5">17.1 Make</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C1E8">17.1.1 Erzeugen eines Makefiles</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C226">17.1.2 Variablen, Makros und Abk&uuml;rzungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C253">17.1.3 Implizite Regeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C262">17.1.4 Musterregeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C268">17.1.5 make zur Installation verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C26E">17.1.6 make-Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C270">17.1.7 Ausblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-001.html#RxxKap170010400061A1F029100">17.2 Bibliotheken erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F029102">17.2.1 Statische Bibliotheken erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F02917F">17.2.2 Dynamische Bibliotheken (Shared Libraries) erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F0291A1">17.2.3 Dynamisches Nachladen von Bibliotheken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-002.html#RxxKap170020400061B1F03E100">17.3 RPM</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E181">17.3.1 Verzeichnisse, die RPM ben&ouml;tigt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E194">17.3.2 Ein eigenes RPM-Paket erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E196">17.3.3 Sources</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E19D">17.3.4 Die Spec-Datei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E1E3">17.3.5 Paket erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E1FB">17.3.6 Das Paket installieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-003.html#RxxKap170030400061C1F047100">17.4 RCS und CVS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-003.html#RxxKap170030400061C1F047102">17.4.1 Software-Configuration-Management-Systeme (SCM)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-003.html#RxxKap170030400061C1F047109">17.4.2 RCS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-003.html#RxxKap170030400061C1F0471C2">17.4.3 CVS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-004.html#RxxKap170040400061D1F040100">17.5 Zeitmessung von Programmen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F040105">17.5.1 Einfache Zeitmessung mit TIME – Laufzeit von Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F04010F">17.5.2 Profiling mit GPROF – Laufzeit von Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F040198">17.5.3 Analyse mit GCOV</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-005.html#RxxKap170050400061E1F02B100">17.6 Debuggen mit gdb und ddd</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-006.html#RxxKap170060400061F1F03C100">17.7 STRACE – Systemaufrufe verfolgen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap17007040006201F02E100">17.8 Memory Leaks und unerlaubte Speicherzugriffe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap17007040006201F02E104">17.8.1 efence</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap17007040006201F02E112">17.8.2 valgrind</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-008.html#RxxKap17008040006211F036100">17.9 Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">17.8 <a id="RxxKap17770MemoryLeaksundunerlaubteSpeicherzugriffe" name="RxxKap17770MemoryLeaksundunerlaubteSpeicherzugriffe"></a>Memory Leaks und unerlaubte Speicherzugriff<a id="RxxKap17007040006201F02E100" name="RxxKap17007040006201F02E100"></a>e 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999247" name="Xxx999247"></a><a id="Xxx999248" name="Xxx999248"></a><a id="Xxx999249" name="Xxx999249"></a>Mit den Problemen von Buffer Overflows und den Memory Leaks haben sehr viele Programmierer zu k&auml;mpfen, die &auml;ltere Software &uuml;berholen und verbessern m&uuml;ssen. Hierbei finden sich recht h&auml;ufig Funktionen oder Fehler, bei denen eine Speicher&uuml;berschreitung stattfindet. Ein Speicherleck (Memory Leak) tritt auf, wenn einmal in einer Funktion alloziierter Speicher angefordert und nie wieder freigegeben (<span class="listing">free()</span>) wird. Wenn diese Funktion dann immer wieder aufgerufen wird und erneut Speicher anfordert, sollte es logisch sein, dass dem Programm zwangsl&auml;ufig immer weniger Speicher zur Verf&uuml;gung steht. Irgendwann werden Sie sich dann wundern, warum das Programm so erheblich langsam wird, und m&uuml;ssen es zwangsweise neu starten.</p>
+<p>Das Schlimme an diesen beiden Fehlern ist, dass h&auml;ufig das Pogramm nach der Ausf&uuml;hrung scheinbar fehlerfrei ausgef&uuml;hrt wird. Meistens treten diese Fehler irgendwann sp&auml;ter auf, wenn das Programm freigegeben wurde. Eine falsche Ausgabe von Daten bis hin zum Absturz der Anwendung w&auml;ren einige der Folgen des Fehlers.</p>
+<p>F&uuml;r beide Probleme gibt es mittlerweile eine Menge hervorragender Tools, vom einfachen (kostenlosen) Konsolen-Tool bis hin zum ultimativen Allesk&ouml;nner-Tool, das allerdings auch (zu Recht) seinen Preis hat.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">17.8.1 efence<a id="RxxKap17007040006201F02E104" name="RxxKap17007040006201F02E104"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999254" name="Xxx999254"></a><a id="Xxx999255" name="Xxx999255"></a>Als Beispiel m&ouml;chte ich Ihnen das Tool efence etwas n&auml;her vorstellen. Die Bibliothek efence liegt den meisten Linux-Distributionen bei und l&auml;sst sich ggf. problemlos nachinstallieren. Das Prinzip von efence ist einfach, aber effektiv, um Speicher&uuml;berl&auml;ufe zu verhindern. Dazu wird ein Speicherbereich so angelegt, dass sich vor und nach diesem Bereich ein nicht existierender Speicherbereich befindet; ein Loch, wenn Sie so wollen. Wenn hierbei ein Byte durch dieses Loch f&auml;llt, bricht efence das Programm ab. Damit dies auch funktioniert, werden die Standardfunktionen zum Reservieren von Speicher wie <span class="listing">malloc()</span>, <span class="listing">realloc()</span>, <span class="listing">calloc()</span> und <span class="listing">free()</span> durch eigene Routinen ersetzt, die von efence zur Verf&uuml;gung gestellt werden. Es gibt au&szlig;erdem noch weitere Funktionen, die Ihnen diese Bibliothek zur Verf&uuml;gung stellt. Hierzu sei allerdings wieder die Manual Page von efence empfohlen.</p>
+<p>Um eine Anwendung mit efence zu &uuml;bersetzen, muss die Bibliothek libefence mit <span class="listing">-lefence</span> hinzugelinkt werden. Zur Demonstration soll folgendes fehlerhafte Listing verwendet werden:</p>
+<pre><a id="Xxx999258" name="Xxx999258"></a>/* memory.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#define BUF 10
+static char *alloc_memory( unsigned int mem ) {
+   return malloc( mem );
+}
+int main(void) {
+        char* ptr = alloc_memory( BUF );
+        char* buf;
+        char array[BUF];
+        unsigned int i;
+        printf("Eingabe machen : ");
+        fgets(ptr, BUF, stdin);
+        printf("Die Eingabe lautet : %s", ptr );
+        /* Speicher&uuml;berschreitung */
+        strcat(ptr, " 123456789");
+        printf("%s\n", ptr );
+        /* falsches free() */
+        for( i = 0; i&lt;BUF; i++ ) {
+                buf = alloc_memory( BUF * BUF );
+                /* tu was mit dem Speicher … */
+                /* Ein nicht reservierter Speicher */
+                /* wird freigegeben */
+                free(ptr);
+        }
+        return EXIT_SUCCESS;
+}</pre>
+<p>Testen Sie dieses Beispiel erst einmal ohne jeden Hintergedanken an Fehler:</p>
+<pre>$~&gt; gcc -o memory memory.c
+$~&gt; ./memory
+Eingabe machen : J&uuml;rgen
+Die Eingabe lautet : J&uuml;rgen
+J&uuml;rgen
+ 123456789</pre>
+<p>Obwohl sich im Listing zwei gravierende Fehler befinden, l&auml;sst sich das Programm problemlos (!) ausf&uuml;hren. Jetzt soll dasselbe Beispiel nochmals mit der efence-Bibliothek und dem Compilerflag f&uuml;r den Debugger GDB &uuml;bersetzt werden:</p>
+<pre>$~&gt; gcc -o memory memory.c -ggdb -lefence
+$~&gt; ./memory
+Electric Fence 2.2.0 Copyright (C) 1987–1999 Bruce Perens &lt;bruce@perens.com&gt;
+Eingabe machen: J&uuml;rgen
+Die Eingabe lautet: J&uuml;rgen
+Speicherzugriffsfehler</pre>
+<p>Hier sieht es schon ein wenig anders aus. Ein Speicherzugriffsfehler wurde mithilfe von efence entdeckt. Um mehr hier&uuml;ber zu erfahren, sollten Sie jetzt das Programm mit dem Debugger GDB starten:</p>
+<pre>$~&gt; gdb memory
+GNU gdb 5.3
+...
+(gdb) run
+Starting program: /home/tot/memory
+[New Thread 16384 (LWP 4341)]
+Electric Fence 2.2.0 Copyright (C) 1987–1999 Bruce Perens 
+Eingabe machen: J&uuml;rgen
+Die Eingabe lautet: J&uuml;rgen
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 16384 (LWP 4341)]
+0x400a533d in strcat () from /lib/libc.so.6
+(gdb) bt
+#0  0x400a533d in strcat () from /lib/libc.so.6
+#1  0xbffff444 in ?? ()
+#2  0x400408ae in __libc_start_main () from /lib/libc.so.6</pre>
+<p>Nach einem Aufruf von <span class="listing">bt</span> (auch <span class="listing">where</span>) finden Sie von unten nach oben die Stelle, an der das Programm mit dem Signal <span class="listing">SIGSEGV</span> abgebrochen hat. <span class="listing">strcat()</span> in der <span class="listing">main()</span>-Funktion ist hier der &Uuml;belt&auml;ter. Nach der Beseitigung des Fehlers sollten Sie die Anwendung nat&uuml;rlich weiterhin testen. Also ein Neu&uuml;bersetzen mithilfe von efence:</p>
+<pre>$~&gt; gcc -o memory memory.c -ggdb -lefence
+$~&gt; gdb memory
+GNU gdb 5.3
+...
+(gdb) run
+Starting program: /home/tot/memory
+[New Thread 16384 (LWP 4372)]
+Electric Fence 2.2.0 Copyright (C) 1987–1999 Bruce Perens
+Eingabe machen: J&uuml;rgen
+Die Eingabe lautet: J&uuml;rgen
+ElectricFence Aborting: free(401b3ff6): address not from malloc().
+Program received signal SIGILL, Illegal instruction.
+[Switching to Thread 16384 (LWP 4372)]
+0x40054691 in kill () from /lib/libc.so.6
+(gdb) bt
+#0  0x40054691 in kill () from /lib/libc.so.6
+#1  0x40029127 in do_abort () from /usr/lib/libefence.so.0
+#2  0x400293e4 in EF_Abort () from /usr/lib/libefence.so.0
+#3  0x40028c8e in free () from /usr/lib/libefence.so.0
+#4  0x080485ed in main () at memory.c:33
+#5  0x400408ae in __libc_start_main () from /lib/libc.so.6
+(gdb) list 33
+28              for( i = 0; i&lt;BUF; i++ )
+29              {
+30                      buf = alloc_memory( BUF * BUF );
+31                      /* tu was mit dem Speicher */
+32          /* Ein nicht reservierter Speicher wird freigegeben */
+33                      free(ptr);
+34              }
+35              return 0;
+36      }</pre>
+<p>Nun haben Sie einen weiteren &Uuml;belt&auml;ter ausgemacht. Hier bekommen Sie beim Aufruf von <span class="listing">bt</span> gleich die Zeilennummer und die Funktion mit ausgegeben. Im Beispiel wurde das Programm mit dem Signal f&uuml;r einen illegalen Maschinenbefehl in der <span class="listing">main</span>-Funktion in Zeile 33 abgebrochen. Bei einem genauen Blick auf <span class="listing">free()</span> f&auml;llt auf, dass hier ein unerlaubter Zeiger freigegeben wurde. Anstatt <span class="listing">buf</span> wird hier immer wieder <span class="listing">ptr</span> freigegeben. Nach einem erneuten Korrigieren des Fehlers l&auml;uft die Anwendung erstmals ohne einen Abbruch von efence.</p>
+<p>Sie konnten zwar jetzt mithilfe von efence kleinere bis gr&ouml;&szlig;ere &Uuml;bel beseitigen. Dennoch sollte nicht unerw&auml;hnt bleiben, dass efence nur Speicher&uuml;berschreitungen auf dem Heap erkennt. Speicher&uuml;berschreitungen auf statischen Puffern hingegen, wie z. B. bei einem Array, kann efence ebenso wenig erkennen wie Memory Leaks. Ein weiterer Nachteil von efence ist der sehr hohe Speicherverbrauch von Anwendungen, womit die Performance erheblich ausgebremst wird. Somit sollten Sie nach dem ausgiebigen Testen mit efence die finale Version Ihrer Anwendung m&ouml;glichst ohne efence &uuml;bersetzen und anbieten.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">17.8.2 valgrind<a id="RxxKap17007040006201F02E112" name="RxxKap17007040006201F02E112"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999271" name="Xxx999271"></a><a id="Xxx999272" name="Xxx999272"></a>Einen Schritt weiter wie efence geht das Tool valgrind. Hiermit lassen sich auch Memory Leaks und noch einiges mehr ermitteln. Z. B. ist es mit valgrind auch m&ouml;glich, den Schreib- oder Lesezugriff auf nicht alloziierten Speicher, &uuml;ber Array-Grenzen und gar &uuml;ber einige Bereiche des Stacks hinaus, zu finden. valgrind ben&ouml;tigt im Gegensatz zu efence auch keine extra Bibliothek und belastet somit die Programmgr&ouml;&szlig;e und die Performance &uuml;berhaupt nicht. Zur Demonstration soll valgrind wieder auf das fehlerhafte Listing angewandt werden, das schon im Beispiel von efence verwendet wurde (Ausgabe verk&uuml;rzt).</p>
+<pre>$~&gt; valgrind ./memory
+==5767== Memcheck, a.k.a. Valgrind, a memory error detector for x86-linux.
+...
+==5767==
+Eingabe machen: J&uuml;rgen
+Die Eingabe lautet: J&uuml;rgen
+==5767== Invalid write of size 1
+==5767== at 0x401636FF: strcat (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x80484B2: main (in /home/tot/memory)
+==5767==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)
+==5767==    by 0x8048390: (within /home/tot/memory)
+==5767==    Address 0x40F4902E is 0 bytes after a block of size 10 alloc'd
+==5767== at 0x40162F43: malloc (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x8048444: alloc_memory (in /home/tot/memory)
+==5767==    by 0x8048463: main (in /home/tot/memory)
+==5767==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)
+==5767==
+==5767== Invalid write of size 1
+==5767== at 0x40163708: strcat (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x80484B2: main (in /home/tot/memory)
+==5767==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)
+==5767==    by 0x8048390: (within /home/tot/memory)
+==5767==    Address 0x40F49035 is 7 bytes after a block of size 10 alloc'd
+==5767== at 0x40162F43: malloc (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x8048444: alloc_memory (in /home/tot/memory)
+==5767==    by 0x8048463: main (in /home/tot/memory)
+==5767==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)
+==5767==
+==5767== Invalid read of size 1
+==5767==    at 0x40163721: strlen (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x402658BD: _IO_vfprintf_internal (in 
+...
+...
+==5767== Invalid read of size 1
+==5767== at 0x4028ACCA:_IO_default_xsputn_internal(in /lib/libc.so.6)
+==5767== by 0x40289D24: _IO_file_xsputn@@GLIBC_2.1 (in /lib/libc.so.6)
+==5767==    by 0x40265A7A: _IO_vfprintf_internal (in /lib/libc.so.6)
+==5767==    by 0x4026CBBF: _IO_printf (in /lib/libc.so.6)
+==5767==    Address 0x40F4902E is 0 bytes after a block of size 10 alloc'd
+==5767== at 0x40162F43: malloc (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x8048444: alloc_memory (in /home/tot/memory)
+==5767==    by 0x8048463: main (in /home/tot/memory)
+==5767==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)
+ 123456789
+==5767==
+==5767== Invalid free() / delete / delete[]
+==5767==    at 0x401631DC: free (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x80484F2: main (in /home/tot/memory)
+==5767==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)
+==5767==    by 0x8048390: (within /home/tot/memory)
+==5767==    Address 0x40F49024 is 0 bytes inside a block of size 10 free'd
+==5767==    at 0x401631DC: free (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x80484F2: main (in /home/tot/memory)
+==5767==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)
+==5767==    by 0x8048390: (within /home/tot/memory)
+==5767==
+==5767== ERROR SUMMARY: 39 errors from 6 contexts (suppressed: 0 from 0)
+==5767== malloc/free: in use at exit: 1000 bytes in 10 blocks.
+==5767== malloc/free: 11 allocs, 10 frees, 1010 bytes allocated.
+==5767== For a detailed leak analysis,  rerun with: --leak-check=yes
+==5767== For counts of detected errors, rerun with: -v</pre>
+<p>Es f&auml;llt gleich auf, dass valgrind um einiges geschw&auml;tziger ist als efence. Ich m&ouml;chte Ihnen die Ausgabe ein bisschen genauer erl&auml;utern, ohne mich in Details zu verstricken. Z. B. teilt Ihnen valgrind mit den folgenden Zeilen mit</p>
+<pre>==5767== Invalid write of size 1
+==5767== at 0x40163708: strcat (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x80484B2: main (in /home/tot/memory)
+==5767==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)
+==5767==    by 0x8048390: (within /home/tot/memory)
+==5767==    Address 0x40F49035 is 7 bytes after a block of size 10 alloc'd
+==5767== at 0x40162F43: malloc (in /usr/lib/valgrind/valgrind.so)
+==5767==    by 0x8048444: alloc_memory (in /home/tot/memory)
+==5767==    by 0x8048463: main (in /home/tot/memory)
+==5767==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)</pre>
+<p>dass hier ein ung&uuml;ltiger Schreibvorgang mit <span class="listing">strcat()</span> in der <span class="listing">main()</span>-Funktion durchgef&uuml;hrt wurde. Und zwar wurden hier 7 Bytes hinter einem reservierten Speicherblock geschrieben, der eigentlich nur f&uuml;r eine Gr&ouml;&szlig;e von 10 Bytes vorgesehen war. Also wurden insgesamt 17 Bytes in den Speicher geschrieben. Des Weiteren wird aufgelistet, wo der Speicher reserviert wurde.</p>
+<p>Dasselbe Problem wird dann ebenfalls in dreifacher Ausf&uuml;hrung mit der anschlie&szlig;enden Ausgabe von <span class="listing">printf()</span> beschrieben (siehe Invalid read of size 1). Hier wird schlie&szlig;lich auch ein Lesezugriff auf einen nicht alloziierten Bereich ausgef&uuml;hrt.</p>
+<p>Ebenso wird der Fehler einer nicht erlaubten Freigabe (falscher Zeiger) des Speichers bem&auml;ngelt. Vorbildlich hat hier valgrind also alle Fehler auf einmal aufgedeckt. Verbessern Sie auch hier wieder die Fehler, und f&uuml;hren Sie valgrind erneut aus:</p>
+<pre>$~&gt; gcc -o memory memory.c
+$~&gt; valgrind ./memory
+==5798== Memcheck, a.k.a. Valgrind, a memory error detector for x86-linux.
+...
+==5798==
+Eingabe machen: J&uuml;rgen
+Die Eingabe lautet: J&uuml;rgen
+==5798==
+==5798== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==5798== malloc/free: in use at exit: 10 bytes in 1 blocks.
+==5798== malloc/free: 11 allocs, 10 frees, 1010 bytes allocated.
+==5798== For a detailed leak analysis,  rerun with: --leak-check=yes
+==5798== For counts of detected errors, rerun with: -v</pre>
+<p>So, jetzt scheint alles in Ordnung zu sein; keine Fehler werden mehr angezeigt. Aber dennoch stimmt ja noch etwas nicht. Hier haben Sie noch ein Memory Leak entdeckt:</p>
+<pre>==5798== malloc/free: in use at exit: 10 bytes in 1 blocks.
+==5798== malloc/free: 11 allocs, 10 frees, 1010 bytes allocated.</pre>
+<p>Nach dem Ende der Anwendung sind immer noch 10 Bytes (1 Block) Speicher &uuml;brig, der nicht freigegeben wurde. Eine Zeile tiefer wird Ihnen das nochmals best&auml;tigt – 11 allocs und 10 frees. Sie haben ein Memory Leak gefunden. Hier gehen wir der Anweisung der Ausgabe nach und verwenden das Flag <span class="listing">--leak-check=yes</span>, um Genaueres zu erfahren:</p>
+<pre>$~&gt; valgrind --leak-check=yes ./memory
+...
+==5801==
+Eingabe machen: J&uuml;rgen
+Die Eingabe lautet: J&uuml;rgen
+==5801==
+==5801== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==5801== malloc/free: in use at exit: 10 bytes in 1 blocks.
+==5801== malloc/free: 11 allocs, 10 frees, 1010 bytes allocated.
+==5801== For counts of detected errors, rerun with: -v
+==5801== searching for pointers to 1 not-freed blocks.
+==5801== checked 3413996 bytes.
+==5801==
+==5801== 10 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==5801== at 0x40162F43: malloc (in /usr/lib/valgrind/valgrind.so)
+==5801==    by 0x8048414: alloc_memory (in /home/tot/memory)
+==5801==    by 0x8048433: main (in /home/tot/memory)
+==5801==    by 0x4022E8AD: __libc_start_main (in /lib/libc.so.6)
+==5801==
+==5801== LEAK SUMMARY:
+==5801==    definitely lost: 10 bytes in 1 blocks.
+==5801==    possibly lost:   0 bytes in 0 blocks.
+==5801==    still reachable: 0 bytes in 0 blocks.
+==5801==         suppressed: 0 bytes in 0 blocks.
+==5801== Reachable blocks (those to which a pointer was found) are not shown.
+==5801== To see them, rerun with: --show-reachable=yes
+==5801==</pre>
+<p>Auf jeden Fall haben Sie 10 Bytes in der <span class="listing">main()</span>-Funktion stehen lassen. Den Fehler k&ouml;nnen Sie jetzt auch noch ausb&uuml;geln, und dann d&uuml;rfte valgrind nichts mehr zu bem&auml;ngeln haben:</p>
+<pre>$~&gt; gcc -o memory memory.c
+$~&gt; valgrind --leak-check=yes ./memory
+...
+==5815==
+Eingabe machen: J&uuml;rgen
+Die Eingabe lautet: J&uuml;rgen
+==5815==
+==5815== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==5815== malloc/free: in use at exit: 0 bytes in 0 blocks.
+==5815== malloc/free: 11 allocs, 11 frees, 1010 bytes allocated.
+==5815== For counts of detected errors, rerun with: -v
+==5815== No malloc'd blocks -- no leaks are possible.</pre>
+<p>Keine Beanstandungen mehr von valgrind. Jetzt sollte das Programm fehlerfrei sein.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap17-006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap17-008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap17-007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 20:00:27 GMT -->
+</html>

@@ -1,0 +1,1045 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap03-000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:24 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 3 Attribute von Dateien und Verzeichnissen</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap02-006.html">
+<link rel="next" href="Kap04-000.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap02-006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap04-000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a class="navh2" href="#RxxKap03000040000F51F035100">3 Attribute von Dateien und Verzeichnissen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap03000040000F51F035102">3.1 Struktur stat</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap03000040000F51F035193">3.1.1 Dateiart und Zugriffsrechte einer Datei erfragen – st_mode</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap03000040000F51F0351D4">3.1.2 User-ID-Bit und Group-ID-Bit – st_uid und st_gid</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap03000040000F51F0351D9">3.1.3 Inode ermitteln – st_ino</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap03000040000F51F0351DF">3.1.4 Linkz&auml;hler – st_nlink</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap03000040000F51F0351F9">3.1.5 Gr&ouml;&szlig;e der Datei – st_size</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap03000040000F51F035202">3.1.6 st_atime, st_mtime, st_ctime</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<h1 class="t1">Kapitel 3 <a id="RxxKap032AttributevonDateienundVerzeichnissen" name="RxxKap032AttributevonDateienundVerzeichnissen"></a>Attribute von Dateien und Verzeichnisse<a id="RxxKap03000040000F51F035100" name="RxxKap03000040000F51F035100"></a>n</h1>
+<p class="anleser"><i>Im Kapitel zuvor wurden Sie h&auml;ufig auf dieses Kapitel verwiesen. Hier werden nun die Attribute vorgestellt, die eine jede Datei und jedes Verzeichnis im Inode speichert.</i></p>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">3.1 <a id="RxxKap034Strukturstat" name="RxxKap034Strukturstat"></a>Struktur sta<a id="RxxKap03000040000F51F035102" name="RxxKap03000040000F51F035102"></a>t 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999238" name="Xxx999238"></a>Die einzelnen Attribute zu einer Datei oder einem Verzeichnis k&ouml;nnen Sie aus der Struktur <span class="listing">stat</span> herauslesen. Die einzelnen Strukturvariablen von <span class="listing">stat</span> sind das Thema der nun folgenden Seiten.</p>
+<p>Die Struktur <span class="listing">stat</span> ist in der Headerdatei <span class="listing">&lt;sys/stat.h&gt;<a id="Xxx999240" name="Xxx999240"></a></span> definiert und besitzt gew&ouml;hnlich (wird nicht fest vorgeschrieben) die in der Tabelle aufgelisteten Strukturvariablen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 3.1   
+    </b>Strukturvariablen in struct stat und deren Bedeutung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Variable</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung </b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>POSIX</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_dev
+</td>
+<td class="tabellentext" bgcolor="#000000">Ger&auml;tenummer (Device-Nummer) des Dateisystems, auf dem sich die Datei/das Verzeichnis befindet.
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_ino
+</td>
+<td class="tabellentext" bgcolor="#000000">Inode-Nummer
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_mode
+</td>
+<td class="tabellentext" bgcolor="#000000">Dateimodus (Dateityp und Zugriffsrechte) 
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_nlink
+</td>
+<td class="tabellentext" bgcolor="#000000">Anzahl fester Links auf die Datei 
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_uid
+</td>
+<td class="tabellentext" bgcolor="#000000">UID des Dateieigent&uuml;mers
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_gid 
+</td>
+<td class="tabellentext" bgcolor="#000000">GID des Dateieigent&uuml;mers 
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_rdev
+</td>
+<td class="tabellentext" bgcolor="#000000">Ger&auml;te-ID (nur f&uuml;r Spezialdateien) 
+</td>
+<td class="tabellentext" bgcolor="#000000">nein
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_size
+</td>
+<td class="tabellentext" bgcolor="#000000">Gr&ouml;&szlig;e der Datei in Bytes 
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_atime
+</td>
+<td class="tabellentext" bgcolor="#000000">Datum des letzten Zugriffs 
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_mtime
+</td>
+<td class="tabellentext" bgcolor="#000000">Datum der letzten Ver&auml;nderung 
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_ctime
+</td>
+<td class="tabellentext" bgcolor="#000000">Datum der Inode-&Auml;nderung 
+</td>
+<td class="tabellentext" bgcolor="#000000">ja
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_blksize
+</td>
+<td class="tabellentext" bgcolor="#000000">Eingestellte Blockgr&ouml;&szlig;e
+</td>
+<td class="tabellentext" bgcolor="#000000">nein
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">st_blocks
+</td>
+<td class="tabellentext" bgcolor="#000000">Anzahl der verwendeten st_blksize-Bl&ouml;cke
+</td>
+<td class="tabellentext" bgcolor="#000000">nein
+</td>
+</tr>
+</table><br>
+<p>Sie haben drei Versionen, womit Sie die Dateiattribute der Struktur <span class="listing">stat</span> erfragen k&ouml;nnen. Hier die Syntax<a id="Xxx999338" name="Xxx999338"></a><a id="Xxx999339" name="Xxx999339"></a><a id="Xxx999340" name="Xxx999340"></a>:</p>
+<pre>#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+int stat(const char *pfadname, struct stat *buf);
+int fstat(int fd, struct stat *buf);
+int lstat(const char *pfadname, struct stat *buf);</pre>
+<p>Alle drei Versionen geben bei einem Fehler -1 und bei Erfolg des Funktionsaufrufs 0 zur&uuml;ck. Bei allen drei Funktionen m&uuml;ssen Sie die Adresse einer Variablen vom Typ <span class="listing">struct</span> <span class="listing">stat</span> &uuml;bergeben. Nach dem Funktionsaufruf befinden sich dann die entsprechenden Informationen (siehe Tabelle 3.1) zur betreffenden Datei in den einzelnen Strukturvariablen.</p>
+<p>Bei der Funktion <span class="listing">stat()</span> geben Sie dabei die Datei mit <span class="listing">pfadnamen</span> an. Die Funktion <span class="listing">lstat()</span> ist &auml;hnlich wie <span class="listing">stat()</span>, nur mit dem Unterschied, wenn es sich bei der Datei um einen symbolischen Link handeln sollte, dann werden die Attribute des symbolischen Links anstatt die der Datei nach <span class="listing">buf</span> geschrieben. Die Funktion <span class="listing">fstat()</span> ist die Variante der niedrigeren Ebene, die als erstes Argument einen bereits ge&ouml;ffneten Filedeskriptor erwartet.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">3.1.1 Dateiart und Zugriffsrechte einer Datei erfragen – st_mode<a id="RxxKap03000040000F51F035193" name="RxxKap03000040000F51F035193"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999345" name="Xxx999345"></a><a id="Xxx999346" name="Xxx999346"></a>Die Strukturvariable <span class="listing">st_mode</span> kann gleich f&uuml;r zwei Abfragen verwendet werden. Zum einen erfragt man mit ihr, um was f&uuml;r eine Dateiart es sich handelt, und zum anderen, welche Zugriffsrechte diese Datei besitzt.</p>
+<p>Die Dateiart k&ouml;nnen Sie mit den in der Tabelle aufgelisteten Makros abfragen. Jedes dieser Makros liefert 1 zur&uuml;ck, wenn die Bedingung zutrifft, oder 0, falls nicht.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 3.2   
+    </b>Makros in &lt;sys/stat.h&gt; f&uuml;r die Dateiart – st_mode</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Makro</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung </b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_ISREG()<a id="Xxx999355" name="Xxx999355"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Regul&auml;re Datei 
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_ISDIR()<a id="Xxx999360" name="Xxx999360"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Verzeichnis 
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_ISCHR()<a id="Xxx999365" name="Xxx999365"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichenorientierte Ger&auml;tedatei 
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_ISBLK()<a id="Xxx999370" name="Xxx999370"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Blockorientierte Ger&auml;tedatei 
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_ISFIFO()<a id="Xxx999375" name="Xxx999375"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">FIFO (benannte Pipe)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_ISLINK()<a id="Xxx999380" name="Xxx999380"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Symbolischer Link (nicht bei POSIX.1 oder SVR4) 
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_ISSOCK()<a id="Xxx999385" name="Xxx999385"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Socket (nicht bei POSIX.1 oder SVR4)
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999397" name="Xxx999397"></a><a id="Xxx999398" name="Xxx999398"></a>Wie schon erw&auml;hnt, k&ouml;nnen Sie &uuml;ber die Strukturvariable <span class="listing">st_mode</span> auch die einfachen Zugriffsrechte der drei Benutzerklassen (<span class="listing">rwx|rwx|rwx</span>), die es unter Linux/UNIX gibt, ermitteln. Hier die Tabelle mit den einzelnen Konstanten, womit Sie die Zugriffsrechte &uuml;berpr&uuml;fen k&ouml;nnen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 3.3   
+    </b>Zugriffsrechte der drei Benutzerklassen in &lt;sys/stat.h&gt;</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Konstante</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Benutzerklasse</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_IRUSR<a id="Xxx999408" name="Xxx999408"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">read (Leserecht)
+</td>
+<td class="tabellentext" bgcolor="#000000">Dateieigent&uuml;mer
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_IWUSR<a id="Xxx999415" name="Xxx999415"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">write (Schreibrecht)
+</td>
+<td class="tabellentext" bgcolor="#000000">Dateieigent&uuml;mer
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_IXUSR<a id="Xxx999422" name="Xxx999422"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">execute (Ausf&uuml;hrungsrecht)
+</td>
+<td class="tabellentext" bgcolor="#000000">Dateieigent&uuml;mer 
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_IRGRP<a id="Xxx999429" name="Xxx999429"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">read (Leserecht)
+</td>
+<td class="tabellentext" bgcolor="#000000">Gruppe des Dateieigent&uuml;mers
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_IWGRP<a id="Xxx999436" name="Xxx999436"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">write (Schreibrecht)
+</td>
+<td class="tabellentext" bgcolor="#000000">Gruppe des Dateieigent&uuml;mers
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_IXGRP<a id="Xxx999443" name="Xxx999443"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">execute (Ausf&uuml;hrungsrecht)
+</td>
+<td class="tabellentext" bgcolor="#000000">Gruppe des Dateieigent&uuml;mers
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_IROTH<a id="Xxx999450" name="Xxx999450"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">read (Leserecht)
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle anderen Benutzer
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_IWOTH<a id="Xxx999457" name="Xxx999457"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">write (Schreibrecht)
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle anderen Benutzer
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">S_IXOTH<a id="Xxx999464" name="Xxx999464"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">execute (Ausf&uuml;hrungsrecht)
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle anderen Benutzer
+</td>
+</tr>
+</table><br>
+<p>»Alle anderen« hei&szlig;t auch wirklich alle anderen, die nicht in der Gruppe sind. So gesehen gibt es im Dateimodus 0705 immer eine gelackmeierte Benutzergruppe.</p>
+<p>Ver&auml;ndern k&ouml;nnen Sie die Zugriffsrechte mit der Funktion <span class="listing">chmod()<a id="Xxx999481" name="Xxx999481"></a></span> oder dem gleichnamigen Befehl in einer Shell.</p>
+<p>Das folgende Listing demonstriert nun, wie Sie ein komplettes Verzeichnis (hier das Arbeitsverzeichnis) auslesen und die Dateiart und Zugriffsrechte (Linux-/UNIX-gerecht) mithilfe der Funktion <span class="listing">stat()</span> und der Strukturvariablen <span class="listing">st_mode</span> ermitteln k&ouml;nnen.</p>
+<pre><a id="Xxx999484" name="Xxx999484"></a>/* my_stat.c */
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;dirent.h&gt;
+#include &lt;stdlib.h&gt;
+int main (int argc, char **argv) {
+  DIR *dir;
+  struct dirent *dirzeiger;
+  const char *rwx = "rwxrwxrwx";
+  int bits[]= {
+     S_IRUSR,S_IWUSR,S_IXUSR,/*Zugriffsrechte User*/
+     S_IRGRP,S_IWGRP,S_IXGRP,/*Zugriffsrechte Gruppe*/
+     S_IROTH,S_IWOTH,S_IXOTH /*Zugriffsrechte der Rest*/
+  };
+  /* Arbeitsverzeichnis &ouml;ffnen */
+  if((dir=opendir(".")) == NULL) {
+    fprintf(stderr,"Fehler bei opendir: %s\n",
+       strerror(errno));
+    return (EXIT_FAILURE);
+  }
+  /* Das komplette Verzeichnis auslesen */
+  while((dirzeiger=readdir(dir)) != NULL) {
+    struct stat attribut;
+    int i;
+    char l_rwx[10];
+    l_rwx[9] = '\0';
+    if(stat(dirzeiger-&gt;d_name, &amp;attribut) == -1) {
+      fprintf(stderr,"Fehler bei stat: %s\n",
+         strerror(errno));
+      return (EXIT_FAILURE);
+    }
+    /* Dateiart erfragen */
+    if( S_ISREG(attribut.st_mode) )
+      printf("Regul&auml;re Datei           : ");
+    else if( S_ISDIR(attribut.st_mode) )
+      printf("Verzeichnis              : ");
+    else if( S_ISCHR(attribut.st_mode) )
+      printf("zeichenorient. Ger&auml;tedatei : ");
+    else if( S_ISBLK(attribut.st_mode) )
+      printf("blockorient. Ger&auml;tedatei : ");
+    else if( S_ISFIFO(attribut.st_mode) )
+      printf("FIFO oder named Pipe     : ");
+    else
+      printf("Unbekannte Datei          : ");
+    /* Dateinamen ausgeben */
+    printf("%-20s [",dirzeiger-&gt;d_name);
+    /* Einfache Zugriffsrechte erfragen */
+    l_rwx[0]='\0';
+    for(i=0; i&lt;9; i++) { /*Wenn nicht 0, dann gesetzt*/
+      l_rwx[i]=(attribut.st_mode &amp; bits[i]) ? rwx[i] : '-';
+    }
+    l_rwx[9]='\0';
+    printf("%s]\n",l_rwx);
+  }
+  closedir(dir);
+  return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc –o my_stat my_stat.c
+$ ./my_stat
+Verzeichnis              : .                    [rwxrwx---]
+Verzeichnis              : ..                   [rwxrwx---]
+Verzeichnis              : bin                  [rwxrwx---]
+Regul&auml;re Datei           : dir1.c               [rwx------] 
+Verzeichnis              : etc                  [rwxrwx---]
+Regul&auml;re Datei           : file                 [rwxr-xr-x]
+Regul&auml;re Datei           : file1.txt            [rw-r--r--]
+Verzeichnis              : lib                  [rwxrwx---]
+Verzeichnis              : mails                [rwx------]
+Regul&auml;re Datei           : my_stat.c            [rwx------]
+Regul&auml;re Datei           : my_stat              [rwxr-xr-x]
+Regul&auml;re Datei           : out.txt              [rw-r--r--]
+Regul&auml;re Datei           : reformime            [rwx------]
+Verzeichnis              : sbin                 [rwxrwx---]
+Regul&auml;re Datei           : test                 [rwxrwxrwx]
+Regul&auml;re Datei           : test.txt             [rwx------]
+Regul&auml;re Datei           : testfile.txt         [rwx------]
+Verzeichnis              : tmp                  [rwxrwx---]
+Regul&auml;re Datei           : Unbenannt2.cpp       [rwx------]
+Verzeichnis              : usr                  [rwxrwx---]
+Verzeichnis              : var                  [rwxrwx---]</pre>
+<p>Sollten Sie Probleme mit den Makros <span class="listing">S_IS*</span> haben, dann arbeiten Sie vermutlich mit einem &auml;lteren UNIX-/Linux-System, das die Makros noch nicht unterst&uuml;tzt. In solch einem Fall m&uuml;ssen Sie die Konstanten <span class="listing">S_IF*</span> als Bitmask verwenden, z. B.:</p>
+<pre>if(attribut.st_mode &amp; S_IFREG)
+   printf("Regul&auml;re Datei\n");
+else if(attribut.st_mode &amp; S_IFDIR)
+   printf("Directory\n");</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">3.1.2 User-ID-Bit<a id="Xxx999490" name="Xxx999490"></a> und Group-ID-Bit<a id="Xxx999491" name="Xxx999491"></a> – st_uid und st_g<a id="RxxKap03000040000F51F0351D4" name="RxxKap03000040000F51F0351D4"></a>id 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999493" name="Xxx999493"></a><a id="Xxx999494" name="Xxx999494"></a><a id="Xxx999495" name="Xxx999495"></a><a id="Xxx999496" name="Xxx999496"></a>Wollen Sie den Eigent&uuml;mer und den Gruppeneigent&uuml;mer einer Datei ermitteln, k&ouml;nnen Sie die Strukturvariablen <span class="listing">st_uid</span> (Eigent&uuml;mer) und <span class="listing">st_gid</span> (Gruppeneigent&uuml;mer) abfragen. Hierzu ein kurzes Listing:</p>
+<pre><a id="Xxx999498" name="Xxx999498"></a>/* ugid.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;string.h&gt;
+int main(int argc, char **argv) {
+   struct stat attribut;
+   if(argc &lt; 2)
+      printf("usage: %s datei(en)\n", *argv);
+   while(*++argv != NULL) {
+      if(stat(*argv,&amp;attribut) &lt; 0) {
+           fprintf(stderr, "stat(): %s\n", strerror(errno));
+           return EXIT_FAILURE;
+        }
+      printf("%-18s\n",*argv);
+      printf("USER-ID  : %d\n"   ,attribut.st_uid);
+      printf("GROUP-ID : %d\n\n" ,attribut.st_gid);
+    }
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei seiner Ausf&uuml;hrung:</p>
+<pre>$ gcc –o ugid ugid.c
+$ ./ugid ugid.c
+ugid.c
+USER-ID     :  1003
+GROUP-ID    :  513</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">3.1.3 Inode ermitteln – st_ino<a id="RxxKap03000040000F51F0351D9" name="RxxKap03000040000F51F0351D9"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999503" name="Xxx999503"></a><a id="Xxx999504" name="Xxx999504"></a>Ich setze zwar voraus, dass Sie wissen, was ein Inode ist, aber f&uuml;r den Fall der F&auml;lle hier eine kurze Erkl&auml;rung dazu. Ein Inode (Information Node = Informationsknoten) ist ein Eintrag in einer bestimmten Tabelle einer Partition, die Informationen zu einer Datei enth&auml;lt. Dies sind Informationen &uuml;ber den Besitzer, die Zugriffsrechte, die Gr&ouml;&szlig;e und vor allem auch &uuml;ber die Position einer Datei, wo diese auf der Partition gespeichert ist.</p>
+<p>Wird z. B. eine Datei angelegt, werden alle Informationen zu dieser Datei in einem freien Inode geschrieben, dessen Nummer sich im Verzeichnis der Datei befindet. Das hei&szlig;t, der Inode selbst befindet sich nicht im selben Verzeichnis wie die Datei, sondern nur die dazugeh&ouml;rende Inode-Nummer. Linux/UNIX trennt die Verwaltung von Informationen und der eigentlichen Datei. Somit kann es f&uuml;r einen Inode mehrere Dateinamen im System geben (siehe Abschnitt 3.1.4).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sie werden es wahrscheinlich geahnt haben: Die meisten Informationen der Struktur <span class="listing">stat</span> werden aus diesem Inode gelesen.</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt wissen Sie, was die Inode-Nummer bedeutet, und somit auch, was Sie mit <span class="listing">st_ino</span> f&uuml;r Informationen erhalten. Ein Listing dazu kann ich mir ersparen, da die Ermittlung von <span class="listing">st_ino</span> genauso abl&auml;uft wie im Listing zuvor (siehe Abschnitt 3.1.2).</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">3.1.4 Linkz&auml;hler – st_nlink<a id="RxxKap03000040000F51F0351DF" name="RxxKap03000040000F51F0351DF"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999513" name="Xxx999513"></a><a id="Xxx999514" name="Xxx999514"></a><a id="Xxx999515" name="Xxx999515"></a>Ein Link ist unter Linux/UNIX eine einfache M&ouml;glichkeit, einen Alias f&uuml;r eine Originaldatei anzulegen. Damit k&ouml;nnen Sie auf ein und dieselbe Datei unter mehreren Namen und an einer anderen Stelle, als sich die Originaldatei befindet, zugreifen. Es gibt viele Gr&uuml;nde, so etwas zu tun. Z. B. befindet sich eine Datei oder eine Anwendung im tiefsten Dschungel der Verzeichnishierarchie, und Sie wollen nicht immer wieder einen ellenlangen Text in die Kommandozeile eingeben. Daf&uuml;r k&ouml;nnen Sie in Ihrem Arbeitsverzeichnis einen Link (= Verbindung) zu dieser Datei anlegen. Sie k&ouml;nnen dabei (fast) beliebig viele Links anlegen.</p>
+<p>Ein Beispiel. Sie wollen ein Programm aus Ihrem <span class="listing">/home</span>-Verzeichnis aufrufen, das sich im Pfad <span class="listing">/opt/kde/bin/</span> befindet. Anstatt das Programm jedes Mal mit folgendem Aufruf zu starten:</p>
+<pre>/opt/kde/bin/programmname</pre>
+<p>k&ouml;nnen Sie hierzu einen Link zu diesem Programm erstellen. In der Kommandozeile k&ouml;nnen Sie dabei folgenderma&szlig;en vorgehen:</p>
+<pre>$ ln /opt/kde/bin/programmname programmname</pre>
+<p>Von jetzt an k&ouml;nnen Sie aus Ihrem <span class="listing">/home</span>-Verzeichnis auf das Programm mit <span class="listing">programmname</span> zugreifen. Nat&uuml;rlich m&uuml;ssen Sie den Programmnamen dabei nicht einbehalten. Sie k&ouml;nnen genauso gut einen anderen Namen daf&uuml;r verwenden:</p>
+<pre>$ ln /opt/kde/bin/programmname neuer_name</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Eine Datei existiert so lange, bis der letzte Link auf diese Datei gel&ouml;scht wurde.</p>
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999527" name="Xxx999527"></a><a id="Xxx999528" name="Xxx999528"></a>Man unterscheidet generell zwischen einem harten Link und einem symbolischen Link. Mit einem symbolischen Link kann man im Gegensatz zu harten Links auch partitions&uuml;bergreifend Dateien verlinken. Des Weiteren k&ouml;nnen symbolische Links auch auf ein Verzeichnis zeigen, was bei harten Links nicht m&ouml;glich ist. Symbolische Links erkennen Sie bei der Ausgabe von Verzeichnissen mit <span class="listing">ls</span> -<span class="listing">l</span> an einem Pfeil und einem <span class="listing">l</span> (f&uuml;r Link) als erstes Zeichen der Ausgabe:</p>
+<pre>$ ls –l 
+lrwxrwxrwx 1 juergen users 10 Nov  6 00:13 hallo -&gt; /var/hallo</pre>
+<p>Die »Gr&ouml;&szlig;e« eines Symlinks ist immer die L&auml;nge seines Ziels, also dem Textstring hinter »<span class="listing">–&gt;</span>« in <span class="listing">ls</span>.</p>
+<p>Wollen Sie aus Ihrem Programm heraus einen harten oder einen symbolischen Link erstellen, bieten sich dazu zwei Funktionen an:<a id="Xxx999533" name="Xxx999533"></a><a id="Xxx999534" name="Xxx999534"></a></p>
+<pre>#include &lt;unistd. h.&gt;
+int link(const char *name, const char *linkname);
+int symlink(const char *pfadname, const char *symlink);</pre>
+<p>Beide Funktionen geben bei Erfolg 0, ansonsten bei einem Fehler -1 zur&uuml;ck. Mit der Funktion <span class="listing">link()</span> erzeugen Sie einen harten Link <span class="listing">linkname</span> auf die existierende Datei <span class="listing">name</span>. Mit <span class="listing">symlink()</span> erzeugen Sie einen symbolischen Link mit dem Namen <span class="listing">symlink</span> auf <span class="listing">pfadname</span>.</p>
+<p>Es muss erw&auml;hnt werden, dass <span class="listing">st_nlink</span> keinen symbolischen Link mitz&auml;hlt. Dies liegt daran, dass Symlinks selbst einen Inode besitzen und somit au&szlig;er dem Zielnamen (der ja nicht immer existieren muss) keine Beziehung zu der referenzierten Datei haben. Weiterhin referenziert ein Symlink eine potenzielle Datei, w&auml;hrend ein dentry (Verzeichniseintrag) einen Inode referenziert, inkl. gleicher Inodes f&uuml;r mehrere dentries. Ein Symlink dagegen ist ein dentry mit eigenst&auml;ndigem Inode.</p>
+<p><a id="Xxx999538" name="Xxx999538"></a>Anders als beim harten Link kann es passieren, dass der symbolische Link ins Nichts zeigt (auch genannt »Dangling Symlink«). Linux &uuml;berpr&uuml;ft nicht, ob ein symbolischer Link noch g&uuml;ltig ist, das m&uuml;ssen die Anwendungen machen. Das ist eigentlich auch logisch. Denn haben Sie z. B. einen symbolischen Link auf einem anderen Rechner &uuml;ber ein Netzwerk gesetzt, w&uuml;rde dies bedeuten, dass dieser Rechner dauerhaft &uuml;berpr&uuml;ft werden muss. Einen symbolischen Link kann man eher mit der »grausamen« Verkn&uuml;pfung von MS-Systemen vergleichen. Wollen Sie abfragen, auf welche Originaldatei oder welches Verzeichnis der symbolische Link verweist, so k&ouml;nnen Sie dies mit der Funktion <span class="listing">readlink()</span> in Erfahrung bringen<a id="Xxx999540" name="Xxx999540"></a><a id="Xxx999541" name="Xxx999541"></a>.</p>
+<pre>#include &lt;unistd. h.&gt;
+int readlink(const char *sym_link, char *buf, int buf_size);</pre>
+<p>Gibt diese Funktion -1 zur&uuml;ck, ist etwas nicht in Ordnung mit dem symbolischen Link (siehe z. B. <span class="listing">/proc/2/exe</span>). Nat&uuml;rlich sagt ein R&uuml;ckgabewert von 0 noch nichts &uuml;ber die Existenz der referenzierten Datei aus. Somit bleibt bei den symbolischen Links immer ein wenig Ungewissheit &uuml;brig. Die Funktion <span class="listing">readlink()</span> terminiert den String <span class="listing">buf</span> &uuml;brigens nicht. Aber da die Funktion als R&uuml;ckgabewert die Anzahl der gelesenen Bytes zur&uuml;ckgibt, sollte dies kein Problem sein.</p>
+<p>Ob eine Datei/ein Verzeichnis, die/das durch einen Symlink referenziert wird, nun tats&auml;chlich existiert, kann man entweder mit einem <span class="listing">stat()</span> nach <span class="listing">readlink()</span> oder einem <span class="listing">open()</span> &uuml;berpr&uuml;fen. Existiert die Zieldatei nicht, wird in beiden F&auml;llen (<span class="listing">stat</span>/<span class="listing">open</span>) <span class="listing">ENOENT</span> in <span class="listing">errno</span> zur&uuml;ckgegeben.</p>
+<p>Nat&uuml;rlich gibt es noch viel mehr zu den Links zu sagen, aber dies ist nicht im Sinne eines Buchs zur Programmierung. Dazu seien entsprechende Manual Pages oder eines der vielen guten Linux-B&uuml;cher empfohlen (oder ein Blick auf den Inhalt der Buch-CD).</p>
+<p>Hierzu nun ein Listing, das die Anzahl von Links (<span class="listing">st_nlink</span>) einer Datei &uuml;berpr&uuml;ft, die Sie als erstes Argument in der Kommandozeile &uuml;bergeben. Anschlie&szlig;end wird jeweils ein harter und ein symbolischer Link zu dieser Datei erzeugt und die Anzahl von Links ausgegeben. Worauf der symbolische Link verweist, wird mit <span class="listing">readlink()</span> ebenso ausgegeben. Am Ende werden der harte und der symbolische Link mit <span class="listing">unlink()</span> gel&ouml;scht. Hier das Listing:</p>
+<pre><a id="Xxx999547" name="Xxx999547"></a>/* my_link.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd. h.&gt;
+#define HARD_LINK "hard_link"
+#define SYM_LINK  "sym_link"
+#define MAX 255
+static int attribute( const char *name ) {
+  struct stat st;
+  if(stat(name , &amp;st) &lt; 0) {
+    fprintf(stderr, "Fehler bei stat: %s\n",
+       strerror(errno));
+    return -1;
+  }
+  printf("Anzahl Links  : %d\n",st.st_nlink);
+  return 1;
+}
+int main(int argc, char **argv) {
+  const char *ptr;
+  char buf[MAX];
+  int n;
+  if(argc &lt; 2) {
+    printf("usage: %s datei\n", argv[0]);
+    return EXIT_FAILURE;
+  }
+  ptr = argv[1];
+  /* Anzahl der Links erfragen */
+  if( attribute( ptr ) &lt; 0)
+    return EXIT_FAILURE;
+  /* Einen harten Link erzeugen */
+  if((link(ptr, HARD_LINK)) == -1) {
+    printf("Konnte keinen Hardlink erstellen\n");
+    return EXIT_FAILURE;
+  }
+  printf("Nach dem Funktionsaufruf von link()\n");
+  /* Wieder die Anzahl der Links erfragen */
+  if(attribute( ptr ) &lt; 0)
+    return EXIT_FAILURE;
+  if((symlink(ptr, SYM_LINK)) == -1) {
+    printf("Konnte keinen sym. Link erstellen\n");
+    return EXIT_FAILURE;
+  }
+  printf("Nach dem Funktionsaufruf von symlink()\n");
+  /* Wieder die Anzahl der Links erfragen */
+  if(attribute( ptr ) &lt; 0)
+    return EXIT_FAILURE;
+  /* Namen anzeigen, worauf der symbolische Link verweist */
+  n=readlink(SYM_LINK, buf, MAX);
+  printf("Der symbolische Link \"%s\"  zeigt auf"
+         " \"%.*s\"\n",SYM_LINK, n, buf);
+  /* Links wieder entfernen */
+  unlink(HARD_LINK);
+  unlink(SYM_LINK);
+  return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc –o my_link my_link.c
+$ ./my_link test_file
+Anzahl Links  : 1
+Nach dem Funktionsaufruf von link()
+Anzahl Links  : 2
+Nach dem Funktionsaufruf von symlink()
+Anzahl Links  : 2
+Der symbolische Link "sym_link" zeigt auf "test_file"</pre>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">3.1.5 Gr&ouml;&szlig;e der Datei – st_size<a id="RxxKap03000040000F51F0351F9" name="RxxKap03000040000F51F0351F9"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999552" name="Xxx999552"></a><a id="Xxx999553" name="Xxx999553"></a>Mit der Strukturvariablen <span class="listing">st_size</span> k&ouml;nnen Sie sich die Gr&ouml;&szlig;e einer Datei in Bytes ermitteln lassen. Bei regul&auml;ren Dateien erhalten Sie dabei die Anzahl von Bytes, die in die Datei geschrieben wurden. Diese Gr&ouml;&szlig;e muss sich nicht auf den reinen physikalischen Speicherplatz beziehen, da dieser in der Regel immer ein Vielfaches der Blockgr&ouml;&szlig;e ist (Gleiches gilt auch umgekehrt, siehe den Abschnitt &uuml;ber <span class="listing">ftruncate()</span> in Kapitel 2). Bei Verzeichnissen ist der Wert abh&auml;ngig vom Filesystem, und bei symbolischen Links enth&auml;lt <span class="listing">st_size</span> die L&auml;nge in Bytes (nicht immer, siehe <span class="listing">/proc/xxx/fd</span>, wo alle 64 lang sind), die der Dateiname belegt (ohne abschlie&szlig;endes <span class="listing">\0</span>), auf den der symbolische Link verweist. In SVR4 enth&auml;lt <span class="listing">st_size</span> au&szlig;erdem bei den Pipes die Anzahl der zu lesenden Bytes.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><a id="Xxx999557" name="Xxx999557"></a><a id="Xxx999558" name="Xxx999558"></a><b>Hinweis   </b>Der Speicherplatz wird bei einem Filesystem nicht in Bytes, sondern immer in Bl&ouml;cken von Bytes angegeben. Die Blockgr&ouml;&szlig;e<a id="Xxx999560" name="Xxx999560"></a> h&auml;ngt vom Filesystem ab. In SVR4 und BSD haben Sie dabei die M&ouml;glichkeit, die beiden Strukturvariablen <span class="listing">st_blocks</span> und <span class="listing">st_blksize</span>, die in der Struktur <span class="listing">stat</span> definiert sind, zu verwenden. Aus der Multiplikation von <span class="listing">st_blocks</span> <span class="listing">*</span> <span class="listing">st_blksize</span> bekommen Sie dann den physikalischen Speicher, den das Dateisystem f&uuml;r die Datei wirklich belegt. Wollen Sie wissen, wie viele Bl&ouml;cke eine Datei belegt, k&ouml;nnen Sie auch das Kommando du verwenden (oder <span class="listing">st_blocks</span> inspizieren).</p>
+</td>
+</tr>
+</table><br>
+<p>Hierzu ein Beispiel:</p>
+<pre><a id="Xxx999563" name="Xxx999563"></a>/* file_size.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd. h.&gt;
+static int filesize( const char *name ) {
+   struct stat st;
+   if(stat(name , &amp;st) &lt; 0) {
+      fprintf(stderr, "Fehler bei stat: %s\n",
+         strerror(errno));
+      return -1;
+    }
+   printf("Gr&ouml;&szlig;e in st_size  : %d Bytes\n",(int)st.st_size);
+   return 1;
+}  
+int main(int argc, char **argv) {
+   const char *ptr;
+   
+   if(argc &lt; 2) {
+         printf("usage: %s datei\n",argv[0]);
+         return EXIT_FAILURE;
+      }
+   ptr = argv[1];
+   /* Gr&ouml;&szlig;e der Datei abfragen */
+   if( filesize( ptr ) &lt; 0)
+      return EXIT_FAILURE;
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei seiner Ausf&uuml;hrung:</p>
+<pre>$ gcc –o file_size file_size.c
+$ ./file_size file_size.c
+Gr&ouml;&szlig;e in st_size: 643 Bytes
+---[Linux]---
+$ du -h file_size.c
+4,0K    file_size.c
+---[BSD]---
+$ du -h file_size.c
+2,0K    file_size.c</pre>
+<p>Zur Demonstration, wie viel physikalischen Speicher die Datei (hier <span class="listing">file_size.c</span>) tats&auml;chlich verwendet, wurde das Kommando du der Option <span class="listing">-h</span> verwendet.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">3.1.6 st_atime, st_mtime, st_ctime<a id="RxxKap03000040000F51F035202" name="RxxKap03000040000F51F035202"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999569" name="Xxx999569"></a><a id="Xxx999570" name="Xxx999570"></a><a id="Xxx999571" name="Xxx999571"></a><a id="Xxx999572" name="Xxx999572"></a><a id="Xxx999573" name="Xxx999573"></a><a id="Xxx999574" name="Xxx999574"></a>F&uuml;r Zeitdaten stehen Ihnen in der Struktur <span class="listing">stat</span> gleich drei Variablen zur Verf&uuml;gung:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> st_atime</span> = Zeit des letzten Lesezugriffs (dazu geh&ouml;ren nicht <span class="listing">stat()</span>, <span class="listing">open()</span>)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> st_mtime</span> = Zeit des letzten Schreibzugriffs</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> st_ctime</span> = Zeit der letzten Inode-&Auml;nderung (z. B. <span class="listing">chmod()</span>)</td>
+</tr>
+</table>
+<p>Und auch hierzu ein Listing:</p>
+<pre><a id="Xxx999580" name="Xxx999580"></a>/* file_times.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;time.h&gt;
+static int file_times(const char *name) {
+   struct stat st;
+   if(stat(name , &amp;st) &lt; 0) {
+      fprintf(stderr, "Fehler bei stat: %s\n",
+         strerror(errno));
+      return -1;
+   }
+   printf("Letzter Zugriff          : %s",
+      ctime( &amp;st.st_atime ));
+   printf("Letzte &Auml;nderung (Inhalt) :%s",
+      ctime( &amp;st.st_mtime ));
+   printf("Letzte &Auml;nderung (Inode)  : %s",
+      ctime( &amp;st.st_ctime ));
+   return 1;
+}  
+int main(int argc, char **argv) {
+   const char *ptr;
+   
+   if(argc &lt; 2) {
+         printf("usage: %s datei\n",argv[0]);
+         return EXIT_FAILURE;
+      }
+   ptr = argv[1];
+   /* Gr&ouml;&szlig;e der Datei abfragen */
+   if( file_times( ptr ) &lt; 0)
+      return EXIT_FAILURE;
+   return EXIT_SUCCESS;
+}</pre>
+<p>In diesem Beispiel wurde au&szlig;erdem die Standardfunktion <span class="listing">ctime()</span> verwendet, die in der Headerdatei <span class="listing">&lt;time.h&gt;<a id="Xxx999583" name="Xxx999583"></a></span> definiert ist, womit aus dem Zeitformat <span class="listing">time_t</span>, aus dem die Strukturvariablen <span class="listing">st_atime</span>, <span class="listing">st_mtime</span> und <span class="listing">st_ctime</span> gebildet sind (primitive Datentypen), in einen String konvertiert wird. Hier das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc –o file_times file_times.c
+$ ./file_times file_times.c
+Letzter Zugriff          : Tue Nov  4 23:28:36 2003
+Letzte &Auml;nderung (Inhalt) : Fri Nov  7 00:10:36 2003
+Letzte &Auml;nderung (Inode)  : Tue Nov  4 23:28:36 2003
+$ touch file_times.c
+$ ./file_times file_times.c
+Letzter Zugriff          : Fri Nov  7 00:23:56 2003
+Letzte &Auml;nderung (Inhalt) : Fri Nov  7 00:23:56 2003
+Letzte &Auml;nderung (Inode)  : Fri Nov  7 00:23:56 2003</pre>
+<p>Wollen Sie die Zugriffs- und/oder Modifikationszeit ver&auml;ndern, k&ouml;nnen Sie dies mit der Funktion <span class="listing">utime()</span> realisieren<a id="Xxx999586" name="Xxx999586"></a>.</p>
+<pre>#include &lt;sys/types.h&gt;
+#include &lt;utime.h&gt;
+int utime(const char *pfad, const struct utimbuf *time_ptr);</pre>
+<p>Bei Erfolg gibt diese Funktion 0, ansonsten bei einem Fehler -1 zur&uuml;ck. Die Struktur <span class="listing">utimbuf</span> sieht wie folgt aus:</p>
+<pre>struct utime {
+   time_t actime;  /* access time -&gt; st_atime       */
+   time_t modtime  /* modification time -&gt; st_mtime */
+};</pre>
+<p>Damit k&ouml;nnen Sie die Zugriffs- und Modifikationszeit auf mindestens den 01. Januar 1970, 01:00:00 Uhr, zur&uuml;cksetzen. In der Praxis:</p>
+<pre><a id="Xxx999591" name="Xxx999591"></a>/* backward.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;utime.h&gt;
+int main(int argc, char **argv) {
+   const char *ptr;
+   struct utimbuf zeit;
+   
+   if(argc &lt; 2) {
+         printf("usage: %s datei\n",argv[0]);
+         return EXIT_FAILURE;
+      }
+   ptr = argv[1];   
+   zeit.actime = 0;
+   zeit.modtime =0;
+   /* Gr&ouml;&szlig;e der Datei abfragen */
+   if( utime( ptr, &amp;zeit ) &lt; 0) {
+      perror("uptime");
+      return EXIT_FAILURE;
+   }
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc –o backward backward.c
+$ ./file_times file_times.c
+Letzter Zugriff          : Fri Nov  7 00:23:56 2003
+Letzte &Auml;nderung (Inhalt) : Fri Nov  7 00:23:56 2003
+Letzte &Auml;nderung (Inode)  : Tue Nov  4 23:28:36 2003
+$ ./backward file_times.c
+$ file_times file_times.c
+Letzter Zugriff          : Thu Jan  1 01:00:00 1970
+Letzte &Auml;nderung (Inhalt) : Thu Jan  1 01:00:00 1970
+Letzte &Auml;nderung (Inode)  : Tue Nov  4 23:28:36 2003</pre>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap02-006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap04-000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap03-000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:25 GMT -->
+</html>

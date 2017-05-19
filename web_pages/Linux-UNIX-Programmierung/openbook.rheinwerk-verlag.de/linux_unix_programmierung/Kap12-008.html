@@ -1,0 +1,2563 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap12-008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:58:25 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 12.9 PostgreSQL – objektrelationales Datenbankverwaltungssystem</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap12-007.html">
+<link rel="next" href="Kap13-000.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap12-007.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap13-000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap12-000.html#RxxKap12000040004161F04F100">12 MySQL und PostgreSQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-000.html#RxxKap12000040004161F04F103">12.1 Relationales Datenbanksystem</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-001.html#RxxKap12001040004331F01E100">12.2 Relationaler Datenbankserver</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-002.html#RxxKap12002040004341F03B100">12.3 SQL-Server im &Uuml;berblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-003.html#RxxKap12003040004351F038100">12.4 MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F038105">12.4.1 Anwendungsgebiete von MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F03810C">12.4.2 Schnittstellen von MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F03810F">12.4.3 Installation von MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F038114">12.4.4 MySQL-Server starten und stoppen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F03817A">12.4.5 Konfigurationsdatei my.cnf</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F03818C">12.4.6 Kommandozeilenwerkzeuge f&uuml;r und von mysql</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F0381B6">12.4.7 Grafische Clients</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F0381BE">12.4.8 MySQL-Crashkurs</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F0381C8">12.4.9 Datentypen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F038251">12.4.10 Datenbank anlegen, verwenden und l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F038275">12.4.11 Tabelle anlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F038281">12.4.12 Schl&uuml;sselfelder (Tabellen anlegen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F038286">12.4.13 Indizes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F03828F">12.4.14 Tabellentypen (Tabellen anlegen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F038291">12.4.15 Autowerte definieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F038294">12.4.16 Tabellen umbenennen und &auml;ndern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F0382A5">12.4.17 Daten einf&uuml;gen, &auml;ndern und l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F0382BB">12.4.18 Daten importieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F0382C1">12.4.19 Datenausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F0382D4">12.4.20 NULL ist 0 oder undefiniert?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-003.html#RxxKap12003040004351F0382D6">12.4.21 Unscharfe Suche</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-004.html#RxxKap12004040004361F03F100">12.5 MySQL C-API</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F175">12.5.1 Verbindung mit dem MySQL-Server aufbauen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F199">12.5.2 Aufgetretene Fehler ermitteln – mysql_errno() und mysql_error()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1A0">12.5.3 Schlie&szlig;t die Verbindung zum Server – mysql_close()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1A4">12.5.4 Erstes Beispiel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1AF">12.5.5 Verschiedene Informationen ermitteln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1C8">12.5.6 Datenbanken, Tabellen und Felder ausgeben (MYSQL_RES)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1DF">12.5.7 Ergebnismenge zeilenweise bearbeiten (MYSQL_ROW)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F1F7">12.5.8 Ergebnismenge spaltenweise einlesen (und ausgeben) (MYSQL_FIELD)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F267">12.5.9 Ein Beispiel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F26C">12.5.10 Ergebnismenge – weitere Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F276">12.5.11 Befehle an den Server – mysql_query() und mysql_real_query()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F2A4">12.5.12 Weitere Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F2F8">12.5.13 Veraltete Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-004.html#RxxKap12004040004361F03F308">12.5.14 Neue Funktionen ab Version 4.1.x</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-005.html#RxxKap12005040004371F021100">12.6 Beispiel eines Newssystems mit MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F02110B">12.6.1 Die Headerdatei my_cgi.h</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F02110E">12.6.2 (Pseudo-)Planung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F021114">12.6.3 Datenbank und Tabellen anlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F0211AA">12.6.4 MySQL-Clients mit GUI</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-005.html#RxxKap12005040004371F0211AC">12.6.5 Randnotiz</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-006.html#RxxKap12006040004381F04D100">12.7 Neue SQL-Funktionen f&uuml;r die Shell – MySQL erweitern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap12-007.html#RxxKap12007040004391F02B100">12.8 MySQL-Funktionen mit der UDF-Schnittstelle entwerfen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B17D">12.8.1 UDF-Sequenzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B187">12.8.2 UDF_INIT-Struktur</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B18D">12.8.3 UDF_ARGS-Struktur</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B19C">12.8.4 R&uuml;ckgabewert</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B1A1">12.8.5 Benutzerdefinierte Funktionen erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap12-007.html#RxxKap12007040004391F02B1A9">12.8.6 Benutzerdefinierte Funktion kompilieren, installieren und ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap120080400043A1F017100">12.9 PostgreSQL – objektrelationales Datenbankverwaltungssystem</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap120080400043A1F017104">12.9.1 PostgreSQL im Vergleich zu MySQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap120080400043A1F017116">12.9.2 Unterschiede in der Syntax zwischen MySQL und PostgreSQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap120080400043A1F01717A">12.9.3 PostgreSQL installieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap120080400043A1F017183">12.9.4 Konfigurationsdateien bei PostgreSQL – (postgresql.conf, pg_hba_conf)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap120080400043A1F017195">12.9.5 CRASHKURS PostgreSQL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap120080400043A1F017247">12.9.6 PostgreSQL C-API – libpg</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap120080400043A1F017304">12.9.7 Umgebungsvariablen und Passwortdatei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap120080400043A1F017312">12.9.8 PostgreSQL und Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap120080400043A1F017316">12.9.9 Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">12.9 <a id="RxxKap12757PostgreSQLobjektrelationalesDatenbankverwaltungssystem" name="RxxKap12757PostgreSQLobjektrelationalesDatenbankverwaltungssystem"></a>PostgreSQL – objektrelationales Datenbankverwaltungssys<a id="RxxKap120080400043A1F017100" name="RxxKap120080400043A1F017100"></a>tem 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999237" name="Xxx999237"></a>Zwar ist MySQL inzwischen die wesentlich verbreitetere Open-Source-Datenbank, doch f&uuml;r anspruchsvollere Anwendungen hinkt sie immer noch weit hinter PostgreSQL her – so dass ich es als Autor nicht ignorieren kann. Die Messlatte von PostgreSQL liegt eher schon in der H&ouml;he von Oracle oder DB2. Aber auch f&uuml;r Webanwendungen, wo MySQL immer noch die unumstrittene Dominanz hat, breitet sich PostgreSQL immer mehr aus. Dabei hat PostgreSQL nat&uuml;rlich auch einige Jahrzehnte Entwicklungszeit hinter sich und entstand, wie so vieles auch, in der kalifornischen Universit&auml;t in Berkeley aus dem POSTGRES-Paket.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nat&uuml;rlich gilt auch hier, wie schon bei der Einf&uuml;hrung in MySQL, dass diese kurze Einf&uuml;hrung keine Alternative zu einem guten Buch oder einer Dokumentation ist. Hier handelt es sich lediglich um einen Streifzug vorbei an PostgreSQL. Ich werde hierbei nur auf das N&ouml;tigste eingehen, um im weiteren Verlauf des Buches mit der C-API von PostgreSQL arbeiten zu k&ouml;nnen.</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">12.9.1 PostgreSQL im Vergleich zu MySQ<a id="RxxKap120080400043A1F017104" name="RxxKap120080400043A1F017104"></a>L 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999245" name="Xxx999245"></a>Um es gleich vorwegzunehmen: Auf die Frage nach einem direkten Vergleich, welches Datenbanksystem denn nun besser sei, verzichte ich hier. Sie l&auml;sst sich wohl auch nicht beantworten, da der Zweck die Wahl der Software bestimmen sollte. Im Internet finden sich diesbez&uuml;glich viele Webseiten, die sich mit dem Performance-Vergleich dieser beiden Datenbanken besch&auml;ftigen. Daher vorneweg die »Nachteile« von PostgreSQL gegen&uuml;ber MySQL.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> PostgreSQL l&auml;uft gew&ouml;hnlich nur auf UNIX-artigen Rechnern am effektivsten. Das kann Ihnen als Linux-Programmierer zwar egal sein, aber den gro&szlig;en Firmenbossen ist das nicht egal.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> PostgreSQL ist ein wenig schwieriger zu handhaben – dies trifft vor allem auf die Umsteiger von MySQL zu PostgreSQL zu.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> F&uuml;r PostgreSQL gibt es eindeutig weniger Literatur und Dokumentationen – was ein sehr gravierender Punkt ist, um ein Datenbanksystem f&uuml;r die Masse bekannt zu machen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Der Bekanntheitsgrad von MySQL ist h&ouml;her – oder haben Sie zuvor schon von PostgreSQL geh&ouml;rt?</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die meisten Internet-Provider und Webhoster bieten nur MySQL an – aber hier ist allm&auml;hlich ein Umbruch zu sp&uuml;ren.</td>
+</tr>
+</table>
+<p>Wenn f&uuml;r Sie keiner dieser Nachteile einer sein sollte, k&ouml;nnen Sie zu PostgreSQL greifen. Sie erhalten hiermit ein Datenbanksystem, was mindestens genauso schnell wie MySQL ist (z. T. ist PostgreSQL schneller). Und im Gegensatz zu vielen Falschaussagen werden auch Skriptsprachen wie z. B. PHP oder Perl mittlerweile recht gut unterst&uuml;tzt. Viele Anwendungen laufen mittlerweile nur mit PostgreSQL. Gerade im Administrationsbereich findet man oft Programme mit PostgreSQL-Unterst&uuml;tzung, aber ohne MySQL (Mail-Server, Warenwirtschaftssysteme). Nebenbei muss man auch anmerken, dass PostgreSQL einige Features mehr besitzt als MySQL. Dar&uuml;ber wird hier zwar nicht geschrieben, aber diese (vor allem im professionellen Bereich) Punkte will ich Ihnen nicht vorenthalten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Views</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Procedural Languages</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Triggers</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Customizable aggregates</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> bessere Transaktionen</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Cluster – Diese erm&ouml;glichen es einem Admin, jedem User sein eigenes Cluster zu geben.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Point-in-Time Recovery (ab Version 8.x) – Damit l&auml;sst sich eine zerschossene DB vom Zeitpunkt DD.MM.YYYY wiederherstellen. Alles, was dazwischen war, ist Geschichte. Zus&auml;tzlich kann man damit wohl Backups in der Zeit nach hinten versetzt fahren; also ein Backup der DB machen, wie sie vor x Sekunden aussah.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Tablespaces Simplify Disk Layout (ab Version 8.x) – Als Admin kann man das Dateisystem f&uuml;r die Datenbanken, Indizes, Schemas usw. ausw&auml;hlen. So wie ich das verstehe, kann man so z. B. einen Index auf einem anderen Dateisystem lagern. Die Performance w&auml;re der Hammer :-)</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Ab Version 8 von PostgreSQL ben&ouml;tigt man f&uuml;r Windows keine Cygwin-Umgebung mehr, sondern man kann nativ mit Installer installieren. Somit ist diese Version die erste, die nativ auf MS Windows als Server ausf&uuml;hrbar ist - ein weiteres (erhebliches) Plus f&uuml;r PostgreSQL.</p>
+</td>
+</tr>
+</table><br>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">12.9.2 Unterschiede in der Syntax zwischen MySQL und PostgreSQ<a id="RxxKap120080400043A1F017116" name="RxxKap120080400043A1F017116"></a>L 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999267" name="Xxx999267"></a>PostgreSQL h&auml;lt sich im Gegensatz zu MySQL (und auch MS Access) sehr an den ANSI SQL-Standard. Wenn Sie von diesen Datenbanksystemen kommen, kann einiges sehr fremd f&uuml;r Sie sein. Hier einige Dinge, wo Sie ein wenig umdenken m&uuml;ssen:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> MySQL verwendet das Zeichen '<span class="listing">#</span>' f&uuml;r den Beginn einer Kommentarzeile. PostgreSQL verwendet stattdessen ANSI-konformes '<span class="listing">--</span>' (double dash). Dies versteht &uuml;brigens MySQL auch!</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> MySQL verwendet <span class="listing">'</span> oder <span class="listing">"</span> zum Quoting von Werten (wie z. B. <span class="listing">name</span> <span class="listing">=</span> <span class="listing">'Jack'</span> oder <span class="listing">name</span> <span class="listing">=</span> <span class="listing">"Jack"</span>). ANSI schreibt das einzelne Singelquoting <span class="listing">'</span> vor – und PostgreSQL nutzt nur dieses. Doppeltes Quoting wird bei PostgreSQL hingegen f&uuml;r System Identifiers, Feldnamen oder Tabellennamen verwendet (z. B. ... <span class="listing">WHERE</span> <span class="listing">"first</span> <span class="listing">name"</span> <span class="listing">=</span> <span class="listing">'Jack'</span>). MySQL verwendet hierf&uuml;r stattdessen <span class="listing">`</span> (Backtick) – was wiederum nicht dem Standard entspricht.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> PostgreSQL ist case-sensitiv bez&uuml;glich der Stringvergleiche. Das Feld <span class="listing">'Jack'</span> ist nicht das gleiche wie das Feld <span class="listing">'jacK'</span>. MySQL und auch MS Access sind diesbez&uuml;glich case-INsensitiv! Wollen Sie bei PostgreSQL erreichen, dass nicht auf Gro&szlig;- und Kleinbuchstaben geachtet wird, m&uuml;ssen Sie entweder <span class="listing">ILIKE</span> oder <span class="listing">*~</span> verwenden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Es gibt zwischen PostgreSQL und MySQL einige Unterschiede bez&uuml;glich der Verwendung des Datums und der Funktionen, die mit Datum arbeiten.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> In MySQL k&ouml;nnen Sie die logischen C-Operatoren <span class="listing">||</span> und <span class="listing">&amp;&amp;</span> verwenden – was hierbei auch f&uuml;r das Verkn&uuml;pfen eines logischen ODER und eines logischen UND steht. In PostgreSQL steht das <span class="listing">||</span> f&uuml;r das Aneinanderh&auml;ngen von Strings (was auch dem Standard entspricht (z. B. <span class="listing">'test'</span> <span class="listing">||</span> <span class="listing">'string'</span> <span class="listing">=</span> <span class="listing">'teststring'</span>)).</td>
+</tr>
+</table>
+<p>Es gibt sicherlich noch eine Menge Differenzen, aber diese hier sollten f&uuml;r den Umstieg die wichtigsten gewesen sein.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">12.9.3 PostgreSQL installiere<a id="RxxKap120080400043A1F01717A" name="RxxKap120080400043A1F01717A"></a>n 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999277" name="Xxx999277"></a>Es gibt zwei M&ouml;glichkeiten der Installation von PostgreSQL, zum einen w&auml;re dies, das Softwarepaket, was Ihnen Ihre Distribution mitliefert, zu installieren, und zum anderen, die Software selbst zu installieren. Sofern Ihrer Distribution PostgreSQL beiliegt (sollte eigentlich immer der Fall sein), empfehle ich Ihnen erst einmal, dies zu installieren, da Ihnen hiermit eine Menge Konfigurationsarbeit abgenommen wird und Sie gleich nach der Installation mit PostgreSQL beginnen k&ouml;nnen. Somit k&ouml;nnen Distributionsinstallierer die folgenden Schritte dieses &uuml;berspringen.</p>
+<p>Sofern Ihre Distribution kein PostgreSQL mitgeliefert hat, sollten Sie &uuml;ber eine Neuanschaffung nachdenken (war nur ein Test, ob Sie noch bei der Sache sind :-)). Wenn Sie also den steinigen Weg der Quelltextdistribution gehen m&uuml;ssen, m&uuml;ssen Sie nach dem Auspacken mit <span class="listing">tar</span> den &uuml;blichen <span class="listing">./configure</span>- und <span class="listing">make</span>-Weg gehen. Zu den unendlich vielen Optionen f&uuml;r spezielle Einstellungen zu <span class="listing">./configure</span> sei die Dokumentation zurate gezogen. Nach dem <span class="listing">make</span>-Aufruf kann die eigentliche systemweite Installation mit <span class="listing">make</span> <span class="listing">install</span> vollzogen werden.</p>
+<p>Nachdem das Datenbanksystem von PostgreSQL installiert wurde, ben&ouml;tigen Sie einen Systembenutzer – nicht gleichzusetzen mit Datenbankbenutzern. Der Systembenutzer ist der Besitzer, dem sp&auml;ter die Datenbankdateien geh&ouml;ren. Unter SUSE und RedHat wird hierf&uuml;r <span class="listing">postgres</span> als Namen verwendet, <span class="listing">pgsql</span> ist noch ein g&auml;ngiger Name. Einen solchen Benutzer k&ouml;nnen Sie je nach Distribution (Debian liefert z. B. das wirklich hervorragende <span class="listing">adduser</span>) ganz einfach mit folgender Eingabe erzeugen (root):</p>
+<pre># useradd -mk /var/lib/empty -s /bin/false postgres</pre>
+<p>Jetzt k&ouml;nnen Sie als <span class="listing">root</span> anschlie&szlig;end &uuml;ber das <span class="listing">su</span>-Kommando auf den Benutzer <span class="listing">postgres</span> zugreifen. Bevor Sie dies allerdings tun, m&uuml;ssen Sie zuerst eine initiale Datenbank erzeugen, um PostgreSQL zu starten. Es handelt sich dabei um eine Verzeichnisstruktur, die Sie mit dem Programm <span class="listing">initdb</span> erzeugen m&uuml;ssen. Das Programm soll jetzt mit dem Systembenutzer, den Sie eben erstellt haben, als Datenverzeichnis <span class="listing">/usr/local/pqsql/data</span> angewendet werden (wieder Root-Rechte n&ouml;tig).</p>
+<pre># mkdir /usr/local/pgsql/data 
+# chown postgres /usr/local/pgsql/data 
+# su - postgres 
+postgres # initdb --pwprompt -D /usr/local/pgsql/data </pre>
+<p>Durch den Aufruf von <span class="listing">initdb</span> wurde eine Datenbank (genauer: das Datenbank-Cluster <span class="listing">initdb</span> erzeugt in dem Sinne keine Datenbank) mit dem Namen <span class="listing">template1</span> erzeugt. Diese Datenbank ben&ouml;tigt PostgreSQL als Vorlage zum Erzeugen von neuen Datenbanken – daher Finger weg von dieser Datenbank.</p>
+<p>Hier wurde auch gleich mit dem Flag –<span class="listing">pwprompt</span> ein Passwort f&uuml;r den Administrator gesetzt. Wird keines verwendet, dann gibt es kein g&uuml;ltiges Passwort, und es kann alles angegeben werden. F&uuml;r den Verlauf des Buchs ben&ouml;tigen Sie allerdings keine Passwortabfrage und k&ouml;nnen somit das Flag erst einmal weglassen. Es lohnt sich, die Optionen von <span class="listing">initdb</span> genauer zu betrachten, da Sie mit diesem Programm auch Voreinstellungen f&uuml;r das neue Cluster festlegen. Insbesondere die Optionen –<span class="listing">encoding</span>, <span class="listing">--locale</span>, <span class="listing">--username</span> und –<span class="listing">pgdata</span> verdienen genauere Beachtung. Wenn diese Schalter nicht gesetzt werden, benutzt <span class="listing">initdb</span> die Umgebungsvariablen der Shell und als Clusterverzeichnis ein Verzeichnis <span class="listing">data</span> in dem Verzeichnis, in dem Sie sich gerade befinden. Sie k&ouml;nnen die meisten der Optionen also auch in der Datei <span class="listing">~/.profile</span> des PostgreSQL Users festlegen, um diese nicht bei jedem Cluster wieder eingeben zu m&uuml;ssen.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">12.9.4 Konfigurationsdateien bei PostgreSQL – (postgresql.conf, 
+pg_hba_con<a id="RxxKap120080400043A1F017183" name="RxxKap120080400043A1F017183"></a>f) 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999288" name="Xxx999288"></a>In diesem Buch werden Sie die Konfigurationsdatei zwar nicht ben&ouml;tigen, aber es kann recht hilfreich bei Problemen sein – besonders bei den Zugriffsrechten –, wenn Sie wissen, unter welchem Namen Sie diese auf Ihrem System finden.</p>
+<p><a id="Xxx999290" name="Xxx999290"></a><a id="Xxx999291" name="Xxx999291"></a>Die Konfigurationsdateien bei PostgreSQL lauten hier <span class="listing">postgresql.conf</span> und <span class="listing">pg_hba.conf</span>. Die erste Datei ist dabei die eigentliche Konfigurationsdatei, und mit der zweiten Datei stellt man die Zugriffsbeschr&auml;nkungen ein. Jedes Cluster besitzt seine eigenen Konfigurationsdateien.</p>
+<p>Die Konfigurationsdatei <span class="listing">postgresql.conf</span> werden Sie wohl nicht so schnell ver&auml;ndern m&uuml;ssen. Diese ist standardm&auml;&szlig;ig f&uuml;r bis zu 100.000 Datens&auml;tze optimal eingerichtet. Sofern Sie die Datei dennoch ver&auml;ndern wollen oder gar m&uuml;ssen, sei f&uuml;r mehr Details die Dokumentation von PostgreSQL empfohlen. Wenn Sie sich diese Datei betrachten, finden Sie immer folgendes Format vor:</p>
+<pre>Option=Wert</pre>
+<p>Damit wird immer f&uuml;r die entsprechende Option ein bestimmter Wert gesetzt. Zeilen, die mit dem Zeichen # beginnen, sind Kommentarzeichen und werden vom PostgreSQL-Server ignoriert. H&auml;ufig findet man hier auch einige Option/Wertpaare auskommentiert.</p>
+<p>Die Zugriffsrechte werden &uuml;ber die Datei <span class="listing">pg_hba.conf</span> eingestellt. Nat&uuml;rlich ist dies nur n&ouml;tig, wenn eine Authentifizierung durchgef&uuml;hrt wird. In den Beispielen dieses Buchs ist dies nicht n&ouml;tig. Da diese Datei nur einmal beim Starten geladen wird, muss bei einer Ver&auml;nderung der Datei der Server nochmals neu gestartet werden, bzw. es reicht ein reload, um nur die Konfiguration neu einzulesen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   <a id="Xxx999299" name="Xxx999299"></a></b>An dieser Stelle erfolgte beim Probelesen ein Zwischenruf von einem mir bekannten Datenbank-Guru. Und zwar kommt hier die hervorragende Benutzerverwaltung von PostgreSQL ein wenig zu kurz. In der Praxis sollte man die Daten immer so gut wie irgend m&ouml;glich sch&uuml;tzten – sprich, man sollte dem User schon nahe legen, auch f&uuml;r die UNIX-Socket-Verbindung ein md5-Passwort zu verwenden, das von dem User-Passwort abweicht. Es sollte daher auch immer die Option <span class="listing">-U</span> <span class="listing">USERNAME</span> hinzugenommen werden. Allerdings sollten Sie bedenken, dass es sich hierbei nur um einen Crashkurs zu PostgreSQL handelt. W&uuml;rde man hierbei noch mehr ins Detail gehen, so h&auml;tten noch zig Seiten mehr geschrieben werden m&uuml;ssen. F&uuml;r mehr Details sei an dieser Stelle das Buch »PostgreSQL: Das offizielle Handbuch« von Peter Eisentraut empfohlen, das Sie &uuml;brigens auch auf der Buch-CD zum Probelesen finden. Wie auch immer, vielleicht ist das auch z. T. das Erfolgsgeheimnis von MySQL. MySQL l&auml;sst sich sehr schnell &uuml;berblicken, was man von PostgreSQL kaum behaupten kann. Man entdeckt hier immer wieder neue Funktionalit&auml;ten.</p>
+</td>
+</tr>
+</table><br>
+<p>Der Aufbau einer solchen Zeile wird als eine »Regel« bezeichnet. Jede dieser Regeln besteht aus mehreren Teilen, die durch ein Leerzeichen voneinander getrennt werden. Hier eine solche komplette Regel:</p>
+<pre>host Datenbankname IP-Adresse Netzmaske Authentifizierung</pre>
+<p>Der erste Regeltyp <span class="listing">host</span> ist der wichtigste und gibt den <span class="listing">host</span> f&uuml;r die Netzwerkadresse an. W&uuml;rde anstatt <span class="listing">host</span> der Regeltyp <span class="listing">local</span> verwendet, so w&uuml;rde eine Verbindung &uuml;ber UNIX Domain Sockets verwendet. Die weiteren Regeltypen bis zur Authentifizierung sprechen f&uuml;r sich. Wollen Sie bez&uuml;glich der Datenbank keine Einschr&auml;nkungen machen, dann k&ouml;nnen Sie hier einfach <span class="listing">all</span> einsetzen – ansonsten geben Sie eine entsprechende existierende Datenbank mit dem Namen an. Bei der Authentifizierung haben Sie mehrere M&ouml;glichkeiten zur Verf&uuml;gung:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> trust</span> – Keine Authentifizierung n&ouml;tig. Der Benutzername und das (falls eingegeben) Passwort werden akzeptiert.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> password</span> – Eine Klartext-Passwort-Authentifizierung. Dies kann auch eine Passwortdatei <span class="listing">(.pgpass</span>) sein.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> crypt</span> – Wie <span class="listing">password</span>, nur &uuml;ber das Netzwerk werden die Passw&ouml;rter verschl&uuml;sselt &uuml;bertragen. Bei Anwendungen mit Threads sollte stattdessen <span class="listing">md5</span> verwendet werden, da <span class="listing">crypt</span> nicht thread-sicher ist.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> md5</span> – Wie <span class="listing">crypt</span>, nur mit anderem und besserem Algorithmus zur Verschl&uuml;sselung.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> Ident</span> – <span class="listing">Ident</span>-D&auml;mon wird abgefragt. Hier kann ein Benutzernamen-Mapping &uuml;ber eine Datei namens <span class="listing">pg_ident.conf</span> durchgef&uuml;hrt werden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> reject</span> – Verbindung wird immer abgelehnt.</td>
+</tr>
+</table>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">12.9.5 CRASHKURS PostgreSQ<a id="RxxKap120080400043A1F017195" name="RxxKap120080400043A1F017195"></a>L 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<h4 class="t4">Server starten und stoppen</h4>
+<p><a id="Xxx999314" name="Xxx999314"></a>Hierbei gilt schon, es gibt mehr als nur einen Weg. Daher empfehle ich Ihnen diesbez&uuml;glich, die mitgelieferte Dokumentation von PostgreSQL zu lesen. Im Gro&szlig;en und Ganzen ist hierbei kein gro&szlig;er Aufwand n&ouml;tig. Sie m&uuml;ssen lediglich ein entsprechendes Skript, das Ihnen von der Distribution bei der Installation zur Verf&uuml;gung steht, mit der Option <span class="listing">start</span> zum Starten oder mit der Option <span class="listing">stop</span> zum Stoppen aufrufen. Alternativ zum Neustart des Datenbankservers k&ouml;nnen Sie auch <span class="listing">reload</span> oder <span class="listing">restart</span> verwenden.</p>
+<pre>---[unter SUSE]---
+$ su
+Password:********
+# rcpostgresql start
+Starting PostgreSQL                                    done
+# rcpostgresql stop
+Shutting down PostgreSQL                               done
+#
+---[unter RedHat]---
+$ su
+Password:********
+# service postgresql start
+Starting PostgreSQL                                    done
+# service postgresql stop
+Shutting down PostgreSQL                               done
+#
+---[generisch]---
+$ su
+Password:********
+# /etc/init.d/postgres* start
+Starting PostgreSQL                                    done
+# /etc/init.d/postgres* stop
+Shutting down PostgreSQL                               done </pre>
+<p>Wenn Ihnen keines dieser Skripte zur Verf&uuml;gung steht, sei Ihnen die Homepage von PostgreSQL empfohlen. Hier werden f&uuml;r diverse Systeme solche Skripte zum Download angeboten. Dies ist z. B. der Fall, wenn Sie PostgreSQL selbst &uuml;bersetzt haben. Nat&uuml;rlich k&ouml;nnen Sie auch ohne ein solches Skript den Datenbankserver – wenn auch etwas umst&auml;ndlich – starten und stoppen:</p>
+<pre>$ su -c 'pg_ctl start -D /usr/local/pgsql/data -l serverlog' \
+  postgres</pre>
+<p>Notfalls k&ouml;nnen Sie zum Beenden des Datenbankservers auch mit <span class="listing">kill</span> die Signale <span class="listing">SIGINT</span> und <span class="listing">SIGQUIT</span> senden.</p>
+<h4 class="t4">Datenbank erzeugen und l&ouml;schen</h4>
+<p><a id="Xxx999321" name="Xxx999321"></a>Jetzt k&ouml;nnen Sie als normaler User eine Datenbank erzeugen bzw. l&ouml;schen. Dazu muss logischerweise der Server laufen und PostgreSQL ordnungsgem&auml;&szlig; installiert sein. Eine Datenbank erzeugen k&ouml;nnen Sie jetzt einfach mit der Eingabe (als Beispiel eine Tabelle namens <span class="listing">adressen</span>):<a id="Xxx999323" name="Xxx999323"></a></p>
+<pre>$ createdb adressen
+CREATE DATABASE</pre>
+<p><a id="Xxx999325" name="Xxx999325"></a>Etwas ungew&ouml;hnlich erscheint hier einem als Umsteiger, dass hierbei noch kein Client verwendet wird. Ebenso sieht es wieder mit dem L&ouml;schen einer Datenbank aus. Auch hierzu reicht eine einfache Eingabe in der Kommandozeile mit:<a id="Xxx999327" name="Xxx999327"></a></p>
+<pre>$ dropdb adressen
+DROP DATABASE</pre>
+<p>Nat&uuml;rlich hat und sollte auch nicht jeder User die Privilegien besitzen, Datenbanken zu erzeugen und zu l&ouml;schen, wie es ihm gef&auml;llt. Dies ist hierbei nur dadurch m&ouml;glich, weil Sie selbst PostgreSQL installiert haben und als DER Benutzer angemeldet sind, der auch den Server gestartet hat. Sollte dies nicht der Fall sein und Sie eine Fehlermeldung zur&uuml;ckbekommen wie</p>
+<pre>ERROR:  CREATE DATABASE: permission denied
+createdb: database creation failed</pre>
+<p>dann sollten Sie den Administrator um Erlaubnis fragen, eine Datenbank zu erzeugen – oder Sie lassen sich eine f&uuml;r die weitere Arbeit mit diesem Buch erzeugen. Das Thema Zugriffsrechte wird hier allerdings nicht behandelt, schlie&szlig;lich ist es lediglich eine Einf&uuml;hrung in PostgreSQL, um anschlie&szlig;end mit dessen C-API eigene Clientanwendungen zu erstellen.</p>
+<p>Sie k&ouml;nnen beliebig viele Datenbanken anlegen, allerdings muss die Datenbank einen Buchstaben als erstes Zeichen beinhalten, und der Name darf nicht l&auml;nger als 63 Zeichen sein.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nat&uuml;rlich ist es auch mit PostgreSQL mithilfe des Clientprogramms <span class="listing">psql</span> (wie bei MySQL der Client <span class="listing">mysql</span>) m&ouml;glich, Datenbanken mit <span class="listing">CREATE</span> <span class="listing">DATABASE</span> <span class="listing">adressen</span> zu erzeugen und mit <span class="listing">DROP</span> <span class="listing">DATABASE</span> <span class="listing">adressen</span> wieder zu l&ouml;schen.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Datentypen in PostgreSQL</h4>
+<p><a id="Xxx999338" name="Xxx999338"></a>In PostgreSQL wird Ihnen eine enorme Menge an Datentypen angeboten. Neben den gew&ouml;hnlichen Datentypen, die es in MySQL auch gibt, gibt es u. a. noch Datentypen f&uuml;r Geometrie, f&uuml;r Netzwerkadressen, Bitkettentypen und Arrays. Auf alle Datentypen einzugehen, w&auml;re recht umfangreich, weshalb hier nur auf die g&auml;ngigsten Datentypen eingegangen werden soll – da sich doch die Syntax im Gegensatz zu MySQL erheblich unterscheidet.</p>
+<p>Zuerst eine Zusammenfassung der nummerischen Datentypen – also sowohl Ganzzahl als auch Flie&szlig;kommazahl:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.11   
+    </b>Nummerische Datentypen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Name</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Speichergr&ouml;&szlig;e</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beschreibung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Reichweite</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">smallint
+</td>
+<td class="tabellentext" bgcolor="#000000">2 Bytes
+</td>
+<td class="tabellentext" bgcolor="#000000">ganze Zahl mit kleiner Reichweite
+</td>
+<td class="tabellentext" bgcolor="#000000">-32768 bis +32767
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">integer
+</td>
+<td class="tabellentext" bgcolor="#000000">4 Bytes
+</td>
+<td class="tabellentext" bgcolor="#000000">normale Wahl f&uuml;r ganze Zahlen
+</td>
+<td class="tabellentext" bgcolor="#000000">-2147483648 bis +2147483647
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">bigint
+</td>
+<td class="tabellentext" bgcolor="#000000">8 Bytes
+</td>
+<td class="tabellentext" bgcolor="#000000">ganze Zahl mit gro&szlig;er Reichweite
+</td>
+<td class="tabellentext" bgcolor="#000000">-9223372036854775808 bis 9223372036854775807
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">decimal
+</td>
+<td class="tabellentext" bgcolor="#000000">variabel
+</td>
+<td class="tabellentext" bgcolor="#000000">benutzerdefinierte Pr&auml;zision, exakt
+</td>
+<td class="tabellentext" bgcolor="#000000">keine Begrenzung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">numeric
+</td>
+<td class="tabellentext" bgcolor="#000000">variabel
+</td>
+<td class="tabellentext" bgcolor="#000000">benutzerdefinierte Pr&auml;zision, exakt
+</td>
+<td class="tabellentext" bgcolor="#000000">keine Begrenzung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">real
+</td>
+<td class="tabellentext" bgcolor="#000000">4 Bytes
+</td>
+<td class="tabellentext" bgcolor="#000000">variable Pr&auml;zision, inexakt
+</td>
+<td class="tabellentext" bgcolor="#000000">6 Dezimalstellen Pr&auml;zision
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">double precision
+</td>
+<td class="tabellentext" bgcolor="#000000">8 Bytes
+</td>
+<td class="tabellentext" bgcolor="#000000">variable Pr&auml;zision, inexakt
+</td>
+<td class="tabellentext" bgcolor="#000000">15 Dezimalstellen Pr&auml;zision
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">serial
+</td>
+<td class="tabellentext" bgcolor="#000000">4 Bytes
+</td>
+<td class="tabellentext" bgcolor="#000000">selbstz&auml;hlende ganze Zahl
+</td>
+<td class="tabellentext" bgcolor="#000000">1 bis 2147483647
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">bigserial
+</td>
+<td class="tabellentext" bgcolor="#000000">8 Bytes
+</td>
+<td class="tabellentext" bgcolor="#000000">gro&szlig;e selbstz&auml;hlende ganze Zahl
+</td>
+<td class="tabellentext" bgcolor="#000000">1 bis 9223372036854775807
+</td>
+</tr>
+</table><br>
+<p>Als N&auml;chstes erfolgt ein &Uuml;berblick zu den Datentypen f&uuml;r Zeichenketten:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.12   
+    </b>Datentypen f&uuml;r Zeichenketten (Strings)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Name</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beschreibung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">character varying(n), varchar(n)
+</td>
+<td class="tabellentext" bgcolor="#000000">variable L&auml;nge mit H&ouml;chstgrenze
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">character(n), char(n)
+</td>
+<td class="tabellentext" bgcolor="#000000">feste L&auml;nge, mit Leerzeichen aufgef&uuml;llt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">text
+</td>
+<td class="tabellentext" bgcolor="#000000">variable L&auml;nge ohne H&ouml;chstgrenze
+</td>
+</tr>
+</table><br>
+<p>Zum Schluss noch Datentypen zur Datums- und Zeitangabe:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.13   
+    </b>Datentypen zur Datums- und Zeitangabe</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Name</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bytes</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beschreibung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Wert</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Genauigkeit</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">timestamp [ (p) ]
+without time zone
+</td>
+<td class="tabellentext" bgcolor="#000000">8
+</td>
+<td class="tabellentext" bgcolor="#000000">Datum und
+Zeit
+</td>
+<td class="tabellentext" bgcolor="#000000">4713 v.u.Z -
+1465001 u.Z.
+</td>
+<td class="tabellentext" bgcolor="#000000">1 Mikrosek./14 Stellen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">timestamp [ (p) ] with time zone
+</td>
+<td class="tabellentext" bgcolor="#000000">8
+</td>
+<td class="tabellentext" bgcolor="#000000">Datum und
+Zeit
+</td>
+<td class="tabellentext" bgcolor="#000000">4713 v.u.Z. –
+1465001 u.Z.
+</td>
+<td class="tabellentext" bgcolor="#000000">1 Mikrosek./14 Stellen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">interval [ (p) ]
+</td>
+<td class="tabellentext" bgcolor="#000000">12
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeitspannen
+</td>
+<td class="tabellentext" bgcolor="#000000">–178000000 -
+178000000 Jhr.
+</td>
+<td class="tabellentext" bgcolor="#000000">1 Mikrosek.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">date
+</td>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+<td class="tabellentext" bgcolor="#000000">nur Datum
+</td>
+<td class="tabellentext" bgcolor="#000000">4713 v.u.Z.
+–32767 u.Z.
+</td>
+<td class="tabellentext" bgcolor="#000000">1 Tag
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">time [ (p) ]
+without time zone
+</td>
+<td class="tabellentext" bgcolor="#000000">8
+</td>
+<td class="tabellentext" bgcolor="#000000">nur Tageszeit
+</td>
+<td class="tabellentext" bgcolor="#000000">00:00:00.00 –
+23:59:59.99
+</td>
+<td class="tabellentext" bgcolor="#000000">1 Mikrosek.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">time [ (p) ]
+with time zone
+</td>
+<td class="tabellentext" bgcolor="#000000">12
+</td>
+<td class="tabellentext" bgcolor="#000000">nur Tageszeit
+</td>
+<td class="tabellentext" bgcolor="#000000">00:00:00.00+12 – 23:59:59.99–12
+</td>
+<td class="tabellentext" bgcolor="#000000">1 Mikrosek.
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nat&uuml;rlich gibt es in PostgreSQL auch einen Datentypen f&uuml;r bin&auml;re Daten, wie das bei MySQL mit <span class="listing">BLOB</span> der Fall ist. Der Typ in PostgreSQL lautet hierbei <span class="listing">bytea</span>.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Datenbank verwenden</h4>
+<p><a id="Xxx999551" name="Xxx999551"></a>Wie Sie eine neue Datenbank anlegen bzw. eine bereits vorhandene Datenbank l&ouml;schen k&ouml;nnen, haben Sie bereits erfahren. Wenn Sie jetzt auf die Datenbank zugreifen wollen, haben Sie mehrere M&ouml;glichkeiten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sie verwenden das PostgreSQL-Clientprogramm <span class="listing">psql</span> – vergleichbar in MySQL mit dem Client <span class="listing">mysql</span>. Mit diesem Clientprogramm k&ouml;nnen Sie in der Kommandozeile SQL-Befehle eingeben.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sie verwenden ein grafisches Frontend wie z. B. PgAccess oder Knoda.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sie verwenden ein Office-Paket mit ODBC-Unterst&uuml;tzung.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sie schreiben eine eigene Clientanwendung in einer der verschiedenen Sprachanbindungen – was letztendlich auch das Ziel dieses Kapitels ist.</td>
+</tr>
+</table>
+<p>Da es sich hier um einen Crashkurs handelt, verwenden Sie erst das Clientprogramm <span class="listing">psql</span>. Sofern Sie die Datenbank <span class="listing">adressen</span> von der Einf&uuml;hrung noch nicht gel&ouml;scht haben, werden Sie diese jetzt wieder verwenden. Um die Datenbank zu verwenden, m&uuml;ssen Sie den Client <span class="listing">psql</span> unter der Angabe der Datenbank, die verwendet werden soll, folgenderma&szlig;en starten:</p>
+<pre>$ createdb adressen
+CREATE DATABASE
+$ psql adressen
+Welcome to psql 7.3.2, the PostgreSQL interactive terminal.
+Type:  \copyright for distribution terms
+       \h for help with SQL commands
+       \? for help on internal slash commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+adressen=#</pre>
+<p>Sie greifen jetzt auf die Datenbank <span class="listing">adressen</span> zu. Dies k&ouml;nnen Sie in der Zeile, in der sich jetzt auch das Eingabeprompt befindet, erkennen. Die Zeile k&ouml;nnte allerdings auch so aussehen:</p>
+<pre>adressen=&gt;</pre>
+<p>Das bedeutet dann, dass Sie nicht der Datenbank-Superuser sind, was auch hei&szlig;t, dass Sie einige rechtliche Einschr&auml;nkungen bez&uuml;glich des Zugriffs auf die Datenbank haben. F&uuml;r den weiteren Verlauf im Buch ist dies allerdings nicht so wichtig. In der letzten Zeile befindet sich nun der Prompt und wartet auf Ihre Eingaben. Im Folgenden lassen Sie sich die Version von PostgreSQL anzeigen, und anschlie&szlig;end beenden Sie die Arbeit mit der Datenbank <span class="listing">adressen</span> mit <span class="listing">\q</span> wieder.</p>
+<pre>adressen=# SELECT version();
+----------------------------------------------------------------
+PostgreSQL 7.3.2 on i686-pc-linux-gnu,
+compiled by GCC gcc (GCC) 3.3 20030226
+(prerelease) (SUSE Linux)
+(1 row)
+adressen=# \q</pre>
+<p><span class="listing">psql</span> erfordert als Parameter mindestens den Namen der Datenbank, mit der verbunden werden soll. &Uuml;ber weitere Optionen kann z. B. angegeben werden, auf welchem Server die Datenbank l&auml;uft oder welcher Benutzername verwendet werden soll, z. B.:</p>
+<pre>$ psql -h localhost -U meinusername datenbankname</pre>
+<p>Hier verbinden Sie sich z. B. mit dem Host <span class="listing">localhost</span> und dem User-Namen <span class="listing">meinusername</span> mit der Datenbank <span class="listing">datenbankname</span>. <span class="listing">psql</span> kann noch mit weiteren Optionen gestartet werden – manchmal ist dies auch Voraussetzung, um eine Verbindung aufzubauen. Mehr dar&uuml;ber erfahren Sie mit <span class="listing">psql</span> –<span class="listing">help</span>. Ben&ouml;tigt eine Verbindung ein Authentifizierungsverfahren, so wird man daraufhin nach dem Passwort gefragt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Auf Benutzer, Gruppen und das Einrichten ihrer Privilegien wird in diesem Buch nicht eingegangen (ich wiederhole mich nur ungern).</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Grafische Frontends f&uuml;r PostgreSQL</h4>
+<p><a id="Xxx999571" name="Xxx999571"></a>Der eine oder andere wird hierbei lieber die Kommandozeile mit einem grafischen Client austauschen wollen. F&uuml;r Umsteiger von MySQL auf PostgreSQL, die gerne und viel mit phpmyadmin gearbeitet haben, gibt es ein postgresche Alternative mit <a id="Xxx999573" name="Xxx999573"></a>phpPgAdmin.</p>
+<p>Hierbei handelt es sich um ein Webfrontend, was einen Webbrowser voraussetzt. Das Frontend verf&uuml;gt &uuml;ber unz&auml;hlig viele Funktionen, um mindestens genauso effektiv mit der PostgreSQL-Datenbank zusammenzuarbeiten wie mit dem Kommandozeilenclient <span class="listing">psql</span>. Dieses Frontend bietet alles, was auch phpmyadmin dem MySQL-Kenner schon bietet, vom Betrachten der Tabellendaten als HTML-Tabelle zum Bearbeiten von Feldern bis hin zu Kopier- und Dump-Funktionen. Nat&uuml;rlich lassen sich auch hiermit die SQL-Befehle wie aus der Kommandozeile eingeben – weshalb Sie ohne weiteres phpPgAdmin installieren und im weiteren Verlauf des Crashkurses verwenden k&ouml;nnen. Des Weiteren hat man mit einer Verlinkung zu den passenden Seiten der PostgreSQL-Dokumentation alles in einer Hand (besser in einem Fenster).</p>
+<p>Als weiteres grafisches Frontend, womit man sich die &uuml;blichen Dialoge zwischen dem Client und den Server erklicken kann, w&auml;re pgaccess. Auch mit diesem Frontend lassen sich alle Arbeiten mit der Datenbank recht einfach und komfortabel (h&auml;ufig) mit einem Mausklick erledigen. Allerdings ist pgaccess seit der Version 7.3 nicht mehr Bestandteil der PostgreSQL-Distribution und muss extra von http://www.pgaccess.org/ besorgt werden.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Viele dieser Tools funktionieren nicht mit dem UNIX-Socket, da meistens Netzwerk-Sockets dazu ben&ouml;tigt werden, weshalb in <span class="listing">postgresql.conf</span> des Clusters der Schalter <span class="listing">tcpip_socket</span> <span class="listing">=</span> <span class="listing">true</span> gesetzt sein muss.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Tabelle anlegen und l&ouml;schen</h4>
+<p><a id="Xxx999581" name="Xxx999581"></a>Das Anlegen einer neuen Tabelle in der Datenbank unterscheidet sich fast gar nicht von der Syntax von MySQL. Auch hier wird der SQL-Befehl <span class="listing">CREATE</span> <span class="listing">TABLE</span> wie folgt verwendet:</p>
+<pre>CREATE TABLE &lt;tabellennamen&gt; ( &lt;spaltennamen&gt; &lt;datentype&gt;, ... );</pre>
+<p>In der Praxis sieht dies somit genauso wie mit MySQL aus – unter der Ber&uuml;cksichtigung, dass einige Datentypen eine andere Syntax haben.<a id="Xxx999585" name="Xxx999585"></a></p>
+<pre>adressen=# CREATE TABLE adressen(
+adressen(# vname varchar(80),
+adressen(# nname varchar(80),
+adressen(# plz int,
+adressen(# ort varchar(80),
+adressen(# strasse varchar(100),
+adressen(# hausnr int
+adressen(# );
+CREATE TABLE</pre>
+<p>Sie k&ouml;nnen auch hier Leerzeichen, Tabulatoren und Zeilenumbr&uuml;che in den SQL-Befehlen beinahe beliebig verwenden. Kommentare k&ouml;nnen Sie mit zwei Minuszeichen einleiten (--). Alles dahinter wird ignoriert bis zum Zeilenumbruch. Ebenso sieht es mit der Gro&szlig;- und Kleinschreibung der Befehle aus, die im SQL-Standard schon immer unerheblich war.</p>
+<p><a id="Xxx999588" name="Xxx999588"></a><a id="Xxx999589" name="Xxx999589"></a>L&ouml;schen k&ouml;nnen Sie diese Tabelle wieder mit dem Befehl:</p>
+<pre>DROP TABLE tabellenname;</pre>
+<p>Was Sie hier aber nicht durchzuf&uuml;hren brauchen, da Sie diese Tabellen noch f&uuml;r den weiteren Verlauf des Crashkurses verwenden.</p>
+<h4 class="t4">Daten in die Tabelle einf&uuml;gen, ver&auml;ndern und l&ouml;schen</h4>
+<p><a id="Xxx999594" name="Xxx999594"></a>Nachdem Sie nun die Datenbank angelegt haben und die Tabelle definiert wurde, sind Sie hierbei wieder als Programmierer gefragt, die Daten in diese Tabelle einzuf&uuml;gen. Den Vorgang heben wir uns zun&auml;chst f&uuml;r sp&auml;ter – nach dem Crashkurs – auf. Auch hierbei k&ouml;nnen Sie den in MySQL bereits bekannten Befehl <span class="listing">INSERT</span> <span class="listing">INTO</span> verwenden.<a id="Xxx999596" name="Xxx999596"></a></p>
+<pre>adressen=# INSERT INTO adressen(vname, nname, plz, ort, strasse,
+adressen(# hausnr )
+adressen-# VALUES (
+adressen(# 'J&uuml;rgen', 'Wolf', 86316, 'Mering', 'Musterweg', 123 );
+INSERT 16988 1</pre>
+<p>Hierbei wird also der Tabellenname angegeben, gefolgt von den Tabellenspalten und den Werten (<span class="listing">VALUES</span>), die in den einzelnen Spalten gespeichert werden sollen. Die Tabellenspalten und Werte werden dabei von Kommata getrennt. Wichtig ist auch hier, dass Sie die Reihenfolge der Tabellenspalten auch bei den Werten einhalten. Dabei m&uuml;ssen Sie die Reihenfolge nicht so stur einhalten, wie Sie die Tabellenstruktur definiert haben. Sie k&ouml;nnen z. B. auch alles in der umgekehrten Reihefolge schreiben – wie eben schon in MySQL.</p>
+<p>Sofern Sie die Reihenfolge der Tabellenspalten im Kopf haben, k&ouml;nnen Sie auch direkt die Werte in die Tabelle einf&uuml;gen:</p>
+<pre>adressen=# INSERT INTO adressen 
+adressen-# VALUES('Fatma', 'Wolf', 33333, 'Schlumpfhausen',
+adressen(# 'Schlumpfweg', 444);
+INSERT 16990 1</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bei der Erstellung Ihrer eigenen Clientanwendungen ist von diesem direkten Einf&uuml;gen abzuraten. Denn wird w&auml;hrend der Programmerstellung z. B. ein Feld hinzugef&uuml;gt, funktioniert das gesamte bisherige Programm nicht mehr. Daher sollte man sich angew&ouml;hnen, die Felder, die man einf&uuml;gen m&ouml;chte, mit anzugeben.</p>
+</td>
+</tr>
+</table><br>
+<p>Im Gegensatz zu MySQL ist es allerdings mit PostgreSQL nicht m&ouml;glich, mehrere Datens&auml;tze auf einmal einzuf&uuml;gen – da folgt PostgreSQL brav dem ANSI SQL-Standard. Sie k&ouml;nnen also in der Praxis immer nur eine komplette Adresse in die Datenbank einf&uuml;gen – nicht zwei oder drei auf einmal.</p>
+<p><a id="Xxx999606" name="Xxx999606"></a><a id="Xxx999607" name="Xxx999607"></a>Analog wie beim Hinzuf&uuml;gen von Daten verh&auml;lt es sich beim Ver&auml;ndern und L&ouml;schen der Daten im Vergleich zu MySQL. Auch in PostgreSQL werden hierf&uuml;r die Befehle <span class="listing">DELETE</span> <span class="listing">FROM</span> (zum L&ouml;schen von Zeilen) und <span class="listing">UPDATE</span> (zum Ver&auml;ndern bzw. Aktualisieren) verwendet.</p>
+<h4 class="t4">Datenausgabe</h4>
+<p><a id="Xxx999610" name="Xxx999610"></a>Auch die Datenausgabe l&auml;sst sich bei PostgreSQL mit derselben Syntax wie MySQL erledigen. Dabei bedienen Sie sich auch hier wieder des m&auml;chtigen Befehls <span class="listing">SELECT</span>, dessen komplette Beschreibung wohl mehrere hundert Seiten f&uuml;llen k&ouml;nnte. Der einfachste Befehl ist nat&uuml;rlich das Anzeigen aller Daten in einer Tabelle:<a id="Xxx999612" name="Xxx999612"></a></p>
+<pre>adressen=# SELECT * FROM adressen;
+vname   | nname |  plz  |      ort       |    strasse    | hausnr
+--------+-------+-------+----------------+---------------+-------
+J&uuml;rgen  | Wolf  | 86316 | Mering         | Musterweg     |    123
+Jonathan| Wolf  | 12345 | Musterdorf     | Musterstrasse |      1
+Fatma   | Wolf  | 33333 | Schlumpfhausen | Schlumpfweg   |    444
+(3 rows)</pre>
+<p>Auf einzelne Werte in der Tabelle k&ouml;nnen Sie mit der Angabe des Namens der Spalte zur&uuml;ckgreifen (und ausgeben lassen):</p>
+<pre>adressen=# SELECT ort FROM adressen;
+      ort
+----------------
+ Mering
+ Musterdorf
+ Schlumpfhausen
+(3 rows)</pre>
+<p>F&uuml;r spezielle Inhalte k&ouml;nnen Sie sich auch hierbei des SQL-Befehls <span class="listing">WHERE</span> bedienen:</p>
+<pre>adressen=# SELECT * FROM adressen WHERE ort='Mering';
+ vname  | nname |  plz  |  ort   |  strasse  | hausnr
+--------+-------+-------+--------+-----------+--------
+ J&uuml;rgen | Wolf  | 86316 | Mering | Musterweg |    123
+(1 row)</pre>
+<p>Wollen Sie die Ausgabe nach einem bestimmten Kriterium sortieren und ausgeben lassen, k&ouml;nnen Sie auch hierbei den Befehl <span class="listing">ORDER</span> <span class="listing">BY</span> verwenden:</p>
+<pre>adressen=# SELECT * FROM adressen ORDER by plz;
+vname   | nname |  plz  |      ort       |    strasse    | hausnr
+--------+-------+-------+----------------+---------------+-------
+Jonathan| Wolf  | 12345 | Musterdorf     | Musterstrasse |      1
+Fatma   | Wolf  | 33333 | Schlumpfhausen | Schlumpfweg   |    444
+J&uuml;rgen  | Wolf  | 86316 | Mering         | Musterweg     |    123
+(3 rows)</pre>
+<p><a id="Xxx999620" name="Xxx999620"></a>Wollen Sie nach allen Ortschaften suchen, die mit der Stringfolge '<span class="listing">M</span>' beginnen, k&ouml;nnen Sie die unscharfe Suche mittels <span class="listing">LIKE</span> verwenden:</p>
+<pre>adressen=# SELECT * FROM adressen WHERE ort LIKE 'M%';
+  vname   | nname |  plz  |    ort     |    strasse    | hausnr
+----------+-------+-------+------------+---------------+--------
+ J&uuml;rgen   | Wolf  | 86316 | Mering     | Musterweg     |    123
+ Jonathan | Wolf  | 12345 | Musterdorf | Musterstrasse |      1
+(2 rows)</pre>
+<p>Sie bemerken hier bereits, warum ich den Crashkurs von PostgreSQL k&uuml;rzer gehalten habe. Die Verwendung beider Datenbanken (und vieler anderer auch) ist eben recht &auml;hnlich. Wenn Sie sich erst einmal gute Kenntnisse eines Datenbanksystems angeeignet haben, f&auml;llt es relativ einfach, sich in anderen Systemen zurechtzufinden. H&auml;ufig vermisst man hier und da die eine oder andere Bequemlichkeit. Der Vorteil der Kenntnisse von PostgreSQL ist, dass diese sehr ANSI-konform ist, und somit d&uuml;rfte der Umstieg von PostgreSQL in eine andere Datenbank wie MySQL oder gar Oracle wesentlich einfacher fallen als umgekehrt. Beim Umstieg von MySQL auf PostgreSQL z. B. m&uuml;ssen Sie sich einige Dinge wieder abgew&ouml;hnen – was bekanntlich immer schwer f&auml;llt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sofern Sie jetzt gerne tiefer ins Detail von PostgreSQL einsteigen wollen, kann ich Ihnen von Peter Eisentraut PostgreSQL - Das Offizielle Handbuch, eine &Uuml;bersetzung (viel mehr als das) der Originaldokumentation der PostgreSQL Global Development Group, empfehlen. Diese Dokumentation ist sowohl als HTML-Format zum Lesen am PC als auch als Buch erh&auml;ltlich. Die HTML-Version dazu finden Sie auf der Buch-CD.</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">12.9.6 PostgreSQL C-API – libp<a id="RxxKap120080400043A1F017247" name="RxxKap120080400043A1F017247"></a>g 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999630" name="Xxx999630"></a>Die Bibliothek, die Sie zur Schnittstelle zu PostgreSQL f&uuml;r die Anwendungsprogrammierung in C ben&ouml;tigen, ist die <span class="listing">libpg</span>-Bibliothek. Diese Bibliothek liegt gew&ouml;hnlich Ihrer Distribution bei und muss meistens nur noch nachinstalliert werden. Sofern dies nicht der Fall ist, m&uuml;ssen Sie diese von der Webseite http://www.postgresql.org/ beziehen und sich installieren. Mit <span class="listing">libpg</span> steht Ihnen eine ganze Sammlung von Funktionen zur Erstellung von Clientanwendungen zur Kommunikation mit dem PostgreSQL-Server zur Verf&uuml;gung. <span class="listing">libpg</span> ist auch die Grundlage f&uuml;r alle anderen Anwendungsschnittstellen zu PostgreSQL wie libpg++ (C++), libpgtcl (Tcl), Perl oder ECPG.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Auch hierbei finden Sie wie schon bei der MySQL C-API mehrere komplette Listings in der Quelltextdistribution im Verzeichnis <span class="listing">src/test/examples</span>.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Eine PostgreSQL-Anwendung &uuml;bersetzen</h4>
+<p><a id="Xxx999637" name="Xxx999637"></a>Um PostgreSQL-Anwendungen zu erstellen, ist nicht allzu viel Know-how n&ouml;tig. Sie m&uuml;ssen dem Compiler lediglich den Pfad zur Headerdatei angeben und dem Linker den Pfad zur Bibliothek (eigentlich logisch). Folgende drei Punkte sind eigentlich zu beachten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><b>1.</b></td>
+<td valign="top" width="100%" align="left"> Die Headerdatei &lt;libpq-fe.h&gt; einbinden:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing">#include &lt;libpq-fe.h&gt;</span></td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><b>2.</b></td>
+<td valign="top" width="100%" align="left"> Sagen Sie dem Compiler mit der Option -I, wo er die PostgreSQL-Headerdateien findet. In meinem Beispiel sieht dies so aus:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing">gcc -c -I/usr/include/pgsql programm.c</span></td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">Es kann sein, dass sich von Distribution zu Distribution das Verzeichnis der Headerdateien woanders befindet (in meinem Fall ist dies <span class="listing">/usr/include/</span>). Sollte der Compilerlauf bei Ihnen einen Fehler ausspucken wie No such file or directory, dann k&ouml;nnen Sie sich das Verzeichnis mit <span class="listing">pg_config</span> ermitteln lassen:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">$ pg_config --includedir
+/usr/include/pgsql</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><b>3.</b></td>
+<td valign="top" width="100%" align="left"> Jetzt m&uuml;ssen Sie aus der Objektdatei noch eine ausf&uuml;hrbare Datei machen. Dazu ben&ouml;tigt der Linker noch den Pfad zur entsprechenden libpg-Bibliothek und die Bibliothek selbst. Den Pfad geben Sie mit dem Flag -L an und die Bibliothek mit -l. Da es auch hier Unterschiede zu den Pfadangaben gibt, hilft Ihnen wieder pg_config weiter, um den Pfad zu den Bibliotheken zu ermitteln:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+$ pg_config --libdir
+/usr/lib
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">Somit sieht in diesem Fall das Linken zu einer ausf&uuml;hrbaren Datei folgenderma&szlig;en aus:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing">gcc -o programm programm.o -L/usr/lib/pgsql -lpq</span></td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">… oder ganz einfach in einem Rutsch und quasi eine &uuml;berall funktionierende Alternative:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+gcc -o programm programm.o -I`pg_config –includedir` \
+-L`pg_config –libdir` -lpq
+<p>Nach dem Vorgang befindet sich in Ihrem Verzeichnis eine ausf&uuml;hrbare PostgreSQL-Clientanwendung. Nach dem Trockenschwimmen ist es nun Zeit, ins Wasser zu gehen.</p>
+<h4 class="t4">Eine Verbindung zum PostgreSQL-Server herstellen</h4>
+<p><a id="Xxx999653" name="Xxx999653"></a>Die <span class="listing">libpg</span> bietet Ihnen gleich mehrere Funktionen an, um eine Verbindung mit einem PostgreSQL-Server aufzunehmen. Hier die Syntax der Funktionen:<a id="Xxx999655" name="Xxx999655"></a><a id="Xxx999656" name="Xxx999656"></a><a id="Xxx999657" name="Xxx999657"></a><a id="Xxx999658" name="Xxx999658"></a><a id="Xxx999659" name="Xxx999659"></a></p>
+<pre>#include &lt;libpq-fe.h&gt;
+PGconn *PQconnectdb(const char *conninfo);
+PGconn *PQsetdbLogin(const char *pghost,
+                     const char *pgport,
+                     const char *pgoptions,
+                     const char *pgtty,
+                     const char *dbName,
+                     const char *login,
+                     const char *pwd);
+PGconn *PQsetdb(char *pghost,
+                char *pgport,
+                char *pgoptions,
+                char *pgtty,
+                char *dbName);
+/* Nicht blockierende Funktionen */
+PGconn *PQconnectStart(const char *conninfo);
+PostgresPollingStatusType PQconnectPoll(PGconn *conn);</pre>
+<p>Trotz der unterschiedlichen Syntax machen alle Funktionen im Grunde dasselbe. Jede Verbindung, die mit einer dieser Funktionen erstellt wurde, gibt ein Objekt von Typ <span class="listing">Pgconn</span> zur&uuml;ck. Im seltensten Fall wird dabei bei einem Fehler der <span class="listing">NULL</span>-Zeiger zur&uuml;ckgegeben (nur im Falle, wenn kein Speicherplatz mehr f&uuml;r <span class="listing">PGconn</span> vorhanden war). Daher sollten Sie den R&uuml;ckgabewert jeder dieser Funktionen immer mit der Funktion <span class="listing">Pqstatus()</span> &uuml;berpr&uuml;fen lassen. Dazu gleich mehr.</p>
+<p>Die Funktion <span class="listing">PQconnectdb()</span> &ouml;ffnet eine Verbindung mit den Parametern, die in dem String <span class="listing">conninfo</span> angegeben werden. Es scheint ein wenig ungew&ouml;hnlich, aber der Vorteil an dieser Funktion ist, dass hierbei die Parametersammlung ohne Weiteres erweitert werden kann und dass Sie keinen extra Parser schreiben m&uuml;ssen, wenn Sie die Verbindungsdaten in eine Konfigurationsdatei schreiben wollen. Geben Sie einen leeren String an, wird versucht, mit den Vorgabeparametern eine Verbindung zum Server aufzubauen. Sie k&ouml;nnen aber auch mehrere durch Whitespaces getrennte Parameter verwenden. Jeder dieser Parameter hat das Format <span class="listing">schl&uuml;ssel=wert</span>. Einen leeren Wert k&ouml;nnen Sie zwischen Apostrophe setzen, wobei diese mit einem Backslash eingeleitet werden sollten. Das Beispiel eines solchen Verbindungsaufbaus kann so aussehen:</p>
+<pre>conn = Pqconnectdb (
+         "dbname=adressen user=tot password=k4p6m3o3 tty=\' \'");</pre>
+<p>Bekannte Parameterschl&uuml;ssel, die Sie hierf&uuml;r verwenden k&ouml;nnen, w&auml;ren:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> host</span> – Name des Servers, womit eine Verbindung hergestellt werden soll. Ist der Wert ein UNIX Domain Socket anstatt TCP/IP, wird am Anfang ein Schr&auml;gstrich verwendet, was ein Verzeichnis einleitet, in dem sich die Socket-Datei befindet (standardm&auml;&szlig;ig wird das <span class="listing">/tmp</span>-Verzeichnis verwendet).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> hostaddr</span> – Die IP-Adresse des Servers in Form von Zahlen und Punkten (193.23.32.3)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> port</span> – Portnumer, womit eine Verbindung aufgebaut werden soll</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> dbname</span> – Name der Datenbank</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> user</span> – Name des Benutzers der Verbindung</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> password</span> – Ben&ouml;tigt der Server ein Passwort, wird dies damit angegeben.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> connect_timeout</span> – Zeit in Sekunden, die dieser Verbindungsfunktion gegeben wird. <span class="listing">NULL</span> oder nicht verwendet, hei&szlig;t unendlich (mit Vorsicht benutzen).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> options</span> – Optionen zur Konfiguration, die an den Server geschickt werden</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> tty</span> – Eine Datei oder ein TTY f&uuml;r die Debug-Ausgabe vom Server</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> requiressl</span> – Wird dieser Wert auf 1 gesetzt, wird eine SSL-Verbindung mit dem Server verlangt. Bietet der Server das nicht an, schl&auml;gt der Funktionsaufruf fehl. Ansonsten bei keiner Angabe oder bei 0 wird der Verbindungstyp mit dem Server ausgehandelt.</td>
+</tr>
+</table>
+<p>Werden bestimmte Parameter nicht verwendet, wird erst (falls vorhanden) in den entsprechenden Umgebungsvariablen gesucht, ansonsten werden entsprechende Vorgabewerte verwendet.</p>
+<p>Die Funktion <span class="listing">PQsetdbLogin()</span> verwendet eine feste Anzahl von Parametern, hat aber die gleiche Funktion wie schon die Funktion <span class="listing">PQconnectdb()</span>. Die einzelnen Parameter sprechen nach der Erkl&auml;rung der Funktion <span class="listing">PQconnectdb()</span>, denke ich, f&uuml;r sich. Diese Funktion war die Vorg&auml;ngerfunktion von <span class="listing">PQconnectdb()</span>.</p>
+<p><span class="listing">PQsetdb()</span> ist ein Makro, das die Funktion <span class="listing">PQsetdbLogin()</span> mit <span class="listing">NULL</span>-Zeigern f&uuml;r die Parameter <span class="listing">login</span> und <span class="listing">pwd</span> aufruft. Die Funktion gilt als veraltet und ist aus Kompatibilit&auml;tsgr&uuml;nden noch vorhanden.</p>
+<p>Die Funktionen <span class="listing">PQconnectStart()</span> und <span class="listing">PQconnectPoll()</span> werden verwendet, um eine Verbindung mit dem Datenbankserver zu &ouml;ffnen, ohne dass die Anwendung w&auml;hrend der Eingabe- oder Ausgabeoperationen blockiert wird. Darauf wird allerdings hier nicht eingegangen.</p>
+<h4 class="t4">Status und Informationen zur Verbindung ermitteln</h4>
+<p><a id="Xxx999680" name="Xxx999680"></a><a id="Xxx999681" name="Xxx999681"></a>Um zu ermitteln, ob die Verbindung zum Server erfolgreich verlief, sollte man immer den Status des Verbindungsaufbaus von <span class="listing">Pgconn</span> mit der Funktion <span class="listing">PQstatus()</span> &uuml;berpr&uuml;fen.<a id="Xxx999683" name="Xxx999683"></a></p>
+<pre>ConnStatusType PQstatus(const PGconn *conn);</pre>
+<p>In einer gew&ouml;hnlichen asynchronen Verbindung k&ouml;nnen hierbei <span class="listing">CONNECTION_OK</span> und <span class="listing">CONNECTION_BAD</span> auftreten. <span class="listing">CONNECTION_OK</span> signalisiert, dass alles glatt verlaufen ist, und <span class="listing">CONNECTION_BAD</span> zeigt an, dass ein Fehler beim Verbindungsaufbau aufgetreten ist. Beim Aufbau einer nicht blockierenden Verbindung mit <span class="listing">PQconnectStart()</span> k&ouml;nnen noch weitere Statusangaben &uuml;berpr&uuml;ft werden, die hier allerdings nicht n&auml;her behandelt werden. Dies w&auml;ren die Flags:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> CONNECTION_STARTED</span> – Auf die Erstellung einer Verbindung wird gewartet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> CONNECTION_MADE</span> – Verbindung wurde aufgebaut, wartet nun auf das Senden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> CONNECTION_AWAITING_RESPONSE</span> – Wartet auf eine Antwort vom Server.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> CONNECTION_AUTH_OK</span> – Authentifizierung erhalten; wartet auf Fortsetzung des Verbindungsaufbaus.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> CONNECTION_SETENV</span> – Aushandlung der Umgebungsvariablen (geh&ouml;rt zum Teil eines Verbindungsaufbaus)</td>
+</tr>
+</table>
+<p>Wenn die Funktion <span class="listing">PQstatus()</span> den Status <span class="listing">CONNECTION_OK</span> zur&uuml;ckgegeben hat, bleibt eine Verbindung im Normalfall bis zum n&auml;chsten <span class="listing">Pqfinish()</span> bestehen. Tritt allerdings aus irgendwelchen Gr&uuml;nden ein Fehler auf, wird bei ggf. nochmaliger &Uuml;berpr&uuml;fung mit <span class="listing">PQstatus()</span> das Flag <span class="listing">CONNECTION_BAD</span> zur&uuml;ckgegeben, und Sie k&ouml;nnten in diesem Fall einen erneuten Verbindungsaufbau mit der Funktion <span class="listing">Pqreset()</span> versuchen.</p>
+<p><a id="Xxx999692" name="Xxx999692"></a>Im Falle einer Fehlermeldung <span class="listing">CONNECTION_BAD</span> k&ouml;nnen Sie den Fehler, der die Verbindung zum Scheitern bzw. nicht zustande gebracht hat, mit der Funktion <span class="listing">PqerrorMessage()</span> in Klartext ausgeben lassen.<a id="Xxx999694" name="Xxx999694"></a></p>
+<pre>char *PQerrorMessage(const PGconn* conn);</pre>
+<p>Eine solche Fehler&uuml;berpr&uuml;fung eines Verbindungsaufbaus kann z. B. so aussehen:</p>
+<pre>    conn = PQconnectdb("dbname=adressen");
+    if (PQstatus(conn) == CONNECTION_BAD) {
+        fprintf(stderr, "Connection to database '%s' failed.\n",
+                dbName);
+        fprintf(stderr, "%s", PQerrorMessage(conn));
+        exit_nicely(conn);
+    }</pre>
+<p>L&auml;uft z. B. der Datenbankserver von PostgreSQL nicht, w&uuml;rde hier folgende Fehlermeldung ausgegeben:</p>
+<pre>Connection to database 'adressen' failed.
+could not connect to server: No such file or directory
+        Is the server running locally and accepting
+        connections on UNIX domain socket "/tmp/.s.PGSQL.5432"?</pre>
+<p>Nat&uuml;rlich gilt dies nicht nur f&uuml;r die Funktionen, womit eine Verbindung zum Datenbankserver aufgebaut wird, sondern fast alle <span class="listing">libpq</span>-Funktionen geben eine Fehlermeldung mit <span class="listing">PQerrorMessage()</span> aus, wenn ein Fehler aufgetreten ist.</p>
+<p>Ben&ouml;tigen Sie f&uuml;r die laufende Verbindung Informationen, welche Datenbank verwendet wird oder welcher User damit arbeitet, steht Ihnen hierzu eine ganze Palette an Funktionen zur Verf&uuml;gung. Alle Funktionen erwarten als Parameter einen <span class="listing">Pgconn</span>-Zeiger, den Sie bei einem erfolgreichen Verbindungsaufbau erhalten haben. Alle Werte, die diese Funktionen zur&uuml;ckgeben, sind w&auml;hrend der Laufzeit des Objekts <span class="listing">PGconn</span> nicht mehr ver&auml;nderbar. Hier die Funktionen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.14   
+    </b>Funktionen, die Informationen zur aktuellen Verbindung zur&uuml;ckgeben</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Funktion</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999708" name="Xxx999708"></a>char *PQdb(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt einen Zeiger auf den Datenbanknamen der Verbindung zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999713" name="Xxx999713"></a>char *PQuser(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt den Benutzernamen der Verbindung zur&uuml;ck
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999718" name="Xxx999718"></a>char *PQpass(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt das Passwort der Verbindung zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999723" name="Xxx999723"></a>char *PQhost(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt den Server-Hostnamen der Verbindung zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999728" name="Xxx999728"></a>char *PQport(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt den Port der Verbindung zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999733" name="Xxx999733"></a>char *PQtty(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt das TTY f&uuml;r die Debug-Ausgaben der Verbindung zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999738" name="Xxx999738"></a>char *PQoptions(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt Konfigurationsoptionen, die der Verbindungsanfrage &uuml;bergeben wurden, zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999743" name="Xxx999743"></a>int PQsocket(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt die Deskriptornummer des mit dem Server verbundenen Sockets zur&uuml;ck. Bei –1 wird angezeigt, dass keine Verbindung besteht.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999748" name="Xxx999748"></a>int PQbackendPID(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt die Prozesskennung (PID) des Serverprozesses zur&uuml;ck, der mit dieser Verbindung arbeitet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999753" name="Xxx999753"></a>SSL *PQgetssl(const PGconn *conn);
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier wird eine SSL-Struktur zur&uuml;ckgegeben. Wird SSL nicht verwendet, wird NULL zur&uuml;ckgegeben. Mehr dazu entnehmen Sie ggf. der Anleitung von OpenSSL.
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Verbindung beenden oder wieder aufnehmen</h4>
+<p><a id="Xxx999766" name="Xxx999766"></a>Wenn Sie mit der Arbeit des Datenbankservers fertig sind, sollten Sie die Verbindung wieder mit der Funktion <span class="listing">PQfinish()</span> schlie&szlig;en.<a id="Xxx999768" name="Xxx999768"></a></p>
+<pre>void PQfinish(PGconn *conn);</pre>
+<p>Damit wird die Verbindung geschlossen und der Speicher f&uuml;r das <span class="listing">PGconn</span>-Objekt wieder freigegeben. Es wird empfohlen, diese Funktionen auch zu verwenden, wenn der Versuch, eine Verbindung zum Server aufzubauen, fehlschl&auml;gt, um den eventuell alloziierten Speicher wieder freizugeben.</p>
+<p><a id="Xxx999771" name="Xxx999771"></a>Es kann passieren, dass eine Verbindung zum Server w&auml;hrend der Arbeit verloren geht. In solch einem Fall k&ouml;nnen Sie mit der Funktion <span class="listing">PQreset()</span> versuchen, erneut eine Verbindung zum selben Server aufzubauen.<a id="Xxx999773" name="Xxx999773"></a></p>
+<pre>void PQreset(PGconn *conn);</pre>
+<p>Diese Funktion schlie&szlig;t die Verbindung zum Server und versucht, eine neue Verbindung zum selben Server mit den gleichen Parametern aufzubauen. Das kann zur Fehlerbehandlung n&uuml;tzlich sein, wenn eine funktionierende Verbindung verloren gegangen ist.</p>
+<p>Auch f&uuml;r die nicht blockierenden Verbindungen gibt es zwei Funktionen, die versuchen, eine Verbindung zu schlie&szlig;en und erneut mit demselben Server eine neue, nicht blockierende Verbindung aufzubauen:<a id="Xxx999777" name="Xxx999777"></a><a id="Xxx999778" name="Xxx999778"></a></p>
+<pre>int PQresetStart(PGconn *conn);
+PostgresPollingStatusType PQresetPoll(PGconn *conn);</pre>
+<h4 class="t4">Programmbeispiel: Verbindung zum Server herstellen</h4>
+<p>Hierzu folgt nun ein einfaches Listing, womit eine Verbindung zum (hoffentlich gestarteten) PostgreSQL-Server aufgebaut wird, das einige Informationen zur Verbindung ausgibt und die Verbindung wieder schlie&szlig;t; das Grundger&uuml;st, wenn Sie so wollen. Bitte passen Sie ggf. die Parameter zum Verbindungsaufbau an Ihre Konfigurationen und Systemgegebenheiten an.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Im Beispiel wird davon ausgegangen, dass die Datenbank <span class="listing">adressen</span>, die Sie im Crashkurs zu PostgreSQL erzeugt haben, noch existiert.</p>
+</td>
+</tr>
+</table><br>
+<pre><a id="Xxx999786" name="Xxx999786"></a>/* postgre1.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;libpq-fe.h&gt;
+void exit_nicely(PGconn *conn) {
+  PQfinish(conn);
+  exit(EXIT_FAILURE);
+}
+int main(void) {
+  /* char    *pghost = NULL,
+   *         *pgport = NULL,
+   *         *pgoptions = NULL,
+   *         *pgtty = NULL; */
+  char       *dbName = "adressen";
+  PGconn     *conn;
+  /* ... entsprechende Angaben selbst erg&auml;nzen - */
+  /* Verbindungsaufbau                            */
+  conn = PQconnectdb("dbname=adressen");
+  /* Verbindung &uuml;berpr&uuml;fen ... */
+  if (PQstatus(conn) == CONNECTION_BAD) {
+    fprintf(stderr, "Connection to database '%s' failed.\n",
+            dbName);
+    fprintf(stderr, "%s", PQerrorMessage(conn));
+    exit_nicely(conn);
+  } 
+  else
+    printf("Mit PostgreSQL-Server verbunden ...\n");
+  /* Informationen zur Verbindung ... */
+  printf("Datenbank : %s\n", PQdb(conn));
+  printf("User      : %s\n", PQuser(conn));
+  /*   printf("Passwort  : %s\n", PQpass(conn));
+   *   printf("Host      : %s\n", PQhost(conn));
+   *   printf("Port      : %s\n", PQport(conn));
+   *   printf("TTY       : %s\n", PQtty(conn));
+   *   printf("Options   : %s\n", PQoptions(conn)); */
+  /* Verbindung beenden und Aufr&auml;umarbeiten durchf&uuml;hren */
+  PQfinish(conn);
+  return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -c -I/usr/include/pgsql postgre1.c
+$ gcc -o postgre1 postgre1.o -L/usr/lib/pgsql -lpq
+$ ./postgre1
+Mit PostgreSQL-Server verbunden ...
+Datenbank : adressen
+User      : tot</pre>
+<h4 class="t4">Anfragen an den Server</h4>
+<p><a id="Xxx999791" name="Xxx999791"></a>Wenn die Verbindung zum PostgreSQL-Server aufgebaut wurde, k&ouml;nnen Sie die nun folgenden Befehle verwenden, um Anfragen und Befehle auszuf&uuml;hren. Die Funktion, mit der ein Befehl oder eine Anfrage an den Server geschickt wird, ist <span class="listing">PQexec()</span>. Die Syntax dazu lautet:<a id="Xxx999793" name="Xxx999793"></a></p>
+<pre>PGresult *PQexec(PGconn *conn, const char *command);</pre>
+<p>Bei Erfolg erhalten Sie einen Zeiger auf <span class="listing">Pgresult</span> zur&uuml;ck. <span class="listing">NULL</span> wird gew&ouml;hnlich nur dann zur&uuml;ckgegeben, wenn kein Speicher f&uuml;r die Antwort alloziiert werden konnte oder der Befehl gar nicht erst an den Server geschickt werden konnte. Um mehr Informationen zum Auftreten eines Fehlers zu erhalten, sollten Sie die Funktion <span class="listing">PQerrorMessage()</span> verwenden. In der Struktur <span class="listing">PGresult</span> finden Sie das vom Server geschickte Ergebnis, das Sie mit den gleich folgenden vielen Funktionen verwenden k&ouml;nnen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sofern Sie mit der <span class="listing">libpq</span>-Version vor 6.4 noch vertraut sind, so sollten Sie nicht mehr auf die einzelnen Variablen der Struktur <span class="listing">PGresult</span> zugreifen, sondern eine entsprechende Zugriffsfunktion verwenden. Dies nur f&uuml;r den Fall, dass Sie Ihre Anwendung zukunftssicher gestalten wollen.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Status der Anfrage</h4>
+<p><a id="Xxx999801" name="Xxx999801"></a>Ob und was der Aufruf von <span class="listing">PQexec()</span> bewirkt hat, k&ouml;nnen Sie mit der Funktion <span class="listing">PQresultStatus()</span> und dem Zeiger auf <span class="listing">PGresult</span> ermitteln:<a id="Xxx999803" name="Xxx999803"></a></p>
+<pre>ExecStatusType PQresultStatus(const PGresult *res);</pre>
+<p>M&ouml;gliche Werte, die dabei zur&uuml;ckgegeben werden k&ouml;nnen, w&auml;ren:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGRES_EMPTY_QUERY</span> – Eine leere Zeichenkette wurde an den Server geschickt.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGRES_COMMAND_OK</span> – Ein Befehl, der keine Daten zur&uuml;ckgibt, wurde erfolgreich ausgef&uuml;hrt (z. B. ein Befehl mit <span class="listing">INSERT</span> oder <span class="listing">UPDATE</span>).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGRES_TUPLES_OK</span> – Eine erfolgreiche Anfrage. Anschlie&szlig;end k&ouml;nnen somit die Funktionen verwendet werden, um die von der Anfrage gelieferten Zeilen zu lesen. <span class="listing">PGRES_TUPLES_OK</span> wird auch dann zur&uuml;ckgegeben, wenn eine <span class="listing">SELECT</span>-Anfrage kein Ergebnis (0) zur&uuml;ckliefert.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGRES_COPY_OUT</span> – Ein ausgehender <span class="listing">COPY</span>-Datentransfer, der vom Server gestartet wird</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGRES_COPY_IN</span> – Ein eingehender <span class="listing">COPY</span>-Datentransfer, der zum Server gestartet wird</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGRES_BAD_RESPONSE</span> – Die Antwort vom Server konnte nicht ausgewertet werden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGRES_NONFATAL_ERROR</span> – Ein nicht fataler Fehler</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGRES_FATAL_ERROR</span> – Ein fataler Fehler trat auf. Meistens ein Fehler in der Clientanwendung.</td>
+</tr>
+</table>
+<p>Um aus dem von <span class="listing">PQresultStatus()</span> zur&uuml;ckgegebenen Wert eine Stringkonstante zu machen, steht Ihnen die Funktion <span class="listing">PQresStatus()</span> zur Verf&uuml;gung:<a id="Xxx999815" name="Xxx999815"></a></p>
+<pre>char *PQresStatus(ExecStatusType status);</pre>
+<p>Damit erhalten Sie einen Zeiger auf eine Stringkonstante, die den Statuscode etwas genauer beschreibt.</p>
+<p>Die Funktionen <span class="listing">PQresultStatus()</span> und <span class="listing">PQresStatus()</span>k&ouml;nnen Sie mit der Funktion <span class="listing">PQresultErrorMessage()</span> in einem Rutsch realisieren:<a id="Xxx999819" name="Xxx999819"></a></p>
+<pre>char *PQresultErrorMessage(const PGresult *res);</pre>
+<p>Liegt hier kein Fehler vor, wird ein leerer String zur&uuml;ckgegeben.</p>
+<h4 class="t4">Ergebnis der Anfrage</h4>
+<p><a id="Xxx999823" name="Xxx999823"></a>Ben&ouml;tigen Sie Informationen zum Ergebnis einer Anfrage, finden Sie in der folgenden Tabellen einen ganzen Satz von Funktionen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.15   
+    </b>Funktionen, um das Ergebnis einer Anfrage auszuwerten</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Funktion</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999831" name="Xxx999831"></a>int PQntuples(const PGresult *res);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt die Anzahl der Zeilen (Tuples) des Anfrageergebnisses zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999836" name="Xxx999836"></a>int PQnfields(const PGresult *res);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt die Anzahl der Spalten in einer Zeile des Anfrageergebnisses zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999841" name="Xxx999841"></a>char *PQfname(const PGresult *res,
+       int spalten_nummer);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt den Namen der Spalte spalten_nummer – beginnend bei 0 – zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999846" name="Xxx999846"></a>int PQfnumber(const PGresult *res,
+     const char *field_name);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt die Nummer der Spalte zum angegebenen Spaltennamen field_name zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999851" name="Xxx999851"></a>Oid PQftype(const PGresult *res,
+      int spalten_nummer);
+</td>
+<td class="tabellentext" bgcolor="#000000">Hiermit k&ouml;nnen Sie den Datentyp der Spalte erfahren. Eine &Uuml;bersicht der OIDs finden Sie in der Datei pg_type.h (meistens im Verzeichnis von libpq im Pfad server/catalog/pg_type.h zu finden).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999856" name="Xxx999856"></a>int PQfmod(const PGresult *res,
+      int spalten_nummer);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt die typenspezifischen Modifikationsdaten der Spalte (beginnend mit 0) mit der angegebenen Nummer zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999861" name="Xxx999861"></a>int PQfsize(const PGresult *res,
+      int spalten_nummer);
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt die Gr&ouml;&szlig;e in Bytes der Spalte spalten_nummer zur&uuml;ck. Wird –1 zur&uuml;ckgegeben, handelt es sich um einen String variabler L&auml;nge.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999866" name="Xxx999866"></a>int PQbinaryTuples(
+       const PGresult *res);
+</td>
+<td class="tabellentext" bgcolor="#000000">Diese Funktion gibt 1 zur&uuml;ck, wenn PGresult bin&auml;re Zeilendaten enth&auml;lt. Bei 0 handelt es sich um Textdaten.
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Speicherplatz der Anfrage freigeben</h4>
+<p>Wenn Sie mit dem Auswerten des Ergebnisses einer Anfrage fertig sind, sollten Sie immer mit der Funktion <span class="listing">PQclear()</span> das <span class="listing">PGresult</span>-Objekt wieder freigeben, um die ber&uuml;chtigten Memory Leaks (Speicherlecks) zu vermeiden.<a id="Xxx999880" name="Xxx999880"></a></p>
+<pre>void PQclear(PQresult *res);</pre>
+<h4 class="t4">Programmbeispiel – Anfrage an den Server</h4>
+<p>Das nun folgende Beispiel demonstriert Ihnen einige der zuvor erw&auml;hnten Funktionen. Verwendet wurde in diesem Beispiel auch die Funktion <span class="listing">PQgetvalue()</span>, die im anschlie&szlig;enden n&auml;chsten Abschnitt erl&auml;utert wird.</p>
+<pre><a id="Xxx999884" name="Xxx999884"></a>/* postgre2.c */
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;libpq-fe.h&gt;
+/* weitere Typen siehe server/catalog/pg_type.h */
+#define INT 23
+#define VARCHAR 1043
+static void exit_nicely (PGconn * conn) {
+  PQfinish (conn);
+  exit (EXIT_FAILURE);
+}
+static void read_fields (PGresult * res) {
+  int i;
+  int n_fields = PQnfields (res);
+  printf("\n");
+  for (i = 0; i &lt; n_fields; i++)
+    printf ("%s %s, ", PQfname (res, i),
+            (PQftype (res, i) == INT) ? "INT" : "VARCHAR");
+  printf ("\n\n");
+}
+static void read_full (PGresult * res) {
+  int i, j;
+  int n_fields = PQnfields (res);
+  int n_line = PQntuples (res);
+  printf("\n");
+  for (j = 0; j &lt; n_line; j++) {
+    for (i = 0; i &lt; n_fields; i++)
+      printf ("%-15s", PQgetvalue (res, j, i));
+    printf ("\n");
+  }
+  printf("\n");
+}
+static void read_info (PGresult * res) {
+  int i, size = 0;
+  int n_fields = PQnfields (res);
+  int n_line = PQntuples (res);
+  printf ("Tabelle enth&auml;lt %d Zeile %d Spalten\n",
+          n_line, n_fields);
+  printf ("Speichergr&ouml;&szlig;e der einzelnen Spalten\n");
+  for (i = 0; i &lt; n_fields; i++) {
+    printf ("%10s : %d Byte ", PQfname (res, i),
+            PQfsize (res, i));
+    if(PQfsize(res, i) != -1 ) {
+      size += PQfsize (res, i);
+      printf("\n");
+    } else
+      printf("( == Ein String mit variabler L&auml;nge)\n");
+  }
+  printf ("Gesamtspeichergr&ouml;&szlig;e ist %d Bytes\n", size);
+}
+static PGresult *select_all (char *dbName, PGconn * conn) {
+  char query[255] = { "SELECT * FROM " };
+  PGresult *res;
+  strcat (query, dbName);
+  res = PQexec (conn, query);
+  if (!res || PQresultStatus (res) != PGRES_TUPLES_OK) {
+    fprintf (stderr, "Fehler beim Befehl SELECT\n");
+    PQclear (res);
+    exit_nicely (conn);
+  }
+  return res;
+}
+int main (void) {
+  /*char *pghost = NULL, *pgport = NULL,  */
+  /*    *pgoptions = NULL, *pgtty = NULL; */
+  char *dbName;
+  char buf[64];
+  char db[255] = { "dbname=" };
+  PGconn *conn;
+  PGresult *res;
+  int auswahl;
+  printf ("Mit welcher Datenbank wollen Sie arbeiten?: ");
+  scanf ("%s", buf);
+  dbName = buf;
+  strcat (db, buf);
+  /* ... bitte ggf. anpassen */
+  conn = PQconnectdb (db);
+  if (PQstatus (conn) == CONNECTION_BAD) {
+    fprintf (stderr, "Verbindung z. Datenbank '%s' verfehlt\n",
+             dbName);
+    fprintf (stderr, "%s", PQerrorMessage (conn));
+    exit_nicely (conn);
+  } 
+  else
+    printf ("Mit PostgreSQL-Server verbunden ...\n");
+  do {
+    printf ("-1- Info zur Datenbank %s\n", dbName);
+    printf ("-2- Alle Spaltennamen ausgeben\n");
+    printf ("-3- Komplette Datenbank %s ausgeben\n", dbName);
+    printf ("-4- Ende\n");
+    printf ("Ihre Auswahl : ");
+    scanf ("%d", &amp;auswahl);
+    switch (auswahl) {
+    case 1:
+      res = select_all (buf, conn);
+      read_info (res);
+      PQclear (res);
+      break;
+    case 2:
+      res = select_all (buf, conn);
+      read_fields (res);
+      PQclear (res);
+      break;
+    case 3:
+      res = select_all (buf, conn);
+      read_full (res);
+      PQclear (res);
+      break;
+    default:
+      break;
+    }
+  } while (auswahl != 4);
+  PQfinish (conn);
+  return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -c -I/usr/include/pgsql postgre2.c
+$ gcc -o postgre2 postgre2.o -L/usr/lib/pgsql -lpq
+$ ./postgre2
+Mit welcher Datenbank wollen Sie arbeiten: adressen
+Mit PostgreSQL-Server verbunden ...
+-1- Info zur Datenbank adressen
+-2- Alle Spaltennamen ausgeben
+-3- Komplette Datenbank adressen ausgeben
+-4- Ende
+Ihre Auswahl : 1
+Tabelle enth&auml;lt 5 Zeile, 6 Spalten
+Speichergr&ouml;&szlig;e der einzelnen Spalten
+     vname : -1 Byte ( == Ein String mit variabler L&auml;nge)
+     nname : -1 Byte ( == Ein String mit variabler L&auml;nge)
+       plz : 4 Byte
+       ort : -1 Byte ( == Ein String mit variabler L&auml;nge)
+   strasse : -1 Byte ( == Ein String mit variabler L&auml;nge)
+    hausnr : 4 Byte
+Gesamtspeichergr&ouml;&szlig;e ist 8 Bytes
+-1- Info zur Datenbank adressen
+-2- Alle Spaltennamen ausgeben
+-3- Komplette Datenbank adressen ausgeben
+-4- Ende
+Ihre Auswahl : 2
+vname VARCHAR, nname VARCHAR, plz INT, ort VARCHAR, strasse VARCHAR, hausnr INT,
+-1- Info zur Datenbank adressen
+-2- Alle Spaltennamen ausgeben
+-3- Komplette Datenbank adressen ausgeben
+-4- Ende
+Ihre Auswahl : 3
+Jonathan    Wolf      12345     Musterdorf     Musterstrasse  1
+Fatma       Wolf      33333     Schlumpfhausen Schlumpfweg    444
+John        Travolta  555444    Kalifornien    Broadway       1
+Jonny       Depp      11234     Hollywood      Kingsroad      1
+Jacko       Jackson   1234      New York       5th Avenue     1</pre>
+<h4 class="t4">R&uuml;ckgabe des Anfrageergebnisses auslesen</h4>
+<p><a id="Xxx999889" name="Xxx999889"></a>Au&szlig;er dass Sie u. a. Informationen wie die Anzahl der betroffenen Spalten einer Anfrage ermitteln k&ouml;nnen, wollen Sie sicherlich auch echte Daten von der Datenbank auslesen k&ouml;nnen – sprich, den Inhalt der Zeilen und der einzelnen Spalten. Die folgenden Funktionen ben&ouml;tigen alle dieselben Parameter: den Zeiger auf das Anfrageergebnis (<span class="listing">PGresult</span>), die Zeilennummer und die Spaltennummer, von denen Sie den Wert haben wollen.</p>
+<p>Die einzelnen Spaltenwerte k&ouml;nnen Sie mit der Funktion <span class="listing">PQgetvalue()</span> ermitteln:<a id="Xxx999891" name="Xxx999891"></a></p>
+<pre>char* PQgetvalue(const PGresult *res,
+                 int zeilen_nummer,
+                 int spalten_nummer);</pre>
+<p>Damit lesen Sie aus der Anfrage <span class="listing">res</span>, die Sie durch eine Ausf&uuml;hrung von <span class="listing">PQexec()</span> zur&uuml;ckbekommen haben, den Wert von der Zeile <span class="listing">zeilen_nummer</span> und der Spalte <span class="listing">spalten_nummer</span> aus. Sowohl Zeile als auch Spalte beginnen bei 0 zu z&auml;hlen. Bei erfolgreicher Ausf&uuml;hrung wird ein Zeiger auf einen entsprechenden String mit einem abschlie&szlig;enden Null-Byte zur&uuml;ckgegeben. Da sich die Daten hier in der Struktur <span class="listing">PGresult</span> befinden, h&auml;lt die Lebensdauer des R&uuml;ckgabewerts bis zum n&auml;chsten <span class="listing">PQexec()</span>-Aufruf. F&uuml;r eine l&auml;ngere Benutzung m&uuml;ssen Sie diese Daten in einen anderen Speicherbereich kopieren.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sofern Sie bin&auml;re Daten (z. B. eine Grafik) aus der Anfrage auslesen wollen – die Funktion <span class="listing">PQbinaryTuples()</span> gibt ja hierbei 1 zur&uuml;ck –, sind Sie selbst f&uuml;r die richtige Verarbeitung der Daten verantwortlich.</p>
+</td>
+</tr>
+</table><br>
+<p>Wollen Sie testen, ob der Wert einer Spalte <span class="listing">NULL</span> ist, k&ouml;nnen Sie die Funktion <span class="listing">PQgetisnull()</span> verwenden.<a id="Xxx999900" name="Xxx999900"></a></p>
+<pre>int PQgetisnull(const PGresult *res,
+                int zeilen_nummer,
+                int spalten_nummer);</pre>
+<p>Wie immer beginnen Zeilen- und Spaltennummer bei 0. Enth&auml;lt der Wert einer Spalte den <span class="listing">NULL</span>-Wert, wird wahrheitsgem&auml;&szlig; 1, ansonsten 0 zur&uuml;ckgegeben.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   <a id="Xxx999905" name="Xxx999905"></a></b>Auch hier gilt, &auml;hnlich wie schon bei MySQL, dass bei PostgreSQL NULL ein leerer String ist und keine <span class="listing">NULL</span> im Sinne von C.</p>
+</td>
+</tr>
+</table><br>
+<p>Ben&ouml;tigen Sie die wirkliche L&auml;nge des Datenwertes, den Sie mit <span class="listing">PQgetvalue()</span> erhalten haben, k&ouml;nnen Sie die Funktion <span class="listing">Pqgetlength()</span> verwenden.<a id="Xxx999909" name="Xxx999909"></a></p>
+<pre>int PQgetlength(const PGresult *res,
+                int zeilen_nummer,
+                int spalten_nummer);</pre>
+<p>Zeilen- und Spaltenwerte beginnen bei 0. Die wirkliche L&auml;nge hat allerdings nichts mit der L&auml;nge der bin&auml;ren Gr&ouml;&szlig;e zu tun, die Sie mit <span class="listing">Pqfsize()</span> erhalten (insbesondere nicht im Textformat).</p>
+<h4 class="t4">Ergebnisse anderer Befehle ermitteln</h4>
+<p><a id="Xxx999913" name="Xxx999913"></a>Wenn Sie mit dem Client <span class="listing">psql</span> einen SQL-Befehl an den Server geschickt haben, haben Sie meistens eine Statuszeichenkette des Befehls erhalten, z. B.:</p>
+<pre>INSERT 16994 1</pre>
+<p>Hier wurde ein Datensatz (»1«) mit dem Befehl <span class="listing">INSERT</span> eingef&uuml;gt. Die OID-Nummer der eingef&uuml;gten Zeile lautet 16994. Diesen Status k&ouml;nnen Sie sich nat&uuml;rlich auch auf <span class="listing">PGresult</span> mit der Funktion <span class="listing">PQcmdStatus()</span> zur&uuml;ckgeben lassen.<a id="Xxx999917" name="Xxx999917"></a></p>
+<pre>char * PQcmdStatus(PGresult *res);</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>OID ist eine Datensatznummer, die f&uuml;r jeden eingef&uuml;gten Datensatz (Zeile) vom internen Z&auml;hler des Datenbanksystems generiert wird. Diese Nummer ist bei objektrelationalen DB-Systemen n&ouml;tig, damit alle Datenbankobjekte eindeutig identifizierbar sind. Daher besitzt jede Tabelle ein Feld tableoid, das den Objektidentifizierer der Tabelle enth&auml;lt, zu dem dieser Datensatz geh&ouml;rt. Da es durchaus m&ouml;glich ist, dass bei &uuml;bergro&szlig;en Tabellen der Z&auml;hler &uuml;berrundet wird und sich wieder zur&uuml;cksetzt, sollten Sie sich nicht unbedingt darauf verlassen, dass diese Nummer eindeutig ist. In der Version 7.2. ist es auch m&ouml;glich, beim Erzeugen einer Tabelle eine Generierung der <span class="listing">OID</span>-Nummer mit der zus&auml;tzlichen Angabe von <span class="listing">WITHOUT</span> <span class="listing">OIDS</span> zu unterbinden.</p>
+</td>
+</tr>
+</table><br>
+<p>Ben&ouml;tigen Sie hiervon nur die Anzahl der Zeilen, die auf SQL-Befehle wie <span class="listing">INSERT</span>, <span class="listing">UPDATE</span> oder <span class="listing">DELETE</span> eine Auswirkung hatten, so k&ouml;nnen Sie auch die Funktion <span class="listing">PQcmdTuples()</span> verwenden.<a id="Xxx999924" name="Xxx999924"></a></p>
+<pre>char * PQcmdTuples(PGresult *res);</pre>
+<p>Wenn der Befehl kein <span class="listing">INSERT</span>, <span class="listing">UPDATE</span> oder <span class="listing">DELETE</span> war, wird hierbei eine leere Zeichenkette zur&uuml;ckgegeben.</p>
+<p>Ben&ouml;tigen Sie hingegen nur die <span class="listing">OID</span> der eingef&uuml;gten Zeile, die mit dem Befehl <span class="listing">INSERT</span> eingef&uuml;gt wurde, und hat die Zieltabelle auch <span class="listing">OID</span>, so k&ouml;nnen Sie die Funktionen <span class="listing">PQoidValue()</span> oder <span class="listing">PQoidStatus()</span> verwenden.<a id="Xxx999928" name="Xxx999928"></a><a id="Xxx999929" name="Xxx999929"></a></p>
+<pre>Oid PQoidValue(const PGresult *res);
+char * PQoidStatus(const PGresult *res);</pre>
+<p><span class="listing">PQoidValue()</span> gibt entweder einen (ganzzahligen) Wert vom Typ <span class="listing">Oid</span> oder im Falle eines Fehlers <span class="listing">InvalidOid</span> zur&uuml;ck. Beide Typen sind definiert, wenn die <span class="listing">libpq</span>-Headerdatei eingebunden wurde.</p>
+<p><span class="listing">PQoidStatus()</span> gibt eine Zeichenkette mit der <span class="listing">OID</span> der eingef&uuml;gten Zeile zur&uuml;ck, wenn die SQL-Anweisung ein <span class="listing">INSERT</span> war, ansonsten 0, wenn die Zieltabelle keine <span class="listing">OID</span> hatte. Wenn der SQL-Befehl kein <span class="listing">INSERT</span> war, wird ein leerer String zur&uuml;ckgegeben.</p>
+<p>Mit den beiden Funktionen <span class="listing">PQoidValue()</span> und <span class="listing">PQoidStatus()</span> bekommen Sie im Endeffekt dasselbe Ergebnis zur&uuml;ck, wobei die Funktion <span class="listing">PQoidValue()</span> nicht f&uuml;r Anwendungen mit Threads verwendet werden sollte, da diese nicht thread-sicher ist.</p>
+<h4 class="t4">Programmbeispiel – Daten in Datenbank einf&uuml;gen</h4>
+<p>Das folgende Beispiel ist eine Erweiterung des Listings zuvor, nur dass hierbei die Funktionen zum Hinzuf&uuml;gen neuer und zum L&ouml;schen alter Datens&auml;tze hinzugekommen sind. Eine fast komplette Clientanwendung zum Arbeiten mit dem PostgreSQL-Server.</p>
+<pre><a id="Xxx999936" name="Xxx999936"></a>/* postgre3.c */
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;libpq-fe.h&gt;
+/* weitere Typen siehe server/catalog/pg_type.h */
+#define INT 23
+#define VARCHAR 1043
+static void exit_nicely (PGconn * conn) {
+  PQfinish (conn);
+  exit (EXIT_FAILURE);
+}
+static void read_fields (PGresult * res) {
+  int i;
+  int n_fields = PQnfields (res);
+  printf("\n");
+  for (i = 0; i &lt; n_fields; i++)
+    printf ("%s %s, ", PQfname (res, i),
+            (PQftype (res, i) == INT) ? "INT" : "VARCHAR");
+  printf ("\n\n");
+}
+static void read_full (PGresult * res) {
+  int i, j;
+  int n_fields = PQnfields (res);
+  int n_line = PQntuples (res);
+  printf("\n");
+  for (j = 0; j &lt; n_line; j++) {
+    for (i = 0; i &lt; n_fields; i++)
+      printf ("%-15s", PQgetvalue (res, j, i));
+    printf ("\n");
+  }
+  printf("\n");
+}
+static void read_info (PGresult * res) {
+  int i, size = 0;
+  int n_fields = PQnfields (res);
+  int n_line = PQntuples (res);
+  printf ("Tabelle enth&auml;lt %d Zeile %d Spalten\n",
+          n_line, n_fields);
+  printf ("Speichergr&ouml;&szlig;e der einzelnen Spalten\n");
+  for (i = 0; i &lt; n_fields; i++) {
+    printf ("%10s : %d Byte ", PQfname (res, i),
+            PQfsize (res, i));
+    if(PQfsize(res, i) != -1 ) {
+      size += PQfsize (res, i);
+      printf("\n");
+    } else
+      printf("( == Ein String mit variabler L&auml;nge)\n");
+  }
+  printf ("Gesamtspeichergr&ouml;&szlig;e ist %d Bytes\n", size);
+}
+static PGresult *select_all (char *dbName, PGconn * conn) {
+  char query[255] = { "SELECT * FROM " };
+  PGresult *res;
+  strcat (query, dbName);
+  res = PQexec (conn, query);
+  if (!res || PQresultStatus (res) != PGRES_TUPLES_OK) {
+    fprintf (stderr, "Fehler beim Befehl SELECT\n");
+    PQclear (res);
+    exit_nicely (conn);
+  }
+  return res;
+}
+static void insert_into (char *dbName, PGconn * conn) {
+  int i;
+  char query[4096] = { "INSERT INTO " };
+  char buf[255];
+  char *ptr;
+  PGresult *res;
+  int n_fields;
+  strcat (query, dbName);
+  strcat (query, " VALUES(");
+  res = select_all (dbName, conn);
+  n_fields = PQnfields (res);
+  for (i = 0; i &lt; n_fields; i++) {
+    printf ("Eingabe f&uuml;r %s (%s)\t:", PQfname (res, i),
+            (PQftype (res, i) == INT) ? "(INT)" : "(VARCHAR)");
+    fgets (buf, 255, stdin);
+    ptr = strchr (buf, '\n');
+    *ptr = '\0';
+    if (PQftype (res, i) == VARCHAR) {
+      strcat (query, "'");
+      strcat (query, buf);
+      strcat (query, "',");
+    } 
+    else if (PQftype (res, i) == INT) {
+      strcat (query, buf);
+      strcat (query, ",");
+    } 
+    else {
+      printf ("Konnte Datentyp (OID) nicht ermitteln!\n");
+      exit_nicely (conn);
+    }
+  }
+  ptr = strchr (query, '\0');
+  *(ptr - 1) = '\0';
+  strcat(query, ");");
+  PQclear(res);
+  //printf ("Query: %s\n", query);
+  res = PQexec (conn, query);
+  if (!res || PQresultStatus (res) != PGRES_COMMAND_OK) {
+    fprintf (stderr, "Fehler beim Befehl INSERT\n");
+    PQclear (res);
+    exit_nicely (conn);
+  }
+  printf("Statuszeichenkette (ges.)     : %s\n", 
+     PQcmdStatus(res));
+  printf("Betroffene Zeilen der Anfrage : %s\n", 
+     PQcmdTuples(res));
+  printf("OID der Anfrage               : %s\n", 
+     PQoidStatus(res));
+  PQclear(res);
+}
+static void delete(char *dbName, PGconn * conn) {
+  int i, n_fields;
+  char query[4096] = { "DELETE FROM " };
+  char buf[255];
+  char *ptr;
+  PGresult *res;
+  int n;
+  strcat (query, dbName);
+  strcat (query, " WHERE ");
+  res = select_all( dbName, conn );
+  n_fields = PQnfields (res);
+  printf("Nach welchem Kriterium wollen Sie l&ouml;schen?\n");
+  for (i = 0; i &lt; n_fields; i++)
+    printf ("%d=%s   ",i, PQfname (res, i));
+  printf(":-&gt;");
+  scanf("%d", &amp;n);
+  getchar();
+  strcat(query, PQfname(res, n));
+  printf("Was wollen Sie l&ouml;schen?: ");
+  fgets(buf, 255, stdin );
+  ptr = strchr( buf, '\n');
+  *ptr = '\0';
+  if (PQftype (res, n) == VARCHAR) {
+    strcat (query, "='");
+    strcat (query, buf);
+    strcat (query, "';");
+  } 
+  else if (PQftype (res, n) == INT) {
+    strcat (query, "=");
+    strcat (query, buf);
+    strcat (query, ";");
+  }
+  else {
+    printf ("Konnte Datentyp (OID) nicht ermitteln!\n");
+    exit_nicely (conn);
+  }
+  PQclear(res);
+  /* printf ("Query: %s\n", query); */
+  res = PQexec (conn, query);
+  if (!res || PQresultStatus (res) != PGRES_COMMAND_OK) {
+    fprintf (stderr, "Fehler beim Befehl INSERT\n");
+    PQclear (res);
+    exit_nicely (conn);
+  }
+  printf("Statuszeichenkette (ges.)     : %s\n",
+     PQcmdStatus(res));
+  printf("Betroffene Zeilen der Anfrage : %s\n",
+     PQcmdTuples(res));
+  PQclear(res);
+}
+int main (void) {
+  /* char *pghost = NULL, *pgport = NULL,   */
+  /*      *pgoptions = NULL, *pgtty = NULL; */
+  char *dbName;
+  char buf[64];
+  char db[255] = { "dbname=" };
+  PGconn *conn;
+  PGresult *res;
+  int auswahl;
+  printf ("Mit welcher Datenbank wollen Sie arbeiten?: ");
+  scanf ("%s", buf);
+  dbName = buf;
+  strcat(db, buf);
+  conn = PQconnectdb(db);
+  if (PQstatus (conn) == CONNECTION_BAD) {
+    fprintf (stderr, "Verbindung z. Datenbank '%s' verfehlt\n",
+             dbName);
+    fprintf (stderr, "%s", PQerrorMessage (conn));
+    exit_nicely (conn);
+  } 
+  else
+    printf ("Mit PostgreSQL-Server verbunden ...\n");
+  do {
+    printf ("-1- Info zur Datenbank '%s'\n", dbName);
+    printf ("-2- Alle Spaltennamen ausgeben\n");
+    printf ("-3- Komplette Datenbank '%s' ausgeben\n", dbName);
+    printf ("-4- Neue Daten in '%s' eingeben\n", dbName);
+    printf ("-5- Eine Zeile l&ouml;schen in '%s'\n",dbName);
+    printf ("-6- Ende\n");
+    printf ("Ihre Auswahl : ");
+    scanf ("%d", &amp;auswahl);
+    getchar ();
+    switch (auswahl) {
+    case 1:
+      res = select_all (buf, conn);
+      read_info (res);
+      PQclear (res);
+      break;
+    case 2:
+      res = select_all (buf, conn);
+      read_fields (res);
+      PQclear (res);
+      break;
+    case 3:
+      res = select_all (buf, conn);
+      read_full (res);
+      PQclear (res);
+      break;
+    case 4:
+      insert_into (buf, conn);
+      break;
+    case 5:
+      delete ( buf, conn );
+      break;
+    default:
+      break;
+    }
+  } while (auswahl != 6);
+  PQfinish (conn);
+  return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -c -I/usr/include/pgsql postgre3.c
+$ gcc -o postgre3 postgre3.o -L/usr/lib/pgsql -lpq
+$ ./postgre3
+Mit welcher Datenbank wollen Sie arbeiten_?: adressen
+Mit PostgreSQL-Server verbunden ...
+-1- Info zur Datenbank 'adressen'
+-2- Alle Spaltennamen ausgeben
+-3- Komplette Datenbank 'adressen' ausgeben
+-4- Neue Daten in 'adressen' eingeben
+-5- Eine Zeile l&ouml;schen in 'adressen'
+-6- Ende
+Ihre Auswahl : 3
+Jonathan  Wolf           12345    Musterdorf     Musterstrasse  1
+Fatma     Wolf           33333    Schlumpfhausen Schlumpfweg    4
+John      Travolta       555444   Kalifornien    Broadway       1
+Jonny     Depp           11234    Hollywood      Kingsroad      1
+Arnold    Schwarzenegger 1234     Augsburg       Am Weg         3
+-1- Info zur Datenbank 'adressen'
+-2- Alle Spaltennamen ausgeben
+-3- Komplette Datenbank 'adressen' ausgeben
+-4- Neue Daten in 'adressen' eingeben
+-5- Eine Zeile l&ouml;schen in 'adressen'
+-6- Ende
+Ihre Auswahl : 4
+Eingabe f&uuml;r vname ((VARCHAR))   :Frank
+Eingabe f&uuml;r nname ((VARCHAR))   :Sinatra
+Eingabe f&uuml;r plz ((INT))         :1234
+Eingabe f&uuml;r ort ((VARCHAR))     :Kings Road
+Eingabe f&uuml;r strasse ((VARCHAR)) :Broadway
+Eingabe f&uuml;r hausnr ((INT))      :1
+Statuszeichenkette (ges.)     : INSERT 16996 1
+Betroffene Zeilen der Anfrage : 1
+OID der Anfrage               : 16996
+-1- Info zur Datenbank 'adressen'
+-2- Alle Spaltennamen ausgeben
+-3- Komplette Datenbank 'adressen' ausgeben
+-4- Neue Daten in 'adressen' eingeben
+-5- Eine Zeile l&ouml;schen in 'adressen'
+-6- Ende
+Ihre Auswahl : 3
+Jonathan  Wolf           12345    Musterdorf     Musterstrasse  1
+Fatma     Wolf           33333    Schlumpfhausen Schlumpfweg    4
+John      Travolta       555444   Kalifornien    Broadway       1
+Jonny     Depp           11234    Hollywood      Kingsroad      1
+Arnold    Schwarzenegger 1234     Augsburg       Am Weg         3
+Frank     Sinatra        1234     Kings Road     Broadway       1
+...
+Ihre Auswahl : 5
+Nach welchem Kriterium wollen Sie l&ouml;schen?
+0=vname   1=nname   2=plz   3=ort   4=strasse   5=hausnr   :-&gt;2
+Was wollen Sie l&ouml;schen?: 1234
+Statuszeichenkette (ges.)     : DELETE 2
+Betroffene Zeilen der Anfrage : 2</pre>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">12.9.7 Umgebungsvariablen und Passwortdate<a id="RxxKap120080400043A1F017304" name="RxxKap120080400043A1F017304"></a>i 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999942" name="Xxx999942"></a><a id="Xxx999943" name="Xxx999943"></a>Der folgende Abschnitt darf als eine Art Anhang zur <span class="listing">libpq</span>-Bibliothek verstanden werden. Es sollen Ihnen hier die Umgebungsvariablen gezeigt werden, die Sie verwenden k&ouml;nnen, um Vorgabewerte f&uuml;r die Verbindungsparameter zu setzen, die von den Funktionen <span class="listing">PQconnectdb()</span> und <span class="listing">PQsetdbLogin()</span> verwendet werden. Dies ist recht hilfreich, wenn man diese Daten nicht direkt in den Code schreiben will. Folgende Umgebungsvariablen und deren Bedeutung k&ouml;nnen Sie hierbei setzen – was im Endeffekt einer Wiederholung zu den Verbindungsparametern der Funktion <span class="listing">PQconnectdb()</span> darstellt.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGHOST</span> – Hierbei wird der Servername gesetzt. Bei beginnendem Schr&auml;gstrich wird ein UNIX Domain Socket statt TCP/IP verwendet. Der Wert ist dann eine Verzeichnisangabe zu einer Socket-Datei – wo sich diese befindet (Standard: <span class="listing">/tmp</span>).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGPORT</span> – Hierbei wird die vorgegebene TCP-Portnummer oder der UNIX-Domain-Socket-Namen gesetzt.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGDATABASE</span> – Einen vorgegebenen Datenbanknamen k&ouml;nnen Sie damit setzen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGUSER</span> – Der Benutzername f&uuml;r die Datenbankverbindung</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGPASSWORD</span> – Hier k&ouml;nnten Sie das Passwort setzen, wenn eine Authentifizierung n&ouml;tig ist – was logischerweise aus Sicherheitsgr&uuml;nden nicht zu empfehlen ist. Es wird hierzu empfohlen, die Datei <span class="listing">./pgpass</span> im Homeverzeichnis zu verwenden (dazu gleich mehr).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGOPTIONS</span> – Hier werden die Konfigurationsoptionen gesetzt, die an den PostgreSQL-Server geschickt werden sollen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PGTTY</span> – Hier k&ouml;nnen Sie eine Datei oder das TTY f&uuml;r die Debug-Ausgabe des Servers angeben.</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nat&uuml;rlich gilt hierbei, wenn Sie eine bestimmte Umgebungsvariable gesetzt haben, aber beim Verbindungsaufbau einen anderen Parameter verwenden, dass der Parameter im Code den Vorrang gegen&uuml;ber der Umgebungsvariablen erh&auml;lt.</p>
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999956" name="Xxx999956"></a>Die Passwortdatei zur Authentifizierung im Home-Verzeichnis wurde bereits kurz erw&auml;hnt. Wenn eine Verbindung ein Passwort ben&ouml;tigt, wird die Datei <span class="listing">.pgpass</span> dazu verwendet. Eine Zeile in dieser Datei sollte folgenderma&szlig;en aufgebaut sein:</p>
+<pre>hostname:port:datenbank:benutzername:passwort</pre>
+<p>F&uuml;r jede dieser Angaben geben Sie entweder eine Konstante an oder das Zeichen <span class="listing">*</span>, das somit f&uuml;r alles passen w&uuml;rde. Befindet sich in der Konstante ein <span class="listing">\</span> oder ein <span class="listing">:</span>, m&uuml;ssen Sie ein Backslash davor setzen (<span class="listing">\:</span> und <span class="listing">\\</span>). Au&szlig;erdem m&uuml;ssen Sie die Zugriffsrechte auf 0600 setzen, womit nur der Eigent&uuml;mer Zugriff hat. Werden die Zugriffsrechte nicht gesetzt, wird die Datei <span class="listing">.pgpass</span> ignoriert.</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">12.9.8 PostgreSQL und Thread<a id="RxxKap120080400043A1F017312" name="RxxKap120080400043A1F017312"></a>s 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999962" name="Xxx999962"></a>Da PostgreSQL im Gegensatz zu MySQL schon mehr im professionellen Bereich eingesetzt wird, ist zwangsl&auml;ufig auch die Frage nach der Thread-Sicherheit gestellt. Hierbei sollte es seit Version 7.0 keine Probleme geben, sofern Sie nicht mit zwei Threads gleichzeitig auf dasselbe PGconn-Objekt zugreifen. Sie k&ouml;nnen also nicht hergehen und mit Thread1 eine Zeile in der Datenbank hinzuf&uuml;gen und zur gleichen Zeit mit Thread2 eine Zeile aus der Datenbank entfernen. Bedenken Sie, dass Sie gleichzeitig dieselbe Verbindung verwenden. Verwenden Sie f&uuml;r gleichzeitige Ausf&uuml;hrungen lieber mehrere Verbindungen. Das <span class="listing">PGresult</span>-Objekt bleibt bis zum n&auml;chsten Aufruf auf das Objekt unver&auml;ndert und kann somit problemlos zwischen den Threads ausgetauscht werden.</p>
+<p>Nicht thread-sicher ist die Funktion <span class="listing">PQoidStatus()</span> – als Alternative kann hierf&uuml;r <span class="listing">PQoidValue()</span> verwendet werden.</p>
+<p>Des Weiteren sollten Sie, sofern Sie eine Authentifizierungsmethode verwenden, nicht die Betriebssystemfunktion <span class="listing">crypt()</span> verwenden. Als Alternative wird die Methode <span class="listing">md5</span> empfohlen. <span class="listing">md5</span> ist auf allen Betriebssystemen thread-sicher.</p>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">12.9.9  Ausblic<a id="RxxKap120080400043A1F017316" name="RxxKap120080400043A1F017316"></a>k 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Das Kapitel zur Schnittstelle von libpq lie&szlig;e sich noch ein wenig erweitern – allerdings w&auml;re das Buchs dann sehr einseitig durch die Programmierung von Clientanwendungen f&uuml;r Datenbanken gepr&auml;gt. Au&szlig;erdem wurden die grundlegenden und g&auml;ngigen Funktionen hier beschrieben und erw&auml;hnt. Nicht angesprochen wurden Themen wie:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Asynchrone Befehlsverarbeitung und asynchrone Benachrichtigung</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die Fast-Path-Schnittstelle (aus Sicherheitsgr&uuml;nden nicht zu empfehlen)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Hinweismeldungen des Servers verarbeiten und das Nachverfolgen der Server-Client-Kommunikation</td>
+</tr>
+</table>
+<p>Des Weiteren wurde hier nicht behandelt, was aus der Sicht des C-Programmierers doch recht interessant ist, wie Sie benutzerdefinierte Funktionen f&uuml;r PostgreSQL erstellen k&ouml;nnen (&auml;hnlich wie bei der UDP-Schnittstelle in MySQL). Der Vorgang entspricht hier demselben wie bei der C-API von MySQL. Die Funktionen werden in dynamisch ladbare Module (Shared Libraries) kompiliert und vom Server bei Bedarf oder von Ihnen auf Wunsch nachgeladen.</p>
+<p>F&uuml;r diese und weitere Informationen sei die sehr gute Dokumentation (auch als Buch erh&auml;ltlich und sehr empfehlenswert) &uuml;ber PostgreSQL auf der Buch-CD (PostgreSQL: Das Offizielle Handbuch – von Peter Eisentraut) empfohlen.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap12-007.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap13-000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap12-008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:58:25 GMT -->
+</html>

@@ -1,0 +1,792 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap10-004.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:28 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 10.5 Die grundlegenden Funktionen zur Thread–Programmierung</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap10-003.html">
+<link rel="next" href="Kap10-005.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap10-003.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap10-005.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap10-000.html#RxxKap10000040002FE1F043100">10 Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-000.html#RxxKap10000040002FE1F043106">10.1 Unterschiede zwischen Threads und Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-001.html#RxxKap100010400031B1F04C100">10.2 Thread-Bibliotheken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-002.html#RxxKap100020400031C1F04E100">10.3 Kernel- und User-Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-003.html#RxxKap100030400031D1F024100">10.4 Scheduling und Zust&auml;nde von Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap100040400031E1F04A100">10.5 Die grundlegenden Funktionen zur Thread–Programmierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap100040400031E1F04A103">10.5.1 pthread_create – einen neuen Thread erzeugen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap100040400031E1F04A108">10.5.2 pthread_exit – einen Thread beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap100040400031E1F04A114">10.5.3 pthread_join – auf das Ende eines Threads warten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap100040400031E1F04A175">10.5.4 pthread_self – die ID von Threads ermitteln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap100040400031E1F04A186">10.5.5 pthread_equal – die ID von zwei Threads vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap100040400031E1F04A18D">10.5.6 pthread_detach – einen Thread unabh&auml;ngig machen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-005.html#RxxKap100050400031F1F030100">10.6 Die Attribute von Threads und das Scheduling</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-006.html#RxxKap10006040003201F028100">10.7 Threads synchronisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-006.html#RxxKap10006040003201F028109">10.7.1 Mutexe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-006.html#RxxKap10006040003201F02818E">10.7.2 Condition-Variablen (Bedingungsvariablen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-006.html#RxxKap10006040003201F0281B2">10.7.3 Semaphore</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-006.html#RxxKap10006040003201F0281BD">10.7.4 Weitere Synchronisationstechniken im &Uuml;berblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-007.html#RxxKap10007040003211F03E100">10.8 Threads abbrechen (canceln)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-008.html#RxxKap10008040003221F025100">10.9 Erzeugen von Thread-spezifischen Daten (TSD-Data)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-009.html#RxxKap10009040003231F04A100">10.10 pthread_once – Codeabschnitt einmal ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-010.html#RxxKap10010040003241F048100">10.11 Thread-safe (thread-sichere Funktionen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-011.html#RxxKap10011040003251F036100">10.12 Threads und Signale</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-012.html#RxxKap10012040003261F020100">10.13 Zusammenfassung und Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">10.5 <a id="RxxKap1028DiegrundlegendenFunktionenzurThreadProgrammierung" name="RxxKap1028DiegrundlegendenFunktionenzurThreadProgrammierung"></a>Die grundlegenden Funktionen zur Thread–Programmierun<a id="RxxKap100040400031E1F04A100" name="RxxKap100040400031E1F04A100"></a>g 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Einen Hinweis gleich zu Beginn der Thread-Programmierung – alle Funktionen aus der pthread-Bibliothek geben bei Erfolg 0, ansonsten bei einem Fehler -1 zur&uuml;ck.</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">10.5.1 pthread_create<a id="Xxx999239" name="Xxx999239"></a> – einen neuen Thread erzeuge<a id="RxxKap100040400031E1F04A103" name="RxxKap100040400031E1F04A103"></a>n 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999241" name="Xxx999241"></a>Einen neuen Thread kann man mit der Funktion <span class="listing">pthread_create</span> erzeugen:</p>
+<pre>#include &lt;pthread. h.&gt;
+int pthread_create( pthread_t *thread, 
+                    const pthread_attr_t *attribute,
+                    void *(*funktion)(void *),
+                    void *argumente );</pre>
+<p>Wenn Sie sich die Funktion betrachten, d&uuml;rfte Ihnen die &Auml;hnlichkeit zur Funktion <span class="listing">clone()</span> auffallen (siehe Manual Page), worauf sich <span class="listing">pthread_create()</span> unter Linux ja auch beruft. Jeder Thread bekommt eine eigene Identifikationsnummer (ID) vom Datentyp <span class="listing">pthread_t</span>, die in der Variablen des ersten Parameters <span class="listing">thread</span> abgelegt wird. Anhand dieser ID werden alle anderen Threads voneinander unterschieden. Mit dem zweiten Parameter <span class="listing">attribute</span> k&ouml;nnen Sie bei dem neu zu startenden Thread Attribute setzen wie die Priorit&auml;t, die Stackgr&ouml;&szlig;e und noch einiges mehr. Auf die einzelnen Attribute wird noch eingegangen. Geben Sie hierf&uuml;r <span class="listing">NULL</span> an, werden die Standardattribute f&uuml;r den Thread vorgenommen. Mit dem dritten Parameter geben Sie die »Funktion« f&uuml;r einen Thread selbst an. Hierbei geben Sie die Anfangsadresse einer Routine an, die der Thread verwenden soll. Wenn sich die hier angegebene Funktion beendet, bedeutet dies auch automatisch das Ende des Threads. Argumente, die Sie dem Thread mitgeben wollen, k&ouml;nnen Sie mit dem vierten Parameter <span class="listing">argumente</span> &uuml;bergeben. Meistens wird dieser Parameter verwendet, um Daten an Threads zu &uuml;bergeben. Hierzu wird in der Praxis h&auml;ufig die Adresse einer Strukturvariablen herangezogen.</p>
+<p>Nach dem Aufruf von <span class="listing">pthread_create()</span> kehrt diese Funktion sofort wieder zur&uuml;ck und f&auml;hrt mit der Ausf&uuml;hrung hinter <span class="listing">pthread_create()</span> fort. Der neu erzeugte Thread f&uuml;hrt sofort asynchron seine Arbeit aus. Jetzt w&uuml;rden praktisch zwei Threads gleichzeitig ausgef&uuml;hrt, der Haupt-Thread und der neue Thread, der vom Haupt-Thread mit <span class="listing">pthread_create()</span> erzeugt wurde. Welcher der beiden Threads hierbei zun&auml;chst mit seiner Ausf&uuml;hrung beginnt, ist nicht festgelegt (selbes Verhalten wie bei <span class="listing">fork</span>).</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">10.5.2 pthread_exit – einen Thread beenden<a id="RxxKap100040400031E1F04A108" name="RxxKap100040400031E1F04A108"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999247" name="Xxx999247"></a>Beenden k&ouml;nnen Sie einen Thread auf unterschiedliche Weise. Meistens werden Threads mit der Funktion <span class="listing">pthread_exit()<a id="Xxx999249" name="Xxx999249"></a></span> beendet:</p>
+<pre>#include &lt;pthread. h.&gt;
+void pthread_exit( void * wert );</pre>
+<p>Diese Funktion beendet nur den Thread, indem Sie diese aufrufen. Mit dem Argument <span class="listing">wert</span> geben Sie den Exit-Status des Threads an. Diesen Status k&ouml;nnen Sie mit <span class="listing">pthread_join()</span> ermitteln (folgt in K&uuml;rze). Nat&uuml;rlich darf auch hierbei, wie eben C-&uuml;blich, der R&uuml;ckgabewert kein lokales Speicherobjekt vom Thread sein, da dieses (wie eben bei Funktionen auch) nach der Beendigung des Threads nicht mehr g&uuml;ltig ist.</p>
+<p>Neben der M&ouml;glichkeit, einen Thread mit <span class="listing">pthread_exit()</span> zu beenden, sind noch folgende Dinge zu beachten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Ruft ein beliebiger Thread die Funktion <span class="listing">exit()</span> auf, werden alle Threads, einschlie&szlig;lich des Haupt-Threads, beendet (also das komplette Programm). Genauso sieht dies aus, wenn Sie dem Prozess das Signal <span class="listing">SIGTERM</span> oder <span class="listing">SIGKILL</span> senden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Ein Thread, der mittels <span class="listing">pthread_create()</span> erzeugt wurde, l&auml;sst sich auch mit <span class="listing">return</span> [wert] beenden. Dies entspricht exakt dem Verhalten von <span class="listing">pthread_exit()</span>. Der R&uuml;ckgabewert kann hierbei ebenfalls mit <span class="listing">pthread_join()</span> ermittelt werden.</td>
+</tr>
+</table>
+<h4 class="t4">Exit-Handler f&uuml;r Threads einrichten</h4>
+<p><a id="Xxx999256" name="Xxx999256"></a>Wenn Sie einen Thread beenden, k&ouml;nnen Sie auch einen Exit-Handler einrichten. Dies wird in der Praxis recht gerne verwendet, um z. B. tempor&auml;re Dateien zu l&ouml;schen, Mutexe freizugeben oder eben sonstige »Reinigungsarbeiten« zu machen. Ein solcher eingerichteter Exit-Handler wird dann automatisch bei Beendigung eines Threads mit z. B. <span class="listing">pthread_exit()</span> oder <span class="listing">return</span> automatisch ausgef&uuml;hrt. Das Prinzip ist &auml;hnlich, wie Sie es von der Standardbibliotheksfunktion <span class="listing">atexit()</span> kennen sollten. Auch hierbei werden bei mehreren Exit-Handlern die einzelnen Funktionen in umgekehrter Reihenfolge (da Stack) der Einrichtung ausgef&uuml;hrt. Hier die Funktionen dazu:<a id="Xxx999258" name="Xxx999258"></a><a id="Xxx999259" name="Xxx999259"></a></p>
+<pre>#include &lt;pthread. h.&gt;
+void pthread_cleanup_push( void (*function)(void *),
+                           void *arg );
+void pthread_cleanup_pop( int exec );</pre>
+<p>Eine solche Funktion richten Sie also mit der Funktion <span class="listing">pthread_cleanup_push()</span> ein. Als ersten Parameter &uuml;bergeben Sie dabei die Funktion, die ausf&uuml;hrt werden soll, und als zweiten Parameter die Argumente f&uuml;r den Exit-Handler (falls n&ouml;tig). Den zuletzt eingerichteten Exit-Handler k&ouml;nnen Sie wieder mit der Funktion <span class="listing">pthread_cleanup_pop()</span> vom Stack entfernen. Geben Sie allerdings einen Wert ungleich 0 als Parameter <span class="listing">exec</span> an, so wird diese Funktion zuvor noch ausgef&uuml;hrt, was bei einer Angabe von 0 nicht gemacht wird.</p>
+<p>Etwas, was mich hier schon zur Wei&szlig;glut gebracht hat, ist, dass die beiden Funktionen <span class="listing">pthread_cleanup_push()</span> und <span class="listing">pthread_cleanup_pop()</span> als Makros implementiert sind. Was nicht so schlimm w&auml;re, wenn <span class="listing">pthread_cleanup_push()</span> eine sich &ouml;ffnend geschweifte Klammer enth&auml;lt und <span class="listing">pthread_cleanup_pop()</span> eine sich schlie&szlig;ende. Dies bedeutet, Sie m&uuml;ssen beide Funktionen im selben Anweisungsblock ausf&uuml;hren. Daher m&uuml;ssen Sie immer ein   _push und ein _pop verwenden, auch wenn Sie wissen, dass eine _pop-Stelle nie erreicht wird.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">10.5.3 pthread_join – auf das Ende eines Threads warten<a id="RxxKap100040400031E1F04A114" name="RxxKap100040400031E1F04A114"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999264" name="Xxx999264"></a><a id="Xxx999265" name="Xxx999265"></a>Bevor Sie sich dem ersten Listing widmen k&ouml;nnen, ben&ouml;tigen Sie noch die Kenntnisse zur Funktion <span class="listing">pthread_join()</span>.</p>
+<pre>#include &lt;pthread. h.&gt;
+int pthread_join( pthread_t thread, void **thread_return );</pre>
+<p><span class="listing">pthread_join()</span> h&auml;lt den aufrufenden Thread (meistens den Haupt-Thread), der einen Thread mit <span class="listing">pthread_create()</span> erzeugt hat, so lange an, bis der Thread mit der ID <span class="listing">thread</span> vom Typ <span class="listing">pthread_t</span> beendet wurde. Der Exit-Status (bzw. R&uuml;ckgabewert) des Threads wird an die Adresse von <span class="listing">thread_return</span> geschrieben. Sind Sie nicht am R&uuml;ckgabewert interessiert, k&ouml;nnen Sie hier auch <span class="listing">NULL</span> verwenden. <span class="listing">pthread_join()</span> ist also das, was Sie bei den Prozessen mit <span class="listing">waitpid()</span> kennen.</p>
+<p>Ein Thread, der sich beendet, wird eben so lange nicht »freigegeben« bzw. als beendeter Thread anerkannt, bis ein anderer Thread <span class="listing">pthread_join()</span> aufruft. Diesen Zusammenhang k&ouml;nnen Sie bei den Prozessen mit »Zombie-Prozessen« vergleichen. Daher sollte man f&uuml;r jeden erzeugten Thread einmal <span class="listing">pthread_join()</span> aufrufen, es sei denn, man hat einen Thread »abgeh&auml;ngt« (aber dazu in K&uuml;rze mehr).</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">10.5.4 pthread_self – die ID von Threads ermitteln<a id="RxxKap100040400031E1F04A175" name="RxxKap100040400031E1F04A175"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999271" name="Xxx999271"></a><a id="Xxx999272" name="Xxx999272"></a>Die Identifikationsnummer eines auszuf&uuml;hrenden Threads k&ouml;nnen Sie sich mit der Funktion <span class="listing">pthread_self()</span> erfragen.</p>
+<pre>#include &lt;pthread. h.&gt;
+pthread_t pthread_self(void);</pre>
+<p>Als R&uuml;ckgabewert erhalten Sie die Thread-ID vom Datentyp <span class="listing">pthread_t</span>.</p>
+<p>Hierzu soll nun ein einfaches Beispiel erstellt werden, das alle bisher vorgestellten Funktionen in klarer Weise demonstrieren soll.</p>
+<pre>/* thread1.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;pthread. h.&gt;
+/* insg. MAX_THREADS Threads erzeugen */
+#define MAX_THREADS 3
+#define BUF 255
+/* Einfache Daten f&uuml;r die Wert&uuml;bergabe an den Thread */
+struct data {
+   int wert;
+   char msg[BUF];
+};
+/* Ein einfacher Exit-Handler f&uuml;r Threads, der  *
+ * pthread_cleanup_push und pthread_cleanup_pop *
+ * in der Praxis demonstrieren soll             */ 
+static void exit_handler_mem( void * arg ) {
+   printf("\tExit-Handler aufgerufen ...");
+   struct data *mem =  (struct data *)arg;
+   /* Speicher freigeben */
+   free(mem);
+   printf("Speicher freigegeben\n");
+}
+/* Die Thread-Funktion */
+static void mythread (void *arg) {
+   struct data *f = (struct data *)arg;
+   /* Exit-Handler einrichten - wird automatisch nach *
+    * pthread_exit oder Thread-Ende aufgerufen        */
+   pthread_cleanup_push( exit_handler_mem, (void*)f );
+   /* Daten ausgeben */
+   printf("\t-&gt; Thread mit ID:%ld gestartet\n",
+      pthread_self());
+   printf("\tDaten empfangen: \n");
+   printf("\t\twert = \"%d\"\n", f-&gt;wert);
+   printf("\t\tmsg  = \"%s\"\n", f-&gt;msg);
+   /* Den Exit-Handler entfernen, aber trotzdem ausf&uuml;hren, *
+    * da als Angabe 1 anstatt 0 verwendet wurde           */
+   pthread_cleanup_pop( 1 );
+   /* Thread beenden - Als R&uuml;ckgabewert Thread-ID verwenden.
+    * Alternativ kann hierf&uuml;r auch:
+    * return(void) pthread_self();  
+    * verwendet werden */
+   pthread_exit((void *)pthread_self());
+}
+int main (void) {
+   pthread_t th[MAX_THREADS];
+   struct data *f;
+   int i;
+   static int ret[MAX_THREADS];
+   /* Haupt-Thread gestartet */
+   printf("\n-&gt; Main-Thread gestartet (ID:%ld)\n",
+      pthread_self());
+   /* MAX_THREADS erzeugen */
+   for (i = 0; i &lt; MAX_THREADS; i++) {
+      /* Speicher f&uuml;r Daten anfordern u. m. Werten belegen*/
+      f = (struct data *)malloc(sizeof(struct data));
+      if(f == NULL) {
+         printf("Konnte keinen Speicher reservieren ...!\n");
+         exit(EXIT_FAILURE);
+      }
+      /* Zufallszahl zwischen 1 und 10 (Spezial) */
+      f-&gt;wert =  1+(int) (10.0*rand()/(RAND_MAX+1.0)); 
+      snprintf (f-&gt;msg, BUF, "Ich bin Thread Nr. %d", i+1);
+      /* Jetzt Thread erzeugen */
+      if(pthread_create(&amp;th[i], NULL, &amp;mythread, f) != 0) {
+         fprintf (stderr, "Konnte Thread nicht erzeugen\n");
+         exit (EXIT_FAILURE);
+      }
+   }
+   /* Auf das Ende der Threads warten */
+   for( i=0; i &lt; MAX_THREADS; i++)
+      pthread_join(th[i], &amp;ret[i]);
+   /* R&uuml;ckgabewert der Threads ausgeben */
+   for( i=0; i &lt; MAX_THREADS; i++)
+       printf("&lt;-Thread %ld ist fertig\n", ret[i]);
+   /* Haupt-Thread ist jetzt auch fertig */
+   printf("&lt;- Main-Thread beendet (ID:%ld)\n", 
+      pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread1 thread1.c -lpthread
+$ ./thread1
+-&gt; Main-Thread gestartet (ID:-1209412512)
+        -&gt; Thread mit ID:-1209414736 gestartet
+        Daten empfangen:
+                wert = "9"
+                msg  = "Ich bin Thread Nr. 1"
+        Exit-Handler aufgerufen ... Speicher freigegeben
+        -&gt; Thread mit ID:-1217807440 gestartet
+        Daten empfangen:
+                wert = "4"
+                msg  = "Ich bin Thread Nr. 2"
+        Exit-Handler aufgerufen ... Speicher freigegeben
+        -&gt; Thread mit ID:-1226200144 gestartet
+        Daten empfangen:
+                wert = "8"
+                msg  = "Ich bin Thread Nr. 3"
+        Exit-Handler aufgerufen ...Speicher freigegeben
+&lt;-Thread -1209414736 ist fertig
+&lt;-Thread -1217807440 ist fertig
+&lt;-Thread -1226200144 ist fertig
+&lt;- Main-Thread beendet (ID:-1209412512)</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><a id="Xxx999282" name="Xxx999282"></a><b>Hinweis am Rande</b>   Bevor sich jemand &uuml;ber die Warnmeldung des Compilers wundert, noch ein Satz zum Casten von <span class="listing">void</span> <span class="listing">*</span>. In der Programmiersprache C ist ein Casten von oder nach <span class="listing">void</span> <span class="listing">*</span> nicht n&ouml;tig. Aber wen die Warnmeldung st&ouml;rt, der kann dies gerne trotzdem nachholen.</p>
+</td>
+</tr>
+</table><br>
+<p>Dieses Beispiel demonstriert auch auf einfache Weise, wie Sie Daten an einen neu erzeugten Thread &uuml;bergeben k&ouml;nnen (hier mit der Struktur <span class="listing">data</span>). Ebenfalls gezeigt wurde hier die Verwendung eines Exit-Handlers, der nur den im Haupt-Thread angeforderten Speicherbereich freigibt. Zugegeben, das lie&szlig;e sich auch im Thread »mythread« einfacher realisieren, aber zu Anschauungszwecken sind solch einfache Codebeispiele immer noch am besten. Im Beispiel wurden au&szlig;erdem drei Threads »mythread« erzeugt, die im Prinzip alle dasselbe machen, n&auml;mlich eine einfache Ausgabe der Daten, die an die Threads &uuml;bergeben wurden. Hierbei muss nochmals explizit darauf hingewiesen werden, dass die Ausf&uuml;hrung, in welcher Reihenfolge die Threads starten, nicht vorgegeben ist, auch wenn dies hier einen anderen Anschein macht. Hierzu werden Synchronisationsmechanismen erforderlich. Jeder Thread wurde hier mit <span class="listing">pthread_exit()</span> und der eignen Thread-ID als R&uuml;ckgabewert beendet. Genauso gut kann dies nat&uuml;rlich auch mit <span class="listing">return</span> gemacht werden. Der R&uuml;ckgabewert von den einzelnen Threads wird im Haupt-Thread von <span class="listing">pthread_join()</span> erwartet und ausgegeben. Der Haupt-Thread beendet sich am Ende erst, wenn alle Threads fertig sind.</p>
+<p>W&uuml;rden Sie in diesem Beispiel <span class="listing">pthread_join()</span> weglassen, so w&uuml;rde sich der Haupt-Thread noch vor den anderen Threads beenden. Dies bedeutet, dass alle anderen Threads zwar noch laufen, aber auf nun nicht mehr g&uuml;ltige Strukturvariablen zugreifen w&uuml;rden.</p>
+<h4 class="t4">R&uuml;ckgabewert von Threads</h4>
+<p><a id="Xxx999288" name="Xxx999288"></a>Zwar wurde schon auf den R&uuml;ckgabewert von Threads eingegangen, aber hierbei wurden nur Thread-spezifische Daten zur&uuml;ckgegeben (hier die Thread-ID). Aber genauso wie schon bei der Wert&uuml;bergabe an Threads k&ouml;nnen Sie hierbei auch ganze Strukturen zur&uuml;ckgeben, was in der Praxis auch h&auml;ufig so der Fall ist. Hierzu ein &auml;hnliches Beispiel wie schon »thread1.c«, nur dass jetzt die Daten der Struktur aus dem Thread zur&uuml;ckgegeben und im Haupt-Thread mit <span class="listing">pthread_join()</span> »abgefangen« und anschlie&szlig;end ausgegeben werden. Auf die Verwendung eines Exit-Handlers wurde der &Uuml;bersichtlichkeit halber zuliebe verzichtet.</p>
+<pre>/* thread2.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;pthread. h.&gt;
+/* insg. MAX_THREADS Threads erzeugen */
+#define MAX_THREADS 3
+#define BUF 255
+/* Einfache Daten f&uuml;r die Wert&uuml;bergabe an den Thread */
+struct data {
+   int wert;
+   char msg[BUF];
+};
+/* Die Thread-Funktion */
+static void *mythread (void *arg) {
+   struct data *f= (struct data *)arg;
+   /* Zufallszahl zwischen 1 und 10 (Spezial) */
+   f-&gt;wert =  1+(int) (10.0*rand()/(RAND_MAX+1.0)); 
+   snprintf (f-&gt;msg, BUF, "Ich bin Thread Nr. %ld",
+      pthread_self());
+   /* Thread beenden - Als R&uuml;ckgabewert Strukturdaten 
+    * verwenden - Alternativ auch pthread_exit( f );  */
+   return arg;
+}
+int main (void) {
+   pthread_t th[MAX_THREADS];
+   int i;
+   struct data *ret[MAX_THREADS];
+   /* Haupt-Thread gestartet */
+   printf("\n-&gt; Main-Thread gestartet (ID:%ld)\n",
+      pthread_self());
+   /* Speicher reservieren */
+   for (i = 0; i &lt; MAX_THREADS; i++){
+      ret[i] = (struct data *)malloc(sizeof(struct data));
+      if(ret[i] == NULL) {
+         printf("Konnte keinen Speicher reservieren ...!\n");
+         exit(EXIT_FAILURE);
+      }
+   }   
+   /* MAX_THREADS erzeugen */
+   for (i = 0; i &lt; MAX_THREADS; i++) {
+      /* Jetzt Thread erzeugen */
+      if(pthread_create(&amp;th[i],NULL,&amp;mythread,ret[i]) !=0) {
+         fprintf (stderr, "Konnte Thread nicht erzeugen\n");
+         exit (EXIT_FAILURE);
+      }
+   }
+   /* Auf das Ende der Threads warten */
+   for( i=0; i &lt; MAX_THREADS; i++)
+      pthread_join(th[i], (void **)&amp;ret[i]);
+   /* Daten ausgeben */
+   for( i=0; i &lt; MAX_THREADS; i++) {
+      printf("Main-Thread: Daten empfangen: \n");
+      printf("\t\twert = \"%d\"\n", ret[i]-&gt;wert);
+      printf("\t\tmsg  = \"%s\"\n", ret[i]-&gt;msg);
+   }
+   /* Haupt-Thread ist jetzt auch fertig */
+   printf("&lt;- Main-Thread beendet (ID:%ld)\n",
+      pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread2 thread2.c -lpthread
+$ ./thread2
+-&gt; Main-Thread gestartet (ID:-1209412512)
+Main-Thread: Daten empfangen:
+                wert = "9"
+                msg  = "Ich bin Thread Nr. -1209414736"
+Main-Thread: Daten empfangen:
+                wert = "4"
+                msg  = "Ich bin Thread Nr. -1217807440"
+Main-Thread: Daten empfangen:
+                wert = "8"
+                msg  = "Ich bin Thread Nr. -1226200144"
+&lt;- Main-Thread beendet (ID:-1209412512)</pre>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">10.5.5 pthread_equal – die ID von zwei Threads vergleichen<a id="RxxKap100040400031E1F04A186" name="RxxKap100040400031E1F04A186"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999294" name="Xxx999294"></a><a id="Xxx999295" name="Xxx999295"></a>Um einen Thread mit einem anderen Thread zu vergleichen, kann die Funktion <span class="listing">pthread_equal()</span> verwendet werden. Dies wird h&auml;ufig verwendet, um sicherzugehen, dass nicht ein Thread gleich derselbe ist. Ein Wert ungleich 0 wird zur&uuml;ckgegeben, wenn beide Threads gleich sind, und 0 wird zur&uuml;ckgegeben, wenn die Threads eine unterschiedliche Identifikationsnummer (ID) besitzen.</p>
+<p>Das folgende Beispiel erzeugt drei Threads mit derselben »Funktion«, hierbei soll jeder Thread wiederum eine andere Aktion ausf&uuml;hren. Im Beispiel ist dies zwar nur die Ausgabe eines Textes, aber in der Praxis k&ouml;nnten Sie hierbei neue Funktionen aufrufen. F&uuml;r die ersten drei Threads wird jeweils eine bestimmte Aktion festgelegt. Alle anderen Threads f&uuml;hren nur noch die <span class="listing">else</span>-Aktion aus. Dies ist z. B. sinnvoll, wenn Sie in Ihrer Anwendung Vorbereitungen treffen wollen (im Beispiel eben drei Vorbereitungen) so wie Dateien anlegen, M&uuml;ll beseitigen, eine Server-Verbindung herstellen und noch vieles mehr. Sind diese Vorbereitungen getroffen, wird immer mit der gleichen Funktion fortgefahren. Damit der Vergleich von Threads mit <span class="listing">pthread_equal()</span> auch funktioniert, wurden die Thread-IDs, die beim Anlegen mit <span class="listing">pthread_create()</span> erzeugt worden sind, in globale Variablen gespeichert – und sind daher auch f&uuml;r alle Threads »sichtbar«. Hier das Beispiel, dessen Ausgabe eigentlich auch einiges erkl&auml;rt.</p>
+<pre>/* thread3.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;pthread. h.&gt;
+#define MAX_THREADS 5
+#define BUF 255
+/* Globale Variable mit Thread-IDs *
+ * f&uuml;r alle Threads sichtbar       */
+static pthread_t th[MAX_THREADS];
+static void aktion(void *name) {
+   while( 1 ) {
+      if(pthread_equal(pthread_self(),th[0])) {
+         printf("\t-&gt;(%ld): Aufgabe \"abc\" Ausf&uuml;hren \n",
+            pthread_self());
+         break;
+      }
+      else if(pthread_equal(pthread_self(),th[1])) {
+         printf("\t-&gt;(%ld): Aufgabe \"efg\" Ausf&uuml;hren \n",
+            pthread_self());
+         break;
+      }
+      else if(pthread_equal(pthread_self(),th[2])) {
+         printf("\t-&gt;(%ld): Aufgabe \"jkl\" Ausf&uuml;hren \n",
+            pthread_self());
+         break;
+      }
+      else {
+         printf("\t-&gt;(%ld): Aufgabe \"xyz\" Ausf&uuml;hren \n", 
+            pthread_self());
+         break;
+      }
+   }
+   pthread_exit((void *)pthread_self());
+}
+int main (void) {
+   int i;
+   static int ret[MAX_THREADS];
+   printf("-&gt;Haupt-Thread (ID:%ld) gestartet...\n",
+      pthread_self());
+   /* Threads erzeugen */
+   for (i = 0; i &lt; MAX_THREADS; i++) {
+      if (pthread_create (&amp;th[i],NULL,&amp;aktion,NULL) != 0) {
+         printf ("Konnte keinen Thread erzeugen\n");
+         exit (EXIT_FAILURE);
+      }
+   }
+   /* Auf die Threads warten */
+   for (i = 0; i &lt; MAX_THREADS; i++)
+      pthread_join (th[i], &amp;ret[i]);
+   /* R&uuml;ckgabe der Threads auswerten */
+   for (i = 0; i &lt; MAX_THREADS; i++)
+      printf("\t&lt;-Thread %ld mit Arbeit fertig\n", ret[i]);
+   printf("-&gt;Haupt-Thread (ID:%ld) fertig ...\n", 
+      pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread3 thread3.c -lpthread
+$ ./thread3
+-&gt;Haupt-Thread (ID:-1209412512) gestartet...
+        -&gt;(-1209414736): Aufgabe "abc" Ausf&uuml;hren
+        -&gt;(-1217807440): Aufgabe "efg" Ausf&uuml;hren
+        -&gt;(-1226200144): Aufgabe "jkl" Ausf&uuml;hren
+        -&gt;(-1234592848): Aufgabe "xyz" Ausf&uuml;hren
+        -&gt;(-1242985552): Aufgabe "xyz" Ausf&uuml;hren
+        &lt;-Thread -1209414736 mit Arbeit fertig
+        &lt;-Thread -1217807440 mit Arbeit fertig
+        &lt;-Thread -1226200144 mit Arbeit fertig
+        &lt;-Thread -1234592848 mit Arbeit fertig
+        &lt;-Thread -1242985552 mit Arbeit fertig
+-&gt;Haupt-Thread (ID:-1209412512) fertig ...</pre>
+<p>Sie k&ouml;nnen daran erkennen, dass die ersten drei Threads jeweils »abc«, »efg« und »jkl« ausf&uuml;hren. Alle noch folgenden Threads f&uuml;hren dann »xyz« aus. Zugegeben, das l&auml;sst sich eleganter mit den Synchronisationsmechanismen der Thread-Bibliothek l&ouml;sen, aber das Beispiel demonstriert den Sachverhalt der Funktion <span class="listing">pthread_equal()</span> recht gut.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">10.5.6 pthread_detach – einen Thread unabh&auml;ngig machen<a id="RxxKap100040400031E1F04A18D" name="RxxKap100040400031E1F04A18D"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999303" name="Xxx999303"></a><a id="Xxx999304" name="Xxx999304"></a><a id="Xxx999305" name="Xxx999305"></a>Das Gegenteil von <span class="listing">pthread_join()</span> stellt die Funktion <span class="listing">pthread_detach()</span> dar. Mit dieser Funktion legen Sie fest, dass nicht mehr auf die Beendigung des Threads gewartet werden soll.</p>
+<pre>#include &lt;pthread. h.&gt;
+int pthread_detach( pthread_t thread );</pre>
+<p>Sie l&ouml;sen hiermit praktisch den Thread mit der ID <span class="listing">thread</span> von der Hauptanwendung los. Sie k&ouml;nnen diesen Vorgang gerne mit den Daemon-Prozessen vergleichen. Dass dieser Thread dann selbstst&auml;ndig ist, ist nichts Magisches, im Grunde »markieren« Sie den Thread damit nur, so dass bei seinem Beenden der Exit-Status und die Thread-ID gleich freigegeben werden. Ohne <span class="listing">pthread_detach()</span> w&uuml;rde dies erst der Fall nach einem <span class="listing">pthread_join</span>-Aufruf sein. Nat&uuml;rlich bedeutet die Verwendung von <span class="listing">pthread_detach()</span>, dass hierbei auch kein <span class="listing">pthread_join()</span> mehr auf das Ende des Threads reagiert.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Ein Thread, der mit <span class="listing">pthread_detach()</span> oder dem Attribut <span class="listing">PTHREAD_CREATE_DETACHED<a id="Xxx999312" name="Xxx999312"></a></span> von den anderen Threads losgel&ouml;st wurde, kann nicht mehr mit <span class="listing">pthread_join()</span> abgefangen werden. Der Thread l&auml;uft praktisch ohne &auml;u&szlig;ere Kontrolle weiter.</p>
+</td>
+</tr>
+</table><br>
+<p>Ein typischer Codeausschnitt, wie Sie einen Thread von den anderen losl&ouml;sen k&ouml;nnen, sieht wie folgt aus:</p>
+<pre>pthread_t a_thread;
+int ret;
+...
+/* Einen neuen Thread erzeugen */
+ret = pthread_create( &amp;a_thread, NULL, 
+                      thread_function, NULL);
+/* bei Erfolg den Thread abh&auml;ngen ... */
+if (ret == 0) {
+   pthread_detach(a_thread);
+}</pre>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap10-003.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap10-005.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap10-004.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:28 GMT -->
+</html>

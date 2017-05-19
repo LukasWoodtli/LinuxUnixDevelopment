@@ -1,0 +1,586 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap16-007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:59:45 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 16.8 Der rechteckige Bildbereich von SDL</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap16-006.html">
+<link rel="next" href="Kap16-008.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap16-006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap16-008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap16-000.html#RxxKap16000040005921F031100">16 SDL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-000.html#RxxKap16000040005921F031102">16.1 Was ist und kann SDL?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-001.html#RxxKap16001040005AF1F026100">16.2 SDL installieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-002.html#RxxKap16002040005B01F049100">16.3 SDL-Anwendungen erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-003.html#RxxKap16003040005B11F049100">16.4 SDL initialisieren und Videomodus einstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-003.html#RxxKap16003040005B11F0491A5">16.4.1 Programmbeispiel – SDL initialisieren und Videomodus einstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-004.html#RxxKap16004040005B21F03B100">16.5 Direkt auf den Bildschirm zeichnen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-004.html#RxxKap16004040005B21F03B117">16.5.1 Programmbeispiel – direkt auf den Bildschirm zeichnen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-005.html#RxxKap16005040005B31F029100">16.6 Bitmap laden und anzeigen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-005.html#RxxKap16005040005B31F02910A">16.6.1 Programmbeispiel – Bitmap laden und anzeigen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-006.html#RxxKap16006040005B41F030100">16.7 Ein anderes Grafikformat laden und anzeigen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap16007040005B51F036100">16.8 Der rechteckige Bildbereich von SDL</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-008.html#RxxKap16008040005B61F047100">16.9 Farbenschl&uuml;ssel, Transparenz und Alpha-Blending</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-008.html#RxxKap16008040005B61F047107">16.9.1 Alpha-Blending</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-009.html#RxxKap16009040005B71F04F100">16.10 Animation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-009.html#RxxKap16009040005B71F04F117">16.10.1 Programmbeispiel – Animation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-010.html#RxxKap16010040005B81F033100">16.11 Eingabe- und Ereignisverarbeitung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-010.html#RxxKap16010040005B81F033102">16.11.1 SDL-Event-Struktur</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-010.html#RxxKap16010040005B81F03318B">16.11.2 Maus-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-010.html#RxxKap16010040005B81F0331A1">16.11.3 Programmbeispiel – Maus-Event</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-010.html#RxxKap16010040005B81F0331AA">16.11.4 Tastatur-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-010.html#RxxKap16010040005B81F03321B">16.11.5 Programmbeispiel – Tastatur-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-010.html#RxxKap16010040005B81F033221">16.11.6 Joystick-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-010.html#RxxKap16010040005B81F033251">16.11.7 Programmbeispiel – Joystick-Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-010.html#RxxKap16010040005B81F033256">16.11.8 Weitere Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-011.html#RxxKap16011040005B91F049100">16.12 Audio</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap16-011.html#RxxKap16011040005B91F049184">16.12.1 Programmbeispiel – Audio</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap16-012.html#RxxKap16012040005BA1F037100">16.13 Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">16.8 <a id="RxxKap1693DerrechteckigeBildbereichvonSDL" name="RxxKap1693DerrechteckigeBildbereichvonSDL"></a>Der rechteckige Bildbereich von S<a id="RxxKap16007040005B51F036100" name="RxxKap16007040005B51F036100"></a>DL 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a><a id="Xxx999237" name="Xxx999237"></a>Im Abschnitt zuvor wurde die Struktur <span class="listing">SDL_Rects</span> schon kurz angesprochen. Zwar handelt es sich hierbei um eine simple Struktur f&uuml;r einen rechteckigen Bereich, wo die Position von links oben und die Gr&ouml;&szlig;enangabe gespeichert wird, doch ist gerade diese Information eine der wichtigsten in der SDL-Programmierung. Die Struktur <span class="listing">SDL_Rect</span> ist wie folgt definiert:</p>
+<pre>typedef struct {
+  Sint16 x, y;
+  Uint16 w, h;
+} SDL_Rect;</pre>
+<p><span class="listing">x</span> und <span class="listing">y</span> stehen f&uuml;r die linke obere Ecke und <span class="listing">w</span> f&uuml;r die Breite, <span class="listing">h</span> f&uuml;r die H&ouml;he des rechteckigen Bereichs – der Bildausschnitt, wenn Sie so wollen.</p>
+<p>Im Beispiel zuvor wurde beim Anzeigen eines Bildes der komplette Videomodus ver&auml;ndert – was in der Praxis nat&uuml;rlich absolut ineffizient ist. Wenn Sie also ein Surface fester Gr&ouml;&szlig;e erstellt haben, k&ouml;nnen Sie somit mit dieser Struktur nur einen bestimmten Bereich im Surface erneuern. Oft will man vielleicht auch nur einen kleinen Teilbereich erneuern – was sich gerade aus Performancegr&uuml;nden auch empfiehlt. Und dabei muss nicht immer das komplette Surface neu kopiert werden (was gerade bei gr&ouml;&szlig;eren Bilddateien auf Dauer negativ auff&auml;llt).</p>
+<p>Um Ihnen zu demonstrieren, worum es sich bei einem Bildbereich handelt, soll das Beispiel vom Abschnitt zuvor ein wenig umgeschrieben werden. Die Bilder, die zuvor auf dem ver&auml;nderbaren Surface dargestellt werden, sollen nun auf einem Surface fester Gr&ouml;&szlig;e wiedergegeben werden. Au&szlig;erdem sollen die Bilder zur Demonstration um 50 x 50 Pixel vom rechten oberen Bereich einger&uuml;ckt werden. Dies erledigen Sie, indem Sie den rechteckigen Bereich des Haupt-Surfaces mit der Struktur <span class="listing">SDL_Rect</span> ver&auml;ndern:</p>
+<pre>   SDL_Rect ziel;
+   ...
+   ziel.x = 50;
+   ziel.y = 50;
+   ziel.w = bild-&gt;w;
+   ziel.h = bild-&gt;h;</pre>
+<p>Jetzt ben&ouml;tigen Sie noch einen zweiten rechteckigen Bereich f&uuml;r das Surface des Bildes. Dieses Surface stellt ja den Quellbereich da, den Sie anschlie&szlig;end mit der Funktion <span class="listing">SDL_BlitSurface()<a id="Xxx999245" name="Xxx999245"></a></span> in den rechteckigen Zielbereich <span class="listing">ziel</span> kopieren (die Funktion wurde bereits behandelt). Den Zielbereich <span class="listing">ziel</span> verwenden Sie nun, um wirklich auch nur den rechteckigen Bereich des Bildes zu erneuern, der neu auf dem Bildschirm erscheint. H&auml;ufig werden hierzu auch wiederum nur Bildausschnitte eines Bildbereichs ben&ouml;tigt. Diese Angaben m&uuml;ssen Sie allerdings dann bei dem rechteckigen Quellbereich machen, der folgenderma&szlig;en aussehen kann:</p>
+<pre>  SDL_Rect quelle;
+  ...
+  for (i = 640; i--;) {
+     quelle.x = i + 50;
+     quelle.y = 0;
+     quelle.w = bild-&gt;w / 2 + 50;
+     quelle.h = bild-&gt;h;
+     SDL_BlitSurface (bild, &amp;quelle, screen, &amp;ziel);
+     /* den ver&auml;nderten Bildschirmbereich auffrischen */
+     SDL_UpdateRects (screen, 1, &amp;ziel);
+  }</pre>
+<p>Sie k&ouml;nnen damit anschlie&szlig;end in der Praxis gerne herumexperimentieren. W&uuml;rden Sie jetzt das Neuzeichnen mit einem Funktionsaufruf von</p>
+<pre>SDL_UpdateRect(screen,0,0,0,0);</pre>
+<p>machen, w&uuml;rden Sie wieder das komplette Surface neu zeichnen. Zwar w&auml;re es auch m&ouml;glich, wirklich nur den aktuellen Bildbereich neu zu zeichnen, der n&ouml;tig ist, allerdings kann dies recht schnell fehleranf&auml;llig werden. F&uuml;r solch einen Fall eignet sich hervorragend die Funktion:<a id="Xxx999250" name="Xxx999250"></a></p>
+<pre> void SDL_UpdateRects( SDL_Surface *display,
+                       int numrects, SDL_Rect *rects );</pre>
+<p>Mit <span class="listing">SDL_UpdateRects()</span> k&ouml;nnen Sie einfach und komfortabel den rechteckigen Bereich <span class="listing">rects</span> im Ziel-Surface <span class="listing">display</span> angeben, der neu gezeichnet werden soll. Der zweite Parameter <span class="listing">numrects</span> zeigt es auch schon an, dass es m&ouml;glich ist, mit dieser Funktion gleich mehrere Rechtecke auf einmal zu erneuern. Hierf&uuml;r m&uuml;ssten Sie allerdings ein Array vom Typ <span class="listing">SDL_Rects</span> als dritten Parameter &uuml;bergeben.</p>
+<p>Dass wirklich nur ein rechteckiger Bereich gezeichnet wird, zeigt Ihnen das gleich folgende Beispiel, wenn das n&auml;chste Bild (oder der Ausschnitt) davon &uuml;ber das vorherige Bild geschoben wird, ohne dass das vorherige Bild verschwindet. Das Beispiel l&auml;dt geradezu ein, mit den Parametern zu spielen. Beispielsweise wird ein Bild von oben eingeschoben und eines von links – hierf&uuml;r k&ouml;nnen Sie ja die Funktion <span class="listing">SDL_UpdateRects()</span> mit einem <span class="listing">SDL_Rect</span>-Array verwenden.</p>
+<pre><a id="Xxx999254" name="Xxx999254"></a>/* sdl5.c */
+#include &lt;SDL/SDL.h&gt;
+#include &lt;SDL/SDL_image.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd. h.&gt;
+static void display_bmp (const char *datei, SDL_Surface * screen,
+                         int x, int y) {
+  SDL_Surface *bild;
+  SDL_Rect ziel, quelle;
+  int i;
+  /* l&auml;dt die BMP-Datei in ein Surface */
+  bild = IMG_Load (datei);
+  if (bild == NULL) {
+    fprintf (stderr, "'%s' konnte nicht geladen werden: %s\n",
+       datei, SDL_GetError ());
+    return;
+  }
+  /* auf den Bildschirm kopieren                     */
+  /* die Surfaces sollten hier nicht gelockt sein.   */
+  /* x,y = linke obere Ecke; w, h = Breite und H&ouml;he  */
+  ziel.x = 50;
+  ziel.y = 50;
+  ziel.w = bild-&gt;w;
+  ziel.h = bild-&gt;h;
+  for (i = 640; i--;) {
+    quelle.x = i + 50;
+    quelle.y = 0;
+    quelle.w = bild-&gt;w / 2 + 50;
+    quelle.h = bild-&gt;h;
+    SDL_BlitSurface (bild, &amp;quelle, screen, &amp;ziel);
+    /* den ver&auml;nderten Bildschirmbereich auffrischen */
+    SDL_UpdateRects (screen, 1, &amp;ziel);
+  }
+  SDL_FreeSurface (bild);
+}
+int main (int argc, char **argv) {
+  SDL_Surface *screen;
+  int i;
+  if (argc == 1) {
+    printf ("Bitte mindestens eine g&uuml;ltige Grafikdatei "
+            " angeben!\n");
+    return EXIT_FAILURE;
+  }
+  /* SDLs Videosystem initialisieren und auf Fehler pr&uuml;fen */
+  if (SDL_Init (SDL_INIT_VIDEO) != 0) {
+    printf ("Konnte SDL nicht initialisieren: %s\n",
+       SDL_GetError ());
+    return EXIT_FAILURE;
+  }
+  /* Wenn die Anwendung beendet wird,          */
+  /* wird die Funktion SDL_Quit() ausgef&uuml;hrt   */
+  atexit (SDL_Quit);
+  /* Videomodus mit 640 x 480 Pixel, Hi-Color (16 Bit) */
+  /* einrichten Oberfl&auml;che (Surface) Standardm&auml;&szlig;ig in */
+  /* den Hauptspeicher (SDL_SWSURFACE) legen          */
+  screen = SDL_SetVideoMode (640, 480, 16, SDL_SWSURFACE);
+  if (screen == NULL) {
+    printf ("Videomodus konnte nicht eingerichtet werden: "
+            " %s\n", SDL_GetError ());
+    return EXIT_FAILURE;
+  }
+  /* Slideshow starten                                       */
+  /* Zeigt alle BMP-Bilddateien an, die in der Kommandozeile */
+  /* mit angegeben wurden                                     */
+  for (i = 1; argv[i] != NULL; i++) {
+    display_bmp (argv[i], screen, 0, 0);
+    SDL_Delay (1000);  
+  }
+  printf ("Erfolgreich beendet!\n");
+  return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc `sdl-config --libs` `sdl-config --cflags` -o \
+  sdl5 sdl5.c -lSDL_image
+$ ./sdl5 john2.bmp john.bmp john2.bmp john.bmp</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/16_3.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein16_3.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 16.3   
+    </b>Einzelne rechteckige Bildbereiche neu zeichnen</p>
+</td>
+</tr>
+</table><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap16-006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap16-008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap16-007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:59:53 GMT -->
+</html>

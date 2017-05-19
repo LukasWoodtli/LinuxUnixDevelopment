@@ -1,0 +1,1561 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap15-009.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:59:22 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 15.10 Men&uuml; und Toolbar</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap15-008.html">
+<link rel="next" href="Kap15-010.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap15-008.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap15-010.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap15-000.html#RxxKap15000040005211F024100">15 GTK+</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-000.html#RxxKap15000040005211F024102">15.1 Was ist GTK+?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F024108">15.1.1 Was sind GDK und Glib?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F02410E">15.1.2 Schnittstellen von GTK+ zu anderen Programmiersprachen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F024110">15.1.3 GTK+ und GNOME</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F024115">15.1.4 GTK+ Version 1.2 und 2.x</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-000.html#RxxKap15000040005211F024175">15.1.5 GTK+-Aufbau des Kapitels</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-001.html#RxxKap150010400053E1F049100">15.2 GTK+-Anwendungen &uuml;bersetzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-002.html#RxxKap150020400053F1F013100">15.3 Eine Einf&uuml;hrung in die Glib-Bibliothek</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013103">15.3.1 Datentypen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013187">15.3.2 Routinen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013195">15.3.3 Assertions-Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F0131A4">15.3.4 Speicherverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F0131D6">15.3.5 Stringbearbeitung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013201">15.3.6 Selbstverwaltender Stringpuffer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013218">15.3.7 Timer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F01322F">15.3.8 Dynamische Arrays</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F013243">15.3.9 Listen, Hashtabellen und bin&auml;re B&auml;ume</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-002.html#RxxKap150020400053F1F01324A">15.3.10 Ausblick Glib</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-003.html#RxxKap15003040005401F028100">15.4 Grundlagen der GTK+-Programmierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F028109">15.4.1 Die Umgebung initialisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F02810F">15.4.2 Widgets erzeugen und ggf. die Attribute setzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F02817C">15.4.3 Eine Callback-Funktion einrichten, um Events abzufangen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F028190">15.4.4 Eine GTK+-Anwendung beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F02819D">15.4.5 Die hierarchische Anordnung der Widgets definieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F0281A8">15.4.6 Widgets anzeigen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F0281B0">15.4.7 Signale und Events abfangen und bearbeiten – (Events-)Verarbeitungsschleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-003.html#RxxKap15003040005401F0281B9">15.4.8 GTK+ und Umlaute (Zeichenkodierung)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-004.html#RxxKap15004040005411F03E100">15.5 Fenster – GtkWindow</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-004.html#RxxKap15004040005411F03E19A">15.5.1 Dialogfenster (Dialogboxen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-004.html#RxxKap15004040005411F03E1BB">15.5.2 GtkMessageDialog</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-005.html#RxxKap15005040005421F03D100">15.6 Anzeige-Elemente</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D10A">15.6.1 Text – GtkLabel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D194">15.6.2 Trennlinie – GtkSeparator</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D196">15.6.3 Grafiken – GtkImage</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D19A">15.6.4 Statusleiste – GtkStatusbar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-005.html#RxxKap15005040005421F03D1A1">15.6.5 Fortschrittsbalken – GtkProgressBar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-006.html#RxxKap15006040005431F023100">15.7 Beh&auml;lter</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-006.html#RxxKap15006040005431F023102">15.7.1 Boxen – GtkBox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-006.html#RxxKap15006040005431F02317A">15.7.2 Aufteilungen, Register und Button-Box</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-006.html#RxxKap15006040005431F0231CB">15.7.3 Tabellen – GtkTable</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-006.html#RxxKap15006040005431F0231F6">15.7.4 Ausrichtung – GtkAlignment</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-007.html#RxxKap15007040005441F037100">15.8 Buttons und Toogled-Buttons</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-007.html#RxxKap15007040005441F03710A">15.8.1 Buttons allgemein</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-007.html#RxxKap15007040005441F03717A">15.8.2 Radio-Buttons (GtkRadioButton)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-007.html#RxxKap15007040005441F037182">15.8.3 GtkRadioButton, GtkCheckButton und GtkToggleButton</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-007.html#RxxKap15007040005441F037191">15.8.4 Signale f&uuml;r Buttons (GtkButton)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-008.html#RxxKap15008040005451F023100">15.9 Dateneingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F02310A">15.9.1 Textfelder – GtkEntry</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F0231A0">15.9.2 Schieberegler – GtkScale</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F0231C1">15.9.3 Zahlenfelder – GtkSpinButton</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F0231E0">15.9.4 Einstellungen – GtkAdjustment</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-008.html#RxxKap15008040005451F0231F1">15.9.5 GtkEditable</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap15009040005461F035100">15.10 Men&uuml; und Toolbar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap15009040005461F03510A">15.10.1 Men&uuml; – GtkItemFactory</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap15009040005461F0351C3">15.10.2 Toolbar – GtkToolbar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap15009040005461F0351F0">15.10.3 Options-Men&uuml; – GtkOptionsMenu</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap15009040005461F0351FA">15.10.4 Combo-Boxen – GtkCombo</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-010.html#RxxKap15010040005471F030100">15.11 Mehrzeiliger Text</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-010.html#RxxKap15010040005471F030111">15.11.1 Text(editor) – GtkTextView, GtkTextBuffer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-010.html#RxxKap15010040005471F0301D9">15.11.2 Scrollendes Fenster – GtkScrolledWindow</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-011.html#RxxKap15011040005481F04B100">15.12 Ausw&auml;hlen (Selection)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap15-011.html#RxxKap15011040005481F04B10D">15.12.1 Dateiauswahl – GtkFileSelection</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-012.html#RxxKap15012040005491F04C100">15.13 Events</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap15-013.html#RxxKap150130400054A1F03E100">15.14 Weitere Widget- und GTK+-Elemente im &Uuml;berblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">15.10 <a id="RxxKap15503MenuundToolbar" name="RxxKap15503MenuundToolbar"></a>Men&uuml; und Toolb<a id="RxxKap15009040005461F035100" name="RxxKap15009040005461F035100"></a>ar 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a><a id="Xxx999237" name="Xxx999237"></a>Ein Men&uuml; wie Sie es bei fast jedem Programm finden, l&auml;sst sich in GTK+ recht einfach realisieren. Es gibt hierbei zwei Wege, den harten mit den Widget-Klassen <span class="listing">GtkMenu<a id="Xxx999239" name="Xxx999239"></a></span> und <span class="listing">GtkMenuBar<a id="Xxx999240" name="Xxx999240"></a></span> und den einfacheren Weg &uuml;ber <span class="listing">GtkItemFactory<a id="Xxx999241" name="Xxx999241"></a></span>, der in diesem Buch behandelt wird.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sollten Sie sich auch f&uuml;r den harten Weg zur Erstellung von Men&uuml;s interessieren, k&ouml;nnen Sie das urspr&uuml;nglich f&uuml;r dieses Buch vorgesehene Kapitel auf der Buch-CD lesen.</p>
+</td>
+</tr>
+</table><br>
+<p>Des Weiteren werden Sie auch erfahren, wie Sie einfache Toolbars von der Klasse <span class="listing">GtkToolbar</span> (Typenkennung: <span class="listing">GTK_TYPE_TOOLBAR<a id="Xxx999247" name="Xxx999247"></a></span>) mit Buttons erzeugen k&ouml;nnen, wie Sie dies von vielen Anwendungen wie z. B. einem Texteditor her kennen. Nat&uuml;rlich lassen sich neben Buttons noch beliebig andere Widgets in eine solche Toolbar stecken (sonst h&auml;tten Sie ja gleich die Button-Box verwenden k&ouml;nnen). Hierzu wieder ein Listing mit der anschlie&szlig;enden Erl&auml;uterung.</p>
+<pre><a id="Xxx999248" name="Xxx999248"></a>/* gkt6.c */
+/* Ein einfaches Men&uuml;   */
+/*        GtkItemFactory */
+/*        GtkToolbar     */
+#include &lt;gtk/gtk.h&gt;
+static gint
+delete_Event(GtkWidget *widget, GdkEvent event, gpointer daten) {
+  g_print ("Das Fenster wird zerstoert!\n");
+  /* Nur mit FALSE wird die Anwendung wirklich beendet */
+  return FALSE;
+}
+static void end (GtkWidget * widget, gpointer daten) {
+  g_print ("Und tschuess!\n");
+  gtk_main_quit ();
+}
+/* Auswahl der Men&uuml;s auswerten und die Auswahl     */
+/* mit einer einfachen Dialogbox anzeigen lassen   */
+static void
+menuitem_auswerten (gpointer callback_data,
+                    guint callback_action, GtkWidget * widget) {
+  GtkWidget *dialog;
+  dialog = gtk_message_dialog_new (
+             GTK_WINDOW (callback_data),
+             GTK_DIALOG_DESTROY_WITH_PARENT,
+             GTK_MESSAGE_INFO,
+             GTK_BUTTONS_CLOSE,
+             "Ihre Menueauswahl war: \"%s\"",
+             gtk_item_factory_path_from_widget
+             (widget));
+  /* Sobald Dialog best&auml;tigt, auch wieder zerst&ouml;ren */
+  g_signal_connect ( dialog, "response",
+                     G_CALLBACK (gtk_widget_destroy), NULL);
+  /* Dialogbox anzeigen */
+  gtk_widget_show (dialog);
+}
+/* Ein Toolbar-Element wurde bet&auml;tigt ...               */
+/* Gew&ouml;hnlich wird f&uuml;r jedes Toolbar-Element eine extra */
+/* Callback-Funktion erstellt - Neu, Speichern, ...     */
+/* ... daher hierzu nur ein einfaches Dialogfenster     */
+static void
+toolbar_auswerten (GtkWidget * button, gpointer data) {
+  GtkWidget *dialog;
+  dialog = gtk_message_dialog_new (
+             GTK_WINDOW (data),
+             GTK_DIALOG_DESTROY_WITH_PARENT,
+             GTK_MESSAGE_INFO,
+             GTK_BUTTONS_CLOSE,
+             "Es wurde ein Toolbar-Button betaetigt");
+  /* Sobald Dialog best&auml;tigt, auch wieder zerst&ouml;ren */
+  g_signal_connect ( dialog, "response",
+                     G_CALLBACK (gtk_widget_destroy), NULL);
+  /* Dialogbox anzeigen */
+  gtk_widget_show (dialog);
+}
+int main (int argc, char **argv) {
+  GtkWindow *win;
+  GdkPixbuf *pic;
+  GtkVBox *vbox;
+  GtkWidget *menu_bar;
+  GtkAccelGroup *accel_group;
+  GtkItemFactory *itemfac;
+  GtkToolbar *toolbar;
+  /* Die einzelnen Men&uuml;elemente */
+  static GtkItemFactoryEntry menu[] = {
+      {"/_Datei", NULL, 0, 0, "&lt;Branch&gt;"},
+      {"/Datei/_Neu", "&lt;control&gt;N", menuitem_auswerten, 0,
+                            "&lt;StockItem&gt;", GTK_STOCK_NEW},
+      {"/Datei/_Oeffnen", "&lt;control&gt;O", menuitem_auswerten, 0,
+                               "&lt;StockItem&gt;", GTK_STOCK_OPEN},
+      {"/Datei/_Speichern", "&lt;control&gt;S", menuitem_auswerten, 0,
+                                 "&lt;StockItem&gt;", GTK_STOCK_SAVE},
+      {"/Datei/Speichern unter...", NULL, menuitem_auswerten, 0,
+                                 "&lt;StockItem&gt;", GTK_STOCK_SAVE},
+      {"/Datei/sep1",NULL, menuitem_auswerten, 0,"&lt;Separator&gt;"},
+      {"/Datei/_Ende", "&lt;control&gt;E", end, 0, "&lt;StockItem&gt;",
+                                           GTK_STOCK_QUIT},
+      {"/_Eigenschaften", NULL, 0, 0, "&lt;Branch&gt;"},
+      {"/_Eigenschaften/_Farbe", NULL, 0, 0, "&lt;Branch&gt;"},
+      {"/_Eigenschaften/Farbe/_Rot", NULL, 0, 0, "&lt;RadioItem&gt;"},
+      {"/_Eigenschaften/Farbe/_Gruen", NULL, 0, 0,
+                      "/Eigenschaften/Farbe/Rot"},
+      {"/_Eigenschaften/Farbe/_Blau", NULL, 0, 0,
+                     "/Eigenschaften/Farbe/Rot"},
+      {"/_Eigenschaften/_Form", NULL, 0, 0, "&lt;Branch&gt;"},
+      {"/_Eigenschaften/Form/_Quadrat", NULL, 0, 0,
+                                    "&lt;RadioItem&gt;"},
+      {"/_Eigenschaften/Form/_Rechteck", NULL, 0, 0,
+                     "/Eigenschaften/Form/Quadrat"},
+      {"/_Eigenschaften/Form/_Kreis", NULL, 0, 0,
+                  "/Eigenschaften/Form/Quadrat"},
+      {"/_Hilfe", NULL, 0, 0, "&lt;LastBranch&gt;"},
+      {"/Hilfe/_Ueber", NULL, menuitem_auswerten, 0},
+    };
+  gtk_init (&amp;argc, &amp;argv);
+  /* Eine Grafik in einen Pixbuf laden */
+  pic = gdk_pixbuf_new_from_file ("icon/at-work.gif", NULL);
+  /* Fenster mit folgenden Eigenschaften anlegen */
+  win = g_object_new (GTK_TYPE_WINDOW,
+                      "title", "Menue und Toolbar",
+                      "default-width", 300,
+                      "default-height", 200,
+                      "resizable", TRUE,
+                      "window-position", GTK_WIN_POS_CENTER,
+                      "border-width", 0, "icon", pic, NULL);
+  /* vertikale Box erzeugen */
+  vbox = g_object_new (GTK_TYPE_VBOX, "spacing", 0, NULL);
+  /* Neue Gruppe von Tastaturk&uuml;rzeln erzeugen */
+  accel_group = g_object_new (GTK_TYPE_ACCEL_GROUP, NULL);
+  /* Tastaturk&uuml;rzel-Gruppe mit dem Hauptfenster verkn&uuml;pfen */
+  gtk_window_add_accel_group (win, accel_group);
+  /* Ein neues Widget der Klasse GtkItemFactory erzeugen */
+  itemfac = gtk_item_factory_new ( GTK_TYPE_MENU_BAR,
+                                   "&lt;main&gt;", accel_group);
+  /* Jetzt kann das Men&uuml; mit einem Rutsch mit seinen */
+  /* Elementen best&uuml;ckt werden                       */
+  gtk_item_factory_create_items (
+    itemfac,sizeof (menu) / sizeof (menu[0]), menu, NULL );
+  /* Men&uuml;leiste zum sp&auml;teren "Packen" abholen */
+  menu_bar = gtk_item_factory_get_widget (itemfac, "&lt;main&gt;");
+  /* Tastenkombination STRG+G f&uuml;r Radio-Men&uuml;auswahl 'Gr&uuml;n' */
+  gtk_widget_add_accelerator (
+    gtk_item_factory_get_widget (
+      itemfac, "/Eigenschaften/Farbe/Gruen"),
+    "activate", accel_group,
+    'G', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+  /* Kombination Shift+S f&uuml;r Auswahl 'Speichern unter ...' */
+  gtk_widget_add_accelerator (
+    gtk_item_factory_get_widget (
+      itemfac, "/Datei/Speichern unter ..."),
+    "activate", accel_group,
+    'S', GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
+  /* Tastenkombination Shift+STRG+H f&uuml;r Men&uuml;auswahl 'Ueber' */
+  gtk_widget_add_accelerator (
+    gtk_item_factory_get_widget (
+      itemfac, "/Hilfe/Ueber"),
+    "activate", accel_group,
+    'H', GDK_SHIFT_MASK|GDK_CONTROL_MASK,GTK_ACCEL_VISIBLE);
+  /* Eine neue Toolbar erzeugen */
+  toolbar = g_object_new (GTK_TYPE_TOOLBAR, NULL);
+  /* Einzelne Buttons mit Icon, Beschriftung und */
+  /* Tooltipp einf&uuml;gen                           */
+  gtk_toolbar_insert_stock (
+    GTK_TOOLBAR (toolbar),
+    GTK_STOCK_NEW,
+    "Ein Button mit einem 'NEU' Icon", NULL,
+    G_CALLBACK (toolbar_auswerten), win, -1);
+  gtk_toolbar_insert_stock (
+    GTK_TOOLBAR (toolbar),
+    GTK_STOCK_OPEN,
+    "Ein Button mit einem 'Oeffnen'-Icon",
+    NULL,
+    G_CALLBACK (toolbar_auswerten), win, -1);
+  gtk_toolbar_insert_stock (
+    GTK_TOOLBAR (toolbar),
+    GTK_STOCK_SAVE,
+    "Ein Button mit einem 'SPEICHERN'-Icon",
+    NULL,
+    G_CALLBACK (toolbar_auswerten), win, -1);
+  gtk_toolbar_insert_stock (
+    GTK_TOOLBAR (toolbar),
+    GTK_STOCK_QUIT,
+    "Ein Button mit einem 'ENDE'-Icon",
+    NULL, G_CALLBACK (end), win, -1);
+  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar));
+  gtk_toolbar_insert_stock (
+    GTK_TOOLBAR (toolbar),
+    GTK_STOCK_DIALOG_QUESTION,
+    "Ein Button mit einem 'FRAGE'-Icon",
+    NULL,
+    G_CALLBACK (toolbar_auswerten), win, -1);
+  /* Signalhandler einrichten */
+  g_signal_connect ( win, "delete-event",
+                     G_CALLBACK (delete_Event), NULL );
+  g_signal_connect ( win, "destroy",
+                     G_CALLBACK (end), NULL );
+  /* Alles packen */
+  gtk_container_add (GTK_CONTAINER (win), GTK_WIDGET (vbox));
+  gtk_box_pack_start ( GTK_BOX (vbox), menu_bar,
+                       FALSE, FALSE, 0 );
+  gtk_box_pack_start ( GTK_BOX (vbox), GTK_WIDGET (toolbar),
+                       FALSE, FALSE, 0);
+  /* Fenster anzeigen */
+  gtk_widget_show_all (GTK_WIDGET (win));
+  /* Hauptschleife von gtk */
+  gtk_main ();
+  g_print ("Die GTK-Hauptschleife wurde beendet\n");
+  return 0;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -Wall -o gtk6 gtk6.c `pkg-config gtk+-2.0 --cflags --libs`
+$ ./gtk6</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_14.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_14.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.14   
+    </b>Ein Beispiel mit GtkItemFactory und GtkToolbar</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">15.10.1 Men&uuml; – GtkItemFactory<a id="RxxKap15009040005461F03510A" name="RxxKap15009040005461F03510A"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999260" name="Xxx999260"></a>Wie schon erw&auml;hnt, stellt diese M&ouml;glichkeit, ein Men&uuml; zu erstellen, die einfachere Methode von zwei m&ouml;glichen Wegen dar.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Der Unterschied zwischen beiden M&ouml;glichkeiten ist f&uuml;r den Anwender nicht ersichtlich. Lediglich Sie, als Programmierer, entscheiden sich praktisch zwischen besserer Kontrolle (harter Weg) oder einfacher zu erstellen (leichter Weg).</p>
+</td>
+</tr>
+</table><br>
+<p>Der Aufwand mit <span class="listing">GtkItemFactory<a id="Xxx999266" name="Xxx999266"></a></span> (im Gegensatz zum anderen Weg) ist minimal. Gew&ouml;hnlich reichen zum Erstellen folgende drei Schritte aus:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><b>1.</b></td>
+<td valign="top" width="100%" align="left"> Sie erstellen ein Array vom Typ GtkItemFactoryEntry, in dem s&auml;mtliche Informationen, die f&uuml;r das Men&uuml; n&ouml;tig sind, enthalten sind.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><b>2.</b></td>
+<td valign="top" width="100%" align="left"> Sie erzeugen ein GtkItemFactory-Widget mit gtk_item_factory_create_new().</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><b>3.</b></td>
+<td valign="top" width="100%" align="left"> Jetzt k&ouml;nnen Sie das Men&uuml; mit seinen Elementen erzeugen, indem Sie das Array mit den Informationen verwenden – gtk_item_factory_create_items().</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<p>Um den ersten Schritt durchzuf&uuml;hren, m&uuml;ssen Sie erst wissen, welche Eintr&auml;ge in der Struktur <span class="listing">GtkItemFactoryEntry<a id="Xxx999275" name="Xxx999275"></a></span> vorhanden sind, um ein entsprechendes Array mit Werten zu belegen. Jedes dieser Mitglieder ist Teil eines Men&uuml;elementes.</p>
+<pre>struct _GtkItemFactoryEntry {
+  gchar *path;
+  gchar *accelerator;
+  GtkItemFactoryCallback callback;
+  guint callback_action;
+  gchar *item_type;
+};</pre>
+<p>Mit <span class="listing">path</span> geben Sie den Men&uuml;pfad an, was wie bei einer gew&ouml;hnlichen Verzeichnisstruktur gemacht wird. Mit <span class="listing">/Datei/Speichern</span> <span class="listing">unter</span> bekommen Sie z. B. einen Men&uuml;eintrag <span class="listing">Speichern</span> <span class="listing">unter</span>, der sich unter dem Eintrag <span class="listing">/Datei</span> befindet. Nat&uuml;rlich wird mit <span class="listing">/Datei/Speichern</span> <span class="listing">unter</span> nur der Name <span class="listing">Speichern</span> <span class="listing">unter</span> angezeigt. Unterstriche k&ouml;nnen hierbei auch gleich verwendet werden. Soll z. B. der erste Buchstabe von <span class="listing">Speichern</span> <span class="listing">unter</span> unterstrichen werden, dann gehen Sie so vor: <span class="listing">/Datei/_Speichern</span> <span class="listing">unter</span>.</p>
+<p>Mit der zweiten Strukturvariablen geben Sie den <a id="Xxx999278" name="Xxx999278"></a>Accelerator (Shortcut) des Men&uuml;eintrags an. Wollen Sie keinen verwenden, k&ouml;nnen Sie hier auch <span class="listing">NULL</span> angeben. Als Shortcut kommt hierbei entweder der String (!) eines einzelnen Zeichens in Frage oder eine Kombination von modifizierten Tasten mit einem einzelnen Zeichen. Folgende Modifizierer stehen Ihnen dabei zur Verf&uuml;gung:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 15.21   
+    </b>Modifizierer f&uuml;r einen Accelerator (GtkItemFactoryEntry)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Zeichen</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;ALT&gt;"  
+</td>
+<td class="tabellentext" bgcolor="#000000"><b>(Alt)</b>-Taste
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;CTL&gt;""&lt;CTRL&gt;""&lt;CONTROL&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Control(<b>(STRG)</b>)-Taste
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;SHFT&gt;""&lt;SHIFT&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000"><b>(ª)</b>-Taste
+</td>
+</tr>
+</table><br>
+<p>Nat&uuml;rlich sind auch mehrere Kombinationen wie z. B. <span class="listing">"&lt;SHIFT&gt;&lt;ALT&gt;&lt;CONTROL&gt;Z"</span> m&ouml;glich. Die n&auml;chsten beiden Strukturvariablen sind f&uuml;r die Callback-Funktion gedacht. Auf die Callback-Funktion selbst wird gleich extra eingegangen.</p>
+<p>Mit <span class="listing">item_type</span> geben Sie an, was f&uuml;r einen Typ von (Men&uuml;-)Widget Sie in den Container packen wollen. Folgende Typen stehen hierbei zur Auswahl:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 15.22   
+    </b>M&ouml;gliche Werte f&uuml;r item_type (GtkItemFactoryEntry)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Widget-Typ</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">NULL oder "" oder "&lt;Item&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Normaler Men&uuml;eintrag
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;Title&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Titeleintrag
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;CheckItem&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Checkmen&uuml;eintrag
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;ToggleItem&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Toogle-Eintrag
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;RadioItem&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">(Root) Radiomen&uuml;eintrag
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"Path"
+</td>
+<td class="tabellentext" bgcolor="#000000">Pfad zu restlichen Radiomen&uuml;eintr&auml;gen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;Tearoff&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Abrei&szlig;kante
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;Separator&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Trennlinie
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;Branch&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Eintrag, der Untereintr&auml;ge aufnehmen kann
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;LastBranch&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Rechts ausgerichteter Men&uuml;eintrag
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;ImageItem&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Men&uuml;eintrag mit einem Bild
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"&lt;StockItem&gt;"
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Men&uuml;eintrag mit einem Stock-Image (siehe Beispiel)
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Beschreibung der Callback-Funktion</h4>
+<p>Die Callback-Funktion von <span class="listing">GtkItemFactoryEntry</span> kann zwei verschiedene Formen haben und ist abh&auml;ngig vom Parameter <span class="listing">callback_action</span>. Ist der Wert 0 – wie im Beispiel angewendet –, dann k&ouml;nnen Sie folgende Callback-Funktion verwenden:</p>
+<pre>void my_callback_func( void );</pre>
+<p>Ansonsten ist folgende Syntax vorgesehen:</p>
+<pre>void callback( gpointer    callback_data,
+               guint       callback_action,
+               GtkWidget   *widget);</pre>
+<p><span class="listing">callback_data</span> ist ein Zeiger auf &uuml;bergebene Daten – <span class="listing">callback_action</span> entspricht demselben Wert der gleichnamigen Strukturvariablen von <span class="listing">GtkItemFactoryEntry</span>. <span class="listing">widget</span> ist ein Zeiger auf ein Men&uuml;element.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Es gibt aber auch noch einen anderen Weg, eine Callback-Funktion mit dem &uuml;blichen <span class="listing">g_signal_connect()</span> bzw. <span class="listing">g_signal_connect_swapped()</span> einzurichten – worauf in K&uuml;rze eingegangen wird.</p>
+</td>
+</tr>
+</table><br>
+<p>Nachdem Sie die Bedeutung der einzelnen Strukturvariablen von <span class="listing">GtkItemFactoryEntry</span> kennen, k&ouml;nnen Sie ein Array mit diesen Mitgliedern f&uuml;r Ihre Men&uuml;bar erzeugen.</p>
+<pre>static GtkItemFactoryEntry menu[] = {
+      {"/_Datei", NULL, 0, 0, "&lt;Branch&gt;"},
+      {"/Datei/_Neu", "&lt;control&gt;N", menuitem_auswerten, 0,
+       "&lt;StockItem&gt;", GTK_STOCK_NEW},
+      {"/Datei/_Oeffnen", "&lt;control&gt;O", menuitem_auswerten, 0,
+       "&lt;StockItem&gt;", GTK_STOCK_OPEN},
+      {"/Datei/_Speichern", "&lt;control&gt;S", menuitem_auswerten, 0,
+       "&lt;StockItem&gt;", GTK_STOCK_SAVE},
+      {"/Datei/Speichern unter...", NULL, menuitem_auswerten, 0,
+       "&lt;StockItem&gt;", GTK_STOCK_SAVE},
+      {"/Datei/sep1", NULL, menuitem_auswerten, 0,
+       "&lt;Separator&gt;"},
+      {"/Datei/_Ende", "&lt;control&gt;E", end, 0, "&lt;StockItem&gt;",
+       GTK_STOCK_QUIT},
+...</pre>
+<p>Je nachdem, wie Sie die Elemente des Men&uuml;s festgelegt haben, k&ouml;nnen Sie ein neues Men&uuml; mit der Funktion <span class="listing">gtk_item_factory_new()</span> erzeugen.</p>
+<pre>GtkItemFactory* gtk_item_factory_new( 
+                        GtkType container_type,
+                        const gchar   *path,
+                        GtkAccelGroup *accel_group );</pre>
+<p>Mit dem <span class="listing">container_typ</span> geben Sie an, was f&uuml;r ein Men&uuml; Sie wollen. Hierf&uuml;r sind folgende (selbst sprechende) Angaben m&ouml;glich:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> GTK_TYPE_MENU</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> GTK_TYPE_MENU_BAR</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> GTK_TYPE_OPTION_MENU</td>
+</tr>
+</table>
+<p>Mit <span class="listing">path</span> geben Sie die Wurzel des Men&uuml;s, eingeschlossen von <span class="listing">"&lt;root&gt;"</span>, an. Dieser Name ist auch wichtig f&uuml;r den Accelerator und sollte daher einzigartig f&uuml;r jedes Men&uuml; und f&uuml;r jedes Programm sein. <span class="listing">accel_group</span> ist ein Zeiger auf <span class="listing">GtkAccelGroup</span>. Dieses Widget ist ebenfalls n&ouml;tig, da das <span class="listing">GtkItemFactory</span>-Widget beim Erzeugen die Accelerator-Tabelle setzt.</p>
+<p>Jetzt der letzte Schritt: Die Men&uuml;elemente des Arrays <span class="listing">GtkItemFactoryEntry</span> m&uuml;ssen noch in ein Widget »konvertiert« werden. Hierzu wird die Funktion <span class="listing">gtk_item_factory_create_items()<a id="Xxx999388" name="Xxx999388"></a></span> verwendet.</p>
+<pre>void gtk_item_factory_create_items( 
+                   GtkItemFactory *ifactory,
+                   guint n_entries,
+                   GtkItemFactoryEntry *entries,
+                   gpointer callback_data );</pre>
+<p><span class="listing">ifactory</span> ist ein Zeiger auf das zuvor erzeugte <span class="listing">GtkItemFactory</span>-Widget. <span class="listing">n_entries</span> enth&auml;lt die Anzahl der Eintr&auml;ge im <span class="listing">GtkItemFactoryEntry</span>-Array. <span class="listing">entries</span> ist ein Zeiger auf das Array. Mit <span class="listing">callback_action</span> k&ouml;nnen Sie alle Callback-Funktionen in <span class="listing">entries</span> mit Daten versorgen. Meistens wird dabei <span class="listing">NULL</span> angegeben.</p>
+<p>Um die Men&uuml;bar anschlie&szlig;end auch wie jedes andere Widget packen zu k&ouml;nnen, ben&ouml;tigen Sie die Kennungs-ID der Men&uuml;bar. Diese k&ouml;nnen Sie mit der folgenden Funktion ermitteln:<a id="Xxx999392" name="Xxx999392"></a></p>
+<pre>GtkWidget* gtk_item_factory_get_widget( GtkItemFactory *ifactory,
+                                        const gchar    *path );</pre>
+<p><span class="listing">ifactory</span> ist das Element, von dem Sie die Kennungs-ID haben wollen, und <span class="listing">path</span> ist der Men&uuml;pfad des Widgets, den Sie ermitteln wollen. Da Sie f&uuml;r das Packen das ganze Men&uuml; verwenden wollen, sollten Sie den Pfad verwenden, den Sie als zweiten Parameter der Funktion <span class="listing">gtk_item_factory_new()<a id="Xxx999395" name="Xxx999395"></a></span> verwendet haben.</p>
+<p>Und, um bei der Auswahl eines Widgets in der Callback-Funktion den kompletten Pfad zu ermitteln, steht Ihnen die Funktion <span class="listing">gtk_item_factory_path_from_widget()<a id="Xxx999397" name="Xxx999397"></a></span> zur Verf&uuml;gung:</p>
+<pre>G_CONST_RETURN gchar* gtk_item_factory_path_from_widget  ( 
+                                             GtkWidget *widget );</pre>
+<p>Als R&uuml;ckgabewert erhalten Sie hierbei den vollen Pfad zum Men&uuml;element (Widget), den Sie beim Erzeugen angegeben haben. Konnte kein Pfad ermittelt werden, wird <span class="listing">NULL</span> zur&uuml;ckgegeben. Denn letztendlich ist jetzt jeder einzelne Men&uuml;eintrag ein eigenes Widget.</p>
+<p>Wie schon erw&auml;hnt, ist es auch m&ouml;glich, Callback-Funktionen nachtr&auml;glich – sprich, nicht im Array <span class="listing">GtkItemFactoryEntry</span> – zu setzen. Dies ist relativ einfach mit der bereits gezeigten Funktion <span class="listing">gtk_item_factory_get_widget()</span> m&ouml;glich – die Ihnen, wie bereits erw&auml;hnt, die Kennungs-ID eines Widgets (was die einzelnen Men&uuml;eintr&auml;ge letztendlich auch sind) zur&uuml;ckgibt. Sie m&uuml;ssen nur unter Angabe des zweiten Parameters das Men&uuml;element angeben, von dem Sie die Kennungs-ID haben wollen. F&uuml;r den Men&uuml;punkt <span class="listing">/Datei/Ende</span> w&uuml;rde eine Callback-Funktion z. B. folgenderma&szlig;en eingerichtet werden:</p>
+<pre>g_signal_connect (
+  G_OBJECT(gtk_item_factory_get_widget(itemfac, "/Datei/Ende")),
+  "activate", G_CALLBACK (end), NULL);</pre>
+<p>Nat&uuml;rlich l&auml;sst sich dies auch mit <span class="listing">g_signal_connect_swapped()<a id="Xxx999402" name="Xxx999402"></a></span> in »einem Rutsch« realisieren:</p>
+<pre>g_signal_connect_swapped(
+ G_OBJECT( gtk_item_factory_get_widget(itemfac, "/Datei/Ende") ),
+ "activate", G_CALLBACK (gtk_widget_dzhg67tr65t67testroy),
+  G_OBJECT(win) );</pre>
+<p>Wollen Sie jetzt wissen, ob ein bestimmtes Men&uuml;element gesetzt oder nicht gesetzt ist – z. B. bei Radio- bzw. Check-Buttons –, dann sollten Sie sich die Funktion <span class="listing">gtk_check_menu_item_set_active()</span> ansehen.</p>
+<h4 class="t4">GtkAccelGroup – Tastaturk&uuml;rzel</h4>
+<p><a id="Xxx999407" name="Xxx999407"></a><a id="Xxx999408" name="Xxx999408"></a>Im Beispiel wurde auch das Widget <span class="listing">GtkAccelGroup<a id="Xxx999409" name="Xxx999409"></a></span> (Typenkennung: <span class="listing">GTK_TYPE_ACCEL_GROUP<a id="Xxx999410" name="Xxx999410"></a></span>) verwendet. Bei diesem Widget handelt es sich um Tastatur-Shortcuts (Abk&uuml;rzungen), womit der Anwender der Software gew&ouml;hnlich schneller ans Ziel kommt als mit der Maus. Bei sehr vielen Anwendungen bewirkt z. B. die Tastenkombination <b>(STRG)</b>+<b>(O)</b>, dass sich eine Dialogbox &ouml;ffnet, womit Sie eine Datei zum &Ouml;ffnen ausw&auml;hlen k&ouml;nnen – oder mit <b>(STRG)</b>+<b>(S)</b> wird h&auml;ufig eine Datei abgespeichert. In GTK+ sind diese Shortcuts als Accelerator Group (was zu Deutsch so viel wie Beschleuniger bedeutet) bekannt.</p>
+<p>Um f&uuml;r ein Men&uuml; solche Shortcuts einzurichten, sind bestenfalls zwei Routinen n&ouml;tig, die Ihnen GTK+ zur Verf&uuml;gung stellt (nat&uuml;rlich gibt es auch hierzu wieder eine Menge mehr).<a id="Xxx999413" name="Xxx999413"></a><a id="Xxx999414" name="Xxx999414"></a></p>
+<pre>void gtk_window_add_accel_group ( 
+                         GtkWindow *window,
+                         GtkAccelGroup *accel_group, );
+void gtk_widget_add_accelerator ( 
+                         GtkWidget *widget, 
+                         const gchar *accel_signal,
+                         GtkAccelGroup *accel_group,
+                         guint accel_key,
+                         guint accel_mods, 
+                         GtkAccelFlags accel_flags );</pre>
+<p>Nachdem Sie ein neues Objekt <span class="listing">GtkAccelGroup</span> erzeugt haben, k&ouml;nnen Sie mit der Funktion <span class="listing">gtk_window_add_accel_group()</span> angeben, mit welchem Fenster (erstes Argument) Sie diese Shortcuts (Accelerator Groups) verkn&uuml;pfen wollen. Der zweite Parameter entspricht der zuvor erzeugten Accelerator-Gruppe (<span class="listing">GtkAccelGroup</span>).</p>
+<p>Jetzt k&ouml;nnen Sie mit der Funktion <span class="listing">gtk_widget_add_accelerator()</span> Tastenkombinationen zur Gruppe hinzuf&uuml;gen; zu welchem Widget, geben Sie mit dem ersten Parameter an. Mit dem zweiten Parameter <span class="listing">accel_signal</span> geben Sie das Signal an, das emittiert wird, wenn das Widget ausgew&auml;hlt wurde. Mit <span class="listing">accel_group</span> geben Sie die Gruppe an, zu der Sie den neuen Shortcut hinzuf&uuml;gen wollen. <span class="listing">accel_key</span> ist die Taste auf dem Keyboard, die zum Shortcut hinzugef&uuml;gt werden soll. Mit <span class="listing">accel_mods</span> k&ouml;nnen Sie die Accelerator-Taste angeben (<b>(STRG)</b>, <b>(ª)</b> etc.), die zusammen mit <span class="listing">key_accel</span> gedr&uuml;ckt werden soll. M&ouml;gliche Angaben hierf&uuml;r sind <span class="listing">GDK_CONTROL_MASK</span>, <span class="listing">GDK_SHIFT_MASK</span>, <span class="listing">GDK_RELEASE_MASK</span>, <span class="listing">GDK_BUTTONn_MASK</span> (<span class="listing">n</span> = 1 bis 5), <span class="listing">GDK_LOCK_MASK</span>, <span class="listing">GDK_MODn_MASK</span> (<span class="listing">n</span> = 1 bis 5). Mit dem letzten Parameter k&ouml;nnen Sie angeben, wie der Accelerator angezeigt werden soll. M&ouml;gliche Angaben sind: <span class="listing">GTK_ACCEL_VISIBLE</span> (sichtbar), <span class="listing">GTK_ACCEL_SIGNAL_VISIBLE</span> (sichtbar inkl. Signal) und <span class="listing">GTK_ACCEL_LOCKED</span> (unsichtbar).</p>
+<h4 class="t4">Abk&uuml;rzungsbuchstaben – Unterstriche</h4>
+<p><a id="Xxx999419" name="Xxx999419"></a><a id="Xxx999420" name="Xxx999420"></a><a id="Xxx999421" name="Xxx999421"></a>Ebenfalls Mitglied einer Accelerator-Gruppe sind unterstrichene Shortcuts, mit denen ein Buchstabe durch einen Unterstrich sichtbar gemacht wird. Gew&ouml;hnlich reicht es hierzu aus, in der Eigenschaft <span class="listing">"label"</span> einen Unterstrich vor einen Buchstaben zu machen und die Eigenschaft <span class="listing">"use-underline"</span> auf <span class="listing">TRUE</span> zu setzen. Dann kann das Widget mit dem entsprechenden unterstrichenen Buchstaben mit einem Tastendruck bet&auml;tigt werden. Bei Widgets, die keine Eigenschaft <span class="listing">"label"</span> besitzen, k&ouml;nnen Sie ein <span class="listing">GtkLabel<a id="Xxx999423" name="Xxx999423"></a></span>-Widget verwenden und dort mit <span class="listing">"use-underline"</span> einen Unterstrich setzen. Auf welches Widget sich dann der Abk&uuml;rzungsbuchstabe beziehen soll, tragen Sie dann in die Eigenschaft <span class="listing">"mnemonic-widget"</span> ein. Dann erh&auml;lt dieses Widget bei Bet&auml;tigung des Shortcuts den Fokus oder wird (je nach Widget) aktiviert.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">15.10.2 Toolbar – GtkToolbar<a id="RxxKap15009040005461F0351C3" name="RxxKap15009040005461F0351C3"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999425" name="Xxx999425"></a>Mit dem Widget <span class="listing">GtkToolbar<a id="Xxx999426" name="Xxx999426"></a></span> (Typenkennung: <span class="listing">GTK_TYPE_TOOLBAR<a id="Xxx999427" name="Xxx999427"></a></span>) k&ouml;nnen Sie eine Reihe (vertikal oder horizontal) erzeugen, worin Sie Buttons und weitere Widgets platzieren k&ouml;nnen. Der Toolbar sind noch folgende Eigenschaften zugeordnet:<a id="Xxx999429" name="Xxx999429"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 15.23   
+    </b>Eigenschaften f&uuml;r GtkToolbar (GTK_TYPE_TOOLBAR)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Eigenschaft</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Datentyp</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"orientation"
+</td>
+<td class="tabellentext" bgcolor="#000000">GtkOrientation
+</td>
+<td class="tabellentext" bgcolor="#000000">Soll die Toolbar vertikal oder horizontal angeordnet werden? Dies kann mit den folgenden zwei Konstanten besetzt werden/sein: GTK_ORIENTATION_HORIZONTAL, GTK_ORIENTATION_VERTICAL
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"toolbar-style"
+</td>
+<td class="tabellentext" bgcolor="#000000">GtkToolbarStyle
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier kann der Stil der Toolbar angegeben werden. Folgende Konstanten sind hierf&uuml;r gegeben:
+GTK_TOOLBAR_ICONS
+Buttons nur mit Icons anzeigen
+GTK_TOOLBAR_TEXT
+Buttons nur mit Text anzeigen
+GTK_TOOLBAR_BOTH
+Buttons mit Icons und Text anzeigen
+GTK_TOOLBAR_BOTH_HORIZ
+Buttons mit Icons und Text anzeigen, wobei sich der Text rechts anstatt unter dem Icon befindet
+</td>
+</tr>
+</table><br>
+<p>Wenn au&szlig;erdem die Eigenschaften der Anordnung (<span class="listing">orientation</span>) oder des Stils (<span class="listing">toolbar-style</span>) ver&auml;ndert wurden, werden die Signale <span class="listing">"orientation-changed"</span> bzw. <span class="listing">"style-changed"</span> emittiert.</p>
+<p>Um in einer Toolbar Widgets hinzuzuf&uuml;gen, finden Sie bei der Klasse <span class="listing">GtkToolbar</span> eine Menge Funktionen. Im Beispiel wurde die Funktion <span class="listing">gtk_toolbar_insert_stock()<a id="Xxx999462" name="Xxx999462"></a></span> verwendet.</p>
+<pre>GtkWidget* gtk_toolbar_insert_stock ( 
+                             GtkToolbar *toolbar,
+                             const gchar *stock_id,
+                             const char *tooltip_text,
+                             const char *tooltip_private_text,
+                             GtkSignalFunc callback,
+                             gpointer user_data,
+                             gint position );</pre>
+<p>Damit wird ein <a id="Xxx999464" name="Xxx999464"></a>Stock-Element (hier Icon) nach einer bestimmten Position in die Toolbar hinzugef&uuml;gt. Mit dem ersten Argument geben Sie die Toolbar an, der ein neues Stock-Item hinzugef&uuml;gt werden soll. Das zweite Argument erwartet eine g&uuml;ltige ID des Stock-Items, die gew&ouml;hnlich als symbolische Konstante <span class="listing">GTK_STOCK_</span> <span class="listing">...</span> implementiert ist. Die Anwendung <span class="listing">gtk-demo</span>, die der GTK+ 2.0-Version beiliegt, listet Ihnen alle vorhandenen Stock-Items auf. Mit dem dritten Argument k&ouml;nnen Sie einen Text f&uuml;r einen Tooltipp eingeben, der erscheint, wenn sich die Maus &uuml;ber dem Button befindet. Dabei handelt es sich um so genannte Minihilfen, welche die Aktion des Widgets der Toolbar beschreiben soll.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Solche <a id="Xxx999468" name="Xxx999468"></a>Minihilfen lassen sich auch mit einem speziellen Widget namens <span class="listing">GtkTooltip<a id="Xxx999470" name="Xxx999470"></a></span> (Typenkennung: <span class="listing">GTK_TYPE_TOOLTIP<a id="Xxx999471" name="Xxx999471"></a></span>) erstellen und einem Widget zuordnen. Mehr dazu finden Sie auf der Buch-CD in dem alten GTK+-Kapitel, was urspr&uuml;nglich f&uuml;r das Buch vorhergesehen war.</p>
+</td>
+</tr>
+</table><br>
+<p>Mit dem vierten Argument <span class="listing">tooltip_private_text</span> k&ouml;nnen Sie noch eine spezielle Hilfe hinzuf&uuml;gen. Diese spezielle Hilfe finden Sie bei vielen Anwendungen unter <span class="listing">Hilfe/?</span>. Dabei finden Sie dann am Mauscursor zus&auml;tzlich noch ein Fragezeichen. Wenn Sie damit ein bestimmtes Men&uuml;element anklicken, das Sie selbstverst&auml;ndlich auch mit <span class="listing">tooltip_private_text</span> beschriftet haben m&uuml;ssen, wird eine etwas umfangreichere Hilfe angezeigt. Im Beispiel wurde hierf&uuml;r <span class="listing">NULL</span> angegeben, da diese nicht verwendet wird. Mit <span class="listing">callback</span> geben Sie eine Callback-Funktion an, die aufgerufen wird, wenn der Toolbar-Button bet&auml;tigt (angeklickt) wurde. Mit <span class="listing">user_data</span> k&ouml;nnen Sie der Callback-Funktion noch zus&auml;tzliche Informationen mit &uuml;bergeben. Mit dem letzten Argument geben Sie die Position des Buttons an, wo dieser platziert werden soll. –1 bedeutet, wie im Beispiel gesehen, am Ende anf&uuml;gen.</p>
+<p>Au&szlig;erdem wurde mit der Funktion <span class="listing">gtk_toolbar_append_space()<a id="Xxx999474" name="Xxx999474"></a></span> noch eine vertikale Linie eingebaut.</p>
+<p>Neben der Funktion <span class="listing">gtk_toolbar_insert_stock()</span> gibt es noch eine Reihe weiterer Funktionen f&uuml;r die Toolbar. Ich verweise Sie hierzu auf die Referenz von GTK+.</p>
+<h4 class="t4">GtkMessageDialog</h4>
+<p>Nebenbei sei hier noch die Funktion <span class="listing">gtk_message_dialog_new()<a id="Xxx999478" name="Xxx999478"></a></span> erw&auml;hnt, die in diesem Beispiel ebenfalls verwendet wurde. <span class="listing">GtkMessageDialog<a id="Xxx999480" name="Xxx999480"></a></span> geh&ouml;rt zu einer der <span class="listing">GtkWindow<a id="Xxx999481" name="Xxx999481"></a></span>-Unterklassen und wurde bereits kurz erw&auml;hnt. Die Syntax zum Erzeugen eines solchen Message-Fensters sieht wie folgt aus:</p>
+<pre>GtkWidget* gtk_message_dialog_new ( 
+                         GtkWindow *parent,
+                         GtkDialogFlags flags,
+                         GtkMessageType type,
+                         GtkButtonsType buttons,
+                         const gchar *message_format, ... );</pre>
+<p>Mit dem ersten Argument k&ouml;nnen Sie entweder das Eltern-Widget eintragen oder <span class="listing">NULL</span>. F&uuml;r die Angabe der Flags (zweites Argument) stehen Ihnen folgende Konstanten zur Verf&uuml;gung:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_DIALOG_MODAL</span> – Erzeugt ein modales Fenster.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_DIALOG_DESTROY_WITH_PARENT</span> – Wird das Elternfenster zerst&ouml;rt, wird das Message-Fenster ebenso automatisch beseitigt.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_DIALOG_NO_SEPARATOR</span> – Keine Trennlinie oberhalb der Buttons.</td>
+</tr>
+</table>
+<p>Mit dem dritten Argument geben Sie die Art der Nachricht an. Diese Angabe entscheidet, welche Art von Icon und Fenster-Titel bei der Nachrichten-Box angezeigt wird. Hierzu stehen Ihnen wiederum folgende Konstanten zur Verf&uuml;gung:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_MESSAGE_INFO</span> – Wird bei Nachrichten mit Informationen verwendet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_MESSAGE_WARNING</span> – Wird bei Nachrichten mit Warnungen verwendet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_MESSAGE_QUESTION</span> – Wird bei Nachrichten mit Fragen verwendet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_MESSAGE_ERROR</span> – Wird bei Nachrichten mit Fehlern verwendet.</td>
+</tr>
+</table>
+<p>Das Argument <span class="listing">button</span> beinhaltet die Art des Buttons mitsamt eines Bildes und der Beschriftung, die sich in dem Nachrichten-Fenster befinden. Hierzu sind folgende Angaben m&ouml;glich:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_BUTTONS_NONE</span> – Keine Buttons</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_BUTTONS_OK</span> – OK-Button</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_BUTTONS_CLOSE</span> – Schlie&szlig;en-Button</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_BUTTONS_CANCEL</span> – Abbrechen-Button</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_BUTTONS_YES_NO</span> – Ja- und Nein-Button</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> GTK_BUTTONS_OK_CANCEL</span> – Ok- und Abbrechen-Button</td>
+</tr>
+</table>
+<p>Mit <span class="listing">message_format</span> k&ouml;nnen Sie einen <span class="listing">printf()</span>-&auml;hnlichen Ausgabe-String zusammenbasteln, da sich hinter <span class="listing">message_format</span> auch die <span class="listing">printf()</span>-typische Ellipse (<span class="listing">...</span>) f&uuml;r eine variabel lange Argumentenliste befindet. Wenn der Anwender den Button anklickt, wird das Signal <span class="listing">"response"</span> emittiert.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">15.10.3 Options-Men&uuml; – GtkOptionsMenu<a id="RxxKap15009040005461F0351F0" name="RxxKap15009040005461F0351F0"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999501" name="Xxx999501"></a>Bei einem Optionsmen&uuml; handelt es sich in der Tat um ein echtes Men&uuml; der Klasse <span class="listing">GtkMenu<a id="Xxx999502" name="Xxx999502"></a></span>. Gew&ouml;hnlich werden Optionsmen&uuml;s (Klasse <span class="listing">GtkOptionsMenu<a id="Xxx999504" name="Xxx999504"></a></span>; Typenkennung: <span class="listing">GTK_TYPE_OPTION_MENU<a id="Xxx999505" name="Xxx999505"></a></span>) dazu verwendet, eine Auswahl aus mehreren Eintr&auml;gen einer Liste zu w&auml;hlen.</p>
+<p>Bevor Sie ein solches Optionsmen&uuml; erzeugen, m&uuml;ssen Sie erst ein Men&uuml; von der Klasse <span class="listing">GtkMenu<a id="Xxx999507" name="Xxx999507"></a></span> (Typenkennung: <span class="listing">GTK_TYPE_MENU<a id="Xxx999508" name="Xxx999508"></a></span>) erstellen. In dieses Men&uuml; k&ouml;nnen Sie jetzt mit den Funktionen <span class="listing">gtk_menu_shell_append()<a id="Xxx999509" name="Xxx999509"></a></span> oder auch dem Makro <span class="listing">gtk_menu_append()<a id="Xxx999510" name="Xxx999510"></a></span> die einzelnen Widgets anf&uuml;gen.</p>
+<pre>void gtk_menu_shell_append ( GtkMenuShell *menu_shell,
+                             GtkWidget *child );</pre>
+<p>Wobei es sich sinnvollerweise um einfache Men&uuml;eintr&auml;ge wie einen Text handeln sollte. Ein einfaches Text-Widget k&ouml;nnte hierbei mit <span class="listing">gtk_menu_item_new_with_label</span> <span class="listing">()<a id="Xxx999513" name="Xxx999513"></a></span> erstellt werden.</p>
+<p>Nat&uuml;rlich gibt es neben der <span class="listing">_append</span>-Funktion auch die <span class="listing">_prepend</span>- und <span class="listing">_insert</span>-Version, um ein neues (Men&uuml;-)Widget am Anfang hinzuzuf&uuml;gen oder unter Angabe eines Index dazwischenzuf&uuml;gen.</p>
+<p>Nachdem Sie das Men&uuml; erstellt haben, k&ouml;nnen Sie ein Optionsmen&uuml; erzeugen (Klassen <span class="listing">GtkOptionsMenu</span>; Typenkennung: <span class="listing">GTK_TYPE_OPTION_MENU</span>) und bei der Eigenschaft <span class="listing">"menu"</span> das eben erzeugte Men&uuml; (<span class="listing">GtkMenu</span>) hinzuf&uuml;gen.</p>
+<p>Wollen Sie hierbei einen bestimmten Men&uuml;eintrag vorbelegen, k&ouml;nnen Sie hierzu die Funktion <span class="listing">gtk_option_menu_set_history()<a id="Xxx999517" name="Xxx999517"></a></span> und die Angabe der Indexnummer des Eintrags als zweites Argument verwenden. Das erste Argument beinhaltet das Men&uuml;, worauf sich die Aktion bezieht. Abfragen, welcher Men&uuml;eintrag gerade ausgew&auml;hlt ist, k&ouml;nnen Sie mit dem Gegenst&uuml;ck <span class="listing">gtk_option_menu_get_history()<a id="Xxx999518" name="Xxx999518"></a></span> und der Angabe des Men&uuml;s, das erfragt werden soll. Als R&uuml;ckgabewert erhalten Sie die Indexnummer des ausgew&auml;hlten Men&uuml;eintrags.</p>
+<pre>void gtk_option_menu_set_history ( GtkOptionMenu *option_menu,
+                                   guint index );
+gint gtk_option_menu_get_history (GtkOptionMenu *option_menu);</pre>
+<p>Wurde ein anderer Eintrag des Optionsmen&uuml;s ausgew&auml;hlt, wird au&szlig;erdem das Signal <span class="listing">"changed"</span> emittiert.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">15.10.4 Combo-Boxen – GtkCombo<a id="RxxKap15009040005461F0351FA" name="RxxKap15009040005461F0351FA"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999522" name="Xxx999522"></a>Die Combo-Boxen sind den Optionsmen&uuml;s recht &auml;hnlich, nur dass die urspr&uuml;ngliche Herkunft der Combo-Boxen aus den Textfeldern (<span class="listing">GtkEntry<a id="Xxx999524" name="Xxx999524"></a></span>) entspringt. Die Struktur <span class="listing">GtkCombo<a id="Xxx999525" name="Xxx999525"></a></span> beinhaltet zwei Mitglieder.</p>
+<pre>struct GtkCombo {
+        GtkWidget *entry;        
+        GtkWidget *list;
+};</pre>
+<p><span class="listing">entry</span> ist ein Zeiger auf einen <span class="listing">GtkEntry</span>-Eintrag, worauf Sie beim Auswerten der Combo-Boxen mittels <span class="listing">combo-&gt;entry</span> zugreifen k&ouml;nnen. Der zweite Eintrag beinhaltet eine Liste von Eintr&auml;gen f&uuml;r die Combo-Box. Hier k&ouml;nnen Sie z. B. eine <span class="listing">GList</span> verwenden und mit der Funktion <span class="listing">g_list_append()<a id="Xxx999528" name="Xxx999528"></a></span> einzelne Eintr&auml;ge in die Liste hinzuf&uuml;gen. Anschlie&szlig;end k&ouml;nnen Sie diese Liste mit der Funktion <span class="listing">gtk_combo_set_popdown_strings()<a id="Xxx999529" name="Xxx999529"></a></span> der Combo-Box hinzuf&uuml;gen.</p>
+<pre>void gtk_combo_set_popdown_strings ( GtkCombo *combo,
+                                     GList *strings );</pre>
+<p>Wollen Sie, dass nicht das oberste Element der Liste <span class="listing">GList</span> beim Start der Anwendung angezeigt wird, sondern ein spezielles, k&ouml;nnen Sie dies mit <span class="listing">g_object_set()<a id="Xxx999532" name="Xxx999532"></a></span>, dem <span class="listing">entry</span>-Feld und der Eigenschaft <span class="listing">"text"</span> selbst vorgeben. Ebenso k&ouml;nnen Sie mittels <span class="listing">g_object_get()<a id="Xxx999533" name="Xxx999533"></a></span> das momentan ausgew&auml;hlte Element ermitteln. Weitere Eigenschaften, die Sie f&uuml;r <span class="listing">GtkCombo</span> (Typenkennung: <span class="listing">GTK_TYPE_COMBO<a id="Xxx999534" name="Xxx999534"></a></span>) verwenden k&ouml;nnen, finden Sie in der folgenden Tabelle:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 15.24   
+    </b>Eigenschaften f&uuml;r GtkCombo (GTK_TYPE_COMBO)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Eigenschaft</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Datentyp</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"allow-empty"
+</td>
+<td class="tabellentext" bgcolor="#000000">gboolean
+</td>
+<td class="tabellentext" bgcolor="#000000">Bei TRUE kann auch ein leeres Feld hinterlassen werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"case-sensitive"
+</td>
+<td class="tabellentext" bgcolor="#000000">gboolean
+</td>
+<td class="tabellentext" bgcolor="#000000">Bei TRUE wird die Gro&szlig;- und Kleinschreibung bei einer &Uuml;berpr&uuml;fung, ob der Eintrag einem Feldeintrag entspricht, beachtet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"enable-arrow-keys"
+</td>
+<td class="tabellentext" bgcolor="#000000">gboolean
+</td>
+<td class="tabellentext" bgcolor="#000000">Bei TRUE darf man sich auch mit den Pfeiltasten durch die Combo-Box scrollen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"enable-arrows-always"
+</td>
+<td class="tabellentext" bgcolor="#000000">gboolean
+</td>
+<td class="tabellentext" bgcolor="#000000">Wenn enable-arrow-keys TRUE ist, wird das Scrollen nur dann verwendet, wenn der aktuelle Inhalt der Combo-Box einem Listeneintrag entspricht.
+</td>
+</tr>
+</table><br>
+<p>Zum Schluss folgt hierzu ein Listing, das Ihnen das Optionsmen&uuml; und die Combo-Box noch in der Praxis zeigen soll. Ein einfaches Beispiel, das Ihnen die Auswahl auf die Konsole ausgibt.</p>
+<pre><a id="Xxx999577" name="Xxx999577"></a>/* gkt6b.c */
+/*        Optionsmen&uuml;    */
+/*        Combo-Boxen     */
+#include &lt;gtk/gtk.h&gt;
+static GtkOptionMenu *options_menu;
+static GtkCombo *combo;
+static gchar *linux_t[] = {
+   "SUSE Linux", "RedHat Linux", "Mandrake Linux",
+   "Debian (Woody) Linux", "Geentoo Linux"
+ };
+static gint
+delete_Event(GtkWidget *widget, GdkEvent event, gpointer daten) {
+  g_print ("Das Fenster wird zerstoert!\n");
+  /* Nur mit FALSE wird die Anwendung wirklich beendet */
+  return FALSE;
+}
+static void end (GtkWidget * widget, gpointer daten) {
+  g_print ("Und tschuess!\n");
+  gtk_main_quit ();
+}
+/* Auswerten des Optionsmen&uuml;s und der Combo-Box */
+static void auswerten (GtkWidget * widget, gpointer daten) {
+  gint i = gtk_option_menu_get_history (options_menu);
+  gchar *opt;
+  if (i == -1)
+    g_print ("Fehler beim Auswerten der Combo-Box\n");
+  else
+    g_print ("Auswertung Combo-Box: %s\n", linux_t[i]);
+  g_object_get (GTK_COMBO (combo)-&gt;entry, "text", &amp;opt, NULL);
+  g_print ("Auswerten Optionsmenue : %s\n", opt);
+  g_print ("------------------------------------\n");
+}
+int main (int argc, char **argv) {
+  GtkWindow *win;
+  GdkPixbuf *pic;
+  GtkTable *table;
+  GtkMenu *menu;
+  GList *combo_list = NULL;
+  GtkButton *button;
+  GtkLabel *option_label, *combo_label;
+  gint i;
+  gtk_init (&amp;argc, &amp;argv);
+  /* Eine Grafik in einen Pixbuf laden */
+  pic = gdk_pixbuf_new_from_file ("icon/at-work.gif", NULL);
+  /* Fenster mit folgenden Eigenschaften anlegen */
+  win = g_object_new (GTK_TYPE_WINDOW,
+                      "title", "Optionsmenues und Combo-Boxen",
+                      "default-width", 300,
+                      "default-height", 150,
+                      "resizable", TRUE,
+                      "window-position", GTK_WIN_POS_CENTER,
+                      "border-width", 10, "icon", pic, NULL);
+  /* Eine Tabelle 3x2 erzeugen */
+  table = g_object_new (GTK_TYPE_TABLE,
+                        "n-rows", 3,
+                        "n-columns", 2,
+                        "row-spacing", 3,
+                        "column_spacing", 3,
+                        "homogeneous", FALSE, NULL);
+  /* Ein neues Men&uuml; erzeugen */
+  menu = g_object_new (GTK_TYPE_MENU, NULL);
+  /* Men&uuml; mit Eintr&auml;gen bef&uuml;llen */
+  for (i = 0; i &lt; 5; i++)
+    gtk_menu_shell_append (
+      GTK_MENU_SHELL (menu),
+      gtk_menu_item_new_with_label (linux_t[i]));
+  /* Ein Optionsmen&uuml; erzeugen und mit dem Men&uuml; best&uuml;cken */
+  options_menu = gtk_object_new ( GTK_TYPE_OPTION_MENU,
+                                  "menu", menu,
+                                  NULL);
+  /* Ein Textfeld erzeugen */
+  option_label = g_object_new ( GTK_TYPE_LABEL,
+                                "label", "Optionsmenue ",
+                                NULL );
+  /* Eine neue Combo-Box erzeugen */
+  combo = g_object_new (GTK_TYPE_COMBO, NULL);
+  /* Einr&auml;ge zu Combo-Box hinzuf&uuml;gen */
+  for (i = 0; i &lt; 5; i++)
+    combo_list = g_list_append (combo_list, linux_t[i]);
+  /* Liste von Eintr&auml;gen an Combo-Box &uuml;bergeben */
+  gtk_combo_set_popdown_strings (GTK_COMBO (combo), combo_list);
+  /* Liste kann wieder freigegeben werden, da */
+  /* nicht mehr ben&ouml;tigt                      */
+  g_list_free (combo_list);
+  /* Ein neues Label erzeugen */
+  combo_label = g_object_new ( GTK_TYPE_LABEL,
+                               "label", "Combo-Box ",
+                               NULL);
+  /* Einen neuen Button erzeugen */
+  button = g_object_new ( GTK_TYPE_BUTTON,
+                          "label", "Auswerten",
+                          "relief", GTK_RELIEF_HALF,
+                          NULL);
+  /* Signalhandler einrichten */
+  g_signal_connect ( win, "delete-event",
+                     G_CALLBACK (delete_Event), NULL);
+  g_signal_connect ( win, "destroy",
+                     G_CALLBACK (end), NULL );
+  g_signal_connect ( button, "clicked",
+                     G_CALLBACK (auswerten), NULL );
+  /* Alles packen */
+  gtk_container_add (GTK_CONTAINER (win), GTK_WIDGET (table));
+  gtk_table_attach(GTK_TABLE (table), GTK_WIDGET (option_label),
+                   0, 1, 0, 1,
+                   GTK_FILL, GTK_FILL,
+                   10, 0);
+  gtk_table_attach(GTK_TABLE (table), GTK_WIDGET (options_menu),
+                   1, 2, 0, 1,
+                   GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), GTK_WIDGET (combo_label),
+                    0, 1, 1, 2,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), GTK_WIDGET (combo),
+                    1, 2, 1, 2,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), GTK_WIDGET (button),
+                    1, 2, 2, 3,
+                    GTK_FILL, GTK_FILL, 0, 20);
+  /* Fenster anzeigen */
+  gtk_widget_show_all (GTK_WIDGET (win));
+  /* Hauptschleife von gtk */
+  gtk_main ();
+  g_print ("Die GTK-Hauptschleife wurde beendet\n");
+  return 0;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -Wall -o gtk6b gtk6b.c \
+  `pkg-config gtk+-2.0 --cflags --libs`
+$ ./gtk6b      </pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_15.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_15.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.15   
+    </b>Combo-Box und Optionsmen&uuml;</p>
+</td>
+</tr>
+</table><br>
+<pre>M&ouml;gliche Ausgabe auf der Konsole:
+Auswertung Combo-Box: Mandrake Linux
+Auswerten Options-Menue : Debian (Woody) Linux
+------------------------------------
+Auswertung Combo-Box: SUSE Linux
+Auswerten Options-Menue : Geentoo Linux
+------------------------------------
+...</pre>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap15-008.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap15-010.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap15-009.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:59:27 GMT -->
+</html>

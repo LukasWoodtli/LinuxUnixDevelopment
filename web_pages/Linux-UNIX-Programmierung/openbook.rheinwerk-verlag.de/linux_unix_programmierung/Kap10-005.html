@@ -1,0 +1,674 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap10-005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:28 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 10.6 Die Attribute von Threads und das Scheduling</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap10-004.html">
+<link rel="next" href="Kap10-006.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap10-004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap10-006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap10-000.html#RxxKap10000040002FE1F043100">10 Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-000.html#RxxKap10000040002FE1F043106">10.1 Unterschiede zwischen Threads und Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-001.html#RxxKap100010400031B1F04C100">10.2 Thread-Bibliotheken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-002.html#RxxKap100020400031C1F04E100">10.3 Kernel- und User-Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-003.html#RxxKap100030400031D1F024100">10.4 Scheduling und Zust&auml;nde von Threads</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-004.html#RxxKap100040400031E1F04A100">10.5 Die grundlegenden Funktionen zur Thread–Programmierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A103">10.5.1 pthread_create – einen neuen Thread erzeugen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A108">10.5.2 pthread_exit – einen Thread beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A114">10.5.3 pthread_join – auf das Ende eines Threads warten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A175">10.5.4 pthread_self – die ID von Threads ermitteln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A186">10.5.5 pthread_equal – die ID von zwei Threads vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-004.html#RxxKap100040400031E1F04A18D">10.5.6 pthread_detach – einen Thread unabh&auml;ngig machen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap100050400031F1F030100">10.6 Die Attribute von Threads und das Scheduling</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-006.html#RxxKap10006040003201F028100">10.7 Threads synchronisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-006.html#RxxKap10006040003201F028109">10.7.1 Mutexe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-006.html#RxxKap10006040003201F02818E">10.7.2 Condition-Variablen (Bedingungsvariablen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-006.html#RxxKap10006040003201F0281B2">10.7.3 Semaphore</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap10-006.html#RxxKap10006040003201F0281BD">10.7.4 Weitere Synchronisationstechniken im &Uuml;berblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-007.html#RxxKap10007040003211F03E100">10.8 Threads abbrechen (canceln)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-008.html#RxxKap10008040003221F025100">10.9 Erzeugen von Thread-spezifischen Daten (TSD-Data)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-009.html#RxxKap10009040003231F04A100">10.10 pthread_once – Codeabschnitt einmal ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-010.html#RxxKap10010040003241F048100">10.11 Thread-safe (thread-sichere Funktionen)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-011.html#RxxKap10011040003251F036100">10.12 Threads und Signale</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap10-012.html#RxxKap10012040003261F020100">10.13 Zusammenfassung und Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">10.6 <a id="RxxKap1082DieAttributevonThreadsunddasScheduling" name="RxxKap1082DieAttributevonThreadsunddasScheduling"></a>Die Attribute von Threads und das Schedulin<a id="RxxKap100050400031F1F030100" name="RxxKap100050400031F1F030100"></a>g 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999235" name="Xxx999235"></a><a id="Xxx999236" name="Xxx999236"></a>Wie Sie bereits im Abschnitt zuvor erfahren haben, kann man auch das Attribut <span class="listing">PTHREAD_CREATE_DETACHED</span> zum Abh&auml;ngen (detached) von Threads verwenden. Hierzu k&ouml;nnen die folgenden Funktionen verwendet werden:<a id="Xxx999238" name="Xxx999238"></a><a id="Xxx999239" name="Xxx999239"></a><a id="Xxx999240" name="Xxx999240"></a><a id="Xxx999241" name="Xxx999241"></a></p>
+<pre>#include &lt;pthread. h.&gt;
+int pthread_attr_init( pthread_attr_t *attribute );
+int pthread_attr_getdetachestate( pthread_attr_t *attribute,
+                                  int detachstate );
+int pthread_attr_setdetachestate( pthread_attr_t *attribute,
+                                  int detachstate );
+int pthread_attr_destroy( pthread_attr_t *attribute );</pre>
+<p>Mit der Funktion <span class="listing">pthread_attr_init()</span> m&uuml;ssen Sie zun&auml;chst das Attributobjekt <span class="listing">attr</span> initialisieren. Dabei werden auch gleich die voreingestellten Attribute gesetzt. Um beim Thema »detached« und »joinable« zu bleiben, ist die Voreinstellung hier <span class="listing">PTHREAD_CREATE_JOINABLE<a id="Xxx999244" name="Xxx999244"></a></span>, hiermit wird also der Thread nicht von den anderen losgel&ouml;st und erst freigegeben, wenn ein Thread nach dem Exit-Status diese Threads fragt (mit <span class="listing">pthread_join()</span>). Mit der Funktion <span class="listing">pthread_attr_getdetachestate()</span> k&ouml;nnen Sie das »detached«-Attribut erfragen, und mit <span class="listing">pthread_attr_setdetachedstate()</span> wird es gesetzt. Neben dem eben erw&auml;hnten <span class="listing">PTHREAD_CREATE_JOINABLE</span>, was ja auch die Standardeinstellung eines erzeugten Threads ist, k&ouml;nnen Sie hierbei auch <span class="listing">PTHREAD_CREATE_DETACHED<a id="Xxx999245" name="Xxx999245"></a></span> verwenden. Das Setzen von <span class="listing">PTHREAD_CREATE_DETACHED</span> entspricht exakt dem Verhalten der Funktion <span class="listing">pthread_detach()</span> (siehe Kap. 9.5.6) und kann auch stattdessen verwendet werden – da es erheblich k&uuml;rzer ist. Ben&ouml;tigen Sie das Attributobjekt <span class="listing">attr</span> nicht mehr, k&ouml;nnen Sie es mit <span class="listing">pthread_attr_destroy()</span> l&ouml;schen. Somit machen die Funktionen wohl erst Sinn, wenn Sie bereits mit <span class="listing">pthread_detach()</span> einen Thread ausgeh&auml;ngt haben und diesen eventuell wieder zur&uuml;ckholen (<span class="listing">PTHREAD_CREATE_JOINABLE</span>) m&uuml;ssen.</p>
+<p>Bedeutend wichtiger im Zusammenhang mit den Attributen von Threads erscheint hier schon das Setzen der Prozessorzuteilung (Scheduling). Laut POSIX gibt es drei verschiedene solcher Prozesszuteilungen (Scheduling Policies):</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> SCHED_OTHER<a id="Xxx999247" name="Xxx999247"></a></span> – Die normale Priorit&auml;t wie bei einem gew&ouml;hnlichen Prozess. Der Thread wird beendet, entweder wenn seine Zeit um ist und er wartet, bis er wieder am Zuge ist, oder wenn ein anderer Thread oder Prozess gestartet wurde, der mit einer h&ouml;heren Priorit&auml;t ausgestattet ist.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Echtzeit (<span class="listing">SCHED_FIFO<a id="Xxx999249" name="Xxx999249"></a></span>) – Dies sind Echtzeitprozesse. Sie werden in jedem Fall <span class="listing">SCHED_OTHER</span>-Prozessen vorgezogen. Auch k&ouml;nnen sie nicht von normalen Prozessen unterbrochen werden. Es gibt drei M&ouml;glichkeiten, Echtzeitprozesse zu unterbrechen:</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left"> a.) Er wandert in eine Warteschlange und wartet auf ein externes Ereignis.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left"> b.) Er verl&auml;sst freiwillig die CPU (z. B. mit <span class="listing">sched_yield()</span>).</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left"> c.) Er wird von einem anderen Echtzeitprozess mit einer h&ouml;heren Priorit&auml;t verdr&auml;ngt.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Echtzeit (<span class="listing">SCHED_RR<a id="Xxx999254" name="Xxx999254"></a></span>) – Dies sind Round-Robin-Echtzeitprozesse. Beim Round-Robin-Verfahren hat jeder Prozess die gleiche Zeitspanne zur Verf&uuml;gung. Ist diese verstrichen, so kommt der n&auml;chste Prozess an die Reihe. Unter Linux werden diese Prozesse genauso behandelt wie die Echtzeitprozesse, mit dem Unterschied, dass diese an das Ende der run-queue gesetzt werden, wenn sie den Prozessor verlassen.</td>
+</tr>
+</table>
+<p>Jetzt habe ich hier Echtzeitoperationen ins Spiel geworfen und sollte daher hierzu einen kurzen Exkurs machen, damit man die Echtzeitstrategie nicht mit »jetzt – gleich sofort« vergleicht. Die Abarbeitung von Daten in der Echtzeit kann einfach nicht sofort ausgef&uuml;hrt werden, sondern auch hier muss man sich damit begn&uuml;gen, dass diese innerhalb einer vorgegebenen Zeitspanne abgearbeitet werden. Allerdings m&uuml;ssen solche Echtzeitoperationen auch unterbrechbar sein, um auf pl&ouml;tzliche unvorsehbare Ereignisse reagieren zu k&ouml;nnen. Daher unterscheidet man hier zwischen »weichen« und »harten« Echtzeitanforderungen. Die Anforderungen h&auml;ngen vom Anwendungsfall ab, so kann man bei einem Computerspiel jederzeit »weiche« Echtzeitanforderungen setzen – was bei Maschinenanforderungen wohl eher katastrophal sein kann. Hier muss innerhalb einer vorgegebenen Zeit reagiert werden. Der Hauptbereich von Echtzeitanwendungen ist immer noch:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Multimedia - Audio, Video</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Steuerung, Regelung - Maschinen-, Robotersteuerung</td>
+</tr>
+</table>
+<p>Damit eine solche Zuteilungsstrategie auch funktioniert, muss das System diese auch unterst&uuml;tzen. Dies ist gegeben, wenn bei Ihnen die Konstante <span class="listing">_POSIX_THREAD_PRIORITY_SCHEDULING<a id="Xxx999260" name="Xxx999260"></a></span> definiert ist. Beachten Sie au&szlig;erdem, dass die Echtzeit-Zuteilungsstrategien <span class="listing">SCHED_FIFO</span> und <span class="listing">SCHED_RR</span> nur vom Superuser root ausgef&uuml;hrt werden k&ouml;nnen.</p>
+<p>Ver&auml;ndern bzw. erfragen der Zustellungsstrategie k&ouml;nnen Sie mit den folgenden Funktionen:</p>
+<pre>int pthread_setschedparam<a id="Xxx999262" name="Xxx999262"></a>( pthread thread, int policy,
+                           const struct sched_param *param);
+int pthread_getschedparam<a id="Xxx999264" name="Xxx999264"></a>( pthread thread, int policy,
+                           struct sched_param *param);</pre>
+<p>Mit diesen Funktionen setzen (set) oder ermitteln (get) Sie die Zustellungsstrategie eines Threads mit der ID <span class="listing">thread</span> vom Typ <span class="listing">pthread_t</span>. Die Strategie legen Sie mit dem Parameter <span class="listing">policy</span> fest. Hierbei kommen die bereits beschriebenen Konstanten <span class="listing">SCHED_OTHER</span>, <span class="listing">SCHED_FIFO</span> und <span class="listing">SCHED_RR</span> in Frage. Mit dem letzten Parameter der Struktur <span class="listing">sched_param</span>, die sich in der Headerdatei <span class="listing">&lt;bits/sched. h.&gt;</span> befindet:</p>
+<pre>/* Struktur sched_param */
+struct sched_param {
+    int sched_priority;
+};</pre>
+<p>legen Sie die gew&uuml;nschte Priorit&auml;t fest.</p>
+<p>Das folgende Beispiel soll Ihnen zeigen, wie einfach es ist, die Zuteilungsstrategie und die Priorit&auml;t zu ver&auml;ndern. Sie finden hierbei zwei Funktionen, eine, womit Sie die Strategie und Priorit&auml;t abfragen k&ouml;nnen, und eine weitere, womit Sie diese Werte neu setzen k&ouml;nnen. Allerdings ben&ouml;tigen Sie f&uuml;r das Setzen Superuser-root-Rechte, was im Beispiel ebenfalls ermittelt wird.</p>
+<pre>/* thread4.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;pthread. h.&gt;
+#define MAX_THREADS 3
+#define BUF 255
+/* Funktion ermittelt die Zuteilungsstrategie *
+ * und Priorit&auml;t eines Threads */
+static void getprio( pthread_t id ) {
+   int policy;
+   struct sched_param param;
+   printf("\t-&gt;Thread %ld: ", id);
+   if((pthread_getschedparam(id, &amp;policy, &amp;param)) == 0  ) {
+      printf("Zuteilung: ");
+      switch( policy ) {
+         case SCHED_OTHER :  printf("SCHED_OTHER; "); break;
+         case SCHED_FIFO  :  printf("SCHED_FIFO; ");  break;
+         case SCHED_RR    :  printf("SCHED_RR; ");    break;
+         default          :  printf("Unbekannt; ");  break;
+      }
+      printf("Priorit&auml;t: %d\n", param.sched_priority);
+   }
+}
+/* Funktion zum Setzen der Zuteilungsstrategie *
+ * und Priori&auml;t eines Threads */
+static void setprio( pthread_t id, int policy, int prio ) {
+   struct sched_param param;
+   param.sched_priority=prio;
+   if((pthread_setschedparam( pthread_self(),
+                              policy, &amp;param)) != 0  ) {
+      printf("Konnte Zuteilungsstrategie nicht &auml;ndern\n");
+      pthread_exit((void *)pthread_self());
+   }
+}
+static void thread_prio_demo(void *name) {
+   int policy;
+   struct sched_param param;
+   /*Aktuelle Zuteilungsstrategie und Priorit&auml;t erfragen */
+   getprio(pthread_self());
+   /* &Auml;ndern darf hier nur der root */
+   if( getuid() != 0 ) {
+      printf("Ver&auml;ndern geht nur mit Superuser-Rechten\n");
+      pthread_exit((void *)pthread_self());
+   }
+   /* Neue Zuteilungsstrategie und Priorit&auml;t festsetzen */
+   setprio(pthread_self(), SCHED_RR, 2);
+   /* Nochmals abfragen, ob erfolgreich ver&auml;ndert ... */
+   getprio(pthread_self());
+   /* Thread-Ende */
+   pthread_exit((void *)pthread_self());
+}
+int main (void) {
+   int i;
+   static int ret[MAX_THREADS];
+   static pthread_t th[MAX_THREADS];
+   printf("-&gt;Haupt-Thread (ID:%ld) gestartet ...\n",
+      pthread_self());
+   /* Threads erzeugen */
+   for (i = 0; i &lt; MAX_THREADS; i++) {
+      if (pthread_create ( &amp;th[i],NULL, &amp;thread_prio_demo,
+                           NULL) != 0) {
+         printf ("Konnte keinen Thread erzeugen\n");
+         exit (EXIT_FAILURE);
+      }
+   }
+   /* Auf die Threads warten */
+   for (i = 0; i &lt; MAX_THREADS; i++)
+      pthread_join (th[i], &amp;ret[i]);
+   /* R&uuml;ckgabe der Threads auswerten */
+   for (i = 0; i &lt; MAX_THREADS; i++)
+      printf("\t&lt;-Thread %ld mit Arbeit fertig\n", ret[i]);
+   printf("-&gt;Haupt-Thread (ID:%ld) fertig ...\n",
+      pthread_self());
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o thread4 thread4.c -lpthread
+$ ./thread4
+-&gt;Haupt-Thread (ID:-1209412512) gestartet...
+        -&gt;Thread -1209414736: Zuteilung: SCHED_OTHER; Priorit&auml;t: 0
+!!! Ver&auml;ndern geht nur mit Superuser-Rechten!!!
+        -&gt;Thread -1217807440: Zuteilung: SCHED_OTHER; Priorit&auml;t: 0
+!!! Ver&auml;ndern geht nur mit Superuser-Rechten!!!
+        -&gt;Thread -1226200144: Zuteilung: SCHED_OTHER; Priorit&auml;t: 0
+!!! Ver&auml;ndern geht nur mit Superuser-Rechten!!!
+        &lt;-Thread -1209414736 mit Arbeit fertig
+        &lt;-Thread -1217807440 mit Arbeit fertig
+        &lt;-Thread -1226200144 mit Arbeit fertig
+-&gt;Haupt-Thread (ID:-1209412512) fertig ...
+$ su
+Password:********
+# ./thread4
+-&gt;Haupt-Thread (ID:-1209412512) gestartet ...
+-&gt;Thread -1209414736: Zuteilung: SCHED_OTHER; Priorit&auml;t: 0
+-&gt;Thread -1209414736: Zuteilung: SCHED_RR; Priorit&auml;t: 2
+-&gt;Thread -1217807440: Zuteilung: SCHED_OTHER; Priorit&auml;t: 0
+-&gt;Thread -1217807440: Zuteilung: SCHED_RR; Priorit&auml;t: 2
+-&gt;Thread -1226200144: Zuteilung: SCHED_OTHER; Priorit&auml;t: 0
+-&gt;Thread -1226200144: Zuteilung: SCHED_RR; Priorit&auml;t: 2
+        &lt;-Thread -1209414736 mit Arbeit fertig
+        &lt;-Thread -1217807440 mit Arbeit fertig
+        &lt;-Thread -1226200144 mit Arbeit fertig
+-&gt;Haupt-Thread (ID:-1209412512) fertig ...</pre>
+<p>Selbiges (Zuteilungsstrategien und Priorit&auml;t) k&ouml;nnen Sie &uuml;brigens mit folgenden Funktionen auch &uuml;ber Attributobjekte (<span class="listing">pthread_attr_t</span>) setzen bzw. erfragen:</p>
+<pre>#include &lt;pthread. h.&gt;
+/* Zuteilungsstrategie ver&auml;ndern bzw. erfragen */
+int pthread_attr_setschedpolicy<a id="Xxx999274" name="Xxx999274"></a>( pthread_attr_t *attr,
+                                 int policy);
+int pthread_attr_getschedpolicy<a id="Xxx999275" name="Xxx999275"></a>( const pthread_attr_t *attr,
+                                 int *policy);
+/* Priorit&auml;t ver&auml;ndern bzw. erfragen */
+int pthread_attr_setschedparam<a id="Xxx999276" name="Xxx999276"></a>(
+   pthread_attr_t *attr, const struct sched_param *param );
+int pthread_attr_getschedparam<a id="Xxx999277" name="Xxx999277"></a>(
+   const pthread_attr_t *attr, struct sched_param *param );</pre>
+<p>Wollen Sie au&szlig;erdem festlegen bzw. abfragen, wie ein Thread seine Attribute (Zuteilungsstrategie und Priorit&auml;t) vom Erzeuger-Thread &uuml;bernehmen soll, stehen Ihnen folgende Funktionen zur Verf&uuml;gung:</p>
+<pre>#include &lt;pthread. h.&gt; 
+int pthread_attr_setinheritsched<a id="Xxx999280" name="Xxx999280"></a>(
+   pthread_attr_t *attr, int inheritsched );
+int pthread_attr_getinheritsched<a id="Xxx999281" name="Xxx999281"></a>(
+   const pthread_attr_t *attr, int *inheritsched );</pre>
+<p>Mit den beiden Funktionen <span class="listing">phtread_attr_getinheritsched()</span> und <span class="listing">phtread_attr_setinheritsched()</span> k&ouml;nnen Sie abfragen bzw. festlegen, wie der Thread die Attribute vom »Eltern«-Thread &uuml;bernimmt. Dabei gibt es zwei M&ouml;glichkeiten – <span class="listing">PTHREAD_INHERIT_SCHED<a id="Xxx999283" name="Xxx999283"></a></span>, was bedeutet, dass der Kind-Thread die Attribute (mitsamt Zuteilungsstrategie und der Priorit&auml;t) des Eltern-Threads &uuml;bernimmt, und <span class="listing">PTHREAD_EXPLICIT_SCHED<a id="Xxx999284" name="Xxx999284"></a></span> bedeutet, eben nichts zu &uuml;bernehmen, sondern das zu verwenden, was in <span class="listing">attr</span> als Zuteilungsstrategie und Priorit&auml;t festgelegt ist. Wurden die Attribute des »Eltern«-Threads nicht ver&auml;ndert, so ist der Kind-Thread dennoch (logischerweise) mit denselben Attributen wie der »Eltern«-Thread ausgestattet – da Standardattribute.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap10-004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap10-006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap10-005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:28 GMT -->
+</html>

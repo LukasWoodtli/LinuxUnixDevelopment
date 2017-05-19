@@ -1,0 +1,947 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap17-005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 20:00:25 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 17.6 Debuggen mit gdb und ddd</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap17-004.html">
+<link rel="next" href="Kap17-006.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap17-004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap17-006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap17-000.html#RxxKap17000040005FD1F04C100">17 Werkzeuge f&uuml;r Programmierer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-000.html#RxxKap17000040005FD1F04C1D5">17.1 Make</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C1E8">17.1.1 Erzeugen eines Makefiles</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C226">17.1.2 Variablen, Makros und Abk&uuml;rzungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C253">17.1.3 Implizite Regeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C262">17.1.4 Musterregeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C268">17.1.5 make zur Installation verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C26E">17.1.6 make-Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C270">17.1.7 Ausblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-001.html#RxxKap170010400061A1F029100">17.2 Bibliotheken erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F029102">17.2.1 Statische Bibliotheken erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F02917F">17.2.2 Dynamische Bibliotheken (Shared Libraries) erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F0291A1">17.2.3 Dynamisches Nachladen von Bibliotheken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-002.html#RxxKap170020400061B1F03E100">17.3 RPM</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E181">17.3.1 Verzeichnisse, die RPM ben&ouml;tigt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E194">17.3.2 Ein eigenes RPM-Paket erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E196">17.3.3 Sources</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E19D">17.3.4 Die Spec-Datei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E1E3">17.3.5 Paket erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E1FB">17.3.6 Das Paket installieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-003.html#RxxKap170030400061C1F047100">17.4 RCS und CVS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-003.html#RxxKap170030400061C1F047102">17.4.1 Software-Configuration-Management-Systeme (SCM)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-003.html#RxxKap170030400061C1F047109">17.4.2 RCS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-003.html#RxxKap170030400061C1F0471C2">17.4.3 CVS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-004.html#RxxKap170040400061D1F040100">17.5 Zeitmessung von Programmen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F040105">17.5.1 Einfache Zeitmessung mit TIME – Laufzeit von Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F04010F">17.5.2 Profiling mit GPROF – Laufzeit von Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F040198">17.5.3 Analyse mit GCOV</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap170050400061E1F02B100">17.6 Debuggen mit gdb und ddd</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-006.html#RxxKap170060400061F1F03C100">17.7 STRACE – Systemaufrufe verfolgen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-007.html#RxxKap17007040006201F02E100">17.8 Memory Leaks und unerlaubte Speicherzugriffe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-007.html#RxxKap17007040006201F02E104">17.8.1 efence</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-007.html#RxxKap17007040006201F02E112">17.8.2 valgrind</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-008.html#RxxKap17008040006211F036100">17.9 Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">17.6 <a id="RxxKap17677Debuggenmitgdbundddd" name="RxxKap17677Debuggenmitgdbundddd"></a>Debuggen mit gdb und d<a id="RxxKap170050400061E1F02B100" name="RxxKap170050400061E1F02B100"></a>dd 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999248" name="Xxx999248"></a>Das Thema nach der Fehlersuche in Programmen ist so alt wie der Computer selbst. Meines Erachtens gibt es auch keinen Programmierer, der davon befreit ist. Auf einmal gibt die Anwendung irgendwelchen Murks aus oder st&uuml;rzt aus nicht ersichtlichen Gr&uuml;nden ab. Treten Fragen zu diesen oder &auml;hnlichen Problemen auf, m&uuml;sste eine Antwort hierzu lauten: Was sagt der Debugger dazu?</p>
+<p>Hierzu m&ouml;chte ich noch ein wenig ausholen. Sicherlich, das Thema »Debuggen« ist B&uuml;cher f&uuml;llend – aber h&auml;ufig muss man nicht gleich bei jeder Kleinigkeit zum Debugger greifen. Als allererstes sollte man sich (logischerweise) nochmals den Quellcode ansehen, wo man vermutet, dass das Programm abst&uuml;rzt oder eben nicht wie erwartet ausgef&uuml;hrt wird. Jetzt k&ouml;nnte man an der vermuteten Codestelle etwas ausgeben lassen, z. B. den Programmzustand oder eventuell auch einen einfachen String. Wissen Sie in etwa, in welcher Funktion Ihr Programm abst&uuml;rzt, k&ouml;nnen Sie hier z.B eine einfache Textausgabe wie</p>
+<pre>printf("DEBUG\n");</pre>
+<p>machen. Rutschen Sie mit der Anweisung immer eine Zeile tiefer, bis das Programm abst&uuml;rzt und der Text <span class="listing">DEBUG</span> nicht mehr auf dem Bildschirm ausgegeben wird. Nat&uuml;rlich k&ouml;nnen Sie hierf&uuml;r auch den Zustand gewisser Variablen ausgeben lassen, sofern dies an der Stelle sinnvoll ist, oder ein einfaches getchar() einbauen, welches das Programm anh&auml;lt und auf ein <b>(ENTER)</b> wartet. Meistens findet man so recht schnell den Fehler, der das Programm abst&uuml;rzen l&auml;sst. Des Weiteren hat es sich bew&auml;hrt, h&auml;ufiger eine <span class="listing">assert()</span>-Anweisung in den Code einzubauen.</p>
+<p>Hat man hiermit keinen Erfolg gehabt, kann man ja den Programmzustand ver&auml;ndern. H&auml;ufig bew&auml;hrt hat es sich, das Programm mit anderen Daten zu f&uuml;ttern, als dies der Fall ist, wenn das Programm abst&uuml;rzt. Das Ver&auml;ndern des Quellcodes an einer vermutlich kritischen Stelle kann auch recht sinnvoll sein. Eventuell k&ouml;nnen Sie hierbei auch die eine oder andere Codezeile auskommentieren. Bitte beachten Sie beim Ver&auml;ndern der Codezeile, dass Sie den alten Zustand wiederherstellen k&ouml;nnen. Hierf&uuml;r empfiehlt es sich, CVS oder RCS zu verwenden. Und um gleich beim Thema »Versionsverwaltung« zu bleiben: Gibt es von der unstabilen Programmversion mehrere Versionen, sollten Sie die letzte stabile Version aus dem Archiv auschecken bzw. die letzte stabile Version mit der unstabilen Version vergleichen (siehe CVS und RCS).</p>
+<p><a id="Xxx999254" name="Xxx999254"></a><a id="Xxx999255" name="Xxx999255"></a>Zwar gibt es hier und da noch weitere M&ouml;glichkeiten, ein Programm mit einfachen Mitteln zu debuggen. Sie k&ouml;nnen aber auch zum Debugger GDB greifen, einem Werkzeug, womit Sie Programme ausf&uuml;hren und diese w&auml;hrend der Ausf&uuml;hrung anhalten und genauer untersuchen k&ouml;nnen. Hierbei ist es m&ouml;glich, einzelne Variablen unter die Lupe zu nehmen und deren Werte zu ver&auml;ndern. Ebenso l&auml;sst sich hiermit der Aufruf einzelner Funktionen Schritt f&uuml;r Schritt verfolgen. All dies und noch einiges mehr l&auml;sst sich wohlgemerkt w&auml;hrend der Ausf&uuml;hrung des Programms bewerkstelligen.</p>
+<p>In diesem Buch wird zwar der Konsolen-Debugger GDB beschrieben, doch wenn Sie dessen Ausf&uuml;hrung und Einsatz verstanden haben, ist es nicht mehr schwer, auf die mittlerweile zahlreichen zur Verf&uuml;gung stehenden grafischen Frontends zur&uuml;ckzugreifen. Eines der komfortableren, das ich Ihnen diesbez&uuml;glich empfehlen kann, ist <a id="Xxx999258" name="Xxx999258"></a><a id="Xxx999259" name="Xxx999259"></a>DDD, entwickelt von Dorothea L&uuml;tkehaus und Andreas Zeller.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/17_11.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein17_11.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 17.11   
+    </b>DDD – ein grafisches Frontend f&uuml;r GDB</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Programm &uuml;bersetzen f&uuml;r gdb</h4>
+<p><a id="Xxx999269" name="Xxx999269"></a>Als ersten Schritt m&uuml;ssen Sie die Anwendung f&uuml;r den Debugger &uuml;bersetzen. Dies geschieht mit der Option <span class="listing">-g</span>. Durch Verwendung dieser Option generiert der Compiler eine gr&ouml;&szlig;ere Symboltabelle. Einfach ausgedr&uuml;ckt, die ausf&uuml;hrbare Datei ben&ouml;tigt auch mehr Plattenplatz, da diese jetzt Informationen f&uuml;r den Debugger beinhaltet.</p>
+<p>H&auml;ufig wurde im Buch der Debugger mit dem Schalter –<span class="listing">ggdb3</span> verwendet, womit noch viel mehr Informationen hinzugef&uuml;gt werden, was auch bedeutet, dass die ausf&uuml;hrbare Datei wesentlich gr&ouml;&szlig;er wird. Sollte aber ein Feature in GDB nicht funktionieren, kann es sein, dass zu wenige Infos vorhanden sind. Die Gr&ouml;&szlig;e der Debug-Version einer Anwendung h&auml;ngt wesentlich ungef&auml;hr gesch&auml;tzt von der Anzahl der Objektdateien ab. Ein normales Heimprogramm mag »so« max. 100 KB ergeben, mit -<span class="listing">ggdb3</span> ist es geringf&uuml;gig mehr. Mittelst&auml;ndische Anwendungen (»Serverzubeh&ouml;ranwendungen«), die mit 300 KB anfangen (10+ Dateien), belegen bis zu 1,5 MB mit dem Schalter -<span class="listing">ggdb3</span> (nur ein Beispiel), Serveranwendungen wie Samba hingegen sind im <span class="listing">-O2</span> <span class="listing">-g0</span>-Modus gerade einmal 3,03 MB gro&szlig; (<span class="listing">/usr/sbin/smbd</span>), w&auml;hrend es mit <span class="listing">-ggdb3</span> <span class="listing">-O0</span> schon gut 170 MB werden k&ouml;nnen.</p>
+<h4 class="t4">Debugger gdb starten</h4>
+<p><a id="Xxx999273" name="Xxx999273"></a>Starten k&ouml;nnen Sie den GDB mit folgender Eingabe in der Kommandozeile:</p>
+<pre>gdb programm [coredatei]</pre>
+<p>Das <span class="listing">programm</span> ist das Beispiel, das Sie debuggen wollen. Optional kann auch als zus&auml;tzlicher Parameter eine Core-Dump-Datei verwendet werden, falls eine, bei einem fr&uuml;heren Versuch, das Beispiel zum Laufen zu bringen, angelegt wurde. Der Vorteil einer Core-Dump-Datei ist, dass man sofort findet, wo das Programm misslungen ist (das trifft nicht zu, wenn man einen Stack Smash hat, also die R&uuml;cksprungadressen zerbombt sind) und vor allem auch warum. Wollen Sie den GDB wieder beenden, reicht ein einfaches <span class="listing">quit</span> (oder '<span class="listing">q</span>') in der GDB-Shell.</p>
+<pre>$ gdb array1
+GNU gdb 5.3
+Copyright 2002 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are 
+welcome to change it and/or distribute copies of it under certain conditions. 
+Type "show copying" to see the conditions. There is absolutely no warranty for 
+GDB.  Type "show warranty" for details.
+This GDB was configured as "i586-suse-linux"...
+(gdb) quit</pre>
+<h4 class="t4">Inhalt der Datei anzeigen</h4>
+<p><a id="Xxx999279" name="Xxx999279"></a>Wenn Sie die ausf&uuml;hrbare Datei mit dem GDB gestartet haben, werden Sie sich wohl zuerst einen &Uuml;berblick &uuml;ber den Quellcode der ausf&uuml;hrbaren Datei verschaffen wollen. Hierzu k&ouml;nnen Sie das Kommando <span class="listing">list</span> (oder '<span class="listing">l</span>') verwenden:</p>
+<pre>(gdb) list
+11
+12      int main(int argc, char **argv)
+13      {
+14              int ein_array[10];
+15              int i;
+16
+17              fill_Array(ein_array);
+18              for(i = 0; i &lt; NUM; i++)
+19                      printf("Wert %d: %d\n",i, ein_array[i]);
+20
+(gdb) list 1,5
+1       #include &lt;stdio.h&gt;
+2       #define NUM 100
+3
+4       void fill_Array( int *arr )
+5       {
+(gdb) list fill_Array
+1       #include &lt;stdio.h&gt;
+2       #define NUM 100
+3
+4       void fill_Array( int *arr )
+5       {
+6               int i;
+7               for( i = 0; i &lt; NUM; i++)
+8                       arr[i] = i;
+9       }
+10
+(gdb) list 4, 9
+4       void fill_Array( int *arr )
+5       {
+6               int i;
+7               for( i = 0; i &lt; NUM; i++)
+8                       arr[i] = i;
+9       }
+(gdb)</pre>
+<p>Geben Sie <span class="listing">list</span> ohne irgendwelche Argumente an, zeigt der GDB die Zeilen um den Quellcode, der gerade ausgef&uuml;hrt wurde (wurde der Quellcode noch nicht ausgef&uuml;hrt, wird der Code um die <span class="listing">main()</span>-Funktion aufgelistet). Die Zeilen auf der linken Seite entsprechen den Zeilennummern im Quellcode. Wiederholen Sie den Aufruf von <span class="listing">list</span> ohne Argumente, listet GDB immer die n&auml;chsten Zeilen so lange auf, bis Sie am Ende des Quellcodes angekommen sind. Standardm&auml;&szlig;ig werden bei keiner Angabe von Argumenten immer zehn Zeilen eingelesen und ausgegeben. Wollen Sie bestimmte Zeilen ausgeben, die Sie debuggen oder lesen wollen, k&ouml;nnen Sie auch, wie im Beispiel gesehen, Folgendes angeben:</p>
+<pre>(gdb) list 1,5</pre>
+<p>Hiermit werden die Zeilen 1 bis 5 aufgelistet. Gibt man nur eine Zeile an (list 37), so wird 37 +/– 5 angezeigt. Nat&uuml;rlich lassen sich hiermit auch bestimmte Funktionen auflisten, wie im Beispiel demonstriert wurde:</p>
+<pre>(gdb) list fill_Array</pre>
+<h4 class="t4">Programm mit dem gdb ausf&uuml;hren</h4>
+<p>Bisher haben Sie zwar das Programm in GDB geladen, aber ausf&uuml;hren m&uuml;ssen Sie dies explizit. Hierzu gen&uuml;gt ein einfaches <span class="listing">run</span> (oder '<span class="listing">r</span>') in der GDB-Shell:</p>
+<pre>(gdb) run
+Starting program: /home/tot/debuggen/array1
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000f in ?? ()
+(gdb)</pre>
+<p>Nat&uuml;rlich l&auml;sst sich hier bei unn&ouml;tig langer Ausgabe des Programms die Standardausgabe auch umleiten. Ebenso ist es m&ouml;glich, die Eingabe umzuleiten. Im Beispiel wurde die Anwendung komplett ausgef&uuml;hrt und wie schon au&szlig;erhalb der Welt von GDB mit einem Segmentation Fault (unerlaubter Speicherzugriff) beendet.</p>
+<p>M&uuml;ssen der Anwendung noch Argumente aus der Kommandozeile &uuml;bergeben werden, k&ouml;nnen Sie dies mit <span class="listing">set</span> <span class="listing">args</span> folgenderma&szlig;en machen:</p>
+<pre>(gdb) set args argument1 argument2
+(gdb) show args
+Argument list to give program being debugged when it is started is   
+"argument1 argument2".
+(gdb)</pre>
+<p>Mit <span class="listing">show</span> <span class="listing">args</span> k&ouml;nnen Sie sich die Argumente, mit denen die Anwendung aus der Kommandozeile gestartet wird, anzeigen lassen. Alternativ k&ouml;nnen die Argumente auch bei <span class="listing">run</span> mitgegeben werden:</p>
+<pre>(gdb) run arg1 arg2 ...etc</pre>
+<h4 class="t4">Haltepunkte setzen</h4>
+<p><a id="Xxx999295" name="Xxx999295"></a>Bisher brachte Ihnen der Debugger nicht mehr ein, als wenn Sie das Programm ohne ihn gestartet h&auml;tten. Um ein Programm sinnvoll zu debuggen, wird w&auml;hrend der Ausf&uuml;hrung des Programms an einer oder mehreren (von dem Programmierer vermuteten) kritischen Stellen ein Haltepunkt (<span class="listing">break</span>-Point) gesetzt. An dieser Stelle wird die Ausf&uuml;hrung des Programms dann angehalten. Dabei k&ouml;nnen Sie dann z. B. Variablen &uuml;berpr&uuml;fen, &auml;ndern oder weitere GDB-Kommandos ausf&uuml;hren. Haltepunkte werden mit dem Kommando <span class="listing">break</span> (oder '<span class="listing">b</span>') gesetzt. Diese gibt es in den folgenden Varianten:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Kommando</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">break zeilennummer
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausf&uuml;hrung vor der angegebenen Zeilennummer stoppen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">break dateiname:zeilennummer
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausf&uuml;hrung vor der angegebenen Zeilennummer in der Datei dateiname stoppen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">break zeilennumer if bedingung
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausf&uuml;hrung vor der angegebenen Zeilennummer nur dann stoppen, wenn bedingung zutrifft
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">break Funktion   
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausf&uuml;hrung vor dem Eintreten in die Funktion stoppen. Der Hardware-Meister verr&auml;t: GDB h&auml;lt erst an, wenn ein neues Stack-Frame angefangen wurde. Das passiert bei der »mov ebp, esp«-Instruktion.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">break dateiname:Funktion
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausf&uuml;hrung vor dem Eintreten in die Funktion in der Datei dateiname stoppen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">break Funktion if bedingung
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausf&uuml;hrung vor dem Eintreten in die Funktion nur dann stoppen, wenn bedingung zutrifft
+</td>
+</tr>
+</table><br>
+<p>Ein Beispiel:</p>
+<pre>(gdb) list 4, 9
+4       void fill_Array( int *arr )
+5       {
+6               int i;
+7               for( i = 0; i &lt; NUM; i++)
+8                       arr[i] = i;
+9       }
+(gdb) break array1.c:7
+Note: breakpoint 1 also set at pc 0x804831a.
+Breakpoint 2 at 0x804831a: file array1.c, line 7.
+(gdb) run
+Starting program: /home/tot/debuggen/array1
+Breakpoint 2, fill_Array (arr=0xbffff3b0) at array1.c:7
+7               for( i = 0; i &lt; NUM; i++)</pre>
+<p>Hier wurde bei der Ausf&uuml;hrung der Quelldatei <span class="listing">array.c</span> in der Zeile 7 ein Haltepunkt gesetzt, der sofort aktiv wird.</p>
+<h4 class="t4">Ausf&uuml;hrung nach einem Haltepunkt fortsetzen</h4>
+<p><a id="Xxx999331" name="Xxx999331"></a>Um die Ausf&uuml;hrung der Anwendung nach einem <span class="listing">break</span>-Punkt wieder aufzunehmen, m&uuml;ssen Sie das <span class="listing">continue</span>-Kommando (oder kurz: '<span class="listing">c</span>') verwenden. Nach einem <span class="listing">continue</span>-Aufruf wird die Ausf&uuml;hrung bis zum Programmende, dem n&auml;chsten <span class="listing">break</span>-Punkt oder bei Auftreten eines Fehlers fortgesetzt.</p>
+<pre>(gdb) continue
+Continuing.
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000f in ?? ()</pre>
+<h4 class="t4">Verwaltung von Haltepunkten</h4>
+<p><a id="Xxx999335" name="Xxx999335"></a>Da mit der Zeit eine Menge Haltpunkte in einer Sitzung mit dem Debugger zusammenkommen k&ouml;nnen, finden Sie mit <span class="listing">info</span> <span class="listing">breakpoints</span> ein Kommando, durch das Sie den &Uuml;berblick zu den Haltepunkten bekommen. Um einen nicht ben&ouml;tigten <span class="listing">break</span>-Punkt wieder zu entfernen, k&ouml;nnen Sie das Kommando <span class="listing">delete</span> verwenden.</p>
+<pre>(gdb) info breakpoints
+Num Type           Disp Enb Address    What
+1   breakpoint     keep y   0x0804831a in fill_Array at array1.c:7
+        stop only if i == 5
+2   breakpoint     keep y   0x0804831a in fill_Array at array1.c:7
+        breakpoint already hit 1 time
+(gdb) delete 2
+(gdb) info breakpoints
+Num Type           Disp Enb Address    What
+1   breakpoint     keep y   0x0804831a in fill_Array at array1.c:7
+        stop only if i == 5</pre>
+<p>Mit dem Kommando <span class="listing">clear</span> (oder kurz '<span class="listing">cl</span>') k&ouml;nnen Sie alle Haltepunkte auf einmal entfernen. Vor&uuml;bergehend ausschalten k&ouml;nnen Sie einen Haltepunkt mit dem Kommando <span class="listing">disable</span> und der Nummer als Argument. Aktivieren k&ouml;nnen Sie diesen Haltepunkt wieder mit <span class="listing">enable</span> und der entsprechenden Nummer.</p>
+<h4 class="t4">Einzelschritte</h4>
+<p><a id="Xxx999340" name="Xxx999340"></a>Gew&ouml;hnlich werden Sie, wenn Sie einen Haltepunkt gesetzt haben, auch einzelne Anweisungen des Quellcodes ausf&uuml;hren wollen. Hierzu stehen Ihnen zwei Kommandos zur Verf&uuml;gung; einmal das Kommando <span class="listing">step</span> (kurz <span class="listing">s</span>), das eine Anweisung ausf&uuml;hrt und, falls es sich um einen Funktionsaufruf handelt, in diese Funktion eintritt und immer nur einen Schritt nach dem anderen ausf&uuml;hrt. Mit dem zweiten Kommando <span class="listing">next</span> (kurz <span class="listing">n</span>) hingegen wird eine Zeile ausgef&uuml;hrt oder eine Anweisung, sollte sie auf mehreren Zeilen liegen. Um den Sachverhalt besser zu verstehen, hier ein Beispiel:</p>
+<pre>(gdb) list
+13      {
+14              int ein_array[10];
+15              int i;
+16
+17              fill_Array(ein_array);
+18              //for(i = 0; i &lt; NUM; i++)
+19                     //printf("Wert %d: %d\n",i, ein_array[i]);
+20
+21              return 0;
+22      }
+(gdb) break 16
+Breakpoint 4 at 0x8048355: file array1.c, line 16.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/tot/debuggen/array1
+Breakpoint 5, main (argc=1, argv=0xbffff434) at array1.c:17
+17              fill_Array(ein_array);
+(gdb) next
+21              return 0;
+(gdb) next
+22      }
+(gdb) continue
+...
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/tot/debuggen/array1
+Breakpoint 5, main (argc=1, argv=0xbffff434) at array1.c:17
+17              fill_Array(ein_array);
+(gdb) step
+fill_Array (arr=0xbffff3b0) at array1.c:7
+7               for( i = 0; i &lt; NUM; i++)
+(gdb) step
+8                       arr[i] = i;
+(gdb) step
+7               for( i = 0; i &lt; NUM; i++)
+(gdb) step
+8                       arr[i] = i;
+(gdb) step
+7               for( i = 0; i &lt; NUM; i++)
+(gdb) continue
+Continuing.
+...</pre>
+<p>Hier wurde vor dem Funktionsaufruf <span class="listing">fill_Array</span> in der <span class="listing">main</span>-Funktion ein <span class="listing">break</span>-Point gesetzt. Wenn Sie das Programm jetzt laufen lassen und mit <span class="listing">next</span> den n&auml;chsten Schritt ausf&uuml;hren, wird die komplette Funktion <span class="listing">fill_Array</span> ausgef&uuml;hrt und mit der Ausf&uuml;hrung in der <span class="listing">main</span>-Funktion hinter <span class="listing">fill_Array</span> fortgesetzt. Verwenden Sie hingegeben beim selben <span class="listing">break</span>-Point das <span class="listing">step</span>-Kommando, werden die Anweisungen in der Funktion <span class="listing">fill_Array</span> Schritt f&uuml;r Schritt ausgef&uuml;hrt.</p>
+<h4 class="t4">Datenausgabe</h4>
+<p><a id="Xxx999345" name="Xxx999345"></a>Nat&uuml;rlich m&uuml;ssen Sie zum Debuggen auch auf die Werte der Variablen zugreifen k&ouml;nnen. Hierzu k&ouml;nnen Sie das <span class="listing">print</span>-Kommando (kurz <span class="listing">p</span>) von GDB verwenden. Mit dem <span class="listing">print</span>-Kommando l&auml;sst sich mehr machen, als man diesem einfachen Kommando ansehen w&uuml;rde:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Funktionsaufrufe innerhalb von Programmen mit &Uuml;bergabe von Parametern. Z. B. k&ouml;nnten Sie eine Funktion aufrufen mit</td>
+</tr>
+</table>
+(gdb) print summe_von(4, 9, 3)<br />
+$1 = 16<br />
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">Damit haben Sie eine globale Variable definiert, die zur weiteren Ausf&uuml;hrung des Programms sichtbar bleibt.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Auflisten von komplexen Datenstrukturen. Wenn Sie z. B. folgende Datenstruktur in einem zu debuggenden Programm haben:</td>
+</tr>
+</table>
+struct komplex {<br />
+         int i;<br />
+         char a;<br />
+         char j[6];<br />
+};<br />
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">dann k&ouml;nnen Sie aus dieser Struktur s&auml;mtliche Informationen herauslesen:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+(gdb) print komplex<br />
+$1 = (struct komplex *) 0x40014814<br />
+(gdb) print *komplex<br />
+$2 = {i = 1073825736, a = 0 '\0', j = "\0\0\0\0\0"}<br />
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Werteverlauf-Elemente (History). Sicherlich sind Ihnen bei den <span class="listing">print</span>-Ausgaben <span class="listing">$1</span>, <span class="listing">$2</span>, <span class="listing">$3</span> und so weiter aufgefallen. Dabei handelt es sich um so genannte Werteverlauf-Elemente, die Sie jederzeit wieder verwenden k&ouml;nnen. Z. B. folgender Werteverlauf:</td>
+</tr>
+</table>
+(gdb) print summe_von(4, 9, 3)<br />
+$1 = 16<br />
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">Jetzt k&ouml;nnen Sie auf das Elemente <span class="listing">$1</span> folgenderma&szlig;en zugreifen:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+(gdb) print $1 + 5<br />
+$2 = 21<br />
+(gdb) print $1 + $2<br />
+$3 = 37<br />
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">Jedes dieser Werteverlauf-Elemente gilt bis zum Ende der Programmausf&uuml;hrung von GDB, und darauf kann jederzeit zur&uuml;ckgegriffen werden.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> K&uuml;nstliche Felder. Mit k&uuml;nstlichen Feldern k&ouml;nnen Sie Speicherbereiche wie Arrays oder dynamisch allokierten Speicher ausgeben. Hierzu einige Beispiele:</td>
+</tr>
+</table>
+(gdb) list<br />
+8       };<br />
+9<br />
+10     static void fill_Array( int *arr )<br />
+11      {<br />
+12              int i;<br />
+13              for( i = 0; i &lt; NUM; i++)<br />
+14                      arr[i] = i;<br />
+15      }<br />
+16<br />
+17<br />
+(gdb) break 15<br />
+Breakpoint 5 at 0x8048343: file array1.c, line 15.<br />
+(gdb) run<br />
+Starting program: /home/tot/debuggen/array1<br />
+Breakpoint 5, fill_Array (arr=0xbffff3b0) at array1.c:15<br />
+15      }<br />
+(gdb) print arr@10<br />
+$6 = {0xbffff3b0, 0x400144a0, 0x1a, 0x40014678, 0xbffff3f0,<br />
+      0x4000ae8f,0x40014814, 0x40014e10, 0x0, 0x1}<br />
+(gdb) print arr@15<br />
+$7 = {0xbffff3b0, 0x400144a0, 0x1a, 0x40014678, 0xbffff3f0,<br />
+      0x4000ae8f, 0x40014814, 0x40014e10, 0x0, 0x1, 0x2, 0x3,<br />
+      0x4, 0x5, 0x6}<br />
+(gdb) print arr[0]@10<br />
+$8 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}<br />
+(gdb) print arr[0]@15<br />
+$9 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}<br />
+(gdb) print arr[20]@5<br />
+$10 = {20, 21, 22, 23, 24}<br />
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">Mit <span class="listing">arr@10</span> haben Sie sich die Adressen der ersten zehn Arrays ausgeben lassen. Mit <span class="listing">arr[0]@10</span> hingegen habe Sie zehn Werte ausgegeben, beginnend bei 0, die sich im Array <span class="listing">arr</span> befinden. <span class="listing">arr[20]@5</span> dagegen gibt f&uuml;nf Array-Werte aus, allerdings beginnend bei dem Element 20 des Arrays.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<h4 class="t4">Variablen &uuml;berpr&uuml;fen und ver&auml;ndern</h4>
+<p><a id="Xxx999363" name="Xxx999363"></a><a id="Xxx999364" name="Xxx999364"></a>Au&szlig;er die Variablen mit <span class="listing">print</span> auszugeben, k&ouml;nnen Sie auch ermitteln, von welchem Typ eine Variable ist. Des Weiteren ist es m&ouml;glich, einer Variablen einen Wert zuzuweisen. Das Ermitteln des Datentyps wird mit dem Kommando <span class="listing">whatis</span> und f&uuml;r komplexere Datenstrukturen mit <span class="listing">ptype</span> erledigt:</p>
+<pre>(gdb) list
+10      void fill_Array( int *arr )
+11      {
+12              int i;
+13              for( i = 0; i &lt; NUM; i++)
+14                      arr[i] = i;
+15      }
+16
+17
+18      int main(int argc, char **argv)
+19      {
+(gdb) whatis i
+type = int
+(gdb) whatis *arr
+type = int
+(gdb) whatis arr[0]
+type = int
+(gdb) next
+main (argc=16, argv=0x11) at array1.c:28
+28              return 0;
+(gdb) whatis komp
+type = struct komplex *
+(gdb) ptype komp
+type = struct komplex {
+    int i;
+    char a;
+    char j[6];
+} *
+(gdb) usw.</pre>
+<p>Werte k&ouml;nnen Sie den Variablen mit dem Kommando <span class="listing">set</span> <span class="listing">variable</span> oder aber auch mit <span class="listing">print</span> &uuml;bergeben.</p>
+<pre>(gdb) print arr[5]
+$15 = 5
+(gdb) set variable arr[5] = 100
+(gdb) print arr[5]
+$16 = 100
+(gdb) print arr[5] = $16 + $15
+$17 = 105</pre>
+<h4 class="t4">Weiteres</h4>
+<p>Zum Schluss der Einf&uuml;hrung zum Debugger GDB noch einige Quickies, mit denen Sie noch etwas komfortabler arbeiten k&ouml;nnen.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Wollen Sie ein zuvor geschriebenes Kommando wiederholen, reicht ein wiederholtes Dr&uuml;cken der <b>(ENTER)</b>-Taste, was sich gerade beim schrittweisen Debuggen als sehr hilfreich erweist.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die Kommandos in GDB m&uuml;ssen nicht ganz ausgeschrieben werden, wie schon des &Ouml;fteren angedeutet. Einige Kommandos beim GDB k&ouml;nnen mit dem Anfangsbuchstaben abgek&uuml;rzt werden. Z. B. <span class="listing">r</span> f&uuml;r <span class="listing">run</span>, <span class="listing">c</span> f&uuml;r <span class="listing">continue</span>, <span class="listing">n</span> f&uuml;r <span class="listing">next</span>, <span class="listing">s</span> f&uuml;r <span class="listing">step</span> oder <span class="listing">q</span> f&uuml;r <span class="listing">quit</span>, damit l&auml;sst sich der Tippaufwand enorm verringern. Mehr hierzu finden Sie in den Manual Pages von GDB.</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Tipp   </b>Versuchen Sie doch einmal, das eben durchgef&uuml;hrte Kapitel mit dem grafischen Frontend DDD auszuf&uuml;hren. Im Prinzip m&uuml;ssen Sie hierbei nur die Maus statt der Tastatur verwenden.</p>
+</td>
+</tr>
+</table><br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap17-004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap17-006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap17-005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 20:00:27 GMT -->
+</html>

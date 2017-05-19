@@ -1,0 +1,1045 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap09-005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:26 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 9.6 Message Queues</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap09-004.html">
+<link rel="next" href="Kap09-006.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap09-004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap09-006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap09-000.html#RxxKap09000040002B71F02D100">9 IPC – Interprozesskommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-000.html#RxxKap09000040002B71F02D10B">9.1 Unterschiedliche Interprozesskommunikations-Techniken im &Uuml;berblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D10D">9.1.1 (Namenlose) Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D117">9.1.2 Benannte Pipes (FIFO-Pipes)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D183">9.1.3 Message Queue (Nachrichtenspeicher)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D187">9.1.4 Semaphore</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D18A">9.1.5 Shared Memory (gemeinsamer Speicher)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D18D">9.1.6 STREAMS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D195">9.1.7 Sockets</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D197">9.1.8 Lock Files (Sperrdateien)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-000.html#RxxKap09000040002B71F02D19A">9.1.9 Dateisperren (Record Locking)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-001.html#RxxKap09001040002D41F046100">9.2 Gr&uuml;nde f&uuml;r IPC</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-002.html#RxxKap09002040002D51F049100">9.3 Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049104">9.3.1 Eigenschaften von Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049108">9.3.2 Pipes einrichten – pipe()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049182">9.3.3 Eigenschaften von elementaren E/A-Funktionen bei Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049188">9.3.4 Standard-E/A-Funktionen mit pipe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F049192">9.3.5 Pipes in einen anderen Prozess umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F04919A">9.3.6 Filterprogramm erstellen mithilfe einer Pipe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F0491A6">9.3.7 Einrichten einer Pipe zu einem anderen Prozess – popen()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F0491B8">9.3.8 Mail versenden mit Pipes und Sendmail</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F0491C2">9.3.9 Drucken &uuml;ber eine Pipe mit lpr</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-002.html#RxxKap09002040002D51F0491D5">9.3.10 Benannte Pipes – FIFOs</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-003.html#RxxKap09003040002D61F02A100">9.4 System-V-Interprozesskommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-003.html#RxxKap09003040002D61F02A102">9.4.1 Gemeinsamkeiten der SysV-Mechanismen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-003.html#RxxKap09003040002D61F02A10D">9.4.2 Ein Objekt einrichten, eine Verbindung herstellen und das Objekt wieder l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-003.html#RxxKap09003040002D61F02A111">9.4.3 Datenaustausch zwischen nicht verwandten Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-004.html#RxxKap09004040002D71F017100">9.5 Semaphore</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F017104">9.5.1 Lebenszyklus eines Semaphors</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F017116">9.5.2 Ein Semaphor &ouml;ffnen oder erstellen – semget()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F01717D">9.5.3 Abfragen, &Auml;ndern oder L&ouml;schen der Semaphormenge – semctl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F0171A1">9.5.4 Operationen auf Semaphormengen – semop()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-004.html#RxxKap09004040002D71F0171B3">9.5.5 Semaphore im Vergleich mit Sperren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap09005040002D81F03B100">9.6 Message Queues</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09005040002D81F03B109">9.6.1 Eine Message Queue &ouml;ffnen oder erzeugen – msgget()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09005040002D81F03B111">9.6.2 Nachrichten versenden – msgsnd()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09005040002D81F03B176">9.6.3 Eine Nachricht empfangen – msgrcv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap09005040002D81F03B17E">9.6.4 Abfragen, &Auml;ndern oder L&ouml;schen einer Message Queue – msgctl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap09-006.html#RxxKap09006040002D91F028100">9.7 Shared Memory</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F028102">9.7.1 Ein Shared-Memory-Segment erstellen oder &ouml;ffnen – shmget()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F02810A">9.7.2 Ein Shared-Memory-Segment abfragen, &auml;ndern oder l&ouml;schen – shmctl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F028117">9.7.3 Ein Shared-Memory-Segment anbinden (attach) – shmat()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F02817D">9.7.4 Ein Shared-Memory-Segment losl&ouml;sen – shmdt()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap09-006.html#RxxKap09006040002D91F028181">9.7.5 Client-Server-Beispiel – Shared Memory</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">9.6 <a id="RxxKap09322MessageQueues" name="RxxKap09322MessageQueues"></a>Message Queu<a id="RxxKap09005040002D81F03B100" name="RxxKap09005040002D81F03B100"></a>es 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a><a id="Xxx999237" name="Xxx999237"></a><a id="Xxx999238" name="Xxx999238"></a>Message Queues sind erst einmal nichts anderes als Nachrichten, die in Form einer verketteten Liste verwaltet werden. Jede dieser Message Queues hat eine eindeutige Kennung, woran diese auch von anderen Prozessen identifiziert werden k&ouml;nnen. Sie k&ouml;nnen sich die Message Queues gerne als ein Art Mailbox f&uuml;r Prozesse vorstellen. Prozesse k&ouml;nnen dabei Daten in der Message Queue ablegen, die von anderen Prozessen wieder abgeholt werden. Diese Daten bleiben &uuml;brigens auch nach Beendigung des Erzeugers in der Message Queue.</p>
+<p>Au&szlig;er der normalen Warteschlange nach dem FIFO-Prinzip k&ouml;nnen Sie die Nachrichten auch mit einer Priorit&auml;t versehen. Der Prozess, der dann diese Nachricht aus der Schlange (Queue) abholen will, kann dann die Nachrichten folgenderma&szlig;en abholen:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Nachricht mit der Priorit&auml;t N – Dabei holt sich der Prozess die erste Nachricht in der Warteschlange mit der Priorit&auml;t N, auch wenn diese als letzte eingef&uuml;gt wurde.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Nachrichten ab einer Priorit&auml;t N – Hierbei ist der Prozess nicht nur an einer Nachricht der Priorit&auml;t N interessiert, sondern an allen Nachrichten mit der gleichen und einer h&ouml;heren Priorit&auml;t.</td>
+</tr>
+</table>
+<p>Das folgende Bild demonstriert Ihnen den simplen Vorgang:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/9_3.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein9_3.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 9.14   
+    </b>Prinzip einer Message Queue</p>
+</td>
+</tr>
+</table><br>
+<p>Die Funktionen zur Verwendung der Message Queues sind denen der Semaphoren und dem anschlie&szlig;enden Shared Memory recht &auml;hnlich.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">9.6.1 Eine Message Queue &ouml;ffnen oder erzeugen – msgget()<a id="RxxKap09005040002D81F03B109" name="RxxKap09005040002D81F03B109"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999253" name="Xxx999253"></a><a id="Xxx999254" name="Xxx999254"></a>Wenn Sie eine existierende Message Queue erzeugen oder eine bereits existierende &ouml;ffnen wollen, m&uuml;ssen Sie die Funktion <span class="listing">msgget()</span> dazu verwenden. Hier die Syntax zu dieser Funktion:<a id="Xxx999256" name="Xxx999256"></a></p>
+<pre>#include &lt;sys/types.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;sys/msg.h&gt;
+int msgget(key_t key, int flag);</pre>
+<p>Als ersten Parameter ben&ouml;tigt <span class="listing">msgget()</span> wieder die »magische« Nummer und als zweiten Parameter den oder die Flags. F&uuml;r die Flags gilt auch hier dasselbe wie bei den Semaphoren:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> IPC_PRIVATE<a id="Xxx999259" name="Xxx999259"></a></span> – &Ouml;ffnen eines privaten Schl&uuml;ssels</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> IPC_CREAT<a id="Xxx999261" name="Xxx999261"></a></span> – Damit wird ein noch nicht existierender Schl&uuml;ssel erzeugt.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> IPC_EXCL<a id="Xxx999263" name="Xxx999263"></a></span> – Dieses Flag wird in der Regel mit dem bitweisen ODER-Operator hinter <span class="listing">IPC_CREAT</span> angef&uuml;gt. Damit gehen Sie sicher, dass wirklich ein neues Objekt (eine Message Queue) angelegt wird und nicht ein bereits existierendes mit derselben Kennung. Existiert bereits eine Kennung, bricht die entsprechende Funktion – hier <span class="listing">msgget()</span> – mit einem Fehler ab (<span class="listing">errno</span> <span class="listing">=</span> <span class="listing">EEXIST</span>).</td>
+</tr>
+</table>
+<p>Des Weiteren, nicht zu verachten, sollten Sie bei den Flags auch die entsprechenden Zugriffsrechte setzen, damit Sie &uuml;berhaupt Zugriff auf die Message Queue haben. Der R&uuml;ckgabewert der Funktion <span class="listing">msgget()</span> ist bei Erfolg die ID der Message Queue, die Sie bei den weiteren Funktionen ben&ouml;tigen, oder bei einem Fehler -1.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">9.6.2 Nachrichten versenden – msgsnd()<a id="RxxKap09005040002D81F03B111" name="RxxKap09005040002D81F03B111"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999267" name="Xxx999267"></a>Um eine Nachricht an eine existierende Message Queue zu versenden, steht Ihnen die Funktion <span class="listing">msgsnd()</span> zur Verf&uuml;gung:<a id="Xxx999269" name="Xxx999269"></a></p>
+<pre>#include &lt;sys/types.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;sys/msg.h&gt;
+int msgsnd(int msg_id, const void *buf, 
+           size_t m_len, int flag);</pre>
+<p>Damit schicken Sie eine Nachricht an die Message Queue mit der ID <span class="listing">msg_id</span>, die Sie von der Funktion <span class="listing">msgget()</span> erhalten haben. Das Argument <span class="listing">buf</span> beinhaltet die Adresse des Message-Typs, gefolgt von dem eigentlichen Message-Text. H&auml;ufig verwendet man f&uuml;r <span class="listing">buf</span> eine Struktur wie folgt:</p>
+<pre>struct my_nachricht {
+   long nachrichten_typ;     /* Message-Typ  */
+   char nachricht[MSG_LEN];  /* Message Text */
+}</pre>
+<p>Das w&uuml;rde bedeuten, als Argument f&uuml;r <span class="listing">buf</span> wird die Adresse der selbst definierten Struktur <span class="listing">my_nachricht</span> &uuml;bergeben. Die erste Variable der Struktur <span class="listing">nachrichten_typ</span> ist nur dann von Bedeutung, wenn Sie die Nachrichten mit der Funktion <span class="listing">msgrcv()</span> in einer anderen Reihenfolge empfangen wollen. Hier geben Sie also die Priorit&auml;t der Nachricht an. Mit <span class="listing">nachricht</span> geben Sie in der Struktur <span class="listing">my_nachricht</span> den eigentlichen Inhalt der Nachricht an.</p>
+<p>Mit dem dritten Parameter der Funktion <span class="listing">msgsnd()</span> geben Sie die Textl&auml;nge der Nachricht von <span class="listing">buf</span> an. In diesem Fall w&auml;re es die Textl&auml;nge der Strukturvariablen <span class="listing">nachricht</span> – also <span class="listing">MSG_LEN</span> Bytes.</p>
+<p>Mit dem letzten Parameter k&ouml;nnen Sie das Flag <span class="listing">IPC_NOWAIT</span> setzen, wenn Sie wollen, dass eine Message Queue nicht, wie es standardm&auml;&szlig;ig der Fall ist, blockiert, wenn diese voll ist. In dem Fall kehrt <span class="listing">msgsnd()</span> sofort mit einem Fehler (<span class="listing">errno</span> <span class="listing">==</span> <span class="listing">EAGAIN</span>) zur&uuml;ck.</p>
+<p>Wenn die Nachricht mit der Funktion <span class="listing">msgsnd()</span> erfolgreich verschickt werden konnte, wird 0, ansonsten bei einem Fehler -1 zur&uuml;ckgegeben.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">9.6.3 Eine Nachricht empfangen – msgrcv()<a id="RxxKap09005040002D81F03B176" name="RxxKap09005040002D81F03B176"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999278" name="Xxx999278"></a>Um eine gesendete Nachricht aus einer Message Queue zu empfangen, steht Ihnen die Funktion <span class="listing">msgrcv()</span> zur Verf&uuml;gung:<a id="Xxx999280" name="Xxx999280"></a></p>
+<pre>#include &lt;sys/types.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;sys/msg.h&gt;
+int msgrcv(int msg_id, void *buf,
+           size_t msg_len, long typ, int flag);</pre>
+<p>Die Funktion ist &auml;hnlich aufgebaut wie die Funktion zum Senden einer Nachricht. Als erstes Argument bekommt <span class="listing">msgrcv()</span> die ID einer Message Queue. In der Adresse des zweiten Parameters befindet sich der Message-Typ und die Nachricht als Text. Mit <span class="listing">msg_len</span> geben Sie auch hier die Textl&auml;nge an, die aus dem Nachrichtentext gelesen werden soll. Mit <span class="listing">typ</span> legen Sie die Priorit&auml;t fest, in welcher Reihenfolge die Nachrichten aus einer Message Queue gelesen werden sollen. Folgende Angaben k&ouml;nnen hierf&uuml;r gemacht werden:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> typ</span> <span class="listing">==</span> <span class="listing">0</span> – Erste Nachricht aus einer Message Queue wird gelesen (nach dem FIFO-Prinzip).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> typ</span> <span class="listing">==</span> <span class="listing">N</span> – Erste Nachricht wird aus einer Message Queue gelesen, die den Typ <span class="listing">N</span> hat. Das Gegenteil erreichen Sie mit dem Flag <span class="listing">MSG_EXCEPT</span>.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> typ</span> <span class="listing">&lt;</span> <span class="listing">0</span> – Erste Nachricht aus einer Message Queue wird empfangen, deren Typ der kleinste Wert ist, der kleiner oder gleich dem absoluten Wert von <span class="listing">typ</span> ist.</td>
+</tr>
+</table>
+<p>Auch hier kann das Flag <span class="listing">IPC_NOWAIT</span> als letztes Argument angegeben werden. Damit k&ouml;nnen Sie verhindern, dass <span class="listing">msgrcv()</span> blockiert und auf das Eintreffen einer entsprechenden Nachricht wartet – was auch die Standardeinstellung ist. Allerdings bricht beim Setzen des Flags <span class="listing">IPC_NOWAIT</span> die Funktion <span class="listing">msgrcv()</span> mit einem Fehler ab (<span class="listing">errno</span> <span class="listing">==</span> <span class="listing">ENOMSG</span>). Bei erfolgreicher Ausf&uuml;hrung gibt die Funktion <span class="listing">msgrcv()</span> die der empfangenen Nachricht zur&uuml;ck oder bei einem Fehler -1.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">9.6.4 Abfragen, &Auml;ndern oder L&ouml;schen einer Message Queue – msgctl()<a id="RxxKap09005040002D81F03B17E" name="RxxKap09005040002D81F03B17E"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999288" name="Xxx999288"></a><a id="Xxx999289" name="Xxx999289"></a><a id="Xxx999290" name="Xxx999290"></a>Will man den Zustand einer Message Queue abfragen, ver&auml;ndern oder gar l&ouml;schen, steht hierf&uuml;r die Funktion <span class="listing">msgctl()</span> zur Verf&uuml;gung:<a id="Xxx999292" name="Xxx999292"></a></p>
+<pre>#include &lt;sys/types.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;sys/msg.h&gt;
+int msgctl(int msg_id, int kommando, struct msqid_ds *buf);</pre>
+<p>Das Argument <span class="listing">msg_id</span> ist wie gehabt die ID einer Message Queue, auf die sich die Operation mit <span class="listing">msgctl()</span> beziehen soll. Mit <span class="listing">kommando</span> legen Sie die auszuf&uuml;hrende Aktion auf einer Message Queue fest. Dabei k&ouml;nnen folgende Angaben gemacht werden (entsprechende Rechte vorausgesetzt):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 9.2   
+    </b>Kommandoangaben f&uuml;r msgctl()</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Kommando</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">IPC_STAT<a id="Xxx999301" name="Xxx999301"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Abragen des Status in einer Message Queue. Dabei werden die Informationen in den Puffer buf, der vom Typ struct msqid_ds ist, geschrieben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">IPC_SET<a id="Xxx999306" name="Xxx999306"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Setzen der UID/GID-Zugriffsrechte und der maximalen Gr&ouml;&szlig;e einer Message Queue. Dabei werden Variablen in der Struktur msqid_ds beschrieben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">IPC_RMD<a id="Xxx999311" name="Xxx999311"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Message Queue l&ouml;schen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">IPC_INFO<a id="Xxx999316" name="Xxx999316"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">(nur Linux) Zus&auml;tzliche Informationen zu einer Message Queue
+</td>
+</tr>
+</table><br>
+<p>Mehr zu den einzelnen Variablen der Struktur <span class="listing">msqid_ds</span> k&ouml;nnen Sie der Headerdatei <span class="listing">&lt;bits/msq.h&gt;</span> entnehmen. In dieser Struktur befindet sich der momentane Status der Message Queue. In diesem Buch wird diese Struktur nicht ben&ouml;tigt. Hier nur ein kurzer &Uuml;berblick dazu:<a id="Xxx999329" name="Xxx999329"></a></p>
+<pre>struct msqid_ds {
+    struct ipc_perm msg_perm;
+    struct msg *msg_first; // Erste Nachricht in der Queue
+    struct msg *msg_last;  // Letzte Nachricht in der Queue
+    time_t msg_stime;      // Letzter msgsnd()-Aufruf (Zeit) 
+    time_t msg_rtime;      // Letzter msgrcv()-Aufruf (Zeit)
+    time_t msg_ctime;      // Letzte &Auml;nderungen (Zeit) 
+    struct wait_queue *wwait;
+    struct wait_queue *rwait;
+    ushort msg_cbytes;    
+    ushort msg_qnum;      // Anzahl der Nachrichten in Queue
+    ushort msg_qbytes;    // Max. Anzahl Bytes der Queue
+    ushort msg_lspid;     // PID vom letzten msgsnd()-Aufruf
+    ushort msg_lrpid;     // PID vom letzten msgrcv()-Aufruf
+};</pre>
+<p>Mit dem folgenden Beispiel m&ouml;chte ich Ihnen ein einfaches Server-Client-Prinzip mithilfe einer Message Queue demonstrieren. Sie k&ouml;nnen sich das Prinzip wie bei einer Mailingliste vorstellen. Zuerst erzeugen Sie einen Server, der die eingehenden Nachrichten der Clients empf&auml;ngt. Um es einfach zu halten, werden als Nachrichtentyp die Kennung der Message-Queue-ID und als Text lediglich »Login« verwendet. Alle anderen bereits in den Server eingeloggten User bekommen vom Server Bescheid, wenn sich ein neuer User (Client) angemeldet hat. Der neu gestartete Prozess bekommt lediglich seine Message-Queue-ID und das Login best&auml;tigt.</p>
+<p>Zuerst ben&ouml;tigen Sie hierzu die gemeinsame Headerdatei:</p>
+<pre><a id="Xxx999333" name="Xxx999333"></a>/* msq_header.h */
+#include &lt;stdlib.h&gt;
+#include &lt;signal.h&gt;
+/* Magische Nummer */
+#define KEY 1234L
+/* Begrenzung der Nachricht */
+#define MSG_LEN 1024
+/* Zugriffsrechte */
+#define PERM 0666
+#undef signal
+/* Datentypen zum Senden und Empfangen der Nachrichten */
+typedef struct {
+   long prioritaet;
+   char message[MSG_LEN];
+} client2server;
+typedef struct {
+   long prioritaet;
+   char message[MSG_LEN];
+} server2client;
+struct id_verwaltung {
+   int id;
+   struct id_verwaltung *next;
+ };
+   
+struct id_verwaltung *id_first = NULL;
+   
+static void mq_verwaltung_add( int i ) {
+   struct id_verwaltung *ptr;
+   if( id_first == NULL) {
+      id_first = malloc(sizeof( struct id_verwaltung ));
+       if( id_first == NULL )
+         exit(EXIT_FAILURE);
+      id_first-&gt;id = i;
+       id_first-&gt;next = NULL;
+   }
+   else {
+      ptr = id_first;
+      while(ptr-&gt;next != NULL)
+         ptr=ptr-&gt;next;
+      ptr-&gt;next = malloc(sizeof( struct id_verwaltung ));
+      ptr = ptr-&gt;next;
+      ptr-&gt;id = i;
+      ptr-&gt;next = NULL;
+   }
+}   
+static void mq_verwaltung_remove( int i ) {
+   struct id_verwaltung *ptr_tmp;
+   struct id_verwaltung *ptr;
+   if(id_first == NULL)
+      return;
+   if( id_first-&gt;id == i ) {
+      ptr = id_first-&gt;next;
+      free(id_first);
+      id_first = ptr;
+      printf("User %d hat sich ausgeloggt\n",i);
+      return;
+   }
+   ptr = id_first;
+   while(ptr-&gt;next != NULL) {
+      ptr_tmp = ptr-&gt;next;
+      if( ptr_tmp-&gt;id == i ) {
+         ptr-&gt;next = ptr_tmp-&gt;next;
+         free(ptr_tmp);
+         printf("User %d hat sich ausgeloggt\n",i);
+         break;
+      }
+      ptr=ptr_tmp;
+   }
+}
+typedef void (sigfunk) (int);
+sigfunk * signal (int sig_nr, sigfunk signalhandler) {
+   struct sigaction neu_sig, alt_sig;
+   neu_sig.sa_handler = signalhandler;
+   sigemptyset (&amp;neu_sig.sa_mask);
+   neu_sig.sa_flags = SA_RESTART;
+   if (sigaction (sig_nr, &amp;neu_sig, &amp;alt_sig) &lt; 0)
+      return SIG_ERR;
+   return alt_sig.sa_handler;
+}</pre>
+<p>Die Daten, die in der Nachrichtenwarteschlange miteinander ausgetauscht werden, werden damit festgelegt:</p>
+<pre>typedef struct {
+   long prioritaet;
+   char message[MSG_LEN];
+} client2server;
+typedef struct {
+   long prioritaet;
+   char message[MSG_LEN];
+} server2client;</pre>
+<p>Au&szlig;erdem wurde mit den Funktionen <span class="listing">msq_verwaltung_add()</span> und <span class="listing">msq_verwaltung_remove()</span> eine dynamisch verkettete Liste erstellt, worin alle vorhandenen Client-Message-Queue-IDs aufgezeichnet und wieder entfernt werden. Dies dient anschlie&szlig;end dazu, dass der Server keine Nachrichten an einen nicht mehr existierenden Client verschickt. Das neue Signalkonzept wurde auch implementiert, das anschlie&szlig;end von einem Clientprozess zur Beendigung mit der Tastenkombination <b>(STRG)</b>+<b>(C)</b> f&uuml;r Aufr&auml;umarbeiten verwendet wird.</p>
+<p>Als Erstes das Serverprogramm:</p>
+<pre><a id="Xxx999339" name="Xxx999339"></a>/* server_msq.c */
+#include &lt;sys/types.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;sys/msg.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include "msq_header.h"
+static int setup_server( key_t key, int flag ) {
+   int res;
+   res = msgget( key, flag );
+   if( res &lt; 0 ) {
+      printf("Serverfehler beim Einrichten Message "
+             "Queues\n");
+      return -1;
+   }
+   return res;
+}
+static void verteilen( const char *str, int p ) {
+   int res;
+   server2client s2c;   
+   struct id_verwaltung *ptr = id_first;
+      
+   s2c.prioritaet = p;
+   sprintf(s2c.message,"%s",str);
+   
+   while(ptr != NULL) {
+      res = msgsnd(ptr-&gt;id, &amp;s2c, MSG_LEN, 0);
+      if( res &lt; 0 )
+         printf("Konnte Nachricht an Client MQ %d nicht"
+                " zustellen ...\n",ptr-&gt;id);
+      else
+         printf("Nachricht an Client MQ %d zugestellt\n",
+                 ptr-&gt;id);
+      ptr=ptr-&gt;next;
+   }
+}
+      
+int main(void) {
+   int server_id, res;
+   client2server c2s;
+   char puffer[MSG_LEN];
+   int client_id;
+   
+   server_id = setup_server( KEY, PERM  | IPC_CREAT );
+   if( server_id &lt; 0 )
+      return EXIT_FAILURE;
+   printf("Server l&auml;uft ...\n");
+   while(1) {
+      /* Nachricht empfangen */
+      res = msgrcv( server_id, &amp;c2s, MSG_LEN, 0, 0 );
+      if( res &lt; 0 ) {
+         printf("Fehler beim Empfangen einer Nachricht?\n");
+         return EXIT_FAILURE;
+      }
+      /*Nachricht auswerten */
+      if( c2s.prioritaet == 1 ) {
+         /* Message Queues aus der Verwaltung entfernen */
+         sscanf(c2s.message,"%d",&amp;client_id);
+         mq_verwaltung_remove( client_id );   
+      }
+      else {
+         sscanf(c2s.message,"%d:%s",&amp;client_id, puffer);
+         /* client_id eventuell zur Liste hinzuf&uuml;gen */
+         mq_verwaltung_add( client_id );
+         /* Allen anderen User einen Hinweis schicken */
+         verteilen( puffer, client_id );
+      }
+   }
+   printf(" --- Server-Ende ---\n");
+   return EXIT_SUCCESS;
+}</pre>
+<p>Der Server erzeugt erst eine Message Queue mit <span class="listing">msgget()</span>. Anschlie&szlig;end werden in einer Endlosschleife Daten (falls vorhanden) von den Clients empfangen, die an die Message Queue des Servers etwas geschickt haben. Hat ein Client eine Nachricht gesendet, wird erst noch &uuml;berpr&uuml;ft, ob dies mit der Priorit&auml;t 1 geschehen ist. Dies w&uuml;rde bedeuten, dass sich der Client mit <b>(STRG)</b>+<b>(C)</b> beendet hat. Somit wird diese Message Queue (mit entsprechender ID) aus der Liste entfernt. Ansonsten wird die Nachricht mit <span class="listing">sscanf()</span> ausgelesen, falls es eine neue Message Queue-ID war, in die Verwaltung eingef&uuml;gt, und alle anderen eingeloggten Prozesse werden mit der Funktion <span class="listing">verteilen()</span> benachrichtigt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die Client Message Queues k&ouml;nnen auch untereinander ohne den Server kommunizieren.</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt zum Client-Programm:</p>
+<pre><a id="Xxx999347" name="Xxx999347"></a>/* client_msq.c */
+#include &lt;sys/types.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;sys/msg.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd. h.&gt;
+#include "msq_header.h"
+static int ende = 1;
+static int setup_client (key_t key, int flag) {
+   int res;
+   res = msgget (key, flag);
+   if (res == -1) {
+      printf ("Client-Fehler beim Einrichten"
+              " der Message Queues...\n");
+      return -1;
+   }
+   return res;
+}
+/* Der Client will sich beenden */
+static void shutdown_msq (int signr) {
+      ende = 0;
+}
+int main (void) {
+   int server_id, client_id;
+   int res;
+   client2server c2s;
+   server2client s2c;
+   /* Signalhandler f&uuml;r STRG+C einrichten */
+   signal (SIGINT, shutdown_msq);
+   /* Eine Message Queue zum Server */
+   server_id = setup_client (KEY, 0);
+   if (server_id &lt; 0)
+      return EXIT_FAILURE;
+   /* Eine Message Queue f&uuml;r den Client */
+   client_id = setup_client (IPC_PRIVATE, PERM | IPC_CREAT);
+   if (client_id &lt; 0)
+      return EXIT_FAILURE;
+   /* Eine Nachricht an den Server versenden */
+   c2s.prioritaet = 2;
+   sprintf (c2s.message, "%d:Login", client_id);
+   res = msgsnd (server_id, &amp;c2s, MSG_LEN, 0);
+   if (res == -1) {
+      printf ("Konnte keine Nachricht versenden ...\n");
+      return EXIT_FAILURE;
+   }
+   /* Best&auml;tigung des Servers oder Rundschreiben */
+   /* von anderen Clients empfangen              */
+   res = msgrcv (client_id, &amp;s2c, MSG_LEN, 0, 0);
+   if (res == -1) {
+      printf ("Fehler beim Erhalt der Nachricht ...\n");
+      return EXIT_FAILURE;
+   }
+   /*Best&auml;tigung oder Rundschreiben auslesen und ausgeben*/
+   printf ("%ld: %s\n", s2c.prioritaet, s2c.message);
+   while (ende) {
+  /* Hier k&ouml;nnte der wichtige Code zur Kommunikation  */
+  /* zwischen  den Prozessen geschrieben werden.      */
+  /* In diesem Beispiel werden nur die neu erstellten */
+  /* Message Queues als neue User ausgegeben. Die     */
+  /* Schleife wartet auf das Signal SIGINT == STRG+C  */
+      /* Best&auml;tigung oder Rundschreiben empfangen */
+      res= msgrcv (client_id, &amp;s2c, MSG_LEN, 0, IPC_NOWAIT);
+      if (res != -1) {
+         printf ("(%s) von User mit der Message-Queue-ID: "
+                 " %ld\n", s2c.message, s2c.prioritaet);
+      }
+      /* Dauerndes Pollen belastet unn&ouml;tig die CPU      */
+      /* – Eine Bremse (siehe top mit und ohne usleep() */
+      usleep( 1000 );
+   }
+   /* STRG+C also das Signal SIGINT wurde ausgel&ouml;st ... */
+   c2s.prioritaet = 1;
+   sprintf (c2s.message, "%d", client_id);
+   res = msgsnd (server_id, &amp;c2s, MSG_LEN, 0);
+   if (res == -1) {
+      printf ("Konnte keine Nachricht versenden ...\n");
+      return EXIT_FAILURE;
+   }
+   /* Message Queues entfernen */
+   msgctl (client_id, IPC_RMID, NULL);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Der Client erzeugt sich zuerst eine eigene Message Queue und richtet anschlie&szlig;end eine Verbindung zur Server Message Queue ein. Anschlie&szlig;end sendet (<span class="listing">msgsnd()</span>) der Client eine Nachricht an den Server (praktisch die Anmeldung) und wartet mit <span class="listing">msgrcv()</span> auf die Antwort. Anschlie&szlig;end geht es in die Endlosschleife, die mithilfe des Signals <span class="listing">SIGINT</span> (<b>(STRG)</b>+<b>(C)</b>) und der Funktion <span class="listing">shutdown_msq</span> beendet werden kann. In der Schleife selbst k&ouml;nnten Sie jetzt wichtige Arbeiten, die f&uuml;r eine Message Queue &uuml;blich sind, ausf&uuml;hren. Hier wurde der Einfachheit halber nur jeder neu eingeloggte Client als Nachricht empfangen und ausgegeben. Au&szlig;erdem wird nach Beendigung mit <b>(STRG)</b>+<b>(C)</b> die Message Queue des Clients mit <span class="listing">msgctl()</span> entfernt.</p>
+<p>Das Programm bei der Ausf&uuml;hrung in einer Beispielsitzung:</p>
+<pre>---[tty1]---
+$ gcc -o server_msq server_msq.c
+$ gcc -o client_msq client_msq.c
+$ ./server_msq
+Server l&auml;uft ...
+---[tty2 -&gt; andere Konsole]---
+$ ./client_msq
+524291: Login
+---[tty1 w&auml;hrenddessen]---
+$ ./server_msq
+Server l&auml;uft ...
+Nachricht an Client MQ 524291 zugestellt
+---[tty3 -&gt; andere Konsole]---
+$ ./client_msq
+557060: Login
+---[tty1 w&auml;hrenddessen]---
+$./server_msq
+Server l&auml;uft ...
+Nachricht an Client MQ 524291 zugestellt
+Nachricht an Client MQ 524291 zugestellt
+Nachricht an Client MQ 557060 zugestellt
+---[tty2 w&auml;hrenddessen]---
+$ ./client_msq
+524291: Login
+(Login) von User mit der Message-Queue-ID: 557060
+---[tty3]---
+$ ./client_msq
+557060: Login
+STRG+C
+$
+---[tty1 w&auml;hrenddessen]---
+$./server_msq
+Server l&auml;uft ...
+Nachricht an Client MQ 524291 zugestellt
+Nachricht an Client MQ 524291 zugestellt
+Nachricht an Client MQ 557060 zugestellt
+User 557060 hat sich ausgeloggt
+---[tty2]---
+$./client_msq
+524291: Login
+(Login) von User mit der Message-Queue-ID: 557060
+STRG+C
+$
+---[tty1]---
+$./server_msq
+Server l&auml;uft ...
+Nachricht an Client MQ 524291 zugestellt
+Nachricht an Client MQ 524291 zugestellt
+Nachricht an Client MQ 557060 zugestellt
+User 557060 hat sich ausgeloggt
+User 524291 hat sich ausgeloggt</pre>
+<p>Sie k&ouml;nnen das Beispiel gerne anhand mehrerer Clients testen.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap09-004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap09-006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap09-005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:26 GMT -->
+</html>

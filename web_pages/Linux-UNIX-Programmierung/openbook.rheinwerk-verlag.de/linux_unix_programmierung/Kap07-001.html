@@ -1,0 +1,905 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap07-001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:10 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 7.2 Prozesskomponente</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap07-000.html">
+<link rel="next" href="Kap07-002.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap07-000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap07-002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap07-000.html#RxxKap07000040001DB1F02D100">7 D&auml;monen, Zombies und Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-000.html#RxxKap07000040001DB1F02D103">7.1 Was ist ein Prozess?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap07001040001F81F033100">7.2 Prozesskomponente</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07001040001F81F033114">7.2.1 Prozessnummer (PID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07001040001F81F033175">7.2.2 Prozessnummer des Vaterprozesses (PPID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07001040001F81F033177">7.2.3 Benutzer- und Gruppennummer eines Prozesses (UID, EUID, GID, EGID)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07001040001F81F03317F">7.2.4 Prozessstatus</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07001040001F81F033194">7.2.5 Prozesspriorit&auml;t</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07001040001F81F033197">7.2.6 Timesharing-Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07001040001F81F0331B4">7.2.7 Prozessauslagerung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap07001040001F81F0331B8">7.2.8 Steuerterminal</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-002.html#RxxKap07002040001F91F041100">7.3 Prozesse &uuml;berwachen – ps, top, kpm</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-003.html#RxxKap07003040001FA1F021100">7.4 Lebenszyklus eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-004.html#RxxKap07004040001FB1F030100">7.5 Umgebungsvariablen eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F030108">7.5.1 Einzelne Umgebungsvariablen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F03010F">7.5.2 Umgebungsvariable ver&auml;ndern oder hinzuf&uuml;gen – putenv() und setenv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-004.html#RxxKap07004040001FB1F030197">7.5.3 L&ouml;schen von Umgebungsvariablen – unsetenv() und clearenv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-005.html#RxxKap07005040001FC1F039100">7.6 Ressourcenlimits eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-005.html#RxxKap07005040001FC1F039192">7.6.1 Mehr Sicherheit mit Ressourcenlimits</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-006.html#RxxKap07006040001FD1F02A100">7.7 Prozesserkennung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-007.html#RxxKap07007040001FE1F021100">7.8 Erzeugung von Prozessen – fork()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F021111">7.8.1 Pufferung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F02117D">7.8.2 Was wird vererbt und was nicht?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-007.html#RxxKap07007040001FE1F02118F">7.8.3 Einen Prozess mit ver&auml;nderter Priorit&auml;t erzeugen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-008.html#RxxKap07008040001FF1F022100">7.9 Warten auf einen Prozess</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-009.html#RxxKap07009040002001F028100">7.10 Die exec-Familie</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028112">7.10.1 execl()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028118">7.10.2 execve()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028177">7.10.3 execv()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F02817A">7.10.4 execle()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F02817D">7.10.5 execlp()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028180">7.10.6 execvp()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-009.html#RxxKap07009040002001F028183">7.10.7 Kindprozesse mit exec-Aufruf &uuml;berlagern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-010.html#RxxKap07010040002011F016100">7.11 Kommandoaufrufe aus dem Programm – system()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-011.html#RxxKap07011040002021F048100">7.12 D&auml;monprozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F04810A">7.12.1 Wie ein Prozess zum D&auml;mon wird ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F048110">7.12.2 D&auml;mon, sprich mit uns ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F048112">7.12.3 Protokollieren von D&auml;monen – syslog()</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F0481CA">7.12.4 syslog() in der Praxis</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-011.html#RxxKap07011040002021F0481E1">7.12.5 Den D&auml;mon, den ich rief ...</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-012.html#RxxKap07012040002031F04A100">7.13 Rund um die Ausf&uuml;hrung von Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-012.html#RxxKap07012040002031F04A102">7.13.1 Einen D&auml;mon beim Booten mit einem init-Skript starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-012.html#RxxKap07012040002031F04A19D">7.13.2 Hintergrundprozesse und Jobkontrolle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap07-012.html#RxxKap07012040002031F04A1CD">7.13.3 Prozesse zeitgesteuert ausf&uuml;hren (cron-Jobs)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap07-013.html#RxxKap07013040002041F025100">7.14 Zusammenfassung und Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">7.2 <a id="RxxKap077Prozesskomponente" name="RxxKap077Prozesskomponente"></a>Prozesskomponen<a id="RxxKap07001040001F81F033100" name="RxxKap07001040001F81F033100"></a>te 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999236" name="Xxx999236"></a>Wie schon erw&auml;hnt, steht dem Prozess eine ganze Verwaltungseinheit des Prozessors zur Verf&uuml;gung. Zu solch einer Umgebung geh&ouml;ren Dinge wie die ge&ouml;ffneten Dateien, Registerinhalte der CPU, Speicherbelegung, das Arbeitsverzeichnis, die Umgebungsvariablen und noch einiges mehr.</p>
+<p>Ein Prozess besteht aus einem Adressraum und den Kenndaten eines Prozesses, der intern eine Datenstruktur im Kernel darstellt, worin verschiedene Informationen &uuml;ber den Prozess aufgezeichnet werden.</p>
+<p>Der Adressraum eines Prozesses wird dabei in Benutzerdaten und Systemdaten aufgeteilt (auch User- und Kernelspace genannt) Zu den Systemdaten geh&ouml;ren prozessspezifische Daten und der Systemstack. Der Adressraum von Benutzerdaten wird in die folgenden Segmente aufgeteilt (nicht nur Linux):</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Textsegment (<span class="listing">.text</span>) – Darin befindet sich der ausf&uuml;hrbare Programmcode, der auch von mehreren Programmen gleichzeitig verwendet werden kann (Shared Libraries). Au&szlig;erdem ist das Textsegment schreibgesch&uuml;tzt; denn k&ouml;nnte man den Code dynamisch &auml;ndern, w&uuml;rde dies auch andere Prozesse, die sich das Textsegment teilen, betreffen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Datensegment – Darin befinden sich die Benutzerdaten eines Prozesses. Das Datensegment wird au&szlig;erdem nochmals in einen initialisierten (wiederum in schreibgesch&uuml;tzt (<span class="listing">.rodata</span>) bzw. nicht schreibgesch&uuml;tzt (<span class="listing">.data</span>)) und einen nicht initialisierten Bereich (<span class="listing">.bss</span>) aufgeteilt. Das Datensegment beinhaltet au&szlig;erdem den Heap (siehe auch »C von A bis Z« auf der Buch-CD).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Stacksegment (<span class="listing">/</span>) – In diesem Bereich befinden sich alle lokalen Variablen einer Funktion, wenn diese aufgerufen wird.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Shared-Memory-Segment(e) – Dieser Bereich kann bei Bedarf hinzukommen und als von mehreren Prozessen geteilter Speicherbereich verwendet werden, die gemeinsam darauf zugreifen k&ouml;nnen.</td>
+</tr>
+</table>
+<p><a id="Xxx999244" name="Xxx999244"></a>Zu den Kenndaten eines Prozesses geh&ouml;ren Dinge wie:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Prozessnummer vom Prozess (<span class="listing">PID</span>) und Elternprozess (<span class="listing">PPID</span>)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Gruppen- und Benutzernummer (<span class="listing">GID</span>, <span class="listing">UID</span>) vom »Prozesseigent&uuml;mer«</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> effektiver Benutzer und Gruppe (<span class="listing">EGID</span>, <span class="listing">EUID</span>)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Filesystem effective user and group (kernel-intern) (<span class="listing">FSUID</span>, <span class="listing">FSGID</span>), z. B. bei NFS, wo UID-Mappings entstehen k&ouml;nnen</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Prozesspriorit&auml;t (<span class="listing">PRI</span>)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> gew&uuml;nschte Priorit&auml;t (<span class="listing">NICE</span>)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> physikalische Adresse im Speicher oder Blockadresse im Auslagerungsbereich</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Zustand des Prozesses</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Ort, von wo aus der Prozess gestartet wurde (Kontrollterminal ...) ((<span class="listing">C</span>)<span class="listing">TTY</span>)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> verbrauchte Rechenzeit des Prozesses (<span class="listing">TIME</span>)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Kommando, womit der Prozess gestartet wurde (<span class="listing">CMD</span>)</td>
+</tr>
+</table>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">7.2.1 Prozessnummer (PID)<a id="RxxKap07001040001F81F033114" name="RxxKap07001040001F81F033114"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999258" name="Xxx999258"></a><a id="Xxx999259" name="Xxx999259"></a>Jeder Prozess besitzt eine systemweit eindeutige fortlaufende Prozessnummer (Process Identification (Number) == <span class="listing">PID</span>). Das Betriebssystem stellt dabei sicher, dass systemweit keine Nummer zweimal vorkommt, es sei denn, dies wird explizit von einem Programm gefordert (siehe <span class="listing">clone(2)</span> und <span class="listing">!CLONE_PID</span>, aber das scheint seit der Linux-Kernel-Version 2.5.16 wieder entfernt worden zu sein).</p>
+<p>Stehen bei der Vergabe von fortlaufenden Prozessnummern keine Nummern mehr zur Verf&uuml;gung, wird wieder bei 0 angefangen. Vergebene Prozessnummern werden &uuml;bersprungen. Standardm&auml;&szlig;ig hat der Kernel Platz f&uuml;r 32768 verschiedene Prozesse, aber auf gro&szlig;en Systemen kann man auch gr&ouml;&szlig;ere Tabellen bis zu 262144 finden. Nat&uuml;rlich belegt das mehr RAM, der nicht geswappt werden kann, weshalb eine Erh&ouml;hung auf Heimsystemen keinen Sinn macht.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">7.2.2 Prozessnummer des Vaterprozesses (PPID)<a id="RxxKap07001040001F81F033175" name="RxxKap07001040001F81F033175"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999265" name="Xxx999265"></a><a id="Xxx999266" name="Xxx999266"></a>Die Prozessnummer des &uuml;bergeordneten Prozesses (Parent Process Identification (Number) == <span class="listing">PPID</span>) gibt an, von welchem Prozess der aktuelle Prozess (<span class="listing">PID</span>) gestartet wurde. Man spricht dabei auch vom Elternprozess. Die Prozesse mit der Prozessnummer 0 und 1 haben unter Linux eine besondere Bedeutung und werden noch extra behandelt.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">7.2.3 Benutzer- und Gruppennummer eines Prozesses (UID, EUID, GID, EGID)<a id="RxxKap07001040001F81F033177" name="RxxKap07001040001F81F033177"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999269" name="Xxx999269"></a><a id="Xxx999270" name="Xxx999270"></a><a id="Xxx999271" name="Xxx999271"></a><a id="Xxx999272" name="Xxx999272"></a><a id="Xxx999273" name="Xxx999273"></a><a id="Xxx999274" name="Xxx999274"></a>Bei einem Prozess gibt es drei Arten von Benutzer- und Gruppennummern:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> die effektive Benutzer- und Gruppennummer (<span class="listing">EUID</span>, <span class="listing">EGID</span>)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> die reale Benutzer- und Gruppennummer (<span class="listing">UID</span>, <span class="listing">GID</span>)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> die Filesysteme <span class="listing">UID</span>/<span class="listing">GID</span>, die bei NFS-Mapping auftreten. Sie sind meist kernel-intern (<span class="listing">FSUID</span>, <span class="listing">FSGID</span>, siehe <span class="listing">setfsuid()</span>).</td>
+</tr>
+</table>
+<p>Die effektive Benutzer- bzw. Gruppennummer wird bei der &Uuml;berpr&uuml;fung von Zugriffsrechten auf Dateien verwendet. Die reale Benutzer- bzw. Gruppennummer hingegen ist die Nummer, die der aufrufende Benutzer eines Prozesses besitzt.</p>
+<p>Ist bei einem aufrufenden Programm das Ausf&uuml;hrungsrecht auf <span class="listing">x</span> (<span class="listing">rw</span>x) eingestellt, so wird beim Start des Programms (Prozesses) die effektive und reale Benutzer- und Gruppennummer auf die jeweilige Nummer des Aufrufers gesetzt. <a id="Xxx999281" name="Xxx999281"></a>Steht aber an der Stelle des Ausf&uuml;hrungsrechtes anstatt <span class="listing">x</span> ein <span class="listing">s</span> (f&uuml;r set user ID = <span class="listing">SUID</span>), dann wird die Benutzernummer des Dateieigent&uuml;mers als effektive Benutzernummer verwendet, w&auml;hrend die reale Benutzernummer die des Aufrufers bleibt. Damit k&ouml;nnen bestimmte Funktionen auf Dateien ausgef&uuml;hrt werden, die sonst nur dem Programmbesitzer gestattet sind, w&auml;hrend der aufrufende Benutzer eigentlich keine Rechte darauf hat. Damit wird veranlasst, vom Programm kontrollierte Ver&auml;nderungen von gesch&uuml;tzten Dateien vorzunehmen. Setzt man mit dem <span class="listing">s</span>-Attribut des Benutzers auch noch das <span class="listing">s</span>-Attribut f&uuml;r die Gruppe, so wird die Gruppennummer der Programmdatei als effektive Gruppennummer bei der Programmausf&uuml;hrung gesetzt. Dies gilt nat&uuml;rlich auch, wenn das Benutzerattribut »<span class="listing">s</span>« (<span class="listing">SUID</span>) nicht gesetzt ist und nur das Gruppenattribut <span class="listing">s</span> <span class="listing">(SGID)</span>.</p>
+<p>Man ben&ouml;tigt also die realen und effektiven Nummern, um die Identit&auml;t und Berechtigung eines Prozesses zu unterscheiden. Ich gebe zu, dass das Thema sehr trocken ist (zumindest in der Theorie). Daher sei f&uuml;r weitere Informationen das HowTo zu »Secure Programming for Linux and UNIX« empfohlen (siehe Buch-CD).</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">7.2.4 Prozessstatus<a id="RxxKap07001040001F81F03317F" name="RxxKap07001040001F81F03317F"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999284" name="Xxx999284"></a>Ein Prozess kann sich in den folgenden Zust&auml;nden befinden:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 7.1   
+    </b>M&ouml;gliche Zust&auml;nde eines Prozesses</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Status</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">l&auml;uft gerade (running)
+</td>
+<td class="tabellentext" bgcolor="#000000">Der Prozess wird gerade ausgef&uuml;hrt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">lauff&auml;hig (runnable)
+</td>
+<td class="tabellentext" bgcolor="#000000">Der Prozess kann ausgef&uuml;hrt werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">schlafend (sleeping)
+</td>
+<td class="tabellentext" bgcolor="#000000">Der Prozess wartet darauf, dass er ein St&uuml;ck Rechenzeit bekommt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">angehalten (stopped)
+bzw. traced
+</td>
+<td class="tabellentext" bgcolor="#000000">Der Prozess wurde unterbrochen/angehalten.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">Zombie
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Prozess, der beendet, aber noch nicht aus der Tabelle entfernt wurde.
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999319" name="Xxx999319"></a>Ist ein Prozess lauff&auml;hig, hei&szlig;t dies noch lange nicht, dass er automatisch CPU-Zeit bekommt. Er wird erst dann ausgef&uuml;hrt, wenn ihm CPU-Zeit gew&auml;hrt wird.</p>
+<p>Bekommt ein Prozess Rechenzeit zur Verf&uuml;gung gestellt, blockiert jedoch ein Systemcall (z. B. Pipe voll durch <span class="listing">write()</span>), wird der Prozess erst mal »schlafen gelegt«. Genauer gesagt, er wird in der Priorit&auml;tenliste etwas herabgelassen, und es wird sp&auml;ter noch einmal geschaut, ob die Pipe immer noch voll ist. Nur das Eintreffen eines Signals kann dieses Warten unterbrechen (sofern der Systemcall dies erlaubt). Im genannten Beispiel w&uuml;rde <span class="listing">write()</span> umgehend -1 zur&uuml;ckgegeben und <span class="listing">errno</span> auf <span class="listing">EINTR</span> gesetzt.</p>
+<p>Sie k&ouml;nnen einen Prozess aber auch anhalten, was dem Schlafen eines Prozesses &auml;hnlich ist. Anhalten k&ouml;nnen Sie einen Prozess, indem Sie diesem das Signal <span class="listing">STOP</span> schicken. Ein &auml;hnlich lautendes Signal, <span class="listing">TSTP</span>, wird den »Vordergrund«prozessen geschickt – was meist die Shell und das aktuelle Kommando sind –, wenn die Tastenkombination zum Anhalten gedr&uuml;ckt wird, i. d. R. <b>(STRG)</b>+<b>(Z)</b>. In diesem Falle sendet die Shell dann <span class="listing">STOP</span> an den aktuellen Prozess. Mit dem Signal <span class="listing">CONT</span> k&ouml;nnen Sie einen Prozess wieder fortlaufen lassen. Der Unterschied zum angehaltenen Prozess im Gegensatz zum Schlafenden ist der, dass der angehaltene Prozess den Status so lange beibeh&auml;lt, bis ein anderer Prozess diesen Status aufhebt.</p>
+<p>Ein Zombie ist ein Prozess, der sich l&auml;ngst beendet hat bzw. beendet wurde, aber noch nicht aus der Prozesstabelle ausgetragen worden ist (das muss n&auml;mlich der Elternprozess machen). Zombie-Prozesse verbrauchen keine Rechenleistung oder sonstigen Speicher, sondern sind nur noch als Prozesseintrag enthalten. Darauf wird noch n&auml;her eingegangen. Vereinfacht: Sie brauchen eine PID. Wenn Sie dabei vergessen, <span class="listing">wait()</span> oder <span class="listing">waitpid()</span> (sp&auml;ter erkl&auml;rt) aufzurufen, k&ouml;nnten Sie sich wundern, warum irgendwann (bei einem langlebigeren Programm) keine PIDs mehr frei sind.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">7.2.5 Prozesspriorit&auml;t<a id="RxxKap07001040001F81F033194" name="RxxKap07001040001F81F033194"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999325" name="Xxx999325"></a>Damit, wie es sich f&uuml;r ein Multitasking-Betriebssystem geh&ouml;rt, jeder Prozess zu seiner Arbeit kommt und Zeit von der CPU zur Verf&uuml;gung stehen hat, ist eine Steuerung n&ouml;tig. F&uuml;r die Steuerung aller Prozesse ist der Scheduling-Algorithmus zust&auml;ndig. Dabei wird unter Linux ein priorit&auml;tsgesteuerter Algorithmus verwendet. Dabei bekommt der Prozess die CPU als N&auml;chstes zugesprochen, der eine h&ouml;here Priorit&auml;t besitzt. Ruft z. B. ein Prozess eine Systemfunktion auf, so hat dieser eine h&ouml;here Priorit&auml;t. Prozesse wechseln somit immer vom Userspace in den Kernelspace (und dann wieder zur&uuml;ck), niemals umgekehrt. Der Kernel ist praktisch als Rasthof zu sehen: Man kommt rein, bleibt aber nicht f&uuml;r immer (man verbringt mehr Zeit im Userspace als im Kernelspace ... meistens). Der Beweis, dass diese These (vom User- in Kernelspace) richtig ist: W&auml;ren Interrupts deaktiviert, w&uuml;rde man nie in den Kernelspace wechseln k&ouml;nnen. Dagegen braucht man nichts weiter, um vom Kernelspace in den Userspace zu wechseln.</p>
+<p>Da also »normale Prozesse« immer zwischen User- und Kernelspace wechseln, gibt es keine »normalen« Prozesse. Ausnahme: Kernel-Threads, Kthreads (kswapd etc.). Linux kennt zwei Priorit&auml;tsklassen, die Systemprozesse, worauf Sie keinerlei Einfluss haben, und die Timesharing-Prozesse. Mittlerweile gibt es eine dritte Priorit&auml;tsklasse, n&auml;mlich die Echtzeitprozesse (Real-Time). Diese werden bei besonders zeitkritischen Prozessen eingesetzt, womit diese dann eine h&ouml;here Priorit&auml;t als die Timesharing-Prozesse besitzen.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">7.2.6 Timesharing-Prozesse<a id="RxxKap07001040001F81F033197" name="RxxKap07001040001F81F033197"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999329" name="Xxx999329"></a>Alle gew&ouml;hnlichen Prozesse sind somit Timesharing-Prozesse. Beim Timesharing wird versucht, die CPU-Zeit m&ouml;glichst gleichm&auml;&szlig;ig auf alle anderen Prozesse unter Beachtung der Priorit&auml;t zu verteilen. Damit es keine Ungerechtigkeiten gibt, wird die Priorit&auml;t der Prozesse nach einer gewissen Zeit neu berechnet. Beeinflussen k&ouml;nnen Sie die Scheduling-Priorit&auml;t mit dem Kommando nice oder renice. Wenn Sie z. B. die Prozesse mit ps -l auflisten lassen, finden Sie darin einen Wert <span class="listing">NI</span> (nice). Diesen Wert k&ouml;nnen Sie mit einer Priorit&auml;t belegen. -20 bedeutet die h&ouml;chste und +19 die niedrigste Priorit&auml;t. Wollen Sie z. B. dem Prozess <span class="listing">ein_prozess</span>, der die PID 1234 besitzt, eine tiefere Priorit&auml;t vergeben, k&ouml;nnen Sie wie folgt vorgehen:</p>
+<pre>$ renice +10 1234
+1234: Alte Priorit&auml;t: 0, neue Priorit&auml;t: 10</pre>
+<p>Um dem Prozess eine h&ouml;here Priorit&auml;t zuzuweisen (egal ob man ihn vorher runtergesetzt hat), braucht man Superuser-Rechte. Man kann sich selbst degradieren, aber nicht wieder aufsteigen. Dazu fehlt dem Linux-Kernel ein Feld in der Prozesstabelle, das es erlauben w&uuml;rde, wieder bis zur Originalpriorit&auml;t aufzusteigen. Inwiefern ein solches Feld Sinn macht, ist fraglich, denn ein Prozess, der seine Priorit&auml;t wieder erh&ouml;hen will, z&auml;hlt sowieso schon als besonders.</p>
+<p>Zwar sind die beiden Kommandos nice und renice noch Relikte aus Zeiten, wo es noch keine Monster-CPU im GHz-Bereich gab. Aber dennoch haben diese Kommandos durchaus ihre Daseinsberechtigung, wenn z. B. der Superuser nachtr&auml;glich manuell Prozessen Rechenzeit zuteilen will, wenn ein ausgesuchter Prozess etwas schneller fertig sein soll als ein anderer (nat&uuml;rlich zulasten der anderen Anwendungen).</p>
+<p>Oder ein weiteres Beispiel: Es w&uuml;rde sonst »etwas« (knapp doppelt so lange) dauern, bis man etwas fertig kompiliert hat, wenn auf derselben Priorit&auml;t noch ein Prozess mit gleicher CPU-Beanspruchung l&auml;uft. Als Beispiel nehme man Seti@Home (http://seti.alien.de/) – und da erscheint es logisch, dass die Scheduling-Priorit&auml;t auf Nice 20 statt Nice 0 laufen sollte.</p>
+<h4 class="t4">Scheduling-Priorit&auml;t in einer Anwendung setzen bzw. abfragen –
+setpriority() und getpriority()</h4>
+<p><a id="Xxx999336" name="Xxx999336"></a><a id="Xxx999337" name="Xxx999337"></a>Wollen Sie die Scheduling-Priorit&auml;t eines Prozesses, einer Prozessgruppe abfragen bzw. setzen oder einen Benutzer mit Ihrer Anwendung (in welcher H&auml;ufigkeit der Prozess &uuml;ber den Prozessor verf&uuml;gen darf) abfragen, stehen Ihnen folgende zwei Systemcalls zur Verf&uuml;gung:<a id="Xxx999339" name="Xxx999339"></a><a id="Xxx999340" name="Xxx999340"></a></p>
+<pre>#include &lt;sys/time.h&gt;
+#include &lt;sys/resource.h&gt;
+int getpriority(int which, int who)
+int setpriority(int which, int who, int prio)</pre>
+<p>Mit <span class="listing">setpriority()</span> k&ouml;nnen Sie &auml;hnlich wie mit dem Systemkommando nice die Priorit&auml;t eines Prozesses ver&auml;ndern. Nat&uuml;rlich sollte klar sein, dass das Heraufsetzen der Priorit&auml;t weiterhin dem Superuser &uuml;berlassen bleibt. Aber Achtung: Das Systemkommando nice, also /usr/bin/nice, setzt den Nice-Wert auf den angegebenen Wert, w&auml;hrend der Syscall <span class="listing">nice(2)</span> den Nice-Wert um dessen Argument erh&ouml;ht. Als normaler User k&ouml;nnen Sie lediglich die Priorit&auml;t heruntersetzen oder mittels <span class="listing">getpriority()</span> erfragen. Wobei <span class="listing">who</span> angibt, wie <span class="listing">which</span> interpretiert werden soll. Dabei stehen Ihnen folgende Makros zur Verf&uuml;gung:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PRIO_PROCESS</span> – <span class="listing">who</span> ist eine <span class="listing">PID</span>.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PRIO_PGRP</span> – <span class="listing">who</span> ist eine Prozessgruppe.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> PRIO_USER</span> – <span class="listing">who</span> ist eine <span class="listing">UID.</span></td>
+</tr>
+</table>
+<p>Zum Setzen der Priorit&auml;t mithilfe des dritten Argumentes von <span class="listing">setpriority()</span> wird ein Wert zwischen -20 und 20 erwartet, der dann auf den aktuellen Nice-Wert hinzuaddiert wird. Auch hier gilt, dass Sie mit einem negativen Wert (bspw. -10) die Priorit&auml;t erh&ouml;hen und mit einem positiven diese verringern (wie schon bei nice). Beide Funktionen geben bei Erfolg 0 zur&uuml;ck, ansonsten wird -1 bei einem Fehler zur&uuml;ckgegeben (wobei Sie dabei <span class="listing">errno</span> &uuml;berpr&uuml;fen sollten), der im Falle, dass man nicht berechtigt ist, den Nice-Wert zu ver&auml;ndern, <span class="listing">EACCES</span> sein sollte (h&auml;ufigster Fehler).</p>
+<p>Hierzu folgt ein einfaches Beispiel, das zun&auml;chst die Priorit&auml;t mittels <span class="listing">getpriority()</span> &uuml;berpr&uuml;ft und diese dann mit <span class="listing">setpriority()</span> um 10 verringert. Anschlie&szlig;end wird die Priorit&auml;t nochmals &uuml;berpr&uuml;ft und versucht, diese um den Wert 10 zu erh&ouml;hen, was gew&ouml;hnlich nur dem Superuser gestattet ist.</p>
+<pre><a id="Xxx999348" name="Xxx999348"></a>/* prio.c */
+#include &lt;unistd. h.&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;sys/time.h&gt;
+#include &lt;sys/resource.h&gt;
+int main (void) {
+   printf("Priorit&auml;t:%d\n",
+      getpriority(PRIO_PROCESS, getpid()));
+   printf("Priorit&auml;t um 10 reduzieren\n");
+   if (setpriority (PRIO_PROCESS, getpid (), 10) == -1) {
+      perror ("Fehler bei setpriority()");
+      exit (EXIT_FAILURE);
+   }
+   printf("Priorit&auml;t:%d\n",
+      getpriority(PRIO_PROCESS, getpid()));
+    
+    printf("Priorit&auml;t um 10 erh&ouml;hen (root-only)\n");
+    if (setpriority (PRIO_PROCESS, getpid (), -10) == -1) {
+      perror ("Fehler bei setpriority()");
+      exit (EXIT_FAILURE);
+   }
+   printf("Priorit&auml;t:%d\n",
+      getpriority(PRIO_PROCESS, getpid()));
+   return EXIT_SUCCESS;
+}</pre>
+<p>Das Programm bei der Ausf&uuml;hrung:</p>
+<pre>$ gcc -o prio prio.c
+$ ./prio
+Priorit&auml;t:0
+Priorit&auml;t um 10 reduzieren
+Priorit&auml;t:10
+Priorit&auml;t um 10 erh&ouml;hen (root-only)
+Fehler bei setpriority(): Permission denied
+$ su
+Password: ********
+# ./prio
+Priorit&auml;t:0
+Priorit&auml;t um 10 reduzieren
+Priorit&auml;t:10
+Priorit&auml;t um 10 erh&ouml;hen (root-only)
+Priorit&auml;t:–10</pre>
+<h4 class="t4">Prozess-Warteschleifen – sched_yield()</h4>
+<p><a id="Xxx999353" name="Xxx999353"></a><a id="Xxx999354" name="Xxx999354"></a>Sollten Sie in Ihrer Anwendung Warteschleifen ben&ouml;tigen, empfiehlt es sich, diese mithilfe von Signalen zu realisieren (siehe n&auml;chstes Kapitel). Meistens werden solche Warteschleifen verwendet, um zu warten (J), bis ein bestimmtes Ereignis eintrifft. Ein primitives Beispiel hierzu – ohne jede Funktionalit&auml;t:</p>
+<pre><a id="Xxx999356" name="Xxx999356"></a>/* eventloop1.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+static int event_loop( void ) {
+   int ereignis = 0;
+   /* Eine Ereignisschleife */
+   if( ereignis )
+      return 1;
+   else
+      return 0;
+}
+int main(void) {
+  int loop = 0;
+  while( !loop )
+     loop = event_loop();     
+  return EXIT_SUCCESS;
+}</pre>
+<p>Wenn Sie das Beispiel ausf&uuml;hren, wird »gepollt« ohne Ende – sprich sinnlos Rechenzeit verbraten. Wenn nichts los ist, k&ouml;nnten in dieser Zeit andere Prozesse vielleicht wichtigere Aufgaben erledigen.</p>
+<p>In solch einem Beispiel k&ouml;nnen Sie, wie eben schon erw&auml;hnt, die Signale oder die Funktion <span class="listing">sched_yield()</span>verwenden.</p>
+<pre>#include &lt;sched. h.&gt;
+int sched_yield(void);</pre>
+<p>Eingebaut in eine Warteschleife, sorgt diese Funktion daf&uuml;r, dass die Ausf&uuml;hrung der Anwendung unterbrochen und dieser Prozess an das Ende der Liste der auszuf&uuml;hrenden Prozesse verschoben wird. Der R&uuml;ckgabewert ist bei Erfolg 0, ansonsten bei Fehler -1. Ist der aktuelle Prozess der einzige Prozess in der h&ouml;chsten Priorit&auml;tenliste w&auml;hrend der Laufzeit, wird dieser gleich unmittelbar nach dem Aufruf von <span class="listing">sched_yield()</span> weiter ausgef&uuml;hrt. Au&szlig;erdem h&auml;ngt das »Verschieben an das Ende der Liste der auszuf&uuml;hrenden Prozesse« auch davon ab, mit welcher Priorit&auml;t die anderen Prozesse in der Prozessliste unterwegs sind. Ob das Scheduling mit <span class="listing">sched_yield()</span> &uuml;berhaupt zur Verf&uuml;gung steht, k&ouml;nnen Sie dadurch &uuml;berpr&uuml;fen, ob die Konstante <span class="listing">_POSIX_PRIORITY_SCHEDULING<a id="Xxx999362" name="Xxx999362"></a></span> in der Headerdatei <span class="listing">unistd. h.</span> definiert ist.</p>
+<pre><a id="Xxx999363" name="Xxx999363"></a>/* eventloop2.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd. h.&gt;
+#include &lt;sched. h.&gt;
+#ifndef _POSIX_PRIORITY_SCHEDULING
+   #error "sched_yield() ist hier nicht vorhanden"
+#endif
+// aus dem Beispiel eventloop1.c zu entnehmen
+static int event_loop( void ); 
+int main() {
+  int loop = 0;
+  while( !loop ) {
+     loop = event_loop();
+     sched_yield();
+  }
+  return EXIT_SUCCESS;
+}</pre>
+<p>Ab der Kernel-Version von 2.6.x hat sich das Verhalten von <span class="listing">sched_yield()</span> erheblich ver&auml;ndert. Benutzt ein Prozess diesen Systemaufruf, kann dieser jetzt erwarten, f&uuml;r sehr lange Zeit inaktiv zu sein.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wollen Sie noch tiefer ins Detail des Prozess-Schedulings einsteigen, sollten Sie sich Literatur zum Linux-Kernel beschaffen.</p>
+</td>
+</tr>
+</table><br>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">7.2.7 Prozessauslagerung<a id="RxxKap07001040001F81F0331B4" name="RxxKap07001040001F81F0331B4"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999371" name="Xxx999371"></a><a id="Xxx999372" name="Xxx999372"></a>Reicht der echte Hauptspeicher (RAM) nicht mehr im System f&uuml;r einen neuen Prozess aus, muss ein anderer zuerst in einem so genannten Swap-Bereich ausgelagert werden. Zum Swapping werden externe Medien, wie Festplatten u. &Auml;., als ein langsames RAM zum Hin- und Herschaufeln der Daten verwendet. F&uuml;r das Auslagern der Prozesse ist unter Linux der D&auml;mon kswapd verantwortlich. Nat&uuml;rlich sorgt auch hierbei wieder ein vern&uuml;nftiger Algorithmus daf&uuml;r, dass dieses Swapping nicht wild und planlos ausgef&uuml;hrt wird, auch wenn die Festplatte des Anwenders mal wieder endlos »r&ouml;delt«.</p>
+<p>Au&szlig;erdem wird nicht das ganze Programm in den Hauptspeicher gelegt, sondern nur ein Teil. Dazu wird das Programm in kleine St&uuml;cke, so genannte Pages, zerlegt. Es befinden sich in der Regel auch nur die Pages im Hauptspeicher, mit denen auch wirklich gearbeitet wird. Muss wegen Speicherknappheit ausgelagert werden, so werden nur einzelne Pages verlegt. Beim Einlagern der Pages werden auch nicht wieder alle ausgelagerten Seiten eingelesen, sondern nur die, die im Augenblick ben&ouml;tigt werden. Man spricht dabei vom Demand Paging (Seite auf Anfrage). Der Bereich, in den diese Pages ausgelagert werden, wird als Paging-Bereich (Paging Area) bezeichnet. Damit ist die maximale Programmgr&ouml;&szlig;e vom virtuellen Adressraum des Rechners und des Kernels abh&auml;ngig. Der virtuelle Adressraum erstreckt sich beim x86 bekanntlich auf 4 GB, bei 64-Bit-CPUs bis auf 16 EB. Auf neue Techniken wie PAE, die helfen sollen, die 4 GB zu erweitern, soll hier nicht weiter eingegangen werden.</p>
+<p>In Kernel 2.4 gab es eine Option, wie viel vom 4-GB-Adressraum dem User- und Kernelspace zustand, meist war es ein 3-GB/1-GB-Split, der die maximale Prozessgr&ouml;&szlig;e (Text-, Datensegment etc.) bestimmte. Es gab auch 2/2 und 3.5/0.5, in 2.6 ist diese Option jedoch nicht mehr w&auml;hlbar. Stattdessen scheint 3/1 (f&uuml;r x86) fest eincodiert worden zu sein.</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">7.2.8 Steuerterminal<a id="RxxKap07001040001F81F0331B8" name="RxxKap07001040001F81F0331B8"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999377" name="Xxx999377"></a><a id="Xxx999378" name="Xxx999378"></a>Den meisten Prozessen ist au&szlig;erdem ein Steuerterminal zugeordnet. Prozesse, denen kein Steuerterminal (<span class="listing">CTTY</span>) zugeordnet ist, sind in der Regel D&auml;monprozesse oder »verloren gegangene« Prozesse. Wer z. B. ein Perl-Skript startet und das xterm dazu beendet, kann u. U. (muss nicht immer sein) erreichen, dass Perl ohne <span class="listing">CTTY</span> weiterl&auml;uft. Wird z. B. ein Prozess aus einer Shell gestartet, so wird der Terminal der Shell in der Regel auch der Steuerterminal.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap07-000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap07-002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap07-001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:10 GMT -->
+</html>

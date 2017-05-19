@@ -1,0 +1,1174 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap17-003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 20:00:09 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – 17.4 RCS und CVS</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap17-002.html">
+<link rel="next" href="Kap17-004.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap17-002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap17-004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap17-000.html#RxxKap17000040005FD1F04C100">17 Werkzeuge f&uuml;r Programmierer</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-000.html#RxxKap17000040005FD1F04C1D5">17.1 Make</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C1E8">17.1.1 Erzeugen eines Makefiles</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C226">17.1.2 Variablen, Makros und Abk&uuml;rzungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C253">17.1.3 Implizite Regeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C262">17.1.4 Musterregeln</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C268">17.1.5 make zur Installation verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C26E">17.1.6 make-Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-000.html#RxxKap17000040005FD1F04C270">17.1.7 Ausblick</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-001.html#RxxKap170010400061A1F029100">17.2 Bibliotheken erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F029102">17.2.1 Statische Bibliotheken erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F02917F">17.2.2 Dynamische Bibliotheken (Shared Libraries) erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-001.html#RxxKap170010400061A1F0291A1">17.2.3 Dynamisches Nachladen von Bibliotheken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-002.html#RxxKap170020400061B1F03E100">17.3 RPM</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E181">17.3.1 Verzeichnisse, die RPM ben&ouml;tigt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E194">17.3.2 Ein eigenes RPM-Paket erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E196">17.3.3 Sources</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E19D">17.3.4 Die Spec-Datei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E1E3">17.3.5 Paket erstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-002.html#RxxKap170020400061B1F03E1FB">17.3.6 Das Paket installieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap170030400061C1F047100">17.4 RCS und CVS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap170030400061C1F047102">17.4.1 Software-Configuration-Management-Systeme (SCM)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap170030400061C1F047109">17.4.2 RCS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a class="navh2" href="#RxxKap170030400061C1F0471C2">17.4.3 CVS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-004.html#RxxKap170040400061D1F040100">17.5 Zeitmessung von Programmen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F040105">17.5.1 Einfache Zeitmessung mit TIME – Laufzeit von Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F04010F">17.5.2 Profiling mit GPROF – Laufzeit von Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-004.html#RxxKap170040400061D1F040198">17.5.3 Analyse mit GCOV</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-005.html#RxxKap170050400061E1F02B100">17.6 Debuggen mit gdb und ddd</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-006.html#RxxKap170060400061F1F03C100">17.7 STRACE – Systemaufrufe verfolgen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-007.html#RxxKap17007040006201F02E100">17.8 Memory Leaks und unerlaubte Speicherzugriffe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-007.html#RxxKap17007040006201F02E104">17.8.1 efence</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><T3Verw><a href="Kap17-007.html#RxxKap17007040006201F02E112">17.8.2 valgrind</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap17-008.html#RxxKap17008040006211F036100">17.9 Ausblick</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">17.4 <a id="RxxKap17382RCSundCVS" name="RxxKap17382RCSundCVS"></a>RCS und C<a id="RxxKap170030400061C1F047100" name="RxxKap170030400061C1F047100"></a>VS 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999248" name="Xxx999248"></a><a id="Xxx999249" name="Xxx999249"></a>In diesem Abschnitt erhalten Sie einige wichtige Informationen zu so genannten Software-Configuration-Management-Systemen. Dabei werden zwei dieser Tools, n&auml;mlich RCS und CVS, etwas n&auml;her erl&auml;utert.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">17.4.1 Software-Configuration-Management-Systeme (SCM<a id="RxxKap170030400061C1F047102" name="RxxKap170030400061C1F047102"></a>) 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999253" name="Xxx999253"></a><a id="Xxx999254" name="Xxx999254"></a>Sicherlich haben Sie schon des &Ouml;fteren etwas von RCS oder CVS gelesen und konnten in etwa erahnen, wozu diese Werkzeuge gut sind. Software-Configuration –Management-Systeme (kurz SCM) sind f&uuml;r die Verwaltung von einzelnen Dateien bis hin zu ganzen Projekten verantwortlich. Dabei ist es m&ouml;glich, jede noch so kleine &Auml;nderung zu protokollieren und als eine neue Version abzuspeichern. So kann jederzeit wieder auf eine &auml;ltere Version zur&uuml;ckgegriffen werden.</p>
+<p>Wozu soll das gut sein? Vielleicht ver&auml;ndern Sie eines Tages in einem Programm ein oder zwei Zeilen Code und kommen nicht gleich dazu, die Ver&auml;nderungen zu testen. Am n&auml;chsten Tag testen Sie das Programm, und es tut nicht das, wozu es gedacht war. Dummerweise wissen Sie jetzt nicht mehr, in welcher Quelldatei oder in welcher Zeile Sie den Code ver&auml;ndert haben. Das bedeutet f&uuml;r Sie erst einmal verlorene Zeit und viel Frust beim Suchen. Sie machen regelm&auml;&szlig;ig ein Backup, sagen Sie? Bei jeder Codezeile, die Sie ver&auml;ndern? Ich wage es zu bezweifeln, und au&szlig;erdem ist das sehr umst&auml;ndlich, denn dazu sind ja eigentlich SCM-Systeme entwickelt worden.</p>
+<p>Eine weitere interessante M&ouml;glichkeit von SCM-Systemen: Sie k&ouml;nnen damit ohne weiteres Daten von &auml;lteren Anwendungen verwenden. Wollen Sie z. B. einen Webbrowser erstellen, dann werden Sie wohl kaum anfangen, sich mit dem kompletten Code des Browsers xyz der Version 7.1. auseinander zu setzen, sondern mit einer m&ouml;glichst fr&uuml;hen stabilen Version. Sie haben sicherlich schon h&auml;ufiger etwas derartiges gelesen wie: »Der Browser xyz basiert auf …« Sie k&ouml;nnen praktisch aus einem &auml;lteren bestehenden Projekt ein eigenes ableiten. So entstehen zwar viele Abk&ouml;mmlinge und Klone, aber Vielfalt tut dem Markt gut.</p>
+<p>Und vielleicht noch etwas zum Nachdenken, um Sie von dem Sinn der SCM-Systeme zu &uuml;berzeugen. Ein gutes Beispiel sind die gro&szlig;en Projekte wie der KDE- oder GNOME-Desktop und die vielen anderen Open-Source-Anwendungen. Sie werden sich sicherlich gefragt haben, wie es m&ouml;glich ist, dass so viele Programmierer an einem Projekt beteiligt sind, ohne dass sich hier der eine und der andere ins Gehege kommen. Je nach Projekt arbeiten hier nicht gerade nur ein bis zwei Personen – sondern es sind h&auml;ufig gut und gerne ein Dutzend Entwickler, die sich gleichzeitig einem Projekt widmen. Solche Projekte w&auml;ren wohl ohne SCM-Systeme kaum m&ouml;glich. Durch Sperren von einzelnen Texten f&uuml;r einen Benutzer wird daf&uuml;r gesorgt, dass es nicht vorkommt, dass zwei Personen gleichzeitig daran arbeiten.</p>
+<p>Dank der Protokollierung ist es au&szlig;erdem m&ouml;glich herauszufinden, wer als Letztes an einer Datei gearbeitet und wieder solchen Murks gemacht hat. Somit kann der Projektleiter schnell die schwarzen Schafe aufsp&uuml;ren und feuern ;-).</p>
+<p>Damit es hierbei nicht zu Streitereien kommt, wer denn nun wieder die Datei gesperrt hat und wann diese wieder freigegeben ist, wird meistens ein Gruppenverzeichnis erstellt. Dabei sind dann die neu erstellten Texte immer nur von einer Person zum Schreiben freizugeben. Ist diese Person nicht pr&auml;sent, kann der Rest der Gruppe nicht mehr weiterarbeiten.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">17.4.2 RC<a id="RxxKap170030400061C1F047109" name="RxxKap170030400061C1F047109"></a>S 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999263" name="Xxx999263"></a><a id="Xxx999264" name="Xxx999264"></a>RCS entstand aus dem GNU-Projekt unter UNIX und steht f&uuml;r Revision Control System. Der Vorteil von RCS ist, dass es auf fast allen Plattformen verf&uuml;gbar ist. RCS ist sozusagen der Vater (oder auch die Mutter) vieler weiterer SCM-Systeme. Auf RCS baut &uuml;brigens auch CVS auf. Mehr dazu sp&auml;ter. Um es gleich zu erw&auml;hnen, ein Nachteil von RCS ist es, dass Sie immer nur einzelne Dateien damit bearbeiten k&ouml;nnen. F&uuml;r ganze Projekte m&uuml;ssen Sie entweder ein Shellskript schreiben oder eben CVS verwenden. F&uuml;r kleinere Aufgaben und zum Einstieg in die Welt von SCM, also auch CVS, ist RCS aber genau das Richtige.</p>
+<h4 class="t4">Das Konzept von RCS – die Theorie</h4>
+<p><a id="Xxx999267" name="Xxx999267"></a>Das Konzept von RCS basiert darauf, von einer Datei mehrere Versionen zu verwalten, ohne dadurch viel Speicherplatz zu verschwenden, indem man von einer Datei mehrere Kopien erstellt. Um dies zu erreichen, muss man ein Archiv anlegen, das lokal in einem Unterverzeichnis rcs oder auf einem Server liegt. Die Operationen in diesem Archiv sind das Einchecken einer Datei in das Archiv und das Auschecken mit und ohne Sperre. Will man eine Datei ver&auml;ndern und wieder einchecken, kann dies nur geschehen, wenn diese mit einer Sperre versehen wurde. Solange die Sperre vergeben ist, kann keine andere Person etwas an dieser Datei ver&auml;ndern. Zwar k&ouml;nnen andere Anwender die Datei lesen oder im Falle eines Quellcodeprojektes kompilieren oder interpretieren (je nach Programmiersprache), aber um etwas zu ver&auml;ndern, muss gewartet werden, bis die Sperre aufgehoben wurde. Damit beh&auml;lt der Projektleiter die &Uuml;bersicht, wer wann an der Datei gearbeitet hat, und es entsteht kein Datensalat.</p>
+<p>In das Archiv sollten Sie au&szlig;erdem nur lauff&auml;hige und fertige Dateien bzw. Anwendungen einchecken. Sie k&ouml;nnen diesen Versionen auch symbolische Namen (z. B. stable f&uuml;r stabil oder beta f&uuml;r instabil oder …) geben, auf die Sie jederzeit wieder zugreifen k&ouml;nnen. Damit vermeiden Sie, dass Sie beim Kunden nicht aus Versehen eine instabile Testversion vorf&uuml;hren. Sinnvollerweise sollten dann alle Dateien des Projekts mit diesem symbolischen Namen versehen werden.</p>
+<p>Au&szlig;erdem ist der Zwang, das Projekt zu dokumentieren, ein weiterer Vorteil. Bei jedem Einchecken werden Sie nach einem Kommentar gefragt, was sich in der neuen Version ge&auml;ndert hat. Haben Sie dann (sinnvollerweise) ein entsprechendes RCS-Schl&uuml;sselwort im Kommentar des Dateikopfes parat, dann wird die Datei oder der Quellcode mit entsprechenden Hinweisen zu allen Versionen erg&auml;nzt.</p>
+<p>RCS bezieht sich in der Regel nur auf Textdateien und nicht auf &uuml;bersetzten Code. Es ist daher nicht abh&auml;ngig davon, welche Programmiersprache Sie verwenden. Ganz im Gegenteil, im Prinzip k&ouml;nnten Sie auch die Dokumentation Ihrer Kochrezepte mit RCS verwalten. Zwar wird RCS vorwiegend verwendet, um Programmierern unter die Arme zu greifen, aber dies sollte hier dennoch erw&auml;hnt werden. RCS speichert die &Auml;nderungen einzelner Zeilen, wobei es das Kommando diff verwendet, um &Auml;nderungen von einzelnen Zeilen zu erkennen.</p>
+<p>Zwar ist es ab Version 5.7 m&ouml;glich, RCS auch auf das Verwenden von Bin&auml;rcode anzusetzen, da es aber in Bin&auml;rdateien eigentlich keine Zeilen gibt, w&uuml;rde die kleinste Ver&auml;nderung das Speichern der kompletten Kopie der neuen und der alten Version bedeuten. Dann br&auml;uchten Sie eigentlich kein RCS zu verwenden und k&ouml;nnen gleich regelm&auml;&szlig;ig »von Hand« ein Backup anlegen.</p>
+<p>Bevor Sie eine Datei einchecken oder auschecken, sucht RCS im aktuellen Arbeitsverzeichnis erst nach einem Unterverzeichnis namens RCS. Existiert das Verzeichnis, werden alle von RCS erzeugten Dateien in diesem Verzeichnis gehalten.</p>
+<p>Die Datei, die RCS anschlie&szlig;end erzeugt, ist eine separate Datei mit der Endung <span class="listing">v</span>. Darin befinden sich die Beschreibung der Datei, das &Auml;nderungsprotokoll, die aktuelle Version, eine Liste der Benutzer, Datum und Uhrzeit der &Auml;nderung. Mit diesen Informationen kann RCS eine beliebige Version jederzeit wieder herstellen. Trotz dieser umfangreichen Informationen ist die RCS-Datei kaum gr&ouml;&szlig;er als die Quelldatei. Und w&auml;chst diese dennoch einmal betr&auml;chtlich an, k&ouml;nnen unn&ouml;tige Informationen jederzeit entfernt werden.</p>
+<h4 class="t4">Versionsb&auml;ume</h4>
+<p><a id="Xxx999276" name="Xxx999276"></a>Mit RCS (und auch vielen anderen SCM-Systemen) werden die verschiedenen Versionen in einer Baumstruktur verwaltet. Die erste Version stellt somit immer die Wurzel des Baumes dar und erh&auml;lt die Revisionsnummer 1.1. Bei den folgenden Versionen wird der Wert hinter 1.x immer um 1 inkrementiert (1.2, 1.3 …).</p>
+<p>Auch ein anderer Entwicklungszweig kann z. B. von der Version 1.3 erstellt werden (1.3.1.1). Die n&auml;chsten Versionen beziehen sich dann immer auf die letzte Stelle der Revisionsnummer (1.3.1.2, 1.3.1.3 …).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/17_4.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein17_4.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 17.4   
+    </b>Ein einfacher Versionsbaum</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Eine Datei einchecken und auschecken – ci und co</h4>
+<p>Zur Demonstration von RCS soll (wie immer) ein einfaches C-Programm erstellt werden. Sie k&ouml;nnen aber gerne auch eine Quelldatei oder auch eine einfache Textdatei Ihrer Wahl dazu verwenden. Das Listing soll den Namen <span class="listing">datei.c</span> haben. Sollten Sie einen anderen Namen f&uuml;r Ihre Datei verwenden, so passen Sie diesen bitte im weiteren Verlauf Ihren Bed&uuml;rfnissen an und &auml;ndern eben entsprechende Eingaben unter diesem Namen ab.</p>
+<p>Erstellen Sie zuerst in einem Verzeichnis Ihrer Wahl ein Verzeichnis namens RCS.</p>
+<pre>$ mkdir RCS</pre>
+<p>Alle folgenden RCS-Kommandos verwenden dieses Verzeichnis; nat&uuml;rlich nur, wenn dies auch das aktuelle Arbeitsverzeichnis ist, in dem sich jetzt anschlie&szlig;end auch Ihre Datei <span class="listing">datei.c</span> befindet. Erstellen Sie folgende Datei als N&auml;chstes im selben Verzeichnis:</p>
+<pre>/* $Id$
+ * datei.c
+ * Beispielcode zur Demonstration von RCS
+ * von J&uuml;rgen Wolf
+ */
+#include &lt;stdio.h&gt;
+int main(void) {
+   printf("Mein erstes Projekt mit RCS\n");
+   return 0;
+}</pre>
+<p>Somit befinden sich im aktuellen Arbeitsverzeichnis das Verzeichnis <span class="listing">RCS</span> und die Datei <span class="listing">datei.c</span>.</p>
+<pre>$ ls –l 
+drwxr-xr-x+   2 Juergen   Kein            0 Nov  8 14:06 RCS
+-rw-r--r--    1 Juergen   Kein          193 Nov  8 14:10 datei.c</pre>
+<p><a id="Xxx999294" name="Xxx999294"></a>Zum Einchecken einer Datei wird der Befehl <span class="listing">ci</span> (f&uuml;r check in) verwendet. Zus&auml;tzlich zu diesem Befehl werden noch der Parameter zum Sperren (Lock) mit <span class="listing">-l</span> und das Flag <span class="listing">-u</span> angegeben, womit eine Read-only-Version erstellt wird. Ohne den Parameter <span class="listing">-l</span> wird keine Sperre gesetzt, was in der Praxis nicht zu empfehlen ist. Also checken Sie die Datei ein:</p>
+<pre>$ ci –l -u datei.c
+RCS/datei.c,v  &lt;-- datei.c
+enter description, terminate with single '.' or end of file
+NOTE: This is not the Log message
+&gt;&gt;.
+initial revision 1.1
+done</pre>
+<p>Hier wurde die erste Revision 1.1 der Datei <span class="listing">datei.c</span> eingecheckt. Sollte RCS bereits eine Version der Datei verwalten, z. B. 1.2, so ordnet das Kommando der Datei die n&auml;chsth&ouml;here Revisionsnummer zu (1.3). Beim Prompt <span class="listing">&gt;&gt;</span> wartet RCS auf eine Eingabe von Ihnen. Mit einem Punkt oder dem Ausl&ouml;sen von End of File (<b>(STRG)</b>+<b>(D)</b>) kann die Protokollmeldung beendet werden, und es wird <span class="listing">done</span> ausgegeben. Statt der Quelldatei <span class="listing">datei.c</span> erzeugt bzw. ver&auml;ndert RCS eine Datei namens <span class="listing">datei.c,v</span>, die sich jetzt im Verzeichnis RCS befindet. Die Endung <span class="listing">v</span> stellt hier eine Erweiterung zur Erkennung dar, dass es sich um eine RCS-Datei handelt. Wird eine Datei ausgecheckt, extrahiert RCS eine neue Version aus der entsprechenden Datei.</p>
+<p>Wenn Sie wollen, k&ouml;nnen Sie sich jetzt die Datei <span class="listing">datei.c</span> in Ihrem Texteditor ansehen. Sie werden in der ersten Zeile, wo Sie im Listing <span class="listing">$Id$</span> angegeben haben, folgende Ver&auml;nderung bemerkt haben:</p>
+<pre>$Id: datei.c,v 1.1 2003/11/08 13:19:59 Juergen Exp Juergen $</pre>
+<p>Dabei handelt es sich um den Identifikationsstring. Aber dazu erfahren Sie mehr bei den Schl&uuml;sselw&ouml;rtern von RCS.</p>
+<p><a id="Xxx999301" name="Xxx999301"></a>Checken Sie nun die Datei <span class="listing">datei.c</span> aus. Dies erledigen Sie mit dem Kommando:</p>
+<pre>$ co –l datei.c
+RCS/datei.c,v --&gt; datei.c
+revision 1.1 (locked)</pre>
+<p>Damit geben Sie die Datei aus der RCS-Kontrolle wieder frei, und Sie finden diese in Ihrem aktuellen Arbeitsverzeichnis wieder. W&uuml;rden Sie das Kommando <span class="listing">co</span> zum Auschecken ohne das Flag –<span class="listing">l</span> (locked) zum Sperren verwenden, kann zwar auf die Datei zugegriffen werden (lesen, &uuml;bersetzen …), aber es ist keine Ver&auml;nderung mehr m&ouml;glich. <a id="Xxx999305" name="Xxx999305"></a>Der alleinige <span class="listing">co</span>-Befehl stellt die Quelldatei im Read-only-Modus zur Verf&uuml;gung. Somit k&ouml;nnen andere Programmierer zwar weiterhin auf die Datei zugreifen, aber nur eben im Read-only-Modus. Nat&uuml;rlich ist es auch nicht m&ouml;glich, eine bereits gesperrte Datei mit <span class="listing">co</span> <span class="listing">-l</span> auszuchecken.</p>
+<p>Jetzt ist es an der Zeit, die Datei <span class="listing">datei.c</span> zu ver&auml;ndern, um eine neue Versionsnummer zu erhalten.</p>
+<pre>/* $Id: datei.c,v 1.1 2003/11/08 13:19:59 J&uuml;rgen Exp J&uuml;rgen $
+ * datei.c
+ * Beispielcode zur Demonstration von RCS
+ * von J&uuml;rgen Wolf
+ */
+#include &lt;stdio.h&gt;
+int main(void) {
+   const char *str = "Mein erstes Projekt mit RCS\n";
+   printf(»%s«,str);
+   return 0;
+}</pre>
+<p>Die Ver&auml;nderung wurde hier fett hervorgehoben. Nehmen Sie diese ebenfalls an Ihrem Text vor. Jetzt wird die Datei erneut eingecheckt.</p>
+<pre>$ ci –l -u datei.c
+RCS/datei.c,v  &lt;-- datei.c
+enter description, terminate with single '.' or end of file
+new revision: 1.2; previous revision: 1.1
+enter log message, terminated with single '.' or end of file:
+&gt;&gt; Der Ausgabestring wurde mit einer Stringkonstante umge&auml;ndert
+&gt;&gt; .
+done</pre>
+<p>Nach erneutem Einchecken hat die Datei nun die Revisionsnummer 1.2. Da Sie hierbei etwas ver&auml;ndert haben, k&ouml;nnen Sie auch bei der Beschreibung (<span class="listing">description</span>) etwas eintragen.</p>
+<p>Jetzt haben Sie zwei Versionen von dem Programm <span class="listing">datei.c</span>. Der Benutzer, der jetzt die aktuelle Version bearbeiten will, muss diese erst extrahieren. Dies wird wieder mit einem <span class="listing">co</span> erledigt.</p>
+<pre>$ co datei.c
+RCS/datei.c,v  --&gt;  datei.c
+revision 1.2
+done</pre>
+<p>Hiermit kann der Benutzer zwar auf die aktuelle Version des Programms zugreifen, aber nur im Read-only-Modus. Es wurde ja bereits erw&auml;hnt, dass <span class="listing">co</span> ohne irgendwelche Angaben die Datei im Read-only-Modus auscheckt. F&uuml;r die &Uuml;bersetzung des Listings (z. B. zum Testen der Anwendung) und zum Lesen reicht dies aus. Will der Entwickler diese Version ver&auml;ndern, muss er diese mit dem Flag <span class="listing">-l</span> auschecken.</p>
+<pre>$ co -l datei.c
+RCS/datei.c,v  --&gt;  datei.c
+revision 1.2 (locked)
+done</pre>
+<p>An der Ausgabe <span class="listing">locked</span> k&ouml;nnen Sie erkennen, dass Sie die aktuelle Version der Datei ausgecheckt und somit f&uuml;r andere gesperrt haben. Somit kann auch kein anderer Programmierer etwas an der Version ver&auml;ndern.</p>
+<p>Nat&uuml;rlich sollten Sie, wenn Sie etwas am Programm ver&auml;ndert haben, es jetzt mit <span class="listing">ci</span> auch wieder einchecken, so dass es dem anderen Programmierer auch wieder zur Verf&uuml;gung steht. Der Quelltext soll also nochmals geringf&uuml;gig ver&auml;ndert werden.</p>
+<pre>/* $Id: datei.c,v 1.2 2003/11/10 06:47:25 tot Exp $
+ * datei.c
+ * Beispielcode zur Demonstration von RCS
+ * von J&uuml;rgen Wolf
+ */
+#include &lt;stdio.h&gt;
+int main(void) {
+   char *str = "Mein erstes Projekt mit RCS";
+   printf("%s\n",str);
+   printf(»Eine weitere Ausgabe\n«);
+   return 0;
+}</pre>
+<p>Checken Sie diese Datei wieder wie gewohnt ein, so haben Sie soeben die Revision 1.3 erstellt. Was ist aber jetzt, wenn Sie oder ein anderer Entwickler auf die Versionen 1.1 oder 1.2 zur&uuml;ckgreifen wollen? Nichts ist einfacher als das. Checken Sie die Datei mit dem Flag <span class="listing">-r</span> f&uuml;r die Revisionsnummer wie folgt aus:<a id="Xxx999319" name="Xxx999319"></a></p>
+<pre>$ co -l -r1.2 datei.c
+RCS/datei.c,v  --&gt;  datei.c
+revision 1.2 (locked)
+done</pre>
+<p>Schon befindet sich die Version 1.2 in Ihrem Arbeitsverzeichnis zum Ver&auml;ndern. Wenn Sie jetzt die Version 1.2 ver&auml;ndern und wieder einchecken wollen, was passiert dann? Denn schlie&szlig;lich existiert ja bereits (im Beispiel) eine Version 1.3. Ganz einfach, die neue Versionsnummer geht der Version 1.2 voraus und bekommt somit die Nummer 1.2.1.1.</p>
+<pre>$ ci -l -u  datei.c
+RCS/datei.c,v  &lt;--  datei.c
+new revision: 1.2.1.1; previous revision: 1.2
+enter log message, terminated with single '.' or end of file:
+&gt;&gt; .
+done</pre>
+<p>Und wie sieht das jetzt mit der ersten Ziffer der Revisionsnummer aus? Wie kann hier aus der Version 1.x die Version 2.x gemacht werden? Auch hierbei bedient man sich der Option <span class="listing">-r</span>. Im folgenden Beispiel checken Sie die Datei <span class="listing">datei.c</span> mit Versionsnummer 1.3 ein, so dass hieraus die Version 2.1 wird. Zuerst m&uuml;ssen Sie nat&uuml;rlich die aktuellste Version auschecken:</p>
+<pre>$ co -l datei.c
+RCS/datei.c,v  --&gt;  datei.c
+revision 1.3 (locked)
+done</pre>
+<p>Nat&uuml;rlich sollte an der Version 1.3 jetzt auch etwas ver&auml;ndert werden, denn eine unver&auml;nderte Version checkt RCS nicht so ohne weiteres ein. Also &auml;ndern Sie etwas in der Datei der Version 1.3, und checken Sie diese dann folgenderma&szlig;en wieder ein:<a id="Xxx999326" name="Xxx999326"></a></p>
+<pre>$ ci -r2.1 datei.c
+RCS/datei.c,v  &lt;--  datei.c
+new revision: 2.1; previous revision: 1.3
+enter log message, terminated with single '.' or end of file:
+&gt;&gt; Gravierende Ver&auml;nderungen daher aus 1.x 2.x gemacht
+&gt;&gt; .
+done</pre>
+<p>Wollen Sie jetzt im Fall der F&auml;lle einer Datei eine neue Versionsnummer verpassen, obwohl diese nicht ver&auml;ndert wurde, k&ouml;nnen Sie dies mit der Option <span class="listing">-f</span> (<span class="listing">force</span>) erzwingen.<a id="Xxx999329" name="Xxx999329"></a></p>
+<pre>$ ci -f -r2.1.1 datei.c
+RCS/datei.c,v  &lt;--  datei.c
+new revision: 2.1.1.1; previous revision: 2.1
+enter log message, terminated with single '.' or end of file:
+&gt;&gt; .
+done</pre>
+<p>Dieses Erzwingen ist sinnvoll, wenn Sie zwei Dateiversionen anbieten wollen.</p>
+<h4 class="t4">Versionsprotokoll – rlog</h4>
+<p><a id="Xxx999333" name="Xxx999333"></a>Nach (fast) jedem erneuten Einchecken geben Sie im Prompt (<span class="listing">&gt;&gt;</span>) h&auml;ufig einen Kommentar oder eine Anmerkung der Ver&auml;nderung ein. Da sich mit der Zeit eine Menge Versionen ergeben, kann man sich hier gelegentlich einen &Uuml;berblick zu den verschiedenen Versionen verschaffen. Dieses Protokoll k&ouml;nnen Sie sich mit dem Befehl <span class="listing">rlog</span> ansehen:</p>
+<pre>$ rlog datei.c
+RCS file: RCS/datei.c,v
+Working file: datei.c
+head: 2.2
+branch:
+locks: strict
+        tot: 2.2
+access list:
+symbolic names:
+        beta: 2.2
+keyword substitution: kv
+total revisions: 8;     selected revisions: 8
+description:
+----------------------------
+revision 2.2    locked by: tot;
+date: 2003/11/11 05:48:46; author: tot; state: Exp;  lines: +2 -1
+Eine ungetestete Version
+----------------------------
+revision 2.1
+date: 2003/11/10 12:23:31; author: tot; state: Exp;  lines: +2 -1
+branches:  2.1.1;
+Gravierende Ver&auml;nderungen daher aus 1.x 2.x gemacht
+----------------------------
+revision 1.4
+date: 2003/11/10 12:10:09; author: tot; state: Exp;  lines: +2 -1
+Noch ein Textstring wurde hinzugef&uuml;gt
+...</pre>
+<p>Die Ausgabe wurde hierbei erheblich gek&uuml;rzt. In diesem Protokoll finden Sie alles, was Sie ben&ouml;tigen, wie die Versionsnummer, das Datum der Versionen und die Zeit des Eincheckens, den Autor, der die Datei ver&auml;ndert hat, &Auml;nderungen von hinzugef&uuml;gten und gel&ouml;schten Zeilen und wer alles auf die Datei zugreifen darf. Ebenfalls finden Sie hier, ob jemand aus einer Version eine Nebenversion (<span class="listing">branch</span>) gemacht hat, und nat&uuml;rlich die Beschreibung der Ver&auml;nderungen, die Sie (hoffentlich) regelm&auml;&szlig;ig eingegeben haben.</p>
+<h4 class="t4">Zugriffsliste</h4>
+<p><a id="Xxx999338" name="Xxx999338"></a>Wollen Sie, dass nur autorisierte Personen auf die Datei zugreifen d&uuml;rfen, k&ouml;nnen Sie eine Zugriffsliste erstellen. Diese Liste bezieht sich dann auf den ganzen Dateibaum. Dazu m&uuml;ssen Sie das Kommando <span class="listing">rcs</span> mit dem Flag <span class="listing">-a</span> verwenden. Hinter <span class="listing">-a</span> schreiben Sie alle Benutzernamen, getrennt durch ein Komma, die Zugriff auf eine entsprechende Datei erhalten sollen.</p>
+<pre>$ rcs -atot,mars,pluto,erde datei.c</pre>
+<p>Somit haben nur noch die Benutzer(-Namen) <span class="listing">tot</span>, <span class="listing">erde</span>, <span class="listing">mars</span> und <span class="listing">pluto</span> Zugriff auf die Datei <span class="listing">datei.c</span>. Wenn Sie <span class="listing">rlog</span> auf diese Datei aufrufen, finden Sie entsprechende Namen in der <span class="listing">access</span> <span class="listing">list</span> eingetragen:</p>
+<pre>access list:
+        tot
+        erde
+        pluto
+        mars</pre>
+<p>Wollen Sie einen Benutzer aus dieser Liste herausstreichen, so machen Sie das mit dem Kommando <span class="listing">rcs</span> und dem Flag <span class="listing">-e</span>.</p>
+<pre>rcs -epluto,erde datei.c</pre>
+<p>Hiermit w&uuml;rden die Benutzer <span class="listing">pluto</span> und <span class="listing">erde</span> aus der Zugriffsliste gestrichen. Ein Blick in <span class="listing">rlog</span> best&auml;tigt Ihnen das.</p>
+<p>Ist die Zugriffsliste leer, dann darf jeder auf die Datei zugreifen. Der Eigent&uuml;mer und der Superuser d&uuml;rfen ebenfalls immer auf die Datei zugreifen und k&ouml;nnen sich somit niemals selbst aussperren. Nat&uuml;rlich gilt auch hier, ist die Datei ausgecheckt und mit dem Flag <span class="listing">-l</span> gesperrt, m&uuml;ssen alle anderen Teilnehmer warten, bis die Datei wieder eingecheckt wurde, sofern die Teilnehmer etwas ver&auml;ndern wollen. Denn die Read-only-Version steht ja zur Verf&uuml;gung.</p>
+<h4 class="t4">Versionen miteinander vergleichen – rcsdiff</h4>
+<p><a id="Xxx999348" name="Xxx999348"></a><a id="Xxx999349" name="Xxx999349"></a>Ben&ouml;tigen Sie einen Vergleich zwischen der aktuellen Version und irgendeiner vorherigen, k&ouml;nnen Sie zum Vergleich das Kommando <span class="listing">rcsdiff</span> verwenden. <span class="listing">rcsdiff</span> ist sehr hilfreich, wenn man die Ver&auml;nderungen zwischen verschiedenen Versionen vergleichen muss; gerade wenn mehrere Entwickler an der Datei arbeiten und Sie nicht genau wissen, was an dieser alles ver&auml;ndert wurde. Ein Beispiel:</p>
+<pre>$ rcsdiff -r1.2 -r2.1 datei.c
+=================================================================
+RCS file: RCS/datei.c,v
+retrieving revision 1.2
+retrieving revision 2.1
+diff -r1.2 -r2.1
+1c1
+&lt; /* $Id: datei.c,v 1.2 2003/11/10 06:37:27 tot Exp $
+---
+&gt; /* $Id: datei.c,v 2.1 2003/11/11 12:23:31 tot Exp $
+10,11c10,13
+&lt;    char *str = "Mein erstes Projekt mit RCS\n";
+&lt;    printf("%s",str);
+---
+&gt;    char *str = "Mein erstes Projekt mit RCS";
+&gt;    printf("%s\n",str);
+&gt;    printf("Eine weitere Ausgabe\n");
+&gt;    printf("\n\n");
+13c15</pre>
+<p>Hier wurde ein Vergleich zwischen der Version 1.2 und der Version 2.1 von der Datei <span class="listing">datei.c</span> aufgelistet.</p>
+<h4 class="t4">RCS-Schl&uuml;sselw&ouml;rter</h4>
+<p><a id="Xxx999354" name="Xxx999354"></a>RCS-Schl&uuml;sselw&ouml;rter sind makro&auml;hnliche Erkennungen, die Informationen in der Datei oder auch in der ausf&uuml;hrbaren bin&auml;ren Datei speichern. Alle Schl&uuml;sselw&ouml;rter werden dabei zwischen zwei Dollarzeichen gestellt (<span class="listing">$Schl&uuml;sselwort$</span>). RCS expandiert dann <span class="listing">$Schl&uuml;sselwort$</span> durch <span class="listing">$Schl&uuml;sselwort:</span> <span class="listing">Wert$</span>. Ein Beispiel haben Sie ja auf den vergangenen Seiten mit dem Schl&uuml;sselwort <span class="listing">$Id$</span> gesehen. Wo Sie im Quellcode <span class="listing">$Id$</span> angegeben haben, hat RCS nach dem Einchecken Folgendes daraus gemacht:</p>
+<pre>$Id: datei.c,v 1.2.1.1 2003/11/10 12:14:06 tot Exp tot $</pre>
+<p>Somit lautet das Format f&uuml;r den <span class="listing">$Id$</span>-String folgenderma&szlig;en:</p>
+<pre>$Schl&uuml;sselwort: Dateinamen, Revisionsnummer, Datum, Uhrzeit, 
+Autor, Status, Locker$</pre>
+<p>Weitere m&ouml;gliche Schl&uuml;sselw&ouml;rter, mit denen Sie experimentieren k&ouml;nnen, sind:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> $Header$</span> – Standardheader: Pfad- und Filename des RCS-Files, Versionsnummer, Datum, Autor, Status und Urheber einer aktuellen Sperre.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> $Log$</span> – Der beim Einchecken angegebene Kommentar, davor ein Header mit Filename des RCS-Files, Versionsnummer, Datum, Autor. Das <span class="listing">$Log$</span>-Schl&uuml;sselwort wird beim Auschecken nicht ersetzt, sondern um den letzten Kommentar erweitert.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> $Author$</span> – Name des Nutzers, der die Version eincheckte</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> $Date$</span> – Datum und Zeit des Eincheckens</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> $Locker$</span> – Name des Nutzers, der eine Sperre auf die Version eingetragen hat</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> $Revision$</span> – Versionsnummer</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> $State$</span> – Statusattribut</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Mit dem Programm <span class="listing">ident</span> k&ouml;nnen Sie aus jeder Datei egal welchen Typs diese Schl&uuml;sselw&ouml;rter extrahieren und anzeigen lassen.</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">17.4.3 CV<a id="RxxKap170030400061C1F0471C2" name="RxxKap170030400061C1F0471C2"></a>S 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999373" name="Xxx999373"></a><a id="Xxx999374" name="Xxx999374"></a>Nachdem mit RCS die Pionierarbeiten f&uuml;r SCM-Systeme erledigt wurden, kann ich mir die eine oder andere Erkl&auml;rung sparen, da Sie jetzt bereits mit den Grundlagen solcher Systeme vertraut sind.</p>
+<p>Es wurde bereits erw&auml;hnt, dass der Hauptnachteil von RCS die fehlende Projektunterst&uuml;tzung ist. Wenn man also Dateien eines ganzen Verzeichnisses oder Verzeichnisbaums mit RCS bearbeiten will, muss man sich entweder kleine Skripte basteln oder die Erweiterung von RCS, n&auml;mlich CVS, verwenden.</p>
+<p>CVS (Kurzform f&uuml;r Concurrent Versions System) ist mittlerweile das am h&auml;ufigsten eingesetzte Open-Source-Tool zur Versionskontrolle und steht unter der GPL. Au&szlig;erdem gibt es f&uuml;r Kommandozeilen-Muffel inzwischen mehrere GUIs f&uuml;r Windows, Mac und Linux/UNIX.</p>
+<p>Das System von CVS besteht aus zwei Teilen: der serverseitigen Software, die das Archiv verwaltet, und einer clientseitigen Software, womit der Entwickler mit den Dateien im Archiv arbeiten kann.</p>
+<p>CVS ben&ouml;tigt au&szlig;erdem keine Sperren (Locking). (Es benutzt aber Locks w&auml;hrend des Ein-/Auscheckens, um Race Conditions zu vermeiden.) Anwender von CVS k&ouml;nnen gleichzeitig &Auml;nderungen an denselben Quelldateien vornehmen.</p>
+<p>Neben den Hauptanwendungen wie der Softwareentwicklung im Team eignet sich CVS auch f&uuml;r die Verwaltung und Wartung von Websites und ebenso zur Administration des Systems (Wartung mehrerer Systeme &uuml;ber ein gemeinsames Archiv).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>CVS ist ein gewaltiges Werkzeug, wor&uuml;ber man gut und gerne ein paar hundert Seiten verfassen k&ouml;nnte. &Uuml;ber Sinn und Unsinn eines solch umfangreichen Textes kann man diskutieren, aber f&uuml;r weitere Informationen sei immer die Manual oder info-Page von CVS empfohlen.</p>
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999385" name="Xxx999385"></a>Kernst&uuml;ck von CVS ist die Repository (dt. Beh&auml;lter oder dt.-frz. Repertoire), worin die Quelldateien liegen. Diese Repository wird allerdings nicht direkt bearbeitet. Man legt stattdessen f&uuml;r jeden an einem Projekt beteiligten Entwickler ein eigenes Arbeitsverzeichnis an. Darin kann dieser nun beliebig die Dateien ver&auml;ndern, neue hinzuf&uuml;gen oder einzelne Dateien l&ouml;schen. Jede Ver&auml;nderung betrifft vorerst immer nur die lokale Kopie des einzelnen Entwicklers in seinem Arbeitsverzeichnis.</p>
+<p>Will der Entwickler jetzt seine neu &uuml;berarbeitete Version in die Repository einspielen, muss diese Version eingecheckt werden. Dazu macht der Entwickler zuvor erst ein Update seiner eigenen Datei(en). Dabei werden nur die Quelldateien &uuml;bernommen, deren Datum j&uuml;nger als die eigenen sind, um Widerspr&uuml;che zu vermeiden. Denn es k&ouml;nnten ja in der Zeit, wo Sie die Datei ver&auml;ndert haben, weitere Programmierer ebenso an der gleichen Datei gearbeitet haben. War das Update erfolgreich, wird die Ver&auml;nderung in die Repository &uuml;bertragen. Das n&auml;chste Auschecken bzw. Update erfolgt jetzt bei allen anderen Entwicklern aus der eben aktualisierten Version.</p>
+<h4 class="t4">Einrichten eines Archivs (Repository)</h4>
+<p><a id="Xxx999389" name="Xxx999389"></a>Damit Sie den anschlie&szlig;enden Erkl&auml;rungen auch folgen bzw. dies in der Praxis nachvollziehen k&ouml;nnen, sei Folgendes gegeben: In Ihrem Arbeitsverzeichnis erstellen Sie ein Verzeichnis namens <span class="listing">my_project</span> und darin die Verzeichnisse <span class="listing">quellcodes</span> und <span class="listing">repository</span>. Im Verzeichnis <span class="listing">quellcodes</span> befinden sich folgende Dateien (deren Inhalt hier nicht von Interesse sein soll):</p>
+<pre>$ cd my_project/quellcodes
+$ ls
+extra.h  funktionen.c  main.c</pre>
+<p>Das Verzeichnis <span class="listing">repository</span> ist noch leer. Somit liegt folgende Hierarchie im Arbeitsverzeichnis vor:</p>
+<pre>my_project
+  |
+  |-quellcodes
+  |   |
+  |   |-extra.h
+  |   |-funktionen.c
+  |   |-main.c 
+  |
+  |-resository</pre>
+<p>Wenn Sie diese Gegebenheiten erstellt bzw. erzeugt haben, k&ouml;nnen Sie die folgenden Beispiele selbst in der Praxis ausf&uuml;hren – was sehr zu empfehlen ist. Das komplette Beispiel wird auf dem lokalen Rechner ausgef&uuml;hrt. In der Praxis wird dies nat&uuml;rlich eher selten der Fall sein, was bedeutet, dass der ganze Vorgang meistens &uuml;ber ein Netzwerk (z. B. Internet) vonstatten geht.</p>
+<p>Bevor Sie ein Archiv verwenden k&ouml;nnen, m&uuml;ssen Sie dieses logischerweise erst erstellen. Damit Sie im Verlaufe dieses Kapitels nicht immer mittels</p>
+<pre>$ cvs -d /pfad/zum/cvs Kommando </pre>
+<p>auf das Archiv zugreifen m&uuml;ssen, soll erst die Umgebungsvariable <span class="listing">CVSROOT</span> neu gesetzt werden. Damit wird so manches einfacher. Dies erledigen Sie mit dem Kommando:</p>
+<pre>$ setenv CVSROOT /pfad/zum/Archiv</pre>
+<p>oder</p>
+<pre>$ export CVSROOT=/pfad/zum/Archiv</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>F&uuml;r eine dauerhafte Einstellung m&uuml;ssen Sie einen Eintrag in z. B. <span class="listing">~/.bashrc</span> vornehmen.</p>
+</td>
+</tr>
+</table><br>
+<p>In diesem Fall befindet sich das Projekt im Arbeitsverzeichnis. Somit setzen Sie die Umgebungsvariable mittels</p>
+<pre>$ export CVSROOT=$HOME/my_project/repository
+$ echo $CVSROOT
+/home/tot/my_project/repository</pre>
+<h4 class="t4">Eine neues Projekt einrichten (Repository initialisieren)</h4>
+<p><a id="Xxx999408" name="Xxx999408"></a>Im n&auml;chsten Schritt m&uuml;ssen Sie festlegen, welches Archiv verwaltet werden soll. Dazu muss lediglich die Repository initialisiert werden. Wechseln Sie also in das Verzeichnis, in dem sich das Projekt befindet, und initialisieren Sie die Repository wie folgt:</p>
+<pre>$ cd my_project/repository
+$ cvs init
+$ ls
+CVSROOT </pre>
+<p>Jetzt befindet sich in dem Verzeichnis (repository) ein neues Verzeichnis mit dem Namen <span class="listing">CVSROOT</span>. Darin befinden sich u. a. viele verschiedene Hilfsdateien f&uuml;r CVS. Bisher haben Sie allerdings nur eine neue Repository initialisiert – somit m&uuml;ssen Sie im n&auml;chsten Schritt die einzelnen Dateien des Projektes unter die Kontrolle von CVS bringen – besser importieren. Dazu m&uuml;ssen Sie wieder im Hauptverzeichnis des Projektes sein, worin sich die Quelldateien befinden. Dank der gesetzten Umgebungsvariablen <span class="listing">CVSROOT</span> findet CVS sein Ziel von selbst.</p>
+<pre>$ cd $HOME/my_project/quellcodes
+$ ls
+extra.h  funktionen.c  main.c
+$ cvs import -m 'Bemerkung' mytest_projekt Wolf alpha
+N mytest_projekt/extra.h
+N mytest_projekt/main.c
+N mytest_projekt/funktionen.c
+No conflicts created by this import</pre>
+<p>Durch <span class="listing">import</span> wird in <span class="listing">repository</span> ein Verzeichnis mit dem Namen <span class="listing">mytest_projekt</span> erzeugt. Darin befinden sich jetzt s&auml;mtliche Archivdateien mit der Endung <span class="listing">,v</span>, die mit zus&auml;tzlichen Informationen erweitert wurden. H&auml;tten Sie beim <span class="listing">import</span> das Flag <span class="listing">-m</span> nicht verwendet, h&auml;tte sich f&uuml;r den dazugeh&ouml;renden Kommentar einen Editor (der in der Umgebungsvariablen <span class="listing">$EDITOR</span> spezifiziert ist) ge&ouml;ffnet, worin Sie einen entsprechenden Kommentar (hier nur <span class="listing">Bemerkung</span>) h&auml;tten schreiben k&ouml;nnen. Die beiden Angaben <span class="listing">Wolf</span> und <span class="listing">alpha</span> sind so genannte Vendor- und Release-Tags, die zwar vorgeschrieben sind, aber in diesem Fall noch nicht n&auml;her betrachtet werden.</p>
+<h4 class="t4">Auschecken einer Arbeitskopie</h4>
+<p><a id="Xxx999415" name="Xxx999415"></a>Jetzt k&ouml;nnen Sie (endlich) mit der Arbeit an Ihrem Projekt beginnen. Dazu m&uuml;ssen Sie die Quelldateien aus dem CVS-Archiv in einen Arbeitsbereich kopieren. Dies wird mit dem Befehl <span class="listing">checkout</span> (oder kurz co) erledigt, womit Sie ein komplettes Verzeichnis und alle darin enthaltenen Dateien aus dem Archiv in das aktuelle Verzeichnis kopieren.</p>
+<pre>$ cd ~
+$ cvs checkout mytest_projekt
+cvs checkout: Updating mytest_projekt
+U mytest_projekt/extra.h
+U mytest_projekt/funktionen.c
+U mytest_projekt/main.c</pre>
+<p>Jetzt befindet sich in Ihrem Arbeitsverzeichnis eine Arbeitskopie desselben Inhalts, den Sie zuvor mit <span class="listing">import</span> importiert haben – inklusive eines CVS-Verzeichnisses, in dem die CVS-Informationen f&uuml;r die Versionskontrolle gespeichert werden. Dieses CVS-Verzeichnis finden Sie jetzt in JEDEM Unterverzeichnis; also f&uuml;r jedes Verzeichnis im Projekt ein CVS-Verzeichnis. Dies bedeutet nat&uuml;rlich, dass sich in dem Verzeichnis oder den Verzeichnissen Ihres Projekts kein Verzeichnis mit dem Namen CVS befinden darf.</p>
+<pre>$ ls mytest_projekt
+CVS  extra.h  funktionen.c  main.c</pre>
+<p>Hierzu auch gleich ein Unterschied zu RCS: Bei CVS m&uuml;ssen die Dateien nicht erst gesperrt werden, sondern stehen gleich zum Arbeiten zur Verf&uuml;gung. Nat&uuml;rlich ist hier von besonderem Interesse, was sich in diesem CVS-Verzeichnis befindet. Dabei erfahren Sie auch gleich, wie CVS arbeitet.</p>
+<p>Bestimmt f&auml;llt Ihnen eine gewisse &Auml;hnlichkeit zu RCS auf – was ja auch selbstverst&auml;ndlich ist, denn (wie schon erw&auml;hnt) CVS verwendet das RCS-System. Der einzige Unterschied (auch das wurde schon erw&auml;hnt) liegt darin, dass Sie mit CVS die F&auml;higkeit haben, ganze Dateib&auml;ume zu verwalten. Damit dies realisierbar ist, legt CVS eben ein entsprechendes CVS-Archiv (Verzeichnis) an, das dieselben Dateien, Verzeichnisse und Unterverzeichnisse enth&auml;lt wie das Projekt selbst; nur dass es sich hier um RCS-Dateien handelt.</p>
+<p>Bei dem <span class="listing">checkout</span>-Befehl, den Sie eben verwendet haben, legt CVS die Verzeichnisse in derselben Struktur an wie im CVS-Archiv. Anschlie&szlig;end werden mit RCS die Dateien anhand der Revision konstruiert und in das Arbeitsverzeichnis kopiert. Durch das Konstruieren der Revision ist es erst m&ouml;glich, dass der Programmierer auch eine &auml;ltere Version des Projektes auschecken kann.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/17_5.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein17_5.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 17.5   
+    </b>Checkout verschiedener Versionen aus einem CVS-Archiv</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt folgt ein Blick in das CVS-Verzeichnis des ausgecheckten Projekts:</p>
+<pre>$ ls mytest_projekt/CVS
+Entries  Repository  Root</pre>
+<p>Die Datei <span class="listing">Root</span> verweist auf das Projekt:</p>
+<pre>$ cat mytest_projekt/CVS/Root
+/home/tot/my_project/repository</pre>
+<p>In <span class="listing">Entries</span> sind die Nummern und Checkout-Zeiten des Projektes gespeichert:</p>
+<pre>$ cat mytest_projekt/CVS/Entries
+/extra.h/1.1.1.1/Wed Dec 10 01:37:08 2003//
+/funktionen.c/1.1.1.1/Wed Dec 10 01:37:08 2003//
+/main.c/1.1.1.1/Wed Dec 10 01:37:08 2003//
+D</pre>
+<p>Diese sind n&ouml;tig, damit ein <span class="listing">commit</span> (folgt noch) richtig ausgef&uuml;hrt wird. Damit wei&szlig; CVS, welche Revision sich im Arbeitsbereich befindet. Die Datei <span class="listing">Repository</span> verweist auf ein Projekt innerhalb des Archivs, in dem sich die passenden RCS-Dateien befinden (hier auf: <span class="listing">mytest_projekt</span>).</p>
+<pre>$ cat mytest_projekt/CVS/Repository
+mytest_projekt
+$ ls repository/mytest_projekt
+extra.h,v  funktionen.c,v  main.c,v</pre>
+<p>W&uuml;rden Sie in Ihrem CVS-Archiv eine Quelldatei entfernen (l&ouml;schen), dann wird auch hierf&uuml;r von CVS ein Eintrag gemacht. Diese Dateien befinden sich dann in einem Unterverzeichnis namens <span class="listing">Attic</span>.</p>
+<h4 class="t4">Ver&auml;nderungen von Dateien</h4>
+<p><a id="Xxx999440" name="Xxx999440"></a>Im n&auml;chsten Schritt k&ouml;nnen Sie jetzt mit den ausgecheckten Dateien Ihres oder des Projektes arbeiten. In diesem Beispiel soll die Datei <span class="listing">funktionen.c</span> ver&auml;ndert werden.</p>
+<pre>$ cd ~/mytest_projekt
+$ ls
+CVS  extra.h  funktionen.c  main.c
+$ vi funktionen.c</pre>
+<p>Was ver&auml;ndert wurde, spielt zum Verst&auml;ndnis keine Rolle. Ich rufe hierbei den Editor <span class="listing">vi</span> auf, f&uuml;ge eine Zeile im Quellcode dazu und speichere diese Ver&auml;nderung ab.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sie m&uuml;ssen hier nicht den Editor <span class="listing">vi</span> verwenden, obwohl der Arbeitsvorgang damit um einiges schneller ist. Sofern Sie <span class="listing">vi</span> verwenden und der Editor das Listing geladen hat, dr&uuml;cken Sie <b>(i)</b>f&uuml;r insert, f&uuml;gen jetzt Ihre neue Zeile bzw. irgendeine Ver&auml;nderung ein und dr&uuml;cken anschlie&szlig;end <b>(ESC)</b>, um aus dem Editormodus herauszukommen. Jetzt k&ouml;nnen Sie die Datei speichern, indem Sie die <b>(ª)</b>-Taste gedr&uuml;ckt halten und zweimal <b>(Z)</b> <b>(Z)</b> bet&auml;tigen. Alternativ bietet sich auch <span class="listing">joe</span> oder <span class="listing">pico</span> an. Auf jeden Fall aber sollte <span class="listing">$EDITOR</span> gesetzt sein, wenn <span class="listing">'cvs</span> <span class="listing">ci'</span> ausgef&uuml;hrt wird, sonst endet man hilflos im <span class="listing">vi</span>!</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt wollen Sie noch eine Ver&auml;nderung einbringen. Doch jetzt kommt es: Sie erhalten einen wichtigen Telefonanruf und m&uuml;ssen alles liegen und stehen lassen. W&auml;hrend dieser Zeit hat sich aber jemand anderes am Code zu schaffen gemacht. Jetzt gilt es nat&uuml;rlich, erst einmal mit der Untersuchung der Ver&auml;nderung(en) fortzufahren.</p>
+<h4 class="t4">Untersuchen von Ver&auml;nderungen</h4>
+<p><a id="Xxx999450" name="Xxx999450"></a>Um herauszufinden, welche Datei(en) zuletzt ge&auml;ndert wurde(n), reicht der Befehl <span class="listing">update</span>:</p>
+<pre>$ cd ~/mytest_projekt
+$ cvs update
+ cvs update: Updating .
+ M funktionen.c </pre>
+<p>Die Datei <span class="listing">funktionen.c</span> wurde hier ver&auml;ndert. Dies k&ouml;nnen Sie am <span class="listing">M</span>, das f&uuml;r Modified steht, erkennen. Bei den vielen Zeilen Code wollen Sie sicherlich auch wissen, was ver&auml;ndert wurde. Dazu k&ouml;nnen Sie <span class="listing">diff</span> verwenden.</p>
+<pre>$ cvs -Q diff -c
+Index: funktionen.c
+=================================================================
+RCS file: /home/tot/my_project/repository/mytest_projekt/funktionen.c,v
+retrieving revision 1.1.1.1
+diff -c -r1.1.1.1 funktionen.c
+*** funktionen.c        10 Dec 2003 01:37:08 -0000      1.1.1.1
+--- funktionen.c        11 Dec 2003 03:23:51 -0000
+***************
+*** 1,4 ****
+--- 1,5 ----
+  static void hallo(void)
+  {
+        printf("Hallo Welt\n");
++         printf("Heute ist ein sch&ouml;ner Tag\n");
+  }</pre>
+<p>Ich denke, klarer geht es nicht mehr. Hier finden Sie mit <span class="listing">Index</span> den Namen der Datei, mit <span class="listing">RCS</span> <span class="listing">file</span> den Ort, wo die RCS-Datei gespeichert wurde, die Version, wann diese erstellt wurde und wann die &Auml;nderung gemacht wurde. Die Ver&auml;nderung sehen Sie anhand des <span class="listing">+</span>-Zeichens in der Zeile (hier <span class="listing">printf("Heute</span> <span class="listing">ist</span> <span class="listing">ein</span> <span class="listing">sch&ouml;ner</span> <span class="listing">Tag\n");</span>). In welcher Zeile die Datei ge&auml;ndert wurde und welche Zeilen hinzugekommen sind, k&ouml;nnen Sie im folgenden Eintrag lesen:</p>
+<pre>*** 1,4 ****
+(Start des Kontextes ab Zeile 1, Chunk ist 4 Zeilen lang)
+--- 1,5 ---- 
+(Start des Kontextes ab Zeile 1, Chunk ist 5 Zeilen lang)</pre>
+<p>Mehr dazu w&uuml;rde jetzt den Rahmen des Kapitels sprengen. Daher seien hierf&uuml;r die Manual Pages von <span class="listing">diff</span> empfohlen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bei umfangreicheren Programmen sollten Sie das Flag –<span class="listing">pdu</span> hinter <span class="listing">diff</span> verwenden, da mit <span class="listing">pdu</span> die Ausgabe weitaus besser lesbar ist als mit <span class="listing">c</span>.</p>
+</td>
+</tr>
+</table><br>
+<p>Nat&uuml;rlich k&ouml;nnen Sie <span class="listing">diff</span> und <span class="listing">update</span> auch auf einzelnen Dateien verwenden wie z. B.</p>
+<pre>$ cvs update funktionen.c</pre>
+<h4 class="t4">Ver&auml;nderungen an das Archiv weitergeben</h4>
+<p><a id="Xxx999465" name="Xxx999465"></a>Nachdem Sie an Ihrem j&uuml;ngsten Projekt weitergearbeitet und es ver&auml;ndert haben, wird es Zeit, das Projekt mitsamt seinen &Auml;nderungen ins Archiv zur&uuml;ckzulegen. Dazu wird der Befehl <span class="listing">commit</span> (oder kurz ci) verwendet. Geben Sie <span class="listing">commit</span> ohne einen Dateinamen an, werden alle Quelldateien des Projektes, die ver&auml;ndert wurden, an das Archiv gesendet.</p>
+<pre>$ cvs commit -m 'zus&auml;tzliche Textausgabe'
+cvs commit: Examining .
+Checking in funktionen.c;
+/home/tot/my_project/repository/mytest_projekt/funktionen.c,v  &lt;--  funktionen.c
+new revision: 1.2; previous revision: 1.1
+done</pre>
+<p>An der Ausf&uuml;hrung von <span class="listing">commit</span> k&ouml;nnen Sie erkennen, welche Dateien ver&auml;ndert wurden und somit neu eingecheckt werden (hier <span class="listing">funktionen.c</span>). Somit h&auml;tte hier auch folgendes <span class="listing">commit</span> angegeben werden k&ouml;nnen:</p>
+<pre>$ cvs commit -m 'zus&auml;tzliche Textausgabe' funktionen.c</pre>
+<p>Au&szlig;erdem k&ouml;nnen Sie an der Ausgabe auch erkennen, dass aus der Revisionsnummer 1.1 die Revisionsnummer 1.2 geworden ist. Jede Datei im Projekt hat &uuml;brigens eine eigene Revisionsnummer. Dabei wird die rechte Stelle der Nummer um eins inkrementiert. Unterschiedliche Revisionsnummern in einem Projekt bedeuten nur, dass eine Datei h&auml;ufiger als die andere ver&auml;ndert (ein <span class="listing">commit</span> gesendet) wurde.</p>
+<h4 class="t4">Mehrere Programmierer – ein Projekt</h4>
+<p><a id="Xxx999472" name="Xxx999472"></a>Da Sie bei CVS – im Gegensatz zu RCS – nicht mit Sperren zu k&auml;mpfen haben, kann gleich mit den Arbeiten am ausgecheckten Projekt begonnen werden. Und das bedeutet auch im Gegensatz zu RCS, dass jetzt ohne weiteres mehrere Entwickler gleichzeitig das Projekt oder Teile davon auschecken und ver&auml;ndern k&ouml;nnen. Zwangsl&auml;ufig k&ouml;nnen hierbei Konflikte auftreten, wenn ein Entwickler nach Beendigung des Projektes keinen Abgleich (ein <span class="listing">commit</span>) mehr macht bzw. den Abgleich erst nach l&auml;ngerer Zeit macht.</p>
+<p>Wie die Gruppe von Entwicklern dabei vorgehen muss, soll anhand eines Fallbeispiels erkl&auml;rt werden.</p>
+<p>Programmierer Anton und Programmierer Xaver greifen beide auf das CVS-Archiv eines Projekts zu und machen ein <span class="listing">checkout</span>.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/17_6.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein17_6.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 17.6   
+    </b>Zwei Programmierer checken aus einem CVS-Archiv aus.</p>
+</td>
+</tr>
+</table><br>
+<p>Programmierer Xaver ver&auml;ndert eine Datei im Projekt und teilt die Ver&auml;nderung dem CVS-Archiv mittels einem <span class="listing">commit</span> mit.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/17_7.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein17_7.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 17.7   
+    </b>Ein Programmierer bringt eine Ver&auml;nderung ins Archiv ein.</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt kommt Programmierer John und holt sich ebenfalls mit einem <span class="listing">checkout</span> das Projekt auf seine Platte.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/17_8.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein17_8.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 17.8   
+    </b>John holt sich die neuste Version aus dem Archiv.</p>
+</td>
+</tr>
+</table><br>
+<p>Programmierer Anton hat jetzt auch eine Datei ver&auml;ndert und will dies mit <span class="listing">commit</span> dem Archiv mitteilen. Das <span class="listing">commit</span> schl&auml;gt fehl, da ja Xaver bereits eine Ver&auml;nderung eingebracht hat, und somit stimmt die Revisionsnummer von Anton nicht mehr mit dem Archiv &uuml;berein. Um diesen Umstand zu beheben, muss Anton ein Update seines Arbeitsbereiches machen. Dies erledigt dieser mit dem <span class="listing">update</span>-Befehl.</p>
+<pre>$ cvs update</pre>
+<p>Mittels <span class="listing">update</span> werden bei Anton alle Daten aktualisiert, die seit seinem letzten <span class="listing">checkout</span> ver&auml;ndert wurden.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/17_9.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein17_9.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 17.9   
+    </b>Arbeitsbereich mittels update auf den neuesten Stand bringen</p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt muss Anton nat&uuml;rlich &uuml;berpr&uuml;fen, ob seine Ver&auml;nderung mit der von Xaver &uuml;bereinstimmt – sprich, keine Konflikte entstehen. Hat Xaver z. B. eine globale Funktion verworfen, die Anton in seiner Ver&auml;nderung verwendet, muss Anton dies beachten. Es empfiehlt sich im Grunde, immer vor dem <span class="listing">commit</span> ein <span class="listing">update</span> zu machen. Wenn es keine Probleme bei den Ver&auml;nderungen gab, kann Anton seine Ver&auml;nderung ebenfalls dem Archiv mitteilen (<span class="listing">commit</span>).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/17_10.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein17_10.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 17.10   
+    </b>Wenn es keine Konflikte gibt, erfolgt ein weiteres commit.</p>
+</td>
+</tr>
+</table><br>
+<p>Wenn Xaver jetzt ebenfalls wieder das Projekt auf seiner Platte aktualisieren will, reicht auch hier ein einfaches <span class="listing">update</span>.</p>
+<p>Derselbe Vorgang wie eben beschrieben l&auml;uft auch ab, wenn zwei Entwickler dieselbe Datei ver&auml;ndern. Allerdings muss auch hierbei beachtet werden, dass sich die Ver&auml;nderungen vertragen.</p>
+<p>Jetzt haben wir ja noch John, der dem Archiv mitteilen will, dass er eine Ver&auml;nderung eingebracht hat. W&auml;hrenddessen macht Anton eine <span class="listing">status</span>-Abfrage, die wie folgt aussieht:</p>
+<pre>$ cvs status funktionen.c
+File: funktionen.c Status: Locally Modified
+Working revision: 1.2 Mon Mar 2 06:35:27 2004
+Repository revision: 1.2 /home/anton/my_projects/repository/funktionen.c,v
+Sticky Tag: (none)
+Sticky Date: (none)
+Sticky Options: (none) </pre>
+<p>Mittlerweile hat ein weiterer Programmierer namens Leon die Datei <span class="listing">funktionen.c</span> bearbeitet und dies bereits dem Archiv mitgeteilt. Somit w&auml;re die aktuelle Revisionsnummer 1.3. Eine <span class="listing">status</span>-Abfrage von John auf seinem lokalen Rechner w&uuml;rde jetzt folgenderma&szlig;en aussehen:</p>
+<pre>$ cvs status funktionen.c
+File: funktionen.c Status: Needs Patch
+Working revision: 1.2 Mon Mar 2 06:35:27 2004
+Repository revision: 1.3 /home/john/my_projects/repository/funktionen.c,v
+Sticky Tag: (none)
+Sticky Date: (none)
+Sticky Options: (none) </pre>
+<p>Damit w&uuml;sste John, dass jemand bei der Datei <span class="listing">funktionen.c</span> ein <span class="listing">commit</span> gemacht hat, die Revisionsnummer im Archiv 1.3 und seine Revisionsnummer 1.2 ist und er somit hinterherhinkt. An der Statuszeile k&ouml;nnte John auch erkennen, dass er einen Patch machen soll. Dabei m&uuml;sste er lediglich ein <span class="listing">update</span> machen und die &Auml;nderung mittels <span class="listing">patch</span> einarbeiten. John hat jetzt aber weder den <span class="listing">status</span>-Befehl noch ein <span class="listing">update</span> gestartet – schlimmer noch, er hat in derselben Datei <span class="listing">funktionen.c</span> dieselbe Zeile wie Leon ver&auml;ndert. Hier liegt ein ganz klarer Konflikt vor.</p>
+<p>Diesen Konflikt bemerkt John erst beim n&auml;chsten <span class="listing">commit</span>, das logischerweise erst einmal fehlschl&auml;gt. Also macht er zun&auml;chst ein <span class="listing">update</span> der Datei <span class="listing">funktionen.c</span>:</p>
+<pre>$ cvs update funktionen.c 
+RCS file: /home/john/my_project/repository/funktionen.c,v
+retrieving revision 1.2
+retrieving revision 1.3
+Merging differences between 1.2 and 1.3 into funktionen.c
+rcsmerge: warning: conflicts during merge
+cvs update: conflicts found in funktionen.c
+C funktionen.c </pre>
+<p>Es liegt also ein Konflikt vor. Welcher Konflikt das genau ist, kann er feststellen, indem er die Datei <span class="listing">funktionen.c</span> in seinem lokalen Arbeitsverzeichnis ansieht.</p>
+<pre>$ cat funktionen.c
+void hallo()
+{
+        printf("Hallo Welt\n");
+&lt;&lt;&lt;&lt;&lt;&lt; funktionen.c
+        printf ("Heute ist ein sch&ouml;ner Tag\n");
+=======
+       printf ("Heute ist kein sch&ouml;ner Tag\n");
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.3
+}</pre>
+<p>Der folgende Teil entspricht der Ver&auml;nderung von John:</p>
+<pre>&lt;&lt;&lt;&lt;&lt;&lt; funktionen.c
+        printf ("Heute ist ein sch&ouml;ner Tag\n");</pre>
+<p>Getrennt werden diese beiden Ver&auml;nderungen in derselben Zeile mit:</p>
+<pre>=======</pre>
+<p>Der untere Teil entspricht der Ver&auml;nderung der aktuellen Revision 1.3, wie sie im CVS-Archiv vorliegt:</p>
+<pre>       printf ("Heute ist kein sch&ouml;ner Tag\n");
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.3</pre>
+<p>Diesen Konflikt m&uuml;ssen Sie nun selbst beseitigen. Meistens handelt es sich allerdings nicht um ein solch stupides Beispiel, so dass eine R&uuml;cksprache mit dem Entwickler, der an derselben Zeile wie Sie gearbeitet hat, vonn&ouml;ten ist, so dass es zu einer &Uuml;bereinkunft kommen wird.</p>
+<p>Wobei das mit der R&uuml;cksprache auch nicht so einfach zu l&ouml;sen ist. Der Franzose spricht kein Chinesisch, der Chinese kein Deutsch und der Amerikaner kein Spanisch (o. k., viele sprechen Englisch – aber tun wir mal so, als k&ouml;nnte dies auch niemand). Doch auch daf&uuml;r gibt es bei CVS einen Weg. Wollen Sie allen mitteilen, dass Sie gerade an der Datei <span class="listing">funktionen.c</span> arbeiten, k&ouml;nnen Sie dies mit dem <span class="listing">edit</span>-Befehl machen.</p>
+<pre>$ cvs edit funktionen.c</pre>
+<p>Jetzt werden alle anderen informiert, dass Sie gerade an dieser Datei arbeiten. Voraussetzung daf&uuml;r ist, dass die anderen Entwickler ebenfalls den <span class="listing">edit</span>-Befehl verwenden. Jetzt k&ouml;nnen sich die Entwickler untereinander absprechen oder warten, bis derjenige, der an dieser Datei arbeitet, diese Ver&auml;nderung(en) an das Archiv (<span class="listing">commit</span>) einsendet. Mit einem <span class="listing">commit</span> tragen Sie sich praktisch aus dem <span class="listing">edit</span>-Modus aus.</p>
+<p>Besser noch ist der Befehl <span class="listing">watch</span>. Damit tragen Sie sich als st&auml;ndiger Beobachter ein. Wenn Sie hierbei eine Datei auschecken (<span class="listing">checkout</span>), geschieht dies vorerst im Lesemodus. Will der Entwickler diese Datei ver&auml;ndern, muss dieser erst <span class="listing">edit</span> eingeben. Durch diese Zwangseingabe erf&auml;hrt der Entwickler, ob gerade jemand an dieser Datei arbeitet.</p>
+<p>Dass es funktioniert, beweist die Open Source Community, wo CVS fast 100 % Marktanteil hat (Tendenz fallend).</p>
+<h4 class="t4">Ver&auml;nderungen r&uuml;ckg&auml;ngig machen</h4>
+<p><a id="Xxx999541" name="Xxx999541"></a>Es kommt zwar nicht h&auml;ufig vor, aber manchmal kann es sinnvoll sein, eine Ver&auml;nderung r&uuml;ckg&auml;ngig zu machen; sei es nun aus Gr&uuml;nden der Unstabilit&auml;t des Programms oder aus Eigeninteresse, um eine eigene Version aus einem &auml;lteren Release zu machen. Das R&uuml;ckg&auml;ngigmachen geschieht auch hier wieder mit dem <span class="listing">update</span>-Befehl und dem Flag <span class="listing">j</span> f&uuml;r <span class="listing">join</span>.</p>
+<pre>$ cat funktionen.c
+static void hallo(void)
+{
+        printf("Hallo Welt\n");
+        printf("Heute ist ein sch&ouml;ner Tag\n");
+}
+$ cvs update -j 1.2 -j 1.1 funktionen.c
+RCS file: /home/tot/my_project/repository/mytest_projekt/funktionen.c,v
+retrieving revision 1.2
+retrieving revision 1.1
+Merging differences between 1.2 and 1.1 into funktionen.c
+$ cat funktionen.c
+static void hallo(void)
+{
+        printf("Hallo Welt\n");
+}
+$ cvs update
+cvs update: Updating .
+M funktionen.c
+$ cvs commit -m "R&uuml;ckg&auml;ngig zur Version 1.1" funktionen.c
+Checking in funktionen.c;
+/home/tot/my_project/repository/mytest_projekt/funktionen.c,v  &lt;--  funktionen.c
+new revision: 1.3; previous revision: 1.2
+done</pre>
+<p>Somit h&auml;tten Sie ohne gro&szlig;en Aufwand hier im Beispiel die Version 1.1 von der Datei <span class="listing">funktionen.c</span> wiederhergestellt, die allerdings trotzdem eine neue Versionsnummer erh&auml;lt!</p>
+<h4 class="t4">Dateien und Verzeichnisse hinzuf&uuml;gen, entfernen oder umbenennen</h4>
+<p>Jetzt fehlen Ihnen eigentlich nur noch zwei wichtige Kommandos zu CVS; das w&auml;ren <span class="listing">add</span> und <span class="listing">remove</span> (oder kurz rm) zum Hinzuf&uuml;gen bzw. Entfernen von Dateien oder Verzeichnissen. Zuerst soll in unserem aktuellen Projekt ein neues Verzeichnis erstellt werden.<a id="Xxx999547" name="Xxx999547"></a></p>
+<pre>$ mkdir include
+$ cvs add include
+Directory /home/tot/my_project/repository/mytest_projekt/include added to the repository
+$ cvs update
+cvs update: Updating .
+cvs update: Updating include</pre>
+<p>Bei einem Blick in das neue Verzeichnis finden Sie auch hier ein extra daf&uuml;r angelegtes CVS-Verzeichnis f&uuml;r das Archiv. Das wurde aber bereits zu Beginn erw&auml;hnt. Ein <span class="listing">commit</span> entf&auml;llt hierbei.</p>
+<p>In de <span class="listing">include</span>-Verzeichnis wollen Sie nun eine neue Headerdatei anlegen, vorausgesetzt, es existiert eine Headerdatei in diesem Verzeichnis. Hier machen Sie es sich mit <span class="listing">touch</span> leicht.<a id="Xxx999551" name="Xxx999551"></a></p>
+<pre>$ touch include/header.h
+$ cvs add include/header.h
+cvs add: scheduling file `incl/header.h' for addition
+cvs add: use 'cvs commit' to add this file permanently
+$ cvs commit -m "neue Headerdatei"
+cvs commit: Examining .
+cvs commit: Examining incl
+RCS file: /home/tot/my_project/repository/mytest_projekt/incl/header.h,v
+done
+Checking in incl/header.h;
+/home/tot/my_project/repository/mytest_projekt/incl/header.h,v  &lt;--  header.h
+initial revision: 1.1
+done</pre>
+<p>Jetzt k&ouml;nnen Sie mit dem neu erstellten Verzeichnis und auch mit der neu erstellten Datei – wie mit jedem anderen Verzeichnis bzw. jeder Datei – mit CVS arbeiten. Ver&auml;ndern Sie jetzt z. B. die Headerdatei <span class="listing">header.h</span>, gehen Sie auch hier gew&ouml;hnlich wie im Beispiel folgt vor:</p>
+<pre>$ cvs update
+cvs update: Updating .
+cvs update: Updating include
+M include/header.h
+$ cvs commit -m 'Headerdatei ver&auml;ndert'
+include/header.hChecking in
+include/header.h;/home/tot/my_project/repository/mytest_projekt/include/header.h,v
+ &lt;--  header.h new revision: 1.2; previous revision: 1.1
+done</pre>
+<p>Ebenso einfach ist es auch, eine Datei wieder aus dem CVS-Archiv zu entfernen. Hierbei sind folgende Schritte n&ouml;tig:<a id="Xxx999556" name="Xxx999556"></a></p>
+<pre>$ cd include
+$ rm header.h
+$ cvs remove header.h
+cvs remove: scheduling `header.h' for removal
+cvs remove: use 'cvs commit' to remove this file permanently
+$ cvs commit -m 'Headerdatei entfernt'
+cvs commit: Examining .
+Removing header.h;
+/home/tot/my_project/repository/mytest_projekt/include/header.h,v  &lt;--  header.h
+new revision: delete; previous revision: 1.2
+done</pre>
+<p>Nat&uuml;rlich muss die Datei, bevor diese aus dem CVS-Archiv entfernt wird, erst aus der Arbeitskopie mittels <span class="listing">rm</span> gel&ouml;scht werden.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Eine Datei, die versehentlich aus der Arbeitskopie gel&ouml;scht wurde, aber noch im CVS-Archiv existiert, kann mit '<span class="listing">cvs</span> <span class="listing">update</span>' wiedergeholt werden (es wird eine Nachricht »xxx.c got lost« angezeigt).</p>
+</td>
+</tr>
+</table><br>
+<p>Ebenso einfach ist das Umbenennen von Dateien bzw. Verzeichnissen im CVS-Archiv. Im Beispiel wird die Datei <span class="listing">leer.c</span> in <span class="listing">voll.c</span> umbenannt:<a id="Xxx999564" name="Xxx999564"></a></p>
+<pre>$ mv leer.c voll.c
+$ cvs remove leer.c
+cvs remove: scheduling `leer.c' for removal
+cvs remove: use 'cvs commit' to remove this file permanently
+$ cvs add voll.c
+cvs add: scheduling file `voll.c' for addition
+cvs add: use 'cvs commit' to add this file permanently
+$ cvs commit -m 'Name leer.c umbenannt in voll.c'
+cvs commit: Examining .
+cvs commit: Examining include
+Removing leer.c;
+/home/tot/my_project/repository/mytest_projekt/leer.c,v  &lt;--  leer.c
+new revision: delete; previous revision: 1.3
+done
+RCS file: /home/tot/my_project/repository/mytest_projekt/voll.c,v
+done
+Checking in voll.c;
+/home/tot/my_project/repository/mytest_projekt/voll.c,v  &lt;--  voll.c
+initial revision: 1.1
+done</pre>
+<p>Sie m&uuml;ssen lediglich die alte Datei in der Arbeitskopie umbenennen (hier mit <span class="listing">mv</span>) und diese aus dem CVS-Archiv entfernen (<span class="listing">cvs</span> <span class="listing">remove</span>), um anschlie&szlig;end die neue Datei hinzuf&uuml;gen (<span class="listing">cvs</span> <span class="listing">add</span>) zu k&ouml;nnen. Am Ende f&uuml;hren Sie noch ein <span class="listing">commit</span> aus, und Sie haben einen neuen Dateinamen.</p>
+<p><a id="Xxx999567" name="Xxx999567"></a>Bei Verzeichnissen k&ouml;nnen Sie &auml;hnlich vorgehen. Erstellen Sie zuerst ein neues Verzeichnis, f&uuml;gen Sie dies mit <span class="listing">cvs</span> <span class="listing">add</span> zum Vormerken f&uuml;r das Archiv dazu. Kopieren Sie jetzt den Inhalt des alten Verzeichnisnamens in das neue Verzeichnis. Jetzt m&uuml;ssen Sie den Inhalt des alten Verzeichnisses l&ouml;schen, ehe Sie das alte Verzeichnis komplett l&ouml;schen k&ouml;nnen. Teilen Sie jetzt noch mit <span class="listing">cvs</span> <span class="listing">add</span> die neuen Dateien im neuen Verzeichnis dem CVS mit und f&uuml;hren zu guter Letzt ein <span class="listing">commit</span> aus.</p>
+<h4 class="t4">Zugriff auf ein Remote-Verzeichnis</h4>
+<p><a id="Xxx999570" name="Xxx999570"></a>Nat&uuml;rlich trifft der Anwendungsfall, wie im Beispiel, in dem sich das Arbeitsverzeichnis auf einem lokalen Rechner befindet, recht selten zu. Gerade in der freien Software (KDE, GNOME, Mozilla usw.) befindet sich die so genannte Repository irgendwo auf einem entfernten CVS-Server. Hier hat man mehrere Zugriffsm&ouml;glichkeiten. Entweder verf&uuml;gt der User &uuml;ber einen eigenen Login auf dem Remote-Rechner via rsh oder ssh. Hierf&uuml;r muss allerdings die <span class="listing">CVS_RSH</span>-Umgebungsvariable angepasst werden. Oder es besteht die M&ouml;glichkeit, eine von CVS portierte rsh-Implementierung zu verwenden. Hierbei muss die bereits bekannte Umgebungsvariable <span class="listing">CVSROOT</span> angepasst werden.</p>
+<p>Sind alle Angaben angepasst worden, erfolgt ein Auschecken der Dateien &auml;hnlich wie auf dem lokalen Rechner. Es muss hierbei lediglich ein etwas l&auml;ngerer Pfad zum Archiv angegeben werden. Zuerst erfolgt die Zugriffsmethode, welche von beiden Seiten mit einem Doppelpunkt abgetrennt wird. Anschlie&szlig;end folgen der Benutzername und der Servername, die mit einem <span class="listing">@</span>-Zeichen zusammengesetzt werden – gefolgt von einem weiteren Doppelpunkt als Trenner. Am Ende folgt dann der Pfad des Archivverzeichnisses auf dem Server. Als Beispiel folgt hierzu eine durch Passwort authentisierte Server-Zugriffsmethode (kurz <span class="listing">pserver</span>):</p>
+<pre>$ cvs -d :pserver:wolf@cvs.pronix.de:/usr/local/cvsroot login 
+(Logging in to wolf@cvs.pronix.de)
+CVS password: ********</pre>
+<p>F&uuml;r mehr Details (in der Praxis) bez&uuml;glich des Zugriffs auf ein Remote-Verzeichnis seien die Dokumentation zu CVS oder auch ein Blick auf die Buch-CD empfohlen.</p>
+<h4 class="t4">Grafische Frontends</h4>
+<p><a id="Xxx999576" name="Xxx999576"></a>Wer die Open-Source-Entwicklergemeinde kennt, wei&szlig;, dass es immer das eine oder andere grafische Frontend f&uuml;r ein Konsolen-Tool gibt. Ich m&ouml;chte hier gar nicht auf die einzelnen Frontends eingehen, sondern nur auf die einzelnen Tools hinweisen. Zwei interessante Frontends stehen Ihnen mit jCVS – ein Java-basierter Client – und tkCVS – ein Tk-basiertes grafisches CVS-Interface – zur Verf&uuml;gung. Als Web-Frontend w&auml;re cvsweb, ein in Perl geschriebener CVS-Client, sehr zu empfehlen, zu dem es auch zus&auml;tzlich einige n&uuml;tzliche kleine Skripte gibt. Geht es Ihnen allerdings darum, die ganze Funktionsvielfalt von CVS auszunutzen, dann werden Sie mit dem Java-basierten Client jCVS am besten beraten sein (abgesehen von der Kommandozeile).</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap17-002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap17-004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap17-003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 20:00:25 GMT -->
+</html>

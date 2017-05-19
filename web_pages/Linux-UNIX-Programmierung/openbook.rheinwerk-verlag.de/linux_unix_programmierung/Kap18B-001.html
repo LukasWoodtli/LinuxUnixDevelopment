@@ -1,0 +1,916 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap18B-001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 20:00:27 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Linux-UNIX-Programmierung – A.2 ANSI C99</title>
+<meta name="title" content="Linux-UNIX-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2006">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2006">
+<meta name="description" content="Linux-UNIX-Programmierung - Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006 – ISBN 3-89842-749-8">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="Kap18B-000.html">
+<link rel="next" href="Kap18B-002.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+<table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74">
+<a href="https://www.rheinwerk-verlag.de/?GPP=oplup"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a>
+</td>
+</tr>
+</table><div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger</a></div><br /><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="156" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+<tr>
+<td colspan="2" class="nav1" align="left" valign="top" height="150">
+<table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00a-000.html#Xxx999195">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap00b-000.html#Xxx999195">Vorwort der Fachgutachter</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap01-000.html#Xxx999235">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap02-000.html#Xxx999234">2 E/A-Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap03-000.html#Xxx999234">3 Attribute von Dateien und Verzeichnissen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap04-000.html#Xxx999234">4 Zugriff auf Systeminformationen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap05-000.html#Xxx999234">5 Devices – eine einfache Verbindung zur Hardware</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap06-000.html#Xxx999234">6 System- und Benutzerdateien</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap07-000.html#Xxx999234">7 D&auml;monen, Zombies und Prozesse</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap08-000.html#Xxx999235">8 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap09-000.html#Xxx999235">9 IPC – Interprozesskommunikation</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap10-000.html#Xxx999234">10 Threads</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap11-000.html#Xxx999235">11 Netzwerkprogrammierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap12-000.html#Xxx999236">12 MySQL und PostgreSQL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap13-000.html#Xxx999235">13 Terminal E/A und Benutzerschnittstellen f&uuml;r die Konsole</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap14-000.html#Xxx999235">14 Xlib – X Window-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap15-000.html#Xxx999235">15 GTK+</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap16-000.html#Xxx999235">16 SDL</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap17-000.html#Xxx999247">17 Werkzeuge f&uuml;r Programmierer</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18A-000.html#Xxx999248">A Sicherheit unter Linux</A></td>
+</tr>
+<tr>
+<td><A class="navnavh" href="Kap18B-000.html#Xxx999245">B Funktionsreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="Kap18C-000.html#Xxx999245">C Inhalt der Buch-CD</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html#Xxx537584">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/lup/galileocomputing_linux_unix_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 4,3 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="https://www.rheinwerk-verlag.de/feedback/">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+<div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap18B-000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=oplup"> &lt;openbook&gt; /</a> <a href="index-2.html" class="navnav"> Linux-UNIX-Programmierung</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap18B-002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+<table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup" class="buchtitel">Linux-UNIX-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Das umfassende Handbuch – 2., aktualisierte und erweiterte Auflage 2006</span></td>
+</tr>
+<tr>
+<td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1137/?GPP=oplup"><img src="common/9783898427494.gif" border="0" alt="Buch: Linux-UNIX-Programmierung" title="Buch: Linux-UNIX-Programmierung" align="left"><br /><br /><span class="autor"><strong>Linux-UNIX-Programmierung</strong><br />1216 S., mit CD, 49,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-749-8</span></a></a></td>
+<td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="Kap18B-000.html#RxxKap18B000040006D31F040100">A Funktionsreferenz</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-000.html#RxxKap18B000040006D31F040103">B.1 ANSI C</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh2" href="#RxxKap18B001040006F01F048100">B.2 ANSI C99</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-002.html#RxxKap18B002040006F11F027100">B.3 Elementare E/A-Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-003.html#RxxKap18B003040006F21F025100">B.4 Fortgeschrittene Ein-/Ausgabe-Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-004.html#RxxKap18B004040006F31F046100">B.5 Verzeichnisse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-005.html#RxxKap18B005040006F41F034100">B.6 Attribute von Dateien und Verzeichnissen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-006.html#RxxKap18B006040006F51F043100">B.7 Links</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-007.html#RxxKap18B007040006F61F016100">B.8 Prozess und Prozessverwaltungsfunktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-008.html#RxxKap18B008040006F71F017100">B.9 Signale – Das neue Signalkonzept</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-009.html#RxxKap18B009040006F81F04C100">B.10 Interprozesskommunikationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-010.html#RxxKap18B010040006F91F034100">B.11 Sys-V-Interprozesskommnunikationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-011.html#RxxKap18B011040006FA1F027100">B.12 Threadprogrammierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-012.html#RxxKap18B012040006FB1F029100">B.13 Netzwerkprogrammierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-013.html#RxxKap18B013040006FC1F04F100">B.14 MySQL C-API</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-014.html#RxxKap18B014040006FD1F049100">B.15 PostgreSQL C-API</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="Kap18B-015.html#RxxKap18B015040006FE1F030100">B.16 Weitere Funktionsreferenzen auf der Buch-CD</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">B.2 ANSI C99<a id="RxxKap18B001040006F01F048100" name="RxxKap18B001040006F01F048100"></a> 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999246" name="Xxx999246"></a><a id="Xxx999247" name="Xxx999247"></a><a id="Xxx999248" name="Xxx999248"></a>Bis heute unterst&uuml;tzt noch kein Compiler den C99-Standard komplett. Wollen Sie bspw. wissen, wie weit der GNU GCC Compiler diesen Standard bis jetzt unterst&uuml;tzt, k&ouml;nnen Sie sich unter der folgenden Webseite einen &Uuml;berblick zum aktuellen Status verschaffen: http://gcc.gnu.org/c99status.html</p>
+<p>Zwar sollte man als Autor stets bei den Fakten bleiben, aber die Frage sollte schon gestattet sein: Wem n&uuml;tzt der C99-Standard? Ich stelle die Frage daher, weil einzig unter Linux/UNIX die Bem&uuml;hungen unternommen werden, den Standard umzusetzen. In der Welt von Microsoft (weder beim Borland- noch beim VC++-Compiler) finden sich Anzeichen der Umsetzung des Standards (und das nach f&uuml;nf Jahren). Sinn und Zweck des ANSI C Standards ist es ja, Programme zu erstellen, die m&ouml;glichst portabel sind! Und das ist de facto nicht der Fall – also ein Standard, der nicht so recht einer ist und es wahrscheinlich auch nie mehr werden wird.</p>
+<p>Im Folgenden finden Sie einen groben &Uuml;berblick zu den neuen Headerdateien des C99-Standards. F&uuml;r eine detailliertere Auflistung (u. a.) aller C99-Funktionen sei bei Bedarf die Webseite http://www.dinkumware.com/refxc.html empfohlen.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">B.2.1 &lt;iso646.h&gt;<a id="Xxx999252" name="Xxx999252"></a> – Zur Verwendung von Zeichens&auml;tze im ISO646-Format (NA1<a id="RxxKap18B001040006F01F048104" name="RxxKap18B001040006F01F048104"></a>) 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Die Headerdatei <span class="listing">&lt;iso646.h&gt;</span> wurde mit Normative Amendment 1, eine Erweiterung des C-Standards, 1995 hinzugef&uuml;gt und enth&auml;lt lesbare Alternativen (symbolische Konstanten) zu einigen Operatoren.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.17   
+    </b>Alternative symbolische Konstanten f&uuml;r Operatoren</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Konstante in &lt;iso646.h&gt;</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Operator</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">and
+</td>
+<td class="tabellentext" bgcolor="#000000">&amp;&amp; (logisches UND)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">or
+</td>
+<td class="tabellentext" bgcolor="#000000">|| (logisches ODER)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">not
+</td>
+<td class="tabellentext" bgcolor="#000000">! (logisches NICHT)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">bitand
+</td>
+<td class="tabellentext" bgcolor="#000000">&amp; (bitweises UND)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">bitor
+</td>
+<td class="tabellentext" bgcolor="#000000">| (bitweises ODER)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">xor
+</td>
+<td class="tabellentext" bgcolor="#000000">^ (bitweises Exklusiv-ODER)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">compl
+</td>
+<td class="tabellentext" bgcolor="#000000">~ (bitweises NICHT)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">and_eq
+</td>
+<td class="tabellentext" bgcolor="#000000">&amp;= (bitweises UND mit Zuweisung)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">or_eq
+</td>
+<td class="tabellentext" bgcolor="#000000">|= (bitweises ODER mit Zuweisung)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">xor_eq
+</td>
+<td class="tabellentext" bgcolor="#000000">^= (bitweises Exklusiv-ODER mit Zuweisung)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">not_eq
+</td>
+<td class="tabellentext" bgcolor="#000000">!= (logisches NICHT mit Zuweisung)
+</td>
+</tr>
+</table><br>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">B.2.2 &lt;wchar.h&gt;<a id="Xxx999312" name="Xxx999312"></a> – (NA1<a id="RxxKap18B001040006F01F048183" name="RxxKap18B001040006F01F048183"></a>) 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Die Headerdatei <span class="listing">&lt;wchar.h&gt;</span> wurde ebenfalls mit Normative Amendment 1 1995 hinzugef&uuml;gt. In dieser Headerdatei sind folgende Funktionen enthalten:</p>
+ Umwandlung von Strings zu Zahlwerten f&uuml;r den erweiterten Zeichensatz
+ String- und Speicherbearbeitung f&uuml;r den erweiterten Zeichensatz
+ Ein- und Ausgabe f&uuml;r den erweiterten Zeichensatz
+<p>Eine genauere Erl&auml;uterung der einzelnen Funktionen w&uuml;rde an dieser Stelle zu weit gehen. Aber im Allgemeinen sind Ihnen diese Funktionen schon u. a. aus den <span class="listing">&lt;stdio.h&gt;</span>- und <span class="listing">&lt;string.h&gt;</span>-Headerdateien bekannt. Hier handelt es sich bei dem <span class="listing">...w...</span> im Funktionsnamen um dieselbe Funktion wie Sie diese bereits aus den eben aufgef&uuml;hrten Headerdateien kennen, nur, dass sich diese auf den erweiterten Zeichensatz beziehen. Also: <span class="listing">fgetwc()</span> ist die Alternative f&uuml;r den erweiterten Zeichensatz der Funktion <span class="listing">fgetc()</span> zum Einlesen einzelner Zeichen aus einem <span class="listing">FILE</span>-Stream.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">B.2.3 &lt;wctype.h&gt;<a id="Xxx999319" name="Xxx999319"></a> (NA1<a id="RxxKap18B001040006F01F048189" name="RxxKap18B001040006F01F048189"></a>) 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Die Headerdatei <span class="listing">&lt;wctype.h&gt;</span> wurde ebenfalls wie <span class="listing">&lt;iso646.h&gt;</span> und <span class="listing">&lt;wchar.h&gt;</span> mit Normative Amendment 1 hinzugef&uuml;gt. Diese Headerdatei enth&auml;lt Zeichenklassifizierungen und Umwandlung f&uuml;r den erweiterten Zeichensatz (einfach, <span class="listing">ctype.h</span> f&uuml;r den erweiterten Zeichensatz ist <span class="listing">wctype.h</span>). Auch hier gilt dasselbe wie schon bei der Headerdatei <span class="listing">&lt;wchar.h&gt;</span>. Die Bedeutung der einzelnen Funktionen entspricht exakt der, die Sie aus der Headerdatei <span class="listing">&lt;ctype.h&gt;</span> bereits kennen – nur, dass sich diese Funktionen auf den erweiterten Zeichensatz beziehen und wieder den Buchstaben <span class="listing">...w...</span> (f&uuml;r Wide-Char) im Funktionsnamen enthalten. Also, anstatt <span class="listing">isalpha()</span> lautet das Gegenst&uuml;ck f&uuml;r den erweiterten Zeichensatz <span class="listing">is</span>w<span class="listing">alpha()</span>.</p>
+<p>Jede Funktion erwartet als Argument einen Typ <span class="listing">win_t</span>, was ein Wert zwischen 0 und 32767 (oder <span class="listing">WEOF</span>) ist.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">B.2.4 &lt;complex.h&gt;<a id="Xxx999323" name="Xxx999323"></a> – Funktionen zur Manipulation komplexer Zahle<a id="RxxKap18B001040006F01F04818C" name="RxxKap18B001040006F01F04818C"></a>n 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>In der Headerdatei <span class="listing">&lt;complex.h&gt;</span> finden Sie eine Reihe von Makros und Funktionen f&uuml;r die (ebenfalls) neu in C99 eingef&uuml;hrten arithmetischen Datentypen. Bei diesen Typen handelt es sich um weitere Gleitpunkttypen, welche zur Darstellung von komplexen und imagin&auml;ren Zahlen eingef&uuml;hrt wurden. Die komplexe Zahl wird dabei mit dem Real- und Imagin&auml;rteil dargestellt, und zwar als <span class="listing">float</span>-, <span class="listing">double</span>- oder <span class="listing">long</span> <span class="listing">double</span>-Wert. Die Schreibweise dieser Gleitpunkttypen sieht wie folgt aus:</p>
+ komplexe Gleitpunkttypen: <span class="listing">float _Complex</span>, <span class="listing">double _Complex</span> und <span class="listing">long double    _Complex</span>
+ imagin&auml;re Zahl: <span class="listing">float _Imaginary</span>, <span class="listing">double _Imaginary</span> und <span class="listing">long double _Imaginary</span>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">B.2.5 &lt;fenv.h&gt;<a id="Xxx999328" name="Xxx999328"></a> – Kontrolle der Gleitpunkzahlen-Umgebun<a id="RxxKap18B001040006F01F048190" name="RxxKap18B001040006F01F048190"></a>g 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999330" name="Xxx999330"></a>In der Headerdatei <span class="listing">&lt;fenv.h&gt;</span> (f&uuml;r Floating Environment = Gleitpunkt-Umgebung) wurden zwei neue Typen, mehrere Makros und einige Funktionen zum Testen auf Fehlersituationen beim Rechnen mit Gleitpunktzahlen implementiert. Diese Umgebung enth&auml;lt die Systemvariable <span class="listing">fexept_t</span>, welche von Gleitpunkt-Exceptions-Funktionen gesetzt werden kann, und die Variable <span class="listing">fenv_t</span>, welche f&uuml;r den Kontroll-Modus (bspw. des Rundungsverhaltens) verwendet wird.</p>
+<h4 class="t4">Gleitpunkt-Exceptions</h4>
+<p>Zum Behandeln von so genannten Gleitpunkt-Exceptions stehen Ihnen folgende Funktionen zur Verf&uuml;gung:</p>
+<pre>#include &lt;fenv.h&gt;
+int feclearexcept<a id="Xxx999335" name="Xxx999335"></a>(int except);
+int fegetexceptflag<a id="Xxx999336" name="Xxx999336"></a>(fexcept_t *pflag, int except);
+int feraiseexcept<a id="Xxx999337" name="Xxx999337"></a>(int except);
+int fesetexceptflag<a id="Xxx999338" name="Xxx999338"></a>(const fexcept_t *pflag, int except);
+int fetestexcept<a id="Xxx999339" name="Xxx999339"></a>(int except);</pre>
+<p>Alle Funktionen enthalten als Argument <span class="listing">except</span>, womit Sie eine oder mehrere der folgenden Konstanten mithilfe des bitweisen ODER kombinieren k&ouml;nnen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.18   
+    </b>Makros f&uuml;r Gleitpunkt-Exeptions</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Makro</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_DIVBYZERO
+</td>
+<td class="tabellentext" bgcolor="#000000">Division durch 0
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_INEXACT
+</td>
+<td class="tabellentext" bgcolor="#000000">Ergebniss der Operation nicht exakt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_INVALID
+</td>
+<td class="tabellentext" bgcolor="#000000">unzul&auml;ssiger Wert(ebereich)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_ OVERFLOW
+</td>
+<td class="tabellentext" bgcolor="#000000">&Uuml;berlauf
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_UNDERFLOW
+</td>
+<td class="tabellentext" bgcolor="#000000">Unterlauf
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_ALL_EXCEPT
+</td>
+<td class="tabellentext" bgcolor="#000000">alle Eben genannte Makros auf einmal verwenden
+</td>
+</tr>
+</table><br>
+<p>Mit der Funktion <span class="listing">fetestexecept()</span> pr&uuml;fen Sie, welche der Gleitpunkt-Exceptions (siehe Tabelle B.18) gesetzt sind. Die Funktion <span class="listing">feraiseexcept()</span> l&ouml;st die als Argument eingegebene Gleitpunkt-Exception aus. Mit <span class="listing">feclearexcept()</span> l&ouml;schen Sie eine als Argument angegebene Gleitpunkt-Exception. Die Funktion <span class="listing">fegetexceptflag()</span> speichert den aktuellen Status, der angegebenen Exception (erstes Argument) in der Systemvariable <span class="listing">pflag</span>. Mit der Funktion <span class="listing">fesetexceptflag()</span> hingegen k&ouml;nnen Sie die Flags in <span class="listing">pflag</span>, welche Sie zuvor mit <span class="listing">fegetexceptflag()</span> gesichert haben, wieder herstellen.</p>
+<h4 class="t4">Kontroll-Modus</h4>
+<p>Mit dem Kontroll-Modus k&ouml;nnen Sie bspw. angeben, wie eine Gleitpunktzahl gerundet werden soll. Die Rundungsart k&ouml;nnen Sie mit den folgenden beiden Funktionen setzen bzw. erfragen:</p>
+<pre>#include &lt;fenv.h&gt;
+int fegetround<a id="Xxx999382" name="Xxx999382"></a>(void);
+int fesetround<a id="Xxx999383" name="Xxx999383"></a>(int mode);</pre>
+<p>Welche Rundungsart Sie setzen bzw. ermitteln k&ouml;nnen, wird mit den folgenden symbolischen Konstanten festgelegt:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.19   
+    </b>Kontroll-Modus f&uuml;r das Rundungsverhalten</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Makro</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_DOWNWARD
+</td>
+<td class="tabellentext" bgcolor="#000000">Abrunden zum n&auml;chstkleineren Wert
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_TONEAREST
+</td>
+<td class="tabellentext" bgcolor="#000000">Runden zum n&auml;chsten Wert
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_TOWARDZERO
+</td>
+<td class="tabellentext" bgcolor="#000000">Abschneiden
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FE_UPWARD
+</td>
+<td class="tabellentext" bgcolor="#000000">Aufrunden zum n&auml;chstgr&ouml;&szlig;eren Wert
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Gleitpunkt-Umgebung</h4>
+<p>Wollen Sie die Gleitpunkt-Umgebung als Ganzes verwenden, stehen Ihnen mit dem Typ <span class="listing">fenv_t</span> folgende Funktionen zur Auswahl:</p>
+<pre>#include &lt;fenv.h&gt;
+int fegetenv<a id="Xxx999417" name="Xxx999417"></a>(fenv_t *penv);
+int feholdexcept<a id="Xxx999418" name="Xxx999418"></a>(fenv_t *penv);
+int fesetenv<a id="Xxx999419" name="Xxx999419"></a>(const fenv_t *penv);
+int feupdateenv<a id="Xxx999420" name="Xxx999420"></a>(const fenv_t *penv);</pre>
+<p>Mit <span class="listing">fegetenv()</span> k&ouml;nnen Sie die aktuelle Gleitpunkt-Umgebung in <span class="listing">penv</span> sichern und mit <span class="listing">fsetenv()</span> wiederherstellen bzw. setzen. Bei Verwendung von <span class="listing">feholdexcept()</span> wird trotzt einer Exception weitergerechnet. Diese Funktion sichert die aktuelle Gleitpunkt-Umgebung und setzt alle Status-Flags zur&uuml;ck. Bspw.:</p>
+<pre>...
+fenv_t env;
+/* Gleitpunkt-Umgebung speichern */
+feholdexcept(&amp;env);   
+...
+/* Ein Exeception ist aufgetreten !!! bspw. Division durch 0 */
+...
+/* Exception l&ouml;schen */
+feclearexcept(FE_DIVIDBYZERO);
+/* zuvor gesetzte Gleitpunkt –Umgebung wieder setzen */    
+feupdateenv(&amp;env);  
+...</pre>
+<p>Wie im Code-Auschnitt eben gesehen, wird mit der Funktion <span class="listing">feuptdateenv()</span> die &uuml;bergebene Gleitpunkt-Umgebung wieder gesetzt. F&uuml;r die Funktionen <span class="listing">feudateenv()</span> und <span class="listing">fesetenv()</span> kann auch die symbolische Konstante <span class="listing">FE_DFL_ENV</span> verwendet werden, was ein Zeiger auf die Gleitpunkt-Umgebung darstellt, welcher beim Programmstart gesetzt wurde.</p>
+<p>Um die Gleitpunkt-Umgebung &uuml;berhaupt verwenden zu k&ouml;nnen, m&uuml;ssen Sie diese mit dem folgenden Pragma aktivieren:</p>
+<pre>#pragma STDC FENC_ACCESS ON</pre>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">B.2.6 &lt;inttypes.h&gt;<a id="Xxx999426" name="Xxx999426"></a> – F&uuml;r genauere Integertype<a id="RxxKap18B001040006F01F0481C1" name="RxxKap18B001040006F01F0481C1"></a>n 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Diese Headerdatei beinhaltet weitere Typen, mehrere Funktionen und Makros, welche recht n&uuml;tzlich zur Verwendung von Integer sind. Das ANSI C-Komitee hat diese Headerdatei eingef&uuml;hrt, um endlich Integer-Typen zu unterst&uuml;tzen, die unabh&auml;ngig von der Maschine und dem Betriebssystem sein sollen. Bspw. betr&auml;gt auf einem 16 Bit-System die Bitanzahl f&uuml;r <span class="listing">char</span>, <span class="listing">short</span>, <span class="listing">int</span> und <span class="listing">long</span> 8, 16, 16 und 32 Bits. Auf einem 32 Bit-System hingegeben 8, 16, 32 und 32 Bits. Hierbei wurden mit <span class="listing">typdef</span> Integertpyen verschiedenster Gr&ouml;&szlig;e erstellt. Diese neue Definierung von Integertypen ist (wird) auf jeden Fall sinnvoll, gerade, da jetzt auch noch die Einf&uuml;hrung der 64 Bit-Systeme auf dem Massenmarkt aktuell ist.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">B.2.7 &lt;stdbool.h&gt;<a id="Xxx999429" name="Xxx999429"></a> – Boolesche Datentypen in <a id="RxxKap18B001040006F01F0481C3" name="RxxKap18B001040006F01F0481C3"></a>C 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>In der Headerdatei <span class="listing">&lt;stdbool.h&gt;</span> gibt es jetzt auch die booleschen Variablen als Makros implementiert f&uuml;r C.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.20   
+    </b>Boolescher Datentyp f&uuml;r C</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Makro</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">Bool
+</td>
+<td class="tabellentext" bgcolor="#000000">Boolescher Datentyp f&uuml;r Wahrheit
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">false
+</td>
+<td class="tabellentext" bgcolor="#000000">0/trifft nicht zu
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">true
+</td>
+<td class="tabellentext" bgcolor="#000000">1/trifft zu
+</td>
+</tr>
+</table><br>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">B.2.8 &lt;stdint.h&gt;<a id="Xxx999457" name="Xxx999457"></a> – Definiert verschieden Integertype<a id="RxxKap18B001040006F01F0481D0" name="RxxKap18B001040006F01F0481D0"></a>n<a id="Xxx999458" name="Xxx999458"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>In der Headerdatei <span class="listing">&lt;stdint.h&gt;</span> befinden sich weitere Ganzzahl-Datentypen, die mit vorgegebener Breite verwendet werden. Mit vorgegebener Breite ist die Anzahl der Bits zur Darstellung des Werts gemeint, welche dieser Typ verwenden darf. Hier die Typen im &Uuml;berblick:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.21   
+    </b>Neue ganzzahlige Typen vorgegebener Breite</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Typ</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">intN_t
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein int-Wert mit einer Breite von <b>exakt</b> N Bits
+(erlaubte Werte f&uuml;r N: 8, 16, 32, 64)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int_leastN_t
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein int-Wert mit einer Breite von <b>mindestens</b> N Bits
+(erlaubte Werte f&uuml;r N: 8, 16, 32, 64)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int_fastN_t
+</td>
+<td class="tabellentext" bgcolor="#000000">Der schnellste int-Typ mit mind. einer Breite von N Bits
+(erlaubte Werte f&uuml;r N: 8, 16, 32, 64)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">intmax_t
+</td>
+<td class="tabellentext" bgcolor="#000000">Gr&ouml;&szlig;tm&ouml;glicher ganzzahliger Typ (Wert ist in der Konstante INT64_MAX bzw. UINT64_MAX deklariert)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">intptr_t
+</td>
+<td class="tabellentext" bgcolor="#000000">Max. Breite, um den Wert eines Zeigers zu speichern
+</td>
+</tr>
+</table><br>
+<p>Zu all diesen Ganzzahltypen gibt es jeweils einen <span class="listing">unsigned</span>-Bruder, der nur ein <span class="listing">u</span> vorangestellt hat (z. B. <span class="listing">uintptr_t</span>). Die maximalen und minimalen Limits dieser Ganzzahltypen sind ebenfalls in der Headerdatei <span class="listing">&lt;stdint.h&gt;</span> deklariert.</p>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">B.2.9 &lt;math.h&gt;<a id="Xxx999496" name="Xxx999496"></a> – Neue Funktion<a id="RxxKap18B001040006F01F0481E2" name="RxxKap18B001040006F01F0481E2"></a>en 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Enorm erweitert wurde die Headerdatei <span class="listing">&lt;math.h&gt;</span>. Darin befinden sich jetzt noch mehr Funktionen und Makros als zuvor. Zu allen Funktionen, die Sie bereits kennen und denen, welche Sie in diesem Abschnitt noch kennen lernen, wurden Versionen herausgebracht, die jetzt auch f&uuml;r die Datentypen <span class="listing">float</span> und <span class="listing">long</span> <span class="listing">double</span> anwendbar sind. Bisher waren die Funktionen dieser Headerdatei ja nur mit <span class="listing">double</span> angegeben. Um die f&uuml;r den Datentyp passende Funktion zu verwenden, m&uuml;ssen Sie nur ein entsprechendes Suffix notieren. <span class="listing">f</span> steht f&uuml;r <span class="listing">float</span>, <span class="listing">l</span> f&uuml;r <span class="listing">long</span> <span class="listing">double</span> und keine Angabe steht – wie gehabt – f&uuml;r <span class="listing">double</span>-Gleitpunktzahlen. Als Beispiel die Funktion <span class="listing">sqrt()</span>:</p>
+<pre>float sqrtf(float zahl);               /* float       */
+double sqrt(double zahl);              /* double      */
+long double sqrtl(long double zahl);   /* long double */</pre>
+<p>In der folgenden Tabelle finden Sie einige Funktionen, die neu in die Headerdatei <span class="listing">&lt;math.h&gt;</span> hinzugekommen sind. Zu all diesen Funktionen gibt es auch schon verschiedene Versionen. Es h&auml;ngt davon ab, welches Suffix Sie verwenden.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.22   
+    </b>Neue mathematische Funktionen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Funktionen</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">double round<a id="Xxx999507" name="Xxx999507"></a> (double);
+double trunc<a id="Xxx999509" name="Xxx999509"></a> (double);
+double rint<a id="Xxx999510" name="Xxx999510"></a> (double)
+</td>
+<td class="tabellentext" bgcolor="#000000">Funktionen zum Runden von Zahlen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">double fmax<a id="Xxx999514" name="Xxx999514"></a> (double, double);
+double fmin<a id="Xxx999516" name="Xxx999516"></a> (double, double);
+</td>
+<td class="tabellentext" bgcolor="#000000">Maximum, Minimum
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">double log2<a id="Xxx999520" name="Xxx999520"></a> (double);
+double logb<a id="Xxx999522" name="Xxx999522"></a> (double);
+</td>
+<td class="tabellentext" bgcolor="#000000">Logarithmus
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">double copysign<a id="Xxx999526" name="Xxx999526"></a> (double, double);
+</td>
+<td class="tabellentext" bgcolor="#000000">Vorzeichen kopieren
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">double scalb<a id="Xxx999531" name="Xxx999531"></a> (double, long);
+extern double fma<a id="Xxx999533" name="Xxx999533"></a> (double,
+      double, double);
+</td>
+<td class="tabellentext" bgcolor="#000000">Laufzeitoptimierte Berechnungen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">double hypot<a id="Xxx999537" name="Xxx999537"></a> (double, double);
+</td>
+<td class="tabellentext" bgcolor="#000000">Wurzel
+</td>
+</tr>
+</table><br>
+<p>Sehr interessant d&uuml;rften die Makros f&uuml;r den Vergleich von Gleitpunktzahlen sein, welche ebenfalls hinzugekommen sind:<a id="Xxx999550" name="Xxx999550"></a><a id="Xxx999551" name="Xxx999551"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.23   
+    </b>Makros zum Vergleichen von Gleitpunktzahlen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Makro</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">isgreater(x, y)
+</td>
+<td class="tabellentext" bgcolor="#000000">x gr&ouml;&szlig;er als y
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">isgreaterequal(x, y)
+</td>
+<td class="tabellentext" bgcolor="#000000">x gr&ouml;&szlig;er als oder gleich y
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">isless(x, y)
+</td>
+<td class="tabellentext" bgcolor="#000000">x kleiner als y
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">islessequal(x, y)
+</td>
+<td class="tabellentext" bgcolor="#000000">x kleiner als oder gleich y
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">islessgreater(x, y)
+</td>
+<td class="tabellentext" bgcolor="#000000">x kleiner als y ODER x gr&ouml;&szlig;er als y
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">isunordered(x, y)
+</td>
+<td class="tabellentext" bgcolor="#000000">Sind x und y nicht miteinander vergleichbar, gibt dieses Makro 1 zur&uuml;ck, ansonsten 0
+</td>
+</tr>
+</table><br>
+<p>Ein weiteres interessantes Feature sind Makros zu Bestimmung der Kategorie von Gleitpunktzahlen. In ANSI C werden die Gleitpunktzahlen in folgende f&uuml;nf Kategorieren unterteilt (Konstanten aus der Headerdatei <span class="listing">&lt;math.h&gt;</span>):<a id="Xxx999590" name="Xxx999590"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.24   
+    </b>Bestimmung der Gleitpunktzahl-Kategorie</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Konstante</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Kategorie</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FP_NAN
+</td>
+<td class="tabellentext" bgcolor="#000000">NAN steht f&uuml;r Not a Number und bedeutet, dass es sich bei dem Wert um keine g&uuml;ltige Gleitpunktdarstellung handelt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FP_NORMAL
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Gleitpunktzahl in normaler Darstellung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FP_INFINITE
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Gleitpunktzahl wird als unendlicher Wert dargestellt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FP_ZERO
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Gleitpunktzahl mit dem Wert 0
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FP_SUBNORMAL
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Gleitpunktzahl, mit der besonders kleine Zahlen dargestellt werden k&ouml;nnen
+</td>
+</tr>
+</table><br>
+<p>Abfragen, in welche Kategorie eine bestimmte Gleitpunktzahl f&auml;llt, k&ouml;nnen Sie mit den folgenden Makros vornehmen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle B.25   
+    </b>Makros zur Bestimmung der Gleitpunktzahl-Kategorie</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Makro</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">isnan(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist die Zahl gleich FP_NAN, wird 1 zur&uuml;ckgegeben, ansonsten 0.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">isnormal(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist die Zahl gleich FP_NORMAL, wird 1 zur&uuml;ckgegeben, ansonsten 0.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">isfinite(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist die Zahl eine Unendliche, wird 1 zur&uuml;ckgegeben, ansonsten 0.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">isinf(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist die Zahl gleich FP_INFINITE, wird 1 zur&uuml;ckgegeben, ansonsten 0.
+</td>
+</tr>
+</table><br>
+<p>Intern werden all diese Makros jedoch zum Teil mit Hilfe des Makros <span class="listing">fpclassify()</span> ausgewertet:</p>
+<pre>fpclassify(x) == FP_INFINITE //isinf(x)
+fpclassify(x) == FP_NORMAL   //isnormal(x)</pre>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">B.2.10 &lt;tgmath.h&gt;<a id="Xxx999656" name="Xxx999656"></a> – Typengenerische Mathematik-Funktione<a id="RxxKap18B001040006F01F048229" name="RxxKap18B001040006F01F048229"></a>n 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>In der Headerdatei <span class="listing">&lt;tgmath.h&gt;</span> befinden sich typengenerische Mathematik-Funktionen (bzw. Makros). Darunter versteht man, dass Sie verschieden mathematische Funktionen mit verschiedenen Argumenten wie reelle und/oder komplexe Gleitpunkttypen mit demselben Namen aufrufen k&ouml;nnen – es wird also immer die Funktion aufgerufen, welche dem Datentyp des Argumentes entspricht. Bspw.:</p>
+<pre>float _Complex fx;
+long double lx;
+/* gleich zu cos((double)1) */
+cos(1) ;     
+ /* gleich zu cosl(lx) */
+cos(lx) ;     
+/* gleich zu
+   cpowl((long double _Complex)fx, (long double _Complex)lx) */
+pow(fx, lx)  ;</pre>
+<p>Ist eine Funktion hingegen nur f&uuml;r reelle und/oder komplexe Gleitpunkttypen definiert, dann entspricht der Namen des typengenerierten Makros dem der Funktion, welche urspr&uuml;nglich f&uuml;r <span class="listing">double</span> definiert ist.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20%"><a class="navnav" href="Kap18B-000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="59%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="20%">
+<div align="right"><a class="navnav" href="Kap18B-002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/linux-unix-programmierung_1137/?GPP=oplup">
+                                        <img src="common/749.gif"  border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-UNIX-Programmierung" title="Zum Katalog: Linux-UNIX-Programmierung">
+                                        <br /><strong>Linux-UNIX-<br />Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Ihre Meinung?</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="https://www.rheinwerk-verlag.de/feedback/"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+                                    <br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=oplup" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=oplup">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=oplup">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=oplup">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=oplup">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-<br />&nbsp;Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=oplup">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=oplup"><img src="common/pfeil_rechts5.gif" border="0" alt="">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br />
+<div align="center">
+    <p class="standard">
+        <strong>Copyright © Rheinwerk Verlag GmbH 2006</strong>
+        <br />F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich 
+        ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, 
+        wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist 
+        urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der 
+        Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und 
+        Verarbeitung in elektronischen Systemen.
+    </p>
+    <br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a>
+    <br /><br />Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, 
+    Tel.: 0228.42150.0, Fax 0228.42150.77, 
+    <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a>
+</div>
+<br /><br />
+</body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap18B-001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 20:00:27 GMT -->
+</html>
