@@ -31,3 +31,7 @@ add_executable(polling_fifo polling_fifo.c)
 
 add_executable(sender sender.c)
 
+add_executable(client client.c)
+
+add_executable(server server.c)
+
