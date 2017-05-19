@@ -31,10 +31,8 @@ static void an_den_drucker(const char* text) {
 }
 
 int main(void) {
-	char puffer[BUF], inhalt[BUF], antwort[BUF], pid[6];
+	char puffer[BUF], antwort[BUF], pid[6];
 	int r_fd, w_fd, n, i;
-
-	inhalt[0] = '\0';
 
     umask(0);
     
