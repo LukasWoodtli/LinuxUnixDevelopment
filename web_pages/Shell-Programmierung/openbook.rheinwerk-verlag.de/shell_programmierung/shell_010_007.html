@@ -1,0 +1,562 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_010_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:42 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 8.8 Shellscripts zeitgesteuert ausf&uuml;hren</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_010_006.html">
+<link rel="next" href="shell_010_008.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_010_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_010_008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_010_000.html#RxxKap01000004004EEC1F010172">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_000.html#RxxKap01000004004EEC1F010174">8.1 Prozesspriorit&auml;ten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_001.html#RxxKap01000104004F031F038172">8.2 Warten auf andere Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_002.html#RxxKap01000204004F041F02E172">8.3 Hintergrundprozess wieder hervorholen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_003.html#RxxKap01000304004F051F035172">8.4 Hintergrundprozess sch&uuml;tzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_004.html#RxxKap01000404004F061F049172">8.5 Subshells</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_005.html#RxxKap01000504004F071F049172">8.6 Mehrere Scripts verbinden und ausf&uuml;hren (Kommunikation zwischen Scripts)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_005.html#RxxKap01000504004F071F049174">8.6.1 Daten&uuml;bergabe zwischen Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_005.html#RxxKap01000504004F071F04918A">8.6.2 R&uuml;ckgabe von Daten an andere Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_005.html#RxxKap01000504004F071F04919F">8.6.3 Scripts synchronisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_006.html#RxxKap01000604004F081F041172">8.7 Jobverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01000704004F091F027172">8.8 Shellscripts zeitgesteuert ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_008.html#RxxKap01000804004F0A1F024172">8.9 Startprozess- und Profildaten der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_008.html#RxxKap01000804004F0A1F02417D">8.9.1 Arten von Initialisierungsdateien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_008.html#RxxKap01000804004F0A1F024181">8.9.2 Ausf&uuml;hren von Profildateien beim Start einer Login-Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_008.html#RxxKap01000804004F0A1F02419B">8.9.3 Ausf&uuml;hren von Profildateien beim Start einer Nicht-Login-Shell (Bash und Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_008.html#RxxKap01000804004F0A1F0241A6">8.9.4 Zusammenfassung alle Profil- und Startup-Dateien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_009.html#RxxKap01000904004F0B1F04C172">8.10 Ein Shellscript bei der Ausf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_009.html#RxxKap01000904004F0B1F04C177">8.10.1 Syntax&uuml;berpr&uuml;fung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_009.html#RxxKap01000904004F0B1F04C179">8.10.2 Expansionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_009.html#RxxKap01000904004F0B1F04C180">8.10.3 Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_010.html#RxxKap01001004004F0C1F02C172">8.11 Shellscripts optimieren</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">8.8 <a id="RxxKap008135Shellscriptszeitgesteuertausfuhren" name="RxxKap008135Shellscriptszeitgesteuertausfuhren"></a>Shellscripts zeitgesteuert ausf&uuml;hre<a id="RxxKap01000704004F091F027172" name="RxxKap01000704004F091F027172"></a>n 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a>Als Systemadministrator oder Webmaster werden Sie zwangsl&auml;ufig mit folgenden Wartungst&auml;tigkeiten konfrontiert:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sichern von Daten (Backup)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Konsistenz&uuml;berpr&uuml;fung</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> »Rotieren« von Logfiles</td>
+</tr>
+</table>
+<p>Solange Sie auf einem Einzelplatz-Rechner arbeiten, k&ouml;nnen Sie hin und wieder solche Scripts, die diese Aufgaben erledigen, selbst von Hand starten (wobei dies auf Dauer auch sehr m&uuml;hsam erscheint). Allerdings hat man es in der Praxis nicht nur mit einem Rechner zu tun, sondern mit einer ganzen Horde. Sie werden sich wohl kaum auf einem Dutzend Rechner einloggen, um jedes Mal ein Backup-Script von Hand zu starten.</p>
+<p><a id="Xxx999283" name="Xxx999283"></a>F&uuml;r solche Aufgaben wurden unter Linux/UNIX Daemons (Abk&uuml;rzung f&uuml;r <b>d</b>isk <b>a</b>nd <b>e</b>xecution <b>mon</b>itor<b>s</b>) eingef&uuml;hrt. Daemons (auch gern als D&auml;monen oder Geister bezeichnet) sind Prozesse, die zyklisch oder st&auml;ndig im Hintergrund ablaufen und auf Auftr&auml;ge warten. Auf Ihrem System laufen wahrscheinlich ein gutes Dutzend solcher Daemons. Die meisten werden beim Start des Systems vom &Uuml;bergang in den Multi-User-Modus automatisch gestartet. In unserem Fall geht es vorwiegend um den cron-daemon.</p>
+<p><a id="Xxx999285" name="Xxx999285"></a><a id="Xxx999286" name="Xxx999286"></a><a id="Xxx999287" name="Xxx999287"></a><a id="Xxx999288" name="Xxx999288"></a>»cron« kommt aus dem Griechischen (chronos) und bedeutet Zeit. Bei diesem cron-daemon definieren Sie eine Aufgabe und delegieren diese dann an den Daemon. Dies realisieren Sie durch einen Eintrag in <span class="listing">crontab<a id="Xxx999290" name="Xxx999290"></a></span>, einer Tabelle, in der festgelegt wird, wann welche Jobs ausgef&uuml;hrt werden sollen. Es ist logisch, dass der Rechner (und der cron-daemon) zu der Zeit laufen muss, zu der ein entsprechender Job ausgef&uuml;hrt wird. Dass dies nicht immer m&ouml;glich ist, leuchtet ein (besonders bei einem Heimrechner). Damit aber trotzdem gew&auml;hrleistet wird, dass die Jobs in der Tabelle <span class="listing">crontab</span> ausgef&uuml;hrt werden, bieten einige Distributionen zus&auml;tzlich den Daemon <span class="listing">anacron<a id="Xxx999291" name="Xxx999291"></a><a id="Xxx999292" name="Xxx999292"></a></span> an. Dieser tritt immer an die Stelle von <span class="listing">cron</span> und stellt sicher, dass die Jobs regelm&auml;&szlig;ig zu einer bestimmten Zeit ausgef&uuml;hrt werden – also auch, wenn der Rechner nicht eingeschaltet ist.</p>
+<p>crond macht also in der Praxis nichts anderes, als in bestimmten Zeitintervallen (Standard eine Minute) die Tabelle <span class="listing">crontab</span> einzulesen und entsprechende Jobs auszuf&uuml;hren. Somit m&uuml;ssen Sie, um den cron-daemon zu verwenden, nichts anderes tun, als in <span class="listing">crontab</span> einen entsprechenden Eintrag zu hinterlegen. Bevor Sie erfahren, wie Sie dies praktisch anwenden, muss ich noch einige Anmerkungen zu Ihren Scripts machen, die mit dem cron-daemon gestartet werden sollen.</p>
+<p>Wenn Sie ein Script mit dem cron-daemon starten lassen, sollten Sie sich immer vor Augen halten, dass Ihr Script keine Verbindung mehr zum Bildschirm und zur Tastatur hat. Damit sollte Ihnen klar sein, dass eine Benutzereingabeaufforderung mit <span class="listing">read</span> genauso sinnlos ist wie eine Ausgabe mittels <span class="listing">echo</span>. In beiden F&auml;llen sollten Sie die Ein- bzw. Ausgabe umlenken. Die Ausgaben werden meist per Mail an den Eigent&uuml;mer der <span class="listing">crontab</span> geschickt.</p>
+<p>Ebenso sieht dies mit den Umgebungsvariablen aus. Sie haben in den Kapiteln zuvor recht h&auml;ufig die Umgebungsvariablen ver&auml;ndert und verwendet, allerdings k&ouml;nnen Sie sich niemals zum Zeitpunkt der Ausf&uuml;hrung eines Scripts, das vom cron-daemon gestartet wurde, darauf verlassen, dass die Umgebung derjenigen entspricht, wie sie vielleicht beim Testen des Shellscripts vorlag. Daher werden auch in der <span class="listing">crontab</span>-Datei entsprechende Umgebungsvariablen belegt. Wird ein cron-Job ausgef&uuml;hrt, wird die Umgebung des cron-daemons verwendet. <span class="listing">LOGNAME</span> (oder auch <span class="listing">USER</span>) wird auf den Eigent&uuml;mer der <span class="listing">crontab</span>-Datei gesetzt und <span class="listing">HOME</span> auf dessen Verzeichnis, so wie dies bei <span class="listing">/etc/passwd</span> der Fall ist. Allerdings k&ouml;nnen Sie nicht alle Umgebungsvariablen in der <span class="listing">crontab</span>-Datei neu setzen. Was mit <span class="listing">SHELL</span> und <span class="listing">HOME</span> kein Problem ist, ist mit <span class="listing">LOGNAME</span> bzw. <span class="listing">USER</span> nicht m&ouml;glich. Sicherstellen sollten (m&uuml;ssen) Sie auch, dass <span class="listing">PATH</span> genauso aussieht wie in der aktuellen Shell – sonst kann es passieren, dass einige Kommandos gar nicht ausgef&uuml;hrt werden k&ouml;nnen. Programme und Scripts sollten bei cron-Jobs m&ouml;glichst mit absoluten Pfaden angegeben werden, um den etwaigen Problemen mit <span class="listing">PATH</span> vorzubeugen.</p>
+<p>Wollen Sie wissen, ob Ihr Script jetzt im Hintergrund l&auml;uft oder nicht (wegen der Ein-/Ausgabe), k&ouml;nnen Sie dies im Script <span class="listing">tty</span> &uuml;berpr&uuml;fen. Wenn das Script nicht im Hintergrund l&auml;uft, gibt <span class="listing">tty</span> <span class="listing">/dev/tty</span> oder &Auml;hnliches zur&uuml;ck. L&auml;uft das Script allerdings im Hintergrund, gibt es keinen Bildschirm zur Ausgabe und <span class="listing">tty</span> gibt einen Fehlerstatus (ungleich 0) wie 1 zur&uuml;ck. Nat&uuml;rlich sollten Sie diese &Uuml;berpr&uuml;fung im Stillen ausf&uuml;hren, damit im Fall der F&auml;lle keine st&ouml;rende Ausgabe auf dem Bildschirm erfolgt. Dies k&ouml;nnen Sie mit der Option <span class="listing">–s</span> (silence) erreichen:<a id="Xxx999297" name="Xxx999297"></a><a id="Xxx999298" name="Xxx999298"></a></p>
+<pre>you@host &gt; tty
+/dev/pts/39
+you@host &gt; tty -s
+you@host &gt; echo $?
+0</pre>
+<p>Ebenso k&ouml;nnen Sie die Shell-Variable <span class="listing">PS1</span> &uuml;berpr&uuml;fen, welche gew&ouml;hnlich nur bei der interaktiven Shell gesetzt wird.</p>
+<p>Der cron-daemon speichert seine Eintr&auml;ge in der <span class="listing">crontab</span>-Datei. Dieser Pfad befindet sich gew&ouml;hnlich im /etc-Verzeichnis. Allerdings handelt es sich hierbei um die cron-Jobs von root. Nat&uuml;rlich hat auch jeder andere Benutzer auf dem System seine eigene <span class="listing">crontab</span>-Datei, welche sich f&uuml;r gew&ouml;hnlich im Verzeichnis /var/spool/cron/ befindet.</p>
+<p>Zum Modifizieren der <span class="listing">crontab</span>-Datei gen&uuml;gt ein einfaches <span class="listing">crontab</span> mit der Option <span class="listing">–e</span> (edit). Normalerweise &ouml;ffnet sich die <span class="listing">crontab</span>-Datei mit dem Standardeditor (meistens <span class="listing">vi</span>). Wollen Sie einen anderen Editor verwenden (bspw. <span class="listing">nano</span>, <span class="listing">pico</span>, <span class="listing">joe</span> ...), m&uuml;ssen Sie die Variable <span class="listing">VISUAL</span> oder <span class="listing">EDITOR</span> &auml;ndern und exportieren (<span class="listing">export</span> <span class="listing">VISUAL='</span>editor_ihrer_wahl<span class="listing">'</span>). Gew&ouml;hnlich ist die Datei, die sich in <span class="listing">vi</span> &ouml;ffnet, leer (bei der ersten Verwendung von <span class="listing">cron</span> als normaler Benutzer).</p>
+<p>Was aber schreibt man in eine solche <span class="listing">crontab</span>-Datei? Nat&uuml;rlich die Jobs, und zwar mit folgender einfacher Syntax:<a id="Xxx999304" name="Xxx999304"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 8.2   
+    </b>Ein Eintrag in die crontab-Datei</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Minuten</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Stunden</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Tage</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Monate</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Wochentage</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>[User]</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Befehl</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0–59
+</td>
+<td class="tabellentext" bgcolor="#000000">0–23
+</td>
+<td class="tabellentext" bgcolor="#000000">1–31
+</td>
+<td class="tabellentext" bgcolor="#000000">1–12
+</td>
+<td class="tabellentext" bgcolor="#000000">0–7
+</td>
+<td class="tabellentext" bgcolor="#000000">Name
+</td>
+<td class="tabellentext" bgcolor="#000000">kommando_oder_script
+</td>
+</tr>
+</table><br>
+<p>Praktisch besteht jede einzelne Zeile aus 6 (bzw. 7) Spalten, in denen ein Auftrag festgelegt wird. Die Spalten werden durch ein Leer- bzw. ein Tabulatorzeichen voneinander getrennt. In der ersten Spalte werden die Minuten (0–59), in der zweiten die Stunden (0–23), in der dritten die Tage (1–31), in der vierten die Monate (1–12), in der f&uuml;nften die Wochentage (0–7; 0 und 7 stehen hierbei f&uuml;r Sonntag) und in der sechsten Spalte wird das Kommando bzw. Script angegeben, welches zum gegebenen Zeitpunkt ausgef&uuml;hrt werden soll. In der Syntax finden Sie noch eine Spalte »User« (die sechste), welche allerdings beim normalen User entf&auml;llt. Diese Spalte ist dem root vorbehalten, in dem dieser einen cron-Job f&uuml;r bestimmte User einrichten kann. Somit besteht eine Zeile (Auftrag) einer <span class="listing">crontab</span>-Datei f&uuml;r den normalen Benutzer aus sechs und f&uuml;r den root aus sieben Spalten.</p>
+<p>Nat&uuml;rlich k&ouml;nnen Sie auch Kommentare bei der <span class="listing">crontab–</span>Datei hinzuf&uuml;gen. Diese werden mit der Shellscript-&uuml;blichen <span class="listing">#</span> eingeleitet. Sie k&ouml;nnen bei den Zeitangaben statt Zahlen auch einen Stern (<span class="listing">*</span>) verwenden, was f&uuml;r »Erster-Letzter« steht – also »immer«. Somit w&uuml;rde folgender Eintrag das Script »meinscript« jede Minute ausf&uuml;hren:</p>
+<pre># F&uuml;hrt das Script jede Minute aus
+* * * * * $HOME/meinscript</pre>
+<p>Es sind auch Zahlenbereiche erlaubt, so kann z. B. ein Bereich durch einen Bindestrich von einem anderen getrennt werden. Die Zahlen zwischen den Bereichen sind immer inklusive. Somit bedeutet folgender Eintrag, dass das Script »meinscript« jeden Tag um 10, 11, 12, 13 und 14 Uhr ausgef&uuml;hrt wird:</p>
+<pre>0 10–14 * * * $HOME/meinscript</pre>
+<p>Es k&ouml;nnen auch Listen verwendet werden, bei denen Nummern oder auch ein Zahlenbereich von Nummern durch Kommata getrennt werden:</p>
+<pre>0 10–12,16,20–23 * * * $HOME/meinscript</pre>
+<p>Hier w&uuml;rde jeden Tag um 10, 11, 12, 16, 20, 21, 22 und 23 Uhr das Script »meinscript« ausgef&uuml;hrt. Es d&uuml;rfen keine Leerzeichen in der Liste vorkommen, da das Leerzeichen ja das Trennzeichen f&uuml;r den n&auml;chsten Eintrag ist.</p>
+<p>Es sind au&szlig;erdem Auftr&auml;ge in bestimmten Schritten m&ouml;glich. So k&ouml;nnten Sie statt der Angabe, alle 4 Stunden ein bestimmtes Script auszuf&uuml;hren, mit</p>
+<pre>0 0,4,8,12,16,20 * * * $HOME/meinscript</pre>
+<p>dies mit <span class="listing">0–23/4</span> oder <span class="listing">*/4</span> verk&uuml;rzen:</p>
+<pre>0 */4 * * * $HOME/meinscript</pre>
+<p>Hier einige Beispiele zum besseren Verst&auml;ndnis:</p>
+<pre># Jeden Tag um 11 Uhr das Script meinscript ausf&uuml;hren
+0 11 * * * $HOME/meinscript
+# Jeden Dienstag und Freitag um 23 Uhr das Script
+# meinscript ausf&uuml;hren
+0 23 * * 2,5 $HOME/meinscript
+# Jeden zweiten Tag das Script meinscript um 23 Uhr ausf&uuml;hren
+0 23 * * 0–6/2 $HOME/meinscript
+# Achtung: Das Script wird jeden 15. eines Monats UND jeden
+# Samstag um 23 Uhr ausgef&uuml;hrt
+0 23 15 * 6 $HOME/meinscript</pre>
+<p>Gew&ouml;hnlich wird Ihre <span class="listing">crontab</span>-Datei auf Dauer immer umfangreicher. Sofern Sie <span class="listing">crontab</span> zur Fernwartung einsetzen, k&ouml;nnen Sie sich die Ausgabe Ihres Scripts per E-Mail zuschicken lassen. Hierzu m&uuml;ssen Sie die Variable <span class="listing">MAILTO</span> (per Standard meist auf user@host gesetzt) in <span class="listing">crontab</span> mit Ihrer E-Mail-Adresse versehen. Mit einem leeren <span class="listing">MAILTO</span> (<span class="listing">""</span>) k&ouml;nnen Sie dies wieder abschalten. Es kann auch sinnvoll sein, die <span class="listing">SHELL</span> entsprechend zu ver&auml;ndern, da standardm&auml;&szlig;ig h&auml;ufig die Bourne-Shell verwendet wird. Da die Korn-Shell bzw. die Bash oft beim Thema »Builtins« und einigen weiteren Funktionen &uuml;berlegen ist, sollten Sie hier entsprechende Shell eintragen, da ansonsten die Scripts nicht richtig laufen k&ouml;nnten. Unter Linux ist dies allerdings – wie schon einige Mal erw&auml;hnt – zweitrangig, da es hier keine echte Bourne-Shell gibt und alles ein Link auf die Bash ist. Hierzu soll eine einfach <span class="listing">crontab</span>-Datei erstellt werden:</p>
+<pre>you@host &gt; crontab -e
+### ---vi startet--- ###
+SHELL=/bin/ksh
+MAILTO=tot
+# Alle zwei Minuten "Hallo Welt" an die Testdatei h&auml;ngen
+*/2 * * * * echo "Hallo Welt" &gt;&gt; $HOME/testdatei
+###--- Abspeichern und Quit (:wq)---###
+crontab: installing new crontab
+you@host &gt;</pre>
+<p>Wollen Sie einen &Uuml;berblick aller cron-Jobs gewinnen, m&uuml;ssen Sie nur <span class="listing">crontab</span> mit der Option <span class="listing">–l</span> (f&uuml;r list) aufrufen. Die vollst&auml;ndige Tabelle k&ouml;nnen Sie mit der Option <span class="listing">–r</span> (remove) l&ouml;schen.</p>
+<pre>you@host &gt; crontab -l
+# DO NOT EDIT THIS FILE – edit the master and reinstall.
+# (/tmp/crontab.8999 installed on Mon Mar 28 19:07:50 2005)
+# (Cron version -- $Id: crontab.c,v 2.13 1994/01/17 03:20:37 vixie Exp $)
+SHELL=/bin/bash
+MAILTO=tot
+# Alle zwei Minuten "Hallo Welt" an die Testdatei h&auml;ngen
+*/2 * * * * echo "Hallo Welt" &gt;&gt; $HOME/testdatei
+you@host &gt; crontab -r
+you@host &gt; crontab -l
+no crontab for you</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 8.3   
+    </b>Optionen f&uuml;r crontab und deren Bedeutung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Aufruf</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">crontab –e<a id="Xxx999376" name="Xxx999376"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Die crontab-Datei editieren
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">crontab –l<a id="Xxx999381" name="Xxx999381"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle cron-Jobs auflisten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">crontab –r<a id="Xxx999386" name="Xxx999386"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle cron-Jobs l&ouml;schen
+</td>
+</tr>
+</table><br>
+<p>Soweit so gut, alles hier Beschriebene (siehe Tabelle 8.3) gilt f&uuml;r den cron-daemon unter Linux. Es gibt allerdings drei Versionen des cron-daemons (eine BSD-Variante, eine SYS-V-Version und die Linux-Variante). So ist bspw. <span class="listing">MAILTO<a id="Xxx999399" name="Xxx999399"></a></span> rein Linux-spezifisch und funktioniert eventuell nirgendwo anders sonst. Auch ist die Zuweisung von Variablen in der <span class="listing">crontab</span>-Datei kein Standard, der &uuml;berall funktionieren muss. Und das Wichtigste: Es kann sein, dass auf einigen Systemen die einzelnen Spalten mit einem Tabulatorzeichen getrennt sein m&uuml;ssen, auf einem anderen aber mit einem Leerzeichen. Linux wiederum kennt beides. Daher sollte immer erst die Manual-Page angesteuert werden, um hundertprozentig sicher zu gehen.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_010_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_010_008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_010_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:42 GMT -->
+</html>

@@ -1,0 +1,1293 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_007_008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:16 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 5.9 gnuplot – Visualisierung von Messdaten</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_007_007.html">
+<link rel="next" href="shell_008_000.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_007_007.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_008_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_007_000.html#RxxKap00700004004E5B1F013172">5 Terminal-Ein- und Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_000.html#RxxKap00700004004E5B1F013174">5.1 Von Terminals zu Pseudo-Terminals</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_001.html#RxxKap00700104004E721F034172">5.2 Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F034174">5.2.1 Der echo-Befehl</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F034255">5.2.2 print (Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F034268">5.2.3 Der Befehl printf</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F03429C">5.2.4 Der Befehl tput – Terminalsteuerung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A172">5.3 Eingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A174">5.3.1 Der Befehl read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A18C">5.3.2 (Zeilenweise) Lesen einer Datei mit read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A198">5.3.3 Zeilenweise mit einer Pipe aus einem Kommando lesen (read)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A19E">5.3.4 Here-Dokumente (Inline-Eingabeumleitung)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1B7">5.3.5 Here-Dokumente mit read verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1BE">5.3.6 Die Variable IFS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1E4">5.3.7 Arrays einlesen mit read (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1EF">5.3.8 Shell-abh&auml;ngige Anmerkungen zu read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1FE">5.3.9 Einzelnes Zeichen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A208">5.3.10 Einzelne Zeichen mit Escape-Sequenzen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A229">5.3.11 Passworteingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_003.html#RxxKap00700304004E741F01B172">5.4 Umlenken mit dem Befehl exec</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_004.html#RxxKap00700404004E751F014172">5.5 Filedeskriptoren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_004.html#RxxKap00700404004E751F01417E">5.5.1 Einen neuen Filedeskriptor verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_004.html#RxxKap00700404004E751F01419B">5.5.2 Die Umlenkung &lt;&gt;</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_005.html#RxxKap00700504004E761F035172">5.6 Named Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_006.html#RxxKap00700604004E771F038172">5.7 Men&uuml;s mit select (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_007.html#RxxKap00700704004E781F018172">5.8 dialog und Xdialog</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F01817C">5.8.1 Entscheidungsfrage --yesno</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F01818D">5.8.2 Nachrichtenbox mit Best&auml;tigung --msgbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F018195">5.8.3 Hinweisfenster ohne Best&auml;tigung --infobox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F01819A">5.8.4 Text-Eingabezeile --inputbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181A3">5.8.5 Ein einfacher Dateibetrachter --textbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181AB">5.8.6 Ein Men&uuml; --menu</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181B4">5.8.7 Auswahlliste zum Ankreuzen --checklist</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181BD">5.8.8 Radiobuttons zum Ausw&auml;hlen --radiolist</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181C5">5.8.9 Fortschrittszustand anzeigen --gauge</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181D1">5.8.10 Ver&auml;ndern von Aussehen und Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181DE">5.8.11 Kleines Beispiel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181E4">5.8.12 Zusammenfassung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00700804004E791F043172">5.9 gnuplot – Visualisierung von Messdaten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F043179">5.9.1 Wozu wird gnuplot eingesetzt?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F04317D">5.9.2 gnuplot starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F043180">5.9.3 Das Kommando zum Plotten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F043189">5.9.4 Variablen und Parameter f&uuml;r gnuplot</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F043194">5.9.5 Ausgabe von gnuplot umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F0431A3">5.9.6 Variablen und eigene Funktionen definieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F0431B0">5.9.7 Interpretation von Daten aus einer Datei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F0431CA">5.9.8 Alles bitte nochmals zeichnen (oder besser speichern und laden)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F0431D5">5.9.9 gnuplot aus einem Shellscript heraus starten (der Batch-Betrieb)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F0431E8">5.9.10 Plot-Styles und andere Ausgaben festlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F043243">5.9.11 Tricks f&uuml;r die Achsen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F04326A">5.9.12 Die dritte Dimension</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700804004E791F043275">5.9.13 Zusammenfassung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">5.9 <a id="RxxKap005475gnuplotVisualisierungvonMessdaten" name="RxxKap005475gnuplotVisualisierungvonMessdaten"></a>gnuplot – Visualisierung von Messdate<a id="RxxKap00700804004E791F043172" name="RxxKap00700804004E791F043172"></a>n 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Zugegeben, <span class="listing">gnuplot</span> hat eigentlich nichts mit der Terminal-Ein-/ Ausgabe zu tun, aber irgendwie ist es doch eine besondere »Art« der Ausgabe, weshalb ich diesen Abschnitt hier eingef&uuml;gt habe. Wer schon immer mal <span class="listing">gnuplot</span> n&auml;her kennen lernen wollte, der kann die n&auml;chsten Seiten gem&uuml;tlich durcharbeiten. Ansonsten k&ouml;nnen Sie sie auch einfach &uuml;berspringen und bei Bedarf nachlesen. Der folgende Abschnitt ist also keine Voraussetzung f&uuml;r Kommendes, sondern nur als einfaches Add-on zu betrachten.</p>
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999281" name="Xxx999281"></a><a id="Xxx999282" name="Xxx999282"></a><span class="listing">gnuplot</span> ist ein Kommandozeilen-Plotprogramm, welches unter Linux/UNIX mittlerweile als das Tool f&uuml;r interaktive wissenschaftliche Visualisierungen von Messdaten gilt. Sowohl Kurven mit x/y-Datenpaaren als auch 3-D-Objekte lassen sich mit <span class="listing">gnuplot</span> realisieren. Wer sich schon einen kurzen &Uuml;berblick verschaffen will, kann sich einige Demos unter <b><a href="http://gnuplot.sourceforge.net/demo/" target="_blank">http://gnuplot.sourceforge.net/demo/</a></b> ansehen.</p>
+<p>Ein weiterer Vorteil von <span class="listing">gnuplot</span> im Gegensatz zu anderen Programmen ist es, dass es auf fast jeglicher Art von Rechnerarchitektur vorhanden ist. Also ist <span class="listing">gnuplot</span> neben Linux auch f&uuml;r alle Arten von UNIX (IRIX, HP-UX, Solaris und Digital Unix), den BSD-Versionen und auch f&uuml;r Microsoft (wgnuplot)- und Macintosh-Welten erh&auml;ltlich. Wenn man auch hier und da (besonders unter UNIX) manchmal kein Paket daf&uuml;r vorfindet, so kann man immer noch den Quellcode passend kompilieren. Und f&uuml;r manche auch noch von Vorteil: <span class="listing">gnuplot</span> ist kostenlos zu beziehen (bspw. unter <b><a href="http://www.gnu.org/" target="_blank">www.gnu.org</a></b>; beim Schreiben des Buchs lag die Version 4.1 vor).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sofern Sie <span class="listing">gnuplot</span> selbst &uuml;bersetzen wollen/m&uuml;ssen, ben&ouml;tigen Sie h&auml;ufig die eine oder andere Bibliothek daf&uuml;r, wenn Sie beispielsweise als Ausgabeformat GIF- oder PNG-Grafiken erhalten wollen. Hierbei kann es immer mal zu Problemen kommen, weil die Versionen der einzelnen Bibliotheken ebenfalls zusammenpassen m&uuml;ssen.</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">5.9.1 Wozu wird gnuplot eingesetzt?<a id="RxxKap00700804004E791F043179" name="RxxKap00700804004E791F043179"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999290" name="Xxx999290"></a>Das Anwendungsgebiet ist gewaltig. Doch ohne auf die Fachgebiete von <span class="listing">gnuplot</span> zu kommen, ist hervorzuheben, dass <span class="listing">gnuplot</span> &uuml;berall dort eingesetzt werden kann, wo Sie Funktionen bzw. Messdaten in einem zweidimensionalen kartesischen Koordinatensystem oder einem dreidimensionalen Raum darstellen wollen. Fl&auml;chen k&ouml;nnen Sie hierbei als Netzgittermodell im 3-D-Raum darstellen oder in einer x/y-Ebene anzeigen.</p>
+<p>Ihr prim&auml;res Einsatzgebiet d&uuml;rfte wohl die zweidimensionale Darstellung von Statistiken sein. Hierzu stehen Ihnen zahlreiche Styles wie Linien, Punkte, Balken, K&auml;sten, Netze, Linien-und-Punkte usw. zur Verf&uuml;gung. Tortendiagramme sind zwar rein theoretisch auch m&ouml;glich, aber nicht unbedingt die St&auml;rke von <span class="listing">gnuplot</span>. Die einzelnen Kurven und Achsen lassen sich auch mit Markierungen, &Uuml;berschriften oder Datums- bzw. Zeitangaben beschriften. Nat&uuml;rlich k&ouml;nnen Sie <span class="listing">gnuplot</span> auch f&uuml;r Dinge wie Polynome (mitsamt Interpolation) und trigonometrische Funktionen einsetzen, und last but not least, <span class="listing">gnuplot</span> kennt auch die polaren Koordinatensysteme.</p>
+<p>Ebenfalls kann <span class="listing">gnuplot</span> bei 3-D-Interpolation (gridding) zwischen ungleichm&auml;&szlig;igen Datenpunkten mit einem einfachen Gewichtungsverfahren verwendet werden. Allerdings muss bei Letzterem gesagt werden, dass es Software gibt, die diesen Aspekt noch etwas besser verarbeiten. Trotzdem d&uuml;rfte kaum jemand so schnell an die Grenzen von <span class="listing">gnuplot</span> sto&szlig;en.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">5.9.2 gnuplot starten<a id="RxxKap00700804004E791F04317D" name="RxxKap00700804004E791F04317D"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999295" name="Xxx999295"></a>Da <span class="listing">gnuplot</span> ein interaktives Kommandozeilen-Tool (mit einem eigenen Prompt <span class="listing">gnuplot&gt;</span>) ist, k&ouml;nnen Sie <span class="listing">gnuplot</span> interaktiv oder aber auch in Ihrem Shellscript verwenden. <span class="listing">gnuplot</span> wird mit seinem Namen aufgerufen und wartet anschlie&szlig;end im Eingabeprompt z. B.. auf seine Plotbefehle, die Definition einer Funktion oder eine Angabe zur Formatierung einer Achse. Verlassen k&ouml;nnen Sie <span class="listing">gnuplot</span> mit <span class="listing">quit</span> oder <span class="listing">exit</span>. Ein (umfangreiches) Hilfe-System erhalten Sie mit der Eingabe von <span class="listing">help</span> im <span class="listing">gnuplot</span>-Prompt.</p>
+<pre>you@host &gt; gnuplot
+        G N U P L O T
+        Version 4.0 patchlevel 0
+        last modified Thu Dec 12 13:00:00 GMT 2002
+        System: Linux 2.6.4–52-default
+        ...
+Terminal type set to 'x11'
+gnuplot&gt; quit
+you@host &gt;</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">5.9.3 Das Kommando zum Plotten<a id="RxxKap00700804004E791F043180" name="RxxKap00700804004E791F043180"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999299" name="Xxx999299"></a>Zum Plotten wird das Kommando <span class="listing">plot</span> (f&uuml;r eine 2-D-Darstellung) oder <span class="listing">splot</span> (f&uuml;r die 3-D-Darstellung) verwendet. <span class="listing">gnuplot</span> selbst zeichnet dann aus einer Quelle, beispielsweise einer Funktion oder numerischen Daten, welche in einer Datei gespeichert werden, einen Graphen. Einfachstes Beispiel (siehe Abbildung 5.13):</p>
+<pre>gnuplot&gt; plot sin(x)</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_13.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_13.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.13   
+    </b>Ein einfacher 2-D-Plot mit sin(x)</p>
+</td>
+</tr>
+</table><br>
+<p>Hier wurde ein einfacher 2-D-Graph mit x/y-Koordinaten geplottet. Im Beispiel wurde der Bezugsrahmen der x/y-Koordinaten nicht angegeben. In diesem Fall macht <span class="listing">gnuplot</span> dies automatisch. Die Standardwerte f&uuml;r die x-Achse lauten hier –10 bis +10 und die y-Achse wird automatisch ermittelt. Wollen Sie bspw. die x-Achse auf den Wert 0 bis 4 setzen, so k&ouml;nnen Sie dies folgenderma&szlig;en realisieren (siehe Abbildung 5.14):</p>
+<pre>gnuplot&gt; plot [0:4] sin(x)</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_14.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_14.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.14   
+    </b>Derselbe Plot wie oben, nur mit ver&auml;nderter x-Achse</p>
+</td>
+</tr>
+</table><br>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">5.9.4 Variablen und Parameter f&uuml;r gnuplot<a id="RxxKap00700804004E791F043189" name="RxxKap00700804004E791F043189"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999319" name="Xxx999319"></a><a id="Xxx999320" name="Xxx999320"></a>Im Beispiel oben konnten Sie sehen, wie man bei <span class="listing">gnuplot</span> den Bezugsrahmen der x-Achse ver&auml;ndern kann. Allerdings war diese Version nicht unbedingt eindeutig und au&szlig;erdem will man die Achsen auch noch beschriften. Hier bietet Ihnen <span class="listing">gnuplot</span> nat&uuml;rlich wieder eine Menge Variablen, welche Sie ver&auml;ndern k&ouml;nnen. Hier&uuml;ber k&ouml;nnen/sollten Sie sich einen &Uuml;berblick mit <span class="listing">help</span> <span class="listing">set</span> verschaffen:</p>
+<pre>gnuplot&gt; help set
+...
+Subtopics available for set:
+ angles            arrow             autoscale         bar
+ bmargin           border            boxwidth          clabel
+ clip              cntrparam         contour           data
+ dgrid3d           dummy             encoding          format
+ function          grid              hidden3d          isosamples
+ key               label             linestyle         lmargin
+ locale            logscale          mapping           margin
+ missing           multiplot         mx2tics           mxtics
+ my2tics           mytics            mztics            noarrow
+ noautoscale       noborder          noclabel          noclip
+ ...</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sie kommen mit einem einfachen <b>(ENTER)</b> wieder aus dem Hilfe-System-Prompt heraus (oder auch ins n&auml;chsth&ouml;here Hilfemen&uuml; hoch).</p>
+</td>
+</tr>
+</table><br>
+<p>Sie finden eine Menge Variablen wieder, die Sie jederzeit Ihren Bed&uuml;rfnissen anpassen k&ouml;nnen. Uns interessieren erst einmal die Variablen <span class="listing">xlabel</span> und <span class="listing">ylabel</span> f&uuml;r die Beschriftung sowie <span class="listing">xrange</span> und <span class="listing">yrange</span> f&uuml;r den Bezugsrahmen der einzelnen Achsen. All diese Variablen k&ouml;nnen Sie mit dem Kommando <span class="listing">set</span> anpassen:</p>
+<pre>set variable wert</pre>
+<p>Um auf das erste Plot-Beispiel zur&uuml;ckzukommen, k&ouml;nnen Sie die einzelnen (eben genannten) Werte wie folgt ver&auml;ndern:</p>
+<pre>gnuplot&gt; set xlabel "X-ACHSE"
+gnuplot&gt; set ylabel "Y-ACHSE"
+gnuplot&gt; set xrange [0:4]
+gnuplot&gt; set yrange [-1:1]
+gnuplot&gt; plot sin(x)</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_15.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_15.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.15   
+    </b>Label und Bezugsrahmen der x/y-Achse verwendet</p>
+</td>
+</tr>
+</table><br>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">5.9.5 Ausgabe von gnuplot umleiten<a id="RxxKap00700804004E791F043194" name="RxxKap00700804004E791F043194"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999339" name="Xxx999339"></a>Im Beispiel erfolgte die Ausgabe von <span class="listing">gnuplot</span> bisher immer auf ein separat sich &ouml;ffnendes Fenster (meistens ist dabei <span class="listing">terminal</span> auf »x11« eingestellt). Dieses Ziel k&ouml;nnen Sie selbstverst&auml;ndlich auch beispielsweise in eine Postscript-Datei oder einen (Postscript-)Drucker umleiten. <span class="listing">gnuplot</span> hat eine Menge Treiber an Bord, die plattformunabh&auml;ngig sind. Die Ausgabe geben Sie mit <span class="listing">set</span> <span class="listing">terminal</span> foo an, wodurch die Ausgabe ins foo-Format umgewandelt wird. Welche »Terminals« Ihr <span class="listing">gnuplot</span> alle zur Anzeige bzw. Ausgabe unterst&uuml;tzt, k&ouml;nnen Sie mit einem einfachen <span class="listing">set</span> <span class="listing">terminal</span> abfragen:</p>
+<pre>gnuplot&gt; set terminal
+...
+   kyo  Kyocera Laser Printer with Courier font
+   latex  LaTeX picture environment
+   mf  Metafont plotting standard
+   mif  Frame maker MIF 3.00 format
+   mp  MetaPost plotting standard
+   nec_cp6  NEC printer CP6, Epson LQ-800 [monocrome color draft]
+   okidata  OKIDATA 320/321 Standard
+   pbm  Portable bitmap [small medium large]
+   pcl5  HP Designjet 750C, HP Laserjet III/IV, etc.
+   png  Portable Network Graphics [small medium large]
+   postscript  PostScript graphics language
+   prescribe  Prescribe – for the Kyocera Laser Printer
+   pslatex  LaTeX picture environment with PostScript \specials
+   pstex  plain TeX with PostScript \specials
+   pstricks  LaTeX picture environment with PSTricks macros
+...</pre>
+<p>Wollen Sie, dass anstatt in einem x11-Fenster die Ausgabe im Postscript-Format erfolgen soll, m&uuml;ssen Sie nur den Terminaltyp mit</p>
+<pre>gnuplot&gt; set terminal postscript
+Terminal type set to 'postscript'</pre>
+<p>&auml;ndern. Die h&auml;ufigsten Endger&auml;te (Terminals) sind hierbei die Formate: »postscript«, »latex« und »windows«, wobei »windows« wiederum f&uuml;r die Ausgabe auf dem Bildschirm (&auml;hnlich wie »x11«) steht. Beachten Sie allerdings, dass wenn Sie ein anderes Format angeben (z. B. »postscript«) hierbei ein Ausgabeziel definiert sein muss, da sonst der komplette Datenfluss auf Ihren Bildschirm erfolgt. Die Ausgabe ver&auml;ndern Sie ebenfalls mit dem Kommando <span class="listing">set</span>:</p>
+<pre>set output "zieldatei.endung"</pre>
+<p>Um etwa aus der einfachen Sinuskurve vom Beispiel oben eine echte Postscript-Datei zu erzeugen, gehen Sie wie folgt vor:</p>
+<pre>gnuplot&gt; set terminal postscript
+Terminal type set to 'postscript'
+gnuplot&gt; set output "testplot.ps"
+gnuplot&gt; plot sin(x)
+gnuplot&gt;</pre>
+<p>Ein Blick in das Arbeitsverzeichnis sollte nun die Postscript-Datei testplot.ps zu Tage f&ouml;rdern. Selbstverst&auml;ndlich k&ouml;nnen Sie hier – sofern vorhanden – auch andere Formate zur Ausgabe verwenden. So z. B. f&uuml;r das Internet eine PNG-Datei:</p>
+<pre>gnuplot&gt; set terminal png
+Terminal type set to 'png'
+Options are ' small color'
+gnuplot&gt; set output "testplot.png"
+gnuplot&gt; plot sin(x)</pre>
+<p>Wenn Sie <span class="listing">set</span> <span class="listing">output</span> <span class="listing">"PRN"</span> verwenden, werden die Daten (vorausgesetzt, es wurden zuvor mit <span class="listing">terminal</span> die richtigen Treiber angegeben) an den Drucker geschickt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Tipp   </b>Das Drucken funktioniert auch via Rechts-Klick des Mausbuttons aus einem x11-Fenster heraus.</p>
+<p class="BStandard"><b>Tipp   </b>Wollen Sie im aktuellen Arbeitsverzeichnis schnell nachsehen, ob hier tats&auml;chlich eine entsprechende Datei erzeugt wurde, k&ouml;nnen Sie auch s&auml;mtliche Shell-Befehle in <span class="listing">gnuplot</span> verwenden. Sie m&uuml;ssen nur vor dem entsprechenden Befehl ein <span class="listing">!</span> setzen, eine Leerzeile lassen und den Befehl anf&uuml;gen. So listet <span class="listing">!</span> <span class="listing">ls</span> <span class="listing">-l</span> Ihnen z. B. in gnuplot das aktuelle Verzeichnis auf.</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">5.9.6 Variablen und eigene Funktionen definieren<a id="RxxKap00700804004E791F0431A3" name="RxxKap00700804004E791F0431A3"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999357" name="Xxx999357"></a><a id="Xxx999358" name="Xxx999358"></a>Variablen k&ouml;nnen Sie mit <span class="listing">gnuplot</span> genauso definieren, wie Sie dies schon von der Shell-Programmierung her kennen:</p>
+<pre>variable=wert</pre>
+<p>Wenn Sie den Wert einer Variablen kennen oder Berechnungen mit <span class="listing">gnuplot</span> ausgeben lassen wollen, kann hierf&uuml;r das <span class="listing">print</span>-Kommando verwendet werden.</p>
+<pre>gnuplot&gt; var=2
+gnuplot&gt; print var
+2
+gnuplot&gt; var_a=1+var*sqrt(2)
+gnuplot&gt; print var_a
+3.82842712474619</pre>
+<p>Solche Variablen k&ouml;nnen auch als Wert f&uuml;r ein Plot-Kommando genutzt werden. Im folgenden Beispiel wird eine Variable <span class="listing">Pi</span> verwendet, um den Bezugsrahmen der x-Koordinate zu »berechnen«.</p>
+<pre>gnuplot&gt; Pi=3.1415
+gnuplot&gt; set xrange [-2*Pi:2*Pi]
+gnuplot&gt; a=0.6
+gnuplot&gt; plot a*sin(x)</pre>
+<p>Hier wird ein Graph gezeichnet aus a*sin(x) von –2*Pi bis 2*Pi f&uuml;r den gilt a=0.5.</p>
+<p>Das Ganze l&auml;sst sich aber auch mit einer eigenen Funktion definieren:</p>
+<pre>gnuplot&gt; func(x)=var*sin(x)</pre>
+<p>Diese Funktion k&ouml;nnen Sie nun mit dem Namen <span class="listing">plot</span> <span class="listing">func(x)</span> aufrufen bzw. plotten lassen. Da diese Funktion auch eine User-definierte Variable <span class="listing">var</span> enth&auml;lt, erwartet diese auch eine solche Variable von Ihnen:</p>
+<pre>gnuplot&gt; var=0.5
+gnuplot&gt; plot func(x)
+gnuplot&gt; var=0.6
+gnuplot&gt; plot func(x)
+gnuplot&gt; var=0.9
+gnuplot&gt; plot func(x)</pre>
+<p>Hierbei wurde der Parameter <span class="listing">var</span> st&auml;ndig ver&auml;ndert, um einige Test-Plots mit ver&auml;nderten Wert durchzuf&uuml;hren.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">5.9.7 Interpretation von Daten aus einer Datei<a id="RxxKap00700804004E791F0431B0" name="RxxKap00700804004E791F0431B0"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999372" name="Xxx999372"></a>Im folgenden Beispiel soll eine Datei namens messdat.dat mit Temperaturwerten der ersten sechs Monate der letzten vier Jahre mit <span class="listing">gnuplot</span> ausgelesen und grafisch ausgegeben werden.</p>
+<pre>gnuplot&gt; ! cat messdat.dat
+1 –5 3 –7 4
+2 8 –5 9 –6
+3 10 8 13 11
+4 16 12 19 18
+5 12 15 20 13
+6 21 22 20 15</pre>
+<p>Jede Zeile soll f&uuml;r einen Monat stehen. Die erste Zeile z. B. steht f&uuml;r den Januar und beinhaltet Daten von vier Jahren (wir nehmen einfach mal 1999–2002). Um jetzt diese Messdaten als eine Grafik ausgeben zu lassen, k&ouml;nnen Sie wie folgt vorgehen:</p>
+<pre>gnuplot&gt; set xrange [0:6]
+gnuplot&gt; set yrange [-20:40]
+gnuplot&gt; set xlabel "Monat"
+gnuplot&gt; set ylabel "Grad/Celcius"</pre>
+<p>Bis hierhin nichts Neues. Jetzt m&uuml;ssen Sie den Zeichenstil angeben, den Sie verwenden wollen (darauf wird noch eingegangen):</p>
+<pre>gnuplot&gt; set data style lp</pre>
+<p>Jetzt erst kommt der Plot-Befehl ins Spiel. Das Prinzip ist verh&auml;ltnism&auml;&szlig;ig einfach, da <span class="listing">gnuplot</span> bestens – wie bei einer Tabellenkalkulation – mit dem spaltenorientierten Aufbau von Messdaten zurechtkommt. Die Syntax:</p>
+<pre>using Xachse:Yachse</pre>
+<p>Damit geben Sie an, dass Sie ab der Zeile <span class="listing">Xachse</span> s&auml;mtliche Daten aus der <span class="listing">Yachse–</span>Spalte erhalten wollen. Beispielsweise:</p>
+<pre># alle Daten ab der ersten Zeile aus der zweiten Spalte
+using 1:2
+# alle Daten ab der ersten Zeile aus der vierten Spalte
+using 1:4</pre>
+<p>Damit <span class="listing">using</span> auch wei&szlig;, von wo die Daten kommen, m&uuml;ssen Sie ihm diese mit <span class="listing">plot</span> zuschieben:</p>
+<pre>plot datei using Xachse:Yachse</pre>
+<p>Somit k&ouml;nnten Sie aus unserer Messdatei messdat.dat alle Daten ab der ersten Zeile in der zweiten Spalte folgenderma&szlig;en ausgeben lassen:</p>
+<pre>gnuplot&gt; plot "messdat.dat" using 1:2</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_16.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_16.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.16   
+    </b>Interpretation von Daten aus einer Datei (1)</p>
+</td>
+</tr>
+</table><br>
+<p>Die Art der Linien, die hier ausgegeben werden, haben Sie mit <span class="listing">set</span> <span class="listing">data</span> <span class="listing">style</span> <span class="listing">lp</span> festgelegt. Wie es sich f&uuml;r ein echtes Messprotokoll geh&ouml;rt, beschriftet man die Linien auch entsprechend – was mit einem einfachen <span class="listing">t</span> f&uuml;r <span class="listing">title</span> und einer Zeichenkette dahinter erledigt werden kann:</p>
+<pre>gnuplot&gt; plot "messdat.dat" using 1:2 t "1999"</pre>
+<p>Wollen Sie dem Messprotokoll auch noch einen Titel verpassen, so k&ouml;nnen Sie diesen mit</p>
+<pre>set title "ein Titel"</pre>
+<p>angeben. Nochmals das vollst&auml;ndige Beispiel, welches die Datei messdat.dat auswertet und plottet:</p>
+<pre>gnuplot&gt; set xrange [0:6]
+gnuplot&gt; set yrange [-20:40]
+gnuplot&gt; set xlabel "Monat"
+gnuplot&gt; set ylabel "Grad/Celcius"
+gnuplot&gt; set data style lp
+gnuplot&gt; set title "Temperatur-Daten 1999–2002"
+gnuplot&gt; plot "messdat.dat" using 1:2 t "1999" ,\
+&gt; "messdat.dat" using 1:3 t "2000" ,\
+&gt; "messdat.dat" using 1:4 t "2001" ,\
+&gt; "messdat.dat" using 1:5 t "2002"</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_17.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_17.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.17   
+    </b>Interpretation von Daten aus einer Datei (2)</p>
+</td>
+</tr>
+</table><br>
+<p>Im Beispiel sehen Sie au&szlig;erdem, dass mehrere Plot-Anweisungen mit einem Komma und Zeilenumbr&uuml;che mit einem Backslash realisiert werden.</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">5.9.8 Alles bitte nochmals zeichnen (oder besser speichern und laden)<a id="RxxKap00700804004E791F0431CA" name="RxxKap00700804004E791F0431CA"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999409" name="Xxx999409"></a><a id="Xxx999410" name="Xxx999410"></a>Das Beispiel zum Auswerten der Messdaten h&auml;lt sich hinsichtlich des Aufwands in Grenzen, aber sofern man hier das ein oder andere &auml;ndern bzw. die Ausgabe nochmals ausgeben will, ist der <span class="listing">plot</span>-Befehl schon ein wenig lang. Zwar gibt es auch hier eine Kommando-History, doch es geht mit dem Befehl <span class="listing">replot</span> noch ein wenig schneller.</p>
+<pre>gnuplot&gt; replot</pre>
+<p>Damit wird der zuvor vorgenommene <span class="listing">plot</span> nochmals geplottet. <span class="listing">replot</span> wird gew&ouml;hnlich verwendet, wenn Sie einen <span class="listing">plot</span> auf ein Fenster vorgenommen haben und diesen jetzt auch in einer Ausgabedatei speichern wollen. Im folgenden Beispiel soll der vorherige Plot in einer Postscript-Datei wieder zu sehen sein. Nichts einfacher als das:</p>
+<pre>gnuplot&gt; set terminal postscript
+Terminal type set to 'postscript'
+gnuplot&gt; set output "messdat.ps"
+gnuplot&gt; replot
+gnuplot&gt; ! ls *.ps
+messdat.ps</pre>
+<p><a id="Xxx999415" name="Xxx999415"></a>Bevor Sie jetzt <span class="listing">gnuplot</span> beenden, k&ouml;nnen Sie auch den kompletten Plot (genauer: alle Befehle, Funktionen und Variablen) in einer Datei speichern.</p>
+<pre>gnuplot&gt; save "messdat.plt"
+gnuplot&gt; quit</pre>
+<p><a id="Xxx999418" name="Xxx999418"></a>Starten Sie jetzt beim n&auml;chsten Mal <span class="listing">gnuplot</span>, k&ouml;nnen Sie mithilfe von <span class="listing">load</span> Ihre gespeicherten Plot-Daten wieder auf dem Bildschirm oder wohin Sie es angeben plotten lassen.</p>
+<pre>gnuplot&gt; load "messdat.plt"</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Tipp:</b> Wenn Sie wissen wollen, welche Linie welche Farbe bekommt und wie sonst alles standardm&auml;&szlig;ig auf dem Terminal aussieht, gen&uuml;gt ein einfacher <span class="listing">test</span>-Befehl. Wenn Sie <span class="listing">test</span> in <span class="listing">gnuplot</span> eintippen, bekommen Sie die aktuelle Terminal-Einstellung von <span class="listing">gnuplot</span> in einem Fenster zur&uuml;ck.</p>
+</td>
+</tr>
+</table><br>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">5.9.9 gnuplot aus einem Shellscript heraus starten (der Batch-Betrieb)<a id="RxxKap00700804004E791F0431D5" name="RxxKap00700804004E791F0431D5"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999426" name="Xxx999426"></a>Hierbei unterscheidet man zwischen zwei M&ouml;glichkeiten. Entweder es existiert bereits eine Batch-Datei, welche mit <span class="listing">save</span> <span class="listing">"file.dat"</span> gespeichert wurde und die es gilt aufzurufen, oder Sie wollen den ganzen <span class="listing">gnuplot</span>-Vorgang aus einem Shellscript heraus starten.</p>
+<h4 class="t4">Batch-Datei verwenden</h4>
+<p><a id="Xxx999429" name="Xxx999429"></a>Eine M&ouml;glichkeit ist es, die Batch-Datei als Argument von <span class="listing">gnuplot</span> anzugeben:</p>
+<pre>you@host &gt; gnuplot messdat.plt</pre>
+<p><span class="listing">gnuplot</span> f&uuml;hrt dann die angegebene Datei bis zur letzten Zeile in der Kommandozeile aus. Allerdings beendet sich <span class="listing">gnuplot</span> nach dem Lesen der letzten Zeile gleich wieder. Hier k&ouml;nnen Sie gegensteuern, indem Sie in der letzten Zeile der entsprechenden Batch-Datei (hier bspw. messdat.plt) <span class="listing">pause</span> <span class="listing">–1</span> einf&uuml;gen. Die Ausgabe h&auml;lt dann so lange an, bis Sie eine Taste dr&uuml;cken.</p>
+<p>Allerdings ist diese Methode unn&ouml;tig, weil <span class="listing">gnuplot</span> Ihnen hier mit der Option <span class="listing">–persist</span> &Auml;hnliches anbietet. Die Option <span class="listing">–persist</span> wird verwendet, damit das Fenster auch im Script-Betrieb sichtbar bleibt.</p>
+<pre>you@host &gt; gnuplot -persist messdat.plt</pre>
+<p>Au&szlig;erdem k&ouml;nnen Sie die Ausgabe auch wie ein Shellscript von <span class="listing">gnuplot</span> interpretieren lassen. Ein Blick auf die erste Zeile der Batch-Datei bringt Folgendes ans Tageslicht:</p>
+<pre>you@host &gt; head –1 messdat.plt
+#!/usr/bin/gnuplot -persist</pre>
+<p>Also machen Sie die Batch-Datei ausf&uuml;hrbar und starten das Script wie ein gew&ouml;hnliches:</p>
+<pre>you@host &gt; chmod u+x messdat.plt
+you@host &gt; ./messdat.plt</pre>
+<h4 class="t4">gnuplot aus einem Shellscript starten</h4>
+<p><a id="Xxx999440" name="Xxx999440"></a><a id="Xxx999441" name="Xxx999441"></a>Um <span class="listing">gnuplot</span> aus einem Shellscript heraus zu starten, ben&ouml;tigen Sie ebenfalls die Option <span class="listing">–persist</span> (es sei denn, Sie schreiben in der letzten Zeile <span class="listing">pause</span> <span class="listing">–1</span>). Zwei M&ouml;glichkeiten stehen Ihnen zur Verf&uuml;gung: mit <span class="listing">echo</span> und einer Pipe oder &uuml;ber ein Here-Dokument. Zuerst die Methode mit <span class="listing">echo</span>:<a id="Xxx999443" name="Xxx999443"></a><a id="Xxx999444" name="Xxx999444"></a></p>
+<pre>you@host &gt; echo 'plot "messdat.dat" using 1:2 t "1999" with lp'\
+&gt; | gnuplot -persist</pre>
+<p>Wobei Sie hier gleich erkennen k&ouml;nnen, dass sich die Methode mit <span class="listing">echo</span> wohl eher f&uuml;r kurze und schnelle Plots eignet. Mit der Angabe <span class="listing">with</span> <span class="listing">lp</span> musste noch der Style angegeben werden, da sonst nur Punkte verwendet w&uuml;rden. Wenn Sie noch weitere Angaben vornehmen wollen, etwa den Namen der einzelnen Achsen oder den Bezugsrahmen, ist die M&ouml;glichkeit mit <span class="listing">echo</span> eher un&uuml;bersichtlich. Zwar lie&szlig;e sich dies auch so erreichen:</p>
+<pre>you@host &gt; var='plot "messdat.dat" using 1:2 t "1999" with lp'
+you@host &gt; echo $var | gnuplot -persist</pre>
+<p>doch meiner Meinung nach ist das <a id="Xxx999448" name="Xxx999448"></a><a id="Xxx999449" name="Xxx999449"></a>Here-Dokument die einfachere L&ouml;sung. Hier ein Shellscript f&uuml;r die Methode mit dem Here-Dokument:</p>
+<pre># Demonstriert einen Plot mit gnuplot und dem Here-Dokument
+# Name : aplot1
+# Datei zum Plotten
+FILE=messdat.dat
+echo "Demonstriert einen Plot mit gnuplot"
+gnuplot -persist &lt;&lt;PLOT
+set xrange [0:6]
+set yrange [-20:40]
+set xlabel "Monat"
+set ylabel "Grad/Celcius"
+set data style lp
+set title "Temperatur-Daten 1999–2002"
+# Falls Sie eine Postscript-Datei erstellen wollen ...
+# set terminal postscript
+# set output "messdat.ps"
+plot "$FILE" using 1:2 t "1999" ,\
+"$FILE" using 1:3 t "2000" ,\
+"$FILE" using 1:4 t "2001" ,\
+"$FILE" using 1:5 t "2002"
+quit
+PLOT
+echo "Done ..."</pre>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">5.9.10 Plot-Styles und andere Ausgaben festlegen<a id="RxxKap00700804004E791F0431E8" name="RxxKap00700804004E791F0431E8"></a> 
+      <a href="#t2t312"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999453" name="Xxx999453"></a>Wollen Sie nicht, dass <span class="listing">gnuplot</span> bestimmt, welcher Plotstil (Style) verwendet wird, k&ouml;nnen Sie diesen auch selbst ausw&auml;hlen. Im Beispiel hatten Sie den Stil bisher mit</p>
+<pre>set data style lp</pre>
+<p>festgelegt. <span class="listing">lp</span> ist eine Abk&uuml;rzung f&uuml;r <span class="listing">linepoints</span>. Sie k&ouml;nnen aber den Stil auch angeben, indem Sie an einen <span class="listing">plot</span>-Befehl das Schl&uuml;sselwort <span class="listing">with</span> gefolgt vom Stil Ihrer Wahl anh&auml;ngen.</p>
+<pre>plot "datei" using 1:2 with steps
+# bspw.
+you@host &gt; echo 'plot "messdat.dat" using 1:2 \
+&gt; t "1999" with steps' | gnuplot -persist</pre>
+<p>Hier geben Sie z. B. als Stil eine Art Treppenstufe an. Die einzelnen Stile hier genauer zu beschreiben, geht wohl ein wenig zu weit und ist eigentlich nicht n&ouml;tig. Am besten probieren Sie die einzelnen Styles selbst aus. Welche m&ouml;glich sind, k&ouml;nnen Sie mit einem Aufruf von</p>
+<pre>gnuplot&gt; set data style</pre>
+<p>in Erfahrung bringen. Das folgende Script demonstriert Ihnen einige dieser Styles, wobei gleich ins Auge sticht, welche Stile f&uuml;r diese Statistik brauchbar sind und welche nicht.</p>
+<pre># Demonstriert einen Plot mit gnuplot und dem Here-Dokument
+# Name : aplotstyles1
+# Datei zum Plotten
+FILE=messdat.dat
+# Verschiedene Styles zum Testen
+STYLES="lines points linespoints dots impulses \
+steps fsteps histeps boxes"
+for var in $STYLES
+do
+   gnuplot -persist &lt;&lt;PLOT
+   set xrange [0:6]
+   set yrange [-20:40]
+   set xlabel "Monat"
+   set ylabel "Grad/Celcius"
+   set data style $var
+   set title "Temperatur-Daten 1999–2002"
+   # Falls Sie eine Postscript-Datei erstellen wollen ...
+   # set terminal postscript
+   # set output "messdat.ps"
+   plot "$FILE" using 1:2 t "1999" ,\
+   "$FILE" using 1:3 t "2000" ,\
+   "$FILE" using 1:4 t "2001" ,\
+   "$FILE" using 1:5 t "2002"
+   quit
+   PLOT
+done</pre>
+<p>Andere Styles wie</p>
+<pre>xerrorbars xyerrorbars boxerrorbars yerrorbars
+boxxyerrorbars vector financebars candlesticks</pre>
+<p>wiederum ben&ouml;tigen zum Plotten mehr Spalten als Informationen. N&auml;heres entnehmen Sie hierzu bitte den Hilfsseiten von <span class="listing">gnuplot</span>.</p>
+<h4 class="t4">Beschriftungen</h4>
+<p><a id="Xxx999466" name="Xxx999466"></a>Neben Titel, Legenden und der x/y-Achse, welche Sie bereits verwendet und beschriftet haben, k&ouml;nnen Sie auch einen Label an einer beliebigen Position setzen.</p>
+<pre>set label "Zeichenkette" at X-Achse,Y-Achse</pre>
+<p>Wichtig in diesem Zusammenhang ist nat&uuml;rlich, dass sich die Angaben der Achsen innerhalb von <span class="listing">xrange</span> und <span class="listing">yrange</span> befinden.</p>
+<p>Zusammenfassend finden Sie die h&auml;ufig verwendeten Beschriftungen in der folgenden Tabelle 5.11:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.11   
+    </b>H&auml;ufig verwendete Beschriftungen von gnuplot</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Variable</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">xlabel
+</td>
+<td class="tabellentext" bgcolor="#000000">Beschriftung der x-Achse
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">ylabel
+</td>
+<td class="tabellentext" bgcolor="#000000">Beschriftung der y-Achse
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">label
+</td>
+<td class="tabellentext" bgcolor="#000000">Beschriftung an einer gew&uuml;nschten x/y-Position innerhalb von xrange und yrange
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">title
+</td>
+<td class="tabellentext" bgcolor="#000000">In Verbindung mit set title "abcd" wird der Text als &Uuml;berschrift verwendet oder innerhalb eines Plot-Befehls hinter der Zeile und Spalte als Legende. Kann auch mit einem einfachen t abgek&uuml;rzt werden.
+</td>
+</tr>
+</table><br>
+<p>Ein Anwendungsbeispiel zur Beschriftung in <span class="listing">gnuplot</span>:</p>
+<pre>gnuplot&gt; set xlabel "X-ACHSE"
+gnuplot&gt; set ylabel "Y-ACHSE"
+gnuplot&gt; set label "Ich bin ein LABEL" at 2,20
+gnuplot&gt; set title "Ich bin der TITEL"
+gnuplot&gt; plot "messdat.dat" using 1:2 title "LEGENDE" with impuls</pre>
+<p>Dies sieht dann so aus, wie in Abbildung 5.18 zu sehen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_18.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_18.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.18   
+    </b>Beschriftungen in gnuplot</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Linien und Punkte</h4>
+<p><a id="Xxx999511" name="Xxx999511"></a><a id="Xxx999512" name="Xxx999512"></a>Wenn es Ihnen nicht gef&auml;llt, wie <span class="listing">gnuplot</span> standardm&auml;&szlig;ig die Linien und Punkte ausw&auml;hlt, k&ouml;nnen Sie diese auch mit dem folgenden Befehl selbst festlegen:</p>
+<pre>set linestyle [indexnummer] {linetype} {linewidth} {pointtype} \
+{pointsize}</pre>
+<p>Beispielsweise:</p>
+<pre>set linestyle 1 linetype 3 linewidth 4</pre>
+<p>Hier definieren Sie einen Linienstil mit dem Index 1. Er soll den <span class="listing">linetyp</span> 3 (in meinem Fall eine blaue Linie) und eine Dicke (<span class="listing">linewidth</span>) von 3 bekommen. Einen &Uuml;berblick zu den Linientypen erhalten Sie mit dem Befehl <span class="listing">test</span> bei <span class="listing">gnuplot:</span></p>
+<pre>gnuplot&gt; test</pre>
+<p>Wollen Sie den Linienstil Nummer 1, den Sie eben festgelegt haben, beim Plotten verwenden, m&uuml;ssen Sie ihn hinter dem Style mit angeben:</p>
+<pre>plot messdat.dat using 1:2 t "1999" with lp linestyle 1</pre>
+<p>Tabelle 5.12 gibt einen kurzen &Uuml;berblick zu den m&ouml;glichen Werten, mit denen Sie die Ausgabe von Linien und Punkten bestimmen k&ouml;nnen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.12   
+    </b>Werte f&uuml;r Linien und Punkte in gnuplot</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Wert</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">linetype
+(Kurzform lt)
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier k&ouml;nnen Sie den Linienstil angeben. Gew&ouml;hnlich handelt es sich um die entsprechende Farbe und – falls verwendet – den entsprechenden Punkt. Welcher Linienstil wie aussieht, k&ouml;nnen Sie sich mit dem Befehl test in gnuplot anzeigen lassen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">linewidth
+(Kurzform lw)
+</td>
+<td class="tabellentext" bgcolor="#000000">Die St&auml;rke der Line; je h&ouml;her dieser Wert ist, desto dicker wird der Strich.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pointtype
+(Kurzform pt)
+</td>
+<td class="tabellentext" bgcolor="#000000">Wie linetype, nur dass Sie hierbei den Stil eines Punktes angeben. Wie die entsprechenden Punkte bei Ihnen aussehen, l&auml;sst sich auch hier mit test anzeigen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pointsize
+(Kurzform ps)
+</td>
+<td class="tabellentext" bgcolor="#000000">Wie linewidth, nur dass Sie hierbei die Gr&ouml;&szlig;e des Punktes angeben – je h&ouml;her der Wert ist, desto gr&ouml;&szlig;er ist der entsprechende Punktstil (pointtype).
+</td>
+</tr>
+</table><br>
+<p>Hierzu nochmals das Shellscript, welches die Temperaturdaten der ersten sechs Monate in den letzten vier Jahren auswertet – jetzt mit ver&auml;nderten Linien und Punkten.</p>
+<pre># Demonstriert einen Plot mit gnuplot und dem Here-Dokument
+# Name : aplot2
+FILE=messdat.dat
+gnuplot -persist &lt;&lt;PLOT
+set linestyle 1 linetype 1 linewidth 4
+set linestyle 2 linetype 2 linewidth 3 pointtype 6 pointsize 3
+set linestyle 3 linetype 0 linewidth 2 pointsize 2
+set linestyle 4 linetype 7 linewidth 1 pointsize 2
+set xlabel "Monat"
+set ylabel "Grad/Celcius"
+set yrange [-10:40]
+set xrange [0:7]
+set label "6 Monate/1999–2003" at 1,30
+set title "Temperaturdaten"
+plot "$FILE" using 1:2 t "1999" with lp linestyle 1 ,\
+   "$FILE" using 1:3 t "2000" with lp linestyle 2,\
+   "$FILE" using 1:4 t "2001" with lp linestyle 3,\
+   "$FILE" using 1:5 t "2002" with lp linestyle 4
+PLOT</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_19.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_19.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.19   
+    </b>Ein Plot mit ver&auml;nderten Linien und Punkten</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Gr&ouml;&szlig;e bzw. Abst&auml;nde der Ausgabe ver&auml;ndern</h4>
+<p><a id="Xxx999565" name="Xxx999565"></a><a id="Xxx999566" name="Xxx999566"></a>H&auml;ufig ist die standardm&auml;&szlig;ige Einstellung der Ausgabe zu gro&szlig; und manchmal (eher selten) auch zu klein. Besonders wenn man die entsprechende Ausgabe in eine Postscript-Datei f&uuml;r ein Latex-Dokument vornehmen will, muss man h&auml;ufig etwas anpassen. Diese Angabe k&ouml;nnen Sie mittels</p>
+<pre>set size Xval,Yval</pre>
+<p>ver&auml;ndern (im Fachjargon »skalieren«).</p>
+<pre>set size 1.0,1.0</pre>
+<p>ist dabei der Standardwert und gibt Ihre Ausgabe unver&auml;ndert zur&uuml;ck. Wollen Sie den Faktor (und somit auch die Ausgabe) verkleinern, m&uuml;ssen Sie den Wert reduzieren:</p>
+<pre>set size 0.8,0.8</pre>
+<p>Weitere Werte, die Sie zum Ver&auml;ndern bestimmter Abst&auml;nde verwenden k&ouml;nnen, sind (siehe Tabelle 5.13):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.13   
+    </b>Ver&auml;ndern von Abst&auml;nden in gnupot</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Befehl</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">set offset links,rechts,oben,unten
+</td>
+<td class="tabellentext" bgcolor="#000000">Hiermit stellen Sie den Abstand der Daten von den Achsen ein. Als Einheit (Wert f&uuml;r links, rechts, oben und unten) dient die Einheit (siehe xrange und yrange), die Sie f&uuml;r die jeweilige Achse verwenden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">set lmargin [wert]
+</td>
+<td class="tabellentext" bgcolor="#000000">Justiert den Abstand der Grafik vom linken Fensterrand
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">set rmargin [wert]
+</td>
+<td class="tabellentext" bgcolor="#000000">Justiert den Abstand der Grafik vom rechten Fensterrand
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">set bmargin [wert]
+</td>
+<td class="tabellentext" bgcolor="#000000">Justiert den Abstand der Grafik vom unteren Fensterrand
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">set tmargin [wert]
+</td>
+<td class="tabellentext" bgcolor="#000000">Justiert den Abstand der Grafik vom oberen Fensterrand
+</td>
+</tr>
+</table><br>
+<h4 class="t4">»Aufl&ouml;sung« (Samplerate) ver&auml;ndern</h4>
+<p><a id="Xxx999608" name="Xxx999608"></a>Gnuplot berechnet von einer Funktion eine Menge von St&uuml;tzpunkten und verbindet diese dann durch »Spline« bzw. Linienelemente. Bei 3-D-Plots ist allerdings die Darstellung oft recht grob, weshalb es sich manchmal empfiehlt, die Qualit&auml;t der Ausgabe mit <span class="listing">set</span> <span class="listing">sample</span> wert (ein wert von bspw. 1000 ist recht fein) feiner einzustellen. Sie ver&auml;ndern so zwar nicht direkt die Aufl&ouml;sung im eigentlichen Sinne, jedoch k&ouml;nnen Sie hiermit die Anzahl von St&uuml;tzpunkten erh&ouml;hen, wodurch die Ausgabe automatisch feiner wird (allerdings ggf. auch mehr Rechenzeit beansprucht).</p>
+<a name="t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t312"></a><h3 class="t3">5.9.11 Tricks f&uuml;r die Achsen<a id="RxxKap00700804004E791F043243" name="RxxKap00700804004E791F043243"></a> 
+      <a href="#t2t313"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t311"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<h4 class="t4">Offset f&uuml;r die x-Achse</h4>
+<p><a id="Xxx999612" name="Xxx999612"></a>Manchmal ben&ouml;tigen Sie ein Offset f&uuml;r die Achsen, etwa wenn Sie Impulsstriche als Darstellungsform gew&auml;hlt haben. Beim Beispiel mit den Temperaturdaten w&uuml;rde eine Verwendung von Impulsstrichen als Style so aussehen (siehe Abbildung 5.20).</p>
+<p>Die Striche &uuml;berlagern sich alle in der x-Achse. In diesem Beispiel mag die Verwendung von Impulsstrichen weniger geeignet sein, aber wenn Sie Punkte hierf&uuml;r verwenden, werden h&auml;ufig viele Punkte auf einem Fleck platziert. Egal welches Anwendungsgebiet, welcher Stil und welche Achse hiervon nun betroffen ist, auch die Achsen (genauer: das Offset der Achsen) k&ouml;nnen Sie mit einem einfachen Trick verschieben. Nehmen wir z. B. folgende Angabe, die die eben gezeigte Abbildung demonstriert:</p>
+<pre>plot "$FILE" using 1:2 t "1999" with impuls,\
+     "$FILE" using 1:3 t "2000" with impuls,\
+     "$FILE" using 1:4 t "2001" with impuls,\
+     "$FILE" using 1:5 t "2002" with impuls</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_20.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_20.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.20   
+    </b>Verwendung von Impulsstrichen auf der x-Achse</p>
+</td>
+</tr>
+</table><br>
+<p>Hier sind die Werte hinter <span class="listing">using</span> von Bedeutung:</p>
+<pre>using 1:2</pre>
+<p>Wollen Sie jetzt, dass die Impulsstriche minimal von der linken Seite der eigentlichen Position weg platziert werden, m&uuml;ssen Sie dies um&auml;ndern in:</p>
+<pre>using (column(1)-.15):2</pre>
+<p>Jetzt wird der erste Strich um <span class="listing">–0.15</span> von der eigentlichen Position der x-Achse nach links verschoben. Wollen Sie die Impulsstriche um <span class="listing">0.1</span> nach rechts verschieben, schreiben Sie dies so:</p>
+<pre>using (column(1)+.1):2</pre>
+<p>Auf das vollst&auml;ndige Script angewandt sieht dies folgenderma&szlig;en aus:</p>
+<pre># Demonstriert einen Plot mit gnuplot und dem Here-Dokument
+# Name : aplot3
+FILE=messdat.dat
+gnuplot -persist &lt;&lt;PLOT
+set xlabel "Monat"
+set ylabel "Grad/Celcius"
+set yrange [-10:40]
+set xrange [0:7]
+set label "6 Monate/1999–2002" at 2,20
+set title "Temperaturdaten"
+plot "$FILE" using (column(1)-.15):2 t "1999" with impuls ,\
+   "$FILE" using (column(1)-.05):3 t "2000" with impuls ,\
+   "$FILE" using (column(1)+.05):4 t "2001" with impuls ,\
+   "$FILE" using (column(1)+.15):5 t "2002" with impuls
+PLOT</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.21):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_21.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_21.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.21   
+    </b>Mehrere Impulsstriche mit verschobener x-Achse</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Zeitdaten</h4>
+<p><a id="Xxx999640" name="Xxx999640"></a>Wenn der Zeitverlauf irgendeiner Messung dargestellt werden soll, muss <span class="listing">gnuplot</span> die x-Werte als Datum/Stunde/Minute etc. erkennen. Gerade als (angehender) Systemadministrator bzw. Webmaster bekommen Sie es regelm&auml;&szlig;ig mit Zeitdaten zu tun. Wollen Sie dem Kunden bzw. dem Angestellten zeigen, zu welcher Uhrzeit sich etwas Besonderes ereignet hat, k&ouml;nnen Sie hierzu ebenfalls auf <span class="listing">gnuplot</span> z&auml;hlen. So zeigen Sie diesen Vorgang anschaulich, statt abschreckend mit einer Kolonne von Zahlen um sich zu werfen. Hier hilft es Ihnen auch wieder weiter, wenn Sie sich mit dem Kommando <span class="listing">date</span> auseinander gesetzt haben, denn das Format und die Formatierungszeichen sind dieselben. Folgende Daten sind z. B. vorhanden:</p>
+<pre>you@host &gt; cat besucher.dat
+10.03.05 655 408
+11.03.05 838 612
+12.03.05 435 345
+13.03.05 695 509
+14.03.05 412 333
+15.03.05 905 765
+16.03.05 355 208</pre>
+<p>Jede dieser Zeilen soll folgende Bedeutung haben:</p>
+<pre>[Datum] [Besucher] [Besucher mit unterschiedlicher IP-Adresse]</pre>
+<p>Eine Besucherstatistik einer Webseite also. Um hierbei <span class="listing">gnuplot</span> mitzuteilen, dass Sie an Daten mit Zeitwerten interessiert sind, m&uuml;ssen Sie dies mit</p>
+<pre>set xdata time</pre>
+<p>angeben. Damit <span class="listing">gnuplot</span> auch das Zeitformat kennt, geben Sie ihm die Daten mit <span class="listing">set</span> <span class="listing">timefmt</span> <span class="listing">'</span> <span class="listing">...</span> <span class="listing">'</span> mit. Die Formatangabe entspricht hierbei der von <span class="listing">date</span>. Im Beispiel von besucher.dat also:</p>
+<pre>set timefmt '%d.%m.%y'</pre>
+<p>Zum Schluss m&uuml;ssen Sie noch angeben, welche Zeitinformationen als Achsenbeschriftung verwendet werden sollen. Dies wird mit einem einfachen</p>
+<pre>set format x ' ... '</pre>
+<p>erreicht. Soll beispielsweise das Format Tag/Monat auf der x-Achse erscheinen, dann schreibt man dies so:</p>
+<pre>set format x "%d/%m"</pre>
+<p>Oder das Format Jahr/Monat/Tag:</p>
+<pre>set format x "%y/%m%/%d"</pre>
+<p>Alles zusammengefasst: <span class="listing">set</span> <span class="listing">xdata</span> <span class="listing">time</span> definiert die x-Werte als Zeitangaben. <span class="listing">set</span> <span class="listing">timefmt</span> erkl&auml;rt <span class="listing">gnuplot</span>, wie es die Daten zu interpretieren hat. <span class="listing">set</span> <span class="listing">format</span> <span class="listing">x</span> definiert, welche der Zeitinformationen als Achsenbeschriftung auftauchen soll.</p>
+<p>Hier das Shellscript, welches die Besucherdaten auswertet und plottet:</p>
+<pre># Demonstriert einen Plot mit gnuplot und dem Here-Dokument
+# Name : aplot4
+FILE=besucher.dat
+gnuplot -persist &lt;&lt;PLOT
+set xdata time
+set timefmt '%d.%m.%y'
+set format x "%d/%m"
+set ylabel "Besucher"
+set title " --- Besucherstatistik vom 10.3. bis 16.3.2003 ---"
+set data style lp
+plot "$FILE" using (timecolumn(1)):2 t "Besucher" pointsize 2 , \
+"$FILE" using (timecolumn(1)):3 t "Besucher mit untersch. IP" 
+linewidth 2 pointsize 2
+PLOT</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.22):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_22.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_22.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.22   
+    </b>Ein gnuplot mit (formatierten) Zeitdaten</p>
+</td>
+</tr>
+</table><br>
+<a name="t312"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t313"></a><h3 class="t3">5.9.12 Die dritte Dimension<a id="RxxKap00700804004E791F04326A" name="RxxKap00700804004E791F04326A"></a> 
+      <a href="#t2t314"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t312"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999667" name="Xxx999667"></a><a id="Xxx999668" name="Xxx999668"></a>Zwar werden Sie als Administrator eher selten mit dreidimensionalen Plottings zu tun haben, dennoch soll dieser Punkt nicht unerw&auml;hnt bleiben. Der Schritt zur dritten Dimension ist im Grunde nicht schwer: Hier kommt eine z-Achse hinzu, weshalb Sie gegebenenfalls noch entsprechende Werte belegen m&uuml;ssen/k&ouml;nnen (<span class="listing">zrange</span>, <span class="listing">zlabel</span> etc.). Ebenfalls festlegen k&ouml;nnen Sie Blickwinkel und -h&ouml;he (mit <span class="listing">set</span> <span class="listing">view</span>). Der Befehl zum Plotten von dreidimensionalen Darstellungen lautet <span class="listing">splot</span>. Hierzu eine Datei, mit der jetzt ein dreidimensionaler Plot vorgenommen werden soll.</p>
+<pre>you@host &gt; cat data.dat
+1  4  4609
+2  4  3534
+3  4  4321
+4  4  6345
+1  5  6765
+2  5  3343
+3  5  5431
+4  5  3467
+1  6  4321
+2  6  5333
+3  6  4342
+4  6  5878
+1  7  4351
+2  7  4333
+3  7  5342
+4  7  4878</pre>
+<p>Die Bedeutung der einzelnen Spalten sei hierbei:</p>
+<pre>[Woche] [Monat] [Besucher]</pre>
+<p>Also wieder eine Auswertung einer Besucherstatistik, wobei hier die erste Spalte der Woche, die zweite Spalte dem Monat und die dritte der Zahl der Besucher gewidmet ist, die in der n-ten Woche im m-ten Monat auf die Webseite zugegriffen haben. Hier das Script, welches diese Daten auswertet und mit einem dreidimensionalen Plot ausgibt:</p>
+<pre># Demonstriert einen Plot mit gnuplot und dem Here-Dokument
+# Name : aplot5
+FILE=data.dat
+gnuplot -persist &lt;&lt;PLOT
+set view ,75,1,1
+set xlabel "Woche"
+set ylabel "Monat"
+set zlabel "Besucher"
+set ymtics
+set title "Besucherstatistik pro Woche eines Monats"
+splot "$FILE" using (column(1)+.3):2:3 t "Besucher pro Woche" 
+  with impuls linewidth 3
+PLOT</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.23):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_23.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_23.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.23   
+    </b>Ein 3-D-Plot mit gnuplot</p>
+</td>
+</tr>
+</table><br>
+<p>Zuerst stellen Sie mit <span class="listing">set</span> <span class="listing">view</span> den Blickwinkel und die -h&ouml;he ein. Neu kommt hier die Beschriftung des <span class="listing">zlabel</span> und die Einstellung von <span class="listing">ymtics</span> hinzu. Damit wandeln Sie die Zahlen auf der Monatsachse (hier in der zweiten Spalte von data.dat) in eine Monatsbezeichnung um (Gleiches k&ouml;nnten Sie auch mit <span class="listing">ydtics</span> f&uuml;r Wochentage auf der y-Achse vornehmen; oder <span class="listing">xdtics</span> entspr&auml;che den Wochentagen auf der x-Achse). Nat&uuml;rlich setzt dies immer voraus, dass hierbei entsprechende Daten mit vern&uuml;nftigen Werten &uuml;bergeben werden.</p>
+<a name="t313"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t314"></a><h3 class="t3">5.9.13 Zusammenfassung<a id="RxxKap00700804004E791F043275" name="RxxKap00700804004E791F043275"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t313"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>F&uuml;r den Standardgebrauch (Systemadministration) sind Sie ger&uuml;stet. Wollen Sie allerdings wissenschaftlich mit <span class="listing">gnuplot</span> arbeiten, werden Sie noch h&auml;ufiger <span class="listing">help</span> eingeben m&uuml;ssen. Daher hierzu noch einige Anlaufstellen im Web, &uuml;ber die Sie noch tiefer in die Plot-Welt einsteigen k&ouml;nnen:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><b> <a href="http://www.gnuplot.info/" target="_blank">http://www.gnuplot.info/</a></b> – die gnuplot-Homepage mit vielen interessanten Demos, der FAQ und einigen Beispielscripts.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><b> <a href="http://www.cs.uni.edu/Help/gnuplot/" target="_blank">http://www.cs.uni.edu/Help/gnuplot/</a></b> – gnuplot-Online-Manual vom College of Natural Sciences Computing Laboratories, University of Northern Iowa.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><b> <a href="https://www.tu-chemnitz.de/urz/software" target="_blank">http://www.tu-chemnitz.de/urz/anwendungen/grafik/gnuplotdoc.html</a></b> – HTML-Handbuch der TU-Chemnitz.</td>
+</tr>
+</table>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_007_007.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_008_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_007_008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:40 GMT -->
+</html>

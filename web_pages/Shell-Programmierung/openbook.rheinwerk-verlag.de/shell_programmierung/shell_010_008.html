@@ -1,0 +1,723 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_010_008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:42 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 8.9 Startprozess- und Profildaten der Shell</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_010_007.html">
+<link rel="next" href="shell_010_009.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_010_007.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_010_009.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_010_000.html#RxxKap01000004004EEC1F010172">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_000.html#RxxKap01000004004EEC1F010174">8.1 Prozesspriorit&auml;ten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_001.html#RxxKap01000104004F031F038172">8.2 Warten auf andere Prozesse</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_002.html#RxxKap01000204004F041F02E172">8.3 Hintergrundprozess wieder hervorholen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_003.html#RxxKap01000304004F051F035172">8.4 Hintergrundprozess sch&uuml;tzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_004.html#RxxKap01000404004F061F049172">8.5 Subshells</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_005.html#RxxKap01000504004F071F049172">8.6 Mehrere Scripts verbinden und ausf&uuml;hren (Kommunikation zwischen Scripts)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_005.html#RxxKap01000504004F071F049174">8.6.1 Daten&uuml;bergabe zwischen Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_005.html#RxxKap01000504004F071F04918A">8.6.2 R&uuml;ckgabe von Daten an andere Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_005.html#RxxKap01000504004F071F04919F">8.6.3 Scripts synchronisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_006.html#RxxKap01000604004F081F041172">8.7 Jobverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_007.html#RxxKap01000704004F091F027172">8.8 Shellscripts zeitgesteuert ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01000804004F0A1F024172">8.9 Startprozess- und Profildaten der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01000804004F0A1F02417D">8.9.1 Arten von Initialisierungsdateien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01000804004F0A1F024181">8.9.2 Ausf&uuml;hren von Profildateien beim Start einer Login-Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01000804004F0A1F02419B">8.9.3 Ausf&uuml;hren von Profildateien beim Start einer Nicht-Login-Shell (Bash und Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01000804004F0A1F0241A6">8.9.4 Zusammenfassung alle Profil- und Startup-Dateien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_009.html#RxxKap01000904004F0B1F04C172">8.10 Ein Shellscript bei der Ausf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_009.html#RxxKap01000904004F0B1F04C177">8.10.1 Syntax&uuml;berpr&uuml;fung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_009.html#RxxKap01000904004F0B1F04C179">8.10.2 Expansionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_010_009.html#RxxKap01000904004F0B1F04C180">8.10.3 Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_010_010.html#RxxKap01001004004F0C1F02C172">8.11 Shellscripts optimieren</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">8.9 <a id="RxxKap008173StartprozessundProfildatenderShell" name="RxxKap008173StartprozessundProfildatenderShell"></a>Startprozess- und Profildaten der Shel<a id="RxxKap01000804004F0A1F024172" name="RxxKap01000804004F0A1F024172"></a>l 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><a id="Xxx999279" name="Xxx999279"></a><a id="Xxx999280" name="Xxx999280"></a><a id="Xxx999281" name="Xxx999281"></a><a id="Xxx999282" name="Xxx999282"></a><a id="Xxx999283" name="Xxx999283"></a><a id="Xxx999284" name="Xxx999284"></a><b>Hinweis   </b>Hier gleich zu Beginn der Hinweis, dass das Thema »Konfigurationsdateien« eine ziemlich knifflige Sache ist, da viele Distributionen hier ihr eigenes S&uuml;ppchen kochen. »Knifflig« sind die Standardeinstellungen, die sich bei den Distributionen unterscheiden. Es handelt sich dabei aber um ein grunds&auml;tzliches Prinzip, anhand dessen Sie bestimmte Funktionsweisen einer Shell verstehen k&ouml;nnen.</p>
+</td>
+</tr>
+</table><br>
+<p>Beim Start liest die Shell – noch vor der ersten Benutzereingabe – eine Reihe von Konfigurationsdateien ein, interpretiert den Inhalt und &uuml;bernimmt bestimmte Einstellungen. Mit einer solchen Konfigurationsdatei wird das Verhalten einer Shell eingestellt, Voreinstellungen werden getroffen und die Benutzerumgebung wird individuell konfiguriert. Allerdings kann der Start einer Shell auf viele unterschiedliche Arten erfolgen.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Eine Shell kann interaktiv (interaktive Subshell) sein und Eingaben von der Kommandozeile lesen und ausf&uuml;hren (wie Sie dies vom t&auml;glichen Gebrauch Ihrer Shell her kennen).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Eine Shell kann nicht interaktiv (nicht interaktive Subshell) sein, so wie dies bspw. beim Starten Ihrer Shellscripts der Fall ist.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Eine Shell kann als Login-Shell gestartet werden (wird f&uuml;r den Benutzer als Erstes nach seiner Anmeldung gestartet).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Eine Shell kann als zus&auml;tzliche Shell gestartet werden.</td>
+</tr>
+</table>
+<p>Da hier viele verschiedene Start- bzw. Anwendungsformen vorhanden sind, durchl&auml;uft die Shell f&uuml;r jeden Modus unterschiedliche Konfigurationsdateien, sofern diese vorhanden sind.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Mittlerweile gibt es eine Menge Linux-UNIX-Systeme (Distributionen) und auch Shells, sodass diese Shell-Initialisierungsdateien recht unterschiedlich sein k&ouml;nnen. Dies kann bedeuten, dass auf manchen Systemen noch mehr solcher Konfigurationsdateien vorhanden sind als hier beschrieben oder sich diese eventuell in einem anderen Verzeichnis (gar mit anderem Namen) befindet.</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">8.9.1 Arten von Initialisierungsdateien<a id="RxxKap01000804004F0A1F02417D" name="RxxKap01000804004F0A1F02417D"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Das Einlesen von Initialisierungsdateien wird h&auml;ufig recht komplex und umst&auml;ndlich erkl&auml;rt, aber im Prinzip m&uuml;ssen Sie hierbei nur zwei unterschiedliche Arten solcher Dateien auseinander halten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Systemweite Initialisierungsdateien – systemweite Einstellungen finden Sie gew&ouml;hnlich im Verzeichnis /etc (bspw. /etc/profile<a id="Xxx999300" name="Xxx999300"></a>) oder manchmal noch in /usr/etc. Einige Programme (nicht nur Shells verwenden Initialisierungsdateien) legen ihre systemweiten Konfigurationsdateien auch in /usr/share/ packet/xxxxxrc ab (Endung <span class="listing">rc</span> steht f&uuml;r read command).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Benutzer/individuelle Initialisierungsdateien – diese Initialisierungsdateien finden Sie f&uuml;r gew&ouml;hnlich im <span class="listing">HOME</span>-Verzeichnis des Benutzers als versteckte Datei (beginnend mit einem Punkt).</td>
+</tr>
+</table>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">8.9.2 Ausf&uuml;hren von Profildateien beim Start einer Login-Shell<a id="RxxKap01000804004F0A1F024181" name="RxxKap01000804004F0A1F024181"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Beim Ausf&uuml;hren von Profildateien gehen die Shells teilweise unterschiedliche Wege (abgesehen von der systemweiten Initialisierungsdatei /etc/profile), weshalb hier auch die einzelnen Shells ber&uuml;cksichtigt werden.</p>
+<h4 class="t4">Systemweite Einstellungen (Bourne-Shell, Korn-Shell und Bash)</h4>
+<p>Beim Anmelden einer interaktiven Login-Shell wird die systemweite Profildatei <span class="listing">/</span>etc/profile ausgef&uuml;hrt. Diese systemweiten Einstellungen sind allerdings vom normalen Benutzer nicht editierbar. Hier kann bspw. der Systemadministrator weitere Shell-Variablen definieren oder Umgebungsvariablen &uuml;berschreiben. Meistens werden aus /etc/profile weitere Initialisierungsdateien aufgerufen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Woher kommen bei einer Login-Shell die Umgebungsvariablen? Wenn Sie sich als Benutzer anmelden, startet <span class="listing">login</span> eine Shell. Welche das ist, steht in der passwd-Datei im letzten Feld. Diese Shell erzeugt nun eine Umgebung mit einer Reihe von Variablen. </p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard">Die meisten dieser Werte werden automatisch auf einen Standardwert gesetzt, trotzdem gibt es auch einige benutzerspezifische Werte wie etwa <span class="listing">HOME</span>, in denen sich das Heimverzeichnis des eben eingeloggten Benutzers befindet.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Benutzerspezifische Einstellungen</h4>
+<p>Wurden die systemspezifischen Konfigurationsdateien abgearbeitet, haben Sie die M&ouml;glichkeit, die Umgebung an die eigenen Bed&uuml;rfnisse (bzw. f&uuml;r jeden Benutzer auf dem System) anzupassen. Hier enden dann auch die Gemeinsamkeiten der verschiedenen Shells, im Folgenden muss also auf die einzelnen Parteien eingegangen werden.</p>
+<h4 class="t4">Bourne-Shell</h4>
+<p>In der Bourne-Shell wird die lokale benutzerindividuelle Konfigurationsdatei .profile<a id="Xxx999316" name="Xxx999316"></a> (im Heimverzeichnis des Benutzers <span class="listing">$HOME</span>/.profile) f&uuml;r eine interaktive Login-Shell eingelesen und interpretiert. F&uuml;r die Bourne-Shell w&auml;re der Login-Prozess somit abgeschlossen (siehe Abbildung 8.1).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wenn Sie in der Bash die Bourne-Shell (<span class="listing">sh</span>) aufrufen, so wird nach /etc/profile nur noch die Datei .profile durchlaufen.</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/08_01.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein08_01.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 8.1   
+    </b>Start einer Login-Shell (Bourne-Shell)</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Bash</h4>
+<p>In der Bash wird im Heimverzeichnis des Benutzers zun&auml;chst nach der Datei .bash_profile<a id="Xxx999330" name="Xxx999330"></a> gesucht. .bash_profile ist die lokale benutzerindividuelle Konfigurationsdatei f&uuml;r eine interaktive Login-Shell in der Bash. Existiert die Datei .bash_profile nicht, wird nach der Datei .bash_login<a id="Xxx999331" name="Xxx999331"></a> (ebenfalls im Heimverzeichnis) gesucht. Konnte weder eine .bash_profile noch eine .bash_login-Datei gefunden werden, wird wie schon bei der Bourne-Shell nach .profile Ausschau gehalten und ausgef&uuml;hrt (siehe Abbildung 8.2). Als Alternative f&uuml;r .bash_profile findet man auf vielen Systemen auch die Datei .bashrc<a id="Xxx999332" name="Xxx999332"></a> (mehr zu .bashrc in K&uuml;rze).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/08_02.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein08_02.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 8.2   
+    </b>Start einer Login-Shell (Bash)</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Korn-Shell</h4>
+<p>Die Korn-Shell startet zun&auml;chst wie die Bourne-Shell die Datei .profile (<span class="listing">$HOME</span>/.profile) aus dem Heimverzeichnis des Benutzers. Jetzt wird noch eine weitere Datei ausgef&uuml;hrt, welche zus&auml;tzliche Parameter f&uuml;r die laufende Sitzung setzt. Diese Datei startet die Shell jedes Mal neu, wenn Sie eine weitere Shell aufrufen. Die Datei, die ausgef&uuml;hrt werden soll, findet die Korn-Shell in der Umgebungsvariablen <span class="listing">ENV<a id="Xxx999342" name="Xxx999342"></a></span>, welche bei einer der Profildateien zuvor (/etc/profile oder .profile) definiert und exportiert wurde. In der Regel handelt es sich hierbei um die Datei .kshrc<a id="Xxx999343" name="Xxx999343"></a> im Heimverzeichnis des Benutzers. In dieser Datei findet man typischerweise alle Shell-Optionen, Funktionen, Aliase, die man nicht exportieren kann – daher wird auch bei jeder neuen Shell diese Datei neu ausgef&uuml;hrt (siehe Abbildung 8.3). Sie werden anschlie&szlig;end gleich feststellen, dass die Bash ohne eine Login-Shell auch nichts anderes macht und ebenfalls eine weitere Datei beim Start einer neuen Subshell aufruft.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Hierbei handelt es sich wieder um das knifflige Thema, das am Anfang des Abschnitts angesprochen wurde.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard">Auf einer BSD-Maschine findet man hier nur .cshrc, auf Debian wiederum findet man weder .cshrc noch .kshrc – ebenso wenig wie unter anderen Linux-Systemen (Fedora, SuSE). Aber auf einem Solaris-Rechner scheint die Welt wieder in Ordnung zu sein, hier ist .kshrc vorhanden (weil ja auch per Standard die Korn-Shell installiert wird).</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/08_03.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein08_03.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 8.3   
+    </b>Start einer Login-Shell (Korn-Shell)</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">8.9.3 Ausf&uuml;hren von Profildateien beim Start einer Nicht-Login-Shell (Bash und Korn-Shell)<a id="RxxKap01000804004F0A1F02419B" name="RxxKap01000804004F0A1F02419B"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Gerade Linux-User, die den Abschnitt oben zu den Profildateien zur geliebten Bash gelesen haben, werden sich fragen, wo denn nun entsprechende Dateien sind. H&auml;ufig findet der User beim Hausgebrauch gerade mal die Datei .profile wieder. Ein Eintrag in diese Datei zeigt zun&auml;chst, dass sich in einer »xterm« hier gar nichts r&uuml;hrt. Sie k&ouml;nnen testweise eine einfache <span class="listing">export</span>-Anweisung in die Profildateien einf&uuml;gen und mittels <span class="listing">echo</span> ausgeben lassen. Erst wenn eine echte Login-Shell (bspw. mit <b>(Strg)</b>+<b>(Alt)</b>+<b>(F1)</b>) ge&ouml;ffnet wird und sich der Benutzer in diese einloggt, werden die Eintr&auml;ge in .profile aktiv. Das ist auch kein Wunder, denn alles zuvor Beschriebene galt f&uuml;r eine echte Login-Shell (das Thema wurde bereits in Abschnitt 1.9.2 behandelt).</p>
+<p>Sobald Sie allerdings ein Pseudo-Terminal (pts bzw. ttyp) &ouml;ffnen, haben Sie aber keine Login-Shell mehr, sondern eine neue Subshell (bzw. eine interaktive Shell). Eine Subshell starten Sie ...</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> beim Aufruf des Scripts mit <span class="listing">sh</span> <span class="listing">ascript</span>, <span class="listing">ksh</span> <span class="listing">ascript</span>, <span class="listing">bash</span> <span class="listing">ascript</span> oder einfach nur mit <span class="listing">ascript</span> und nat&uuml;rlich mit der Angabe der Shell in der ersten Zeile des Shellscripts (bspw. <span class="listing">#!/bin/ksh</span> ...).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> beim direkten Aufruf einer Shell mit <span class="listing">sh</span>, <span class="listing">ksh</span> oder <span class="listing">bash</span>.</td>
+</tr>
+</table>
+<p>Nun ben&ouml;tigt auch die Bash eine Startdatei, wie dies bei der Korn-Shell mit .kshrc<a id="Xxx999363" name="Xxx999363"></a> standardm&auml;&szlig;ig der Fall ist. Der Grund ist hier derselbe wie schon bei der Korn-Shell. Auch hier ist es unm&ouml;glich, die Aliase, Shell-Optionen und Funktionen zu exportieren. Beim Starten einer Subshell zeigen also die Profildateien keine Wirkung mehr. Ganz einfach: G&auml;be es hier keine weitere Startdatei, so g&auml;be es in der Subshell keine Aliase, Shell-Optionen und Funktionen, die Sie vielleicht sonst so regelm&auml;&szlig;ig einsetzen.</p>
+<p>In der Korn-Shell, das haben Sie bereits erfahren, lautet die Startup-Datei .kshrc bzw. es ist die Datei, die in der Variablen <span class="listing">ENV</span> abgelegt wurde. Die Bash geht denselben Weg und f&uuml;hrt gew&ouml;hnlich die Datei .bashrc<a id="Xxx999365" name="Xxx999365"></a> im Heimverzeichnis des Benutzers aus. Allerdings gibt es in der Bash zwei M&ouml;glichkeiten. Wird eine neue Subshell im interaktiven Modus erzeugt (also einfach in der Arbeits-Shell durch einen Aufruf von <span class="listing">bash</span>), so wird die Datei .bashrc ausgef&uuml;hrt. Wird hingegen ein neues Script gestartet, wird die Datei gestartet, die sich in der Umgebungsvariablen <span class="listing">BASH_ENV</span> befindet. Sofern Sie allerdings <span class="listing">BASH_ENV<a id="Xxx999366" name="Xxx999366"></a></span> nicht selbst anpassen und eine andere Datei starten wollen, wird <span class="listing">BASH_ENV</span> gew&ouml;hnlich auch nur mit .bashrc belegt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die Bourne-Shell ruft keinerlei Startdatei beim Aufrufen einer neuen Subshell auf.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Ausnahmen</h4>
+<p>Es gibt allerdings noch zwei Ausnahmen, bei denen zwar eine Subshell erzeugt, aber nicht die Startup-Datei .bashrc bzw. .kshrc ausgef&uuml;hrt wird. Und zwar ist dies der Fall beim Starten einer Subshell zwischen runden Klammern <span class="listing">(</span> <span class="listing">...</span> <span class="listing">)</span> (siehe Abschnitt 8.5) und bei der Verwendung einer Kommando-Substitution. Hierbei erh&auml;lt die Subshell immer jeweils eine exakte Kopie der Eltern-Shell mit allen Variablen. Und nat&uuml;rlich wird auch keine Startup-Datei ausgef&uuml;hrt (auch keine Subshell), wenn Sie ein Script in der aktuellen Shell mit einem Punkt aufrufen.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">8.9.4 Zusammenfassung alle Profil- und Startup-Dateien<a id="RxxKap01000804004F0A1F0241A6" name="RxxKap01000804004F0A1F0241A6"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Tabelle 8.4 bietet zum Schluss noch einen kurzen &Uuml;berblick zu den Dateien (und Variablen), die bez&uuml;glich der Initialisierung f&uuml;r Shells und Shellscripts bedeutend sind.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 8.4   
+    </b>Wichtige Profil- und Startup-Dateien</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Datei</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>sh</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>ksh</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>bash</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">/etc/profile<a id="Xxx999387" name="Xxx999387"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">Diese Datei wird von einer interaktiven Login-Shell abgearbeitet und setzt systemweite, vom normalen Benutzer nicht ver&auml;nderbare Einstellungen. Hier werden h&auml;ufig weitere Initialisierungsdateien aufgerufen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$HOME/.profile<a id="Xxx999398" name="Xxx999398"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">Diese Datei ist die lokale benutzerdefinierte Konfigurationsdatei f&uuml;r eine interaktive Login-Shell, welche der Benutzer an die eigenen Bed&uuml;rfnisse anpassen kann.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$HOME/.bash_profile<a id="Xxx999409" name="Xxx999409"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">Diese Datei ist die lokale benutzerdefinierte Konfigurationsdatei f&uuml;r eine interaktive Login-Shell, welche der Benutzer an die eigenen Bed&uuml;rfnisse anpassen kann (wird gegen&uuml;ber .profile bevorzugt behandelt und verwendet).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$HOME/.bash_login<a id="Xxx999420" name="Xxx999420"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">Wie .bash_profile. Wird verwendet, wenn .bash_profile nicht existiert, ansonsten danach ausgef&uuml;hrt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$HOME/.bashrc            
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">Diese Datei ist die lokale benutzerdefinierte Konfigurationsdatei f&uuml;r jede interaktive Shell, die keine Login-Shell ist, welche der Benutzer den eigenen Bed&uuml;rfnissen entsprechend anpassen kann.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$HOME/.kshrc<a id="Xxx999441" name="Xxx999441"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Diese Datei ist die lokale benutzerdefinierte Konfigurationsdatei f&uuml;r jede interaktive Shell, die keine Login-Shell ist, welche der Benutzer an die eigenen Bed&uuml;rfnisse anpassen kann.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$BASH_ENV<a id="Xxx999452" name="Xxx999452"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Startup-Datei, welche beim Ausf&uuml;hren einer nicht interaktiven Shell (bspw. Shellscript) zus&auml;tzlich ausgef&uuml;hrt wird. Meistens mit .bashrc belegt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$ENV<a id="Xxx999463" name="Xxx999463"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Startup-Datei, welche von der Korn-Shell bei jeder weiteren Shell gestartet wird. Der Wert ist meistens mit der Datei .kshrc belegt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$HOME/.bash_logout<a id="Xxx999474" name="Xxx999474"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">Diese Datei kann bei einer Beendigung bzw. Abmeldung aus einer Login-Shell f&uuml;r Aufr&auml;umarbeiten verwendet werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">/etc/inputrc<a id="Xxx999485" name="Xxx999485"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">In dieser Datei wird die systemweite Vorbelegung der Tastatur f&uuml;r die Bash und andere Programme definiert, welche die C-Funktion readline zum Lesen der Eingabe verwenden. Ver&auml;nderungen sind dem Systemadministrator (root) vorbehalten.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$HOME/.inputrc<a id="Xxx999496" name="Xxx999496"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000"> 
+</td>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">Wie /etc/inputrc, nur dass hier der normale Benutzer eigene Einstellungen vornehmen darf.
+</td>
+</tr>
+</table><br>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_010_007.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_010_009.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_010_008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:48 GMT -->
+</html>

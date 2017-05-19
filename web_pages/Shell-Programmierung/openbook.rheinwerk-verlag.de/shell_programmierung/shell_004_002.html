@@ -1,0 +1,789 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 2.3 Zeichenketten</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_004_001.html">
+<link rel="next" href="shell_004_003.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_004_000.html#RxxKap00400004004D961F024172">2 Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_000.html#RxxKap00400004004D961F024174">2.1 Grundlagen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F024178">2.1.1 Zugriff auf den Wert einer Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F02417E">2.1.2 Variablen-Interpolation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D172">2.2 Zahlen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D174">2.2.1 Integer-Arithmetik (Bourne-Shell, Bash und Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D186">2.2.2 Integer-Arithmetik (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D1BE">2.2.3 bc – Rechnen mit Flie&szlig;kommazahlen und mathematische Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00400204004DAE1F021172">2.3 Zeichenketten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00400204004DAE1F021174">2.3.1 Stringverarbeitung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00400204004DAE1F0211CE">2.3.2 Erweiterte Funktionen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011172">2.4 Quotings und Kommando-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011180">2.4.1 Single und Double Quotings</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011196">2.4.2 Kommando-Substitution – Back Quotes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B172">2.5 Arrays (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B175">2.5.1 Werte an Arrays zuweisen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B180">2.5.2 Eine Liste von Werten an ein Array zuweisen (Bash)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B186">2.5.3 Eine Liste von Werten an ein Array zuweisen (Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B18A">2.5.4 Zugreifen auf die einzelnen Elemente eines Arrays</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_005.html#RxxKap00400504004DB11F020172">2.6 Variablen exportieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_006.html#RxxKap00400604004DB21F030172">2.7 Umgebungsvariablen eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_007.html#RxxKap00400704004DB31F023172">2.8 Shell-Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038172">2.9 Automatische Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038174">2.9.1 Der Name des Shellscripts – $0</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03817F">2.9.2 Die Prozessnummer des Shellscripts – $$</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038185">2.9.3 Der Beendigungsstatus eines Shellscripts – $?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038189">2.9.4 Die Prozessnummer des zuletzt gestarteten Hintergrundprozesses – $!</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03818C">2.9.5 Weitere vordefinierte Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03819D">2.9.6 Weitere automatische Variablen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">2.3 <a id="RxxKap002116Zeichenketten" name="RxxKap002116Zeichenketten"></a>Zeichenkette<a id="RxxKap00400204004DAE1F021172" name="RxxKap00400204004DAE1F021172"></a>n 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a><a id="Xxx999280" name="Xxx999280"></a>Zum Bearbeiten von Zeichenketten werden immer noch vorrangig die alten UNIX-Tools (sofern auf dem System vorhanden) wie <span class="listing">tr</span>, <span class="listing">cut</span>, <span class="listing">paste</span>, <span class="listing">sed</span> und nat&uuml;rlich <span class="listing">awk</span> verwendet. Sofern Ihr Script &uuml;berall laufen soll, sind Sie mit diesen Mitteln immer auf der sicheren Seite. Im Gegensatz zur Bourne-Shell bieten Ihnen hierzu die Bash und die Korn-Shell auch einige eingebaute Funktionen an.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">2.3.1 Stringverarbeitung<a id="RxxKap00400204004DAE1F021174" name="RxxKap00400204004DAE1F021174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999283" name="Xxx999283"></a>Ich m&ouml;chte Ihnen zun&auml;chst die grundlegenden UNIX-Kommandos zur Stringverarbeitung ans Herz legen, mit denen Sie auf jeder Shell arbeiten k&ouml;nnen, also auch der Bourne-Shell.</p>
+<h4 class="t4">Schneiden mit cut</h4>
+<p><a id="Xxx999286" name="Xxx999286"></a><a id="Xxx999287" name="Xxx999287"></a><a id="Xxx999288" name="Xxx999288"></a><a id="Xxx999289" name="Xxx999289"></a>M&uuml;ssen Sie aus einer Datei oder der Ausgabe eines Befehls bestimmte Datenfelder extrahieren (herausschneiden), leistet Ihnen das Kommando <span class="listing">cut</span> sehr gute Dienste. Die Syntax von <span class="listing">cut</span> sieht wie folgt aus:</p>
+<pre>cut -option datei</pre>
+<p>W&uuml;rden Sie bspw. das Kommando folgenderma&szlig;en verwenden</p>
+<pre>you@host &gt; cut -c5 gedicht.txt</pre>
+<p>dann w&uuml;rden Sie aus der Textdatei gedicht.txt jeweils aus jeder Zeile das f&uuml;nfte Zeichen extrahieren. Die Option <span class="listing">–c</span> steht f&uuml;r character (also Zeichen). Wollen Sie hingegen aus jeder Zeile einer Datei ab dem f&uuml;nften Zeichen bis zum Zeilenende alles extrahieren, dann wird <span class="listing">cut</span> wie folgt verwendet:</p>
+<pre>you@host &gt; cut -c5- gedicht.txt</pre>
+<p>Wollen Sie aus jeder Zeile der Datei alles ab dem f&uuml;nften bis zum zehnten Zeichen herausschneiden, dann sieht die Verwendung des Kommandos so aus:</p>
+<pre>you@host &gt; cut -c5–10 gedicht.txt</pre>
+<p>Nat&uuml;rlich lassen sich auch mehrere einzelne Zeichen und Zeichenbereiche mit <span class="listing">cut</span> heraustrennen. Hierf&uuml;r m&uuml;ssen Sie ein Komma zwischen den einzelnen Zeichen bzw. Zeichenbereichen setzen:</p>
+<pre>you@host &gt; cut -c1,3,5,6,7–12,14 gedicht.txt</pre>
+<p>Hiermit w&uuml;rden Sie das erste, dritte, f&uuml;nfte, sechste, siebte bis zw&ouml;lfte und das vierzehnte Zeichen aus jeder Zeile extrahieren.</p>
+<p>H&auml;ufig wird das Kommando <span class="listing">cut</span> in Verbindung mit einer Pipe verwendet, sprich <span class="listing">cut</span> erh&auml;lt die Standardeingabe von einem anderen Kommando und nicht von einer Datei. Einfachstes Beispiel ist das Kommando <span class="listing">who</span>:</p>
+<pre>you@host &gt; who
+sn       pts/0     Feb  5 13:52 (p83.129.9.xxx.tisdip.tiscali.de)
+mm       pts/2     Feb  5 15:59 (p83.129.4.xxx.tisdip.tiscali.de)
+kd10129  pts/3     Feb  5 16:13 (pd9e9bxxx.dip.t-dialin.net)
+you      tty01     Feb  5 16:13 (console)
+you@host &gt; who | cut -c1–8
+sn
+mm
+kd10129
+you</pre>
+<p>Hier wurden zum Beispiel aus dem Kommando <span class="listing">who</span> die Benutzer (die ersten 8 Zeichen) auf dem System extrahiert. Wollen Sie hingegen den Benutzernamen und die Uhrzeit des Logins extrahieren, so ist dies mit <span class="listing">cut</span> kein Problem:</p>
+<pre>you@host &gt; who | cut -c1–8,30–35
+sn      13:52
+mm      15:59
+kd10129 16:13</pre>
+<p><span class="listing">cut</span> l&auml;sst Sie auch nicht im Stich, wenn die Daten nicht so ordentlich in Reih und Glied aufgelistet sind, wie dies eben bei <span class="listing">who</span> der Fall war. Folgendes sei gegeben:</p>
+<pre>you@host &gt; cat datei.csv
+tot;15:21;17:32;
+you;18:22;23:12;
+kd10129;17:11;20:23;</pre>
+<p>Dies soll eine Login-Datei darstellen, die zeigt, welcher Benutzer von wann bis wann eingeloggt war. Um hier bestimmte Daten zu extrahieren, bieten sich die Optionen <span class="listing">–d</span> (Abk. f&uuml;r delimiter = Begrenzungszeichen) und <span class="listing">–f</span> (Abk. f&uuml;r field = Feld) an. Im Beispiel besteht das Begrenzungszeichen aus einem Semikolon (<span class="listing">;</span>). Wollen Sie bspw. nur die Benutzer (Feld 1) aus dieser Datei extrahieren, gehen Sie mit <span class="listing">cut</span> so vor:</p>
+<pre>you@host &gt; cut -d\; -f1 datei.csv
+tot
+you
+kd10129</pre>
+<p>Um die Sonderbedeutung des Semikolons abzuschalten, wurde hier ein Backslash verwendet. Wollen Sie hingegen den Benutzer und die Auslogg-Zeit extrahieren, dann erreichen Sie dies folgenderma&szlig;en:</p>
+<pre>you@host &gt; cut -d\; -f1,3 datei.csv
+tot;17:32
+you;23:12
+kd10129;20:23</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Setzen Sie <span class="listing">cut</span> ohne die Option <span class="listing">-d</span> ein, wird das Tabulatorzeichen standardm&auml;&szlig;ig als Begrenzungszeichen verwendet.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Einf&uuml;gen mit paste</h4>
+<p><a id="Xxx999316" name="Xxx999316"></a><a id="Xxx999317" name="Xxx999317"></a><a id="Xxx999318" name="Xxx999318"></a><a id="Xxx999319" name="Xxx999319"></a>Das Gegenst&uuml;ck zu <span class="listing">cut</span> ist das Kommando <span class="listing">paste</span> (paste = kleben), womit Sie etwas in Zeilen einf&uuml;gen bzw. zusammenf&uuml;gen k&ouml;nnen. Einfachstes Beispiel:</p>
+<pre>you@host &gt; cat namen.txt
+john
+bert
+erni
+flip
+you@host &gt; cat nummer.txt
+(123)12345
+(089)234564
+(432)4534
+(019)311334
+you@host &gt; paste namen.txt nummer.txt &gt; zusammen.txt
+you@host &gt; cat zusammen.txt
+john    (123)12345
+bert    (089)234564
+erni    (432)4534
+flip    (019)311334</pre>
+<p>Hier wurden die entsprechenden Zeilen der Dateien <span class="listing">namen.txt</span> und <span class="listing">nummern.txt</span> zusammengef&uuml;gt und die Ausgabe in die Datei <span class="listing">zusammen.txt</span> umgeleitet. Nat&uuml;rlich k&ouml;nnen Sie auch mehr als nur zwei Dateien zeilenweise zusammenf&uuml;gen. Wollen Sie auch noch ein anderes Begrenzungszeichen verwenden, kann mit der Option <span class="listing">–d</span> ein entsprechendes Zeichen eingesetzt werden.</p>
+<h4 class="t4">Der Filter tr</h4>
+<p><a id="Xxx999324" name="Xxx999324"></a><a id="Xxx999325" name="Xxx999325"></a><a id="Xxx999326" name="Xxx999326"></a><a id="Xxx999327" name="Xxx999327"></a>H&auml;ufig verwendet wird der Filter <span class="listing">tr</span>, mit dem Sie einzelne Zeichen aus der Standardeingabe &uuml;bersetzen k&ouml;nnen. Die Syntax:</p>
+<pre>tr von_Zeichen nach_Zeichen</pre>
+<p>Bei den Argumenten »von_Zeichen« und »nach_Zeichen« k&ouml;nnen Sie ein einzelnes oder mehrere Zeichen verwenden. Dabei wird jedes Zeichen »von_Zeichen«, das aus der Standardeingabe kommt, &uuml;bersetzt in »nach_Zeichen«. Die &Uuml;bersetzung erfolgt wie gehabt auf die Standardausgabe. Als Beispiel soll folgendes Gedicht verwendet werden:</p>
+<pre>you@host &gt; cat gedicht.txt
+Schreiben, wollte ich ein paar Zeilen.
+Buchstabe f&uuml;r Buchstabe reihe ich aneinand.
+Ja, schreiben, meine Gedanken verweilen.
+Wort f&uuml;r Wort, es sind mir viele bekannt.
+Satz f&uuml;r Satz, geht es flie&szlig;end voran.
+Aber um welchen transzendenten Preis?
+Was kostet mich das an Nerven, sodann?
+An Kraft, an Seele, an Geist und Flei&szlig;?
+(von Brigitte Obermaier alias Miss Zauberblume)</pre>
+<p>Wollen Sie jetzt hier sinnloserweise jedes »a« durch ein »b« ersetzen, geht das so:</p>
+<pre>you@host &gt; tr a b &lt; gedicht.txt
+Schreiben, wollte ich ein pbbr Zeilen.
+Buchstbbe f&uuml;r Buchstbbe reihe ich bneinbnd.
+Jb, schreiben, meine Gedbnken verweilen.
+Wort f&uuml;r Wort, es sind mir viele bekbnnt.
+Sbtz f&uuml;r Sbtz, geht es flie&szlig;end vorbn.
+Aber um welchen trbnszendenten Preis?
+Wbs kostet mich dbs bn Nerven, sodbnn?
+An Krbft, bn Seele, bn Geist und Flei&szlig;?
+(von Brigitte Obermbier blibs Miss Zbuberblume)</pre>
+<p>Nun ein etwas sinnvolleres Beispiel. Erinnern Sie sich an folgenden <span class="listing">cut</span>-Befehl:</p>
+<pre>you@host &gt; cut -d\; -f1,3 datei.csv
+tot;17:32
+you;23:12
+kd10129;20:23</pre>
+<p>Die Ausgabe hier ist nicht unbedingt sch&ouml;n leserlich. Hier w&uuml;rde sich der Filter <span class="listing">tr</span> mit einer Pipe hervorragend eignen. Schieben wir doch einfach in die Standardeingabe von <span class="listing">tr</span> die Standardausgabe von <span class="listing">cut</span> und ersetzen das Semikolon durch ein Tabulatorzeichen (<span class="listing">\t</span>):</p>
+<pre>you@host &gt; cut -d\; -f1,3 datei.csv | tr \; '\t'
+tot     17:32
+you     23:12
+kd10129 20:23</pre>
+<p>Dies sieht doch schon um einiges besser aus. Nat&uuml;rlich muss auch hier das Semikolon mit einem Backslash ausgegrenzt werden. Ebenso k&ouml;nnen Sie hier wieder ganze Zeichenbereiche verwenden, wie Sie dies von der Shell (Stichwort: Wildcards) her kennen.</p>
+<pre>you@host &gt; tr '[a-z]' '[A-Z]' &lt; gedicht.txt
+SCHREIBEN, WOLLTE ICH EIN PAAR ZEILEN.
+BUCHSTABE F&uuml;R BUCHSTABE REIHE ICH ANEINAND.
+JA, SCHREIBEN, MEINE GEDANKEN VERWEILEN.
+WORT F&uuml;R WORT, ES SIND MIR VIELE BEKANNT.
+SATZ F&uuml;R SATZ, GEHT ES FLIE&szlig;END VORAN.
+ABER UM WELCHEN TRANSZENDENTEN PREIS?
+WAS KOSTET MICH DAS AN NERVEN, SODANN?
+AN KRAFT, AN SEELE, AN GEIST UND FLEI&szlig;?
+(VON BRIGITTE OBERMAIER ALIAS MISS ZAUBERBLUME)</pre>
+<p>Damit allerdings hier auch der Filter <span class="listing">tr</span> diese Zeichenbereiche erh&auml;lt und nicht unsere Shell daraus eine Datei-Expansion macht, m&uuml;ssen Sie diese Zeichenbereiche f&uuml;r <span class="listing">tr</span> zwischen einfache Anf&uuml;hrungsstriche setzen.</p>
+<p>Wollen Sie bestimmte Zeichen aus dem Eingabestrom l&ouml;schen, so k&ouml;nnen Sie die Option <span class="listing">–d</span> verwenden:</p>
+<pre>you@host &gt; tr -d ' ','\n' &lt; gedicht.txt
+SchreibenwollteicheinpaarZeilen.Buchstabef&uuml;rBuchstabereiheichaneinand.
+JaschreibenmeineGedankenverweilen. Wortf&uuml;rWortessindmirvielebekannt.
+Satzf&uuml;rSatzgehtesflie&szlig;endvoran.AberumwelchentranszendentenPreis?
+WaskostetmichdasanNervensodann?AnKraftanSeeleanGeistundFlei&szlig;?
+(vonBrigitteObermaieraliasMissZauberblume)</pre>
+<p>Hier wurden alle Leer- und Newline-Zeichen (Zeilenumbr&uuml;che) gel&ouml;scht. Mehrere Zeichen werden – wie Sie sehen – mit einem Komma voneinander getrennt.</p>
+<p>Und noch eine gern genutzte Option von <span class="listing">tr</span> ist mit <span class="listing">–s</span> gegeben. Damit k&ouml;nnen Sie mehrfach hintereinander kommende gleiche Zeichen durch ein anderes austauschen. Dies wird etwa verwendet, wenn in einer Datei unn&ouml;tig viele Leerzeichen oder Zeilenumbr&uuml;che vorkommen. Kommen in einer Textdatei unn&ouml;tig viele Leerzeichen hintereinander vor, so k&ouml;nnen Sie diese folgenderma&szlig;en durch ein einzelnes Leerzeichen austauschen:</p>
+<pre>you@host &gt; tr -s ' ' ' ' &lt; datei.txt</pre>
+<p>Gleicher Fall mit unn&ouml;tig vielen Zeilenumbr&uuml;chen:</p>
+<pre>you@host &gt; tr -s '\n' '\n' &lt; datei.txt</pre>
+<h4 class="t4">Die Killer-Tools – sed, awk und regul&auml;re Ausdr&uuml;cke</h4>
+<p><a id="Xxx999349" name="Xxx999349"></a><a id="Xxx999350" name="Xxx999350"></a><a id="Xxx999351" name="Xxx999351"></a><a id="Xxx999352" name="Xxx999352"></a>Die absoluten Killer-Tools f&uuml;r die Textverarbeitung stehen Ihnen mit <span class="listing">awk</span> und <span class="listing">sed</span> zur Verf&uuml;gung. Bei der Verwendung von <span class="listing">sed</span>, <span class="listing">awk</span>, <span class="listing">grep</span> und vielen anderen UNIX-Tools kommen Sie auf Dauer um die regul&auml;ren Ausdr&uuml;cke nicht herum. Sollten Sie also eine Einf&uuml;hrung in diese UNIX-Tools ben&ouml;tigen, so sollten Sie sich die Kapitel 11, 12 und 13 ansehen.</p>
+<p>Auf die Schnelle soll hier dennoch die Verwendung von <span class="listing">awk</span> und <span class="listing">sed</span> in der Shell demonstriert werden. Wollen Sie bspw. mit <span class="listing">awk</span> die L&auml;nge einer Zeichenkette ermitteln, so ist dies mit eingebauten (String-)Funktionen von <span class="listing">awk</span> kein Problem.</p>
+<pre>you@host &gt; zeichen="juergen wolf"
+you@host &gt; echo $zeichen | awk '{print length($zeichen)}'
+12</pre>
+<p>Hier schieben Sie &uuml;ber eine Pipe die Standardausgabe von <span class="listing">echo</span> an die Standardeingabe von <span class="listing">awk</span>. Im Anweisungsblock von <span class="listing">awk</span> wird dann der Befehl <span class="listing">print</span> (zur Ausgabe) verwendet. <span class="listing">print</span> gibt dabei die L&auml;nge (<span class="listing">awk</span>-Funktion <span class="listing">length</span>) der Variablen <span class="listing">zeichen</span> aus. In einem Shellscript werden Sie allerdings selten die L&auml;nge oder den Wert eines Kommandos ausgeben wollen, sondern meistens damit weiterarbeiten. Um dies zu realisieren, wird wieder die Kommando-Substitution verwendet.</p>
+<pre># Demonstriert das Kommando awk im Shellscript
+# Name : aawk
+zeichen="juergen wolf"
+laenge=`echo $zeichen | awk '{print length($zeichen)}'`
+echo "$zeichen enthaelt $laenge Zeichen"</pre>
+<p>Das Beispiel bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aawk
+juergen wolf enthaelt 12 Zeichen</pre>
+<p><a id="Xxx999360" name="Xxx999360"></a><a id="Xxx999361" name="Xxx999361"></a>Neben der Funktion <span class="listing">length()</span> stehen Ihnen noch eine Reihe weiterer typischer Stringfunktionen mit <span class="listing">awk</span> zur Verf&uuml;gung. Aus Referenz-Gr&uuml;nden werden diese in Tabelle 2.3 aufgelistet. Die Anwendung dieser Funktionen entspricht im Prinzip derjenigen, die Sie eben mit <span class="listing">length()</span> gesehen haben. Sofern Ihnen <span class="listing">awk</span> noch nicht so richtig von der Hand gehen sollte, empfehle ich Ihnen, zun&auml;chst Kapitel 13, awk-Programmierung, zu lesen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 2.3   
+    </b>Awks Builtin-Stringfunktionen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Funktion</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">tolower str
+</td>
+<td class="tabellentext" bgcolor="#000000">Komplette Zeichenkette in Kleinbuchstaben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">toupper str
+</td>
+<td class="tabellentext" bgcolor="#000000">Komplette Zeichenkette in Gro&szlig;buchstaben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">index(str, substr)
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt die Position zur&uuml;ck, wo substr in str anf&auml;ngt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">match(str, regexpr)
+</td>
+<td class="tabellentext" bgcolor="#000000">&Uuml;berpr&uuml;ft, ob der regul&auml;re Ausdruck regexpr in str enthalten ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">substr(str, start, len)
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt einen Teilstring ab Postion start mit der L&auml;nge len aus str zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">split(str, array, sep)
+</td>
+<td class="tabellentext" bgcolor="#000000">Teilt einen String in einzelne Felder auf und gibt diese an ein Array. sep dient dabei als Feldtrenner.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">gsub(alt, neu, str)
+</td>
+<td class="tabellentext" bgcolor="#000000">Ersetzt in str den String alt durch neu
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">sub(alt, neu, str)
+</td>
+<td class="tabellentext" bgcolor="#000000">Ersetzt erstes Vorkommen von alt durch neu in str
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">sprintf("fmt",expr)
+</td>
+<td class="tabellentext" bgcolor="#000000">Verwendet die printf-Formatbeschreibung f&uuml;r expr
+</td>
+</tr>
+</table><br>
+<p>Neben <span class="listing">awk</span> will ich Ihnen hier auch kurz den Einsatz von <span class="listing">sed</span> auf Zeichenketten zeigen. <span class="listing">sed</span> wird vorzugsweise eingesetzt, um aus ganzen Textdateien bestimmte Teile herauszufiltern, zu ver&auml;ndern oder zu l&ouml;schen. Auch hier geht man mit einer Pipe zu Werke. Will man eine ganze Textdatei durch <span class="listing">sed</span> jagen, geht man folgenderma&szlig;en vor:</p>
+<pre>you@host &gt; cat gedicht.txt | sed 's/Satz/Wort/g'</pre>
+<p>Hier wird die Ausgabe von <span class="listing">cat</span> durch eine Pipe an die Eingabe von <span class="listing">sed</span> weitergegeben. <span class="listing">sed</span> ersetzt jetzt jedes Wort »Satz« durch das Wort »Wort« und gibt die Ersetzung an die Standardausgabe aus. <span class="listing">s</span> steht hier f&uuml;r substitute und das Suffix <span class="listing">g</span> f&uuml;r global, was bedeutet, dass die Ersetzung nicht nur einmal, sondern im kompletten Text, also auch bei mehrfachen Vorkommen, umgesetzt wird. Nat&uuml;rlich wird auch hier bevorzugt die Kommando-Substitution im Shellscript verwendet.</p>
+<pre># Demonstriert sed im Shellscript
+# Name : ased
+zeichenkette="... und sie dreht sich doch"
+neu=`echo $zeichenkette | sed 's/sie/die Erde/g'`
+echo $neu</pre>
+<p>Das Shellscript bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ased
+... und die Erde dreht sich doch</pre>
+<p>Dies sollte als Kurzeinstieg zu den Power-Tools <span class="listing">sed</span> und <span class="listing">awk</span> gen&uuml;gen. Mehr dazu finden Sie in Kapitel 12, Der Stream-Editor sed, und 13, awk-Programmierung.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">2.3.2 Erweiterte Funktionen f&uuml;r Bash und Korn-Shell<a id="RxxKap00400204004DAE1F0211CE" name="RxxKap00400204004DAE1F0211CE"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Der Bash und der Korn-Shell wurden im Gegensatz zur Bourne-Shell f&uuml;r die Stringverarbeitung einige extra Funktionen spendiert, welche allerdings in keiner Weise die eben vorgestellten UNIX-Tools ersetzen. Hierbei handelt es sich h&ouml;chstens um einige Abk&uuml;rzungen.</p>
+<h4 class="t4">L&auml;nge eines Strings</h4>
+<p><a id="Xxx999422" name="Xxx999422"></a><a id="Xxx999423" name="Xxx999423"></a>Wenn Sie in der Bash oder Korn-Shell nicht auf <span class="listing">awk</span> zur&uuml;ckgreifen wollen, k&ouml;nnen Sie hier die L&auml;nge eines Strings mit folgender Syntax ermitteln:</p>
+<pre>$(#zeichenkette)</pre>
+<p>In der Praxis sieht dies folgenderma&szlig;en aus:</p>
+<pre>you@host &gt; zeichenkette="... keep alive"
+you@host &gt; echo "Laenge von $zeichenkette ist ${#zeichenkette}"
+Laenge von ... keep alive ist 14</pre>
+<h4 class="t4">Aneinanderreihen von Strings</h4>
+<p><a id="Xxx999429" name="Xxx999429"></a><a id="Xxx999430" name="Xxx999430"></a>Die Aneinanderreihung von Strings ist recht einfach. Hier m&uuml;ssen Sie lediglich die einzelnen Variablen hintereinander schreiben und mit einer Begrenzung versehen.</p>
+<pre>you@host &gt; user=you
+you@host &gt; login=15:22
+you@host &gt; logout=18:21
+you@host &gt; daten=${user}:${login}_bis_${logout}
+you@host &gt; echo $daten
+you:15:22_bis_18:21</pre>
+<h4 class="t4">(Teil-)String entfernen</h4>
+<p><a id="Xxx999434" name="Xxx999434"></a><a id="Xxx999435" name="Xxx999435"></a>Um einen bestimmten (Teil-)String oder besser ein Muster (weil hier auch die Metazeichen <span class="listing">*</span>, <span class="listing">?</span> und <span class="listing">[</span> <span class="listing">]</span> verwendet werden k&ouml;nnen) aus einem String zu entfernen, bieten Ihnen Bash und Korn-Shell einige interessante Funktionen an. Aufgrund ihrer etwas umst&auml;ndlicheren Nutzung werden sie recht selten verwendet (siehe Tabelle 2.4).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 2.4   
+    </b>Stringfunktionen von Bash und Korn-Shell</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Funktion</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Gibt zur&uuml;ck ...</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">${var#pattern}
+</td>
+<td class="tabellentext" bgcolor="#000000">… den Wert von var ohne kleinstm&ouml;glichen durch pattern abgedeckten linken Teilstring. Bei keiner Abdeckung wird der Inhalt von var zur&uuml;ckgegeben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">${var##pattern}
+</td>
+<td class="tabellentext" bgcolor="#000000">… den Wert von var ohne gr&ouml;&szlig;tm&ouml;glichen durch pattern abgedeckten linken Teilstring. Bei keiner Abdeckung wird der Inhalt von var zur&uuml;ckgegeben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">${var%pattern}
+</td>
+<td class="tabellentext" bgcolor="#000000">… den Wert von var ohne kleinstm&ouml;glichen durch pattern abgedeckten rechten Teilstring. Bei keiner Abdeckung wird der Inhalt von var zur&uuml;ckgegeben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">${var%%pattern}
+</td>
+<td class="tabellentext" bgcolor="#000000">… den Wert von var ohne gr&ouml;&szlig;tm&ouml;glichen durch pattern abgedeckten rechten Teilstring. Bei keiner Abdeckung wird der Inhalt von var zur&uuml;ckgegeben.
+</td>
+</tr>
+</table><br>
+<p>Hierzu ein Shellscript, das diese Funktionen demonstriert:</p>
+<pre># Name : acut
+var1="1234567890"
+var2="/home/you/Dokuments/shell/kapitel2.txt"
+pfad=${var2  %/*}
+file=${var2##*/}
+echo "Komplette Angabe: $var2"
+echo "Pfad            : $pfad"
+echo "Datei           : $file"
+# rechts 2 Zeichen abschneiden
+echo ${var1  %??}
+# links 2 Zeichen abschneiden
+echo ${var1#??}
+# im Klartext ohne Metazeichen
+echo ${var2  %/kapitel2.txt}</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./acut
+Komplette Angabe: /home/you/Dokuments/shell/kapitel2.txt
+Pfad            : /home/you/Dokuments/shell
+Datei           : kapitel2.txt
+12345678
+34567890
+/home/you/Dokuments/shell</pre>
+<p>Die Metazeichen <span class="listing">*,</span> <span class="listing">?</span> und <span class="listing">[</span> <span class="listing">]</span> k&ouml;nnen Sie hierbei genauso einsetzen, wie Sie dies bereits von der Datei-Expansion her kennen. Zugegeben, sehr lesefreundlich sind diese Funktionen nicht gerade, aber in Verbindung mit einer Pfadangabe, wie im Beispiel gesehen, l&auml;sst es sich recht gut damit leben.</p>
+<h4 class="t4">String rechts oder links abschneiden (Korn-Shell only)</h4>
+<p><a id="Xxx999472" name="Xxx999472"></a><a id="Xxx999473" name="Xxx999473"></a>Die Korn-Shell bietet Ihnen die M&ouml;glichkeit, bei einem String von der rechten oder linken Seite etwas abzuschneiden. Hierzu verwendet man wieder den Befehl <span class="listing">typeset</span>. Nat&uuml;rlich l&auml;sst <span class="listing">typeset</span> schlussfolgern, dass hierbei nicht im eigentlichen Sinneabgeschnitten wird, sondern Sie deklarieren lediglich die L&auml;nge einer Variablen, also welche Anzahl von Zeichen diese aufnehmen darf, beispielsweise:</p>
+<pre>you@host &gt; typeset -L5 atext
+you@host &gt; atext=1234567890
+you@host &gt; echo $atext
+12345</pre>
+<p>Hier definieren Sie die L&auml;nge der Variablen »atext« auf 5 Zeichen. Die Option <span class="listing">–L</span> steht dabei f&uuml;r eine linksb&uuml;ndige Ausrichtung, was allerdings bei einem leeren String keinen Effekt hat. Damit k&ouml;nnten Sie praktisch mit <span class="listing">–L</span> eine Zeichenkette links um n Zeichen abschneiden. Die Gegenoption, um von der rechten Seite etwas zu entfernen, lautet <span class="listing">–R</span>n. Mit n geben Sie die Anzahl der Zeichen an, die Sie von der rechten Seite abschneiden wollen. Hier <span class="listing">typset</span> im Einsatz:</p>
+<pre>you@host &gt; zeichenkette=1234567890
+you@host &gt; typeset -L5 zeichenkette
+you@host &gt; echo $zeichenkette
+12345
+you@host &gt; typeset -R3 zeichenkette
+you@host &gt; echo $zeichenkette
+345</pre>
+<h4 class="t4">(Teil-)Strings ausschneiden (Bash only)</h4>
+<p><a id="Xxx999479" name="Xxx999479"></a><a id="Xxx999480" name="Xxx999480"></a>Als einzige von allen Shells bietet Ihnen die Bash eine sinnvolle Funktion an, um aus einem String Teile herauszuschneiden (&auml;hnlich wie mit dem Kommando <span class="listing">cut</span>). Auch die Anwendung ist recht passabel und lesefreundlich. Die Syntax:</p>
+<pre>${var:start:laenge}
+${var:start}</pre>
+<p>Damit schneiden Sie aus der Variablen <span class="listing">var</span> ab der Position <span class="listing">start</span>, <span class="listing">laenge</span> Zeichen heraus. Erfolgt keine Angabe zu <span class="listing">laenge</span>, wird von der Position <span class="listing">start</span> bis zum Ende alles herauskopiert.</p>
+<pre>you@host &gt; zeichenkette=1234567890
+you@host &gt; echo ${zeichenkette:3:6}
+456789
+you@host &gt; echo ${zeichenkette:5}
+67890
+you@host &gt; neu=${zeichenkette:5:3}
+you@host &gt; echo $neu
+678
+you@host &gt; mehr=${zeichenkette:5:1}_und_${zeichenkette:8:2}
+you@host &gt; echo $mehr
+6_und_90</pre>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+</html>

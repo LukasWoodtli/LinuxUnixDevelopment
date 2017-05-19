@@ -1,0 +1,652 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_009_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:40 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 7.3 Eine Fallgrube f&uuml;r Signale – trap</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_009_001.html">
+<link rel="next" href="shell_010_000.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_009_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_010_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_009_000.html#RxxKap00900004004EC91F04A172">7 Signale</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_009_000.html#RxxKap00900004004EC91F04A174">7.1 Grundlagen zu den Signalen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_009_001.html#RxxKap00900104004EE01F04A172">7.2 Signale senden – kill</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00900204004EE11F034172">7.3 Eine Fallgrube f&uuml;r Signale – trap</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00900204004EE11F034186">7.3.1 Einen Signalhandler (Funktion) einrichten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00900204004EE11F034195">7.3.2 Mit Signalen Schleifendurchl&auml;ufe abbrechen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00900204004EE11F03419A">7.3.3 Mit Signalen das Script beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00900204004EE11F03419E">7.3.4 Das Beenden der Shell (oder eines Scripts) abfangen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00900204004EE11F0341AB">7.3.5 Signale ignorieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00900204004EE11F0341B3">7.3.6 Signale zur&uuml;cksetzen</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">7.3 <a id="RxxKap00733EineFallgrubefurSignaletrap" name="RxxKap00733EineFallgrubefurSignaletrap"></a>Eine Fallgrube f&uuml;r Signale – tra<a id="RxxKap00900204004EE11F034172" name="RxxKap00900204004EE11F034172"></a>p 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a><a id="Xxx999280" name="Xxx999280"></a>Das Kommando <span class="listing">trap</span> ist das Gegenst&uuml;ck zu <span class="listing">kill</span>. Damit k&ouml;nnen Sie in Ihren Shellscripts auf Signale reagieren (bzw. sie abfangen), um so den Programmabbruch zu verhindern.</p>
+<pre>trap 'kommando1; ... ; kommaond_n' Signalnummer</pre>
+<p>Dem Kommandonamen <span class="listing">trap</span> folgt hier ein Befehl oder eine Liste von Befehlen, die ausgef&uuml;hrt werden sollen, wenn das Signal mit »Signalnummer« eintrifft. Die Befehle werden zwischen einfache Single Quotes geschrieben. Trifft beim ausf&uuml;hrenden Script ein Signal ein, wird die Ausf&uuml;hrung an der aktuellen Position unterbrochen und die angegebenen Befehle der <span class="listing">trap</span>-Anweisung werden ausgef&uuml;hrt. Danach wird mit der Ausf&uuml;hrung des Scripts an der unterbrochenen Stelle wieder fortgefahren (siehe Abbildung 7.2).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/07_02.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein07_02.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 7.2   
+    </b>Abfangen von Signalen mit trap</p>
+</td>
+</tr>
+</table><br>
+<p>Ein einfaches Beispiel:</p>
+<pre># Demonstriert die Funktion trap zum Abfangen von Signalen
+# Name: trap1
+# Signal SIGINT (2) (Strg+C)
+trap 'echo SIGINT erhalten' 2
+i=0
+while [ $i -lt 5 ]
+do
+   echo "Bitte nicht st&ouml;ren!"
+   sleep 2
+   i=`expr $i + 1`
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./trap1
+Bitte nicht st&ouml;ren!
+Bitte nicht st&ouml;ren! (Strg)+(C)
+SIGINT erhalten
+Bitte nicht st&ouml;ren!
+Bitte nicht st&ouml;ren! (Strg)+(C)
+SIGINT erhalten
+Bitte nicht st&ouml;ren!
+you@host &gt;</pre>
+<p>Mit der <span class="listing">trap</span>-Anweisung zu Beginn des Scripts sorgen Sie daf&uuml;r, dass beim Eintreffen des Signals <span class="listing">SIGINT</span> – entweder durch die Tastenkombination <b>(Strg)</b>+<b>(C)</b> oder mit <span class="listing">kill</span> <span class="listing">–SIGINT</span> <span class="listing">PID_von_trap1</span> ausgel&ouml;st – der <span class="listing">echo</span>-Befehl ausgef&uuml;hrt wird. W&uuml;rden Sie hier keine <span class="listing">trap</span>-Anweisung verwenden, so w&uuml;rde das Script beim ersten <b>(Strg)</b>+<b>(C)</b> (<span class="listing">SIGINT</span>) beendet werden.</p>
+<p>Nat&uuml;rlich k&ouml;nnen Sie in einem Script auch mehrere Signale abfangen:</p>
+<pre># Demonstriert die Funktion trap zum Abfangen von Signalen
+# Name: trap2
+# Signal SIGINT (2) (Strg+C)
+trap 'echo SIGINT erhalten' 2
+# Signal SIGTERM (15) kill -TERM PID_of_trap2
+trap 'echo SIGTERM erhalten' 15
+i=0
+while [ $i -lt 5 ]
+do
+   echo "Bitte nicht st&ouml;ren! ($$)"
+   sleep 5
+   i=`expr $i + 1`
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./trap2
+Bitte nicht st&ouml;ren! (10175) (Strg)+(C)
+SIGINT erhalten
+Bitte nicht st&ouml;ren! (10175)
+Bitte nicht st&ouml;ren! (10175)
+SIGTERM erhalten
+Bitte nicht st&ouml;ren! (10175)
+Bitte nicht st&ouml;ren! (10175)
+you@host &gt;</pre>
+<p>Bei der Ausf&uuml;hrung von »trap2« wurde das Signal <span class="listing">SIGTERM</span> hier aus einer anderen Konsole wie folgt an das Script gesendet:</p>
+<pre>you@host &gt; kill -TERM 10175</pre>
+<p>Sie m&uuml;ssen allerdings nicht f&uuml;r jedes Signal eine extra <span class="listing">trap</span>-Anweisung verwenden, sondern Sie k&ouml;nnen hinter der Signalnummer weitere Signalnummern – getrennt mit mindestens einem Leerzeichen – anf&uuml;gen und somit auf mehrere Signale mit denselben Befehlen reagieren.</p>
+<pre># Demonstriert die Funktion trap zum Abfangen von Signalen
+# Name: trap3
+# Signale SIGINT und SIGTERM abfangen
+trap 'echo Ein Signal (SIGINT/SIGTERM) erhalten' 2 15
+i=0
+while [ $i -lt 5 ]
+do
+   echo "Bitte nicht st&ouml;ren! ($$)"
+   sleep 5
+   i=`expr $i + 1`
+done</pre>
+<p>In diesem Beispiel k&ouml;nnen Sie auch erkennen, warum es nicht m&ouml;glich ist und auch niemals m&ouml;glich sein darf, dass das Signal <span class="listing">SIGKILL</span> (Nr. 9) ignoriert oder als nicht unterbrechbar eingerichtet wird. Stellen Sie sich jetzt noch eine Endlosschleife vor, die st&auml;ndig Daten in eine Datei schreibt. W&uuml;rde hierbei das Signal <span class="listing">SIGKILL</span> ausgeschaltet, so w&uuml;rden ewig Daten in die Datei geschrieben, bis das System oder der Plattenplatz schlapp macht, und nicht mal mehr der Systemadministrator k&ouml;nnte das Script unterbrechen.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">7.3.1 Einen Signalhandler (Funktion) einrichten<a id="RxxKap00900204004EE11F034186" name="RxxKap00900204004EE11F034186"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999306" name="Xxx999306"></a>In der Praxis werden Sie beim Auftreten eines bestimmten Signals gew&ouml;hnlich keine einfache Ausgabe vornehmen. Meistens werden Sie mit Dingen wie dem »Saubermachen« von Datenresten besch&auml;ftigt sein – oder aber, Sie richten sich hierzu einen eigenen Signalhandler (Funktion) ein, welcher auf ein bestimmtes Signal reagieren soll:</p>
+<pre># Demonstriert die Funktion trap zum Abfangen von Signalen
+# Name: trap4
+sighandler_INT() {
+   printf "Habe das Signal SIGINT empfangen\n"
+   printf "Soll das Script beendet werden (j/n) : "
+   read
+   if [[ $REPLY = "j" ]]
+   then
+      echo "Bye!"
+      exit 0;
+   fi
+}
+# Signale SIGINT abfangen
+trap 'sighandler_INT' 2
+i=0
+while [ $i -lt 5 ]
+do
+   echo "Bitte nicht st&ouml;ren! ($$)"
+   sleep 3
+   i=`expr $i + 1`
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./trap4
+Bitte nicht st&ouml;ren! (4843)
+Bitte nicht st&ouml;ren! (4843) (Strg)+(C)
+Habe das Signal SIGINT empfangen
+Soll das Script beendet werden (j/n) : n
+Bitte nicht st&ouml;ren! (4843)
+Bitte nicht st&ouml;ren! (4843)
+Bitte nicht st&ouml;ren! (4843)
+you@host &gt; ./trap4
+Bitte nicht st&ouml;ren! (4854) (Strg)+(C)
+Habe das Signal SIGINT empfangen
+Soll das Script beendet werden (j/n) : n
+Bitte nicht st&ouml;ren! (4854) (Strg)+(C)
+Habe das Signal SIGINT empfangen
+Soll das Script beendet werden (j/n) : j
+Bye!
+you@host &gt;</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Verwenden Sie in der Korn-Shell innerhalb von Funktionen die <span class="listing">trap</span>-Anweisung, dann sind die mit ihr eingerichteten Signale nur innerhalb dieser Funktion g&uuml;ltig.</p>
+</td>
+</tr>
+</table><br>
+<p>Ein eigener Signalhandler (bzw. eine Funktion) wird h&auml;ufig eingerichtet, um eine Konfigurationsdatei neu einzulesen. Bestimmt haben Sie schon einmal bei einem D&auml;mon- oder Serverprogramm die Konfigurationsdatei Ihren Bed&uuml;rfnissen angepasst. Damit die aktuellen &Auml;nderungen aktiv werden, mussten Sie die Konfigurationsdatei mittels</p>
+<pre>kill -HUP PID_of_d&auml;mon_oder_server</pre>
+<p>neu einlesen. Wie Sie dies in Ihrem Script erreichen k&ouml;nnen, haben Sie eben mit dem Script »trap4« in &auml;hnlicher Weise gesehen. Ein einfaches Beispiel auch hierzu:</p>
+<pre># Demonstriert die Funktion trap zum Abfangen von Signalen
+# Name: trap5
+# Signal SIGHUP empfangen
+trap 'readconfig' 1
+readconfig() {
+   . aconfigfile
+}
+a=1
+b=2
+c=3
+# Endlosschleife
+while [ 1 ]
+do
+   echo "Werte (PID:$$)"
+   echo "a=$a"
+   echo "b=$b"
+   echo "c=$c"
+   sleep 5
+done</pre>
+<p>Die Datei aconfigfile sieht wie folgt aus:</p>
+<pre># Konfigurationsdatei f&uuml;r trap5
+# Name: aconfigfile
+# Hinweis: Um hier vorgenommene &Auml;nderungen umgehend zu
+# aktivieren, m&uuml;ssen Sie lediglich die
+# Konfigurationsdatei aconfigfile mittels
+# kill -HUP PID_of_trap5
+# neu einlesen.
+a=3
+b=6
+c=9</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>###--- tty1 ---###
+you@host &gt; ./trap5
+Werte (PID:6263)
+a=1
+b=2
+c=3
+Werte (PID:6263)
+a=1
+b=2
+c=3
+###--- tty2 ---###
+you@host &gt; kill -HUP 6263
+###--- tty1 ---###
+Werte (PID:6263)
+a=3
+b=6
+c=9 (Strg)+(C)
+you@host &gt;</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">7.3.2 Mit Signalen Schleifendurchl&auml;ufe abbrechen<a id="RxxKap00900204004EE11F034195" name="RxxKap00900204004EE11F034195"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999324" name="Xxx999324"></a>Genauso einfach k&ouml;nnen Sie auch Signale verwenden, um Schleifen abzubrechen. Hierzu m&uuml;ssen Sie nur in den Befehlen von <span class="listing">trap</span> die Anweisung <span class="listing">break</span> eintragen, dann wird bei Auftreten eines gew&uuml;nschten Signals eine Schleife abgebrochen:</p>
+<pre># Demonstriert die Funktion trap zum Abfangen von Signalen
+# Name: trap6
+# Signale SIGINT und SIGTERM abfangen
+trap 'break' 2
+i=1
+while [ $i -lt 10 ]
+do
+   echo "$i. Schleifendurchlauf"
+   sleep 1
+   i=`expr $i + 1`
+done
+echo "Nach dem $i Schleifendurchlauf abgebrochen"
+echo "--- Hinter der Schleife ---"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./trap6
+1. Schleifendurchlauf
+2. Schleifendurchlauf
+3. Schleifendurchlauf
+4. Schleifendurchlauf
+5. Schleifendurchlauf (Strg)+(C)
+Nach dem 5. Schleifendurchlauf abgebrochen
+--- Hinter der Schleife ---
+you@host &gt;</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">7.3.3 Mit Signalen das Script beenden<a id="RxxKap00900204004EE11F03419A" name="RxxKap00900204004EE11F03419A"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999330" name="Xxx999330"></a><a id="Xxx999331" name="Xxx999331"></a>Bitte beachten Sie, dass Sie mit einem abgefangenen Signal keinen Programmabbruch erreichen. Haben Sie zun&auml;chst mit der <span class="listing">trap</span>-Anweisung ein Signal abgefangen, m&uuml;ssen Sie sich gegebenenfalls selbst um die Beendigung eines Prozesses k&uuml;mmern. Diese Methode wird recht h&auml;ufig eingesetzt, wenn der Anwender ein Signal an den Prozess sendet, dieser aber den Datenm&uuml;ll vorher noch entsorgen soll. Hierzu setzen Sie den Befehl <span class="listing">exit</span> an das Ende der Kommandofolge, die Sie in der <span class="listing">trap</span>-Anweisung angegeben haben, beispielsweise:</p>
+<pre>trap 'rm atempfile.tmp ; exit 1' 2</pre>
+<p>Hier wird beim Auftreten des Signals <span class="listing">SIGINT</span> zun&auml;chst die tempor&auml;re Datei atempfile.tmp gel&ouml;scht, bevor im n&auml;chsten Schritt mittels <span class="listing">exit</span> das Script beendet wird.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">7.3.4 Das Beenden der Shell (oder eines Scripts) abfangen<a id="RxxKap00900204004EE11F03419E" name="RxxKap00900204004EE11F03419E"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999336" name="Xxx999336"></a><a id="Xxx999337" name="Xxx999337"></a>Wollen Sie, dass beim Verlassen der Shell oder eines Scripts noch eine andere Datei bzw. Script ausgef&uuml;hrt wird, k&ouml;nnen Sie das Signal 0 (<span class="listing">EXIT</span>) abfangen. Dieses Signal wird beim normalen Beenden einer Shell oder eines Scripts oder &uuml;ber den Befehl <span class="listing">exit</span> gesendet, mit dem ein Script oder eine Shell vorzeitig beendet wird. Nicht abfangen k&ouml;nnen Sie hingegen mit dem Signal 0 Abbr&uuml;che, die durch <span class="listing">kill</span> von au&szlig;en herbeigef&uuml;hrt wurden. Ein einfaches Beispiel, welches das Ende einer (echten) Shell abf&auml;ngt:</p>
+<pre># Name: dasEnde
+# Befehle, die beim Beenden einer Shell ausgef&uuml;hrt werden
+cat &lt;&lt;MARKE
+********************************************
+*   Hier k&ouml;nnten noch einige n&uuml;tzliche     *
+*   zur Beendigung der Shell stehen.       *
+********************************************
+MARKE
+echo "Alles erledigt – Shell mit ENTER beenden"
+read</pre>
+<p>Zun&auml;chst m&uuml;ssen Sie in Ihrer Shell das Signal <span class="listing">EXIT</span> abfangen und die Datei »dasEnde« aufrufen. Steht die »Falle« f&uuml;r das Signal <span class="listing">EXIT</span>, k&ouml;nnen Sie die Shell verlassen:</p>
+<pre>you@host &gt; trap '$SHELL $HOME/dasEnde' 0
+you@host &gt; exit
+logout
+********************************************
+*   Hier k&ouml;nnten noch einige n&uuml;tzliche     *
+*   zur Beendigung der Shell stehen.       *
+********************************************
+Alles erledigt – Shell mit ENTER beenden
+(ENTER)
+login :</pre>
+<p>Damit die Datei »dasEnde« mit wichtigen Hinweisen in Zukunft nach jedem Verlassen einer Shell dauerhaft zur Verf&uuml;gung steht, sollten Sie die Zeile</p>
+<pre>trap '$SHELL $HOME/dasEnde' 0</pre>
+<p>in die Datei <span class="listing">.profile</span> eintragen.</p>
+<p>Gleiches l&auml;sst sich auch in einem Shellscript verwenden:</p>
+<pre># Demonstriert die Funktion trap zum Abfangen von Signalen
+# Name: trap7
+# Signal EXIT abfangen
+trap 'exithandler' 0
+exithandler() {
+   echo "Das Script wurde vorzeitig mit exit beendet!"
+   # Hier noch anfallende Aufr&auml;umarbeiten ausf&uuml;hren
+}
+# Hauptfunktion
+echo "In der Hauptfunktion" &amp;&amp; exit 1
+echo "Wird nicht mehr ausgef&uuml;hrt"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./trap7
+In der Hauptfunktion
+Das Script wurde vorzeitig mit exit beendet!
+you@host &gt;</pre>
+<p>Im Gegensatz zum Vorgehen in Abschnitt 7.3.3 m&uuml;ssen Sie hierbei kein zus&auml;tzliches <span class="listing">exit</span> bei den Kommandos von <span class="listing">trap</span> angeben. Hier halten Sie das Script nur beim wirklichen Ende kurz auf.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">7.3.5 Signale ignorieren<a id="RxxKap00900204004EE11F0341AB" name="RxxKap00900204004EE11F0341AB"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999351" name="Xxx999351"></a>Wenn Sie in der Liste von Befehlen bei <span class="listing">trap</span> keine Angaben vornehmen, also leere Single Quotes verwenden, werden die angegebenen Signale (bzw. Signalnummern) ignoriert. Die Syntax:</p>
+<pre>trap '' Signalnummer</pre>
+<p>Somit w&uuml;rden Sie praktisch mit der Angabe von</p>
+<pre>trap '' 2</pre>
+<p>das Signal <span class="listing">SIGINT</span> beim Auftreten ignorieren. Das v&ouml;llige Ignorieren von Signalen kann bei extrem kritischen Daten&uuml;bertragungen sinnvoll sein. So k&ouml;nnen Sie zum Beispiel verhindern, dass beim Schreiben kritischer Systemdaten der Anwender mit einem unbedachten <span class="listing">SIGINT</span> reinpfuscht. Nat&uuml;rlich gilt hier weiterhin, dass die Signale <span class="listing">SIGKILL</span> und <span class="listing">SIGSTOP</span> nicht ignoriert werden k&ouml;nnen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Laut POSIX ist das weitere Verhalten von Prozessen undefiniert, wenn die Signale <span class="listing">SIGFPE</span>, <span class="listing">SIGILL</span> oder <span class="listing">SIGSEGV</span> ignoriert werden und diese auch nicht durch einen manuellen Aufruf von <span class="listing">kill</span> ausgel&ouml;st wurden.</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">7.3.6 Signale zur&uuml;cksetzen<a id="RxxKap00900204004EE11F0341B3" name="RxxKap00900204004EE11F0341B3"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999362" name="Xxx999362"></a>Wenn Sie die Reaktion von Signalen mittels <span class="listing">trap</span> einmal ver&auml;ndert haben, k&ouml;nnen Sie durch einen erneuten Aufruf von <span class="listing">trap</span> den Standardzustand der Signale wiederherstellen. Hierbei reicht lediglich der Aufruf von <span class="listing">trap</span> und der (bzw. den) Signalnummer(n), die Sie wieder auf den urspr&uuml;nglichen Zustand zur&uuml;cksetzen wollen. Mehrere Signalnummern werden wieder mit mindestens einem Leerzeichen von der vorangegangenen Signalnummer getrennt.</p>
+<pre>trap Signalnummer</pre>
+<p>Das Zur&uuml;cksetzen von Signalen ist sinnvoll, wenn man die Signale nur bei einem bestimmten Codeausschnitt gesondert behandeln will.</p>
+<pre># Demonstriert die Funktion trap zum Abfangen von Signalen
+# Name: trap8
+# Signal SIGINT ignorieren
+trap '' 2
+i=0
+while [ $i -lt 5 ]
+do
+   echo "Hier kein SIGINT m&ouml;glich ..."
+   sleep 1
+   i=`expr $i + 1`
+done
+# Signal SIGINT wieder zur&uuml;cksetzen
+trap 2
+i=0
+while [ $i -lt 5 ]
+do
+   echo "SIGINT wieder m&ouml;glich ..."
+   sleep 1
+   i=`expr $i + 1`
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./trap8
+Hier kein SIGINT m&ouml;glich ...
+Hier kein SIGINT m&ouml;glich ... (Strg)+(C)
+Hier kein SIGINT m&ouml;glich ... (Strg)+(C)
+Hier kein SIGINT m&ouml;glich ...
+Hier kein SIGINT m&ouml;glich ...
+SIGINT wieder m&ouml;glich ...
+SIGINT wieder m&ouml;glich ...  (Strg)+(C)
+you@host &gt;</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wollen Sie wissen, welche Signale f&uuml;r eine bestimmte Routine mit <span class="listing">trap</span> abgefangen werden, k&ouml;nnen Sie das Kommando <span class="listing">trap</span> ohne jegliches Argument verwenden.</p>
+</td>
+</tr>
+</table><br>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_009_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_010_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_009_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:42 GMT -->
+</html>

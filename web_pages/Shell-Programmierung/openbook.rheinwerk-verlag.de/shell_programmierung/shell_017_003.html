@@ -1,0 +1,1249 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_017_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 15.4 Backup-Strategien</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_017_002.html">
+<link rel="next" href="shell_017_004.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_017_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_017_004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_017_000.html#RxxKap0170000400505D1F01A172">15 Die Praxis</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A182">15.1 Allt&auml;gliche L&ouml;sungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A183">15.1.1 Auf alphabetische und numerische Zeichen pr&uuml;fen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A18B">15.1.2 Auf Integer &uuml;berpr&uuml;fen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A190">15.1.3 echo mit oder ohne -n</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_001.html#RxxKap017001040050741F037172">15.2 Datei-Utilities</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_001.html#RxxKap017001040050741F037173">15.2.1 Leerzeichen im Dateinamen ersetzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_001.html#RxxKap017001040050741F037179">15.2.2 Dateiendungen ver&auml;ndern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_001.html#RxxKap017001040050741F037180">15.2.3 Nach ver&auml;nderten Dateien in zwei Verzeichnissen vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_002.html#RxxKap017002040050751F037172">15.3 Systemadministration</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_002.html#RxxKap017002040050751F037174">15.3.1 Benutzerverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_002.html#RxxKap017002040050751F03719F">15.3.2 System&uuml;berwachung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap017003040050761F010172">15.4 Backup-Strategien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017003040050761F010174">15.4.1 Warum ein Backup?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017003040050761F01017C">15.4.2 Sicherungsmedien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017003040050761F010182">15.4.3 Varianten der Sicherungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017003040050761F010186">15.4.4 Bestimmte Bereiche sichern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017003040050761F01018D">15.4.5 Backup &uuml;ber ssh mit tar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017003040050761F0101AC">15.4.6 Daten mit rsync synchronisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017003040050761F0101BB">15.4.7 Dateien und Verzeichnisse per E-Mail versenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017003040050761F0101C2">15.4.8 Startup-Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_004.html#RxxKap017004040050771F019172">15.5 World Wide Web und HTML</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_004.html#RxxKap017004040050771F019177">15.5.1 Analysieren von access_log (Apache)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_004.html#RxxKap017004040050771F019188">15.5.2 Analysieren von error_log (Apache)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_005.html#RxxKap017005040050781F026172">15.6 CGI (Common Gateway Interface)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F026179">15.6.1 CGI-Scripts ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F026187">15.6.2 CGI-Environment ausgeben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F026193">15.6.3 Einfache Ausgabe als Text</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F0261AC">15.6.4 Ausgabe als HTML formatieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F0261BA">15.6.5 Systeminformationen ausgeben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F0261C6">15.6.6 Kontaktformular</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F0261ED">15.6.7 Noch ein Tipp</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">15.4 <a id="RxxKap015123BackupStrategien" name="RxxKap015123BackupStrategien"></a>Backup-Strategie<a id="RxxKap017003040050761F010172" name="RxxKap017003040050761F010172"></a>n 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a>Beim Thema Backup handelt es sich um ein sehr spezielles und vor allem enorm wichtiges Thema, weshalb hier eine umfassendere Einf&uuml;hrung unumg&auml;nglich ist. Anhand dieser kurzen Einf&uuml;hrung werden Sie schnell feststellen, wie viele Aspekte es gibt, die man bei der richtigen Backup-L&ouml;sung beachten muss. Zwar finden Sie anschlie&szlig;end auch einige Scripts in der Praxis dazu, doch handelt es sich bei diesem Thema schon eher um einen sehr speziellen Fall, bei dem man einiges Wissen ben&ouml;tigt und auch so manches ber&uuml;cksichtigen muss, sodass sich keine ultimative L&ouml;sung erstellen l&auml;sst.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">15.4.1 Warum ein Backup?<a id="RxxKap017003040050761F010174" name="RxxKap017003040050761F010174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999281" name="Xxx999281"></a>Es gibt drei verschiedene F&auml;lle von Datenverlusten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Eine einzelne Datei (oder wenige Dateien) wird aus Versehen gel&ouml;scht oder falsch modifiziert (bspw. von einem Virus infiziert). In solch einem Fall ist das Wiederherstellen einer Datei h&auml;ufig nicht allzu kompliziert. Bei solchen Daten ist eine <span class="listing">tar</span>-, <span class="listing">cpio</span>- oder <span class="listing">afio</span>-Sicherung recht schnell wieder zur&uuml;ckgeladen. Nat&uuml;rlich ist dies immer abh&auml;ngig vom Speichermedium. Wenn Sie dieses Backup auf einem Band linear suchen m&uuml;ssen, ist das Wiederherstellen nicht unbedingt vorteilhaft. Hierzu ist es h&auml;ufig sinnvoll, immer wieder ein Backup in einem anderen (entfernten) Verzeichnis zu abzuspeichern.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Eine Festplatte ist defekt. H&auml;ufig denkt man, ist bei mir noch nie vorgekommen, aber wenn es dann mal crasht, ist guter Rat oft teuer. Hier gibt es eine recht elegante L&ouml;sung, wenn man RAID-Systeme im Level 1 oder 5 verwendet. Dabei werden ja die Daten redundant auf mehreren Platten gespeichert. Das bedeutet, dass Sie beim Ausfall einer Festplatte die Informationen jederzeit von der Kopie wieder holen k&ouml;nnen. Sobald Sie die defekte Platte gegen eine neue austauschen, synchronisiert das RAID-System die Platten wieder, sodass alle Daten nach einer gewissen Zeit wieder redundant auf den Platten vorhanden sind. Zur Verwendung von RAID gibt es eine Software- und eine Hardwarel&ouml;sung mit einem RAID-Controller. Zwar ist die Hardwarel&ouml;sung erheblich schneller, aber auch teurer.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">Auf der anderen Seite sollte man bei der Verwendung von RAID bedenken, dass jeder Fehler, der z. B. einem Benutzer oder gar dem Administrator selbst unterl&auml;uft, wie bspw. Software-Fehler, Viren, instabiles System, versehentliches L&ouml;schen von Daten usw., sofort auf das RAID-System bzw. auf alle Speichermedien im System repliziert wird.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Datenverlust durch Hardware- oder Softwarefehler oder Elementarsch&auml;den (wie Feuer, Wasser oder &Uuml;berspannung). Hier wird eine Komplettsicherung der Datenbest&auml;nde n&ouml;tig, was bei den Giga- bis Terrabytes an Daten, die h&auml;ufig vorliegen, kein allzu leichtes Unterfangen darstellt. Gew&ouml;hnlich geht man hierbei zwei Wege:</td>
+</tr>
+</table>
+ Man schiebt die Daten auf einen entfernten Rechner (bspw. mit <span class="listing">cp</span> oder <span class="listing">scp</span>), am besten gleich in komprimierter Form (mittels <span class="listing">gzip</span> oder <span class="listing">bzip2</span>).
+ Die wohl g&auml;ngigste Methode d&uuml;rfte das Archivieren auf wechselbaren Datentr&auml;gern wie Magnetband, CD oder DVD sein (abh&auml;ngig vom Datenumfang). Meistens werden hierzu die klassischen Tools wie <span class="listing">cp</span>, <span class="listing">dd</span>, <span class="listing">scp</span> oder <span class="listing">rsync</span> verwendet. Auch sollte man unter Umst&auml;nden eine Komprimierung mit <span class="listing">gzip</span> oder <span class="listing">bzip2</span> vorziehen. F&uuml;r B&auml;nder und Streamer kommen h&auml;ufig die klassischen Tools wie <span class="listing">tar</span>, <span class="listing">afio</span>, <span class="listing">cpio</span> oder <span class="listing">taper</span> zum Einsatz.
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">15.4.2 Sicherungsmedien<a id="RxxKap017003040050761F01017C" name="RxxKap017003040050761F01017C"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999290" name="Xxx999290"></a>&Uuml;ber das Speichermedium macht man sich wohl zun&auml;chst keine allzu gro&szlig;en Gedanken. Meistens greift man auf eine billigere L&ouml;sung zur&uuml;ck. Ohne auf die einzelnen Speichermedien genauer einzugehen, gibt es hierbei einige Punkte, die es zu &uuml;berdenken gilt:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Maximales Speichervolumen – will man mal eben schnell sein lokales Verzeichnis sichern, wird man wohl mit einer CD bzw. DVD als Speichermedium auskommen. Doch bevor Sie vorschnell urteilen, lesen Sie am besten noch die weiteren Punkte.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Zugriffsgeschwindigkeit – wenn Sie wichtige Datenbest&auml;nde im Umfang von mehreren Gigabytes schnell wiederherstellen m&uuml;ssen, werden Sie wohl kaum ein Speichermedium w&auml;hlen, welches nur 1 MB in der Sekunde &uuml;bertragen kann. Hier gilt es also, die Transferrate in MB pro Sekunde im Auge zu behalten.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Zuverl&auml;ssigkeit – wie lange ist die Haltbarkeit von Daten auf einer CD oder DVD oder gar auf einem Magnetband. Dar&uuml;ber werden Sie sich wohl bisher recht selten Gedanken gemacht haben – doch es gibt in der Tat eine durchschnittliche Haltbarkeit von Daten auf Speichermedien.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Zul&auml;ssigkeit – in manchen Branchen, z. B. in der Buchhaltung, ist es gesetzlich vorgeschrieben, nur einmal beschreibbare optische Datentr&auml;ger zu verwenden. Bei der Verwendung von mehrfach beschreibbaren Medien sollte man immer die Risiken bedenken, dass diese wieder beschrieben werden k&ouml;nnen (sei es nun mit Absicht oder aus Versehen).</td>
+</tr>
+</table>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">15.4.3 Varianten der Sicherungen<a id="RxxKap017003040050761F010182" name="RxxKap017003040050761F010182"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999297" name="Xxx999297"></a>Generell kann man von zwei Varianten einer Sicherung sprechen:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Vollsicherung – dabei werden alle zu sichernden Daten vollst&auml;ndig gesichert. Der Vorteil ist, dass man jederzeit ohne gr&ouml;&szlig;eren Aufwand die gesicherten Daten wieder zur&uuml;ckladen kann. Man sollte allerdings bedenken, ob man bestimmte Daten bei einer Vollsicherung ausgrenzen sollte – besonders die sicherheitsrelevanten. Der Nachteil daran ist ganz klar: Eine Vollsicherung kann eine ganz sch&ouml;ne Menge an Platz (und auch Zeit) auf einem Speichermedium verbrauchen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Inkrementelle Sicherung – hierbei wird nur einmal eine Vollsicherung vorgenommen. Anschlie&szlig;end werden immer nur diejenigen Daten gesichert, die sich seit der letzten Sicherung ver&auml;ndert haben. Hierbei wird weniger Platz auf einem Speichermedium (und auch Zeit) ben&ouml;tigt.</td>
+</tr>
+</table>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">15.4.4 Bestimmte Bereiche sichern<a id="RxxKap017003040050761F010186" name="RxxKap017003040050761F010186"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999302" name="Xxx999302"></a>Hierzu einige kurze Vorschl&auml;ge, wie man bestimmte Bereiche sinnvoll sichert.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Einzelne Dateien – einzelne Dateien kann man mal schnell mit <span class="listing">cp</span> oder <span class="listing">scp</span> auf eine andere Festplatte, Diskette oder ein anderes Verzeichnis &uuml;bertragen. Nat&uuml;rlich steht Ihnen hierzu auch die M&ouml;glichkeit mittels <span class="listing">tar</span>, <span class="listing">afio</span> oder <span class="listing">cpio</span> zur Verf&uuml;gung, um die Daten auf externe Datentr&auml;ger zu sichern. Gew&ouml;hnlich werden diese Archive auch noch mittels <span class="listing">gzip</span> oder <span class="listing">bzip2</span> komprimiert. Gern werden hierzu auch Datentr&auml;ger wie CD oder DVD verwendet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Dateib&auml;ume – ganze Dateib&auml;ume beinhalten h&auml;ufig eine Menge Daten. Hier verwendet man als Speichermedium h&auml;ufig Streamer, Magnetb&auml;nder oder optische Datentr&auml;ger (CD, DVD), je nach Umfang. Als Werkzeuge werden gew&ouml;hnlich <span class="listing">tar</span>, <span class="listing">afio</span> und <span class="listing">cpio</span> eingesetzt. Aber auch Programme zur Datensynchronisation wie <span class="listing">rsync</span> oder <span class="listing">unison</span> werden oft genutzt. Zum Sichern auf optische Speichermedien wie CD oder DVD werden gew&ouml;hnlich die Tools <span class="listing">mkisofs</span>, (oder mit GUI) <span class="listing">xcdroast</span>, <span class="listing">K3b</span> oder <span class="listing">gtoaster</span> verwendet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Ganze Festplatte – zum Sichern ganzer Festplatten verwendet man unter Linux h&auml;ufig das Programmpaket <span class="listing">amanda</span> (Advanced Maryland Automatic Network Disk Archiver), das ein komplettes Backup-System zur Verf&uuml;gung stellt. Da es nach dem Client-Server-Prinzip arbeitet, ist somit auch eine Datensicherung &uuml;ber das Netzwerk m&ouml;glich. Der Funktionsumfang von <span class="listing">amanda</span> ist gewaltig, weshalb ich hier auf die Webseite <b><a href="http://www.amanda.org/" target="_blank">http://www.amanda.org</a></b>.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Dateisysteme – mithilfe des Kommandos <span class="listing">dd</span> l&auml;sst sich ein komplettes Dateisystem auf eine andere Platte oder auf ein Band sichern. Beachten Sie allerdings, dass beim Duplizieren beide Partitionen die gleiche Gr&ouml;&szlig;e haben m&uuml;ssen (falls Sie Festplatten duplizieren wollen) und bestenfalls beide Platten nicht gemountet sind (zumindest nicht die Zielplatte). Da <span class="listing">dd</span> selbst physikalisch Block f&uuml;r Block kopiert, kann das Tool nicht auf defekte Bl&ouml;cke &uuml;berpr&uuml;fen. Daher sollte man hierbei auch gleich noch mit dem Kommando <span class="listing">badblocks</span> nach defekten Bl&ouml;cken suchen. Nat&uuml;rlich m&uuml;ssen Sie auch beim Zur&uuml;ckspielen darauf achten, dass die Zielpartition nicht kleiner als die Quellpartition ist. Ein anderes Tool, das auch auf Low-Level-Ebene und fehlertolerant arbeitet, ist <span class="listing">dd_rescue</span>.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16">
+             
+        </td>
+<td valign="top" width="100%" align="left">Ein weiteres hervorragendes Tool zum Sichern und Wiederherstellen ganzer Partitionen ist <span class="listing">partimage</span>, welches auch wie <span class="listing">dd</span> und <span class="listing">dd_rescue</span> in der Lage ist, unterschiedliche Dateisysteme zu sichern (ext2/ext3; reiserfs, xfs, UFS (Unix), HFS (MAC), NTFS/FAT16/FAT32 (Win32)), da es wie die beiden anderen genannten Tools auf Low-Level-Ebene arbeitet. Mehr zu <span class="listing">partimage</span> entnehmen Sie bitte <b><a href="http://www.partimage.org/" target="_blank">http://www.partimage.org</a></b>. Nat&uuml;rlich bietet sich Ihnen auch die M&ouml;glichkeit, Dateisysteme zu synchronisieren. Hierbei stehen Ihnen Werkzeuge wie <span class="listing">rsync</span>, <span class="listing">unision</span>, WebDAV usw. zur Verf&uuml;gung.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">
+                 
+            </td>
+<td valign="top" width="100%" align="left">
+                 
+            </td>
+</tr>
+</table>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">15.4.5 Backup &uuml;ber ssh mit tar<a id="RxxKap017003040050761F01018D" name="RxxKap017003040050761F01018D"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999310" name="Xxx999310"></a><a id="Xxx999311" name="Xxx999311"></a><a id="Xxx999312" name="Xxx999312"></a><a id="Xxx999313" name="Xxx999313"></a><a id="Xxx999314" name="Xxx999314"></a><a id="Xxx999315" name="Xxx999315"></a>Das Sichern von Dateien zwischen Servern ist eigentlich mit dem Kommando <span class="listing">scp</span> recht einfach:</p>
+<pre>scp some-archive.tgz user@host:/home/backups</pre>
+<p>Nachteile von <span class="listing">scp</span> beim Durchlaufen ganzer Verzeichnisb&auml;ume (mit der Option <span class="listing">–r</span>) sind die vielen Kommandoaufrufe (alles wird einzeln kopiert) und die unflexiblen Kompressionsm&ouml;glichkeiten.</p>
+<p>Hierzu wird in der Praxis oft <span class="listing">tar</span> verwendet. Verkn&uuml;pfen wir nun <span class="listing">tar</span> mit <span class="listing">ssh</span>, haben wir exakt das, was wir wollen. Wenn Sie n&auml;mlich <span class="listing">ssh</span> ohne eine interaktive Login-Sitzung starten, erwartet <span class="listing">ssh</span> Daten von der Standardeingabe und gibt das Ergebnis auf die Standardausgabe aus. Das h&ouml;rt sich stark nach der Verwendung einer Pipe an. Wollen Sie beispielsweise alle Daten aus Ihrem Heimverzeichnis auf einem entfernten Rechner archivieren, k&ouml;nnen Sie wie folgt vorgehen:</p>
+<pre>tar zcvf – /home | ssh user@host "cat &gt; homes.tgz"</pre>
+<p>Nat&uuml;rlich ist es m&ouml;glich, das komprimierte Archiv auch auf ein Magnetband des entfernten Rechners zu schreiben (entsprechendes Medium und Rechte vorausgesetzt):</p>
+<pre>tar zcvf – /home | ssh user@host "cat &gt; /dev/tape"</pre>
+<p>Wollen Sie stattdessen eine Kopie einer Verzeichnisstruktur auf Ihrer lokalen Maschine direkt auf das Filesystem einer anderen Maschine kopieren, so k&ouml;nnen Sie dies so erreichen (Sie synchronisieren das entfernte Verzeichnis mit dem lokalen):</p>
+<pre>cd /home/us10129/www.pronix.de ; tar zcf – html/ \
+ | ssh user@host \
+ "cd /home/us10129/www.pronix.de; mv html html.bak; tar zpxvf -"</pre>
+<p>Hier sichern Sie u. a. auch das Verzeichnis html auf host, indem Sie es umbenennen (html.bak) – f&uuml;r den Fall der F&auml;lle. Dann erstellen Sie eine exakte Kopie von /home/us10129/www.pronix.de/html – Ihrem lokalen Verzeichnis – mit s&auml;mtlichen identischen Zugriffsrechten und der Verzeichnisstruktur auf dem entfernten Rechner. Da hierbei <span class="listing">tar</span> mit der Option <span class="listing">z</span> verwendet wird, werden die Daten vor dem »Hochladen« komprimiert, was nat&uuml;rlich bedeutet, dass eine geringere Datenmenge transferiert werden muss und der Vorgang erheblich schneller vonstatten gehen kann. Nat&uuml;rlich ist dies abh&auml;ngig von der Geschwindigkeit beider Rechner, also wie schnell bei diesen die (De-)Kompression durchgef&uuml;hrt werden kann.</p>
+<p>M&uuml;ssen Sie auf dem entfernten Rechner etwas wiederherstellen und verf&uuml;gen &uuml;ber ein Backup auf der lokalen Maschine, ist dies mit folgender Kommandoverkettung kein allzu gro&szlig;es Unterfangen mehr:</p>
+<pre>ssh user@host "cd /home/us10129/www.pronix.de; tar zpvxf -" \
+   &lt; big-archive.tgz</pre>
+<p>So stellen Sie das komplette Verzeichnis /home/us10129/www.pronix.de/ mit dem Archiv big-archive.tgz wieder her. Gleiches k&ouml;nnen Sie nat&uuml;rlich auch jederzeit in die andere Richtung vornehmen:</p>
+<pre>ssh user@host "cat big-archive.tgz" | tar zpvxf -</pre>
+<p>Damit Sie nicht andauernd ein Passwort eingeben m&uuml;ssen, empfiehlt es sich auch hier, SSH-Schl&uuml;ssel zu verwenden (siehe Abschnitt 14.12.12). Das folgende Script demonstriert Ihnen die M&ouml;glichkeit, <span class="listing">ssh</span> und <span class="listing">tar</span> in einem Backup-Script zu verwenden.</p>
+<pre>#!/bin/sh
+# Name: ssh_tar
+# Backups mit tar &uuml;ber ssh
+# Konfiguration, entsprechend anpassen
+#
+SSH_OPT="-l"
+SSH_HOST="192.135.147.2"
+SSH_USER="jwolf"
+# Default-Angaben
+#
+LOCAL_DIR="/home/tot/backups"
+REMOTE_DIR="/home/jwolf/backups"
+stamp=`date +%d_%m_%Y`
+BACKUP_FILE="backup_${stamp}.tgz"
+usage() {
+   echo "usage: star [-ph] [-pl] [-sh] [-sl] [-r] [-l] ..."
+   echo
+   echo "Optionen : "
+   echo " –ph : (lokales) Verzeichnis packen und hochladen " \
+        " (remote) in 'REMOTE_DIR'"
+   echo "     Beispiel:   star -ph lokalesVerzeichnis "
+   echo " -pl = (remote) Verzeichnis packen und runterladen"\
+        " (lokal) in 'LOCAL_DIR'"
+   echo "     Beispiel:   star -pl remoteVerzeichnis "
+   echo " -sh = Synchronisiert ein Host-Verzeichnis mit einem "\
+        "lokalen Verzeichnis"
+   echo "     Beispiel:   star -sh lokalesVerzeichnis "\
+        "remoteVerzeichnis syncVerzeichnis "
+   echo " -sl = Synchronisiert ein lokales Verzeichnis mit "\
+        "einem Host-Verzeichnis"
+   echo "     Beispiel:   star -sl remoteVerzeichnis "\
+        "lokalesVerzeichnis syncVerzeichnis "
+   echo " -r  = (remote) Wiederherstellen eines"\
+        " Host-Verzeichnisses"
+   echo "     Beispiel:   star -r remoteVerzeichnis "\
+        "lokalTarArchiv.tgz"
+   echo " -l  = (lokal)  Wiederherstellen eines lokalen "\
+        "Verzeichnisses"
+   echo "     Beispiel:   star -l lokalesVerzeichnis "\
+        "remoteTarArchiv.tgz"
+   # ...
+   exit 1
+}
+case "$1" in
+    -ph)
+       if [ $# -ne 2 ]
+       then
+          usage
+       else
+          cd $2; tar zcvf – "." | \
+          ssh $SSH_OPT $SSH_USER $SSH_HOST \
+          "cat &gt; ${REMOTE_DIR}/${BACKUP_FILE}"
+          echo "Verzeichnis '$2' nach "\
+               "${SSH_HOST}:${REMOTE_DIR}/${BACKUP_FILE} "\
+               "gesichert"
+       fi ;;
+    -pl)
+       if [ $# -ne 2 ]
+       then
+          usage
+       else
+          ssh $SSH_OPT $SSH_USER $SSH_HOST \
+          "cd $2; tar zcvf – ." | \
+          cat &gt; ${LOCAL_DIR}/${BACKUP_FILE}
+          echo "Verzeichnis ${SSH_HOST}:${2} nach "\
+               "${LOCAL_DIR}/${BACKUP_FILE} gesichert"
+       fi ;;
+    -sh)
+       if [ $# -ne 4 ]
+       then
+          usage
+       else
+          cd $2
+          tar zcf – $4/ |
+          ssh $SSH_OPT $SSH_USER $SSH_HOST \
+          "cd $3; mv $4 ${4}.bak; tar zpxvf -"
+          echo "Verzeichnis ${2}/${4} mit"\
+               " ${SSH_HOST}:${3}/${4} synchronisiert"
+       fi ;;
+    -sl)
+       if [ $# -ne 4 ]
+       then
+          usage
+       else
+          cd $3; mv $4 ${4}.bak
+     ssh $SSH_OPT $SSH_USER $SSH_HOST "cd ${2}; tar zcvf – ${4}"\
+     | tar zpvxf -
+          echo "Verzeichnis ${SSH_HOST}:${2}/${4} mit"\
+               " ${3}/${4} synchronisiert"
+       fi ;;
+    -r)
+       if [ $# -ne 3 ]
+       then
+          usage
+       else
+          ssh $SSH_OPT $SSH_USER $SSH_HOST \
+          "cd ${2}; tar zpvxf -" &lt; $3
+          echo "${SSH_HOST}:$2 mit dem Archiv $3 "\
+               "Wiederhergestellt"
+       fi ;;
+    -l)
+       if [ $# -ne 3 ]
+       then
+          usage
+       else
+          cd $2
+          ssh $SSH_OPT $SSH_USER $SSH_HOST "cat $3" | \
+          tar zpvxf -
+          echo "$2 mit dem Archiv ${SSH_HOST}:${3} "\
+               "Wiederhergestellt"
+       fi ;;
+    -*)   usage;;
+     *)   usage;;
+esac</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ssh_tar -ph Shellbuch_aktuell/
+./
+./kap004.txt
+./kap005.txt
+...
+...
+./Kap013.txt
+./Kap014.txt
+Verzeichnis 'Shellbuch_aktuell/' nach  
+192.135.147.2:/home/jwolf/backups/backup_20_05_2005.tgz  gesichert</pre>
+<p>Ein Blick zum Rechner »192.135.147.2«:</p>
+<pre>jwolf@jwolf$ ls backups/
+backup_20_05_2005.tgz
+you@host &gt; ./ssh_tar -pl backups/
+./
+./backup_20_05_2005.tgz
+./kap004.txt
+./kap005.txt
+...
+...
+./Kap012.txt
+./Kap013.txt
+./Kap014.txt
+Verzeichnis 192.135.147.2:backups/ nach  /home/you/backups/
+backup_20_05_2005.tgz gesichert
+you@host &gt; ls backups/
+backup_07_05_2005.tgz  backup_20_05_2005.tgz  Shellbuch</pre>
+<p>Erstellt im Remoteverzeichnis backups ein Ebenbild des Verzeichnisses 
+Shellbuch_aktuell aus dem Heimverzeichnis des lokalen Rechners:</p>
+<pre>you@host &gt; ./ssh_tar -sh $HOME backups Shellbuch_aktuell
+Shellbuch_aktuell/
+Shellbuch_aktuell/kap004.txt
+Shellbuch_aktuell/kap005.txt
+...
+Shellbuch_aktuell/Kap013.txt
+Shellbuch_aktuell/Kap014.txt
+Verzeichnis /home/you/Shellbuch_aktuell mit 
+192.135.147.2:backups/Shellbuch_aktuell synchronisiert</pre>
+<p>Erstellt im lokalen Heimverzeichnis $HOME/backup eine exakte 
+Kopie des entfernten Remote-Verzeichnisses backups/Shellbuch:</p>
+<pre>you@host &gt; ./ssh_tar -sl backups $HOME/backups Shellbuch_aktuell
+Shellbuch_aktuell/
+Shellbuch_aktuell/kap004.txt
+Shellbuch_aktuell/kap005.txt
+...
+...
+Shellbuch_aktuell/Kap013.txt
+Shellbuch_aktuell/Kap014.txt
+Verzeichnis 192.135.147.2:backups/Shellbuch_aktuell mit 
+/home/tot/backups/Shellbuch_aktuell synchronisiert
+you@host &gt; ls backups/
+backup_07_05_2005.tgz  backup_20_05_2005.tgz  Shellbuch_aktuell  
+Shellbuch_aktuell.bak
+you@host &gt; ls backups/Shellbuch_aktuell
+Kap003.txt  kap005.txt  Kap007.txt  Kap010.txt  Kap013.txt
+...</pre>
+<p>Wiederherstellen eines entfernten Verzeichnisses mit einem lokalen Archiv. Im Beispiel wird das entfernte Verzeichnis backups/Shellbuch_aktuell mit dem lokalen Archiv backup_20_05_2005.tgz wiederhergestellt:</p>
+<pre>you@host &gt; ls backups/
+backup_07_05_2005.tgz  backup_20_05_2005.tgz  Shellbuch_aktuell  
+Shellbuch_aktuell.bak
+you@host &gt; ./ssh_tar -r backups/Shellbuch_aktuell
+&gt; backups/backup_20_05_2005.tgz
+./
+./kap004.txt
+./kap005.txt
+...
+...
+./Kap013.txt
+./Kap014.txt
+192.135.147.2:backups/Shellbuch_aktuell mit dem Archiv 
+backups/backup_20_05_2005.tgz  wiederhergestellt</pre>
+<p>Dasselbe Beispiel in anderer Richtung. Hier wird das lokale Verzeichnis backups/Shellbuch_aktuell mit dem Archiv backup_20_05_2005.tgz, welches sich auf dem entfernten Rechner im Verzeichnis backups befindet, wiederhergestellt:</p>
+<pre>you@host &gt; ./ssh_tar -l backups/Shellbuch_aktuell
+&gt; backups/backup_20_05_2005.tgz
+./
+./kap004.txt
+./kap005.txt
+...
+...
+./Kap013.txt
+./Kap014.txt
+backups/Shellbuch_aktuell mit dem Archiv 
+192.135.147.2:backups/backup_20_05_2005.tgz wiederhergestellt</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nat&uuml;rlich funktioniert dieses Script wie hier demonstriert nur mit einem Key-Login (siehe Abschnitt 14.12.12). Da Backup-Scripts aber ohnehin chronolgoisch laufen sollten, ist ein ssh-key immer sinnvoll, da man das Passwort nicht in einer Textdatei speichern muss.</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">15.4.6 Daten mit rsync synchronisieren<a id="RxxKap017003040050761F0101AC" name="RxxKap017003040050761F0101AC"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999349" name="Xxx999349"></a><a id="Xxx999350" name="Xxx999350"></a><a id="Xxx999351" name="Xxx999351"></a><a id="Xxx999352" name="Xxx999352"></a><a id="Xxx999353" name="Xxx999353"></a><a id="Xxx999354" name="Xxx999354"></a>Was sich mit <span class="listing">ssh</span> und <span class="listing">tar</span> realisieren l&auml;sst, gelingt nat&uuml;rlich auch mit <span class="listing">rsync</span>. Das folgende einfache Script synchronisiert entweder ein lokales Verzeichnis mit einem entfernten Verzeichnis oder umgekehrt. Um hierbei auch die Vertraulichkeit zu gew&auml;hrleisten, »tunnelt« man das Ganze durch <span class="listing">ssh</span>. Das folgende Script demonstriert Ihnen, wie Sie <span class="listing">rsync</span> zum komfortablen Synchronisieren zweier entfernter Verzeichnisse verwenden k&ouml;nnen.</p>
+<pre>#!/bin/sh
+# ssyncron
+# Script zum Synchronisieren von Daten
+usage() {
+   echo "usage: prgname [-option] [Verzeichnis]"
+   echo
+   echo "-u : Ein Verzeichnis auf dem Server mit einem"\
+        " lokalen synchronisieren"
+   echo "-d : Ein lokales Verzeichnis mit einem Verzeichnis"\
+        " auf dem Server synchronisieren"
+   exit 1
+}
+# Konfigurationsdaten
+#
+# Pfad zu den Daten (Lokal)
+local_path="$HOME/"
+# Pfad zu den Dateien (Server)
+remote_path="/home/us10129"
+# Loginname
+username="us10129@myhoster.de"
+# Optionen zum Download '-d'
+D_OPTIONS="-e ssh -av --exclude '*.xvpics' --exclude 'cache' --exclude 'bestellen'"
+# Optionen zum Hochladen '-u'
+U_OPTIONS="-e ssh -av"
+# rsync vorhanden ...
+if [ `which rsync` = "" ]
+then
+   echo "Das Script ben&ouml;tigt 'rsync' zur Ausf&uuml;hrung ...!"
+   exit 1
+fi
+# Pfad zu rsync
+RSYNC=`which rsync`
+site=$2
+case "$1" in
+   # Webseite herunterladen – Synchronisieren Lokal mit Server
+   -d)
+      [ -z $2 ] &amp;&amp; usage # Verzeichnis fehlt ...
+      $RSYNC $D_OPTIONS \
+      $username:${remote_path}/${site}/ ${local_path}${site}/ ;;
+   # Webseite updaten – Synchronisieren Server mit Lokal
+   -u)
+      $RSYNC $U_OPTIONS \
+      ${local_path}${site}/ $username:${remote_path}/${site}/ ;;
+   -*)
+      usage ;;
+    *)
+      usage ;;
+esac</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<p>Entferntes Verzeichnis mit dem lokalen Verzeichnis synchronisieren:</p>
+<pre>you@host &gt; ./ssyncron -d backups/Shellbuch
+receiving file list ... done
+./
+Martin/
+Kap001.doc
+Kap001.sxw
+Kap002.sxw
+Kap003.txt
+Kap007.txt
+...
+...
+Martin/Kap001.doc
+Martin/Kap002.sxw
+Martin/Kap003.sxw
+Martin/Kap004.sxw
+Martin/Kap005.sxw
+kap004.txt
+kap005.txt
+newfile.txt
+whoami.txt
+wrote 516 bytes  read 1522877 bytes  38566.91 bytes/sec
+total size is 1521182  speedup is 1.00</pre>
+<p>Eine neue lokale Datei atestfile.txt erzeugen und in das entfernte Verzeichnis synchronisieren:</p>
+<pre>you@host &gt; touch backups/Shellbuch/atestfile.txt
+you@host &gt; ./ssyncron -u backups/Shellbuch
+building file list ... done
+Shellbuch/
+Shellbuch/atestfile.txt
+wrote 607 bytes  read 40 bytes  86.27 bytes/sec
+total size is 1521182  speedup is 2351.13</pre>
+<p>Einige Dateien im lokalen Verzeichnis Shellbuch l&ouml;schen (Datenverlust simulieren) und anschlie&szlig;end mit dem entfernten Verzeichnis Shellbuch wiederherstellen (synchronisieren):</p>
+<pre>you@host &gt; rm backups/Shellbuch/Kap00[1–9]*
+you@host &gt; ./ssyncron -d backups/Shellbuch
+receiving file list ... done
+./
+Kap001.doc
+Kap001.sxw
+Kap002.sxw
+Kap003.txt
+Kap007.txt
+Kap008.txt
+Kap009.txt
+wrote 196 bytes  read 501179 bytes  28650.00 bytes/sec
+total size is 3042364  speedup is 6.07</pre>
+<p>Wenn in beiden Richtungen nichts mehr zu tun ist, dann ist alles synchronisiert:</p>
+<pre>you@host &gt; ./ssyncron -u backups/Shellbuch
+building file list ... done
+wrote 551 bytes  read 20 bytes  87.85 bytes/sec
+total size is 1521182  speedup is 2664.07
+you@host &gt; ./ssyncron -d backups/Shellbuch
+receiving file list ... done
+wrote 56 bytes  read 570 bytes  96.31 bytes/sec
+total size is 1521182  speedup is 2430.00</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>In der Praxis w&uuml;rde es sich au&szlig;erdem anbieten, <span class="listing">rsync</span> mit den Optionen <span class="listing">-b</span> f&uuml;r Backup zu verwenden, womit Backup-Kopien alter Dateiversionen angelegt werden, sodass man gegebenenfalls auf mehrere Versionen zur&uuml;ckgreifen kann, und die Option <span class="listing">-z</span> zu nutzen, mit der Kompression m&ouml;glich ist.</p>
+<p class="BStandard"><b>Hinweis   </b>Hier gilt dasselbe wie schon beim Script zuvor. Hier sollten Sie ebenfalls einen ssh-key f&uuml;r ein Key-Login verwenden (siehe Abschnitt 14.12.12).</p>
+</td>
+</tr>
+</table><br>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">15.4.7 Dateien und Verzeichnisse per E-Mail versenden<a id="RxxKap017003040050761F0101BB" name="RxxKap017003040050761F0101BB"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999372" name="Xxx999372"></a><a id="Xxx999373" name="Xxx999373"></a><a id="Xxx999374" name="Xxx999374"></a><a id="Xxx999375" name="Xxx999375"></a><a id="Xxx999376" name="Xxx999376"></a><a id="Xxx999377" name="Xxx999377"></a><a id="Xxx999378" name="Xxx999378"></a><a id="Xxx999379" name="Xxx999379"></a><a id="Xxx999380" name="Xxx999380"></a><a id="Xxx999381" name="Xxx999381"></a><a id="Xxx999382" name="Xxx999382"></a><a id="Xxx999383" name="Xxx999383"></a><a id="Xxx999384" name="Xxx999384"></a><a id="Xxx999385" name="Xxx999385"></a>Sie wollen sich ein Backup mit <span class="listing">cpio</span> erstellen und es sich automatisch zukommen lassen. Als einfachster Weg w&uuml;rde sich hier der Transfer per E-Mail als Anhang eignen. Dank megabyteschwerer Postf&auml;cher sollte dies heutzutage kein Problem mehr sein. Allerdings l&auml;sst sich ein Anhang nicht einfach so hinzuf&uuml;gen. Hierzu ben&ouml;tigen Sie <span class="listing">uuencode</span> (siehe Abschnitt 14.12.6). Zuerst m&uuml;ssen Sie also <span class="listing">cpio</span>-typisch ein komplettes Verzeichnis durchlaufen und die Ausgabe gefundener Dateien (mit <span class="listing">find</span>) durch eine Pipe an <span class="listing">cpio</span> &uuml;bergeben. Damit daraus eine einzige Datei als Anhang wird, schickt <span class="listing">cpio</span> wiederum die Ausgabe durch die Pipe an <span class="listing">gzip</span>, um das vollst&auml;ndige Verzeichnis zu komprimieren. Diesen »gzipten« Anhang m&uuml;ssen Sie nun mit <span class="listing">uuencode</span> enkodieren, um ihn daraufhin mit <span class="listing">mail</span> oder <span class="listing">mailx</span> (oder ggf. mit <span class="listing">sendmail</span>) an den gew&uuml;nschten Absender zu schicken. Alle diese Aktionen werden durch eine Pipe an das andere Kommando geschickt:</p>
+<pre>   find "$Dir" -type f -print |
+   cpio -o${option} |
+   gzip |
+   uuencode "$Archive" |
+   $Mail -s "$Archive" "$User" || exit 1</pre>
+<p>Hierzu das komplette Script:</p>
+<pre>#!/bin/sh
+# Name: mailcpio
+# Archiviert Dateien und Verzeichnisse per cpio, komprimiert mit
+# gzip und verschickt das Archiv an eine bestimmte E-Mail-Adresse
+PROGN="$0"
+# Ben&ouml;tigte Programme: mail oder mailx...
+if [ "`which mailx`" != "" ]
+then
+   Mail="mailx"
+   if [ "`which mail`" != "" ]
+   then
+      Mail="mail"
+   fi
+else
+  echo "Das Script ben&ouml;tigt 'mail' bzw. 'mailx' zur Ausf&uuml;hrung!"
+  exit 1
+fi
+# Ben&ouml;tigt 'uuencode' f&uuml;r den Anhang
+if [ "`which uuencode`" = "" ]
+then
+   echo "Das Script ben&ouml;tigt 'uuencode' zur Ausf&uuml;hrung!"
+   exit 1
+fi
+# Ben&ouml;tigt 'cpio'
+if [ "`which cpio`" = "" ]
+then
+   echo "Das Script ben&ouml;tigt 'cpio' zur Ausf&uuml;hrung!"
+   exit 1
+fi
+Usage () {
+   echo "$PROGN – Versendet ganze Verzeichnisse per E-Mail"
+   echo "usage: $PROGN [option] e-mail-adresse"\
+        " {datei|Verzeichnis} [datei|Verzeichnis] ..."
+   echo
+   echo "Hierbei werden alle angegebenen Dateien und "\
+        "Verzeichnisse (inskl. Unterverzeichnisse)"
+   echo "an eine angegebene Mail-Adresse gesendet. Das"\
+        " Archiv wird mittels gzip komprimiert."
+   echo "Option:"
+   echo "-s : Keine Ausgabe von cpio"
+   echo "-v : Macht cpio gespr&auml;chig"
+   exit 1
+}
+while [ $# -gt 0 ]
+do
+   case "$1" in
+      -v)   option=Bv ;;
+      -s)   Silent=yes ;;
+      --)   shift; break ;;
+      -*)   Usage ;;
+       *)   break ;;
+    esac
+    shift
+done
+if [ $# -lt 2 ]
+then
+   Usage
+fi
+User="$1"; shift
+for Dir
+do
+   Archive="${Dir}.cpio.gz"
+   # Verzeichnis nicht lesbar ...
+   if [ ! -r "$Dir" ]
+   then
+      echo "Kann $Dir nicht lesen – (wird ignoriert)"
+      continue
+   fi
+   [ "$Silent" = "" ] &amp;&amp; echo "$Archive   -&gt;    "
+   find "$Dir" -type f -print |
+   cpio -o${option} |
+   gzip |
+   uuencode "$Archive" |
+   $Mail -s "$Archive" "$User" || exit 1
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./mailcpio-s pronix@t-online.de logfiles
+3 blocks
+you@host &gt; ./mailcpio -v pronix@t-online.de logfiles
+logfiles.cpio.gz   -&gt;
+logfiles/testscript.log.mail
+logfiles/testscript.log
+1 block</pre>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">15.4.8 Startup-Scripts<a id="RxxKap017003040050761F0101C2" name="RxxKap017003040050761F0101C2"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999393" name="Xxx999393"></a><a id="Xxx999394" name="Xxx999394"></a><a id="Xxx999395" name="Xxx999395"></a><a id="Xxx999396" name="Xxx999396"></a><a id="Xxx999397" name="Xxx999397"></a><a id="Xxx999398" name="Xxx999398"></a>Wenn der Kernel gestartet wurde, kann dieser vorerst nur im Lese-Modus auf die Root-Partition zugreifen. Als ersten Prozess startet der Kernel <span class="listing">init</span> (/sbin/init) mit der PID 1. Dieser Prozess gilt ja als Elternteil aller weiteren Prozesse, die noch gestartet werden. Der Prozess <span class="listing">init</span> k&uuml;mmert sich zun&auml;chst um die Konfiguration des Systems und den Start von zahlreichen Daemon-Prozessen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Es muss gleich darauf hingewiesen werden, dass sich &uuml;ber <span class="listing">init</span> keine hundertprozentigen Aussagen treffen lassen. Hier kochen die jeweiligen Distributionen h&auml;ufig Ihr eigenes S&uuml;ppchen. Die Unterschiede beziehen sich wieder insbesondere auf diejenigen Verzeichnisse, in denen sich die Init-Dateien befinden, und auf die hierbei ber&uuml;cksichtigten Konfigurationsdateien. Nat&uuml;rlich hei&szlig;t dies auch, dass die Init-Pakete verschiedener Distributionen gew&ouml;hnlich g&auml;nzlich inkompatibel sind und nicht untereinander ausgetauscht werden k&ouml;nnen. Daher folgt hier zun&auml;chst ein allgemeiner &Uuml;berblick &uuml;ber den Init-Prozess (genauer System-V-init).</p>
+</td>
+</tr>
+</table><br>
+<p>Bevor hier ein wenig ins Detail gegangen wird, zun&auml;chst ein kurzer Init-&Uuml;berblick &uuml;ber einen normalen Systemstart:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Nach dem Systemstart, wenn der Kernel geladen wurde, startet dieser das Programm (besser den Prozess) /sbin/init mit der PID 1.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> init</span> wertet zun&auml;chst die Konfigurationsdatei /etc/inittab aus.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Jetzt f&uuml;hrt <span class="listing">init</span> ein Script zur Systeminitialisierung aus. Name und Pfad des Scripts sind stark distributionsabh&auml;ngig.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Als N&auml;chstes f&uuml;hrt <span class="listing">init</span> das Script <span class="listing">rc</span> aus, welches sich auch an unterscheidlichen Orten (und eventuell unter verschiedenen Namen) auf den Distributionen befindet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> rc</span> startet nun einzelne Scripts, die sich in einem Verzeichnis namens <span class="listing">rc</span>[n]<span class="listing">.d</span> befinden. n ist hierbei der Runlevel. Diese Scriptdateien in den Verzeichnissen <span class="listing">rc</span>[n]<span class="listing">.d</span> starten nun die Systemdienste (Daemonen), auch Startup-Scripts genannt. Der Speicherort dieser Verzeichnisse ist distributionsabh&auml;ngig. F&uuml;r gew&ouml;hnlich finden Sie die Verzeichnisse unter /etc oder unter /etc/init.d.</td>
+</tr>
+</table>
+<h4 class="t4">init und der Runlevel</h4>
+<p><a id="Xxx999411" name="Xxx999411"></a><a id="Xxx999412" name="Xxx999412"></a><a id="Xxx999413" name="Xxx999413"></a>Normalerweise verwendet <span class="listing">init</span> sieben Runlevel, die jeweils eine Gruppe von Diensten enthalten, die das System beim Starten (oder Beenden) ausf&uuml;hren soll. Sicherlich haben Sie schon davon geh&ouml;rt, dass Linux/UNIX ein Multi-User-Betriebssystem ist, also im Multi-User-Modus l&auml;uft. Es ist aber auch m&ouml;glich, dass Sie Linux/UNIX im Single-User-Modus starten. Dass dies &uuml;berhaupt realisiert werden kann, ist den verschiedenen Runlevel zu verdanken.</p>
+<p>In der Datei /etc/inittab wird unter Linux der »default runlevel« festgelegt, es ist stark distributionsabh&auml;ngig. Welcher Runlevel welche Dienste startet, ist von »Symlinks« in den einzelnen Verzeichnissen rc[n].d abh&auml;ngig. Diese »Symlinks« zeigen meist auf die Startscripts der Dienste, die im Allgemeinen unter /etc/init.d abgelegt sind.</p>
+<p>Zun&auml;chst ein kurzer &Uuml;berblick zu den unterschiedlichen Runleveln und ihren Bedeutungen bei den g&auml;ngigsten Distributionen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 15.1   
+    </b>Runlevel und ihre Bedeutung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Runlevel</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">Dieser Runlevel h&auml;lt das System komplett an (Shutdown mit Halt).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1 oder S
+</td>
+<td class="tabellentext" bgcolor="#000000">Single-User-Modus (Einzelbenutzer-Modus)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">2 oder M
+</td>
+<td class="tabellentext" bgcolor="#000000">Multi-User-Modus (Mehrbenutzer-Modus) ohne Netzwerk
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">3
+</td>
+<td class="tabellentext" bgcolor="#000000">Multi-User-Modus (Mehrbenutzer-Modus) mit einem Netzwerk, aber ohne X–Start
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+<td class="tabellentext" bgcolor="#000000">Dieser Runlevel wird gew&ouml;hnlich nicht verwendet und steht somit zur freien Verf&uuml;gung.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">5
+</td>
+<td class="tabellentext" bgcolor="#000000">Multi-User-Modus (Mehrbenutzer-Modus) mit einem Netzwerk und einem grafischen Login (X-Start). Nach dem Login wird gew&ouml;hnlich die grafische Oberfl&auml;che gestartet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">6
+</td>
+<td class="tabellentext" bgcolor="#000000">Dieser Runlevel startet das System neu (Shutdown mit Reboot).
+</td>
+</tr>
+</table><br>
+<p>Wie Sie sehen konnten, handelt es sich bei den Runleveln 0 und 6 um spezielle F&auml;lle, in denen sich das System nicht lange halten kann. Hierbei wird das System heruntergefahren (Runlevel 0) oder eben neu gestartet (Runlevel 1). Zumeist werden die Runlevel 2 und 3 und die Mehrbenutzer-Level l und 5 verwendet, womit eine X-Anmeldeprozedur (wie xdm, kdm, gdm etc.) gestartet wird. Runlevel 1 (bzw. S) ist f&uuml;r die meisten Systeme unterschiedlich definiert und Runlevel 4 wird fast nie benutzt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Linux unterst&uuml;tzt &uuml;brigens 10 Runlevel, wobei die Runlevel 7 bis 9 nicht definiert sind.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Runlevel 1 bzw. S</h4>
+<p>Im Runlevel 1, dem Einzelbenutzer-Modus, werden meist alle Mehrbenutzer- und Anmeldeprozesse beendet. Somit ist sicher, dass das System mit geringem Aufwand ausgef&uuml;hrt wird. Nat&uuml;rlich bietet Runlevel 1 vollen root-Zugriff auf das System. Damit ein System in Runlevel 1 auch nach einem root-Passwort abfragt, wurde der Runlevel S entwickelt. Unter System-V-init existiert kein echter Runlevel S und er dient daher nur dazu, das root-Passwort abzufragen. Dieser Runlevel ist gew&ouml;hnlich dazu gedacht, dass Administratoren diverse Patches einspielen k&ouml;nnen.</p>
+<h4 class="t4">/etc/inittab</h4>
+<p>In der Datei /etc/inittab steht, was <span class="listing">init</span> auf den verschiedenen Runleveln zu tun hat. Wenn der Rechner gestartet wird, durchl&auml;uft <span class="listing">init</span> Runlevel 0 bis hin zum Runlevel, der in /etc/inittab als Standard (default runlevel) festgelegt wurde. Damit der &Uuml;bergang von einem Level zum n&auml;chsten reibungslos l&auml;uft, f&uuml;hrt <span class="listing">init</span> die in /etc/inittab angegebenen Aktionen aus. Dasselbe geschieht nat&uuml;rlich auch im umgekehrten Fall beim Herunterfahren bzw. Neustarten des Systems.</p>
+<p>Die Verwendung von inittab ist allerdings nicht unbedingt das Gelbe vom Ei, weshalb noch zus&auml;tzliche Schichten in Form eines Scripts f&uuml;r das Wechseln der Runlevel eingebaut wurden. Dieses Script (<span class="listing">rc</span> – zu finden meist unter /etc/init.d/rc oder /etc/rc.d/rc) wird gew&ouml;hnlich aus <span class="listing">inittab</span> aufgerufen. Es (<span class="listing">rc</span>) f&uuml;hrt wiederum weitere Scripts in einem vom Runlevel abh&auml;ngigen Verzeichnis aus, um das System in seinen neuen (Runlevel-)Zustand zu versetzen.</p>
+<p>In vielen B&uuml;chern wird jetzt hier die Datei /etc/inittab etwas genauer zerlegt und beschrieben (bspw. <span class="listing">inittab</span>-Schl&uuml;sselw&ouml;rter), was nat&uuml;rlich sehr lehrreich ist, doch in der Praxis m&uuml;ssen Sie sich als Systemadministrator eigentlich nicht damit befassen, da die eben erw&auml;hnte Schnittstelle f&uuml;r jede Anwendung geeignet ist.</p>
+<h4 class="t4">Startup-Scripts erstellen und ausf&uuml;hren</h4>
+<p>Die Terminologie von Startup-Scripts ist h&auml;ufig nicht einfach zu durchschauen, weshalb hier ein Beispiel gegeben werden soll. Gew&ouml;hnlich finden Sie die Hauptkopien der Startup-Scripts im Verzeichnis /etc/inid.d.</p>
+<pre>you@host &gt; ls -l /etc/init.d/
+insgesamt 308
+-rwxr-xr-x  1 root root  2570 2005–03–02 18:45 acpid
+-rwxr-xr-x  1 root root  1098 2005–02–24 10:29 acpi-support
+-rwxr-xr-x  1 root root 11038 2005–03–25 23:08 alsa
+-rwxr-xr-x  1 root root  1015 2004–11–26 12:36 anacron
+-rwxr-xr-x  1 root root  1388 2005–03–01 04:11 apmd
+-rwxr-xr-x  1 root root  1080 2005–02–18 11:37 atd
+-rw-r--r--  1 root root  2805 2005–01–07 19:35 bootclean.sh
+-rwxr-xr-x  1 root root  1468 2005–01–07 19:36 bootlogd
+-rwxr-xr-x  1 root root  1371 2005–01–07 19:35 bootmisc.sh
+-rwxr-xr-x  1 root root  1316 2005–01–07 19:35 checkfs.sh
+-rwxr-xr-x  1 root root  7718 2005–01–07 19:35 checkroot.sh
+-rwxr-xr-x  1 root root  5449 2004–12–26 14:12 console-screen.sh
+-rwxr-xr-x  1 root root  1168 2004–10–29 18:05 cron
+...</pre>
+<p>Jedes dieser Scripts ist f&uuml;r einen Daemon oder einen anderen Aspekt des Systems verantwortlich. Und jedes dieser Scripts verarbeitet die Argumente »start« und »stop«, womit Sie den entsprechenden Dienst initialisieren oder beenden k&ouml;nnen, zum Beispiel:</p>
+<pre># /etc/init.d/cron
+ * Usage: /etc/init.d/cron start|stop|restart|reload|force-reload</pre>
+<p>Hier haben Sie versucht, das Script »<span class="listing">cron</span>«, welches f&uuml;r die Ausf&uuml;hrung und Beendung des <span class="listing">cron</span>-Daemons verantwortlich, ist aufzurufen. Sie bekommen hierbei die m&ouml;glichen Argumente mitgegeben, wie Sie das Script aufrufen k&ouml;nnen. Neben »start« und »stop« finden Sie h&auml;ufig auch noch »restart«, was im Prinzip dasselbe bewirkt, wie ein »stop« mit anschlie&szlig;endem »start«. Des Weiteren findet man gew&ouml;hnlich auch eine Option »reload«, die den Dienst nicht beendet, sondern ihn auffordert, seine Konfiguration neu einzulesen (meist per Signal <span class="listing">SIGHUP</span>).</p>
+<p>Im folgenden Beispiel soll das Script »sleep_daemon« beim Systemstart automatisch gestartet und beim Beenden wieder automatisch beendet werden. Hier das Script:</p>
+<pre>#!/bin/sh
+# Name : sleep_daemon
+sleep 1000 &amp;</pre>
+<p>Das Script macht nichts anderes, als einen »schlafenden D&auml;mon« zu erzeugen. Neben einfachen Shellscripts k&ouml;nnen Sie in der Praxis nat&uuml;rlich jedes andere Programm – sei es nun ein Binary oder ein Script – in beliebiger Sprache ausf&uuml;hren lassen. Tats&auml;chlich k&ouml;nnen Sie alle Shellscripts in diesem Buch dazu verwenden (ob sinnvoll oder nicht). Dieses Script »sleep_daemon« habe ich nun in das Verzeichnis /usr/sbin verschoben und nat&uuml;rlich entsprechende Ausf&uuml;hrrechte (f&uuml;r alle) gesetzt. F&uuml;r diesen Vorgang werden Sie wohl root-Rechte ben&ouml;tigen. Alternativ k&ouml;nnen Sie auch das Verzeichnis /usr/local/sbin verwenden.</p>
+<p>Folgenderma&szlig;en sieht nun das Startup-Script aus, womit Sie »sleep_daemon« starten, beenden und neu starten k&ouml;nnen.</p>
+<pre>#!/bin/sh
+# Name : sleep_daemon
+DAEMON="/usr/sbin/sleep_daemon"
+test -f $DAEMON || exit 0
+case "$1" in
+   start)
+        echo -n "Starte sleep_daemon"
+        $DAEMON
+        echo "."
+        ;;
+    stop)
+        echo -n "Stoppe sleep_daemon"
+        killall sleep
+        echo "."
+        ;;
+    restart)
+        echo -n "Stoppe sleep_daemon"
+        killall sleep
+        echo "."
+        echo -n "Starte sleep_daemon"
+        $DAEMON
+        echo "."
+        ;;
+        # Hierzu wird auch gern folgende Sntax eingesetzt:
+        # $0 stop
+        # $0 start;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac</pre>
+<p>Ich habe hier denselben Namen verwendet, was Sie in der Praxis nicht tun m&uuml;ssen. Dieses Startup-Script k&ouml;nnen Sie nun in das Verzeichnis /etc/init.d verschieben und m&uuml;ssen es auch wieder ausf&uuml;hrbar machen. Theoretisch k&ouml;nnen Sie jetzt schon den Dienst von Hand starten bzw. beenden:</p>
+<pre># /etc/init.d/sleep_daemon start
+Starte sleep_daemon.
+# /etc/init.d/sleep_daemon restart
+Stoppe sleep_daemon.
+Starte sleep_daemon.
+# /etc/init.d/sleep_daemon stop
+Stoppe sleep_daemon.</pre>
+<p>Damit unser Dienst auch automatisch beim Eintreten bzw. Austreten eines bestimmten Runlevels gestartet bzw. beendet wird, ben&ouml;tigt das von <span class="listing">init</span> gestartete Master-Controll-Script (<span class="listing">rc</span>) zus&auml;tzliche Informationen, welche Scripts ausgef&uuml;hrt werden sollen. Denn anstatt im Verzeichnis /etc/init.d nachzubl&auml;ttern, wann bei welchem Runlevel ein Script gestartet werden muss, sieht das Master-Controll-Script in einem Verzeichnis namens <span class="listing">rc</span>[n]<span class="listing">.d</span> (bspw. rc1.d; rc2.d; ... rc6.d) nach. n steht f&uuml;r den Runlevel, in den es gelangen will. Zum Beispiel hier unter »Ubuntu Linux« im Verzeichnis rc2.d:</p>
+<pre># ls -l /etc/rc2.d/
+lrwxrwxrwx  1 root root 17 K11anacron -&gt; ../init.d/anacron
+lrwxrwxrwx  1 root root 17 S05vbesave -&gt; ../init.d/vbesave
+lrwxrwxrwx  1 root root 18 S10sysklogd -&gt; ../init.d/sysklogd
+lrwxrwxrwx  1 root root 15 S11klogd -&gt; ../init.d/klogd
+lrwxrwxrwx  1 root root 14 S12alsa -&gt; ../init.d/alsa
+lrwxrwxrwx  1 root root 13 S14ppp -&gt; ../init.d/ppp
+lrwxrwxrwx  1 root root 16 S19cupsys -&gt; ../init.d/cupsys
+lrwxrwxrwx  1 root root 15 S20acpid -&gt; ../init.d/acpid
+lrwxrwxrwx  1 root root 14 S20apmd -&gt; ../init.d/apmd
+...</pre>
+<p>Sie k&ouml;nnen gleich erkennen, dass diese Eintr&auml;ge in <span class="listing">rc</span>[n]<span class="listing">.d</span> gew&ouml;hnlich symbolische Links sind, die auf die Startup-Scripts im init.d-Verzeichnis verweisen. Wenn Sie die anderen Runlevel-Verzeichnisse ebenfalls ansehen, werden Sie feststellen, dass hierbei alle Namen der symbolischen Links entweder mit einem »S« oder einen »K«, gefolgt von einer Nummer und dem eigentlichen Dienst beginnen (bspw. S14alsa). Auch dies ist recht schnell erkl&auml;rt. Steigt <span class="listing">init</span> von einem Runlevel in den n&auml;chst h&ouml;heren Level auf, werden alle Scripts mit »S« beginnend ausgef&uuml;hrt. Diese Scripts werden also mit dem Argument »start« ausgef&uuml;hrt. Wenn <span class="listing">init</span> hingegen von einem h&ouml;heren Runlevel in einen niedrigeren wechselt, werden alle Scripts mit »K« (kill) beginnend ausgef&uuml;hrt. Hierbei wird gew&ouml;hnlich das Script mit dem Argument »stop« ausgef&uuml;hrt. Die Nummern haben eine Art Priorit&auml;tsbedeutung. Die Scripts im Runlevel-Verzeichnis werden bei der Option »start« in alphabetischer und bei »stop« in umgekehrter Reihenfolge ausgef&uuml;hrt. Somit bedient man sich einer Nummerierung, um die Reihenfolge der Ausf&uuml;hrung zu beeinflussen.</p>
+<p>Jetzt wollen Sie nat&uuml;rlich auch Ihr Startup-Script hinzuf&uuml;gen. Um also dem System mitzuteilen, dass Sie einen Daemon starten wollen, m&uuml;ssen Sie ebenfalls einen symbolischen Link in das entsprechende Verzeichnis setzen. Die meisten Dienste starten Ihre D&auml;monen im Runlevel 2, weshalb hier ebenfalls ein Eintrag vorgenommen wird. Um den Daemon auch ordentlich wieder zu beenden, m&uuml;ssen Sie nat&uuml;rlich auch einen Link im Runlevel 0 eintragen. Da es bei einigen Systemen Unterschiede zwischen Shutdown und Reboot gibt, sollten Sie auch einen Eintrag im Runlevel 6 erstellen, um auf Nummer sicher zu gehen, dass sich der Daemon beim Neustart korrekt beendet hat.</p>
+<pre># ln -s /etc/init.d/sleep_daemon /etc/rc2.d/S23sleep_daemon
+# ln -s /etc/init.d/sleep_daemon /etc/rc0.d/K23sleep_daemon
+# ln -s /etc/init.d/sleep_daemon /etc/rc6.d/K23sleep_daemon</pre>
+<p>Mit der ersten Zeile weisen Sie das System nun an, das Startup-Script /etc/init.d/sleep_daemon mit dem Argument »start« auszuf&uuml;hren, wenn es im Runlevel 2 angelangt ist. Mit der zweiten Zeile legen Sie fest, dass /etc/init.d/sleep_daemon beim Herunterfahren des Systems mit dem Argument »stop« beendet wird, wenn es im Runlevel 0 angekommen. ist. Gleiches nehmen Sie auch mit der dritten Zeile vor, nur eben f&uuml;r den Neustart des Systems in Runlevel 6.</p>
+<p>Wenn Sie jetzt das System beenden und wieder hochfahren, k&ouml;nnen Sie in der Startup-Sitzung (sofern diese sichtbar ist) Ihren Dienst beim Starten beobachten. Hier werden Sie irgendwann ein Zeile wie</p>
+<pre>Starte sleep_daemon.</pre>
+<p>finden. Beim Beenden bzw. Neustarten des Systems entsteht diese Meldung, nur dass eben der »sleep_daemon« beendet wurde.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_017_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_017_004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_017_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

@@ -1,0 +1,958 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_007_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:56 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 5.8 dialog und Xdialog</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_007_006.html">
+<link rel="next" href="shell_007_008.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_007_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_007_008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_007_000.html#RxxKap00700004004E5B1F013172">5 Terminal-Ein- und Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_000.html#RxxKap00700004004E5B1F013174">5.1 Von Terminals zu Pseudo-Terminals</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_001.html#RxxKap00700104004E721F034172">5.2 Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F034174">5.2.1 Der echo-Befehl</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F034255">5.2.2 print (Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F034268">5.2.3 Der Befehl printf</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F03429C">5.2.4 Der Befehl tput – Terminalsteuerung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A172">5.3 Eingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A174">5.3.1 Der Befehl read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A18C">5.3.2 (Zeilenweise) Lesen einer Datei mit read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A198">5.3.3 Zeilenweise mit einer Pipe aus einem Kommando lesen (read)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A19E">5.3.4 Here-Dokumente (Inline-Eingabeumleitung)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1B7">5.3.5 Here-Dokumente mit read verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1BE">5.3.6 Die Variable IFS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1E4">5.3.7 Arrays einlesen mit read (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1EF">5.3.8 Shell-abh&auml;ngige Anmerkungen zu read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1FE">5.3.9 Einzelnes Zeichen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A208">5.3.10 Einzelne Zeichen mit Escape-Sequenzen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A229">5.3.11 Passworteingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_003.html#RxxKap00700304004E741F01B172">5.4 Umlenken mit dem Befehl exec</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_004.html#RxxKap00700404004E751F014172">5.5 Filedeskriptoren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_004.html#RxxKap00700404004E751F01417E">5.5.1 Einen neuen Filedeskriptor verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_004.html#RxxKap00700404004E751F01419B">5.5.2 Die Umlenkung &lt;&gt;</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_005.html#RxxKap00700504004E761F035172">5.6 Named Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_006.html#RxxKap00700604004E771F038172">5.7 Men&uuml;s mit select (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00700704004E781F018172">5.8 dialog und Xdialog</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F01817C">5.8.1 Entscheidungsfrage --yesno</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F01818D">5.8.2 Nachrichtenbox mit Best&auml;tigung --msgbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F018195">5.8.3 Hinweisfenster ohne Best&auml;tigung --infobox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F01819A">5.8.4 Text-Eingabezeile --inputbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F0181A3">5.8.5 Ein einfacher Dateibetrachter --textbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F0181AB">5.8.6 Ein Men&uuml; --menu</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F0181B4">5.8.7 Auswahlliste zum Ankreuzen --checklist</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F0181BD">5.8.8 Radiobuttons zum Ausw&auml;hlen --radiolist</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F0181C5">5.8.9 Fortschrittszustand anzeigen --gauge</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F0181D1">5.8.10 Ver&auml;ndern von Aussehen und Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F0181DE">5.8.11 Kleines Beispiel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700704004E781F0181E4">5.8.12 Zusammenfassung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_008.html#RxxKap00700804004E791F043172">5.9 gnuplot – Visualisierung von Messdaten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043179">5.9.1 Wozu wird gnuplot eingesetzt?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F04317D">5.9.2 gnuplot starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043180">5.9.3 Das Kommando zum Plotten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043189">5.9.4 Variablen und Parameter f&uuml;r gnuplot</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043194">5.9.5 Ausgabe von gnuplot umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431A3">5.9.6 Variablen und eigene Funktionen definieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431B0">5.9.7 Interpretation von Daten aus einer Datei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431CA">5.9.8 Alles bitte nochmals zeichnen (oder besser speichern und laden)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431D5">5.9.9 gnuplot aus einem Shellscript heraus starten (der Batch-Betrieb)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431E8">5.9.10 Plot-Styles und andere Ausgaben festlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043243">5.9.11 Tricks f&uuml;r die Achsen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F04326A">5.9.12 Die dritte Dimension</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043275">5.9.13 Zusammenfassung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">5.8 <a id="RxxKap005392dialogundXdialog" name="RxxKap005392dialogundXdialog"></a>dialog und Xdialo<a id="RxxKap00700704004E781F018172" name="RxxKap00700704004E781F018172"></a>g 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a>Mit <span class="listing">dialog</span> und <span class="listing">Xdialog</span> k&ouml;nnen Sie grafische (bzw. semigrafische) Dialoge in Ihre Shellscripts mit einbauen. Die Tools dienen zur einfachen Darstellung (halb-)grafischer Dialogfenster auf dem Bildschirm, sodass Sie Benutzerabfragen in Scripts anschaulicher und einfacher gestalten k&ouml;nnen. Die R&uuml;ckgabewerte der Dialoge entscheiden dann &uuml;ber den weiteren Verlauf des Shellscripts.</p>
+<p>Die Tools funktionieren im Prinzip &auml;hnlich wie die &uuml;blichen Linux-UNIX-Kommandos und werden mit Kommandozeilenparameter und Standardeingabe zur Beeinflussung von Aussehen und Inhalten gesteuert. Die Resultate (auch Fehler) der Benutzeraktionen werden &uuml;ber die Standardausgabe bzw. die Standardfehlerausgabe und den Exit-Status des Scripts zur&uuml;ckgegeben und k&ouml;nnen von demjenigen Script, von dem der Dialog gestartet wurde, weiterverarbeitet werden.</p>
+<p><span class="listing">dialog</span> l&auml;uft ausschlie&szlig;lich in einer Textkonsole und stellt eine Art halbgrafische Oberfl&auml;che (basierend auf ncurses) zur Verf&uuml;gung. Dass <span class="listing">dialog</span> keine echte grafische Oberfl&auml;che besitzt (bzw. keinen laufenden X-Server ben&ouml;tigt) und somit recht anspruchslos ist, macht es zu einem komfortablen Tool zur Fernwartung &uuml;ber SSH. Die Steuerung von <span class="listing">dialog</span> erfolgt &uuml;ber die Tastatur, jedoch ist auch Maussteuerung m&ouml;glich. Gew&ouml;hnlich liegt <span class="listing">dialog</span> Ihrer Distribution bei und wird eventuell auch schon &uuml;ber eine Standardinstallation mitinstalliert.</p>
+<p><span class="listing">Xdialog</span> l&auml;uft im Gegensatz zu <span class="listing">dialog</span> nur, wenn ein laufender X-Server zur Verf&uuml;gung steht. Da dies bei Fernwartungen selten der Fall ist, eignet sich <span class="listing">Xdialog</span> eher f&uuml;r Shellscripts und Wartungsarbeiten auf dem heimischen Desktoprechner. <span class="listing">Xdialog</span> verwendet als Toolkit GTK+ und muss meistens noch separat bezogen werden (hierbei muss auch gtk-devel gr&ouml;&szlig;er als 1.2 installiert sein). Nat&uuml;rlich l&auml;sst sich <span class="listing">Xdialog</span> GUI-&uuml;blich mit der Maus steuern.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sofern Sie eines (oder beide) der Pakete nicht auf Ihrem Rechner vorfinden, sei hier die Bezugsquelle der jeweiligen Tools genannt: <b><a href="http://hightek.org/dialog/" target="_blank">http://hightek.org/dialog/</a></b> (<span class="listing">dialog</span>) und <b><a href="http://xdialog.dyns.net/" target="_blank">http://xdialog.dyns.net/</a></b> (<span class="listing">Xdialog</span>). Vermutlich werden Sie allerdings den Quellcode selbst &uuml;bersetzen m&uuml;ssen (ggf. INSTALL lesen).</p>
+</td>
+</tr>
+</table><br>
+<p>Das Tolle an <span class="listing">dialog</span> und <span class="listing">Xdialog</span> ist, dass beim Entwickeln von <span class="listing">Xdialog</span> auf Kompatibilit&auml;t geachtet wurde. Sie k&ouml;nnen die mit <span class="listing">dialog</span> erstellten Scripts mit einem minimalen Aufwand in eine absolute grafische Oberfl&auml;che mit <span class="listing">Xdialog</span> umwandeln. Hierzu m&uuml;ssen Sie nur den Kommandoaufruf <span class="listing">dialog</span> in <span class="listing">Xdialog</span> um&auml;ndern. Wobei erw&auml;hnt werden muss, dass <span class="listing">Xdialog</span> noch ein paar Features mehr anbietet als <span class="listing">dialog</span>.</p>
+<p>Die allgemeine Syntax zu <span class="listing">dialog</span> bzw. <span class="listing">Xdialog</span> sieht wie folgt aus:</p>
+<pre>[X]dialog [optionen] [Art des Feldes] "Text" [breite] [h&ouml;he]</pre>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">5.8.1 Entscheidungsfrage --yesno<a id="RxxKap00700704004E781F01817C" name="RxxKap00700704004E781F01817C"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999292" name="Xxx999292"></a>Mit <span class="listing">––yesno</span> k&ouml;nnen Sie eine Entscheidungsfrage stellen, die mit »ja« oder »nein« best&auml;tigt wird. Gibt der Benutzer »ja« ein, gibt <span class="listing">dialog</span> den Wert 0 zur&uuml;ck (<span class="listing">$?</span> = 0), ansonsten wird bei »nein« 1 zur&uuml;ckgegeben. Die Syntax:</p>
+<pre>dialog --yesno [Text] [H&ouml;he] [Breite]</pre>
+<p>Ein Beispielscript:</p>
+<pre># Demonstriert dialog --yesno
+# Name : dialog1
+dialog --yesno "M&ouml;chten Sie wirklich abbrechen?" 0 0
+# 0=ja; 1=nein
+antwort=$?
+# Bildschirm l&ouml;schen
+clear
+# Ausgabe auf die Konsole
+if [ $antwort = 0 ]
+then
+   echo "Die Antwort war JA."
+else
+   echo "Die Antwort war NEIN."
+fi</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.3):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_03.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_03.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.3   
+    </b>Dialog --yesno in der Praxis</p>
+</td>
+</tr>
+</table><br>
+<p>Nun wollen Sie sicherlich testen, ob die Ausf&uuml;hrungen zu <span class="listing">dialog</span> und <span class="listing">Xdialog</span> stimmen und man tats&auml;chlich nur ein (gro&szlig;es) »X« vor <span class="listing">dialog</span> stellen muss, um eine echte grafische Oberfl&auml;che zu erhalten. &Auml;ndern Sie die Zeile</p>
+<pre>dialog --yesno "M&ouml;chten Sie wirklich abbrechen?" 0 0</pre>
+<p>im Script »dialog1« um in</p>
+<pre>Xdialog --yesno "M&ouml;chten Sie wirklich abbrechen?" 0 0</pre>
+<p>und Sie erhalten folgendes, in Abbildung 5.4 gezeigtes Ergebnis (immer vorausgesetzt, Sie haben <span class="listing">Xdialog</span> installiert):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_04.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_04.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.4   
+    </b>Dialog --yesno mit Xdialog</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wird bei der H&ouml;he oder Breite 0 angegeben, so werden die entsprechenden Ma&szlig;e automatisch an den Text angepasst.</p>
+</td>
+</tr>
+</table><br>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">5.8.2 Nachrichtenbox mit Best&auml;tigung --msgbox<a id="RxxKap00700704004E781F01818D" name="RxxKap00700704004E781F01818D"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999322" name="Xxx999322"></a>Mit <span class="listing">––msgbox</span> erscheint eine Informationsbox mit beliebigem Text, den der Benutzer mit »OK« best&auml;tigen muss. Die Abarbeitung des Scripts wird so lange angehalten, bis der Benutzer den OK-Button dr&uuml;ckt. Hierbei wird kein R&uuml;ckgabewert zur&uuml;ckgegeben.</p>
+<pre>[X]dialog --msgbox [Text] [H&ouml;he] [Breite]</pre>
+<p>Ein Beispielscript:</p>
+<pre># Demonstriert dialog --msgbox
+# Name : dialog2
+dialog --yesno "M&ouml;chten Sie wirklich abbrechen?" 0 0
+# 0=ja; 1=nein
+antwort=$?
+# Dialog-Bildschirm l&ouml;schen
+dialog --clear
+# Ausgabe auf die Konsole
+if [ $antwort = 0 ]
+then
+   dialog --msgbox "Die Antwort war JA." 5 40
+else
+   dialog --msgbox "Die Antwort war NEIN." 5 40
+fi
+# Bildschirm l&ouml;schen
+clear</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.5):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_05.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_05.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.5   
+    </b>Dialog --msgbox in der Praxis</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">5.8.3 Hinweisfenster ohne Best&auml;tigung --infobox<a id="RxxKap00700704004E781F018195" name="RxxKap00700704004E781F018195"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999336" name="Xxx999336"></a><span class="listing">––infobox</span> ist gleichwertig zum eben erw&auml;hnten Dialog <span class="listing">––msgbox</span>, nur mit dem Unterschied, dass dieser Dialog nicht auf die Best&auml;tigung des Benutzers wartet und somit das Shellscript im Hintergrund weiter ausgef&uuml;hrt wird.</p>
+<pre>[X]dialog --infobox [Text] [H&ouml;he] [Breite]</pre>
+<p>Ein Script als Demonstration:</p>
+<pre># Demonstriert dialog --msgbox
+# Name : dialog3
+dialog --yesno "M&ouml;chten Sie wirklich alles l&ouml;schen?" 0 0
+# 0=ja; 1=nein
+antwort=$?
+# Dialog-Bildschirm l&ouml;schen
+dialog --clear
+# Ausgabe auf die Konsole
+if [ $antwort = 0 ]
+then
+   dialog --infobox "Dieser Vorgang kann ein wenig dauern" 5 50
+   # Hier die Kommandos zur Ausf&uuml;hrung zum L&ouml;schen
+   sleep 5           # ... wir warten einfach 5 Sekunden
+   dialog --clear    # Dialog-Bildschirm l&ouml;schen
+   dialog --msgbox "Done! Alle L&ouml;schvorg&auml;nge ausgef&uuml;hrt" 5 50
+fi
+# Bildschirm l&ouml;schen
+clear</pre>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">5.8.4 Text-Eingabezeile --inputbox<a id="RxxKap00700704004E781F01819A" name="RxxKap00700704004E781F01819A"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999342" name="Xxx999342"></a>In einer Text-Eingabezeile mit <span class="listing">––inputbox</span> k&ouml;nnen Eingaben des Benutzers erfolgen. Optional kann man hier auch einen Text vorbelegen. Die Ausgabe erfolgt anschlie&szlig;end auf die Standardfehlerausgabe.</p>
+<pre>[X]dialog --inputbox [Text] [H&ouml;he] [Breite] [[Vorgabetext]]</pre>
+<p>Ein Script zu Demonstrationszwecken:</p>
+<pre># Demonstriert dialog --inputbox
+# Name : dialog4
+name=`dialog --inputbox "Wie hei&szlig;en Sie?" 0 0 "J&uuml;rgen" \
+ 3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3`
+# Dialog-Bildschirm l&ouml;schen
+dialog --clear
+dialog --msgbox "Hallo $name, Willkommen bei $HOST!" 5 50
+# Bildschirm l&ouml;schen
+clear</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.6):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_06.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_06.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.6   
+    </b>Dialog --inputbox in der Praxis</p>
+</td>
+</tr>
+</table><br>
+<p>Vielleicht wundern Sie sich im Script bei der Verarbeitung des Dialog-Kommandos &uuml;ber den Zusatz <span class="listing">3&gt;&amp;1</span> <span class="listing">1&gt;&amp;2</span> <span class="listing">2&gt;&amp;3</span> in der Kommando-Substitution. Dies ist einer der Nachteile von <span class="listing">dialog</span>, weil hierbei das Ergebnis immer auf die Standardfehlerausgabe statt auf die Standardausgabe erfolgt. Und um die Dialogausgabe zur weiteren Verarbeitung in eine Variable zu schreiben, m&uuml;ssen Sie ebenso vorgehen (siehe auch Abschnitt 5.5).</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">5.8.5 Ein einfacher Dateibetrachter --textbox<a id="RxxKap00700704004E781F0181A3" name="RxxKap00700704004E781F0181A3"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999357" name="Xxx999357"></a>Mit diesem Dialog kann der Inhalt einer als Parameter &uuml;bergebenen Datei angezeigt werden. Enth&auml;lt der Text mehr Zeilen oder Spalten als angezeigt werden k&ouml;nnen, kann der darzustellende Text mit den Pfeiltasten (<b>(?)</b> <b>(?)</b> <b>(?)</b> <b>(?)</b>) gescrollt werden.</p>
+<pre>[X]dialog --textbox [Datei] [H&ouml;he] [Breite]</pre>
+<p>Ein Script zur Demonstration:</p>
+<pre># Demonstriert dialog --textbox
+# Name : dialog5
+# Zeigt den Inhalt des eigenen Quelltextes an
+dialog --textbox "$0" 0 0
+# Dialog-Bildschirm l&ouml;schen
+dialog --clear
+# Bildschirm l&ouml;schen
+clear</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.7):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_07.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_07.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.7   
+    </b>Dialog --textbox in der Praxis</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">5.8.6 Ein Men&uuml; --menu<a id="RxxKap00700704004E781F0181AB" name="RxxKap00700704004E781F0181AB"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999371" name="Xxx999371"></a>Mit diesem Dialog verf&uuml;gen Sie &uuml;ber eine echte Alternative zu <span class="listing">select</span>. Hierbei wird eine Liste von Eintr&auml;gen (ggf. mit Scrollbalken) angezeigt, von denen jeweils einer ausgew&auml;hlt werden kann. Der entsprechende Eintrag (dessen K&uuml;rzel) wird dann auf den Standardfehlerkanal zur&uuml;ckgegeben, ansonsten – bei Abbruch – eine leere Zeichenkette.</p>
+<pre>[X]dialog --menu [Text] [H&ouml;he] [Breite] [Men&uuml;h&ouml;he] [Tag1] \
+[Eintrag1] ...</pre>
+<p>Der »Text« wird oberhalb der Auswahlbox gesetzt. »Breite« und »H&ouml;he« sprechen f&uuml;r sich, wobei die »Breite« ein etwas genaueres Augenmerk verlangt, da l&auml;ngere Men&uuml;eintr&auml;ge einfach abgeschnitten werden. Haben Sie eine Auswahl getroffen, wird durch Bet&auml;tigen von »OK« der selektierte Eintrag zur&uuml;ckgegeben.</p>
+<p>Ein Script zur Demonstration:</p>
+<pre># Demonstriert dialog --menu
+# Name : dialog6
+os=`dialog --menu "Betriebssystem w&auml;hlen" 0 0 0 \
+ "Linux" "" "BSD" "" "Solaris" "" 3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3`
+dialog --clear
+dialog --yesno "Best&auml;tigen Sie Ihre Auswahl: $os" 0 0
+dialog --clear
+clear</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.8):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_08.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_08.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.8   
+    </b>Dialog --menu in der Praxis</p>
+</td>
+</tr>
+</table><br>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">5.8.7 Auswahlliste zum Ankreuzen --checklist<a id="RxxKap00700704004E781F0181B4" name="RxxKap00700704004E781F0181B4"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999386" name="Xxx999386"></a>Hierbei handelt es sich um eine Liste von Eintr&auml;gen, von denen Sie beliebig viele markieren (ankreuzen) k&ouml;nnen. Es werden – wie schon bei –<span class="listing">menu</span> – die K&uuml;rzel aller ausgew&auml;hlten Eintr&auml;ge auf den Standardfehlerkanal zur&uuml;ckgegeben.</p>
+<pre>[X]dialog --checklist [Text] [H&ouml;he] [Breite] [Listenh&ouml;he] \
+[Tag1] [Eintrag1] [Status1] ...</pre>
+<p>Auch hier wird der »Text« wieder oberhalb der Auswahlliste ausgegeben. Die »H&ouml;he«, »Breite« und »Listenh&ouml;he« sind eigentlich wieder selbsterkl&auml;rend. Bei ihnen sollte man stets auf ein vern&uuml;nftiges Ma&szlig; achten. Wenn das erste Zeichen der Tags eindeutig ist, kann auch mit einem Tastendruck des entsprechenden Zeichens direkt dorthin gesprungen werden. Als »Status« k&ouml;nnen Sie den Eintrag als markiert »on« oder als deaktiviert »off« voreinstellen.</p>
+<p>Das folgende Script soll Ihnen die Auswahlliste demonstrieren:</p>
+<pre># Demonstriert dialog --checklist
+# Name : dialog7
+pizza=`dialog --checklist "Pizza mit ..." 0 0 4 \
+ K&auml;se "" on\
+ Salami "" off\
+ Schinken "" off\
+ Thunfisch "" off 3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3`
+dialog --clear
+clear
+echo "Ihre Bestellung: Pizza mit $pizza"</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.9):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_09.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_09.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.9   
+    </b>Dialog --checklist in der Praxis</p>
+</td>
+</tr>
+</table><br>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">5.8.8 Radiobuttons zum Ausw&auml;hlen --radiolist<a id="RxxKap00700704004E781F0181BD" name="RxxKap00700704004E781F0181BD"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999401" name="Xxx999401"></a>Im Unterschied zu <span class="listing">––checklist</span> kann hier aus einer Liste von Eintr&auml;gen nur eine Option mit der Leertaste markiert werden. Ansonsten entspricht dieser Dialog exakt dem von <span class="listing">––checklist</span>.</p>
+<pre>[X]dialog --radiolist [Text] [H&ouml;he] [Breite] [Listenh&ouml;he] \
+[Tag1] [Eintrag1] [Status1] ...</pre>
+<p>Ein Script zur Demonstration:</p>
+<pre># Demonstriert dialog --radiolist
+# Name : dialog8
+pizza=`dialog --radiolist "Pizza mit ..." 0 0 3 \
+  Salami "" off\
+  Schinken "" off\
+  Thunfisch "" off 3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3`
+dialog --clear
+clear
+echo "Ihre Bestellung: Pizza mit $pizza"</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.10):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_10.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_10.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.10   
+    </b>Dialog --radiolist in der Praxis</p>
+</td>
+</tr>
+</table><br>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">5.8.9 Fortschrittszustand anzeigen --gauge<a id="RxxKap00700704004E781F0181C5" name="RxxKap00700704004E781F0181C5"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999415" name="Xxx999415"></a>Hiermit k&ouml;nnen Sie einen Fortschrittszustand einbauen, um etwa anzuzeigen, wie weit der Prozess des Kopierens von Dateien schon abgeschlossen ist.</p>
+<pre>[X]dialog --gauge [Text] [H&ouml;he] [Breite] [Prozent]</pre>
+<p>Der <span class="listing">Text</span> wird wieder oberhalb des Fortschrittsbalkens angezeigt. Der Startwert des Balkens wird &uuml;ber Prozent angegeben. Um die Anzeige zu aktualisieren, erwartet dieser Dialog weitere Werte aus der Standardeingabe. Erst wenn hierbei auf EOF gesto&szlig;en wurde, ist <span class="listing">gauge</span> fertig. Der Fortschrittszustand ist meiner Meinung nach ohnehin nie etwas Genaues, sondern dient wohl eher dazu, dem Anwender zu zeigen, dass auf dem System noch etwas passiert. ;-)</p>
+<p>Ein Script zur Demonstration:</p>
+<pre># Demonstriert dialog --gauge
+# Name : dialog9
+DIALOG=dialog
+(
+ echo "10" ; sleep 1
+ echo "XXX" ; echo "Alle Daten werden gesichert"; echo "XXX"
+ echo "20" ; sleep 1
+ echo "50" ; sleep 1
+ echo "XXX" ; echo "Alle Daten werden archiviert"; echo "XXX"
+ echo "75" ; sleep 1
+ echo "XXX" ; echo "Daten werden ins Webverzeichnis hochgeladen";
+ echo "XXX"
+ echo "100" ; sleep 3
+) |
+$DIALOG --title "Fortschrittszustand" --gauge "Starte Backup-Script" 8 30
+$DIALOG --clear
+$DIALOG --msgbox "Arbeit erfolgreich beendet ..." 0 0
+$DIALOG --clear
+clear</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.11):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_11.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_11.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.11   
+    </b>Dialog --gauge in der Praxis</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Tipp   </b>Beim letzten Script ist mir erst eingefallen, dass es recht umst&auml;ndlich ist, <span class="listing">dialog</span> immer in <span class="listing">Xdialog</span> umzubenennen. Eine globale Variable eignet sich viel besser. Soll Ihr Script f&uuml;r die Konsole sein, dann schreiben Sie <span class="listing">DIALOG=dialog</span>, f&uuml;r einen Dialog mit dem X-Server <span class="listing">DIALOG=Xdialog</span>.</p>
+<p class="BStandard"><b>Hinweis   </b>F&uuml;r Scripts, die als root ausgef&uuml;hrt werden, sollte man m&ouml;glichst kein <span class="listing">Xdialog</span> verwenden, da sich root nur mit dem X-Server verbinden kann, wenn der Server freigegeben wurde oder root grafisch eingeloggt ist, was man beides vermeiden sollte.</p>
+</td>
+</tr>
+</table><br>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">5.8.10 Ver&auml;ndern von Aussehen und Ausgabe<a id="RxxKap00700704004E781F0181D1" name="RxxKap00700704004E781F0181D1"></a> 
+      <a href="#t2t312"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Es gibt noch ein paar Dialoge, mit denen Sie das Aussehen und die Ausgabe beeinflussen k&ouml;nnen. Tabelle 5.10 bietet eine kurze &Uuml;bersicht.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.10   
+    </b>Weitere Dialoge</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Erl&auml;uterung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999442" name="Xxx999442"></a>––title
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Titelzeile f&uuml;r einen Dialog festlegen (Beschriftung f&uuml;r den oberen Rand)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999447" name="Xxx999447"></a>––backtitle
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Titelzeile am Bildschirmrand festlegen (hierbei wird h&auml;ufig der Scriptname verwendet, der zum jeweiligen Dialog geh&ouml;rt)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><a id="Xxx999452" name="Xxx999452"></a>––clear
+</td>
+<td class="tabellentext" bgcolor="#000000">Dialog-Bildschirm l&ouml;schen
+</td>
+</tr>
+</table><br>
+<a name="t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t312"></a><h3 class="t3">5.8.11 Kleines Beispiel<a id="RxxKap00700704004E781F0181DE" name="RxxKap00700704004E781F0181DE"></a> 
+      <a href="#t2t313"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t311"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><span class="listing">dialog</span> und <span class="listing">Xdialog</span> lassen sich sehr vielseitig und eigentlich &uuml;berall verwenden, sodass ein Beispiel immer recht wenig Sinn ergibt. Trotzdem will ich Ihnen ein kleines Beispiel zeigen. Es soll der Befehl <span class="listing">find</span> verwendet werden, und zwar so, dass auch der unbedarfte Linux-UNIX-User sofort an sein Ziel kommt. Im Beispiel wird ein Men&uuml; verwendet, wobei der User Dateien nach Namen, User-Kennung, Gr&ouml;&szlig;e oder Zugriffsrechten suchen kann. In der anschlie&szlig;enden Eingabebox k&ouml;nnen Sie das Suchmuster festlegen und am Ende wird <span class="listing">find</span> aktiv. Zwar k&ouml;nnte man die Ausgabe von <span class="listing">find</span> auch in eine Textbox von <span class="listing">dialog</span> packen, aber bei einer etwas l&auml;ngeren Ausgabe macht die Dialogbox schlapp und gibt einen Fehler aus wie: »Die Argumentliste ist zu lang«. Hier das Beispielscript:</p>
+<pre># Demonstriert dialog
+# Name : dialog10
+myfind=`dialog --menu \
+ "Suchen nach Dateien – Suchkriterium ausw&auml;hlen" 0 0 0 \
+ "Dateinamen" "" \
+ "Benutzerkennung" "" \
+ "Gr&ouml;sse" "" \
+ "Zugriffsrechte" "" \
+ "Ende" "" 3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3`
+dialog --clear
+case "$myfind" in
+   Dateinamen)
+      search=`dialog --inputbox \
+         "Dateinamen eingeben" 0 0 "" 3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3`
+      command="-name $search"   ;;
+   Benutzerkennung)
+      kennung=`dialog --inputbox \
+         "Benutzerkennung eingeben" 0 0 "" 3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3`
+      command="-user $kennung"   ;;
+   Gr&ouml;sse)
+      bsize=`dialog --inputbox \
+         "Dateigr&ouml;sse (in block size) eingeben" 0 0 "" \
+         3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3`
+      command="-size $bsize"   ;;
+   Zugriffsrechte)
+      permission=`dialog --inputbox \
+         "Zugriffsrechte (oktal) eingeben" 0 0 "" 3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3`
+      command="-perm $permission"   ;;
+   Ende) dialog --clear; clear; exit 0    ;;
+esac
+find /home $command -print 2&gt;/dev/null</pre>
+<p>Das Script bei der Ausf&uuml;hrung (siehe Abbildung 5.12):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_12.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_12.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.12   
+    </b>Ein kleines Beispiel zum Abschnitt dialog</p>
+</td>
+</tr>
+</table><br>
+<a name="t312"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t313"></a><h3 class="t3">5.8.12 Zusammenfassung<a id="RxxKap00700704004E781F0181E4" name="RxxKap00700704004E781F0181E4"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t312"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Sicherlich lie&szlig;e sich zu <span class="listing">dialog</span> und insbesondere <span class="listing">Xdialog</span> noch einiges mehr sagen, aber die Basis haben Sie gelegt. <span class="listing">Xdialog</span> bietet Ihnen nat&uuml;rlich noch einige Widgets mehr an. Wenn Sie sich das Quellcode-Paket herunterladen, finden Sie im Verzeichnis samples eine Menge interessanter Scripts, die Ihnen zus&auml;tzliche Funktionen von <span class="listing">Xdialog</span> demonstrieren.</p>
+<p>Eine weitere, sehr verbreitete Dialog-Schnittstelle ist <span class="listing">lxdialog</span>. Sie ist eine modifizierte Version von <span class="listing">dialog</span> und speziell f&uuml;r die Konfiguration des Kernels ausgelegt. <span class="listing">lxdialog</span> wird also vorwiegend von Kernel-Entwicklern eingesetzt und unterst&uuml;tzt im Gegensatz zu <span class="listing">dialog</span> auch Untermen&uuml;s und Abh&auml;ngigkeiten zwischen Inhalten und einer Vorauswahl anderer Punkte. Leider ist <span class="listing">lxdialog</span> sehr schlecht dokumentiert, sodass schon viel Motivation dazugeh&ouml;rt, sich damit auseinander zu setzen.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_007_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_007_008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_007_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:16 GMT -->
+</html>

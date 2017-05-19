@@ -1,0 +1,1137 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_003_009.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:06 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 1.10 Datenstrom</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_003_008.html">
+<link rel="next" href="shell_003_010.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_003_008.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_003_010.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_003_000.html#RxxKap00300004004D531F048172">1 Einf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_000.html#RxxKap00300004004D531F048174">1.1 Voraussetzungen an den Leser</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_000.html#RxxKap00300004004D531F048180">1.1.1 Zielgruppe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_000.html#RxxKap00300004004D531F048185">1.1.2 Notation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_001.html#RxxKap00300104004D6A1F02E172">1.2 Was ist eine Shell?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_002.html#RxxKap00300204004D6B1F033172">1.3 Hauptanwendungsgebiet</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_002.html#RxxKap00300204004D6B1F033176">1.3.1 Was ist ein Shellscript?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_002.html#RxxKap00300204004D6B1F033184">1.3.2 Vergleich mit anderen Sprachen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F172">1.4 Kommando, Programm oder Shellscript?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F174">1.4.1 Shell-eigene Kommandos (Builtin-Kommando)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F176">1.4.2 Aliase in der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F17B">1.4.3 Funktionen in der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F17D">1.4.4 Shellscripts (Shell-Prozeduren)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F17F">1.4.5 Programme (bin&auml;r)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033172">1.5 Die Shell-Vielfalt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033177">1.5.1 ksh (Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033179">1.5.2 Bash (Bourne-Again-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F03317B">1.5.3 zsh (Z-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F03317D">1.5.4 ash (A-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F03317F">1.5.5 rbash, rzsh (Restricted Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033181">1.5.6 tcsh (TC-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033183">1.5.7 Welche Shell-Variante wird in diesem Buch verwendet?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033188">1.5.8 rsh und ssh</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_005.html#RxxKap00300504004D6E1F04A172">1.6 Betriebssysteme</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D172">1.7 Crashkurs: einfacher Umgang mit der Kommandozeile</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D174">1.7.1 Grundlegende Befehle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D181">1.7.2 Der Umgang mit Dateien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D19F">1.7.3 Der Umgang mit Verzeichnissen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D1D2">1.7.4 Datei- und Verzeichnisnamen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D1D8">1.7.5 Ger&auml;tenamen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D1DE">1.7.6 Dateiattribute</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_007.html#RxxKap00300704004D701F043172">1.8 Shellscripts schreiben und ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F043174">1.8.1 Der Editor</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F043177">1.8.2 Der Name des Shellscripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F04317D">1.8.3 Ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F043195">1.8.4 Hintergrundprozess starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F043197">1.8.5 Ausf&uuml;hrende Shell festlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431BF">1.8.6 Kommentare</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431C4">1.8.7 Stil</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431CB">1.8.8 Ein Shellscript beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431D6">1.8.9 Testen und Debuggen von Shellscripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431E1">1.8.10 Shellscript, das ein Shellscript erstellt und ausf&uuml;hrt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_008.html#RxxKap00300804004D711F043172">1.9 Vom Shellscript zum Prozess</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_008.html#RxxKap00300804004D711F04317B">1.9.1 Ist das Shellscript ein Prozess?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_008.html#RxxKap00300804004D711F043182">1.9.2 Echte Login-Shell?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00300904004D721F048172">1.10 Datenstrom</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300904004D721F04817A">1.10.1 Ausgabe umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300904004D721F048188">1.10.2 Standardfehlerausgabe umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300904004D721F0481A0">1.10.3 Eingabe umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300904004D721F0481CA">1.10.4 Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300904004D721F0481D4">1.10.5 Ein T-St&uuml;ck mit tee</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300904004D721F0481DC">1.10.6 Ersatzmuster (Wildcards)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300904004D721F04820D">1.10.7 Brace Extension (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300904004D721F048217">1.10.8 Muster-Alternativen (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300904004D721F04822A">1.10.9 Tilde-Expansion (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_010.html#RxxKap00301004004D731F01F172">1.11 Empfehlung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">1.10 <a id="RxxKap001344Datenstrom" name="RxxKap001344Datenstrom"></a><a id="Rxx_Ref108439317" name="Rxx_Ref108439317"></a>Datenstr<a id="RxxKap00300904004D721F048172" name="RxxKap00300904004D721F048172"></a>om 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a>Den standardm&auml;&szlig;igen Datenstrom einer Shell kennt jeder. Man gibt einen Befehl in der Kommandozeile ein und wartet, was dabei auf der Ausgabe des Bildschirms so alles passiert (siehe Abbildung 1.1). Hierbei spricht man von Kan&auml;len. Es gibt drei solcher Kan&auml;le in einer Shell:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Standardeingabe<a id="Xxx999281" name="Xxx999281"></a> (kurz <span class="listing">stdin<a id="Xxx999282" name="Xxx999282"></a></span>; Kanal 0) – gew&ouml;hnlich handelt es sich dabei um eine Eingabe von der Tastatur.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Standardausgabe<a id="Xxx999284" name="Xxx999284"></a> (kurz <span class="listing">stdout<a id="Xxx999285" name="Xxx999285"></a></span>; Kanal 1) – als Standardausgabe wird normalerweise die Ausgabe auf dem Bildschirm bezeichnet.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Standardfehlerausgabe<a id="Xxx999287" name="Xxx999287"></a> (kurz <span class="listing">stderr<a id="Xxx999288" name="Xxx999288"></a></span>; Kanal 2) – wie bei der Standardausgabe erfolgt auch die Fehlerausgabe in der Regel auf dem Bildschirm.</td>
+</tr>
+</table>
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/01_01.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein01_01.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 1.1   
+    </b>Der standardm&auml;&szlig;ige Datenstrom einer Shell</p>
+<p>Relativ selten will man allerdings eine Ausgabe auf dem Bildschirm erzeugen. Gerade wenn es sich dabei um Hunderte Zeilen von Log-Daten handelt, speichert man dies gern in eine Datei ab. Dies realisiert man am einfachsten mit der Umleitung der Ausgabe.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">1.10.1 Ausgabe umleiten<a id="RxxKap00300904004D721F04817A" name="RxxKap00300904004D721F04817A"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999297" name="Xxx999297"></a><a id="Xxx999298" name="Xxx999298"></a>Die Standardausgabe eines Kommandos oder eines Shellscripts wird mit dem Zeichen <span class="listing">&gt;</span> hinter dem Kommando bzw. Shellscript in eine Datei umgeleitet. Alternativ kann hierf&uuml;r auch der Kanal 1 mit der Syntax <span class="listing">1&gt;</span> verwendet werden, was aber nicht n&ouml;tig ist, da das Umleitungszeichen <span class="listing">&gt;</span> ohne sonstige Angaben automatisch in der Standardausgabe endet, beispielsweise:</p>
+<pre>you@host &gt; du -b /home &gt; home_size.dat
+you@host &gt; ./ascript &gt; output_of_ascript.dat</pre>
+<p>Mit <span class="listing">du</span> <span class="listing">–b</span> <span class="listing">/home</span> erfahren Sie, wie viele Bytes die einzelnen Ordner im Verzeichnis /home belegen. Da die Ausgabe relativ lang werden kann, wird diese kurzum in eine Datei namens home_size.dat umgeleitet, welche Sie jetzt mit einem beliebigen Texteditor ansehen k&ouml;nnen. Sofern diese Datei noch nicht existiert, wird sie neu erzeugt. Gleiches wurde bei der zweiten Kommandoeingabe vorgenommen. Hier wird davon ausgegangen, dass ein Script namens <span class="listing">ascript</span> existiert, und die Daten dieses Scripts werden in eine Datei namens output_of_ascript.dat geschrieben (siehe Abbildung 1.2).</p>
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/01_02.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein01_02.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 1.2   
+    </b>Umleiten der Standardausgabe (cmd &gt; datei)</p>
+<p>Wie bereits erw&auml;hnt, k&ouml;nnten Sie theoretisch den Standardausgabekanal auch bei der Nummer ansprechen:</p>
+<pre>you@host &gt; du -b /home 1&gt; home_size.dat</pre>
+<p>Diese Schreibweise hat allerdings gegen&uuml;ber dem <span class="listing">&gt;</span> allein keinen Vorteil.</p>
+<p>Leider hat dieses Umleiten einer Ausgabe in eine Datei den Nachteil, dass bei einem erneuten Aufruf von</p>
+<pre>you@host &gt; du -b /home &gt; home_size.dat</pre>
+<p>die Daten gnadenlos &uuml;berschrieben werden. Abhilfe schafft hier eine Ausgabeumleitung mit <span class="listing">&gt;&gt;</span>. Damit wird die Ausgabe wie gehabt in eine entsprechende Datei umgeleitet, nur mit dem Unterschied, dass jetzt die Daten immer ans Ende der Datei angeh&auml;ngt werden. Existiert die Datei noch nicht, wird diese trotzdem neu erzeugt.</p>
+<pre>you@host &gt; du -b /home &gt;&gt; home_size.dat</pre>
+<p>Jetzt werden die weiteren Daten immer ans Ende von home_size.dat angef&uuml;gt.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">1.10.2 Standardfehlerausgabe umleiten<a id="RxxKap00300904004D721F048188" name="RxxKap00300904004D721F048188"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999316" name="Xxx999316"></a><a id="Xxx999317" name="Xxx999317"></a>So, wie Sie die Standardausgabe umleiten k&ouml;nnen, k&ouml;nnen Sie auch die Standardfehlerausgabe umleiten. Etwas &Auml;hnliches konnten Sie ja bereits ein paar Seiten zuvor mit</p>
+<pre>you@host &gt; find / -user you -print 2&gt;/dev/null</pre>
+<p>sehen. Hiermit wurden alle Dateien vom User »you« auf den Bildschirm ausgegeben. Fehlermeldungen wie bspw. »Keine Berechtigung« wurden hier gew&ouml;hnlich auf die Standardfehlerausgabe geleitet. Diese Ausgabe wurde im Beispiel nach /dev/null, dem Datengrab des Systems, umgeleitet.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   <a id="Xxx999323" name="Xxx999323"></a></b>/dev/null eignet sich prima, wenn Sie beispielsweise Daten f&uuml;r einen Test kopieren wollen oder nicht an der Ausgabe interessiert sind. Diese Ger&auml;tedatei ben&ouml;tigt au&szlig;erdem keinen Plattenplatz auf dem System.</p>
+</td>
+</tr>
+</table><br>
+<p>Nat&uuml;rlich k&ouml;nnen Sie auch hierbei die komplette Standardfehlerausgabe (zu erkennen an der Syntax <span class="listing">2&gt;</span> (Kanal 2)) von einem Befehl oder auch einem Script in eine Datei umleiten:</p>
+<pre>you@host &gt; find / -user you -print 2&gt; error_find_you.dat</pre>
+<p>Hiermit werden alle Fehlermeldungen in die Datei error_find_you.dat geschrieben. Existiert diese Datei noch nicht, wird sie angelegt. Sofern diese Datei allerdings pr&auml;sent ist, wird der alte Inhalt in dieser Form komplett &uuml;berschrieben. Wenn Sie dies nicht wollen, k&ouml;nnen Sie so wie schon bei der Standardausgabe mit <span class="listing">&gt;&gt;</span>, nur eben mit dem Kanal 2, die Standardfehlerausgabe an eine bestehende Datei anh&auml;ngen (siehe Abbildung 1.3).</p>
+<pre>you@host &gt; find / -user you -print 2&gt;&gt; error_find_you.dat</pre>
+<p>Sie k&ouml;nnen die Standardausgabe und Standardfehlerausgabe auch in zwei verschiedene Dateien umleiten. Dies wird recht h&auml;ufig gemacht, denn oft hat man nicht die Zeit bzw. &Uuml;bersicht, s&auml;mtliche Ausgaben zu &uuml;berwachen (siehe Abbildung 1.4).</p>
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/01_03.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein01_03.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 1.3   
+    </b>Umleiten der Standardfehlerausgabe (cmd 2&gt; datei)</p>
+<pre>you@host &gt; find / -user you -print &gt;&gt; find_you.dat 2&gt;&gt; \
+  error_find_you.dat</pre>
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/01_04.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein01_04.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 1.4   
+    </b>Beide Ausgabekan&auml;le in eine separate Datei umleiten</p>
+<p>Wollen Sie hingegen beides, also sowohl die Standardausgabe als auch die Standardfehlerausgabe in eine Datei schreiben, dann k&ouml;nnen Sie die beiden Kan&auml;le zusammenkoppeln. Dies erledigen Sie mit der Syntax <span class="listing">2&gt;&amp;1</span>. Damit legen Sie Kanal 2 (Standardfehlerkanal) und Kanal 1 (Standardausgabe) zusammen. Angewandt auf unser Beispiel, sieht dies folgenderma&szlig;en aus:</p>
+<pre>you@host &gt; find / -user you -print &gt; find_you_report.dat 2&gt;&amp;1</pre>
+<p>So k&ouml;nnen Sie &uuml;brigens auch ein Problem mit dem Pager (<span class="listing">less</span>, <span class="listing">more</span> ...) Ihrer Wahl l&ouml;sen. Testen Sie einfach Folgendes:</p>
+<pre>you@host &gt; find / -user you -print | more</pre>
+<p>Gew&ouml;hnlich verwendet man ja einen Pager (im Beispiel <span class="listing">more</span>), um die Standardausgabe komfortabel nach oben oder unten zu scrollen, damit einem bei etwas l&auml;ngeren Ausgaben die Texte nicht nur so vorbeifliegen. Aber hier will das nicht so recht hinhauen, da st&auml;ndig die Standardfehlerausgabe mit einer Fehlermeldung dazwischen funkt. Dies bekommen Sie einfach in den Griff, indem Sie die beiden Ausgaben zusammenlegen.</p>
+<pre>you@host &gt; find / -user you -print 2&gt;&amp;1 | more</pre>
+<p>Alternativ k&ouml;nnen Sie auch die Standardfehlerausgabe ins Datengrab (/dev/null) bef&ouml;rdern.</p>
+<pre>you@host &gt; find / -user you -print 2&gt;/dev/null | more</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">1.10.3 Eingabe umleiten<a id="RxxKap00300904004D721F0481A0" name="RxxKap00300904004D721F0481A0"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999351" name="Xxx999351"></a><a id="Xxx999352" name="Xxx999352"></a>Das Umleiten der Standardeingabe (Kanal 0), das normalerweise von der Tastatur aus erfolgt, kann ebenfalls erreicht werden. Hier wird das Zeichen <span class="listing">&lt;</span> nach einem Befehl bzw. einem Script verwendet. Nehmen wir einfach das Beispiel, in dem es darum ging, alle Dateien vom Eigent&uuml;mer »you« zu suchen und diese in die Datei find_tot.dat zu schreiben. Wahrscheinlich befinden sich hier unendlich viele Dateien, und Sie sind auf der Suche nach einer bestimmten Datei, deren Namen Sie aber nicht mehr genau wissen. War es irgendetwas mit »audio«? Fragen Sie einfach <span class="listing">grep</span>:</p>
+<pre>you@host &gt; grep audio &lt; find_tot.dat
+/dev/audio
+/dev/audio0
+/dev/audio1
+/dev/audio2
+/dev/audio3
+/home/tot/cd2audio.txt
+/home/you/cd2audio.txt
+/home/you/Documents/Claudio.dat
+/var/audio
+/var/audio/audio.txt</pre>
+<p>Hier schieben wir <span class="listing">grep</span> einfach die Datei find_tot.dat von der Standardeingabe zu und werden f&uuml;ndig (siehe Abbildung 1.5).</p>
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/01_05.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein01_05.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 1.5   
+    </b>Umleiten der Standardeingabe (cmd &lt; datei)</p>
+<p>Wollen Sie die Ausgabe von <span class="listing">grep</span> in eine andere Datei speichern, dann k&ouml;nnen Sie auch noch eine Umleitung der Standardausgabe einbauen.</p>
+<pre>you@host &gt; grep audio &lt; find_you.dat &gt; audio.dat
+you@host &gt; cat audio.dat
+/dev/audio
+/dev/audio0
+/dev/audio1
+/dev/audio2
+/dev/audio3
+/home/tot/cd2audio.txt
+/home/tot/Documents/Claudio.dat
+/var/audio
+/var/audio/audio.txt</pre>
+<p>So haben Sie die Standardausgabe von <span class="listing">grep</span>, die Ihre Anfrage von der umgeleiteten Standardeingabe (hier der Datei find_you.dat) erhielt, weitergeleitet in die Datei audio.dat, was Ihnen die Ausgabe von <span class="listing">cat</span> anschlie&szlig;end auch best&auml;tigt (siehe Abbildung 1.6).</p>
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/01_06.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein01_06.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 1.6   
+    </b>Umleiten von Standardeingabe und Standardausgabe</p>
+<p>In Tabelle 1.4 sehen Sie alle Umlenkungen auf einen Blick:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 1.4   
+    </b>Verschiedene Umlenkungen einer Shell</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Kanal</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Syntax</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beschreibung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1 (Standardausgabe)
+</td>
+<td class="tabellentext" bgcolor="#000000">cmd &gt; file
+</td>
+<td class="tabellentext" bgcolor="#000000">Standardausgabe in eine Datei umlenken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1 (Standardausgabe)
+</td>
+<td class="tabellentext" bgcolor="#000000">cmd &gt;&gt; file
+</td>
+<td class="tabellentext" bgcolor="#000000">Standardausgabe ans Ende einer Datei umlenken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">2 (Standardfehlerausgabe)
+</td>
+<td class="tabellentext" bgcolor="#000000">cmd 2&gt; file
+</td>
+<td class="tabellentext" bgcolor="#000000">Standardfehlerausgabe in eine Datei umlenken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">2 (Standardfehlerausgabe)
+</td>
+<td class="tabellentext" bgcolor="#000000">cmd 2&gt;&gt; file
+</td>
+<td class="tabellentext" bgcolor="#000000">Standardfehlerausgabe ans Ende einer Datei umlenken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1 (Standardausgabe)
+2 (Standardfehlerausgabe)
+</td>
+<td class="tabellentext" bgcolor="#000000">cmd &gt; file 2&gt;&amp;1
+</td>
+<td class="tabellentext" bgcolor="#000000">Standardfehlerausgabe und Standardausgabe in die gleiche Datei umlenken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1 (Standardausgabe)
+2 (Standardfehlerausgabe)
+</td>
+<td class="tabellentext" bgcolor="#000000">cmd &gt; file 2&gt; file2
+</td>
+<td class="tabellentext" bgcolor="#000000">Standardfehlerausgabe und Standardausgabe jeweils in eine extra Datei umlenken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0 (Standardeingabe)
+</td>
+<td class="tabellentext" bgcolor="#000000">cmd &lt; file
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Datei in die Standardeingabe eines Kommandos umleiten
+</td>
+</tr>
+</table><br>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">1.10.4 Pipes<a id="RxxKap00300904004D721F0481CA" name="RxxKap00300904004D721F0481CA"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999432" name="Xxx999432"></a><a id="Xxx999433" name="Xxx999433"></a>Bleiben wir doch beim Szenario vom Beispiel zuvor. Folgender Weg wurde gew&auml;hlt, um alle Dateien des Users »you«, welche eine Zeichenfolge »audio« im Namen haben, zu finden.</p>
+<pre>you@host &gt; find / -user you -print &gt; find_you.dat 2&gt;/dev/null
+you@host &gt; grep audio &lt; find_you.dat
+/dev/audio
+/dev/audio0
+/dev/audio1
+/dev/audio2
+/dev/audio3
+/home/tot/cd2audio.txt
+/home/you/cd2audio.txt
+/home/you/Documents/Claudio.dat
+/var/audio
+/var/audio/audio.txt</pre>
+<p>Mit einer Pipe k&ouml;nnen Sie das Ganze noch abk&uuml;rzen und ben&ouml;tigen nicht einmal eine Datei, die hierf&uuml;r angelegt werden muss. Hier das Beispiel mit der Pipe, womit dieselbe Wirkung wie im Beispiel eben erreicht wird.</p>
+<pre>you@host &gt;  find / -user you -print 2&gt;/dev/null | grep audio
+/dev/audio
+/dev/audio0
+/dev/audio1
+/dev/audio2
+/dev/audio3
+/home/tot/cd2audio.txt
+/home/you/cd2audio.txt
+/home/you/Documents/Claudio.dat
+/var/audio
+/var/audio/audio.txt</pre>
+<p>Pipes werden realisiert, wenn mehrere Kommandos durch das Zeichen <span class="listing">|</span> miteinander verkn&uuml;pft werden. Dabei wird immer die Standardausgabe des ersten Kommandos mit der Standardeingabe des zweiten Kommandos verbunden. Beachten Sie aber, dass die Standardfehlerausgabe hierbei nicht beachtet wird (siehe Abbildung 1.7).</p>
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/01_07.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein01_07.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 1.7   
+    </b>Verkn&uuml;pfen mehrerer Kommandos via Pipe</p>
+<p>Die Anzahl der Pipes, die Sie hierbei aneinander reihen k&ouml;nnen, ist unbegrenzt. Wollen Sie bspw. nicht wissen, welche und wo, sondern wie viele Dateien sich mit der Zeichenfolge »audio« auf Ihrem System befinden, m&uuml;ssen Sie dem Befehl zuvor nur das Kommando <span class="listing">wc</span> mit der Option <span class="listing">–l</span> (f&uuml;r line) »pipen«.</p>
+<pre>you@host &gt; find / -user you -print 2&gt;/dev/null | \
+   grep audio | wc -l
+9</pre>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">1.10.5 Ein T-St&uuml;ck mit tee<a id="RxxKap00300904004D721F0481D4" name="RxxKap00300904004D721F0481D4"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999447" name="Xxx999447"></a><a id="Xxx999448" name="Xxx999448"></a>Wollen Sie die Standardausgabe eines Kommandos oder Shellscripts auf dem Bildschirm und in eine Datei oder gar mehrere Dateien gleichzeitig veranlassen, empfiehlt es sich, das Kommando <span class="listing">tee</span> zu verwenden.</p>
+<pre>you@host &gt; du -bc | sort -n | tee februar05.log
+8      ./bin
+48      ./.dia/objects
+48      ./.dia/shapes
+48      ./.dia/sheets
+48      ./.gconf
+48      ./.gnome
+...
+1105091 ./OpenOffice.org1.1/user
+1797366 ./OpenOffice.org1.1
+1843697 ./.thumbnails/normal
+1944148 ./.thumbnails
+32270848        .
+32270848        insgesamt</pre>
+<p>Im Beispiel wird die Plattenplatznutzung nach Bytes sortiert ausgegeben und, dank <span class="listing">tee</span>, in die Datei februar05.log geschrieben. Hier k&ouml;nnen Sie nat&uuml;rlich auch in mehr als einer Datei schreiben.</p>
+<pre>you@host &gt; du -bc | sort -n | tee februar05.log year05.log
+8      ./bin
+48      ./.dia/objects
+48      ./.dia/shapes
+48      ./.dia/sheets
+48      ./.gconf
+48      ./.gnome
+...
+1105091 ./OpenOffice.org1.1/user
+1797366 ./OpenOffice.org1.1
+1843697 ./.thumbnails/normal
+1944148 ./.thumbnails
+32270848        .
+32270848        insgesamt</pre>
+<p>Aber gerade, wenn Sie bei Log-Dateien einen regelm&auml;&szlig;igen Jahresbericht erstellen wollen, sollten Sie <span class="listing">tee</span> mit der Option <span class="listing">–a</span> (append) verwenden. Damit wird die Ausgabe eines Kommandos bzw. des Shellscripts an die Datei(en) angef&uuml;gt und nicht – wie bisher – &uuml;berschrieben (siehe Abbildung 1.8).</p>
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/01_08.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein01_08.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 1.8   
+    </b>Das Kommando tee im Einsatz</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">1.10.6 Ersatzmuster (Wildcards)<a id="RxxKap00300904004D721F0481DC" name="RxxKap00300904004D721F0481DC"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999460" name="Xxx999460"></a><a id="Xxx999461" name="Xxx999461"></a><a id="Xxx999462" name="Xxx999462"></a><a id="Xxx999463" name="Xxx999463"></a>Als Ersatzmuster (Wildcards) werden bestimmte Zeichen(-folgen) eines Wortes bezeichnet, die von der Shell durch eine andere Zeichenkette ersetzt werden. In der Shell werden hierzu die Zeichen <span class="listing">*</span> <span class="listing">?</span> <span class="listing">[</span> <span class="listing">]</span> verwendet. Das hei&szlig;t, findet die Shell bei der Analyse eines dieser Zeichen, geht der Interpreter davon aus, dass es sich hier um ein Ersatzmuster f&uuml;r andere Zeichen handelt. Die Shell sucht jetzt bspw. im Verzeichnis nach Dateien (Namen), welche auf dieses Muster (nach den von der Shell vorgegebenen Regeln) passen, und ersetzt die entsprechenden Wildcards in der Kommandozeile durch eine Liste mit gefundenen Dateien (Namen). Es wird dabei im Fachjargon von einer Dateinamen-Expansion oder auch von Globbing gesprochen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Diese Namens-Expansion findet noch vor Ausf&uuml;hrung des Kommandos in der Shell statt. Das Kommando selbst bekommt von diesem Vorgang nichts mehr mit. Die Argumente des Kommandos sind schon die expandierten Dateinamen.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Eine beliebige Zeichenfolge *</h4>
+<p><a id="Xxx999470" name="Xxx999470"></a><a id="Xxx999471" name="Xxx999471"></a>Das Zeichen <span class="listing">*</span> steht f&uuml;r eine beliebige Zeichenfolge im Dateinamen. Das Sternchen wurde selbst schon zu DOS-Zeiten verwendet und ist das am meisten angewandte Wildcard-Zeichen. Einfaches Beispiel:</p>
+<pre>you@host &gt; grep Backup /home/tot/Mails/*.txt</pre>
+<p>Hier wird in allen Dateien mit der Endung ».txt« im Verzeichnis /home/tot/Mails nach dem Wort »Backup« gesucht. Die Position des Zeichens <span class="listing">*</span> k&ouml;nnen Sie im Suchwort fast beliebig w&auml;hlen. Hier einige Beispiele:</p>
+<pre>you@host &gt; ls *ript
+myscript
+you@host &gt; ls *ript*
+myscript  scripter
+you@host &gt; ls ript*
+/bin/ls: ript*: Datei oder Verzeichnis nicht gefunden
+you@host &gt; ls text*.txt
+text1.txt text2.txt text3.txt texta.txt textb.txt textc.txt textdatei_test.txt</pre>
+<p>Stimmt keine der Dateien mit dem gew&uuml;nschten Muster &uuml;berein, wird entweder eine dem Kommando entsprechende Fehlermeldung oder (bspw. mit <span class="listing">echo</span>) die Zeichenkette des Musters unver&auml;ndert zur&uuml;ckgegeben.</p>
+<h4 class="t4">Ein beliebiges Zeichen ?</h4>
+<p><a id="Xxx999478" name="Xxx999478"></a><a id="Xxx999479" name="Xxx999479"></a>Im Gegensatz zum Zeichen <span class="listing">*</span> wird das Metazeichen <span class="listing">?</span> als Platzhalter f&uuml;r nur ein beliebiges Zeichen verwendet. Das hei&szlig;t, wird das Zeichen <span class="listing">?</span> verwendet, muss sich an dieser Stelle ein (und wirklich nur ein) beliebiges Zeichen befinden, damit das Muster &uuml;bereinstimmt. Zur Demonstration einfach eine Gegen&uuml;berstellung, bei der zuerst das Metazeichen <span class="listing">*</span> und gleich darauf mit denselben Angaben das Zeichen <span class="listing">?</span> verwendet wird:</p>
+<pre>you@host &gt; ls datei*.dat
+datei1.dat datei1b.dat datei1c.dat datei2.dat datei2b.dat datei_backup.dat datei1.dat~
+you@host &gt; ls datei?.dat
+datei1.dat datei2.dat
+you@host &gt; ls datei1.dat?
+datei1.dat~</pre>
+<h4 class="t4">Zeichenbereiche angeben</h4>
+<p><a id="Xxx999483" name="Xxx999483"></a><a id="Xxx999484" name="Xxx999484"></a><a id="Xxx999485" name="Xxx999485"></a>Meistens werden Sie wohl mit den Metazeichen <span class="listing">*</span> und <span class="listing">?</span> zufrieden sein und gr&ouml;&szlig;tenteils auch ans Ziel kommen. Dennoch kann die Bestimmung eines Dateinamens ausgeweitet werden. Sie k&ouml;nnen zus&auml;tzlich noch definieren, welche Zeichen f&uuml;r eine Ersetzung in Frage kommen sollen. Hierzu werden die eckigen Klammern (<span class="listing">[</span> <span class="listing">]</span>) verwendet. Alles, was sich darin befindet, wird als g&uuml;ltiges Zeichen des Musters f&uuml;r die Ersetzung akzeptiert.</p>
+<pre>you@host &gt; ls datei*.txt
+datei1a.txt  datei1b.txt  datei1.txt  datei2a.txt  datei2.txt  
+datei3.txt
+you@host &gt; ls datei[12].txt
+datei1.txt  datei2.txt
+you@host &gt;  ls datei[12]*.txt
+datei1a.txt  datei1b.txt  datei1.txt  datei2a.txt  datei2.txt
+you@host &gt;  ls datei[123].txt
+datei1.txt  datei2.txt  datei3.txt
+you@host &gt;  ls datei[1–3].txt
+datei1.txt  datei2.txt  datei3.txt
+you@host &gt; ls datei[12][a].txt
+datei1a.txt  datei2a.txt
+you@host &gt; ls datei[12][b].txt
+datei1b.txt
+you@host &gt; ls datei[!12].txt
+datei3.txt</pre>
+<p>Im Beispiel konnten Sie erkennen, dass Sie – statt alle m&ouml;glichen Zeichen in eckigen Klammern aneinander zu reihen – auch mit einem Minuszeichen einen Bereich bestimmen k&ouml;nnen. Vorausgesetzt, das bzw. die Zeichen liegen in einem laufenden Bereich der ASCII-Tabelle. So passen z. B. mit <span class="listing">datei[0–9].txt</span> alle Dateinamen von 0 bis 9 in das Muster (<span class="listing">datei1.txt</span>, <span class="listing">datei2.txt</span> ... <span class="listing">datei9.txt</span>). Wird der Wert zweistellig, k&ouml;nnen Sie entweder <span class="listing">datei[0–9][0–9].txt</span> oder <span class="listing">datei[0–9]*.txt</span> verwenden. Wobei beide Versionen wieder unterschiedliche Ersetzungen durchf&uuml;hren, da die erste Version nur zwei dezimale Zeichen und die zweite Version beliebig viele weitere Zeichen enthalten darf.</p>
+<p>Wollen Sie hingegen nur Dateinamen erhalten, die neben der dezimalen Zahl einen weiteren Buchstaben enthalten, k&ouml;nnen Sie auch <span class="listing">datei[0–9][a–z].txt</span> verwenden. Nat&uuml;rlich k&ouml;nnen Sie in den eckigen Klammern noch mehrere Bereiche (allerdings m&uuml;ssen diese immer fortlaufend gem&auml;&szlig; der ASCII-Tabelle sein) verwenden. So liefert <span class="listing">datei[a–cg–j1–3].txt</span> Ihnen beispielsweise als Ergebnisse zur&uuml;ck, worin sich eines der Zeichen »a« bis »c«, »g« bis »j« und 1 bis 3 befindet.</p>
+<p>Wollen Sie hingegen in den eckigen Klammern einzelne oder eine Folge von Zeichen ausschlie&szlig;en, dann k&ouml;nnen Sie die Expansion mittels <span class="listing">!</span> auch negieren. Bspw. liefert Ihnen <span class="listing">datei[!12].txt</span> alles zur&uuml;ck, was als n&auml;chstes Zeichen nicht 1 oder 2 enth&auml;lt (wie im Beispiel gesehen).</p>
+<p>Des Weiteren k&ouml;nnen Sie die Expansionen mit den Metazeichen <span class="listing">*</span> und <span class="listing">?</span> erweitern (allerdings nicht innerhalb der eckigen Klammer).</p>
+<p>Wollen Sie die Datei-Expansionen in Aktion sehen, k&ouml;nnen Sie mit <span class="listing">set</span> die Debugging-Option <span class="listing">–x</span> setzen. Dann sehen Sie die Zeilen, nachdem eine Datei-Expansion ausgef&uuml;hrt wurde (Selbiges k&ouml;nnen Sie selbstverst&auml;ndlich auch mit den Metazeichen <span class="listing">*</span> und <span class="listing">?</span> herbeif&uuml;hren), zum Beispiel:</p>
+<pre>you@host &gt; set -x
+you@host &gt; ls datei[12].txt
+[DEBUG] /bin/ls  datei1.txt datei2.txt
+datei1.txt  datei2.txt
+you@host &gt; ls datei[!12].txt
+[DEBUG]  /bin/ls  datei3.txt
+datei3.txt
+you@host &gt; ls datei[1–3]*.txt
+[DEBUG]  /bin/ls  datei10.txt datei1a.txt datei1b.txt datei1.txt
+                  datei2a.txt datei2.txt datei3.txt
+datei10.txt  datei1b.txt  datei2a.txt  datei3.txt
+datei1a.txt  datei1.txt   datei2.txt</pre>
+<p>Die Bash und die Korn-Shell bieten hierbei au&szlig;erdem vordefinierte Parameter als Ersatzmuster an. Wollen Sie etwa nur Gro&szlig;- und Kleinbuchstaben zulassen, k&ouml;nnen Sie hierf&uuml;r statt <span class="listing">[a–zA–Z]</span> auch <span class="listing">[:alpha:]</span> verwenden. Sollen es nur dezimale Ziffern sein, dann kann <span class="listing">[:digit:]</span> statt <span class="listing">[1–9]</span> verwendet werden. In der Praxis sieht dies folgenderma&szlig;en aus:</p>
+<pre>you@host &gt; ls datei[[:digit:]].txt
+datei1.txt  datei2.txt  datei3.txt
+you@host &gt; ls datei[[:digit:]][[:alpha:]].txt
+datei1a.txt  datei1b.txt  datei2a.txt</pre>
+<p>Selbstverst&auml;ndlich k&ouml;nnen Sie auch hier den Wert in den eckigen Klammern mit <span class="listing">!</span> negieren. In Tabelle 1.5 finden Sie die Zeichenmengen, die Sie alternativ zur g&auml;ngigen Schreibweise in den eckigen Klammern setzen k&ouml;nnen.<a id="Xxx999497" name="Xxx999497"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 1.5   
+    </b>Alternativen zu den g&auml;ngigsten Zeichenmengen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Zeichenmenge</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[:alnum:]
+</td>
+<td class="tabellentext" bgcolor="#000000">Buchstaben, Unterstrich und dezimale Ziffern
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[:alpha:]
+</td>
+<td class="tabellentext" bgcolor="#000000">Gro&szlig;- und Kleinbuchstaben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[:digit:]
+</td>
+<td class="tabellentext" bgcolor="#000000">Dezimale Ziffern
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[:lower:]
+</td>
+<td class="tabellentext" bgcolor="#000000">Kleinbuchstaben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[:upper:]
+</td>
+<td class="tabellentext" bgcolor="#000000">Gro&szlig;buchstaben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[:print:]
+</td>
+<td class="tabellentext" bgcolor="#000000">Nur druckbare Zeichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[:space:]
+</td>
+<td class="tabellentext" bgcolor="#000000">Leerzeichen, Tabulator ...
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Versteckte Dateien</h4>
+<p><a id="Xxx999540" name="Xxx999540"></a><a id="Xxx999541" name="Xxx999541"></a>Sollten Sie sich fragen, was mit den versteckten Dateien ist (das sind Dateien, die mit einem Punkt beginnen) bzw. wie Sie diese bei der Datei-Expansion mit einbeziehen k&ouml;nnen, so ist die Antwort nicht schwer. Sie m&uuml;ssen den Punkt explizit mit angeben, dann werden auch die versteckten Dateien beachtet.</p>
+<pre>you@host &gt; ls *.conf
+/bin/ls: *.conf: Datei oder Verzeichnis nicht gefunden
+you@host &gt; ls .*.conf
+.xyz.conf .abc.conf</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Tipp   </b>In der Bash k&ouml;nnen Sie die versteckten Dateien auch ohne explizite Angabe des Punkts verwenden. Hierbei m&uuml;ssen Sie einfach mit <span class="listing">shopt</span> <span class="listing">-s</span> <span class="listing">dotglob</span> die Option <span class="listing">glob_dot_filenames</span> setzen. Deaktivieren k&ouml;nnen Sie das Ganze wieder mit <span class="listing">shopt</span> <span class="listing">-u</span>  <span class="listing">dotglob</span>.</p>
+</td>
+</tr>
+</table><br>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">1.10.7 Brace Extension (Bash und Korn-Shell only)<a id="RxxKap00300904004D721F04820D" name="RxxKap00300904004D721F04820D"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999549" name="Xxx999549"></a><a id="Xxx999550" name="Xxx999550"></a>Mit der Brace Extension haben Sie eine weitere neue Form, um Muster formulieren zu k&ouml;nnen. Dieses Feature steht unter der Bourne-Shell nicht zur Verf&uuml;gung. Das Prinzip ist recht einfach: Bei einer g&uuml;ltigen Brace Extension schreibt man Alternativ-Ausdr&uuml;cke zwischen geschweifte Klammern getrennt von einem Komma zwischen den beiden Klammern. Die Syntax hierzu lautet:</p>
+<pre>pr&auml;fix{ muster1, muster2 }suffix</pre>
+<p>Von der Shell wird dieses Muster folgenderma&szlig;en ausgewertet: Vor jeder Zeichenkette – innerhalb der geschweiften Klammern – wird das Pr&auml;fix gesetzt und dahinter das Suffix angeh&auml;ngt. Es ist einfacher, als es sich anh&ouml;rt. So generiert aus der Syntaxbeschreibung die Shell zum Beispiel den Dateinamen <span class="listing">pr&auml;fixmuster1suffix</span> und <span class="listing">pr&auml;fixmuster2suffix</span>. Nat&uuml;rlich k&ouml;nnen noch weitere Alternativ-Ausdr&uuml;cke in den geschweiften Klammern gesetzt werden.</p>
+<p>Wollen Sie bspw. mehrere Dateien wie prozess.dat, process.dat und progress.dat gleichzeitig anlegen, dann k&ouml;nnten Sie hierf&uuml;r die Brace Extension wie folgt einsetzen:</p>
+<pre>you@host &gt;  touch pro{z,c,gr}ess.dat
+you@host &gt;  ls *.dat
+process.dat  progress.dat  prozess.dat</pre>
+<p>Brace Extensions lassen sich aber auch verschachteln. Wollen Sie bspw. die Dateinamen dateiorginal.txt, dateiorginal.bak, dateikopie.txt und dateikopie.bak mit einer Brace Extension erzeugen, so wird dies folgenderma&szlig;en realisiert:</p>
+<pre>you@host &gt; touch datei{orginal{.bak,.txt},kopie{.bak,.txt}}
+you@host &gt; ls datei*
+dateikopie.bak  dateikopie.txt  dateiorginal.bak  dateiorginal.txt</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie hier auch eine wilde Wildcard-Orgie veranstalten und alle bisher kennen gelernten Wildcards verwenden.</p>
+<pre>you@host &gt; ls datei{*{.bak,.txt}}
+dateikopie.bak  dateikopie.txt  dateiorginal.bak  dateiorginal.txt</pre>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">1.10.8 Muster-Alternativen (Bash und Korn-Shell only)<a id="RxxKap00300904004D721F048217" name="RxxKap00300904004D721F048217"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999561" name="Xxx999561"></a><a id="Xxx999562" name="Xxx999562"></a>Und es gibt noch eine weitere M&ouml;glichkeit, Muster-Alternativen f&uuml;r Namen zu beschreiben, die zwar eher f&uuml;r Muster-Vergleiche von Zeichenketten und weniger im Bereich der Datei-Expansion eingesetzt werden, allerdings auch daf&uuml;r verwendet werden k&ouml;nnen. Damit Ihnen diese Muster-Alternativen auch f&uuml;r die Bash zur Verf&uuml;gung stehen, m&uuml;ssen Sie die Option <span class="listing">extglob</span> mit <span class="listing">shopt</span> (Abk&uuml;rzung f&uuml;r shell option) ausschalten (<span class="listing">shopt</span> <span class="listing">–s</span> <span class="listing">extglob</span>).</p>
+<pre>you@host &gt; ls *.dat
+process.dat  progress.dat  prozess.dat
+you@host &gt; shopt -s extglob
+you@host &gt; ls @(prozess|promess|process|propan).dat
+process.dat  prozess.dat
+you@host &gt; ls !(prozess|promess|process|propan).dat
+progress.dat</pre>
+<p>In Tabelle 1.6 sind die einzelnen M&ouml;glichkeiten f&uuml;r solche Muster-Alternativen zusammengestellt:<a id="Xxx999566" name="Xxx999566"></a><a id="Xxx999567" name="Xxx999567"></a><a id="Xxx999568" name="Xxx999568"></a><a id="Xxx999569" name="Xxx999569"></a><a id="Xxx999570" name="Xxx999570"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 1.6   
+    </b>Muster-Alternativen f&uuml;r die Bash und Korn-Shell</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Muster-Alternativen</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">@(pattern1 | patter2 | ... | patternN)
+</td>
+<td class="tabellentext" bgcolor="#000000">Eines der Muster
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">!(pattern1 | patter2 | ... | patternN)
+</td>
+<td class="tabellentext" bgcolor="#000000">Keines der Muster
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">+(pattern1 | patter2 | ... | patternN)
+</td>
+<td class="tabellentext" bgcolor="#000000">Mindestens eines der Muster
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">?(pattern1 | patter2 | ... | patternN)
+</td>
+<td class="tabellentext" bgcolor="#000000">Keines oder eines der Muster
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">*(pattern1 | patter2 | ... | patternN)
+</td>
+<td class="tabellentext" bgcolor="#000000">Keines, eines oder mehrere Muster
+</td>
+</tr>
+</table><br>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">1.10.9 Tilde-Expansion (Bash und Korn-Shell only)<a id="RxxKap00300904004D721F04822A" name="RxxKap00300904004D721F04822A"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999605" name="Xxx999605"></a><a id="Xxx999606" name="Xxx999606"></a>Das Tilde-Zeichen <span class="listing">~</span> wird von der Bash und der Korn-Shell als Heimverzeichnis des aktuellen Benutzers ausgewertet. Hier einige typische Aktionen, die mit dem Tilde-Zeichen in der Bash und Korn-Shell durchgef&uuml;hrt werden:</p>
+<pre>you@host &gt; pwd
+/home/you
+you@host &gt; cd /usr
+you@host &gt; echo ~
+/home/you
+you@host &gt; cd ~
+you@host &gt; pwd
+/home/you
+you@host &gt; echo ~-
+/usr
+you@host &gt; echo ~+
+/home/you
+you@host &gt; cd ~-
+you@host &gt; echo ~-
+/home/you
+you@host &gt; cd ~-
+you@host &gt; pwd
+/home/you
+you@host &gt; echo ~tot
+/home/you
+you@host &gt; mkdir ~/new_dir</pre>
+<p>Tabelle 1.7 zeigt, wie die einzelnen Tilde-Expansionen eingesetzt werden und ihre jeweilige Bedeutung.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 1.7   
+    </b>Tilde-Expansionen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Angabe</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">~
+</td>
+<td class="tabellentext" bgcolor="#000000">Heimverzeichnis des eingeloggten Benutzers
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">~BENUTZERNAME
+</td>
+<td class="tabellentext" bgcolor="#000000">Heimverzeichnis eines angegebenen Benutzers
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">~–
+</td>
+<td class="tabellentext" bgcolor="#000000">Verzeichnis, das zuvor besucht wurde
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">~+
+</td>
+<td class="tabellentext" bgcolor="#000000">Aktuelles Arbeitsverzeichnis (wie pwd)
+</td>
+</tr>
+</table><br>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_003_008.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_003_010.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_003_009.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+</html>

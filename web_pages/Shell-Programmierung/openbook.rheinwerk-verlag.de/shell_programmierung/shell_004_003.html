@@ -1,0 +1,612 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 2.4 Quotings und Kommando-Substitution</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_004_002.html">
+<link rel="next" href="shell_004_004.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_004_000.html#RxxKap00400004004D961F024172">2 Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_000.html#RxxKap00400004004D961F024174">2.1 Grundlagen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F024178">2.1.1 Zugriff auf den Wert einer Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F02417E">2.1.2 Variablen-Interpolation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D172">2.2 Zahlen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D174">2.2.1 Integer-Arithmetik (Bourne-Shell, Bash und Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D186">2.2.2 Integer-Arithmetik (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D1BE">2.2.3 bc – Rechnen mit Flie&szlig;kommazahlen und mathematische Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F021172">2.3 Zeichenketten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F021174">2.3.1 Stringverarbeitung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F0211CE">2.3.2 Erweiterte Funktionen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00400304004DAF1F011172">2.4 Quotings und Kommando-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00400304004DAF1F011180">2.4.1 Single und Double Quotings</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00400304004DAF1F011196">2.4.2 Kommando-Substitution – Back Quotes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B172">2.5 Arrays (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B175">2.5.1 Werte an Arrays zuweisen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B180">2.5.2 Eine Liste von Werten an ein Array zuweisen (Bash)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B186">2.5.3 Eine Liste von Werten an ein Array zuweisen (Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B18A">2.5.4 Zugreifen auf die einzelnen Elemente eines Arrays</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_005.html#RxxKap00400504004DB11F020172">2.6 Variablen exportieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_006.html#RxxKap00400604004DB21F030172">2.7 Umgebungsvariablen eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_007.html#RxxKap00400704004DB31F023172">2.8 Shell-Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038172">2.9 Automatische Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038174">2.9.1 Der Name des Shellscripts – $0</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03817F">2.9.2 Die Prozessnummer des Shellscripts – $$</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038185">2.9.3 Der Beendigungsstatus eines Shellscripts – $?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038189">2.9.4 Die Prozessnummer des zuletzt gestarteten Hintergrundprozesses – $!</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03818C">2.9.5 Weitere vordefinierte Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03819D">2.9.6 Weitere automatische Variablen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">2.4 <a id="RxxKap002213QuotingsundKommandoSubstitution" name="RxxKap002213QuotingsundKommandoSubstitution"></a><a id="Rxx_Ref108693597" name="Rxx_Ref108693597"></a>Quotings und Kommando-Substituti<a id="RxxKap00400304004DAF1F011172" name="RxxKap00400304004DAF1F011172"></a>on 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a>Jetzt zu einem l&auml;ngst &uuml;berf&auml;lligen Thema, den Quotings, zu dem die Kommando-Substitution (oder Kommandoersetzung) ebenfalls geh&ouml;rt. H&auml;ufiger wurden in den Beispielen zuvor Quotings eingesetzt, ohne jemals genauer darauf eingegangen zu sein.</p>
+<p>Quoting ist die englische Bezeichnung f&uuml;r verschiedene Anf&uuml;hrungszeichen (Quotes). Generell unterscheidet man dabei zwischen Single Quotes (<span class="listing">'</span>), Double Quotes (<span class="listing">"</span>) und den Back Quotes (<span class="listing">`</span>). Siehe dazu Tabelle 2.5:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 2.5   
+    </b>Verschiedene Quotes</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Zeichen</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">'
+</td>
+<td class="tabellentext" bgcolor="#000000">Single Quote, einfaches Anf&uuml;hrungszeichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"
+</td>
+<td class="tabellentext" bgcolor="#000000">Double Quote, doppeltes Anf&uuml;hrungszeichen (oder G&auml;nsef&uuml;&szlig;chen)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">`
+</td>
+<td class="tabellentext" bgcolor="#000000">Back Quote, Backtick, Gravis-Zeichen, umgekehrtes einfaches Anf&uuml;hrungszeichen
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">2.4.1 Single und Double Quotings<a id="RxxKap00400304004DAF1F011180" name="RxxKap00400304004DAF1F011180"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999308" name="Xxx999308"></a><a id="Xxx999309" name="Xxx999309"></a><a id="Xxx999310" name="Xxx999310"></a><a id="Xxx999311" name="Xxx999311"></a><a id="Xxx999312" name="Xxx999312"></a><a id="Xxx999313" name="Xxx999313"></a>Um den Sinn vom Quotings zu verstehen, wird folgende <span class="listing">echo</span>-Ausgabe verwendet:</p>
+<pre>you@host &gt; echo *** Hier wird $SHELL ausgef&uuml;hrt ***
+aawk acut ased bin chmlib-0.35.tgz datei.csv Desktop Documents gedicht.txt namen.txt 
+nummer.txt OpenOffice.org1.1 public_html Shellbuch zusammen.txt Hier wird /bin/bash 
+ausgef&uuml;hrt aawk acut ased bin chmlib-0.35.tgz datei.csv Desktop Documents 
+gedicht.txt namen.txt nummer.txt OpenOffice.org1.1 public_html Shellbuch zusammen.txt</pre>
+<p>Das war jetzt sicherlich nicht die gew&uuml;nschte und erwartete Ausgabe. Da hierbei das Metazeichen <span class="listing">*</span> mehrmals verwendet wurde, werden f&uuml;r jedes Sternchen alle Dateinamen im Verzeichnis ausgegeben. Nach Ihrem Wissensstand k&ouml;nnten Sie dem Problem mit mehreren Backslash-Zeichen entgegentreten.</p>
+<pre>you@host &gt; echo \*\*\* Hier wird $SHELL ausgef&uuml;hrt \*\*\*
+*** Hier wird /bin/bash ausgef&uuml;hrt ***</pre>
+<p>Aber auf Dauer ist dies wohl eher umst&auml;ndlich und auch sehr fehleranf&auml;llig. Testen Sie das ganze Beispiel doch einmal, indem Sie den auszugebenden Text in Single Quotes stellen.</p>
+<pre>you@host &gt; echo '*** Hier wird $SHELL ausgef&uuml;hrt ***'
+*** Hier wird $SHELL ausgef&uuml;hrt ***</pre>
+<p>Daraus k&ouml;nnen Sie nun schlussfolgern, dass bei der Verwendung von Single Quotes die Metazeichen (hier <span class="listing">*</span>) ausgeschaltet werden. Aber im Beispiel wurde auch die Umgebungsvariable <span class="listing">$SHELL</span> ausgequotet. Wenn Sie also die Variablen im Klartext ausgeben wollen (mitsamt Dollarzeichen), dann k&ouml;nnten Sie dies mit Single Quotes erreichen. Die Single Quotes helfen Ihnen auch beim Multiplizieren mit dem Kommando <span class="listing">expr</span>.</p>
+<pre>you@host &gt; expr 10 * 10
+expr: Syntaxfehler
+you@host &gt; expr 10 \* 10
+100
+you@host &gt; expr 10 '*' 10
+100</pre>
+<p>Zur&uuml;ck zu unserer Textausgabe. Wollen Sie den Wert einer Variablen (im Beispiel <span class="listing">SHELL</span>) ebenfalls ausgeben lassen, dann sollten Sie Double Quotes verwenden.</p>
+<pre>you@host &gt; echo "*** Hier wird $SHELL ausgef&uuml;hrt ***"
+*** Hier wird /bin/bash ausgef&uuml;hrt ***</pre>
+<p>Es mag jetzt verwirrend sein, weshalb ein Double Quoting den Inhalt einer Variablen anzeigt, aber die Sonderbedeutung des Metazeichens <span class="listing">*</span> ausschlie&szlig;t. Dies liegt daran, dass Double Quotes alle Metazeichen ausschlie&szlig;en, bis auf das Dollarzeichen (also auch den Variablen), das Back Quote-Zeichen und den Backslash.</p>
+<h4 class="t4">Leerzeichen und Zeilenumbr&uuml;che</h4>
+<p><a id="Xxx999326" name="Xxx999326"></a><a id="Xxx999327" name="Xxx999327"></a>Damit Sie f&uuml;r den Fall der F&auml;lle beim Verwenden der Single und Double Quotings keine Formatierungsprobleme bei der Ausgabe bekommen, folgen noch ein paar Hinweise. Das Thema Leerzeichen wurde bereits kurz bei der Beschreibung des Befehls <span class="listing">echo</span> erw&auml;hnt.</p>
+<pre>you@host &gt; echo Name    ID-Nr.    Passwort
+Name ID-Nr. Passwort</pre>
+<p>Im Beispiel wurden zwar einige Leerzeichen verwendet, welche aber bei der Ausgabe nicht erscheinen. Vielleicht mag dies den einen oder anderen verwundern, aber auch Leerzeichen haben eine Sonderbedeutung. Ein Leerzeichen mag eben in einer Shell immer gern ein Trennzeichen zwischen zwei Befehlen sein. Um vom Zeichen die Trennung als Bedeutung zu l&ouml;sen, m&uuml;ssen Sie auch hierbei Ouotings einsetzen.</p>
+<pre>you@host &gt; echo 'Name    ID-Nr.    Passwort'
+Name    ID-Nr.    Passwort
+you@host &gt; echo "Name    ID-Nr.    Passwort"
+Name    ID-Nr.    Passwort</pre>
+<p>Selbstverst&auml;ndlich h&auml;lt Sie keiner davon ab, nur diese Leerzeichen zu quoten.</p>
+<pre>you@host &gt; echo Name'    'ID-Nr.'    Passwort'
+Name    ID-Nr.    Passwort</pre>
+<p>&Auml;hnlich sieht dies bei einem Zeilenwechsel aus:</p>
+<pre>you@host &gt; echo Ein Zeilenwechsel \
+&gt; wird gemacht
+Ein Zeilenwechsel wird gemacht
+you@host &gt; echo 'Ein Zeilenwechsel \
+&gt; wird gemacht'
+Ein Zeilenwechsel \
+wird gemacht
+you@host &gt; echo 'Ein Zeilenwechsel
+wird gemacht'
+Ein Zeilenwechsel
+wird gemacht
+you@host &gt; echo "Ein Zeilenwechsel
+&gt; wird gemacht"
+Ein Zeilenwechsel
+wird gemacht
+you@host &gt; echo "Ein Zeilenwechsel \
+wird gemacht"
+Ein Zeilenwechsel wird gemacht</pre>
+<p>Verwenden Sie bspw. das Backslash-Zeichen bei einem Zeilenwechsel in Single Quotes, so wird es au&szlig;er Kraft gesetzt und wie ein normales Zeichen ausgegeben. Beim Double Quoting hingegen beh&auml;lt das Backslash-Zeichen weiterhin seine Sonderbedeutung beim Zeilenumbruch. Ansonsten wird bei der Verwendung von Single oder Double Quotes bei Zeilenbr&uuml;chen kein Backslash-Zeichen verwendet, um einen Zeilenumbruch auszugeben.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">2.4.2 Kommando-Substitution – Back Quotes<a id="RxxKap00400304004DAF1F011196" name="RxxKap00400304004DAF1F011196"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999338" name="Xxx999338"></a><a id="Xxx999339" name="Xxx999339"></a><a id="Xxx999340" name="Xxx999340"></a><a id="Xxx999341" name="Xxx999341"></a><a id="Xxx999342" name="Xxx999342"></a>Die Funktion einer Shell schlechthin ist die Kommando-Substitution. Ohne dieses Feature w&auml;re die Shell-Programmierung wohl nur die H&auml;lfte wert. Damit erst wird es m&ouml;glich, das Ergebnis eines Kommandos in einer Variablen abzuspeichern statt eine Ausgabe auf dem Bildschirm (bzw. in einer Datei) vorzunehmen. In der Praxis gibt es zwei Anwendungen der Kommando-Substitution:</p>
+<pre>variable=<span class="listing">`</span>kommando<span class="listing">`
+</span>grep <span class="listing">`</span>kommando<span class="listing">`</span> file oder grep suche <span class="listing">`</span>kommando<span class="listing">`</span></pre>
+<p>Bei der ersten Variante wird die Ausgabe eines Kommandos in einer Variablen gespeichert. Bei der zweiten Version wird die Ausgabe eines Kommandos f&uuml;r ein weiteres Kommando verwendet. Die Shell erkennt eine solche Kommando-Substitution, indem ein Kommando oder mehrere Kommandos zwischen Back Quotes (`) eingeschlossen ist. Einfachstes und immer wieder verwendetes Beispiel ist das Kommando <span class="listing">date</span>:</p>
+<pre>you@host &gt; datum=`date`
+you@host &gt; echo $datum
+Mo Feb 7 07:16:43 CET 2005
+you@host &gt; tag=`date +%A`
+you@host &gt; echo "Heute ist $tag"
+Heute ist Montag</pre>
+<p>Die Kommando-Substitution ist f&uuml;r Sie als Script-Programmierer sozusagen die Luft zum Atmen, weshalb Sie sehr gut beraten sind, sich intensiv damit zu besch&auml;ftigen. Daher ist es auch unbedingt notwendig, sich bei der Shell-Programmierung auch mit den Linux-UNIX-Kommandos zu befassen. Hier ein einfaches Shellscript dazu:</p>
+<pre># Demonstriert die Kommando-Substitution
+# Name : asubstit
+tag=`date +%A`
+datum=`date +%d.%m.%Y`
+count=`ls -l | wc -l`
+echo "Heute ist $tag der $datum"
+echo "Sie befinden sich in $HOME (Inhalt: $count Dateien)"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./asubstit
+Heute ist Montag der 07.02.2005
+Sie befinden sich in /home/tot (Inhalt: 17 Dateien)</pre>
+<p>Die Kommando-Substitution wird in der Praxis aber h&auml;ufig auch noch anders verwendet als eben demonstriert. Man kann mithilfe der Back Quotes auch die Ausgabe eines Kommandos f&uuml;r ein weiteres Kommando verwenden. Damit erh&auml;lt ein Kommando den R&uuml;ckgabewert eines anderen Kommandos. H&ouml;rt sich schlimmer an, als es ist.</p>
+<pre>you@host &gt; echo "Heute ist `date +%A`"
+Heute ist Montag</pre>
+<p>Im Beispiel k&ouml;nnen Sie sehen, dass die Kommando-Substitution auch zwischen Double Quotes ihre Bedeutung beh&auml;lt. Entmachten k&ouml;nnen Sie die Back Quotes wieder mit einem Backslash-Zeichen.</p>
+<pre>you@host &gt; echo "Heute ist \`date +%A\`"
+Heute ist 'date +%A'</pre>
+<p>In welcher Reihenfolge mehrere Kommando-Substitutionen ausgef&uuml;hrt werden, ermitteln Sie am besten selbst mit der Option <span class="listing">–x</span> f&uuml;r die Shell.</p>
+<pre>you@host &gt; set -x
+you@host &gt; echo "Format1: `date` Format2: `date +%d.%m.%Y`"
+++ date
+++ date +%d.%m.%Y
++ echo 'Format1: Mo Feb  7 12:59:53 CET 2005 Format2: 07.02.2005'
+Format1: Mo Feb  7 12:59:53 CET 2005 Format2: 07.02.2005</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wie bei einer Pipe, geht auch bei einer Kommando-Substitution die Fehlermeldung verloren.</p>
+</td>
+</tr>
+</table><br>
+<p>Anf&auml;nger kommen schnell auf den Gedanken, Kommando-Substitutionen mit Pipes gleichzusetzen. Daher folgendes Beispiel als Gegenbeweis:</p>
+<pre>you@host &gt; find . -name "*.txt" | ls -l</pre>
+<p>Was hier gewollt ist, d&uuml;rfte schnell ersichtlich sein. Es wird versucht, aus dem aktuellen Arbeitsverzeichnis alle Dateien mit der Endung ».txt« herauszufiltern und an die Standardeingabe von <span class="listing">ls</span> <span class="listing">–l</span> zu schieben. Bei der Ausf&uuml;hrung wird Ihnen jedoch auffallen, dass <span class="listing">ls</span> <span class="listing">–l</span> die Eingaben von <span class="listing">find</span> total ignoriert. <span class="listing">find</span> hat hierbei keinerlei Wirkung. Selbiges mit einer Kommando-Substitution zeigt allerdings dann den gew&uuml;nschten Effekt.</p>
+<pre>you@host &gt; ls -l `find . -name "*.txt"`</pre>
+<p>Wenden Sie dieses Prinzip bspw. auf das Script »asubstit« an, l&auml;sst sich dieses auf zwei Zeilen Umfang reduzieren. Hier die neue Version von »asubstit«:</p>
+<p># Demonstriert die Kommando-Substitution
+# Name : asubstit2
+echo "Heute ist `date +%A` der `date +%d.%m.%Y`"
+echo "Sie befinden sich in $HOME " \
+     "(Inhalt:`ls -l | wc -l` Dateien)"Bei der Ausf&uuml;hrung verl&auml;uft das Script »asubtit2« analog zu »asubstit«.</p>
+<h4 class="t4">Erweiterte Syntax (Bash und Korn-Shell only)</h4>
+<p><a id="Xxx999368" name="Xxx999368"></a><a id="Xxx999369" name="Xxx999369"></a>Bash und Korn-Shell bieten Ihnen neben den Back Quotes au&szlig;erdem noch eine andere Syntax an. Statt bspw.</p>
+<pre>you@host &gt; echo "Heute ist `date`"
+Heute ist Mo Feb  7 13:21:43 CET 2005
+you@host &gt; count=`ls -l | wc -l`
+you@host &gt; echo $count
+18
+you@host &gt; ls -l `find . -name "*.txt"`</pre>
+<p>k&ouml;nnen Sie hier folgende Syntax verwenden:</p>
+<pre>you@host &gt; echo "Heute ist $(date)"
+Heute ist Mo Feb  7 13:24:03 CET 2005
+you@host &gt; count=$(ls -l | wc -l)
+you@host &gt; echo $count
+18
+you@host &gt; ls -l $(find . -name "*.txt")</pre>
+<p>Die Verwendung von <span class="listing">$(...)</span> gegen&uuml;ber <span class="listing">'...'</span> hat nat&uuml;rlich nur einen rein optischen Vorteil. Die Form <span class="listing">$(...)</span> l&auml;sst sich erheblich einfacher lesen, aber wem n&uuml;tzt das was, wenn es die Bourne-Shell nicht kennt. Wer sich sicher sein kann, dass seine Scripts auch immer in einer Bash oder einer Korn-Shell ausgef&uuml;hrt werden, der kann sich frohen Herzens damit anfreunden. Damit f&auml;llt wenigstens bei der Quoterei die Back Quote weg, und Sie m&uuml;ssen nur noch die Single und Double Quotes beachten.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+</html>

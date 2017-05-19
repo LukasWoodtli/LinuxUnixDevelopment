@@ -1,0 +1,836 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_013_001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 11.2 grep</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_013_000.html">
+<link rel="next" href="shell_014_000.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_013_000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_014_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_013_000.html#RxxKap01300004004F851F035172">11 Regul&auml;re Ausdr&uuml;cke und grep</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_013_000.html#RxxKap01300004004F851F035174">11.1 Regul&auml;re Ausdr&uuml;cke – die Theorie</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_013_000.html#RxxKap01300004004F851F03517B">11.1.1 Elemente f&uuml;r regul&auml;re Ausdr&uuml;cke (POSIX-RE)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01300104004F9C1F039172">11.2 grep</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01300104004F9C1F039178">11.2.1 Wie arbeitet grep?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01300104004F9C1F039187">11.2.2 grep mit regul&auml;ren Ausdr&uuml;cken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01300104004F9C1F03920A">11.2.3 grep mit Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01300104004F9C1F039216">11.2.4 grep mit Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01300104004F9C1F039230">11.2.5 egrep (extended grep)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01300104004F9C1F03923E">11.2.6 fgrep (fixed oder fast grep)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01300104004F9C1F039240">11.2.7 rgrep</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">11.2 <a id="RxxKap01141grep" name="RxxKap01141grep"></a>gre<a id="RxxKap01300104004F9C1F039172" name="RxxKap01300104004F9C1F039172"></a>p 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a>Zum Suchen nach bestimmten Mustern in Dateien wird h&auml;ufig <span class="listing">grep</span> verwendet. <span class="listing">grep</span> steht f&uuml;r »<b>G</b>lobal search for a <b>R</b>egular <b>E</b>xpression and <b>P</b>rint out matched lines«. Es gibt mittlerweile vier verschiedene solcher <span class="listing">grep</span>-Kommandos:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> grep</span> – der Klassiker</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> egrep<a id="Xxx999281" name="Xxx999281"></a></span> – Kurzform f&uuml;r »Extended Grep«, also ein erweitertes <span class="listing">grep</span>, welches im Gegensatz zu <span class="listing">grep</span> noch mehr regul&auml;re Ausdr&uuml;cke versteht.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> fgrep<a id="Xxx999283" name="Xxx999283"></a></span> – Kurzform f&uuml;r »Fixed Grep« (oder gern auch »Faster Grep«), welches weniger regul&auml;re Ausdr&uuml;cke als <span class="listing">grep</span> versteht und dadurch erheblich schneller bei der Suche in gro&szlig;en Dateien ist als <span class="listing">grep</span> oder <span class="listing">egrep</span>.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> rgrep<a id="Xxx999285" name="Xxx999285"></a></span> – Kurzform f&uuml;r »Rekursive Grep«. <span class="listing">rgrep</span> wird f&uuml;r die rekursive Suche in Unterverzeichnissen verwendet. Es muss allerdings erw&auml;hnt werden, dass <span class="listing">rgrep</span> die Unterverzeichnisse auch komplett durchl&auml;uft.</td>
+</tr>
+</table>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">11.2.1 Wie arbeitet grep?<a id="RxxKap01300104004F9C1F039178" name="RxxKap01300104004F9C1F039178"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999288" name="Xxx999288"></a>Das <span class="listing">grep</span>-Kommando sucht nach einem Muster von Zeichen in einer oder mehreren Datei(en). Enth&auml;lt das Muster ein Whitespace, muss es entsprechend gequotet werden. Das Muster ist also entweder eine gequotete Zeichenkette oder ein einfaches Wort. Alle anderen Worte hinter dem Muster werden von <span class="listing">grep</span> dann als Datei(en) verwendet, in denen nach dem Muster gesucht wird. Die Ausgabe sendet <span class="listing">grep</span> an die Standardausgabe (meistens dem Bildschirm) und nimmt auch keinerlei &Auml;nderung an der Eingabedatei vor. Die Syntax:<span class="listing">grep</span> <span class="listing">wort</span> <span class="listing">datei1</span> <span class="listing">[datei2]</span> <span class="listing">...</span> <span class="listing">[datein]</span></p>
+<p>Ein viel zitiertes Beispiel:</p>
+<pre>you@host &gt; grep john /etc/passwd
+john:x:1002:100:Jonathan Wolf:/home/john:/bin/csh</pre>
+<p><span class="listing">grep</span> sucht hier nach dem Muster »john« in der Datei /etc/passwd. Bei Erfolg wird die entsprechende Zeile auf dem Bildschirm ausgegeben. Wird das Muster nicht gefunden, gibt es keine Ausgabe und auch keine Fehlermeldung. Existiert die Datei nicht, wird eine Fehlermeldung auf dem Bildschirm ausgegeben.</p>
+<p>Als R&uuml;ckgabewert von <span class="listing">grep</span> erhalten Sie bei einer erfolgreichen Suche den Wert 0. Wird ein Muster nicht gefunden, gibt <span class="listing">grep</span> 1 als Exit-Code zur&uuml;ck, und wird die Datei nicht gefunden, wird 2 zur&uuml;ckgegeben. Der R&uuml;ckgabewert von <span class="listing">grep</span> ist in den Shellscripts h&auml;ufig von Bedeutung, da Sie relativ selten die Ausgaben auf dem Bildschirm machen werden. Und vom Exit-Code h&auml;ngt es h&auml;ufig auch ab, wie Ihr Script weiterlaufen soll.</p>
+<p><span class="listing">grep</span> gibt den Exit-Code 0 zur&uuml;ck, also wurde ein Muster gefunden:</p>
+<pre>you@host &gt; grep you /etc/passwd &gt; /dev/null
+you@host &gt; echo $?
+0</pre>
+<p><span class="listing">grep</span> gibt den Exit-Code 1 zur&uuml;ck, somit wurde kein &uuml;bereinstimmendes Muster gefunden:</p>
+<pre>you@host &gt; grep gibtsnicht /etc/passwd &gt; /dev/null
+you@host &gt; echo $?
+1</pre>
+<p><span class="listing">grep</span> gibt den Exit-Code 2 zur&uuml;ck, die Datei scheint nicht zu existieren (oder wurde, wie hier, falsch geschrieben):</p>
+<pre>you@host &gt; grep you /etc/PASSwd &gt; /dev/null 2&gt;&amp;1
+you@host &gt; echo $?
+2</pre>
+<p><span class="listing">grep</span> kann seine Eingabe neben Dateien auch von der Standardeingabe oder einer Pipe erhalten.</p>
+<pre>you@host &gt; grep echo &lt; script1
+echo "Ausgabe1"
+echo "Ausgabe2"
+you@host &gt; cat script1 | grep echo
+echo "Ausgabe1"
+echo "Ausgabe2"</pre>
+<p>Auch <span class="listing">grep</span> kennt eine ganze Menge regul&auml;rer Ausdr&uuml;cke. Metazeichen helfen Ihnen dabei, sich mit <span class="listing">grep</span> ein Suchmuster zu erstellen. Und nat&uuml;rlich unterst&uuml;tzt auch <span class="listing">grep</span> viele Optionen, die Sie dem Kommando mitgeben k&ouml;nnen. Auf einige dieser Features wird in den folgenden Abschnitten eingegangen.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">11.2.2 grep mit regul&auml;ren Ausdr&uuml;cken<a id="RxxKap01300104004F9C1F039187" name="RxxKap01300104004F9C1F039187"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999304" name="Xxx999304"></a><a id="Xxx999305" name="Xxx999305"></a>Das <span class="listing">grep</span> eines der &auml;ltesten Programme ist, das regul&auml;re Ausdr&uuml;cke kennt, wurde bereits beschrieben. Welche regul&auml;ren Ausdr&uuml;cke <span class="listing">grep</span> so alles kennt, wird in Tabelle 11.4 aufgelistet. Allerdings kennt <span class="listing">grep</span> nicht alle regul&auml;ren Ausdr&uuml;cke, weshalb es au&szlig;erdem das Kommando <span class="listing">egrep</span> gibt, das noch einiges mehr versteht (siehe Tabelle 11.5).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 11.4   
+    </b>Regul&auml;re Ausdr&uuml;cke von grep</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Zeichen</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Funktion</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beispiel</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">^
+</td>
+<td class="tabellentext" bgcolor="#000000">Anfang der Zeile
+</td>
+<td class="tabellentext" bgcolor="#000000">'^wort'
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt alle Zeilen aus, die mit »wort« beginnen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$
+</td>
+<td class="tabellentext" bgcolor="#000000">Ende der Zeile
+</td>
+<td class="tabellentext" bgcolor="#000000">'wort$'
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt alle Zeilen aus, die mit »wort« enden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">^$
+</td>
+<td class="tabellentext" bgcolor="#000000">komplette Zeile
+</td>
+<td class="tabellentext" bgcolor="#000000">'^wort$'
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt alle vollst&auml;ndige Zeilen mit dem Muster »wort« aus.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">.
+</td>
+<td class="tabellentext" bgcolor="#000000">beliebiges Zeichen
+</td>
+<td class="tabellentext" bgcolor="#000000">'w.rt'
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt alle Zeilen aus, die ein »w«, einen beliebigen Buchstaben und »rt« enthalten (bspw. »wort«, »wert«, »wirt«, »wart«).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">*
+</td>
+<td class="tabellentext" bgcolor="#000000">beliebig oft
+</td>
+<td class="tabellentext" bgcolor="#000000">'wort*'
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt alle Zeilen aus mit beliebig vielen (oder auch gar keinen) des vorangegangenen Zeichens.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">.*
+</td>
+<td class="tabellentext" bgcolor="#000000">beliebig viele
+</td>
+<td class="tabellentext" bgcolor="#000000">'wort.*wort'
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Kombination .* steht f&uuml;r beliebig viele Zeichen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[]
+</td>
+<td class="tabellentext" bgcolor="#000000">ein Zeichen aus dem Bereich
+</td>
+<td class="tabellentext" bgcolor="#000000">'[Ww]ort'
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt alle Zeilen aus, welche Zeichen in dem angegebenen Bereich (im Beispiel nach »Wort« oder »wort«) enthalten.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[^]
+</td>
+<td class="tabellentext" bgcolor="#000000">kein Zeichen aus dem Bereich
+</td>
+<td class="tabellentext" bgcolor="#000000">'[^A–VX–Za–z]ort'
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Zeichen, die im angegebenen Bereich stehen, werden nicht beachtet (im Beispiel kann »Wort« gefunden werden, nicht aber »Tort« oder »Sort« und auch nicht »wort«).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\&lt;
+</td>
+<td class="tabellentext" bgcolor="#000000">Anfang eines Wortes
+</td>
+<td class="tabellentext" bgcolor="#000000">'\&lt;wort'
+</td>
+<td class="tabellentext" bgcolor="#000000">Findet hier alles, was mit »wort« beginnt (bspw. »wort«, »wortreich« aber nicht »Vorwort« oder »Nachwort«).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\&gt;
+</td>
+<td class="tabellentext" bgcolor="#000000">Ende eines Wortes
+</td>
+<td class="tabellentext" bgcolor="#000000">'wort\&gt;'
+</td>
+<td class="tabellentext" bgcolor="#000000">Findet alle Zeilen, welche mit »wort« enden (bspw. »Vorwort« oder »Nachwort«, nicht aber »wort« oder »wortreich«).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\&lt;\&gt;
+</td>
+<td class="tabellentext" bgcolor="#000000">ein Wort
+</td>
+<td class="tabellentext" bgcolor="#000000">'\&lt;wort\&gt;'
+</td>
+<td class="tabellentext" bgcolor="#000000">Findet exakt »wort« und nicht »Nachwort« oder »wortreich«.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\(...\)
+</td>
+<td class="tabellentext" bgcolor="#000000">Backreferenz
+</td>
+<td class="tabellentext" bgcolor="#000000">'\(wort\)'
+</td>
+<td class="tabellentext" bgcolor="#000000">Merkt sich die eingeschlossenen Muster vor, um darauf sp&auml;ter &uuml;ber \1 zuzugreifen. Bis zu neun Muster k&ouml;nnen auf diese Weise gespeichert werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">x\{m\}
+</td>
+<td class="tabellentext" bgcolor="#000000">exakte Wiederholung des Zeichens
+</td>
+<td class="tabellentext" bgcolor="#000000">x\{3\}
+</td>
+<td class="tabellentext" bgcolor="#000000">Exakt 3-maliges Auftreten des Zeichens »x«.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">x\{m,\}
+</td>
+<td class="tabellentext" bgcolor="#000000">mindestens Wiederholung des Zeichens
+</td>
+<td class="tabellentext" bgcolor="#000000">x\{3,\}
+</td>
+<td class="tabellentext" bgcolor="#000000">Mindestens ein 3-maliges Auftreten des Zeichens »x«.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">x\{m,n\}
+</td>
+<td class="tabellentext" bgcolor="#000000">mindestens bis maxmiale Wiederholung des Zeichens
+</td>
+<td class="tabellentext" bgcolor="#000000">x\{3,6\}
+</td>
+<td class="tabellentext" bgcolor="#000000">Mindestens ein 3-maliges Auftreten des Zeichens »x« bis maximal 6-maliges Auftreten (nicht mehr).
+</td>
+</tr>
+</table><br>
+<p>Zu diesen regul&auml;ren Ausdr&uuml;cken kennt <span class="listing">egrep</span> noch folgende:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 11.5   
+    </b>Weitere regul&auml;re Ausdrucke von egrep</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Zeichen</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Funktion</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beispiel</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">+
+</td>
+<td class="tabellentext" bgcolor="#000000">mindestens ein Mal
+</td>
+<td class="tabellentext" bgcolor="#000000">'wort[0–9]+'
+</td>
+<td class="tabellentext" bgcolor="#000000">Es muss mindestens eine Ziffer aus dem Bereich vorkommen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">?
+</td>
+<td class="tabellentext" bgcolor="#000000">null oder ein Mal
+</td>
+<td class="tabellentext" bgcolor="#000000">'wort[0–9]?'
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Ziffer aus dem Bereich darf, muss aber nicht vorkommen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">|
+</td>
+<td class="tabellentext" bgcolor="#000000">Alternativen
+</td>
+<td class="tabellentext" bgcolor="#000000">'worta|wort'
+</td>
+<td class="tabellentext" bgcolor="#000000">Das Wort »worta« oder »wortb«.
+</td>
+</tr>
+</table><br>
+<p>Hier jetzt einige Beispiele zu den regul&auml;ren Ausdr&uuml;cken mit <span class="listing">grep</span>. Folgende Datei mit folgendem Muster sei hierf&uuml;r gegeben:</p>
+<pre>you@host &gt; cat mrolymia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Samir Bannout Libanon 1983
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Einfachstes Beispiel:</p>
+<pre>you@host &gt; grep Libanon mrolymia.dat
+Samir Bannout Libanon 1983</pre>
+<p>Hierbei werden alle Zeilen ausgegeben, die den regul&auml;ren Ausdruck »Libanon« in der Datei mrolympia.dat enthalten. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '^S' mrolymia.dat
+Sergio Oliva USA 1967 1968 1969
+Samir Bannout Libanon 1983</pre>
+<p>Hiermit werden alle Zeilen ausgegeben, die mit dem Zeichen »S« beginnen. Das Caret-Zeichen (<span class="listing">^</span>) steht immer f&uuml;r den Anfang einer Zeile. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '1$' mrolymia.dat
+Franco Columbu Argentinien 1976 1981
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991</pre>
+<p>Hiermit werden alle Zeilen ausgegeben, die mit dem Zeichen »1« enden. Das Dollarzeichen steht hierbei f&uuml;r das Ende einer Zeile. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep Sergio Yates mrolymia.dat
+grep: Yates: Datei oder Verzeichnis nicht gefunden
+mrolymia.dat:Sergio Oliva USA 1967 1968 1969</pre>
+<p>Hier wurde ein Fehler gemacht, da <span class="listing">grep</span> das dritte Argument bereits als eine Dateiangabe, in der nach einem Muster gesucht wird, behandelt. Einen Namen wie »Sergio Yates« gibt es n&auml;mlich nicht in dieser Datei. Damit das Muster auch komplett zum Vergleich f&uuml;r <span class="listing">grep</span> verwendet wird, m&uuml;ssen Sie es zwischen Single Quoten stellen.</p>
+<pre>you@host &gt; grep 'Sergio Yates' mrolymia.dat
+you@host &gt; echo $?
+1</pre>
+<p>Das n&auml;chste Beispiel:</p>
+<pre>you@host &gt; grep '197.' mrolymia.dat
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975 
+Franco Columbu Argentinien 1976 1981</pre>
+<p>Wer war hier in den 70-ern am besten. Damit geben Sie alle Zeilen aus, in denen sich das Muster »197« und ein weiteres beliebiges einzelnes Zeichen befindet. Sofern Sie wirklich nach einem Punkt suchen, m&uuml;ssen Sie ein Backslash davor setzen. Dies gilt &uuml;brigens f&uuml;r alle Metazeichen. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '^[AS]' mrolymia.dat
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Samir Bannout Libanon 1983</pre>
+<p>Hier wird jede Zeile ausgegeben, die mit dem Zeichen »A« und »S« beginnt. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '^[^AS]' mrolymia.dat
+Larry Scott USA 1965 1966
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Jetzt werden alle Zeilen ausgegeben, die nicht (<span class="listing">[^AS]</span>) mit dem Zeichen »A« oder »S« beginnen. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '^S.*Libanon' mrolymia.dat
+Samir Bannout Libanon 1983</pre>
+<p>Hier liefert <span class="listing">grep</span> die Zeile zur&uuml;ck, die mit einem Zeichen »S« beginnt, gefolgt von beliebig vielen Zeichen und die Zeichenfolge »Libanon« enth&auml;lt. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '^S.*196.' mrolymia.dat
+Sergio Oliva USA 1967 1968 1969</pre>
+<p>&Auml;hnlich wie im Beispiel zuvor werden die Zeilen ausgegeben, die mit dem Zeichen »S« beginnen und die Textfolge »196« mit einem beliebigen weiteren Zeichen enthalten. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '[a-z]\{14\}' mrolymia.dat
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997</pre>
+<p>Gibt alle Zeilen aus, in denen 14 Buchstaben hintereinander Kleinbuchstaben sind. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '\&lt;Col' mrolymia.dat
+Franco Columbu Argentinien 1976 1981
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Hier werden alle Zeilen ausgegeben, in denen sich ein Wort befindet, das mit »Col« beginnt. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep 'A\&gt;' mrolymia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Chris Dickerson USA 1982
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Das Gegenteil vom Beispiel zuvor. Hier werden alle Zeilen ausgegeben, in denen sich ein Wort befindet, welches mit »A« endet. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '\&lt;Coleman\&gt;' mrolymia.dat
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Hierbei wird nach einem vollst&auml;ndigen Wort »Coleman« gesucht. Also kein »AColeman« und auch kein »Colemann«. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '\&lt;.*ien.*\&gt;' mrolymia.dat
+Franco Columbu Argentinien 1976 1981
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997</pre>
+<p>Hier werden alle Zeilen ausgegeben, die ein Wort mit der Zeichenfolge »ien« enthalten. Davor und danach k&ouml;nnen sich beliebig viele Zeichen befinden. N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; grep '\&lt;[G].*ien\&gt;' mrolymia.dat
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997</pre>
+<p>Hier wird nach einem Wort gesucht, das mit dem Gro&szlig;buchstaben »G« beginnt und mit der Zeichenfolge »ien« endet. Dazwischen k&ouml;nnen sich beliebig viele Zeichen befinden.</p>
+<p>Nat&uuml;rlich k&ouml;nnen Sie <span class="listing">grep</span> auch dazu verwenden, in einem ganzen Verzeichnis die Dateien nach einem bestimmten Muster abzusuchen. Hier k&ouml;nnen Sie wieder das Metazeichen <span class="listing">*</span> als Platzhalter f&uuml;r alle Dateien im Verzeichnis verwenden:</p>
+<pre>you@host &gt; grep 'echo' *
+...</pre>
+<p>Hier werden im aktuellen Arbeitsverzeichnis alle Dateien nach dem Muster »echo« durchsucht.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">11.2.3 grep mit Pipes<a id="RxxKap01300104004F9C1F03920A" name="RxxKap01300104004F9C1F03920A"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999533" name="Xxx999533"></a><a id="Xxx999534" name="Xxx999534"></a>H&auml;ufig wird <span class="listing">grep</span> in Verbindung mit einer Pipe verwendet. Hierbei &uuml;bergeben Sie <span class="listing">grep</span> dann statt einer Datei als drittes Argument f&uuml;r die Eingabe die Daten durch eine Pipe von der Standardausgabe eines anderen Kommandos. Bspw.:</p>
+<pre>you@host &gt; ps -ef | grep $USER</pre>
+<p>Hiermit bekommen Sie alle Prozesse aufgelistet, deren Eigent&uuml;mer der aktuelle User ist bzw. die dieser gestartet hat. Dabei gibt <span class="listing">ps</span> seine Ausgabe durch die Pipe an die Standardeingabe von <span class="listing">grep</span>. <span class="listing">grep</span> wiederum sucht dann in der entsprechenden Ausgabe nach dem entsprechenden Muster und gibt gegebenenfalls die Zeile(n) aus, die mit dem Muster &uuml;bereinstimmen. Nat&uuml;rlich k&ouml;nnen Sie hierbei auch, wie schon gehabt, die regul&auml;ren Ausdr&uuml;cke verwenden. Die Syntax:</p>
+<pre>kommando | grep muster</pre>
+<p>Ebenfalls relativ h&auml;ufig wird <span class="listing">grep</span> mit <span class="listing">ls</span> zur Suche bestimmter Dateien verwendet:</p>
+<pre>you@host &gt; ls | grep '^scr.*'
+script1
+script1~
+script2
+script2~</pre>
+<p>Im Abschnitt zuvor haben Sie mit</p>
+<pre>you@host &gt; grep 'echo' *</pre>
+<p>alle Dateien nach dem Muster »echo«' durchsucht. Meistens, mir ging es zumindest so, haben Sie neben einfachen Scripts auch noch eine Menge Dokumentationen im Verzeichnis herumliegen. Wollen Sie jetzt auch noch die Dateinamen mithilfe regul&auml;rer Ausdr&uuml;cke eingrenzen, k&ouml;nnen Sie die Ausgabe von <span class="listing">grep</span> an die Eingabe eines weiteren <span class="listing">grep</span>-Aufrufs h&auml;ngen:</p>
+<pre>you@host &gt; grep 'echo' * | grep 'scrip.*'
+...</pre>
+<p>Jetzt wird in allen Dateien des aktuellen Verzeichnisses nach dem Muster »echo« gesucht (erstes <span class="listing">grep</span>) und anschlie&szlig;end (zweites <span class="listing">grep</span>) werden nur die Dateien ber&uuml;cksichtigt, die mit der Zeichenfolge »scrip« beginnen, gefolgt von beliebig vielen weiteren Zeichen.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">11.2.4 grep mit Optionen<a id="RxxKap01300104004F9C1F039216" name="RxxKap01300104004F9C1F039216"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999547" name="Xxx999547"></a>Nat&uuml;rlich bietet Ihnen <span class="listing">grep</span> neben den regul&auml;ren Ausdr&uuml;cken auch noch eine Menge weiterer Optionen an, mit denen Sie das Verhalten, insbesondere der Standardausgabe steuern k&ouml;nnen. Im folgenden Abschnitt finden Sie eine Liste mit den interessantesten und g&auml;ngigsten Optionen (was bedeutet, dass dies l&auml;ngst nicht alle sind). Reichen Ihnen diese Optionen nicht aus, m&uuml;ssen Sie in den Manual-Page bl&auml;ttern. Als Beispiel dient wieder unsere Datei mrolympia.dat:</p>
+<pre>you@host &gt; cat mrolymia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Samir Bannout Libanon 1983
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>-n – damit wird die Zeile zur&uuml;ckgegeben, in der das Suchmuster gefunden wurde, und zwar mit zus&auml;tzlich n Zeilen vor und nach dieser Zeile. In der Praxis:</p>
+<pre>you@host &gt; grep –1 Sergio mrolymia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975</pre>
+<p>Hierbei wurde vor und nach der gefundenen Zeile jeweils eine zus&auml;tzliche Zeile ausgegeben. Dies ist in der Praxis bei einen etwas l&auml;ngeren Text mit mehreren Abschnitten sehr sinnvoll, da man h&auml;ufig mit einem ausgegebenen Teilsatz aus der Zeile 343 nicht viel anfangen kann.</p>
+<p>-A anzahl – &auml;hnlich wie -n, nur dass noch zus&auml;tzlich »anzahl« Zeilen mit ausgegeben werden, die nach der Zeile enthalten sind.</p>
+<p>-B anzahl – wie <span class="listing">–A</span> anzahl, nur dass »anzahl« Zeilen ausgegeben werden, die vor der Zeile enthalten sind, in welcher der regul&auml;re Ausdruck abgedeckt wurde.</p>
+<p>-c – (f&uuml;r count) hiermit wird nur die Anzahl von Zeilen ausgegeben, die durch den regul&auml;ren Ausdruck abgedeckt werden.</p>
+<pre>you@host &gt; grep -c '.*' mrolymia.dat
+9
+you@host &gt; grep -c 'USA' mrolymia.dat
+5</pre>
+<p>Hier wurden zum Beispiel die Daten aller Sportler ausgegeben und beim n&auml;chsten Ausdruck nur noch die Teilnehmer aus den »USA«. 5 von den 9 ehemaligen Titeltr&auml;gern kamen also aus den USA.</p>
+<p>-h – bei dieser Option wird der Dateiname, in dem der Suchstring gefunden wurde, nicht vor den Zeilen mit ausgegeben:</p>
+<pre>you@host &gt; grep 'Ausgabe1' *
+script1:echo "Ausgabe1"
+script1~:echo "Ausgabe1"
+you@host &gt; grep -h 'Ausgabe1' *
+echo "Ausgabe1"
+echo "Ausgabe1"</pre>
+<p>-i – es wird nicht zwischen Gro&szlig;- und Kleinschreibung unterschieden. Ein Beispiel:</p>
+<pre>you@host &gt; grep 'uSa' mrolymia.dat
+you@host &gt; grep -i 'uSa' mrolymia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Chris Dickerson USA 1982
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>-l – bei dieser Option werden nur die Dateinamen aufgelistet, in denen eine Zeile mit dem entsprechenden Suchmuster gefunden wurde:</p>
+<pre>you@host &gt; grep -l echo *
+Kap 1 bis 9.doc
+ksh.2005–02–02.linux.i386
+script1
+script1~
+script2
+script2~</pre>
+<p>-n – hiermit wird vor jeder gefundenen Zeile in der Datei die laufende Zeilennummer mit ausgegeben. Bspw.:</p>
+<pre>you@host &gt; grep -n echo *
+script1:4:   echo "Die Ausgabe wollen wir nicht!!!"
+script1:7:echo "Ausgabe1"
+script1:11:echo "Ausgabe2"
+...
+script2:9:   echo "Starte script1 ..."
+script2~:7:   echo "Warte ein wenig ..."
+script2~:9:   echo "Starte script1 ..."</pre>
+<p>-q – bei Verwendung dieser Option erfolgt keine Ausgabe, sondern es wird 0 zur&uuml;ckgegeben, wenn ein Suchtext gefunden wurde, oder 1, wenn Suche erfolglos war. Diese Option wird gew&ouml;hnlich in Shellscripts verwendet, bei denen man sich meistens nur daf&uuml;r interessiert, ob eine Datei einen Suchtext enth&auml;lt oder nicht.</p>
+<p>-s – mit dieser Option werden keine Fehlermeldungen ausgegeben, wenn eine Datei nicht existiert.</p>
+<pre>you@host &gt; grep test /etc/gibtsnicht
+grep: /etc/gibtsnicht: Datei oder Verzeichnis nicht gefunden
+you@host &gt; grep -s test /etc/gibtsnicht
+you@host &gt;</pre>
+<p>-v – damit werden alle Zeilen ausgegeben, die nicht durch den angegebenen regul&auml;ren Ausdruck abgedeckt werden:</p>
+<pre>you@host &gt; grep -v 'USA' mrolymia.dat
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+Samir Bannout Libanon 1983
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997</pre>
+<p>-w – eine Abk&uuml;rzung f&uuml;r <span class="listing">\&lt;wort\&gt;</span>. Damit wird nach ganzen W&ouml;rtern im Suchtext gesucht:</p>
+<pre>you@host &gt; grep 'Lib' mrolymia.dat
+Samir Bannout Libanon 1983
+you@host &gt; grep -w 'Lib' mrolymia.dat
+you@host &gt;</pre>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">11.2.5 egrep (extended grep)<a id="RxxKap01300104004F9C1F039230" name="RxxKap01300104004F9C1F039230"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999574" name="Xxx999574"></a><a id="Xxx999575" name="Xxx999575"></a><a id="Xxx999576" name="Xxx999576"></a>Wie Sie bereits erfahren haben, lassen sich mit <span class="listing">egrep</span> erweiterte und weitaus komplexere regul&auml;re Ausdr&uuml;cke bilden. Allerdings wird Otto Normalverbraucher (wie auch die meisten Systemadministratoren) mit <span class="listing">grep</span> mehr als zufrieden sein. Komplexere regul&auml;re Ausdr&uuml;cke gehen nat&uuml;rlich enorm auf Kosten der Ausf&uuml;hrgeschwindigkeit. &Uuml;brigens k&ouml;nnen Sie einen <span class="listing">egrep</span>-Aufruf auch mit <span class="listing">grep</span> und der Option <span class="listing">–E</span> realisieren:</p>
+<pre>grep -E regex Datei</pre>
+<p>Einige Beispiele mit <span class="listing">egrep</span>:</p>
+<pre>you@host &gt; egrep 'Colombo|Columbu' mrolymia.dat
+Franco Columbu Argentinien 1976 1981
+you@host &gt; egrep 'Colombo|Columbu|Col' mrolymia.dat
+Franco Columbu Argentinien 1976 1981
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Wissen Sie nicht genau, wie man einen bestimmten Namen schreibt, k&ouml;nnen Sie mit <span class="listing">|</span> mehrere Suchmuster miteinander verkn&uuml;pfen. Im Beispiel wird nach »Colombo« oder »Columbu« und im zweiten Beispiel noch zus&auml;tzlich nach einer Zeichenfolge »Col« gesucht. Kennen Sie mehrere Personen mit dem Namen »Olivia« und wollen nach einem »Sergio Olivia« und »Gregor Olivia« suchen, k&ouml;nnen Sie das Ganze folgenderma&szlig;en definieren:</p>
+<pre>egrep '(Sergio|Gregor) Olivia' mrolympia.dat</pre>
+<p>N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; egrep 'y+' mrolymia.dat
+Larry Scott USA 1965 1966
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991</pre>
+<p>Mit dem <span class="listing">+</span> wird nach mindestens einem »y«-Zeichen gesucht. Wollen Sie bspw. alle Zeilen einer Datei ausgeben, die mit mindestens einem oder mehreren Leerzeichen beginnen, k&ouml;nnen Sie dies folgenderma&szlig;en definieren:</p>
+<pre>you@host &gt; egrep '^ +' mrolymia.dat</pre>
+<p>N&auml;chstes Beispiel:</p>
+<pre>you@host &gt; egrep 'US?' mrolymia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Chris Dickerson USA 1982
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Wissen Sie jetzt nicht, ob die Zeichenfolge f&uuml;r die USA »USA« oder »US« lautet, k&ouml;nnen Sie das Fragezeichen verwenden. Damit legen Sie fest, dass hier ein Zeichen sein darf, aber nicht muss. Somit wird sowohl die Zeichenfolge »US« als auch »USA« gefunden.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">11.2.6 fgrep (fixed oder fast grep)<a id="RxxKap01300104004F9C1F03923E" name="RxxKap01300104004F9C1F03923E"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999591" name="Xxx999591"></a><a id="Xxx999592" name="Xxx999592"></a><span class="listing">fgrep</span> wird vorwiegend f&uuml;r »schnelle greps« verwendet (<span class="listing">fgrep</span> = fast grep). Allerdings ist nur eine Suche nach einfachen Zeichenketten m&ouml;glich. Regul&auml;re Ausdr&uuml;cke gibt es hierbei nicht – ein Vorteil, wenn Sie nach Zeichenfolgen suchen, die Metazeichen enthalten.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">11.2.7 rgrep<a id="RxxKap01300104004F9C1F039240" name="RxxKap01300104004F9C1F039240"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999595" name="Xxx999595"></a><a id="Xxx999596" name="Xxx999596"></a>Weil <span class="listing">grep</span> nur im aktuellen Verzeichnis sucht, wurde <span class="listing">rgrep</span> entwickelt. <span class="listing">rgrep</span> sucht mit einer rekursiven Suche in Unterverzeichnissen nach entsprechenden Mustern. Bei einer gro&szlig;en Verzeichnistiefe kann dies allerdings problematisch werden. Wenn Sie bspw. nur das aktuelle Verzeichnis und die direkten Unterverzeichnisse durchsuchen wollen, so w&uuml;rde auch ein <span class="listing">grep</span> wie</p>
+<pre>grep regex */*</pre>
+<p>ausreichen. Mehr zu <span class="listing">rgrep</span> entnehmen Sie bitte der Manual-Page.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_013_000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_014_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_013_001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

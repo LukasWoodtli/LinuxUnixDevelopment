@@ -1,0 +1,652 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_015_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 13.3 Grundlegende awk-Programme und -Elemente</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_015_001.html">
+<link rel="next" href="shell_015_003.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_015_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_015_003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_015_000.html#RxxKap01500004004FCF1F017172">13 awk-Programmierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_000.html#RxxKap01500004004FCF1F017174">13.1 Einf&uuml;hrung und Grundlagen von awk</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_000.html#RxxKap01500004004FCF1F017178">13.1.1 History und Versionen von awk</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_000.html#RxxKap01500004004FCF1F017187">13.1.2 Die Funktionsweise von awk</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_001.html#RxxKap01500104004FE61F013172">13.2 Aufruf von awk-Programmen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F013176">13.2.1 Grundlegender Aufbau eines awk-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F013187">13.2.2 Die Kommandozeilen-Optionen von awk</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F0131A0">13.2.3 awk aus der Kommandozeile aufrufen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F0131A8">13.2.4 awk in Shellscripts aufrufen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F0131B1">13.2.5 awk als eigenes Script ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01500204004FE71F028172">13.3 Grundlegende awk-Programme und -Elemente</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01500204004FE71F028174">13.3.1 Ausgabe von Zeilen und Zeilennummern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01500204004FE71F028183">13.3.2 Felder</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_003.html#RxxKap01500304004FE81F040172">13.4 Muster (bzw. Adressen) von awk-Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F040174">13.4.1 Zeichenkettenvergleiche</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F04017B">13.4.2 Vergleichsausdr&uuml;cke</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F0401AE">13.4.3 Regul&auml;re Ausdr&uuml;cke</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F0401DE">13.4.4 Zusammengesetzte Ausdr&uuml;cke</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F0401E6">13.4.5 BEGIN und END</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_004.html#RxxKap01500404004FE91F013172">13.5 Die Komponenten von awk-Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_004.html#RxxKap01500404004FE91F01317C">13.5.1 Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_004.html#RxxKap01500404004FE91F0131C0">13.5.2 Arrays</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_004.html#RxxKap01500404004FE91F0131D4">13.5.3 Operatoren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_004.html#RxxKap01500404004FE91F013239">13.5.4 Kontrollstrukturen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_005.html#RxxKap01500504004FEA1F03F172">13.6 Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_005.html#RxxKap01500504004FEA1F03F174">13.6.1 Mathematische Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_005.html#RxxKap01500504004FEA1F03F196">13.6.2 Funktionen f&uuml;r Zeichenketten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_005.html#RxxKap01500504004FEA1F03F1CA">13.6.3 Funktionen f&uuml;r die Zeit</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_005.html#RxxKap01500504004FEA1F03F21B">13.6.4 Systemfunktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_005.html#RxxKap01500504004FEA1F03F220">13.6.5 Ausgabefunktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_005.html#RxxKap01500504004FEA1F03F232">13.6.6 Eingabefunktion</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_005.html#RxxKap01500504004FEA1F03F255">13.6.7 Benutzerdefinierte Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_006.html#RxxKap01500604004FEB1F031172">13.7 Empfehlung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">13.3 <a id="RxxKap01378GrundlegendeawkProgrammeundElemente" name="RxxKap01378GrundlegendeawkProgrammeundElemente"></a>Grundlegende awk-Programme und -Element<a id="RxxKap01500204004FE71F028172" name="RxxKap01500204004FE71F028172"></a>e 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a>Wenn man noch nie einen Baum gepflanzt hat, wird man keine ganzen W&auml;lder anlegen. Daher folgen hier zun&auml;chst die grundlegenden Elemente bzw. die einfachen Anwendungen von <span class="listing">awk</span>. Was man f&uuml;r <span class="listing">awk</span> zuallererst ben&ouml;tigt, das ist die Ausgabe von Zeilen und alles, was mit den Zeilen zu tun hat, die Verwendung von Feldern (bzw. W&ouml;rtern) und die formatierte Ausgabe bzw. die Ausgabe in einer Datei.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">13.3.1 Ausgabe von Zeilen und Zeilennummern<a id="RxxKap01500204004FE71F028174" name="RxxKap01500204004FE71F028174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999280" name="Xxx999280"></a><a id="Xxx999281" name="Xxx999281"></a>Am besten f&auml;ngt man mit dem Einfachsten an:</p>
+<pre>you@host &gt; awk '{print}'
+Ein Test
+Ein Test
+Noch einer
+Noch einer</pre>
+<p>Dieser Einzeiler macht nichts anderes, als alle Eingaben, die Sie mit <b>(ENTER)</b> abgeschlossen haben, wieder auf dem Bildschirm auszugeben. Und zwar so lange, bis Sie die Tastenkombination <b>(Strg)</b>+<b>(D)</b> (f&uuml;r EOF) dr&uuml;cken. Im Prinzip funktioniert dies wie bei einem einfachen <span class="listing">cat</span>. Schreiben Sie jetzt einen Dateinamen hinter dem <span class="listing">awk</span>-Programm</p>
+<pre>you@host &gt; awk '{print}' mrolympia.dat
+...</pre>
+<p>erh&auml;lt <span class="listing">awk</span> seine Eingabe nicht mehr von der Tastatur, sondern entnimmt diese zeilenweise der Datei. Aber, so ein einfaches <span class="listing">cat</span> ist <span class="listing">awk</span> auch wieder nicht. Wollen Sie, dass <span class="listing">awk</span> bestimmte W&ouml;rter von der Tastatur herausfiltert, k&ouml;nnen Sie hierzu ein Muster verwenden:</p>
+<pre>you@host &gt; awk '!/mist/ {print}'
+Die ist kein Mist
+Die ist kein Mist
+Aber hier ist ein mist!
+Ende
+Ende</pre>
+<p>Hiermit wird jede Zeile, welche die Textfolge »mist« enth&auml;lt, nicht ausgegeben.</p>
+<p>Ben&ouml;tigen Sie die laufende Zeilennummer, steht Ihnen die <span class="listing">awk</span>-interne Variable<a id="Xxx999289" name="Xxx999289"></a> <span class="listing">NR</span> zur Verf&uuml;gung, die sich immer die aktuelle Nummer der Eingabezeile merkt.</p>
+<pre>you@host &gt; awk '{print NR " : " $0}' mrolympia.dat
+1 : Larry Scott USA 1965 1966
+2 : Sergio Oliva USA 1967 1968 1969
+...
+...
+8 : Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+9 : Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Hiermit geben Sie die komplette Datei mrolympia.dat mitsamt der Zeilennummern auf dem Bildschirm aus. Eine weitere Besonderheit ist hier die Variable <span class="listing">$0</span>, die immer automatisch mit der gesamten eingelesenen Zeile belegt ist. Wollen Sie mit <span class="listing">awk</span> nach einem bestimmten Muster suchen und hierbei die entsprechende Zeile bei &Uuml;bereinstimmung mit ausgeben, kann dies wie folgt realisiert werden:</p>
+<pre>you@host &gt; awk '/Lee/ {print NR " : " $0}' mrolympia.dat
+7 : Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991</pre>
+<p>Es wird nach dem Muster »Lee« in der Datei mrolympia.dat gesucht und dann mitsamt der Zeilennummer ausgegeben.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sie k&ouml;nnen mit <span class="listing">awk</span> noch einen Schritt weiter gehen, wenn Sie nicht die Variablen <span class="listing">NR</span> verwenden wollen, indem Sie die Zeilen selbst hochz&auml;hlen. Hierzu m&uuml;ssen Sie nur eine extra Variable einsetzen und diese hochz&auml;hlen: <span class="listing">awk</span> <span class="listing">'{print</span> <span class="listing">++i,</span> <span class="listing">"</span> <span class="listing">:</span> <span class="listing">"</span> <span class="listing">$0}'</span> <span class="listing">mrolympia.dat</span></p>
+</td>
+</tr>
+</table><br>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">13.3.2 Felder<a id="RxxKap01500204004FE71F028183" name="RxxKap01500204004FE71F028183"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999300" name="Xxx999300"></a><a id="Xxx999301" name="Xxx999301"></a>Die n&auml;chst kleinere Einheit nach den Zeilen sind die einzelnen Felder bzw. W&ouml;rter (abh&auml;ngig von <span class="listing">FS</span>), in die jede Eingabezeile zerlegt wird. Allerdings ist es im Grunde falsch, bei <span class="listing">awk</span> von W&ouml;rtern zu sprechen, vielmehr sind es Felder. Standardm&auml;&szlig;ig werden die einzelnen Zeilen durch Leerzeichen und Tabulatorzeichen aufgetrennt und jeweils in eine eigene Variable gespeichert. Die Namen der Variablen entsprechen den Positionsparametern der Shell: <span class="listing">$1</span>, <span class="listing">$2</span>, <span class="listing">$3</span> ...</p>
+<p>Damit ist es ohne gr&ouml;&szlig;eren Umweg m&ouml;glich, einzelne Spalten aus einer Datei zu extrahieren, was u. a. auch ein Hauptanwendungsgebiet von <span class="listing">awk</span> ist. So k&ouml;nnen Sie z. B. ohne Probleme den Inhalt der Spalte 3 und 2 einer Datei ausgeben lassen:</p>
+<pre>you@host &gt; awk '{print $3, $2}' mrolympia.dat
+USA Scott
+USA Oliva
+&Ouml;sterreich Schwarzenegger
+Argentinien Columbu
+USA Dickerson
+Libanon Bannout
+USA Haney
+Grossbritannien Yates
+USA Coleman</pre>
+<p><a id="Xxx999305" name="Xxx999305"></a><a id="Xxx999306" name="Xxx999306"></a>Wollen Sie jetzt noch wissen, wie viele Titel einer der Teilnehmer gewonnen hat, k&ouml;nnen Sie die Variable <span class="listing">NF</span> (Number of Fields) verwenden:</p>
+<pre>you@host &gt; awk '{print $3, $2, NF-3}' mrolympia.dat
+USA Scott 2
+USA Oliva 3
+&Ouml;sterreich Schwarzenegger 7
+Argentinien Columbu 2
+USA Dickerson 1
+Libanon Bannout 1
+USA Haney 8
+Grossbritannien Yates 6
+USA Coleman 7</pre>
+<p>Hier wurde von <span class="listing">NF</span> der Wert 3 subtrahiert, da die ersten drei Spalten eine andere Bedeutung haben. Ich kann mir schon denken, wie die n&auml;chste Frage lauten k&ouml;nnte: Wie kann man dies jetzt noch nach der Anzahl von Titeln sortieren? Hier gibt es immer mehrere Wege – ich k&ouml;nnte folgenden anbieten:</p>
+<pre>you@host &gt; awk '{print NF-3, $3, $2}' mrolympia.dat | sort -r
+8 USA Haney
+7 USA Coleman
+7 &Ouml;sterreich Schwarzenegger
+6 Grossbritannien Yates
+3 USA Oliva
+2 USA Scott
+2 Argentinien Columbu
+1 USA Dickerson
+1 Libanon Bannout</pre>
+<p>Verwenden Sie <span class="listing">NF</span> mit einem Dollarzeichen davor (<span class="listing">$NF</span>), befindet sich darin immer das letzte Wort der Zeile. Das Vorletzte w&uuml;rden Sie mit <span class="listing">$(NF–1)</span> erreichen:</p>
+<pre>you@host &gt; awk '{print $NF, $(NF-1)}' mrolympia.dat
+1966 1965
+1969 1968
+1980 1975
+1981 1976
+1982 USA
+1983 Libanon
+1991 1990
+1997 1996
+2004 2003
+you@host &gt; awk '{print "Zeile " NR, "enh&auml;lt " NF " Worte \
+&gt; (letztes Wort: " $NF "; vorletztes: " $(NF-1) ")"}' \
+&gt; mrolympia.dat
+Zeile  1 enh&auml;lt 5 Worte (letztes Wort: 1966 ; vorletztes: 1965)
+Zeile  2 enh&auml;lt 6 Worte (letztes Wort: 1969 ; vorletztes:1968
+Zeile  3 enh&auml;lt 10 Worte (letztes Wort: 1980 ; vorletztes: 1975)
+Zeile  4 enh&auml;lt 5 Worte (letztes Wort: 1981 ; vorletztes: 1976)
+Zeile  5 enh&auml;lt 4 Worte (letztes Wort: 1982 ; vorletztes: USA)
+Zeile  6 enh&auml;lt 4 Worte (letztes Wort: 1983 ; vorletztes:Libanon)
+Zeile  7 enh&auml;lt 11 Worte (letztes Wort: 1991 ; vorletztes: 1990)
+Zeile  8 enh&auml;lt 9 Worte (letztes Wort: 1997 ; vorletztes: 1996)
+Zeile  9 enh&auml;lt 10 Worte (letztes Wort: 2004 ; vorletztes: 2003)</pre>
+<p>Und nat&uuml;rlich geh&ouml;rt es zu den Grundlagen von Feldern, den Feldtrenner zu ver&auml;ndern. Dies kann &uuml;ber den Schalter <span class="listing">–F</span> oder in einem <span class="listing">awk</span>-Script &uuml;ber die Variable <span class="listing">FS</span> geschehen.</p>
+<h4 class="t4">Formatierte Ausgabe und Dateiausgabe</h4>
+<p><a id="Xxx999315" name="Xxx999315"></a>Zur formatierten Ausgabe wurde bisher immer <span class="listing">print</span> verwendet, welches &auml;hnlich wie <span class="listing">echo</span> in der Shell funktioniert. Da ja die einzelnen Felder anhand von Leerzeichen und Tabulatorzeichen getrennt werden, sollte es einleuchtend sein, dass bei der folgenden Ausgabe die W&ouml;rter nicht voneinander getrennt werden:</p>
+<pre>you@host &gt; awk '{print $1 $2 }' mrolympia.dat
+LarryScott
+SergioOliva
+...
+...
+DorianYates
+RonnieColeman</pre>
+<p>Man kann entweder das Leerzeichen (oder auch ein anderes Zeichen bzw. andere Zeichenfolge) in Double Quotes eingeschlossen einf&uuml;gen:</p>
+<pre>you@host &gt; awk '{print $1 " " $2 }' mrolympia.dat</pre>
+<p>Oder aber man trennt die einzelnen Felder voneinander mit einem Komma:</p>
+<pre>you@host &gt; awk '{print $1, $2 }' mrolympia.dat</pre>
+<p>Meistens reicht die Ausgabe von <span class="listing">print</span>. Aber auch hier haben Sie mit <span class="listing">printf</span> die M&ouml;glichkeit, Ihre Ausgabe erweitert zu formatieren. <span class="listing">printf</span> funktioniert hier genauso, wie es schon f&uuml;r die Shell beschrieben wurde, weshalb ich hier auf Tabellen mit den Typezeichen (<span class="listing">s</span> f&uuml;r String, <span class="listing">d</span> f&uuml;r Dezimal, <span class="listing">f</span> f&uuml;r Float usw.) verzichten kann. Bei Bedarf werfen Sie bitte einen Blick in Abschnitt 5.2.3. Gleiches gilt &uuml;brigens auch f&uuml;r die Escapesequenzen (alias Steuerzeichen) (siehe Tabelle 5.2). Einziger Unterschied im Gegensatz zum <span class="listing">printf</span> der Shell: Die Argumente am Ende m&uuml;ssen durch ein Komma getrennt werden. Ein einfaches Beispiel der formatierten Ausgabe mit <span class="listing">printf</span>:</p>
+<pre>you@host &gt; awk ' \
+&gt; {printf "%-2d Titel\tLand: %-15s\tName: %-15s\n",NF-3,$3,$2}'\
+&gt; mrolympia.dat | sort -r
+8  Titel        Land: USA               Name: Haney
+7  Titel        Land: USA               Name: Coleman
+7  Titel        Land: &Ouml;sterreich         Name: Schwarzenegger
+6  Titel        Land: Grossbritannien   Name: Yates
+3  Titel        Land: USA               Name: Oliva
+2  Titel        Land: USA               Name: Scott
+2  Titel        Land: Argentinien       Name: Columbu
+1  Titel        Land: USA               Name: Dickerson
+1  Titel        Land: Libanon           Name: Bannout</pre>
+<p>Zur Ausgabe in einer Datei wird f&uuml;r gew&ouml;hnlich eine Umlenkung verwendet:</p>
+<pre>you@host &gt; awk \
+&gt; '{printf "%-2d Titel\tLand: %-15s\tName: %-15s\n",NF-3,$3,$2}'\
+&gt; mrolympia.dat &gt; olymp.dat
+you@host &gt; cat olymp.dat
+2  Titel        Land: USA               Name: Scott
+3  Titel        Land: USA               Name: Oliva
+7  Titel        Land: &Ouml;sterreich        Name: Schwarzenegger
+2  Titel        Land: Argentinien       Name: Columbu
+1  Titel        Land: USA               Name: Dickerson
+1  Titel        Land: Libanon           Name: Bannout
+8  Titel        Land: USA               Name: Haney
+6  Titel        Land: Grossbritannien   Name: Yates
+7  Titel        Land: USA               Name: Coleman</pre>
+<p>Es ist aber auch m&ouml;glich, innerhalb von <span class="listing">awk</span> – im Aktionsteil – in eine Datei zu schreiben:</p>
+<pre>you@host &gt; awk '/USA/{ print &gt; "usa.dat"}' mrolympia.dat
+you@host &gt; cat usa.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Chris Dickerson USA 1982
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Im Beispiel wurden alle Zeilen mit einer Zeichenfolge »USA« in die Datei usa.dat geschrieben. Dies ist zum Beispiel sinnvoll, wenn Sie mehrere Muster-Aktions-Teile verwenden und nicht jede Ausgabe gleich in eine Datei geschrieben werden soll.</p>
+<p>Um dem Ganzen die Krone aufzusetzen, folgendes Beispiel:</p>
+<pre>you@host &gt; awk '$3 {print &gt;&gt; $3}' mrolympia.dat</pre>
+<p>Hier schreiben Sie f&uuml;r jedes Land den Inhalt des entsprechenden Eintrags ans Ende einer Datei mit dem entsprechenden Landesnamen. Genauer: F&uuml;r jedes Land wird eine extra Datei angelegt, worin die einzelnen Teilnehmer immer ans Ende der Datei geh&auml;ngt werden. F&uuml;hren Sie das einmal in einer anderen Sprache mit einer Zeile durch.</p>
+<pre>you@host &gt; ls -l
+-rw-------  1 tot users      37 2005–04–11 15:34 Argentinien
+-rw-------  1 tot users      58 2005–04–11 15:34 Grossbritannien
+-rw-------  1 tot users      27 2005–04–11 15:34 Libanon
+-rw-------  1 tot users     381 2005–04–08 07:32 mrolympia.dat
+-rw-------  1 tot users      68 2005–04–11 15:34 &Ouml;sterreich
+-rw-------  1 tot users     191 2005–04–11 15:34 USA
+you@host &gt; cat Libanon
+Samir Bannout Libanon 1983
+you@host &gt; cat &Ouml;sterreich
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie das noch ganz anders erreichen:</p>
+<pre>you@host &gt; awk '$3 {print $2, $1, $3 &gt;&gt; $3}' mrolympia.dat</pre>
+<p>Hier machen Sie das Gleiche, h&auml;ngen jedoch nur den Inhalt der Felder <span class="listing">$2</span>, <span class="listing">$3</span> und <span class="listing">$1</span> an entsprechende Landesdatei. In Verbindung mit einer umfangreichen Datenbank ist das wirklich m&auml;chtig. Doch im Prinzip ist das noch gar nichts, <span class="listing">awk</span> ist bei richtiger Anwendung zu viel mehr im Stande.</p>
+<p>Nat&uuml;rlich k&ouml;nnen Sie <span class="listing">awk</span> auch <span class="listing">cat</span>-&auml;hnlich verwenden, um alle Eingaben von der Tastatur in eine Datei zu schreiben:</p>
+<pre>you@host &gt; awk '{print &gt; "atextfile"}'
+Hallo Textdatei
+Das steht drin
+(Strg)+(D)
+you@host &gt; cat atextfile
+Hallo Textdatei
+Das steht drin</pre>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_015_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_015_003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_015_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

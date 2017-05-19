@@ -1,0 +1,1128 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_015_005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 13.6 Funktionen</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_015_004.html">
+<link rel="next" href="shell_015_006.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_015_004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_015_006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_015_000.html#RxxKap01500004004FCF1F017172">13 awk-Programmierung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_000.html#RxxKap01500004004FCF1F017174">13.1 Einf&uuml;hrung und Grundlagen von awk</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_000.html#RxxKap01500004004FCF1F017178">13.1.1 History und Versionen von awk</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_000.html#RxxKap01500004004FCF1F017187">13.1.2 Die Funktionsweise von awk</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_001.html#RxxKap01500104004FE61F013172">13.2 Aufruf von awk-Programmen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F013176">13.2.1 Grundlegender Aufbau eines awk-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F013187">13.2.2 Die Kommandozeilen-Optionen von awk</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F0131A0">13.2.3 awk aus der Kommandozeile aufrufen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F0131A8">13.2.4 awk in Shellscripts aufrufen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_001.html#RxxKap01500104004FE61F0131B1">13.2.5 awk als eigenes Script ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_002.html#RxxKap01500204004FE71F028172">13.3 Grundlegende awk-Programme und -Elemente</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_002.html#RxxKap01500204004FE71F028174">13.3.1 Ausgabe von Zeilen und Zeilennummern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_002.html#RxxKap01500204004FE71F028183">13.3.2 Felder</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_003.html#RxxKap01500304004FE81F040172">13.4 Muster (bzw. Adressen) von awk-Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F040174">13.4.1 Zeichenkettenvergleiche</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F04017B">13.4.2 Vergleichsausdr&uuml;cke</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F0401AE">13.4.3 Regul&auml;re Ausdr&uuml;cke</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F0401DE">13.4.4 Zusammengesetzte Ausdr&uuml;cke</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_003.html#RxxKap01500304004FE81F0401E6">13.4.5 BEGIN und END</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_004.html#RxxKap01500404004FE91F013172">13.5 Die Komponenten von awk-Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_004.html#RxxKap01500404004FE91F01317C">13.5.1 Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_004.html#RxxKap01500404004FE91F0131C0">13.5.2 Arrays</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_004.html#RxxKap01500404004FE91F0131D4">13.5.3 Operatoren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_015_004.html#RxxKap01500404004FE91F013239">13.5.4 Kontrollstrukturen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01500504004FEA1F03F172">13.6 Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01500504004FEA1F03F174">13.6.1 Mathematische Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01500504004FEA1F03F196">13.6.2 Funktionen f&uuml;r Zeichenketten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01500504004FEA1F03F1CA">13.6.3 Funktionen f&uuml;r die Zeit</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01500504004FEA1F03F21B">13.6.4 Systemfunktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01500504004FEA1F03F220">13.6.5 Ausgabefunktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01500504004FEA1F03F232">13.6.6 Eingabefunktion</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01500504004FEA1F03F255">13.6.7 Benutzerdefinierte Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_015_006.html#RxxKap01500604004FEB1F031172">13.7 Empfehlung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">13.6 <a id="RxxKap013363Funktionen" name="RxxKap013363Funktionen"></a>Funktione<a id="RxxKap01500504004FEA1F03F172" name="RxxKap01500504004FEA1F03F172"></a>n 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><span class="listing">awk</span> ist ohnehin ein m&auml;chtiges Werkzeug. Doch mit den Funktionen, die <span class="listing">awk</span> Ihnen jetzt auch noch anbietet, k&ouml;nnen Sie <span class="listing">awk</span> noch mehr erweitern. Und sollten Ihnen die Funktionen, die <span class="listing">awk</span> mitliefert, nicht ausreichen, k&ouml;nnen Sie immer noch eigene benutzerdefinierte Funktionen hinzuf&uuml;gen.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">13.6.1 Mathematische Funktionen<a id="RxxKap01500504004FEA1F03F174" name="RxxKap01500504004FEA1F03F174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999280" name="Xxx999280"></a>Hier zun&auml;chst ein &Uuml;berblick aller arithmetischen Funktionen, die Ihnen <span class="listing">awk</span> zur Verf&uuml;gung stellt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 13.8   
+    </b>Mathematische Builtin-Funktionen von awk</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Funktion</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">atan2(x,y)
+</td>
+<td class="tabellentext" bgcolor="#000000">Arcustangens von x/y in Radian
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cos(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Liefert den Cosinus in Radian
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">exp(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Exponentialfunktion
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">int(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Abschneiden einer Zahl zu einer Ganzzahl
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">log(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Nat&uuml;rlicher Logarithmus zur Basis e
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">rand()
+</td>
+<td class="tabellentext" bgcolor="#000000">(Pseudo-)Zufallszahl zwischen 0 und 1
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">sin(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Liefert den Sinus in Radian
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">sqrt(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Quadratwurzel
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">srand(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Setzt Startwert f&uuml;r Zufallszahlen. Bei keiner Angabe wird die aktuelle Zeit verwendet.
+</td>
+</tr>
+</table><br>
+<p>Zwar werden Sie als Systemadministrator seltener mit komplizierten arithmetischen Berechnungen konfrontiert sein, dennoch soll hier auf einige Funktionen eingegangen werden, mit denen Sie es als Nicht-Mathematiker h&auml;ufiger zu tun bekommen. So zum Beispiel die Funktion <span class="listing">int</span>, womit Sie aus einer Gleitpunktzahl eine Ganzzahl machen, indem die Nachkommastellen abgeschnitten werden. Ein Beispiel:</p>
+<pre>you@host &gt; awk 'END { print 30/4 }' datei
+7,5
+you@host &gt; awk 'END { print int(30/4) }' datei
+7</pre>
+<p>Neben dem Abschneiden von Gleitpunktzahlen ben&ouml;tigt man manchmal auch Zufallszahl. Hier bieten Ihnen die Funktionen <span class="listing">rand</span> und <span class="listing">srand</span> eine M&ouml;glichkeit an, solche zu erzeugen.</p>
+<pre>you@host &gt; awk 'END { print rand() }' datei
+0,237788</pre>
+<p>Hier haben Sie mit der Verwendung von <span class="listing">rand</span> eine Zufallszahl zwischen 0 und 1 erzeugt. Wenn Sie allerdings <span class="listing">rand</span> erneut aufrufen, ergibt sich dasselbe Bild:</p>
+<pre>you@host &gt; awk 'END { print rand() }' datei
+0,237788</pre>
+<p>Die Zufallsfunktion <span class="listing">rand</span> bezieht sich auf einen Startwert, mit dem sie eine (Pseudo-)Zufallszahl generiert. Diesen Startwert k&ouml;nnen Sie mit der Funktion <span class="listing">srand</span> ver&auml;ndern:</p>
+<pre>you@host &gt; awk 'BEGIN { print srand() }; { print rand() }' datei
+0,152827
+you@host &gt; awk 'BEGIN { print srand() }; { print rand() }' datei
+0,828926</pre>
+<p>Mit der Funktion <span class="listing">srand</span> ohne Angabe eines Parameters wird jedes Mal zum Setzen eines neuen Startwerts f&uuml;r die Funktion <span class="listing">rand</span> die aktuelle Zeit verwendet. Dadurch ist die Verwendung von <span class="listing">rand</span> schon wesentlich effektiver und zuf&auml;lliger (wenn auch nicht perfekt).</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">13.6.2 Funktionen f&uuml;r Zeichenketten<a id="RxxKap01500504004FEA1F03F196" name="RxxKap01500504004FEA1F03F196"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999341" name="Xxx999341"></a><a id="Xxx999342" name="Xxx999342"></a><a id="Xxx999343" name="Xxx999343"></a><a id="Xxx999344" name="Xxx999344"></a>Die Funktionen f&uuml;r Zeichenketten d&uuml;rften die am h&auml;ufigsten eingesetzten Funktionen f&uuml;r Sie als Shell-Programmierer sein. Oft werden Sie hierbei kein extra <span class="listing">awk</span>-Script schreiben, sondern die allseits beliebten Einzeiler verwenden. Trotzdem sollten Sie immer bedenken, dass wenn Sie <span class="listing">awk</span>-Einzeiler in Ihrem Shellscript in einer Schleife mehrmals aufrufen, dies jedes Mal den Start eines neuen (<span class="listing">awk–</span>)Prozesses bedeutet. Die Performance k&ouml;nnte darunter erheblich leiden. Bei h&auml;ufigen <span class="listing">awk</span>-Aufrufen in Schleifen sollten Sie daher in Erw&auml;gung ziehen, ein <span class="listing">awk</span>-Script zu schreiben. Wie dies geht, haben Sie ja in diesem Kapitel erfahren. Die Syntax eines solchen Einzeilers in einem Shellscript sieht h&auml;ufig wie folgt aus:</p>
+<pre>echo string | awk '{ print string_funktion($0) }'</pre>
+<p>oder</p>
+<pre>cat datei | awk '{ print string_funktion($0) }'</pre>
+<h4 class="t4">(Globale) Ersetzung mit sub und gsub<a id="Xxx999349" name="Xxx999349"></a><a id="Xxx999350" name="Xxx999350"></a><a id="Xxx999351" name="Xxx999351"></a><a id="Xxx999352" name="Xxx999352"></a></h4>
+<p>Die Syntax:</p>
+<pre>sub (regul&auml;rer_Ausdruck, Ersetzungs_String);
+sub (regul&auml;rer_Ausdruck, Ersetzungs_String, Ziel_String)
+gsub (regul&auml;rer_Ausdruck, Ersetzungs_String);
+gsub (regul&auml;rer_Ausdruck, Ersetzungs_String, Ziel_String)</pre>
+<p>Mit beiden Funktionen wird das Auftreten von »regul&auml;rer_Ausdruck« durch »Ersetzungs_String« ersetzt. Wird kein »Ziel_String« mit angegeben, so wird <span class="listing">$0</span> verwendet. Der R&uuml;ckgabewert ist die Anzahl erfolgreicher Ersetzungen. Der Unterschied zwischen <span class="listing">gsub</span> und <span class="listing">sub</span> liegt darin, dass mit <span class="listing">gsub</span> (global substitution) eine globale Ersetzung und mit <span class="listing">sub</span> eine Ersetzung des ersten Vorkommens durchgef&uuml;hrt wird.</p>
+<pre>you@host &gt; awk '{ gsub(/USA/, "Amerika"); print }' mrolympia.dat
+Larry Scott Amerika 1965 1966
+Sergio Oliva Amerika 1967 1968 1969
+...</pre>
+<p>Hier werden alle Textfolgen »USA« der Datei mrolympia.dat durch »Amerika« ersetzt. Wollen Sie nur das erste Vorkommen ersetzen, so m&uuml;ssen Sie <span class="listing">sub</span> verwenden. Es kann aber nun sein, dass sich in einer Zeile mehrmals die Textfolge »USA« befindet, Sie aber nur eine bestimmte Spalte ersetzen wollen. Dann k&ouml;nnen Sie das dritte Argument von <span class="listing">gsub</span> bzw. <span class="listing">sub</span> verwenden:</p>
+<pre>you@host &gt; awk '{ gsub(/USA/, "Amerika", $3); print }' mrolympia.dat
+Larry Scott Amerika 1965 1966
+Sergio Oliva Amerika 1967 1968 1969
+...</pre>
+<p>Hier weisen Sie explizit an, dass nur wenn die dritte Spalte die Textfolge »USA« enth&auml;lt, diese durch die Textfolge »Amerika« zu ersetzen ist.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Zu Demonstrationszwecken werden keine komplizierten regul&auml;ren Ausdr&uuml;cke verwendet, sondern immer einfache Textfolgen. Hier geht es lediglich um eine Funktionsbeschreibung der Zeichenketten-Funktionen von awk.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Position einer Zeichenkette ermitteln – index<a id="Xxx999365" name="Xxx999365"></a><a id="Xxx999366" name="Xxx999366"></a></h4>
+<p>Die Syntax:</p>
+<pre>index(string, substring)</pre>
+<p>Diese Funktion gibt die erste Position der Zeichenkette »substring« in »string« zur&uuml;ck. 0 wird zur&uuml;ckgegeben, wenn keine &Uuml;bereinstimmung gefunden wurde. Folgendes Beispiel gibt alle Zeilen mit der Textfolge »USA« mitsamt ihren Positionen zur&uuml;ck:</p>
+<pre>you@host &gt; awk '{ i=index($0, "USA"); if(i) print NR ":" i }' \
+&gt; mrolympia.dat
+1:13
+2:14
+5:17
+7:11
+9:16</pre>
+<h4 class="t4">L&auml;nge einer Zeichenkette ermitteln – length<a id="Xxx999372" name="Xxx999372"></a><a id="Xxx999373" name="Xxx999373"></a></h4>
+<p>Die Syntax:</p>
+<pre>length(string)</pre>
+<p>Mit dieser Funktion k&ouml;nnen Sie die L&auml;nge der Zeichenkette »string« ermitteln. Nehmen Sie f&uuml;r »string« keine Angabe vor, wird <span class="listing">$0</span> verwendet.</p>
+<p>Folgendes Beispiel gibt die L&auml;nge der jeweils ersten Spalten einer jeden Zeile aus und das darauf folgende Beispiel, die L&auml;nge einer kompletten Zeile (<span class="listing">$0</span>):</p>
+<pre>you@host &gt; awk '{ print NR ":" length($1) }' mrolympia.dat
+1:5
+2:6
+3:6
+...
+you@host &gt; awk '{ print NR ":" length }' mrolympia.dat
+1:25
+2:31
+3:67
+...</pre>
+<h4 class="t4">Suchen nach Muster – match<a id="Xxx999380" name="Xxx999380"></a><a id="Xxx999381" name="Xxx999381"></a></h4>
+<p>Die Syntax:</p>
+<pre>match(string, regul&auml;rer_Ausdruck)</pre>
+<p>Mit <span class="listing">match</span> suchen Sie nach dem Muster »regul&auml;rer_Ausdruck« in »string«. Wird ein entsprechender Ausdruck gefunden, wird die Position zur&uuml;ckgegeben, ansonsten bei erfolgloser Suche lautet der R&uuml;ckgabewert 0. Die Startposition des gefundenen (Teil-)Strings »regul&auml;rer_Ausdruck« finden Sie in <span class="listing">RSTART</span> und die L&auml;nge des Teilst&uuml;cks in <span class="listing">RLENGTH</span>. Ein Beispiel:</p>
+<pre>you@host &gt; awk '{ i=match($0, "Yates"); \
+&gt; if(i) print NR, RSTART, RLENGTH }' mrolympia.dat
+8 8 5</pre>
+<p>Hier wird nach der Zeichenfolge »Yates« gematcht und bei Erfolg werden die Zeile, die Position in der Zeile und die L&auml;nge zur&uuml;ckgegeben.</p>
+<h4 class="t4">Zeichenkette zerlegen – split<a id="Xxx999388" name="Xxx999388"></a><a id="Xxx999389" name="Xxx999389"></a></h4>
+<p>Die Syntax:</p>
+<pre>split (string, array, feld_trenner)
+split (string, array)</pre>
+<p>Mit dieser Funktion zerlegen Sie die Zeichenkette »string« und teilen die einzelnen St&uuml;cke in das Array »array« auf. Standardm&auml;&szlig;ig werden die einzelnen Zeichenketten anhand von <span class="listing">FS</span> (standardm&auml;&szlig;ig ein Leerzeichen) »zersplittet«. Allerdings k&ouml;nnen Sie dieses Verhalten optional &uuml;ber den dritten Parameter mit »feld_trenner« ver&auml;ndern. Als R&uuml;ckgabewert erhalten Sie die h&ouml;chste Indexnummer des erzeugten Arrays. Ein Beispiel zu dieser Funktion wurde bereits in Abschnitt 13.5.2 gegeben.</p>
+<h4 class="t4">Eine Zeichenkette erzeugen – sprintf<a id="Xxx999394" name="Xxx999394"></a><a id="Xxx999395" name="Xxx999395"></a></h4>
+<p>Die Syntax:</p>
+<pre>string=sprintf(fmt, exprlist)</pre>
+<p>Mit <span class="listing">sprintf</span> erzeugen Sie eine Zeichenkette und liefern diese zur&uuml;ck. Der Formatstring »fmt« und die Argumente »exprlist« werden genauso verwendet wie bei <span class="listing">printf</span> f&uuml;r die Ausgabe. Ein einfaches Beispiel:</p>
+<pre>you@host &gt; awk '{ \
+&gt; line=sprintf("%-10s\t%-15s\t%-15s", $1, $2, $3); print line }'\
+&gt; mrolympia.dat
+Larry           Scott           USA
+Sergio          Oliva           USA
+Arnold          Schwarzenegger  &Ouml;sterreich
+Franco          Columbu         Argentinien
+...</pre>
+<h4 class="t4">Teilst&uuml;ck einer Zeichenkette zur&uuml;ckgegeben – substr<a id="Xxx999401" name="Xxx999401"></a><a id="Xxx999402" name="Xxx999402"></a></h4>
+<p>Die Syntax:</p>
+<pre>substr(string, start_position)
+substr(string, start_position, l&auml;nge)</pre>
+<p>Die Funktion gibt einen Teil einer Zeichenkette »string« ab der Position »start_position« entweder bis zur L&auml;nge »l&auml;nge« oder bis zum Ende zur&uuml;ck.</p>
+<pre>you@host &gt; awk '{ print substr($0, 5, 10)}' mrolympia.dat
+y Scott US
+io Oliva U
+ld Schwarz
+co Columbu
+...</pre>
+<p>In diesem Beispiel wird (auch wenn es hier keinen Sinn macht) aus jeder Zeile der Datei mrolympia.dat eine Textfolge ab der Position 5 bis 10 ausgegeben (oder auch ausgeschnitten).</p>
+<h4 class="t4">Gro&szlig;- und Kleinbuchstaben – toupper und tolower<a id="Xxx999409" name="Xxx999409"></a><a id="Xxx999410" name="Xxx999410"></a></h4>
+<p>Die Syntax:</p>
+<pre>toupper(string)
+tolower(string)</pre>
+<p>Mit der Funktion <span class="listing">toupper</span> werden alle Kleinbuchstaben in »string« in Gro&szlig;buchstaben und mit <span class="listing">tolower</span> alle Gro&szlig;buchstaben in Kleinbuchstaben umgewandelt. Ein Beispiel:</p>
+<pre>you@host &gt; awk '{ print toupper($0)}' mrolympia.dat
+LARRY SCOTT USA 1965 1966
+SERGIO OLIVA USA 1967 1968 1969
+ARNOLD SCHWARZENEGGER &Ouml;STERREICH 1970 1971 1972 1973 1974 1975
+...
+you@host &gt; awk '{ print tolower($0)}' mrolympia.dat
+larry scott usa 1965 1966
+sergio oliva usa 1967 1968 1969
+arnold schwarzenegger &ouml;sterreich 1970 1971 1972 1973 1974 1975
+...</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">13.6.3 Funktionen f&uuml;r die Zeit<a id="RxxKap01500504004FEA1F03F1CA" name="RxxKap01500504004FEA1F03F1CA"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999417" name="Xxx999417"></a><a id="Xxx999418" name="Xxx999418"></a><a id="Xxx999419" name="Xxx999419"></a><a id="Xxx999420" name="Xxx999420"></a>In <span class="listing">awk</span> existieren auch zwei Funktionen f&uuml;r eine Zeitangabe: zum einen die Funktion <span class="listing">systime</span> (der UNIX-Timestamp<a id="Xxx999422" name="Xxx999422"></a>), welche die aktuelle Tageszeit als Anzahl Sekunden zur&uuml;ckgibt, die seit dem 1.1.1970 vergangen sind. Zum anderen existiert noch die Funktion <span class="listing">strftime</span>, welche einen Zeitwert nach Ma&szlig;angaben einer Formatanweisung (&auml;hnlich wie bei dem Kommando <span class="listing">date</span>) formatiert. Diese Funktion ist au&szlig;erdem der Funktion <span class="listing">strftime()</span> aus C nachgebildet und auch die Formatanweisungen haben dieselbe Bedeutung. Die Syntax zu <span class="listing">strftime</span> lautet:</p>
+<pre>strftime( format, timestamp );</pre>
+<p>Die m&ouml;glichen Formatanweisungen von »format« finden Sie in der folgenden Tabelle. Den »timestamp« erhalten Sie aus dem R&uuml;ckgabewert der Funktion <span class="listing">systime</span>. <a id="Xxx999425" name="Xxx999425"></a><a id="Xxx999426" name="Xxx999426"></a>Hier zun&auml;chst die Formatanweisungen f&uuml;r <span class="listing">strftime</span>:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 13.9   
+    </b>(Zeit-)Formatanweisungen f&uuml;r strftime</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Format</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>… wird ersetzt durch …</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beispiel</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%a
+</td>
+<td class="tabellentext" bgcolor="#000000">Wochenname (gek&uuml;rzt)
+</td>
+<td class="tabellentext" bgcolor="#000000">Sat
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%A
+</td>
+<td class="tabellentext" bgcolor="#000000">Wochenname (ausgeschrieben)
+</td>
+<td class="tabellentext" bgcolor="#000000">Saturday
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%b
+</td>
+<td class="tabellentext" bgcolor="#000000">Monatsname (gek&uuml;rzt)
+</td>
+<td class="tabellentext" bgcolor="#000000">Jan
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%B
+</td>
+<td class="tabellentext" bgcolor="#000000">Monatsname (ausgeschrieben)
+</td>
+<td class="tabellentext" bgcolor="#000000">January
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%c
+</td>
+<td class="tabellentext" bgcolor="#000000">Entsprechende lokale Zeit- und Datumsdarstellung
+</td>
+<td class="tabellentext" bgcolor="#000000">Sat Jan 22 22:22:22 MET 2003
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%d
+</td>
+<td class="tabellentext" bgcolor="#000000">Monatstag (1–31)
+</td>
+<td class="tabellentext" bgcolor="#000000">22
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%H
+</td>
+<td class="tabellentext" bgcolor="#000000">Stunde im 24-Stunden-Format (0–23)
+</td>
+<td class="tabellentext" bgcolor="#000000">23
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%I
+</td>
+<td class="tabellentext" bgcolor="#000000">Stunde im 12-Stunden-Format (1–12)
+</td>
+<td class="tabellentext" bgcolor="#000000">5
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%j
+</td>
+<td class="tabellentext" bgcolor="#000000">Tag des Jahres (1–366)
+</td>
+<td class="tabellentext" bgcolor="#000000">133
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%m
+</td>
+<td class="tabellentext" bgcolor="#000000">Monat (1–12)
+</td>
+<td class="tabellentext" bgcolor="#000000">5
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%M
+</td>
+<td class="tabellentext" bgcolor="#000000">Minute (0–59)
+</td>
+<td class="tabellentext" bgcolor="#000000">40
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%p
+</td>
+<td class="tabellentext" bgcolor="#000000">AM- oder PM-Zeitangabe; Indikator f&uuml;r das 12-Stunden-Format (USA)
+</td>
+<td class="tabellentext" bgcolor="#000000">PM
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%S
+</td>
+<td class="tabellentext" bgcolor="#000000">Sekunden (0–69)
+</td>
+<td class="tabellentext" bgcolor="#000000">55
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%U
+</td>
+<td class="tabellentext" bgcolor="#000000">Wochennummer (0–53) (Sonntag als erster Tag der Woche)
+</td>
+<td class="tabellentext" bgcolor="#000000">33
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%w
+</td>
+<td class="tabellentext" bgcolor="#000000">Wochentag (0–6, Sonntag = 0)
+</td>
+<td class="tabellentext" bgcolor="#000000">3
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%W
+</td>
+<td class="tabellentext" bgcolor="#000000">Wochennummer (0–53) (Montag als erster Tag der Woche)
+</td>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%x
+</td>
+<td class="tabellentext" bgcolor="#000000">Lokale Datumsdarstellung
+</td>
+<td class="tabellentext" bgcolor="#000000">02/20/02
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%X
+</td>
+<td class="tabellentext" bgcolor="#000000">Lokale Zeitdarstellung
+</td>
+<td class="tabellentext" bgcolor="#000000">20:15:00
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%y
+</td>
+<td class="tabellentext" bgcolor="#000000">Jahreszahl (ohne Jahrhundertzahl 0–99)
+</td>
+<td class="tabellentext" bgcolor="#000000">01 (2001)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%Y
+</td>
+<td class="tabellentext" bgcolor="#000000">Jahreszahl (mit Jahrhundertzahl YYYY)
+</td>
+<td class="tabellentext" bgcolor="#000000">2001
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%Z, %z
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeitzone (gibt nichts aus, wenn Zeitzone unbekannt)
+</td>
+<td class="tabellentext" bgcolor="#000000">MET
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%%
+</td>
+<td class="tabellentext" bgcolor="#000000">Prozentzeichen
+</td>
+<td class="tabellentext" bgcolor="#000000">%
+</td>
+</tr>
+</table><br>
+<p>Hierzu ein simples Anwendungsbeispiel, welches alle Zeilen einer Datei auf dem Bildschirm und am Ende einen Zeitstempel ausgibt – eine einfache Demonstration der Funktionen <span class="listing">systime</span> und <span class="listing">strftime</span>:</p>
+<pre>#!/usr/bin/awk -f
+#
+# Programmname: timestamp.awk
+BEGIN {
+    now = systime()
+    # macht eine Ausgabe ala date
+    timestamp = strftime("%a %b %d %H:%M:%S %Z %Y", now)
+}
+{
+   print
+}
+END {
+   print timestamp
+}</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./timestamp.awk mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+...
+...
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004
+Fr Apr 15 07:48:35 CEST 2005</pre>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">13.6.4 Systemfunktionen<a id="RxxKap01500504004FEA1F03F21B" name="RxxKap01500504004FEA1F03F21B"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999581" name="Xxx999581"></a>Sofern Sie reine <span class="listing">awk</span>-Scripts schreiben und <span class="listing">awk</span> nicht in ein Shellscript einbauen, aber einen UNIX-Befehl ausf&uuml;hren wollen, gibt es hierf&uuml;r die Funktion <span class="listing">system</span>:</p>
+<pre>system("Befehl")</pre>
+<p>Damit k&ouml;nnen Sie jeden »Befehl« wie in der Kommandozeile ausf&uuml;hren. Sofern Sie die Ausgabe des Befehls abfangen wollen, m&uuml;ssen Sie <span class="listing">getline</span> (siehe Abschnitt 13.6.6) dazu verwenden:</p>
+<pre>"Befehl" | getline</pre>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">13.6.5 Ausgabefunktionen<a id="RxxKap01500504004FEA1F03F220" name="RxxKap01500504004FEA1F03F220"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999587" name="Xxx999587"></a><a id="Xxx999588" name="Xxx999588"></a>Die eigentlichen Ausgabefunktionen <span class="listing">print</span> und <span class="listing">printf</span> haben Sie bereits kennen gelernt. Trotzdem soll hier noch eine Tabelle erstellt werden, worin Sie aufgelistet finden, wie Sie die Ausgabe anwenden k&ouml;nnen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 13.10   
+    </b>M&ouml;gliche print-Ausgaben</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Verwendung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">print
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausgabe der aktuellen Zeile (Datensatz); gleichwertig mit print $0.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">print /regul&auml;erer Ausdruck/
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier k&ouml;nnen Sie bspw. testen, ob der Ausdruck in der entsprechenden Zeile zutrifft. Trifft der Ausdruck nicht zu, wird 0, ansonsten 1 zur&uuml;ckgegeben. Bspw.: awk '{ print /USA/ }' mrolympia.dat gibt in jeder Zeile, in der die Textfolge »USA« enthalten ist, 1 und sonst 0 zur&uuml;ck.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">print Ausdrucksliste
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausgabe aller in »Ausdrucksliste« angegebenen Werte. Hierbei k&ouml;nnen Konstanten, berechnete Werte, Variablen- oder Feldwerte enthalten sein.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">print Ausdrucksliste &gt; datei
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Ausgabe aller in »Ausdrucksliste« angegebenen Werte wird in datei geschrieben. Dabei kann es sich durchaus um einen berechneten Wert handeln.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">print Ausdrucksliste &gt;&gt; datei
+</td>
+<td class="tabellentext" bgcolor="#000000">Wie eben, nur dass hierbei die Ausgabe aller in »Ausdrucksliste« enthaltenen Werte ans Ende von datei geh&auml;ngt wird.
+</td>
+</tr>
+</table><br>
+<p>F&uuml;r <span class="listing">printf</span> gilt das Gleiche, nur dass die Ausgabe formatiert erfolgt.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">13.6.6 Eingabefunktion<a id="RxxKap01500504004FEA1F03F232" name="RxxKap01500504004FEA1F03F232"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999625" name="Xxx999625"></a><a id="Xxx999626" name="Xxx999626"></a><a id="Xxx999627" name="Xxx999627"></a>Der eine oder andere mag jetzt ganz verwundert sein, aber <span class="listing">awk</span> unterst&uuml;tzt auch eine Eingabefunktion mit <span class="listing">getline</span>. <span class="listing">getline</span> ist ein sehr vielseitiges Kommando. Diese Funktion liefert im Fall eines Fehlers –1, bei Dateiende oder <b>(Strg)</b>+<b>(D)</b> 0 und bei erfolgreichem Lesen 1 zur&uuml;ck. Sie liest eine Zeile von der Eingabezeile, was <span class="listing">stdin</span> oder eine Datei sein kann, und speichert diese entweder in <span class="listing">$0</span> oder in einer separat angegebenen Variablen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 13.11   
+    </b>Die getline-Eingabefunktion</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Verwendung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">getline
+</td>
+<td class="tabellentext" bgcolor="#000000">Verwenden Sie getline ohne Argumente, wird vom aktuellen Eingabekanal der n&auml;chste Datensatz (Zeile) eingelesen und in $0 gespeichert.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">getline var
+</td>
+<td class="tabellentext" bgcolor="#000000">Liest die n&auml;chste Zeile vom aktuellen Eingabekanal und speichert diese Zeile in »var«. Wichtig, NR und FNR werden hochgez&auml;hlt, aber NF wird nicht belegt, weil hier keine Auftrennung in Worten (Feldern) erfolgt!
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">getline &lt; datei
+</td>
+<td class="tabellentext" bgcolor="#000000">Liest die n&auml;chste Zeile von einer Datei, welche ge&ouml;ffnet wird und am Ende mittels close() selbst geschlossen werden muss! Die Zeile befindet sich in $0.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">getline var &lt; datei
+</td>
+<td class="tabellentext" bgcolor="#000000">Liest die n&auml;chste Zeile von einer Datei, welche ge&ouml;ffnet wird und am Ende mittels close() selbst geschlossen werden muss, in die Variable »var« ein. Hierbei werden allerdings NF, NR und FNR nicht ver&auml;ndert!
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">string | getline
+</td>
+<td class="tabellentext" bgcolor="#000000">Liest die n&auml;chste Zeile von der Pipe (hier dem String »string«) ein. Die eingelesene Zeile wird in $0 gespeichert.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">"kommando" | getline var
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier wird die n&auml;chste Zeile von einem Kommando eingelesen und die eingelesene Zeile befindet sich in »var«.
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999666" name="Xxx999666"></a>Bei der Verwendung von <span class="listing">getline</span> war auch die Rede von der Funktion <span class="listing">close</span>, mit der Sie eine Datei oder eine ge&ouml;ffnete Pipe wieder schlie&szlig;en m&uuml;ssen.</p>
+<pre>close(Dateinamen)</pre>
+<p>Der Dateiname kann hierbei als eine Stringkonstante vorliegen oder eine Variable sein.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>M&ouml;glicherweise ist dies etwas verwirrend, weil in <span class="listing">awk</span> die Datei zwar automatisch ge&ouml;ffnet wird, aber sobald man mit <span class="listing">getline</span> etwas daraus liest, diese wieder von Hand mit <span class="listing">close</span> geschlossen werden soll. Gerade wenn man andere Programmiersprachen verwendet, kennt man doch die Logik, ein Programm manuell zu &ouml;ffnen und diese auch wieder manuell zu schlie&szlig;en.</p>
+</td>
+</tr>
+</table><br>
+<p>Hierzu ein einfaches Beispiel. Im Script werden Sie gefragt, wonach und in welcher Datei Sie suchen wollen. Mit <span class="listing">getline</span> lesen Sie dann Zeile f&uuml;r Zeile in die <span class="listing">while</span>-Schleife ein. Anschlie&szlig;end wird die Zeile mit dem eingegebenen Suchstring verglichen und bei &Uuml;bereinstimmung ausgegeben.</p>
+<pre>#!/usr/bin/awk -f
+#
+# Programmname: search.awk
+BEGIN {
+   # Suchstring eingeben
+   print "Wonach suchen Sie : "
+   getline searchstring
+   # Datei zum Suchen eingeben
+   print "In welcher Datei  : "
+   getline file
+   # Zeilenweise aus der Datei lesen
+   while( getline &lt; file ) {
+      if($0 ~ searchstring) {
+         print
+      }
+   }
+   close(file)
+}</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>In der Praxis sollten Sie nat&uuml;rlich &uuml;berpr&uuml;fen, ob die Datei zum &Ouml;ffnen &uuml;berhaupt existiert oder/und lesbar ist und gegebenenfalls abbrechen.</p>
+</td>
+</tr>
+</table><br>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./search.awk
+Wonach suchen Sie : USA
+In welcher Datei  : mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Chris Dickerson USA 1982
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004
+you@host &gt; ./search.awk
+Wonach suchen Sie : ien
+In welcher Datei  : mrolympia.dat
+Franco Columbu Argentinien 1976 1981
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+you@host &gt; ./search.awk
+Wonach suchen Sie : Samir
+In welcher Datei  : mrolympia.dat
+Samir Bannout Libanon 1983</pre>
+<p>Hier soll auch noch ein weiteres g&auml;ngiges und m&auml;chtiges Feature von <span class="listing">getline</span> vorgestellt werden, und zwar die M&ouml;glichkeit, ein (Linux-/UNIX-)Kommando nach <span class="listing">getline</span> zu »pipen«. Das folgende Script gibt die gr&ouml;&szlig;te Datei aus. Die Gr&ouml;&szlig;e einer Datei finden Sie mit <span class="listing">ls</span> <span class="listing">–l</span> in der f&uuml;nften Spalte.</p>
+<pre>#!/usr/bin/awk -f
+#
+# Programmname: bigfile.awk
+{
+   my_ls="/bin/ls -ld '" quoting($0) "' 2&gt;/dev/null"
+   if( my_ls | getline ) {
+      if( $5 &gt; filesize ) {
+         filename=$8
+         filesize=$5
+      }
+   }
+   close(my_ls)
+}
+END {
+   if( filename )
+     print "Gr&ouml;&szlig;te Datei ist " filename " mit " filesize " Bytes"
+   else
+      print "Konnte keine gr&ouml;&szlig;te Datei ermitteln?!?"
+}
+function quoting(s, n) {
+   n=s
+   gsub(/'/, "'\"'\"'", n)
+   return n
+}</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; find $HOME -print | ./bigfile.awk
+Gr&ouml;&szlig;te Datei ist ~/Desktop/Trash/Trailer.mpg mit 91887620 Byte</pre>
+<p>Im Script wurde auch eine Funktion zum Schutz f&uuml;r Dateien mit einfachen Anf&uuml;hrungszeichen (Single Quotes) verwendet. Mehr zu den selbst definierten Funktionen erfahren Sie gleich.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">13.6.7 Benutzerdefinierte Funktionen<a id="RxxKap01500504004FEA1F03F255" name="RxxKap01500504004FEA1F03F255"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999688" name="Xxx999688"></a>Als Programmierer von Shellscripts d&uuml;rften Sie mit dem <span class="listing">awk</span>-Wissen, das Sie jetzt haben, mehr als zufrieden sein. Aber neben der Verwendung von Builtin-Funktionen von <span class="listing">awk</span> haben Sie au&szlig;erdem noch die M&ouml;glichkeit, eigenen Funktionen zu schreiben. Daher hier noch eine kurze Beschreibung, wie Sie auch dies realisieren k&ouml;nnen. Der Ort einer Funktionsdefinition ist nicht so wichtig, obgleich es sich eingeb&uuml;rgert hat, diese am Ende des Scripts zu definieren.</p>
+<pre>function functions_name( parameter ) {
+   # Anweisungen
+}</pre>
+<p><a id="Xxx999691" name="Xxx999691"></a>Dem Schl&uuml;sselwort <span class="listing">function</span>, welches Sie immer verwenden m&uuml;ssen, folgt der Funktionsname. Erlaubt sind hier alle Kombinationen aus Buchstaben, Ziffern und einem Unterstrich – einzig am Anfang darf keine Ziffer stehen. Variablen und Funktion d&uuml;rfen in einem Script allerdings nicht denselben Namen haben. Als Argumente k&ouml;nnen Sie einer Funktion beliebig viele oder auch gar keine Parameter angeben. Mehrere Argumente werden mit einem Komma getrennt. Die Anweisungen einer Funktion werden zwischen geschweiften Klammern (dem Anweisungsblock) zusammengefasst.</p>
+<p>Zum Aufruf einer Funktion m&uuml;ssen Sie den Funktionsnamen gefolgt von runden Klammern und eventuell den einzelnen Parametern angeben. Beachten Sie au&szlig;erdem, dass sich zwischen dem Funktionsnamen und der sich &ouml;ffnenden Klammer kein Leerzeichen befinden darf. Werden weniger Parameter als in der Funktionsdefinition definiert angegeben, so f&uuml;hrt dies nicht zu einem Fehler. Nicht angegebene Parameter werden – abh&auml;ngig vom Kontext – als 0 oder eine leere Zeichenkette interpretiert.</p>
+<p>Anders sieht dies allerdings aus, wenn Sie einer Funktion einen Parameter &uuml;bergeben, obwohl in der Funktionsdefinition keinerlei Argumente enthalten sind. Dann wird Ihnen <span class="listing">awk</span> das Script mit einer Fehlermeldung abbrechen.</p>
+<p>Alle Variablen einer Funktion sind global, abgesehen von den Variablen in den runden Klammern. Deren G&uuml;ltigkeitsbereich ist nur auf die Funktion allein beschr&auml;nkt.</p>
+<p>Um Werte aus einer Funktion zur&uuml;ckzugeben, wird auch hierbei der <span class="listing">return</span>-Befehl gefolgt vom Wert verwendet. Beispielsweise:</p>
+<pre>function functions_name( parameter ) {
+   # Anweisungen
+   ...
+   return Wert
+}</pre>
+<p>Mehrere Werte k&ouml;nnen Sie auch hier, wie in der Shell, zu einem String zusammenfassen und im Hauptteil wieder splitten:</p>
+<pre>function functions_name( parameter ) {
+   # Anweisungen
+   ...
+   return Wert1 " " Wert2 " " Wert3
+}
+...
+ret=functions_name( param )
+split(ret, array)
+...
+print array[1]</pre>
+<p>Hier konnten Sie auch gleich sehen, wie Sie im Hauptteil den R&uuml;ckgabewert auffangen k&ouml;nnen.</p>
+<p>Die &Uuml;bergabe von Variablen erfolgt in der Regel »by-value«, sprich: Die Werte des Funktionsaufrufs werden in die Argumente der Funktion kopiert, sodass jede Ver&auml;nderung des Werts nur in der Funktion g&uuml;ltig ist. Anders hingegen werden Arrays behandelt, diese werden »by-reference«, also als Speicheradresse auf den ersten Wert des Arrays &uuml;bergeben. Dies erscheint sinnvoll, denn m&uuml;sste ein Array mit mehreren hundert Eintr&auml;gen erst kopiert werden, w&auml;re ein Funktionsaufruf wohl eine ziemliche Bremse. Somit bezieht sich allerdings eine Ver&auml;nderung des Arrays in der Funktion auch auf das Original.</p>
+<p>Hierzu ein einfaches Beispiel mit einer selbst definierten Funktion:</p>
+<pre>#!/usr/bin/awk -f
+#
+# Programmname: FILEprint.awk
+{
+  FILEprint($0)
+}
+function FILEprint( line ) {
+   if(length(line) == 0)
+      return "Leerer String"
+   else
+      print FILENAME "(" NR ") : " line
+}</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./FILEprint.awk mrolympia.dat
+mrolympia.dat(1) : Larry Scott USA 1965 1966
+mrolympia.dat(2) : Sergio Oliva USA 1967 1968 1969
+mrolympia.dat(3) : Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972
+...
+...</pre>
+<p>Hier haben Sie eine einfache benutzerdefinierte <span class="listing">print</span>-Funktion, welche am Anfang einer Zeile jeweils den Dateinamen und die Zeilennummer mit ausgibt.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_015_004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_015_006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_015_005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

@@ -1,0 +1,1652 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_007_001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:52 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 5.2 Ausgabe</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_007_000.html">
+<link rel="next" href="shell_007_002.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_007_000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_007_002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_007_000.html#RxxKap00700004004E5B1F013172">5 Terminal-Ein- und Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_000.html#RxxKap00700004004E5B1F013174">5.1 Von Terminals zu Pseudo-Terminals</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00700104004E721F034172">5.2 Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700104004E721F034174">5.2.1 Der echo-Befehl</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700104004E721F034255">5.2.2 print (Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700104004E721F034268">5.2.3 Der Befehl printf</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700104004E721F03429C">5.2.4 Der Befehl tput – Terminalsteuerung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A172">5.3 Eingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A174">5.3.1 Der Befehl read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A18C">5.3.2 (Zeilenweise) Lesen einer Datei mit read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A198">5.3.3 Zeilenweise mit einer Pipe aus einem Kommando lesen (read)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A19E">5.3.4 Here-Dokumente (Inline-Eingabeumleitung)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1B7">5.3.5 Here-Dokumente mit read verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1BE">5.3.6 Die Variable IFS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1E4">5.3.7 Arrays einlesen mit read (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1EF">5.3.8 Shell-abh&auml;ngige Anmerkungen zu read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A1FE">5.3.9 Einzelnes Zeichen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A208">5.3.10 Einzelne Zeichen mit Escape-Sequenzen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_002.html#RxxKap00700204004E731F04A229">5.3.11 Passworteingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_003.html#RxxKap00700304004E741F01B172">5.4 Umlenken mit dem Befehl exec</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_004.html#RxxKap00700404004E751F014172">5.5 Filedeskriptoren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_004.html#RxxKap00700404004E751F01417E">5.5.1 Einen neuen Filedeskriptor verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_004.html#RxxKap00700404004E751F01419B">5.5.2 Die Umlenkung &lt;&gt;</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_005.html#RxxKap00700504004E761F035172">5.6 Named Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_006.html#RxxKap00700604004E771F038172">5.7 Men&uuml;s mit select (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_007.html#RxxKap00700704004E781F018172">5.8 dialog und Xdialog</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F01817C">5.8.1 Entscheidungsfrage --yesno</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F01818D">5.8.2 Nachrichtenbox mit Best&auml;tigung --msgbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F018195">5.8.3 Hinweisfenster ohne Best&auml;tigung --infobox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F01819A">5.8.4 Text-Eingabezeile --inputbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181A3">5.8.5 Ein einfacher Dateibetrachter --textbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181AB">5.8.6 Ein Men&uuml; --menu</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181B4">5.8.7 Auswahlliste zum Ankreuzen --checklist</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181BD">5.8.8 Radiobuttons zum Ausw&auml;hlen --radiolist</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181C5">5.8.9 Fortschrittszustand anzeigen --gauge</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181D1">5.8.10 Ver&auml;ndern von Aussehen und Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181DE">5.8.11 Kleines Beispiel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181E4">5.8.12 Zusammenfassung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_008.html#RxxKap00700804004E791F043172">5.9 gnuplot – Visualisierung von Messdaten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043179">5.9.1 Wozu wird gnuplot eingesetzt?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F04317D">5.9.2 gnuplot starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043180">5.9.3 Das Kommando zum Plotten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043189">5.9.4 Variablen und Parameter f&uuml;r gnuplot</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043194">5.9.5 Ausgabe von gnuplot umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431A3">5.9.6 Variablen und eigene Funktionen definieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431B0">5.9.7 Interpretation von Daten aus einer Datei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431CA">5.9.8 Alles bitte nochmals zeichnen (oder besser speichern und laden)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431D5">5.9.9 gnuplot aus einem Shellscript heraus starten (der Batch-Betrieb)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431E8">5.9.10 Plot-Styles und andere Ausgaben festlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043243">5.9.11 Tricks f&uuml;r die Achsen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F04326A">5.9.12 Die dritte Dimension</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043275">5.9.13 Zusammenfassung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">5.2 <a id="RxxKap00523Ausgabe" name="RxxKap00523Ausgabe"></a>Ausgab<a id="RxxKap00700104004E721F034172" name="RxxKap00700104004E721F034172"></a>e 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a>Auf den folgenden Seiten soll etwas umfangreicher auf die Ausgabe-Funktionen eingegangen werden, von denen Sie bei Ihren Scripts noch regen Gebrauch machen werden.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">5.2.1 Der echo-Befehl<a id="RxxKap00700104004E721F034174" name="RxxKap00700104004E721F034174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999281" name="Xxx999281"></a><a id="Xxx999282" name="Xxx999282"></a><a id="Xxx999283" name="Xxx999283"></a>Den <span class="listing">echo</span>-Befehl haben Sie bisher sehr h&auml;ufig eingesetzt, und im Prinzip gibt es auch gar nicht mehr allzu viel dazu zu sagen. Und dennoch ist der <span class="listing">echo</span>-Befehl unter den unterschiedlichen Shells inkompatibel. Die Syntax zu <span class="listing">echo</span>:</p>
+<pre>echo [-option] argument1 argument2 ... argument_n</pre>
+<p>Die Argumente, die Sie <span class="listing">echo</span> &uuml;bergeben, m&uuml;ssen mindestens mit einem Leerzeichen getrennt werden. Bei der Ausgabe auf dem Bildschirm verwendet <span class="listing">echo</span> dann ebenfalls ein Leerzeichen als Trennung zwischen den Argumenten. Abgeschlossen wird eine Ausgabe von <span class="listing">echo</span> mit einem Newline-Zeichen. Wollen Sie das Newline-Zeichen ignorieren, k&ouml;nnen Sie die Option <span class="listing">–n</span> zum Unterdr&uuml;cken verwenden:</p>
+<pre># Demonstriert den echo-Befehl
+# aecho1
+echo -n "Hier wird das Newline-Zeichen unterdr&uuml;ckt"
+echo ":TEST"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aecho1
+Hier wird das Newline-Zeichen unterdr&uuml;ckt:TEST</pre>
+<p>Soweit ist dies in Ordnung, nur dass eben die »echte« Bourne-Shell &uuml;berhaupt keine Optionen f&uuml;r <span class="listing">echo</span> kennt. Dies stellt aber kein Problem dar, denn Sie k&ouml;nnen hierf&uuml;r die Escape-Sequenz <span class="listing">\c</span> verwenden. <span class="listing">\c</span> unterdr&uuml;ckt ebenfalls das abschlie&szlig;ende Newline-Zeichen. Hier dasselbe Script nochmals:</p>
+<pre># Demonstriert den echo-Befehl
+# aecho2
+echo "Hier wird das Newline-Zeichen unterdr&uuml;ckt\c"
+echo ":TEST"</pre>
+<p>In der Bourne- und Korn-Shell scheint die Welt jetzt in Ordnung zu sein, nur die Bash gibt hier Folgendes aus:</p>
+<pre>you@host &gt; ./aecho2
+Hier wird das Newline-Zeichen unterdr&uuml;ckt\c
+:TEST</pre>
+<p>Die Bash scheint die Escape-Sequenz nicht zu verstehen. Damit dies trotzdem funktioniert, m&uuml;ssen Sie die Option <span class="listing">–e</span> verwenden:</p>
+<pre># Demonstriert den echo-Befehl
+# aecho3
+echo -e "Hier wird das Newline-Zeichen unterdr&uuml;ckt\c"
+echo ":TEST"</pre>
+<p>Leider stehen Sie allerdings dann wieder vor dem Problem, dass die »echte« Bourne-Shell (also nicht der symbolische Link nach Bash!) keine Optionen kennt. Es ist also nicht m&ouml;glich, auf diesem Weg ein portables <span class="listing">echo</span> f&uuml;r alle Shells zu verwenden. Folgende Regeln m&uuml;ssen Sie beachten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die Bourne-Shell kennt keine Optionen wie <span class="listing">-e</span> oder <span class="listing">-n</span>, versteht aber ohne Probleme die Escape-Sequenzen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die Korn-Shell kennt die Optionen <span class="listing">-e</span> und <span class="listing">-n</span> und versteht auch die Escape-Sequenzen. Beachten Sie aber, dass nur neuere Versionen der Korn-Shell die Optionen <span class="listing">-e</span> und <span class="listing">-n</span> kennen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die Bash kenn die Optionen <span class="listing">-e</span> und <span class="listing">-n</span>, versteht aber die Escape-Sequenzen nur dann, wenn <span class="listing">echo</span> mit der Option <span class="listing">-e</span> verwendet wird.</td>
+</tr>
+</table>
+<h4 class="t4">Steuerzeichen und Escape-Sequenzen</h4>
+<p><a id="Xxx999301" name="Xxx999301"></a><a id="Xxx999302" name="Xxx999302"></a><a id="Xxx999303" name="Xxx999303"></a>Sie kennen den Vorgang, dass auf Druck einer Taste hin das Zeichen an der Position des Cursors bzw. »Prompts« ausgegeben wird. Das Terminal bzw. die Terminal-Emulation setzt den Cursor dann automatisch um eine Position weiter. Anders verh&auml;lt sich das Ganze aber bspw. bei einem Zeilenwechsel oder einem Tabulatorenschritt. Solche Zeichen sind ja nicht direkt auf dem Bildschirm sichtbar, sondern steuern die Ausgabe, weshalb hier auch der Name »Steuerzeichen« einleuchtend ist. Im ASCII-Zeichencode sind diese Steuerzeichen mit den Codewerten 0 bis 31 reserviert (siehe Tabelle 5.1).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.1   
+    </b>Steuerzeichen im ASCII-Zeichencode</span></p>
+</caption>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><b>Dez</b>
+</td>
+<td class="tabellentext" bgcolor="#000000"><b>Hex</b>
+</td>
+<td class="tabellentext" bgcolor="#000000"><b>K&uuml;rzel</b>
+</td>
+<td class="tabellentext" bgcolor="#000000"><b>ASCII</b>
+</td>
+<td class="tabellentext" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">NUL
+</td>
+<td class="tabellentext" bgcolor="#000000">^@
+</td>
+<td class="tabellentext" bgcolor="#000000">Keine Verbindung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1
+</td>
+<td class="tabellentext" bgcolor="#000000">1
+</td>
+<td class="tabellentext" bgcolor="#000000">SOH
+</td>
+<td class="tabellentext" bgcolor="#000000">^A
+</td>
+<td class="tabellentext" bgcolor="#000000">Anfang Kopfdaten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">2
+</td>
+<td class="tabellentext" bgcolor="#000000">2
+</td>
+<td class="tabellentext" bgcolor="#000000">STX
+</td>
+<td class="tabellentext" bgcolor="#000000">^B
+</td>
+<td class="tabellentext" bgcolor="#000000">Textanfang
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">3
+</td>
+<td class="tabellentext" bgcolor="#000000">3
+</td>
+<td class="tabellentext" bgcolor="#000000">ETX
+</td>
+<td class="tabellentext" bgcolor="#000000">^C
+</td>
+<td class="tabellentext" bgcolor="#000000">Textende
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+<td class="tabellentext" bgcolor="#000000">EOT
+</td>
+<td class="tabellentext" bgcolor="#000000">^D
+</td>
+<td class="tabellentext" bgcolor="#000000">Ende der &Uuml;bertragung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">5
+</td>
+<td class="tabellentext" bgcolor="#000000">5
+</td>
+<td class="tabellentext" bgcolor="#000000">ENQ
+</td>
+<td class="tabellentext" bgcolor="#000000">^E
+</td>
+<td class="tabellentext" bgcolor="#000000">Aufforderung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">6
+</td>
+<td class="tabellentext" bgcolor="#000000">6
+</td>
+<td class="tabellentext" bgcolor="#000000">ACK
+</td>
+<td class="tabellentext" bgcolor="#000000">^F
+</td>
+<td class="tabellentext" bgcolor="#000000">erfolgreiche Antwort
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">7
+</td>
+<td class="tabellentext" bgcolor="#000000">7
+</td>
+<td class="tabellentext" bgcolor="#000000">BEL
+</td>
+<td class="tabellentext" bgcolor="#000000">^G
+</td>
+<td class="tabellentext" bgcolor="#000000">Signalton (Beep)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">8
+</td>
+<td class="tabellentext" bgcolor="#000000">8
+</td>
+<td class="tabellentext" bgcolor="#000000">BS
+</td>
+<td class="tabellentext" bgcolor="#000000">^H
+</td>
+<td class="tabellentext" bgcolor="#000000">R&uuml;ckschritt (Backspace)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">9
+</td>
+<td class="tabellentext" bgcolor="#000000">9
+</td>
+<td class="tabellentext" bgcolor="#000000">HT
+</td>
+<td class="tabellentext" bgcolor="#000000">^I
+</td>
+<td class="tabellentext" bgcolor="#000000">Tabulatorenschritt (horizontal)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">10
+</td>
+<td class="tabellentext" bgcolor="#000000">A
+</td>
+<td class="tabellentext" bgcolor="#000000">NL
+</td>
+<td class="tabellentext" bgcolor="#000000">^J
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeilenvorschub (Newline)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">11
+</td>
+<td class="tabellentext" bgcolor="#000000">B
+</td>
+<td class="tabellentext" bgcolor="#000000">VT
+</td>
+<td class="tabellentext" bgcolor="#000000">^K
+</td>
+<td class="tabellentext" bgcolor="#000000">Tabulatorenschritt (vertikal)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">12
+</td>
+<td class="tabellentext" bgcolor="#000000">C
+</td>
+<td class="tabellentext" bgcolor="#000000">NP
+</td>
+<td class="tabellentext" bgcolor="#000000">^L
+</td>
+<td class="tabellentext" bgcolor="#000000">Seitenvorschub (NewPage)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">13
+</td>
+<td class="tabellentext" bgcolor="#000000">D
+</td>
+<td class="tabellentext" bgcolor="#000000">CR
+</td>
+<td class="tabellentext" bgcolor="#000000">^M
+</td>
+<td class="tabellentext" bgcolor="#000000">Wagenr&uuml;cklauf
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">14
+</td>
+<td class="tabellentext" bgcolor="#000000">E
+</td>
+<td class="tabellentext" bgcolor="#000000">SO
+</td>
+<td class="tabellentext" bgcolor="#000000">^N
+</td>
+<td class="tabellentext" bgcolor="#000000">Dauerumschaltung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">15
+</td>
+<td class="tabellentext" bgcolor="#000000">F
+</td>
+<td class="tabellentext" bgcolor="#000000">SI
+</td>
+<td class="tabellentext" bgcolor="#000000">^O
+</td>
+<td class="tabellentext" bgcolor="#000000">R&uuml;ckschaltung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">16
+</td>
+<td class="tabellentext" bgcolor="#000000">10
+</td>
+<td class="tabellentext" bgcolor="#000000">DLE
+</td>
+<td class="tabellentext" bgcolor="#000000">^P
+</td>
+<td class="tabellentext" bgcolor="#000000">Umschaltung der Verbindung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">17
+</td>
+<td class="tabellentext" bgcolor="#000000">11
+</td>
+<td class="tabellentext" bgcolor="#000000">DC1
+</td>
+<td class="tabellentext" bgcolor="#000000">^Q
+</td>
+<td class="tabellentext" bgcolor="#000000">Steuerzeichen 1 des Ger&auml;tes
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">18
+</td>
+<td class="tabellentext" bgcolor="#000000">12
+</td>
+<td class="tabellentext" bgcolor="#000000">DC2
+</td>
+<td class="tabellentext" bgcolor="#000000">^R
+</td>
+<td class="tabellentext" bgcolor="#000000">Steuerzeichen 2 des Ger&auml;tes
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">19
+</td>
+<td class="tabellentext" bgcolor="#000000">13
+</td>
+<td class="tabellentext" bgcolor="#000000">DC3
+</td>
+<td class="tabellentext" bgcolor="#000000">^S
+</td>
+<td class="tabellentext" bgcolor="#000000">Steuerzeichen 3 des Ger&auml;tes
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">20
+</td>
+<td class="tabellentext" bgcolor="#000000">14
+</td>
+<td class="tabellentext" bgcolor="#000000">DC4
+</td>
+<td class="tabellentext" bgcolor="#000000">^T
+</td>
+<td class="tabellentext" bgcolor="#000000">Steuerzeichen 4 des Ger&auml;tes
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">21
+</td>
+<td class="tabellentext" bgcolor="#000000">15
+</td>
+<td class="tabellentext" bgcolor="#000000">NAK
+</td>
+<td class="tabellentext" bgcolor="#000000">^U
+</td>
+<td class="tabellentext" bgcolor="#000000">erfolglose Antwort
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">22
+</td>
+<td class="tabellentext" bgcolor="#000000">16
+</td>
+<td class="tabellentext" bgcolor="#000000">SYN
+</td>
+<td class="tabellentext" bgcolor="#000000">^V
+</td>
+<td class="tabellentext" bgcolor="#000000">Synchronmodus
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">23
+</td>
+<td class="tabellentext" bgcolor="#000000">17
+</td>
+<td class="tabellentext" bgcolor="#000000">ETB
+</td>
+<td class="tabellentext" bgcolor="#000000">^W
+</td>
+<td class="tabellentext" bgcolor="#000000">Blockende
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">24
+</td>
+<td class="tabellentext" bgcolor="#000000">18
+</td>
+<td class="tabellentext" bgcolor="#000000">CAN
+</td>
+<td class="tabellentext" bgcolor="#000000">^X
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichen f&uuml;r ung&uuml;ltig
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">25
+</td>
+<td class="tabellentext" bgcolor="#000000">19
+</td>
+<td class="tabellentext" bgcolor="#000000">EM
+</td>
+<td class="tabellentext" bgcolor="#000000">^Y
+</td>
+<td class="tabellentext" bgcolor="#000000">Mediumende
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">26
+</td>
+<td class="tabellentext" bgcolor="#000000">1A
+</td>
+<td class="tabellentext" bgcolor="#000000">SUB
+</td>
+<td class="tabellentext" bgcolor="#000000">^Z
+</td>
+<td class="tabellentext" bgcolor="#000000">Ersetzung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">27
+</td>
+<td class="tabellentext" bgcolor="#000000">1B
+</td>
+<td class="tabellentext" bgcolor="#000000">ESCAPE
+</td>
+<td class="tabellentext" bgcolor="#000000">ESC
+</td>
+<td class="tabellentext" bgcolor="#000000">Umschaltung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">28
+</td>
+<td class="tabellentext" bgcolor="#000000">1C
+</td>
+<td class="tabellentext" bgcolor="#000000">FS
+</td>
+<td class="tabellentext" bgcolor="#000000">^\
+</td>
+<td class="tabellentext" bgcolor="#000000">Dateitrennzeichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">29
+</td>
+<td class="tabellentext" bgcolor="#000000">1D
+</td>
+<td class="tabellentext" bgcolor="#000000">GS
+</td>
+<td class="tabellentext" bgcolor="#000000">^]
+</td>
+<td class="tabellentext" bgcolor="#000000">Gruppentrennzeichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">30
+</td>
+<td class="tabellentext" bgcolor="#000000">1E
+</td>
+<td class="tabellentext" bgcolor="#000000">RS
+</td>
+<td class="tabellentext" bgcolor="#000000">^~
+</td>
+<td class="tabellentext" bgcolor="#000000">Satztrennzeichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">31
+</td>
+<td class="tabellentext" bgcolor="#000000">1F
+</td>
+<td class="tabellentext" bgcolor="#000000">US
+</td>
+<td class="tabellentext" bgcolor="#000000">^/
+</td>
+<td class="tabellentext" bgcolor="#000000">Worttrennzeichen
+</td>
+</tr>
+</table><br>
+<p>Welches Steuerzeichen hier jetzt auch wirklich die angegebene Wirkung zeigt, h&auml;ngt stark vom Terminaltyp (<span class="listing">TERM</span>) und der aktuellen Systemkonfiguration ab. Wenn Sie im Text ein Steuerzeichen verwenden wollen, so ist dies mit <b>(ENTER)</b> und der <b>(ÿ_)</b>-Taste kein Problem, weil hierf&uuml;r ja Tasten vorhanden sind. Andere Steuerzeichen hingegen werden mit einer Tastenkombination aus <b>(Strg)</b>+Buchstabe ausgel&ouml;st. So k&ouml;nnten Sie statt mit <b>(ENTER)</b> auch mit der Tastenkombination <b>(Strg)</b>+<b>(J)</b> einen Zeilenvorschub ausl&ouml;sen. Andererseits l&ouml;sen Sie mit der Tastenkombination <b>(Strg)</b>+<b>(C)</b> das Signal <span class="listing">SIGINT</span> aus, womit Sie z. B. einen Schreibprozess abbrechen w&uuml;rden.</p>
+<p>Zum Gl&uuml;ck unterst&uuml;tzen Kommandos wie u. a. <span class="listing">echo</span> die Umschreibung solcher Steuerzeichen durch Escape-Sequenzen (was &uuml;brigens nichts mit dem Zeichen <b>(ESC)</b> zu tun hat). Eine Escape-Sequenz besteht aus zwei Zeichen, wovon das erste Zeichen immer mit einem Backslash beginnt (siehe Tabelle 5.2).<a id="Xxx999652" name="Xxx999652"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.2   
+    </b>Escape-Sequenzen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Escape-Sequenz</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\a
+</td>
+<td class="tabellentext" bgcolor="#000000">Alarm-Ton (Beep)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\b
+</td>
+<td class="tabellentext" bgcolor="#000000">Backspace; ein Zeichen zur&uuml;ck
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\c
+</td>
+<td class="tabellentext" bgcolor="#000000">continue; das Newline-Zeichen unterdr&uuml;cken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\f
+</td>
+<td class="tabellentext" bgcolor="#000000">Form Feed; einige Zeilen weiterspringen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\n
+</td>
+<td class="tabellentext" bgcolor="#000000">Newline; Zeilenumbruch
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\r
+</td>
+<td class="tabellentext" bgcolor="#000000">return; zur&uuml;ck zum Anfang der Zeile
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\t
+</td>
+<td class="tabellentext" bgcolor="#000000">Tabulator (horizontal)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\v
+</td>
+<td class="tabellentext" bgcolor="#000000">Tabulator (vertikal); meistens eine Zeile vorw&auml;rts
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\\
+</td>
+<td class="tabellentext" bgcolor="#000000">das Backslash-Zeichen ausgeben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\0nnn
+</td>
+<td class="tabellentext" bgcolor="#000000">ASCII-Zeichen in oktaler Form (nur sh und ksh); z. B. aus \0102 wird B (dezimal 66)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\nnn
+</td>
+<td class="tabellentext" bgcolor="#000000">ASCII-Zeichen in oktaler Form (nur Bash); z. B. aus \102 wird wird B (dezimal 66)
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wie bereits erw&auml;hnt wurde, beachtet die Bash diese Escape-Sequenzen mit <span class="listing">echo</span> nur, wenn Sie die Option <span class="listing">-e</span> mit angeben.</p>
+</td>
+</tr>
+</table><br>
+<p>Ein weiteres Beispiel zu den Escape-Sequenzen:</p>
+<pre># Demonstriert den echo-Befehl
+# aecho4
+echo "Mehrere Newline-Zeichen\n\n\n"
+echo "Tab1\tTab2\tEnde"
+echo "bach\bk"
+# Alternativ f&uuml;r die bash mit Option -e
+# echo -e "Mehrere Newline-Zeichen\n\n"
+# echo -e "Tab1\tTab2\tEnde"
+# echo -e "bach\bk"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aecho4
+Mehrere Newline-Zeichen
+Tab1    Tab2    Ende
+zur&uuml;ck</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">5.2.2 print (Korn-Shell only)<a id="RxxKap00700104004E721F034255" name="RxxKap00700104004E721F034255"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999719" name="Xxx999719"></a><a id="Xxx999720" name="Xxx999720"></a><a id="Xxx999721" name="Xxx999721"></a>Die Korn-Shell bietet mit <span class="listing">print</span> (nicht zu verwechseln mit <span class="listing">printf</span>) eine fast gleiche Funktion wie <span class="listing">echo</span>, allerdings bietet es einige Optionen mehr an. Hier die Optionen zur Funktion <span class="listing">print</span> in der Korn-Shell (siehe Tabelle 5.3):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.3   
+    </b>Optionen f&uuml;r den print-Befehl (Korn-Shell only)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–n
+</td>
+<td class="tabellentext" bgcolor="#000000">Newline unterdr&uuml;cken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–r
+</td>
+<td class="tabellentext" bgcolor="#000000">Escape-Sequenzen ignorieren
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–u n
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausgabe von print erfolgt auf den Filedeskriptor n
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–p
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausgabe von print erfolgt auf Co-Prozess
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–
+</td>
+<td class="tabellentext" bgcolor="#000000">Argumente, die mit - beginnen, werden nicht als Option behandelt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–R
+</td>
+<td class="tabellentext" bgcolor="#000000">wie -, mit Ausnahme der Angabe von –n
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">5.2.3 Der Befehl printf<a id="RxxKap00700104004E721F034268" name="RxxKap00700104004E721F034268"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999761" name="Xxx999761"></a><a id="Xxx999762" name="Xxx999762"></a><a id="Xxx999763" name="Xxx999763"></a>Wer schon einmal mit der C-Programmierung in Kontakt gekommen ist, der hat bereits mehr als einmal mit dem <span class="listing">printf</span>-Befehl zur formatierten Ausgabe zu tun gehabt. Allerdings ist dieses <span class="listing">printf</span> im Gegensatz zum <span class="listing">printf</span> der C–Bibliothek ein echtes Programm und unabh&auml;ngig von der Shell (also kein Builtin-Kommando). Die Syntax:</p>
+<pre>printf format argument1 argument2 ... argument_n</pre>
+<p>»format« ist hierbei der Formatstring, der beschreibt, wie die Ausgaben der Argumente »argument1« bis »argument_n« zu formatieren sind. Somit ist der Formatstring im Endeffekt eine Schablone f&uuml;r die Ausgabe, die vorgibt, wie die restlichen Parameter (»argument1« bis »argument_n«) ausgegeben werden sollen. Befindet sich im Formatstring ein bestimmtes Zeichenmuster (bspw. <span class="listing">%s</span> f&uuml;r eine Zeichenkette (s = String)), wird dies durch das erste Argument (<span class="listing">argument1</span>) von <span class="listing">printf</span> ersetzt und formatiert ausgegeben. Befindet sich ein zweites Zeichenmuster im Formatstring, wird dies durch das zweite Argument (<span class="listing">argument2</span>) hinter dem Formatstring von <span class="listing">printf</span> ersetzt usw. Werden mehr Zeichenmuster im Formatstring angegeben, als Argumente vorhanden sind, werden die restlichen Zeichenketten mit <span class="listing">""</span> formatiert.</p>
+<p>Ein Zeichenmuster wird durch das Zeichen <span class="listing">%</span> eingeleitet und mit einem weiteren Buchstaben abgeschlossen. Mit dem Zeichenmuster <span class="listing">%s</span> geben Sie etwa an, dass hier eine Zeichenkette mit beliebiger L&auml;nge ausgegeben wird. Welche Zeichenmuster es gibt und wie diese aussehen, k&ouml;nnen Sie Tabelle 5.4 entnehmen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.4   
+    </b>Zeichenmuster f&uuml;r printf und deren Bedeutung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Zeichenmuster</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Typ</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beschreibung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%c
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichen
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt ein Zeichen entsprechend dem Parameter aus.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%s
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichenkette
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt eine Zeichenkette beliebiger L&auml;nge aus.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%d oder %i
+</td>
+<td class="tabellentext" bgcolor="#000000">Ganzzahl
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt eine Ganzzahl mit Vorzeichen aus.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%u
+</td>
+<td class="tabellentext" bgcolor="#000000">Ganzzahl
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt eine positive Ganzzahl aus. Negative Werte werden dann in der positiven CPU-Darstellung ausgegeben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%f
+</td>
+<td class="tabellentext" bgcolor="#000000">reelle Zahl
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt eine Gleitpunktzahl aus.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%e oder %E
+</td>
+<td class="tabellentext" bgcolor="#000000">reelle Zahl
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt eine Gleitpunktzahl in der Exponentialschreibweise aus.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%x oder %X
+</td>
+<td class="tabellentext" bgcolor="#000000">Ganzzahl
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt eine Ganzzahl in hexadezimaler Form aus.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%g oder %G
+</td>
+<td class="tabellentext" bgcolor="#000000">reelle Zahl
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist der Exponent kleiner als –4, wird das Format %e verwendet, ansonsten %f.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%%
+</td>
+<td class="tabellentext" bgcolor="#000000">Prozentzeichen
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt das Prozentzeichen aus.
+</td>
+</tr>
+</table><br>
+<p>Hier ein einfaches Beispiel, wie Sie eine Textdatei mit folgendem Format</p>
+<pre>you@host &gt; cat bestellung.txt
+J.Wolf::10::Socken
+P.Weiss::5::T-Shirts
+U.Hahn::3::Hosen
+Z.Walter::6::Handschuhe</pre>
+<p>in lesbarer Form formatiert ausgeben lassen k&ouml;nnen:</p>
+<pre># Demonstriert den printf-Befehl
+# aprintf1
+FILE=bestellung.txt
+TRENNER=::
+for data in `cat $FILE`
+do
+   kunde=`echo $data | tr $TRENNER ' '`
+   set $kunde
+   printf "Kunde: %-10s Anzahl: %-5d Gegenstand: %15s\n" $1 $2 $3
+done</pre>
+<p>Das Script liest zun&auml;chst zeilenweise mit <span class="listing">cat</span> aus der Textdatei bestellung.txt ein. Nach <span class="listing">do</span> werden die Trennzeichen »<span class="listing">::</span>« durch ein Leerzeichen ersetzt und mittels <span class="listing">set</span> auf die einzelnen Positionsparameter <span class="listing">$1</span>, <span class="listing">$2</span> und <span class="listing">$3</span> verteilt. Diese Positionsparameter werden anschlie&szlig;end mit <span class="listing">printf</span> als Argument f&uuml;r die Zeichenmuster verwendet. Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aprintf1
+Kunde: J.Wolf     Anzahl: 10    Gegenstand:          Socken
+Kunde: P.Weiss    Anzahl: 5     Gegenstand:        T-Shirts
+Kunde: U.Hahn     Anzahl: 3     Gegenstand:           Hosen
+Kunde: Z.Walter   Anzahl: 6     Gegenstand:      Handschuhe</pre>
+<p>Wie Sie im Beispiel au&szlig;erdem sehen, k&ouml;nnen hierbei auch die Escape-Sequenzen wie <span class="listing">\n</span> usw. im Formatstring verwendet werden. Ein Vorteil ist es zugleich, dass Sie in der Bash die Escape-Zeichen ohne eine Option wie <span class="listing">–e</span> bei <span class="listing">echo</span> anwenden k&ouml;nnen.</p>
+<p>Im Beispiel wurde beim Formatstring das Zeichenmuster mit einer erweiterten Angabe formatiert. So k&ouml;nnen Sie zum Beispiel durch eine Zahlenangabe zwischen <span class="listing">%</span> und dem Buchstaben f&uuml;r das Format die minimale Breite der Ausgabe bestimmen. Besitzt ein Argument weniger Zeichen, als Sie mit der minimalen Breite vorgegeben haben, so werden die restlichen Zeichen mit einem Leerzeichen aufgef&uuml;llt.</p>
+<p>Auf welcher Seite hier mit Leerzeichen aufgef&uuml;llt wird, h&auml;ngt davon ab, ob sich vor der Ganzzahl noch ein Minuszeichen befindet. Setzen Sie n&auml;mlich noch ein Minuszeichen vor die Breitenangabe, wird die Ausgabe linksb&uuml;ndig justiert.</p>
+<p>Hier k&ouml;nnen Sie noch n&auml;her spezifizieren, indem Sie einen Punkt hinter der Feldbreite gefolgt von einer weiteren Ganzzahl verwenden. Dann k&ouml;nnen Sie die Feldbreite von der Genauigkeit trennen (siehe anschlie&szlig;endes Beispiel). Bei einer Zeichenkette definieren Sie dabei die Anzahl von Zeichen, die maximal ausgegeben werden. Bei einer Flie&szlig;kommazahl wird hiermit die Anzahl der Ziffern nach dem Komma definiert und bei Ganzzahlen die minimale Anzahl von Ziffern, die ausgegeben werden sollen – wobei Sie niemals eine Ganzzahl wie etwa 1234 durch <span class="listing">%.2d</span> auf zwei Ziffern k&uuml;rzen k&ouml;nnen. Verwenden Sie hingegen eine gr&ouml;&szlig;ere Ziffer, als die Ganzzahl Stellen erh&auml;lt, werden die restlichen Ziffern mit Nullen aufgef&uuml;llt. Hier ein Script, das die erweiterten Formatierungsm&ouml;glichkeiten demonstrieren soll:</p>
+<pre># Demonstriert den printf-Befehl
+# aprintf2
+text=Kopfstand
+a=3
+b=12345
+printf "|01234567890123456789|\n"
+printf "|%s|\n" $text
+printf "|%20s|\n" $text
+printf "|%-20s|\n" $text
+printf "|%20.4s|\n" $text
+printf "|%-20.4s|\n\n" $text
+printf "Flie&szlig;kommazahl: %f\n" $a
+printf "gek&uuml;rzt       : %.2f\n" $a
+printf "Ganzzahl      : %d\n" $b
+printf "gek&uuml;rzt       : %.2d\n" $b
+printf "erweitert     : %.8d\n" $b</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aprintf2
+|01234567890123456789|
+|Kopfstand|
+|           Kopfstand|
+|Kopfstand           |
+|                Kopf|
+|Kopf                |
+Flie&szlig;kommazahl: 3,000000
+gek&uuml;rzt       : 3,00
+Ganzzahl      : 12345
+gek&uuml;rzt       : 12345
+erweitert     : 00012345</pre>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">5.2.4 Der Befehl tput – Terminalsteuerung<a id="RxxKap00700104004E721F03429C" name="RxxKap00700104004E721F03429C"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999853" name="Xxx999853"></a><a id="Xxx999854" name="Xxx999854"></a><a id="Xxx999855" name="Xxx999855"></a><a id="Xxx999856" name="Xxx999856"></a><a id="Xxx999857" name="Xxx999857"></a>H&auml;ufig will man neben der gew&ouml;hnlichen Ausgabe auch das Terminal oder den Bildschirm steuern: etwa den Bildschirm l&ouml;schen, Farben verwenden oder die H&ouml;he und Breite des Bildschirms ermitteln. Dies und noch vieles mehr k&ouml;nnen Sie mit <span class="listing">tput</span> realisieren. <span class="listing">tput</span> ist &uuml;brigens auch ein eigenst&auml;ndiges Programm (kein Builtin) und somit unabh&auml;ngig von der Shell. Zum Gl&uuml;ck kennt <span class="listing">tput</span> die Terminalbibliothek <span class="listing">terminfo<a id="Xxx999859" name="Xxx999859"></a></span> (fr&uuml;her auch /etc/termcap<a id="Xxx999860" name="Xxx999860"></a>), in der viele Attribute zur Steuerung des Terminals abgelegt sind. Dort finden Sie eine Menge Funktionen, von denen Sie hier nur die n&ouml;tigsten kennen lernen. Einen umfassenderen Einblick k&ouml;nnen Sie &uuml;ber die entsprechende Manual-Page von <span class="listing">terminfo</span> gewinnen.</p>
+<p>Wie sieht ein solcher Eintrag in <span class="listing">terminfo</span> aus? Verwenden wir doch als einfachstes Beispiel <span class="listing">clear</span>, womit Sie den Bildschirm des Terminals l&ouml;schen k&ouml;nnen.</p>
+<pre>you@host &gt; tput clear | tr '\033' 'X' ; echo
+X[HX[2J</pre>
+<p>Hier erhalten Sie die Ausgabe der Ausf&uuml;hrung von <span class="listing">clear</span> im Klartext. Es muss allerdings das Escape-Zeichen (<span class="listing">\033</span>) durch ein »X« oder &Auml;hnliches ausgetauscht werden, weil ein Escape-Zeichen nicht darstellbar ist. Somit lautet der Befehl zum L&ouml;schen des Bildschirms hier:</p>
+<pre>\033[H\033[2J</pre>
+<p><a id="Xxx999865" name="Xxx999865"></a><a id="Xxx999866" name="Xxx999866"></a>Mit folgender Eingabe k&ouml;nnten Sie den Bildschirm l&ouml;schen:</p>
+<pre>you@host &gt; echo '\033[H\033[2J'</pre>
+<p>oder in der Bash:</p>
+<pre>you@host &gt; echo -en '\033[H\033[2J'</pre>
+<p>Allerdings gilt dieses Beispiel nur, wenn »<span class="listing">echo</span> <span class="listing">$TERM</span>« die <span class="listing">xterm</span> ist. Es gibt n&auml;mlich noch eine Reihe weiterer Terminaltypen, weshalb Sie mit dieser Methode wohl nicht sehr weit kommen werden – und dies ist auch gar nicht erforderlich, da es hierf&uuml;r ja die Bibliothek <span class="listing">terminfo</span> mit der Funktion <span class="listing">tput</span> gibt. Die Syntax von <span class="listing">tput</span> lautet:</p>
+<pre>tput Terminaleigenschaft</pre>
+<p>Wenn Sie sich die M&uuml;he machen, die Manual-Page von <span class="listing">terminfo</span> durchzubl&auml;ttern, so finden Sie neben den Informationen zum Ver&auml;ndern von Textattributen und einigen steuernden Terminal-Eigenschaften auch K&uuml;rzel, mit denen Sie Informationen zum aktuellen Terminal abfragen k&ouml;nnen.<a id="Xxx999874" name="Xxx999874"></a><a id="Xxx999875" name="Xxx999875"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.5   
+    </b>Informationen zum laufenden Terminal</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>K&uuml;rzel</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cols<a id="Xxx999882" name="Xxx999882"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Aktuelle Anzahl der Spalten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">lines<a id="Xxx999887" name="Xxx999887"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Aktuelle Anzahl der Zeilen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">colors<a id="Xxx999892" name="Xxx999892"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Aktuelle Anzahl der Farben, die das Terminal unterst&uuml;tzt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">pairs<a id="Xxx999897" name="Xxx999897"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Aktuelle Anzahl der Farbenpaare (Schriftfarbe und Hintergrund), die dem Terminal zur Verf&uuml;gung stehen.
+</td>
+</tr>
+</table><br>
+<p>Diese Informationen lassen sich in einem Script folgenderma&szlig;en ermitteln:</p>
+<pre># Demonstriert den tput-Befehl
+# tput1
+spalten=`tput cols`
+zeilen=`tput lines`
+farben=`tput colors`
+paare=`tput pairs`
+echo "Der Typ des Terminals $TERM hat im Augenblick"
+echo " + $spalten Spalten und $zeilen Zeilen"
+echo " + $farben Farben und $paare Farbenpaare"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./tput1
+Der Typ des Terminals xterm hat im Augenblick
+ + 80 Spalten und 29 Zeilen
+ + 8 Farben und 64 Farbenpaare</pre>
+<p>Zum Ver&auml;ndern der Textattribute finden Sie in <span class="listing">tput</span> ebenfalls einen guten Partner. Ob hervorgehoben, invers oder unterstrichen, auch dies ist mit der Bibliothek <span class="listing">terminfo</span> m&ouml;glich. Tabelle 5.6 nennt hierzu einige K&uuml;rzel und deren Bedeutung.<a id="Xxx999914" name="Xxx999914"></a><a id="Xxx999915" name="Xxx999915"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.6   
+    </b>Ver&auml;ndern von Textattributen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>K&uuml;rzel</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">bold<a id="Xxx999922" name="Xxx999922"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Etwas hervorgehobenere (fette) Schrift
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">boldoff<a id="Xxx999927" name="Xxx999927"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Fettschrift abschalten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">blink<a id="Xxx999932" name="Xxx999932"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Text blinken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">rev<a id="Xxx999937" name="Xxx999937"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Inverse Schrift verwenden
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">smul<a id="Xxx999942" name="Xxx999942"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Text unterstreichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">rmul<a id="Xxx999947" name="Xxx999947"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Unterstreichen abschalten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">sgr0<a id="Xxx999952" name="Xxx999952"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle Attribute wiederherstellen (also normale Standardeinstellung)
+</td>
+</tr>
+</table><br>
+<p>Auch zu den Textattributen soll ein Shellscript geschrieben werden:</p>
+<pre># Demonstriert den tput-Befehl
+# tput2
+fett=`tput bold`
+invers=`tput rev`
+unterstrich=`tput smul`
+reset=`tput sgr0`
+echo "Text wird ${fett}Hervorgehoben${reset}"
+echo "Oder gerne auch ${invers}Invers${reset}"
+echo "Nat&uuml;rlich auch mit ${unterstrich}Unterstrich${reset}"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/05_01.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein05_01.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 5.1   
+    </b>Ein Script mit ver&auml;nderten Textattributen</p>
+</td>
+</tr>
+</table><br>
+<p>Wenn Ihnen <span class="listing">tput</span> <span class="listing">colors</span> mehr als den Wert 1 zur&uuml;ckgibt, k&ouml;nnen Sie auch auf Farben zur&uuml;ckgreifen. Meistens handelt es sich dabei um acht Farben. Je acht Farben f&uuml;r den Hintergrund und acht f&uuml;r den Vordergrund ergeben zusammen 64 m&ouml;gliche Farbenpaare, welche Sie mit</p>
+<pre># Vordergrundfarbe setzen
+tput setf Nummer
+# Hintergrundfarbe setzen
+tput setb Nummer</pre>
+<p>aktivieren k&ouml;nnen. F&uuml;r <span class="listing">Nummer</span> k&ouml;nnen Sie einen Wert zwischen 0 und 7 verwenden, wobei die einzelnen Nummern gew&ouml;hnlich den folgenden Farben entsprechen:<a id="Xxx999977" name="Xxx999977"></a><a id="Xxx999978" name="Xxx999978"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.7   
+    </b>Farbenwerte f&uuml;r den Vorder- und Hintergrund</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Nummer</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Farbe</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">Schwarz
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1
+</td>
+<td class="tabellentext" bgcolor="#000000">Blau
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">2
+</td>
+<td class="tabellentext" bgcolor="#000000">Gr&uuml;n
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">3
+</td>
+<td class="tabellentext" bgcolor="#000000">Gelb
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+<td class="tabellentext" bgcolor="#000000">Rot
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">5
+</td>
+<td class="tabellentext" bgcolor="#000000">Lila
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">6
+</td>
+<td class="tabellentext" bgcolor="#000000">Cyan
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">7
+</td>
+<td class="tabellentext" bgcolor="#000000">Grau
+</td>
+</tr>
+</table><br>
+<p>In der Praxis k&ouml;nnen Sie die Farben zum Beispiel dann so einsetzen:</p>
+<pre># Demonstriert den tput-Befehl
+# tput3
+Vgruen=`tput setf 2`
+Vblau=`tput setf 1`
+Hschwarz=`tput setb 0`
+Hgrau=`tput setb 7`
+reset=`tput sgr0`
+# Farbenpaar Schwarz-Gr&uuml;n erstellen
+Pschwarzgruen=`echo ${Vgruen}${Hschwarz}`
+echo  $Pschwarzgruen
+echo "Ein klassischer Fall von Schwarz-Gr&uuml;n"
+echo  ${Vblau}${Hgrau}
+echo "Ein ungew&ouml;hnliches Blau-Grau"
+# Alles wieder R&uuml;ckg&auml;ngig machen
+echo $reset</pre>
+<p>Nat&uuml;rlich finden Sie in der Bibliothek <span class="listing">terminfo</span> auch steuernde Terminal-Eigenschaften, nach denen h&auml;ufig bevorzugt gefragt wird. Mit steuernden Eigenschaften sind hier K&uuml;rzel in <span class="listing">terminfo</span> <span class="listing">gemeint</span>, mit denen Sie die Textausgabe auf verschiedensten Positionen des Bildschirms erreichen k&ouml;nnen.<a id="Xxx1000027" name="Xxx1000027"></a><a id="Xxx1000028" name="Xxx1000028"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.8   
+    </b>Steuernde Terminal-Eigenschaften</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>K&uuml;rzel</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">home<a id="Xxx1000035" name="Xxx1000035"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Cursor auf die linke obere Ecke des Bildschirms setzen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cup n m<a id="Xxx1000040" name="Xxx1000040"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Cursor auf die n-te Zeile in der m-ten Spalte setzen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">dl1<a id="Xxx1000045" name="Xxx1000045"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Aktuelle Zeile l&ouml;schen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">il1<a id="Xxx1000050" name="Xxx1000050"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeile an aktueller Position einf&uuml;gen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">dch1<a id="Xxx1000055" name="Xxx1000055"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Zeichen in der aktuellen Position l&ouml;schen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">clear<a id="Xxx1000060" name="Xxx1000060"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Bildschirm l&ouml;schen
+</td>
+</tr>
+</table><br>
+<p>Zu guter Letzt noch ein Shellscript, das Ihnen diese Funktionen zum Steuern des Terminals demonstrieren soll.</p>
+<pre># Demonstriert den tput-Befehl
+# tput4
+Dline=`tput dl1`     # Zeile l&ouml;schen
+Iline=`tput il1`     # Zeile einf&uuml;gen
+Dscreen=`tput clear` # Bildschirm l&ouml;schen
+# Bildschirm l&ouml;schen
+echo $Dscreen
+tput cup 9 10
+echo "------------------------------"
+tput cup 10 10
+printf "|%28s|" ""
+tput cup 11 10
+printf "|%5s Ein Teststring %7s|" " " " "
+tput cup 12 10
+printf "|%28s|" ""
+tput cup 13 10
+echo "------------------------------"
+# Kurze Pause
+sleep 2
+tput cup 11 10
+# Zeile l&ouml;schen
+echo $Dline
+sleep 2
+tput cup 11 10
+printf "${Iline}|%7s neuer String %7s|" " " " "
+sleep 2
+echo $Dscreen</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Dieser Abschnitt stellt nat&uuml;rlich nur einen kurzen Einblick in die Funktionen von <span class="listing">terminfo</span> dar. Die Funktionsvielfalt (bei einem Blick auf die Manual-Page) ist erschlagend, dennoch werden Sie in der Praxis das meiste nicht ben&ouml;tigen, und f&uuml;r den Hausgebrauch sind Sie hier schon recht gut ger&uuml;stet.</p>
+</td>
+</tr>
+</table><br>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_007_000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_007_002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_007_001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:54 GMT -->
+</html>

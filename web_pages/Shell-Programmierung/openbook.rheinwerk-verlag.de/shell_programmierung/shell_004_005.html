@@ -1,0 +1,580 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 2.6 Variablen exportieren</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_004_004.html">
+<link rel="next" href="shell_004_006.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_004_000.html#RxxKap00400004004D961F024172">2 Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_000.html#RxxKap00400004004D961F024174">2.1 Grundlagen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F024178">2.1.1 Zugriff auf den Wert einer Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F02417E">2.1.2 Variablen-Interpolation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D172">2.2 Zahlen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D174">2.2.1 Integer-Arithmetik (Bourne-Shell, Bash und Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D186">2.2.2 Integer-Arithmetik (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D1BE">2.2.3 bc – Rechnen mit Flie&szlig;kommazahlen und mathematische Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F021172">2.3 Zeichenketten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F021174">2.3.1 Stringverarbeitung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F0211CE">2.3.2 Erweiterte Funktionen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011172">2.4 Quotings und Kommando-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011180">2.4.1 Single und Double Quotings</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011196">2.4.2 Kommando-Substitution – Back Quotes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B172">2.5 Arrays (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B175">2.5.1 Werte an Arrays zuweisen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B180">2.5.2 Eine Liste von Werten an ein Array zuweisen (Bash)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B186">2.5.3 Eine Liste von Werten an ein Array zuweisen (Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B18A">2.5.4 Zugreifen auf die einzelnen Elemente eines Arrays</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00400504004DB11F020172">2.6 Variablen exportieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_006.html#RxxKap00400604004DB21F030172">2.7 Umgebungsvariablen eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_007.html#RxxKap00400704004DB31F023172">2.8 Shell-Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038172">2.9 Automatische Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038174">2.9.1 Der Name des Shellscripts – $0</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03817F">2.9.2 Die Prozessnummer des Shellscripts – $$</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038185">2.9.3 Der Beendigungsstatus eines Shellscripts – $?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038189">2.9.4 Die Prozessnummer des zuletzt gestarteten Hintergrundprozesses – $!</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03818C">2.9.5 Weitere vordefinierte Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03819D">2.9.6 Weitere automatische Variablen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">2.6 <a id="RxxKap002321Variablenexportieren" name="RxxKap002321Variablenexportieren"></a><a id="Rxx_Ref108692768" name="Rxx_Ref108692768"></a>Variablen exportier<a id="RxxKap00400504004DB11F020172" name="RxxKap00400504004DB11F020172"></a>en 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a><a id="Xxx999280" name="Xxx999280"></a>Definieren Sie Variablen in Ihrem Shellscript, so sind diese gew&ouml;hnlich nur zur Ausf&uuml;hrzeit verf&uuml;gbar. Nach der Beendigung des Scripts werden die Variablen wieder freigegeben. Manches Mal ist es allerdings n&ouml;tig, dass mehrere Scripts oder Subshells mit einer einzelnen Variablen arbeiten. Damit das jeweilige Script bzw. die n&auml;chste Subshell von der Variable Kenntnis nimmt, wird diese exportiert.</p>
+<p>Exportiere Variablen, die Sie in eine neue Shell &uuml;bertragen m&ouml;chten, werden mit dem Kommando <span class="listing">export</span> &uuml;bernommen:</p>
+<pre>export variable</pre>
+<p>Beim Start der neuen Shell steht die exportierte Variable dann auch zur Verf&uuml;gung – nat&uuml;rlich mitsamt dem Wert, den diese in der alten Shell belegt hat. In der Bourne-Shell m&uuml;ssen Sie die Zuweisung und das Exportieren einer Variablen getrennt ausf&uuml;hren.</p>
+<pre>you@host &gt; variable=1234
+you@host &gt; export variable</pre>
+<p>In der Bash und der Korn-Shell k&ouml;nnen Sie diesen Vorgang zusammenlegen:</p>
+<pre>you@host &gt; export variable=1234</pre>
+<p>Nat&uuml;rlich k&ouml;nnen auch mehr Variablen auf einmal exportiert werden:</p>
+<pre>you@host &gt; export var1 var2 var3 var4</pre>
+<p>Die weiteren Variablen, die Sie auf einmal exportieren wollen, m&uuml;ssen mit einem Leerzeichen voneinander getrennt sein.</p>
+<h4 class="t4">Die Shell vererbt eine Variable an ein Script (Subshell)</h4>
+<p><a id="Xxx999292" name="Xxx999292"></a><a id="Xxx999293" name="Xxx999293"></a>Der einfachste Fall ist gegeben, wenn eine in der Shell definierte Variable auch f&uuml;r ein Shellscript vorhanden sein soll. Da die Shell ja zum Starten von Shellscripts in der Regel eine Subshell startet, wei&szlig; die Subshell bzw. das Shellscript nichts mehr von den benutzerdefinierten Variablen. Das Beispiel:</p>
+<pre>you@host &gt; wichtig="Wichtige Daten"</pre>
+<p>Das Shellscript:</p>
+<pre># Demonstriert den Umgang export
+# Name : aexport1
+echo "aexport1: $wichtig"</pre>
+<p>Beim Ausf&uuml;hren von »aexport1« wird bei Verwendung der Variablen »wichtig« ein leerer String ausgegeben. Hier sollte man in der Shell, in der das Script gestartet wird, einen Export durchf&uuml;hren.</p>
+<pre>you@host &gt; export wichtig
+you@host &gt; ./aexport1
+aexport1: Wichtige Daten</pre>
+<p>Und schon steht dem Script die benutzerdefinierte Variable »wichtig« zur Verf&uuml;gung.</p>
+<h4 class="t4">Ein Shellscript vererbt eine Variable an ein Shellscript (Sub-Subshell)</h4>
+<p><a id="Xxx999302" name="Xxx999302"></a>Wenn Sie aus einem Script ein weiteres Script aufrufen und auch hierbei dem aufzurufenden Script eine bestimmte Variable des aufrufenden Scripts zur Kenntnis geben wollen, m&uuml;ssen Sie im aufrufenden Script die entsprechende Variable exportieren.</p>
+<pre># Demonstriert den Umgang export
+# Name : aexport1
+wichtig="Noch wichtigere Daten"
+echo "aexport1: $wichtig"
+# Variable im Shellscript exportieren
+export wichtig
+./aexport2</pre>
+<p>In diesem Script »aexport1« wird ein weiteres Script namens »aexport2« aufgerufen. Damit diesem Script auch die benutzerdefinierte Variable »wichtig« zur Verf&uuml;gung steht, muss diese im Script zuvor noch exportiert werden. Hier das Script »aexport2«:</p>
+<pre># Demonstriert den Umgang export
+# Name : aexport2
+echo "aexport2: $wichtig"</pre>
+<p>Die Shellscripts bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aexport1
+aexport1: Noch wichtigere Daten
+aexport2: Noch wichtigere Daten
+you@host &gt; echo $wichtig
+you@host &gt;</pre>
+<p>Hier wurde au&szlig;erdem versucht, in der Shell, die das Shellscript »aexport1« aufgerufen hat, die benutzerdefinierte Variable »wichtig« auszugeben. Das ist logischerweise ein leerer String, da die Shell nichts von einer Variablen wissen kann, die in einer Subshell definiert und ausgef&uuml;hrt wird.</p>
+<p>Bei dem Beispiel von eben stellt sich die Frage, was passiert, wenn eine Subshell den Inhalt einer vom Elternprozess benutzerdefinierten exportierten Variable ver&auml;ndert und die Ausf&uuml;hrung des Scripts in der &uuml;bergeordneten Shell fortgef&uuml;hrt wird. Um auf das Anwendungsbeispiel zur&uuml;ckzukommen: Im Script »aexport2« soll die Variable »wichtig« ver&auml;ndert werden. Hierzu nochmals beide Shellscripts etwas umgeschrieben. Zuerst das Script »aexport1«:</p>
+<pre># Demonstriert den Umgang export
+# Name : aexport1
+wichtig="Noch wichtigere Daten"
+echo "aexport1: $wichtig"
+# Variable im Shellscript exportieren
+export wichtig
+./aexport2
+# Nach der Ausf&uuml;hrung von aexport2
+echo "aexport1: $wichtig"</pre>
+<p>Jetzt noch »aexport2«:</p>
+<pre># Demonstriert den Umgang export
+# Name : aexport2
+echo "aexport2: $wichtig"
+wichtig="Unwichtig"
+echo "aexport2: $wichtig"</pre>
+<p>Die beiden Scripts wieder bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aexport1
+aexport1: Noch wichtigere Daten
+aexport2: Noch wichtigere Daten
+aexport2: Unwichtig
+aexport1: Noch wichtigere Daten</pre>
+<p>An der Ausf&uuml;hrung der Scripts konnten Sie ganz klar erkennen, dass es auf herk&ouml;mmlichem Weg unm&ouml;glich ist, die Variablen einer Eltern-Shell zu ver&auml;ndern.</p>
+<h4 class="t4">Starten eines Scripts in der aktuellen Shell – Punkte-Kommando</h4>
+<p><a id="Xxx999318" name="Xxx999318"></a><a id="Xxx999319" name="Xxx999319"></a><a id="Xxx999320" name="Xxx999320"></a>Wollen Sie trotzdem, dass die Eltern-Shell betroffen ist, wenn Sie eine Variable in einer Subshell ver&auml;ndern, dann k&ouml;nnen Sie das Punkte-Kommando verwenden. Dieses wurden beim Starten von Shellscripts bereits erw&auml;hnt. Mit dem Punkte-Kommando vor dem auszuf&uuml;hrenden Shellscript veranlassen Sie, dass das Shellscript nicht in einer Subshell ausgef&uuml;hrt wird, sondern von der aktuellen Shell.</p>
+<p>Auf das Beispiel »aexport1« bezogen m&uuml;ssen Sie nur Folgendes &auml;ndern:</p>
+<pre># Demonstriert den Umgang export
+# Name : aexport1
+wichtig="Noch wichtigere Daten"
+echo "aexport1: $wichtig"
+# Variable im Shellscript exportieren
+. ./aexport2
+# Nach der Ausf&uuml;hrung von aexport2
+echo "aexport1: $wichtig"</pre>
+<p>Beim Ausf&uuml;hren der Scripts ist jetzt auch die Ver&auml;nderung der Variablen »wichtig« im Script »aexport2« beim Script »aexport1« angekommen.</p>
+<p>Das Hauptanwendungsgebiet des Punkte-Kommandos ist aber das Einlesen von Konfigurationsdateien. Eine Konfigurationsdatei wird h&auml;ufig verwendet, wenn Sie ein Script f&uuml;r mehrere Systeme oder unterschiedlichste Optionen (bspw. mehrere Sprachen, eingeschr&auml;nkte oder unterschiedliche Funktionen) anbieten wollen. In solch einer Konfigurationsdatei wird dann h&auml;ufig die Variablenzuweisung vorgenommen. Dadurch k&ouml;nnen die Variablen vom eigentlichen Script getrennt werden – was ein Script erheblich flexibler macht. Durch die Verwendung des Punkte-Kommandos bleiben Ihnen diese Variablen in der aktuellen Shell erhalten. Als Beispiel folgende Konfigurationsdatei:</p>
+<pre># aconf.conf
+lang="deutsch"
+prg="Shell"</pre>
+<p>Und jetzt noch das entsprechende Script, das diese Konfigurationsdatei verwendet:</p>
+<pre># Name : apoint
+# Konfigurationsdaten einlesen
+. aconf.conf
+echo "Spracheinstellung: $lang; ($prg)"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt;  ./apoint
+Spracheinstellung: deutsch; (Shell)</pre>
+<p>Jetzt kann durch ein Ver&auml;ndern der Konfigurationsdatei aconf.conf die Ausgabe des Scripts nach Bedarf ver&auml;ndert werden. Im Beispiel ist dieser Fall nat&uuml;rlich recht belanglos.</p>
+<p>Es gibt au&szlig;erdem noch zwei Anwendungsf&auml;lle, wo bei einem Script die benutzerdefinierten Variablen ohne einem Export sichtbar sind. Dies geschieht durch die Verwendung von Kommando-Substitution <span class="listing">`...`</span> und bei einer Gruppierung von Befehlen <span class="listing">(...)</span>. In beiden F&auml;llen bekommt die Subshell (bzw. das Shellscript) eine komplette Kopie aller Variablen der Eltern-Shell kopiert.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Anstelle des Punkte-Operators k&ouml;nnen Sie auch den Builtin-Befehl <span class="listing">script</span> verwenden.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Variablen exportieren – extra (Bash und Korn-Shell only)</h4>
+<p><a id="Xxx999338" name="Xxx999338"></a><a id="Xxx999339" name="Xxx999339"></a><a id="Xxx999340" name="Xxx999340"></a>Intern wird beim Exportieren einer Variablen ein Flag gesetzt. Dank dieses Flags kann eine Variable an weitere Subshells vererbt werden, ohne dass hierbei weitere <span class="listing">export</span>-Aufrufe erforderlich sind. In der Bash oder der Korn-Shell k&ouml;nnen Sie dieses Flag mithilfe des Kommandos <span class="listing">typeset</span> setzen oder wieder entfernen. Um mit <span class="listing">typeset</span> eine Variable zu exportieren, wird die Option <span class="listing">–x</span> verwendet. Hier die Syntax:</p>
+<pre>typeset -x variable</pre>
+<p>Nat&uuml;rlich kann auch hier wieder mehr als nur eine Variable exportiert werden. Ebenso k&ouml;nnen Sie die Zuweisungen und das Exportieren zusammen ausf&uuml;hren. <span class="listing">typeset</span> ist deshalb so interessant f&uuml;r das Exportieren von Variablen, weil Sie hierbei jederzeit mit der Option <span class="listing">+x</span> das Export-Flag wieder l&ouml;schen k&ouml;nnen.</p>
+<h4 class="t4">Umgebungsvariablen exportieren (Bourne-Shell only)</h4>
+<p><a id="Xxx999345" name="Xxx999345"></a><a id="Xxx999346" name="Xxx999346"></a>Zwar werden die Umgebungsvariablen noch gesondert behandelt, doch bez&uuml;glich der Exportierung hier schon ein paar Bemerkungen. Wichtig ist vor allem zu erw&auml;hnen, dass Umgebungsvariablen bei jedem Aufruf einer Shell neu angelegt werden (nat&uuml;rlich als Kopie der Eltern-Shell). Des Weiteren werden bei der Bash und der Korn-Shell die Umgebungsvariablen immer automatisch exportiert und m&uuml;ssen somit nicht explizit angewiesen werden. Geschieht dies trotzdem, ist das kein Fehler – zum Gl&uuml;ck, denn die Bourne-Shell exportiert die Umgebungsvariablen leider nicht automatisch.</p>
+<p>Hier ein solcher Vorgang in der Bourne-Shell:</p>
+<pre>sh-2.05b$ echo $USER
+you
+sh-2.05b$ USER=neu
+sh-2.05b$ echo $USER
+neu
+sh-2.05b$ sh
+sh-2.05b$ echo $USER
+you</pre>
+<p>Damit in einer Bourne-Shell auch die aktuellen Umgebungsvariablen bei einer neuen Shell g&uuml;ltig sind, m&uuml;ssen Sie diese explizit exportieren.</p>
+<pre>sh-2.05b$ echo $USER
+you
+sh-2.05b$ USER=neu
+sh-2.05b$ echo $USER
+neu
+sh-2.05b$ export USER
+sh-2.05b$ sh
+sh-2.05b$ echo $USER
+neu</pre>
+<h4 class="t4">Anzeigen exportierter Variablen</h4>
+<p>Wenn Sie das Kommando <span class="listing">export</span> ohne irgendwelche Argumente verwenden, bekommen Sie alle exportierten Variablen zur&uuml;ck. Bei der Bash und Korn-Shell finden Sie darin auch die Umgebungsvariablen wieder, weil diese hier ja immer als »exportiert« markiert sind.</p>
+<p>Bei der Bash bzw. der Korn-Shell k&ouml;nnen Sie sich auch die exportierten Variablen mit dem Kommando <span class="listing">typeset</span> und der Option <span class="listing">–x</span> (keine weiteren Argumente) ansehen.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_006.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+</html>

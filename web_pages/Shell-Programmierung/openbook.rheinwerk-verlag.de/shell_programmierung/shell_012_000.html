@@ -1,0 +1,463 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_012_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:04 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 10 Fehlersuche und Debugging</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_011_006.html">
+<link rel="next" href="shell_012_001.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_011_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_012_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a class="navh" href="#RxxKap01200004004F621F041172">10 Fehlersuche und Debugging</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01200004004F621F041174">10.1 Strategien zum Vermeiden von Fehlern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01200004004F621F041176">10.1.1 Planen Sie Ihr Script</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01200004004F621F04117C">10.1.2 Testsystem bereitstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01200004004F621F04117E">10.1.3 Ordnung ist das halbe Leben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_012_001.html#RxxKap01200104004F791F019172">10.2 Fehlerarten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_012_002.html#RxxKap01200204004F7A1F023172">10.3 Fehlersuche</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_012_002.html#RxxKap01200204004F7A1F023174">10.3.1 Tracen mit set -x</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_012_002.html#RxxKap01200204004F7A1F023183">10.3.2 DEBUG und ERR-Signal</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_012_002.html#RxxKap01200204004F7A1F02319D">10.3.3 Variablen und Syntax &uuml;berpr&uuml;fen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_012_002.html#RxxKap01200204004F7A1F0231A3">10.3.4 Eine Debug-Ausgabe hinzuf&uuml;gen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_012_002.html#RxxKap01200204004F7A1F0231A7">10.3.5 Debugging-Tools</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<h1 class="t1">Kapitel 10 <a id="RxxKap0102FehlersucheundDebugging" name="RxxKap0102FehlersucheundDebugging"></a>Fehlersuche und Debuggin<a id="RxxKap01200004004F621F041172" name="RxxKap01200004004F621F041172"></a>g</h1>
+<p class="anleser"><i>Sicherlich haben Sie im Verlauf der vielen Kapitel beim Tippen und Schreiben von Scripts genauso viele Fehler gemacht wie ich und sich gefragt: Was passt denn jetzt wieder nicht? Auch hier gilt, dass Fehler beim Lernen nichts Schlechtes sind. Aber sobald Sie Ihre Scripts auf mehreren oder fremden Rechnern ausf&uuml;hren, sollte dies nicht mehr vorkommen. Daher finden Sie in diesem Kapitel einige Hinweise, wie Sie Fehler vermeiden k&ouml;nnen und, wenn sie bereits aufgetreten sind, wie Sie diesen auf die Schliche kommen.</i></p>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">10.1 <a id="RxxKap0104StrategienzumVermeidenvonFehlern" name="RxxKap0104StrategienzumVermeidenvonFehlern"></a>Strategien zum Vermeiden von Fehler<a id="RxxKap01200004004F621F041174" name="RxxKap01200004004F621F041174"></a>n 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999280" name="Xxx999280"></a><a id="Xxx999281" name="Xxx999281"></a><a id="Xxx999282" name="Xxx999282"></a><a id="Xxx999283" name="Xxx999283"></a>Sicherlich, Fehler g&auml;nzlich vermeiden k&ouml;nnen Sie wohl nie, aber es gibt immer ein paar grundlegende Dinge, die Sie beherzigen k&ouml;nnen, um wenigstens den &Uuml;berblick zu behalten.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">10.1.1 Planen Sie Ihr Script<a id="RxxKap01200004004F621F041176" name="RxxKap01200004004F621F041176"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999286" name="Xxx999286"></a>Zugegeben, bei einem Mini-Script von ein paar Zeilen werden Sie wohl kaum das Script planen. Wobei ich pers&ouml;nlich schon die Erfahrung gemacht habe, dass ein geplantes Script wesentlich schneller erstellt ist als ein aus dem Kopf geschriebenes. Eine solche Planung h&auml;ngt nat&uuml;rlich vom entsprechenden »Kopf« ;-) und dem Anwendungsfall ab. Aber das Prinzip ist einfach. Zuerst schreiben (oder kritzeln) Sie auf, was das Script machen soll.</p>
+<p>Ein Beispiel: Das Script soll auf mehreren Rechnern eingesetzt werden und ein Backup der Datenbank erstellen. Das Backup soll hierbei in einem separaten Verzeichnis gespeichert und bei mehr als zehn Backup-Dateien soll immer die &auml;lteste gel&ouml;scht werden.</p>
+<p>Auch wenn man sich bei den ersten Gedanken noch gar nicht vorstellen kann, wie das Script funktionieren bzw. aussehen soll, kann man trotzdem schon mit der Planung beginnen.</p>
+<pre>#---------------------------------------------------------------#
+Plan zum Backup-Script:
+1.) Pr&uuml;fen, ob das Verzeichnis f&uuml;r das Backup existiert (test) und
+    ggf. das Verzeichnis neu anlegen (mkdir)-
+2.) Da mehrere Dateinamen (zehn) in einem Verzeichnis verwendet
+    werden, einen entsprechenden Namen zur Laufzeit mit 'date'
+    erstellen und in einer Variablen speichern (date).
+3.) Einen Dump der Datenbank mit mysqldump und den entsprechenden
+    Optionen erstellen (mysqldump).
+4.) Den Dump gleich in das entsprechende Verzeichnis packen und
+    archivieren (tar oder cpio).    !!! Dateinamen beachten !!!
+5.) Ggf. Datenreste l&ouml;schen.
+6.) Verzeichnis auf Anzahl von Dateien &uuml;berpr&uuml;fen (ls -l | wc -l)
+    und ggf. die &auml;lteste Datei l&ouml;schen.
+Notizen: Bei Fertigstellung crontab aktivieren – t&auml;glich um
+         01.00 Uhr ein Backup erstellen.
+#---------------------------------------------------------------#</pre>
+<p>Zwar haben Sie jetzt noch keine Zeile Code geschrieben, doch Sie werden feststellen, dies ist schon die halbe Miete. Und wenn Sie merken, dass Sie das Script mit dem derzeitigen Wissensstand nicht realisieren k&ouml;nnen, wissen Sie wenigstens, wo sich Ihre Wissensl&uuml;cken befinden und k&ouml;nnen entsprechend nachhelfen.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">10.1.2 Testsystem bereitstellen<a id="RxxKap01200004004F621F04117C" name="RxxKap01200004004F621F04117C"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999293" name="Xxx999293"></a>Bevor Sie Ihr Script nach der Fertigstellung dem Ernstfall &uuml;berlassen, sollten Sie auf jeden Fall das Script lokal oder auf einem Testsystem testen. Gerade Operationen auf einer Datenbank oder schreibende Zugriffe auf Dateien sollte man m&ouml;glichst vorsichtig behandeln. Denn wenn irgendetwas schief l&auml;uft, ist dies auf Ihrem Testsystem nicht so schlimm, aber bei einem oder gar mehreren Rechnern k&ouml;nnte Ihnen solch ein Fehler eine Menge &Auml;rger, Zeit und vor allem Nerven kosten. Es w&auml;re auch sinnvoll, wenn Sie mehrere verschiedene Testsysteme zum Ausprobieren h&auml;tten – denn was auf Ihrer Umgebung l&auml;uft, muss nicht zwangsl&auml;ufig auch in einer anderen Umgebung laufen. Gerade wenn man h&auml;ufig zwischen Linux und UNIX wechselt, gibt es hie und da doch einige Differenzen.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">10.1.3 Ordnung ist das halbe Leben<a id="RxxKap01200004004F621F04117E" name="RxxKap01200004004F621F04117E"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999296" name="Xxx999296"></a>Hierzu gleich am Anfang folgendes Script:</p>
+<pre># Eine Datei anlegen
+# Name: creatfile
+CreatFile=atestfile.txt
+if [ ! -e $CreatFile ]
+then
+touch $CreatFile
+if [ ! -e $CreatFile ] ; then
+echo "Konnte $CreatFile nicht anlegen" ; exit 1
+fi
+fi
+echo "$CreatFile angelegt/vorhanden!"</pre>
+<p>Zugegeben, das Script ist kurz und im Prinzip auch verst&auml;ndlich, doch wenn Sie solch einen Programmierstil &uuml;ber l&auml;ngere Scripts beibehalten, werden Sie allein bei der Fehlersuche keine gro&szlig;e Freude haben. Was auf den ersten Blick negativ auff&auml;llt:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Keine Einr&uuml;ckungen bei den <span class="listing">if</span>-Anweisungen; es fehlt einfach an Struktur.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Mehrere Befehle in einer Zeile. Bei einer Fehlermeldung wird die Zeilennummer mit ausgegeben. Befinden sich darin mehrere Kommandos, wird die Fehlersuche erschwert.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Hier wurde die MS-&uuml;bliche »ungarische Notation« verwendet, welche in der Praxis sehr fehleranf&auml;llig sein kann. Hat man vergessen, wie die Variable »CreatFile« geschrieben wurde und man schreibt »creatfile« oder »creat_file«, ergibt sich schon ein Fehler. Wer schon einmal die Win32-API zur Programmierung verwendet hat, wei&szlig;, was ich meine.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Die Faulheit hat gesiegt, der Anwender wei&szlig; nach dem Script immer noch nicht, ob eine Datei angelegt wurde oder bereits vorhanden ist.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Kommentarlose Scripts sind schwer zu pflegen, besser den ein oder anderen (vielleicht &uuml;berfl&uuml;ssigen) Kommentar hinschreiben als gar keinen.</td>
+</tr>
+</table>
+<p>Hier das Script jetzt in einem etwas lesbareren Stil:</p>
+<pre># Eine Datei anlegen
+# Name: creatfile2
+# Datei, die angelegt werden soll
+creatfile=atestfile.txt
+# Existiert diese Datei bereits ...
+if [ ! -e $creatfile ]
+then                      # Nein ...
+   touch $creatfile       # Datei anlegen ...
+   # Jetzt nochmals &uuml;berpr&uuml;fen ...
+   if [ ! -e $creatfile ]
+   then
+      echo "Konnte $creatfile nicht anlegen"
+      exit 1   # Script erfolglos beenden
+   else
+      echo "$creatfile erfolgreich angelegt"
+   fi
+fi
+echo "$creatfile vorhanden!"</pre>
+<p>Das sieht doch schon viel besser aus. Nat&uuml;rlich kann Ihnen niemand vorschreiben, in welchem Stil Sie Ihre Scripts schreiben, dennoch will ich Ihnen hier einige Hinweise ans Herz legen, mit denen Sie (gerade, wenn Sie vielleicht noch Anf&auml;nger sind) ein friedlicheres Shell-Leben f&uuml;hren k&ouml;nnen.</p>
+<h4 class="t4">Variablen und Konstanten</h4>
+<p><a id="Xxx999309" name="Xxx999309"></a><a id="Xxx999310" name="Xxx999310"></a>Verwenden Sie einen sinnvollen Namen f&uuml;r eine Variable – mit »x«, »y« oder »z« kann keiner so recht was anfangen. Verwenden Sie bspw. Variablen in einer Funktion namens <span class="listing">removing()</span>, k&ouml;nnten Sie Variablen wie »rem_source«, »rem_dest« oder »rem_temp« verwenden. Hier gibt es viele M&ouml;glichkeiten, nur sollten Sie immer versuchen, dass Sie einer Variablen einen Namen geben, an dem man erkennt, was sie bedeutet – eine Variable ben&ouml;tigt also ein klar zu erkennendes Merkmal.</p>
+<p>Au&szlig;erdem sollten Sie Konstanten und Variablen auseinander halten. Ich bezeichne hier Konstanten nicht als Variablen, die mit <span class="listing">typeset</span> als »readonly« markiert wurden, sondern meine einfach Variablen, die sich zur Laufzeit des Scripts nicht mehr &auml;ndern. Ein guter Stil w&auml;re es bspw., Variablen, die sich im Script nicht mehr &auml;ndern, gro&szlig;zuschreiben (wer hat hier was von C gesagt ;-)) und normale Variablen klein. So kann man im Script schnell erkennen, welche Werte sich ohnehin nicht ver&auml;ndern und welche Werte variabel sind. Dies kann die Fehlersuche eingrenzen, weil konstante Variablen nicht ver&auml;ndert werden und man in diesen auch keine falschen Werte vermutet (es sei denn, man gibt diesen Variablen gleich zu Beginn einen falschen Wert).</p>
+<h4 class="t4">Stil und Kommentare</h4>
+<p>Hier gibt es nur eines zu sagen: Einmal mehr auf <b>(ENTER)</b> und eventuell mal auf die (h&auml;ufig noch wie neue) Tabulatortaste zu dr&uuml;cken, hat noch keinem geschadet. Ich empfehle Ihnen, eine Anweisung bzw. ein Schl&uuml;sselwort pro Zeile zu verwenden. Dies hilft Ihnen, bei einer Fehlermeldung gleich die entsprechende Zeile anzuspringen und zu lokalisieren. Ebenfalls sollten Sie der &Uuml;bersichtlichkeit zuliebe Anweisungs- oder Funktionsbl&ouml;cke einr&uuml;cken.</p>
+<p>Das Problem mit einen kaum kommentierten Code kennt man zur Gen&uuml;ge. Ich hatte zum Beispiel fr&uuml;her sehr viel mit Perl zu tun. Nach einem Jahr Abstinenz (und vielen anderen Programmiersprachen) ben&ouml;tigte ich nur ein paar Zeilen aus einem Script, das ich mal geschrieben hatte. Leider habe ich den Code nicht kommentiert und so gestaltete sich das »Entschl&uuml;sseln« etwas l&auml;ngerer bzw. ich ben&ouml;tigte wieder den Rat anderer Personen. Mit der Verwendung von Kommentaren h&auml;tte ich mir einiges an Zeit gespart. Ebenso ist dies mit der Shellscript-Programmierung. Sie werden schlie&szlig;lich noch was anderes zu tun haben, als immer nur Shellscripts zu schreiben.</p>
+<p>Und: Es gibt auch noch das Backslash-Zeichen, von dem Sie immer dann Gebrauch machen sollten, wenn eine Zeile mal zu lang wird oder wenn Sie Ketten von Kommandos mit Pipes verwenden. Dies erh&ouml;ht die &Uuml;bersicht ebenfalls enorm.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_011_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_012_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_012_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:04 GMT -->
+</html>

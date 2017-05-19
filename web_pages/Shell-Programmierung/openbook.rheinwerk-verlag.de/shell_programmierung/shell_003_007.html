@@ -1,0 +1,922 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_003_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:06 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 1.8  Shellscripts schreiben und ausf&uuml;hren</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_003_006.html">
+<link rel="next" href="shell_003_008.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_003_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_003_008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_003_000.html#RxxKap00300004004D531F048172">1 Einf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_000.html#RxxKap00300004004D531F048174">1.1 Voraussetzungen an den Leser</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_000.html#RxxKap00300004004D531F048180">1.1.1 Zielgruppe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_000.html#RxxKap00300004004D531F048185">1.1.2 Notation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_001.html#RxxKap00300104004D6A1F02E172">1.2 Was ist eine Shell?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_002.html#RxxKap00300204004D6B1F033172">1.3 Hauptanwendungsgebiet</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_002.html#RxxKap00300204004D6B1F033176">1.3.1 Was ist ein Shellscript?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_002.html#RxxKap00300204004D6B1F033184">1.3.2 Vergleich mit anderen Sprachen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F172">1.4 Kommando, Programm oder Shellscript?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F174">1.4.1 Shell-eigene Kommandos (Builtin-Kommando)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F176">1.4.2 Aliase in der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F17B">1.4.3 Funktionen in der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F17D">1.4.4 Shellscripts (Shell-Prozeduren)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F17F">1.4.5 Programme (bin&auml;r)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033172">1.5 Die Shell-Vielfalt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033177">1.5.1 ksh (Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033179">1.5.2 Bash (Bourne-Again-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F03317B">1.5.3 zsh (Z-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F03317D">1.5.4 ash (A-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F03317F">1.5.5 rbash, rzsh (Restricted Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033181">1.5.6 tcsh (TC-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033183">1.5.7 Welche Shell-Variante wird in diesem Buch verwendet?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033188">1.5.8 rsh und ssh</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_005.html#RxxKap00300504004D6E1F04A172">1.6 Betriebssysteme</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D172">1.7 Crashkurs: einfacher Umgang mit der Kommandozeile</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D174">1.7.1 Grundlegende Befehle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D181">1.7.2 Der Umgang mit Dateien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D19F">1.7.3 Der Umgang mit Verzeichnissen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D1D2">1.7.4 Datei- und Verzeichnisnamen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D1D8">1.7.5 Ger&auml;tenamen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_006.html#RxxKap00300604004D6F1F04D1DE">1.7.6 Dateiattribute</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00300704004D701F043172">1.8 Shellscripts schreiben und ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F043174">1.8.1 Der Editor</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F043177">1.8.2 Der Name des Shellscripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F04317D">1.8.3 Ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F043195">1.8.4 Hintergrundprozess starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F043197">1.8.5 Ausf&uuml;hrende Shell festlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F0431BF">1.8.6 Kommentare</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F0431C4">1.8.7 Stil</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F0431CB">1.8.8 Ein Shellscript beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F0431D6">1.8.9 Testen und Debuggen von Shellscripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300704004D701F0431E1">1.8.10 Shellscript, das ein Shellscript erstellt und ausf&uuml;hrt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_008.html#RxxKap00300804004D711F043172">1.9 Vom Shellscript zum Prozess</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_008.html#RxxKap00300804004D711F04317B">1.9.1 Ist das Shellscript ein Prozess?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_008.html#RxxKap00300804004D711F043182">1.9.2 Echte Login-Shell?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_009.html#RxxKap00300904004D721F048172">1.10 Datenstrom</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F04817A">1.10.1 Ausgabe umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F048188">1.10.2 Standardfehlerausgabe umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F0481A0">1.10.3 Eingabe umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F0481CA">1.10.4 Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F0481D4">1.10.5 Ein T-St&uuml;ck mit tee</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F0481DC">1.10.6 Ersatzmuster (Wildcards)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F04820D">1.10.7 Brace Extension (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F048217">1.10.8 Muster-Alternativen (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F04822A">1.10.9 Tilde-Expansion (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_010.html#RxxKap00301004004D731F01F172">1.11 Empfehlung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">1.8 <a id="RxxKap001211Shellscriptsschreibenundausfuhren" name="RxxKap001211Shellscriptsschreibenundausfuhren"></a> <a id="Rxx_Ref108518430" name="Rxx_Ref108518430"></a>Shellscripts schreiben und ausf&uuml;hr<a id="RxxKap00300704004D701F043172" name="RxxKap00300704004D701F043172"></a>en 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a>Sie finden hier eine Anleitung, wie Sie gew&ouml;hnlich vorgehen k&ouml;nnen, um eigene Shellscripts zu schreiben und auszuf&uuml;hren.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">1.8.1 Der Editor<a id="RxxKap00300704004D701F043174" name="RxxKap00300704004D701F043174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999282" name="Xxx999282"></a>Zu Beginn steht man immer vor der Auswahl seines Werkzeugs. In der Shell-Programmierung reicht hierf&uuml;r der einfachste Editor aus. Welchen Editor Sie verwenden, h&auml;ngt h&auml;ufig vom Anwendungsfall ab. Obgleich ich hier ein Buch zur Shellscript-Programmierung schreibe, gestehe ich, kein gro&szlig;er Fan der Editoren »vi« und »emacs« zu sein. Ich verwende, wenn irgend m&ouml;glich, einen Editor einer grafischen Oberfl&auml;che wie »Kate« unter KDE, »Gedit« unter dem GNOME-Desktop oder »xemacs« auf einer X11-Oberfl&auml;che.</p>
+<p>Trotzdem habe ich die M&uuml;he nicht gescheut, den gew&ouml;hnungsbed&uuml;rftigen Umgang mit den quasi &uuml;berall vorhandenen Editoren wie »vi«, »emacs«, »joe« oder »pico« zu erlernen. Der Grund ist ganz einfach: Als Systemadministrator oder Webmaster (mit Zugang &uuml;ber SSH) haben Sie nicht &uuml;berall die M&ouml;glichkeit, auf eine grafische Oberfl&auml;che zur&uuml;ckzugreifen. H&auml;ufig sitzen Sie dann vor einem Rechner mit einer nackten Shell. Wenn Sie dann nicht wenigstens den grundlegenden Umgang mit (mindestens) »vi« beherrschen, sehen Sie ziemlich alt aus. Zwar besteht meistens noch die M&ouml;glichkeit eines Fernzugriffs zum Kopieren mit dem Kommando <span class="listing">scp</span>, aber macht man hier bspw. einen Tippfehler, ist dieser Vorgang auf Dauer eher ineffizient. Letztendlich ist das Ihre Entscheidung.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">1.8.2 Der Name des Shellscripts<a id="RxxKap00300704004D701F043177" name="RxxKap00300704004D701F043177"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999286" name="Xxx999286"></a>Den Namen des Shellscripts, unter dem Sie dieses mit dem Editor Ihrer Wahl abspeichern, k&ouml;nnen Sie fast willk&uuml;rlich w&auml;hlen. Sie m&uuml;ssen lediglich folgende Punkte beachten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Es darf kein Name verwendet werden, von dem es ein Kommando mit demselben Namen gibt (das geht, aber man sollte es nicht machen). Dies k&ouml;nnen Sie relativ einfach testen, indem Sie etwa das Kommando <span class="listing">which</span> mit dem Namen Ihres Scripts verwenden (bspw. <span class="listing">which</span> <span class="listing">scriptname</span>). <span class="listing">which</span> liefert, falls es ein Kommando mit dem Namen gibt, den Pfad zum entsprechenden Kommando zur&uuml;ck. Gibt <span class="listing">which</span> nichts zur&uuml;ck, scheint ein solches Kommando nicht auf dem System zu existieren. &Auml;hnliches kann auch mit <span class="listing">type</span> oder <span class="listing">man</span> vorgenommen werden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sie sollten nur die Zeichen A bis Z, a bis z, 0 bis 9 und _ verwenden. Auf jeden Fall sollten Sonderzeichen vermieden werden.</td>
+</tr>
+</table>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Tipp   </b>Auch wenn Sie Ihr Kommando (fast) nennen k&ouml;nnen wie Sie wollen, sollten Sie auf jeden Fall versuchen, einen Namen zu w&auml;hlen, der einen Sinn ergibt.</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">1.8.3 Ausf&uuml;hren<a id="RxxKap00300704004D701F04317D" name="RxxKap00300704004D701F04317D"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999295" name="Xxx999295"></a>Das folgende Listing stellt Ihr erstes Shellscript in diesem Buch dar. Es ist ein einfaches Script, welches das aktuelle Datum anzeigt, als »wer« Sie sich eingeloggt haben, wer sich noch alles zurzeit auf dem System befindet und welchen Rechnernamen (Host) Sie verwenden. Im Augenblick ist es allerdings noch nicht so wichtig f&uuml;r Sie zu wissen, was das Shellscript genau macht (auch wenn es eigentlich nicht kompliziert ist). Hier geht es nur um die Ausf&uuml;hrung eines Shellscripts. Tippen Sie das Beispiel in den Editor Ihrer Wahl und speichern Sie es ab (im Beispiel wurde der Name <span class="listing">userinfo</span> verwendet).</p>
+<pre># Script-Name: userinfo
+# zeigt das aktuelle Datum an
+date
+# gibt die Textfolge "Ich bin ..." aus
+echo "Ich bin ..."
+# Wer bin ich ... ?
+whoami
+echo "Alle User, die eingeloggt sind ..."
+# zeigt alle aktiven User an
+who
+echo "Name des Host-Systems ..."
+# gibt den Hostnamen (Rechnernamen) aus
+hostname</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nat&uuml;rlich m&uuml;ssen Sie hier nicht alles abtippen. Sie finden alle Shellscripts auch auf der Buch-CD. Dennoch ist es aus &Uuml;bungsgr&uuml;nden zu empfehlen, die meisten Shellscripts selbst zu schreiben, um ein Gef&uuml;hl daf&uuml;r zu bekommen.</p>
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999302" name="Xxx999302"></a>Bevor Sie Ihr erstes Script ausf&uuml;hren k&ouml;nnen, m&uuml;ssen Sie gew&ouml;hnlich noch das Ausf&uuml;hrrecht setzen. In Ihrem Fall ist dies das Ausf&uuml;hrrecht (<span class="listing">x</span>) f&uuml;r den User (Dateieigent&uuml;mer):<a id="Xxx999304" name="Xxx999304"></a><a id="Xxx999305" name="Xxx999305"></a></p>
+<pre>you@host &gt; ls -l userinfo
+-rw-r--r--  1 you users 286 2005–01–21 02:19 userinfo
+you@host &gt; chmod u+x userinfo
+you@host &gt; ls -l userinfo
+-rwxr--r--  1 you users 286 2005–01–21 02:19 userinfo</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wenn Ihnen die oktale Schreibweise etwas gel&auml;ufiger ist, k&ouml;nnen Sie selbstverst&auml;ndlich auch <span class="listing">chmod</span> damit beauftragen, das Ausf&uuml;hrrecht zu setzen:
+<span class="listing">chmod</span> <span class="listing">0744</span> <span class="listing">userinfo</span></p>
+</td>
+</tr>
+</table><br>
+<p>Jetzt k&ouml;nnen Sie das Script beim Namen aufrufen. Allerdings werden Sie gew&ouml;hnlich den absoluten Pfadnamen verwenden m&uuml;ssen, es sei denn, Sie f&uuml;gen das entsprechende Verzeichnis (wo sich das Script befindet) zur Umgebungsvariablen <span class="listing">PATH</span> hinzu (aber dazu sp&auml;ter mehr). Somit lautet ein m&ouml;glicher Aufruf des Scripts wie folgt:</p>
+<pre>you@host &gt; ./userinfo
+Fr Jan 21 02:35:06 CET 2005
+Ich bin ...
+you
+Alle User, die eingeloggt sind ...
+you    :0           Jan 20 23:06 (console)
+ingo   :0           Jan 20 12:02 (console)
+john   pts/0        Jan  1 16:15 (pd9e9bdc0.dip.t-dialin.net)
+john   pts/2        Jan  1 16:22 (pd9e9bdc0.dip.t-dialin.net)
+Name des Host-Systems ...
+goliath.speedpartner.de</pre>
+<p>Hier wird mit <span class="listing">./</span> das aktuelle Verzeichnis verwendet. Starten Sie das Script aus einem anderen Verzeichnis, m&uuml;ssen Sie eben den absoluten Pfadnamen angeben:</p>
+<pre>you@host:~/irgend/wo &gt; /home/tot/beispielscripte/Kap1/userinfo</pre>
+<p>Damit Sie verstehen, wie ein Shellscript ausgef&uuml;hrt wird, muss ich Ihnen leider noch ein Shellscript aufdr&uuml;cken, bevor Sie mit den eigentlichen Grundlagen der Shell beginnen k&ouml;nnen. Es ist n&auml;mlich von enormer Bedeutung, dass Sie verstehen, dass nicht die aktuelle Shell das Script ausf&uuml;hrt. Zum besseren Verst&auml;ndnis:</p>
+<pre>you@host &gt; ps -f
+UID        PID  PPID  C STIME TTY          TIME CMD
+you       3672  3658  0 Jan20 pts/38   00:00:00 /bin/bash
+you       7742  3672  0 03:03 pts/38   00:00:00 ps -f</pre>
+<p>Sie geben hier mit <span class="listing">ps</span> <span class="listing">–f</span> die aktuelle Prozessliste (hier unter Linux mit der Bash) der Shell auf den Bildschirm aus. Hier lautet die Prozessnummer (PID) der aktuellen Shell 3672. Die Nummer des Elternprozesses (PPID), der diese Shell gestartet hat, lautet hierbei 3658. Im Beispiel war dies der D&auml;mon »kdeinit«, was hier allerdings jetzt nicht von Bedeutung ist. Den Prozess <span class="listing">ps</span> <span class="listing">–f</span> haben Sie ja soeben selbst gestartet und anhand der PPID l&auml;sst sich auch hier ermitteln, von welcher Shell dieser Prozess gestartet wurde (hier 3672, also der aktuellen Bash).</p>
+<p>Um Ihnen jetzt zu demonstrieren, wie ein Shellscript ausgef&uuml;hrt wird, f&uuml;hren Sie bitte folgendes Script aus:</p>
+<pre># Script-Name: finduser
+# gibt alle Dateien des Users you auf dem Bildschirm aus
+find / -user you -print 2&gt;/dev/null</pre>
+<p>Ich habe hier bewusst einen Befehl verwendet, der ein wenig l&auml;nger besch&auml;ftigt sein sollte. Mit dem Kommando <span class="listing">find</span> und den entsprechenden Angaben werden alle Dateien des Users »you« unterhalb des Wurzelverzeichnisses / auf dem Bildschirm ausgegeben. Fehlerausgaben (Kanal 2) wie bspw. »keine Berechtigung« werden nach /dev/null umgeleitet und somit nicht auf dem Bildschirm ausgegeben. Auf das Thema Umleitung wird noch gezielt eingegangen. Damit uns im Beispiel hier nicht die Standardausgabe (Kanal 1) auf dem Bildschirm st&ouml;rt, leiten wir diese auch beim Start des Scripts nach /dev/null (<span class="listing">1&gt;/dev/null</span>) um. Und damit uns die Shell f&uuml;r weitere Eingaben zur Verf&uuml;gung steht, stellen wir die Ausf&uuml;hrung des Scripts in den Hintergrund (<span class="listing">&amp;</span>). Somit k&ouml;nnen Sie in aller Ruhe die Prozessliste betrachten, w&auml;hrend Sie das Script ausf&uuml;hren.</p>
+<pre>you@host &gt; chmod u+x finduser
+you@host &gt; ./finduser 1&gt;/dev/null &amp;
+[1] 8138
+you@host &gt; ps -f
+UID   PID  PPID  C STIME TTY         TIME CMD
+you  3672  3658  0 Jan20 pts/38  00:00:00 /bin/bash
+you  8138  3672  0 03:26 pts/38  00:00:00 /bin/bash
+you  8139  8138 10 03:26 pts/38  00:00:00 find / -user tot -print
+you       8140  3672  0 03:26 pts/38   00:00:00 ps -f
+you@host &gt; kill $!
+[1]+  Beendet                 ./finduser &gt;/dev/null</pre>
+<p>Damit das Script nicht im Hintergrund unn&ouml;tig Ressourcen verbraucht, wurde es mit <span class="listing">kill</span> <span class="listing">$!</span> beendet. Die Zeichenfolge »<span class="listing">$!</span>« ist eine Shell-Variable einer Prozessnummer vom zuletzt gestarteten Hintergrundprozess (auch hierauf wird noch eingegangen). Interessant ist f&uuml;r diesen Abschnitt nur die Ausgabe von <span class="listing">ps</span> <span class="listing">–f</span>:</p>
+<pre>UID   PID  PPID  C STIME TTY         TIME CMD
+tot  3672  3658  0 Jan20 pts/38  00:00:00 /bin/bash
+tot  8138  3672  0 03:26 pts/38  00:00:00 /bin/bash
+tot  8139  8138 10 03:26 pts/38  00:00:00 find / -user tot -print
+tot  8140  3672  0 03:26 pts/38  00:00:00 ps -f</pre>
+<p>Sie k&ouml;nnen hier anhand der PPID erkennen, dass von der aktuellen Shell (PID:3672) eine weitere Shell (8138) gestartet wurde. <a id="Xxx999325" name="Xxx999325"></a><a id="Xxx999326" name="Xxx999326"></a>Bei dieser neuen Shell spricht man von einer Subshell. Erst diese Subshell f&uuml;hrt anschlie&szlig;end das Script aus, wie unschwer anhand der PPID von <span class="listing">find</span> zu erkennen ist. Der Befehl <span class="listing">ps</span> <span class="listing">–f</span> hingegen wurde wiederum von der aktuellen Shell ausgef&uuml;hrt.</p>
+<p>Derselbe Vorgang ist nat&uuml;rlich auch bei der Bourne-Shell (<span class="listing">sh</span>) und der Korn-Shell (<span class="listing">ksh</span>) m&ouml;glich und nicht nur, wie hier gezeigt, unter der <span class="listing">bash</span>. Jede Shell ruft f&uuml;r das Ausf&uuml;hren eines Scripts immer eine Subshell auf. Die <span class="listing">bash</span> eine <span class="listing">bash</span> und die <span class="listing">sh</span> eine <span class="listing">sh</span>. Nur bei der Korn-Shell kann es sein, dass anstatt einer weiteren <span class="listing">ksh</span> eine <span class="listing">sh</span> aufgerufen wird! Wie Sie dies ermitteln k&ouml;nnen, haben Sie ja eben erfahren.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">1.8.4 Hintergrundprozess starten<a id="RxxKap00300704004D701F043195" name="RxxKap00300704004D701F043195"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999329" name="Xxx999329"></a><a id="Xxx999330" name="Xxx999330"></a><a id="Xxx999331" name="Xxx999331"></a>Wie Sie beim Ausf&uuml;hren des Beispiels eben entnehmen konnten, k&ouml;nnen Sie durch das Anh&auml;ngen eines Ampersand-Zeichens (<span class="listing">&amp;</span>) den Prozess im Hintergrund ausf&uuml;hren. Dies wird gerade bei Befehlen verwendet, die etwas l&auml;nger im Einsatz sind. W&uuml;rden Sie im Beispiel von <span class="listing">finduser</span> den Prozess im Vordergrund (also normal) ausf&uuml;hren, m&uuml;ssten Sie auf das Ende des Prozesses warten, bis Ihnen der Eingabeprompt der aktuell ausf&uuml;hrenden Shell wieder zur Verf&uuml;gung steht. Dadurch, dass der Prozess in den Hintergrund gestellt wird, k&ouml;nnen Sie weitere Prozesse quasi parallel starten.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">1.8.5 Ausf&uuml;hrende Shell festlegen<a id="RxxKap00300704004D701F043197" name="RxxKap00300704004D701F043197"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999334" name="Xxx999334"></a>Im Beispiel konnten Sie sehen, dass ich das Script in einer Bash als (Sub-)Shell ausgef&uuml;hrt habe. Was aber, wenn ich das Script gar nicht in der Bash ausf&uuml;hren will? Schreiben Sie bspw. ein Shellscript in einer bestimmten Shell-Syntax, werden Sie wohl auch wollen, dass Ihr Script eben in der entsprechenden (Sub-)Shell ausgef&uuml;hrt wird. Hierbei k&ouml;nnen Sie entweder die (Sub-)Shell direkt mit dem Shellscript als Argument aufrufen oder eben die auszuf&uuml;hrende (Sub-)Shell im Script selbst festlegen.</p>
+<h4 class="t4">Aufruf als Argument der Shell</h4>
+<p>Der Aufruf eines Shellscripts als Argument der Shell ist recht einfach zu bewerkstelligen:</p>
+<pre>you@host &gt; sh finduser</pre>
+<p>Hier wird zum Ausf&uuml;hren des Shellscripts die Bourne-Shell (<span class="listing">sh</span>) als Subshell verwendet. Wollen Sie hingegen das Script mit einer Korn-Shell als Subshell aufrufen, rufen Sie das Script wie folgt auf:</p>
+<pre>you@host &gt; ksh finduser</pre>
+<p>Ebenso k&ouml;nnen Sie auch andere Shells wie bspw. <span class="listing">ash</span> oder <span class="listing">zsh</span> verwenden. Nat&uuml;rlich k&ouml;nnen Sie auch testweise eine C-Shell (bspw. <span class="listing">tcsh</span>) aufrufen – um festzustellen, dass hier schon erste Unstimmigkeiten auftreten.</p>
+<h4 class="t4">Ausf&uuml;hrende Shell im Script festlegen (She-Bang-Zeile)</h4>
+<p><a id="Xxx999343" name="Xxx999343"></a><a id="Xxx999344" name="Xxx999344"></a>Letztendlich besteht der gew&ouml;hnliche Weg darin, die ausf&uuml;hrende Shell im Script selbst festzulegen. Dabei muss sich in der ersten Zeile des Shellscripts die Zeichenfolge <span class="listing">#!</span> gefolgt von der absoluten Pfadangabe der entsprechenden Shell befinden (wird auch als She-Bang-Zeile bezeichnet). Die absolute Pfadangabe k&ouml;nnen Sie einfach mittels <span class="listing">which</span> ermitteln. Gew&ouml;hnlich befinden sich alle Shell-Varianten im Verzeichnis /bin oder in /usr/bin (bzw. /usr/local/bin ist auch ein Kandidat).</p>
+<p>Wollen Sie bspw. das Shellscript <span class="listing">finduser</span> von einer Korn-(Sub-)Shell ausf&uuml;hren lassen, m&uuml;ssen Sie in der ersten Zeile Folgendes eintragen:</p>
+<pre>#!/bin/ksh</pre>
+<p>oder</p>
+<pre>#!/usr/bin/ksh</pre>
+<p>Somit sieht das komplette Script f&uuml;r die Korn-Shell so aus (davon ausgehend, dass sich die Korn-Shell in <span class="listing">/bin</span> befindet):</p>
+<pre>#!/bin/ksh
+# Shellscript: finduser
+# gibt alle Dateien des Users tot auf dem Bildschirm aus
+find / -user tot -print 2&gt;/dev/null</pre>
+<p>F&uuml;r die Bash verwenden Sie:</p>
+<pre>#!/bin/bash</pre>
+<p>oder</p>
+<pre>#!/usr/bin/bash</pre>
+<p>Und f&uuml;r die Bourne-Shell:</p>
+<pre>#!/bin/sh</pre>
+<p>oder</p>
+<pre>#!/usr/bin/sh</pre>
+<p>&Auml;hnlich wird diese erste Zeile &uuml;brigens auch bei Perl und anderen Skriptsprachen verwendet. Das dies funktioniert, ist nichts Magisches, sondern ein typischer Linux-UNIX-Vorgang. Beim Start eines neuen Programms (besser ist wohl Prozess) verwenden alle Shell-Varianten den Linux-UNIX-Systemaufruf <span class="listing">exec</span>. Wenn Sie aus der Login-Shell eine weitere Prozedur starten, wird ja zun&auml;chst eine weitere Subshell gestartet (wie bereits erw&auml;hnt). Durch den Systemaufruf <span class="listing">exec</span> wird der neue Prozess durch ein angegebenes Programm &uuml;berlagert – egal ob dieses Programm jetzt in Form einer ausf&uuml;hrbaren Datei (wie diese etwa in C erstellt werden) oder als Shellscript vorhanden ist. Im Fall eines Shellscripts startet <span class="listing">exec</span> standardm&auml;&szlig;ig eine Shell vom Typ Ihrer aufrufenden Shell und beauftragt diese Shell, alle Befehle und Kommandos der angegebenen Datei auszuf&uuml;hren. Enth&auml;lt das Shellscript allerdings in der ersten Zeile eine Angabe wie</p>
+<pre>#! Interpreter [Argument(e)]</pre>
+<p>verwendet <span class="listing">exec</span> den vom Script angegebenen Interpreter zum Ausf&uuml;hren des Shellscripts. Als Interpreter k&ouml;nnen alle Ihnen bekannten Shell-Varianten (sofern auf dem System vorhanden) verwendet werden (wie bereits erw&auml;hnt, nicht nur eine Shell!).</p>
+<p>An der Zeichenfolge <span class="listing">#!</span> in der ersten Zeile erkennt <span class="listing">exec</span> die Interpreterzeile und verwendet die dahinter stehenden Zeichen als Namen des Programms, das als Interpreter verwendet werden soll. Der Name Ihres Shellscripts wird beim Aufruf des Interpreters automatisch &uuml;bergeben. Dieser <span class="listing">exec</span>-Mechanismus wird von jeder Shell zum Aufrufen eines Programms oder Kommandos verwendet. Somit k&ouml;nnen Sie sichergehen, dass der Ablauf Ihres Scripts in der richtigen Umgebung ausgef&uuml;hrt wird, auch wenn Sie es gewohnt sind, in einer anderen Shell zu arbeiten.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Es sollte Ihnen klar sein, dass hinter dem Interpreternamen kein weiterer Kommentar folgen darf, weil dieser sonst als Argument verwendet w&uuml;rde.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Shellscript ohne Subshell ausf&uuml;hren</h4>
+<p><a id="Xxx999369" name="Xxx999369"></a><a id="Xxx999370" name="Xxx999370"></a>Es ist auch m&ouml;glich, ein Shellscript ohne das vorherige Starten einer Subshell auszuf&uuml;hren, um es direkt von der aktuellen Shell ausf&uuml;hren zu lassen. Hierzu muss dem Shellscript beim Starten lediglich ein Punkt plus Leerzeichen vorangestellt werden. Dieser Vorgang wird bspw. verwendet, wenn Sie im Script Ver&auml;nderungen an den (Umgebungs-)Variablen wollen. W&uuml;rden Sie Ihr Script hierbei in der Subshell ausf&uuml;hren, so w&uuml;rden sich alle Ver&auml;nderungen nur auf alle weiteren Aktionen der Subshell beziehen. Wenn sich die Subshell beendet, sind auch alle &Auml;nderungen an (Umgebungs-)Variablen weg.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Vielleicht haben Sie schon mal geh&ouml;rt, dass man dem Inhalt von Umgebungsvariablen nicht unbedingt trauen sollte – denn jeder kann diese ver&auml;ndern. In diesem Fall ist es noch schlimmer, denn zum Ausf&uuml;hren eines Shellscripts mit einem Punkt davor ben&ouml;tigt der Benutzer nicht einmal Ausf&uuml;hrrechte. Hierbei begn&uuml;gt sich die Shell schon mit dem Leserecht, um munter mitzumachen.</p>
+</td>
+</tr>
+</table><br>
+<p>Ein Beispiel, wie Sie ein Shellscript ohne Subshell ausf&uuml;hren k&ouml;nnen:</p>
+<pre>you@host &gt; . ./script_zum_ausfuehren</pre>
+<p>oder mit absoluten Pfadnamen:</p>
+<pre>you@host &gt; . /home/tot/beispielscripte/Kap1/script_zum_ausfuehren</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die Bash kennt als Alternative zum Punkt das interne Kommando <span class="listing">source</span>.</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">1.8.6 Kommentare<a id="RxxKap00300704004D701F0431BF" name="RxxKap00300704004D701F0431BF"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999385" name="Xxx999385"></a><a id="Xxx999386" name="Xxx999386"></a><a id="Xxx999387" name="Xxx999387"></a>In den Scripts zuvor wurden Kommentare bereits reichlich verwendet, und Sie sollten dies in Ihren Scripts auch regelm&auml;&szlig;ig tun. Einen Kommentar k&ouml;nnen Sie durch ein vor dem Text stehendes Hash-Zeichen (<span class="listing">#</span>) erkennen. Hier ein Beispiel, wie Sie Ihre Scripts kommentieren k&ouml;nnen:</p>
+<pre>#!/bin/sh
+# Script-Name: HalloWelt
+# Version    : 0.1
+# Autor      : J.Wolf
+# Datum      : 20.05.2005
+# Lizenz     : ...
+# ... gibt "Hallo Welt" aus
+echo "Hallo Welt"
+echo "Ihre Shell:"
+echo $SHELL           # ... gibt die aktuelle Shell aus</pre>
+<p>Zugegeben, f&uuml;r ein solch kleines Beispiel sind die Kommentare ein wenig &uuml;bertrieben. Sie sehen hier, wie Sie auch Kommentare hinter einen Befehl setzen k&ouml;nnen. Alles, was hinter einem Hash-Zeichen steht, wird von der Shell ignoriert. Nat&uuml;rlich mit Ausnahme der ersten Zeile, wenn sich dort die Zeichenfolge »<span class="listing">#!</span>« befindet.</p>
+<p>Kommentieren sollten Sie zumindest den Anfang des Scripts mit einigen Angaben zum Namen und eventuell dem Zweck, sofern dieser nicht gleich klar sein sollte. Wenn Sie wollen, k&ouml;nnen Sie selbstverst&auml;ndlich auch Ihren Namen, das Datum und die Versionsnummer angeben. Auch auf Besonderheiten bez&uuml;glich einer Lizenz sollten Sie hier hinweisen. Komplexe Stellen sollten auf jeden Fall ausreichend kommentiert werden. Dies hilft Ihnen, den Code nach l&auml;ngerer Abwesenheit schneller wieder zu verstehen. Sofern Sie die Scripts der &Ouml;ffentlichkeit zug&auml;nglich machen wollen, wird man es Ihnen danken, wenn Sie Ihren »Hack« ausreichend kommentiert haben.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">1.8.7 Stil<a id="RxxKap00300704004D701F0431C4" name="RxxKap00300704004D701F0431C4"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Jeder Programmierer entwickelt mit der Zeit seinen eigenen Programmierstil, dennoch gibt es einiges, was Sie vielleicht beachten sollten. Zwar ist es m&ouml;glich, durch ein Semikolon getrennt mehrere Befehle in einer Zeile zu schreiben (wie dies ja in der Shell selbst auch m&ouml;glich ist), doch sollten Sie dies, wenn m&ouml;glich, der &Uuml;bersichtlichkeit zuliebe vermeiden.</p>
+<p>Und sollte eine Zeile doch mal ein wenig zu lang werden, dann k&ouml;nnen Sie immer noch das Backslash-Zeichen (<span class="listing">\</span>) setzen. Ein Shellscript arbeitet ja Zeile f&uuml;r Zeile ab. Als Zeilentrenner wird gew&ouml;hnlich das Newline-Zeichen (ein f&uuml;r den Editor nicht sichtbares Zeichen mit der ASCII-Code-Nummer 10) verwendet. Durch das Voranstellen eines Backslash-Zeichens wird das Newline-Zeichen au&szlig;er Kraft gesetzt.</p>
+<pre>#!/bin/sh
+# Script-Name: backslash
+# ... bei &uuml;berlangen Befehlen kann man ein Backslash setzen
+echo "Hier ein solches Beispiel, wie Sie\
+ ueberlange Zeilen bzw. Ketten von Befehlen\
+ auf mehreren Zeilen ausf&uuml;hren k&ouml;nnen"</pre>
+<p>Bei etwas &uuml;berlangen Ketten von Kommandos verhilft das Setzen eines Backslashs auch ein wenig, die &Uuml;bersichtlichkeit zu verbessern:</p>
+<pre>ls -l /home/tot/docs/listings/beispiele/kapitel1/final/*.sh | \
+    sort -r | less</pre>
+<p>Wenn Sie etwas sp&auml;ter auf Schleifen und Verzweigungen treffen, sollten Sie gerade hier mal eine Einr&uuml;ckung mehr als n&ouml;tig vornehmen. Einmal mehr auf die <b>(ÿ_)</b>-Taste zu dr&uuml;cken, hat noch keinem geschadet.</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">1.8.8 Ein Shellscript beenden<a id="RxxKap00300704004D701F0431CB" name="RxxKap00300704004D701F0431CB"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999400" name="Xxx999400"></a><a id="Xxx999401" name="Xxx999401"></a><a id="Xxx999402" name="Xxx999402"></a>Ein Shellscript beendet sich entweder nach Ablauf der letzten Zeile selbst oder Sie verwenden den Befehl <span class="listing">exit</span>, womit die Ausf&uuml;hrung des Scripts sofort beendet wird. Die Syntax des Kommandos sieht wie folgt aus:</p>
+<pre>exit [n]</pre>
+<p>Der Parameter <span class="listing">n</span> ist optional. F&uuml;r diesen Wert k&ouml;nnen Sie eine ganze Zahl von 0 bis 255 verwenden. Verwenden Sie <span class="listing">exit</span> ohne jeden Wert, wird der <span class="listing">exit</span>-Status des Befehls genutzt, der vor <span class="listing">exit</span> ausgef&uuml;hrt wurde. Mit den Werten 0 bis 255 wird angegeben, ob ein Kommando oder Script ordnungsgem&auml;&szlig; ausgef&uuml;hrt wurde. Der Wert 0 steht daf&uuml;r, dass alles ordnungsgem&auml;&szlig; abgewickelt wurde. Jeder andere Wert signalisiert eine Fehlernummer.</p>
+<p>Sie k&ouml;nnen damit auch testen, ob ein Kommando, das Sie im Script ausgef&uuml;hrt haben, erfolgreich ausgef&uuml;hrt wurde und je nach Situation das Script an einer anderen Stelle fortsetzen lassen. Hierf&uuml;r fehlt Ihnen aber noch die Kenntnis der Verzweigung. Die Zahl des <span class="listing">exit</span>-Status kann jederzeit mit der Shell-Variablen <span class="listing">$?</span> abgefragt werden. Hierzu ein kurzes Beispiel:<a id="Xxx999407" name="Xxx999407"></a><a id="Xxx999408" name="Xxx999408"></a></p>
+<pre>#!/bin/sh
+# Script-Name: ende
+echo "Tick ..."
+# ... Shellscript wird vorzeitig beendet
+exit 5
+# "Tack ..." wird nicht mehr ausgef&uuml;hrt
+echo "Tack ...</pre>
+<p>Das Beispiel bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; chmod u+x ende
+you@host &gt; ./ende
+Tick ...
+you@host &gt; echo $?
+5
+you@host &gt; ls -l /root
+/bin/ls: /root: Keine Berechtigung
+you@host &gt; echo $?
+1
+you@host &gt; ls -l *.txt
+/bin/ls: *.txt: Datei oder Verzeichnis nicht gefunden
+you@host &gt; echo $?
+1
+you@host &gt; ls -l *.c
+-rw-r--r--  1 tot users 49 2005–01–22 01:59 hallo.c
+you@host &gt; echo $?
+0</pre>
+<p>Im Beispiel wurden auch andere Kommandos ausgef&uuml;hrt. Je nach Erfolg war hierbei der Wert der Variablen <span class="listing">$?</span> 1 (bei einem Fehler) oder 0 (wenn alles in Ordnung ging) – abgesehen von unserem Beispiel, wo bewusst der Wert 5 zur&uuml;ckgegeben wurde.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Beachten Sie bitte, wenn Sie den Befehl <span class="listing">exit</span> direkt im Terminal ausf&uuml;hren, wird dadurch auch die aktuelle Login-Shell beendet.</p>
+</td>
+</tr>
+</table><br>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">1.8.9 Testen und Debuggen von Shellscripts<a id="RxxKap00300704004D701F0431D6" name="RxxKap00300704004D701F0431D6"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999418" name="Xxx999418"></a><a id="Xxx999419" name="Xxx999419"></a>Debuggen und Fehlersuche ist auch in der Shellscript-Programmierung von gro&szlig;er Bedeutung, sodass diesem Thema ein extra Abschnitt gewidmet wird. Trotzdem werden Sie auch bei Ihren ersten Scripts unweigerlich den einen oder anderen (Tipp-)Fehler einbauen (es sei denn, Sie verwenden s&auml;mtliche Listings von der Buch-CD).</p>
+<p>Am h&auml;ufigsten wird dabei in der Praxis die Option <span class="listing">–x</span> verwendet. Damit wird jede Zeile vor ihrer Ausf&uuml;hrung auf dem Bildschirm ausgegeben. Meistens wird diese Zeile mit einem f&uuml;hrenden Plus angezeigt (abh&auml;ngig davon, was in der Variablen <span class="listing">PS4</span> enthalten ist). Als Beispiel diene folgendes Shellscript:</p>
+<pre>#!/bin/sh
+# Script-Name: prozdat
+# Listet Prozessinformationen auf
+echo "Anzahl laufender Prozesse:"
+# ... wc -l z&auml;hlt alle Zeilen, die ps -ef ausgeben w&uuml;rde
+ps -ef | wc -l
+echo "Prozessinformationen unserer Shell:"
+# ... die Shell-Variable $$ enth&auml;lt die eigene Prozessnummer
+ps $$</pre>
+<p>Normal ausgef&uuml;hrt ergibt dieses Script folgende Ausgabe:</p>
+<pre>you@host &gt; ./prozdat
+Anzahl laufender Prozesse:
+76
+Prozessinformationen unserer Shell:
+  PID TTY      STAT   TIME COMMAND
+10235 pts/40   S+     0:00 /bin/sh ./prozdat</pre>
+<p>Auch hier wollen wir uns zun&auml;chst nicht zu sehr mit dem Script selbst befassen. Jetzt soll die Testhilfe mit der Option <span class="listing">–x</span> eingeschaltet werden:</p>
+<pre>you@host &gt; sh -x ./prozdat
++ echo 'Anzahl laufender Prozesse:'
+Anzahl laufender Prozesse:
++ ps -ef
++ wc -l
+76
++ echo 'Prozessinformationen unserer Shell:'
+Prozessinformationen unserer Shell:
++ ps 10405
+  PID TTY      STAT   TIME COMMAND
+10405 pts/40   S+     0:00 sh -x ./prozdat</pre>
+<p>Sie sehen, wie jede Zeile vor ihrer Ausf&uuml;hrung durch ein voranstehendes Plus ausgegeben wird. Au&szlig;erdem k&ouml;nnen Sie hierbei auch feststellen, dass die Variable <span class="listing">$$</span> durch den korrekten Inhalt ersetzt wurde. Selbiges w&auml;re &uuml;brigens auch bei der Verwendung von Sonderzeichen (Wildcards) wie <span class="listing">*</span> der Fall. Sie bekommen mit dem Schalter <span class="listing">–x</span> alles im Klartext zu sehen.</p>
+<p><a id="Xxx999428" name="Xxx999428"></a><a id="Xxx999429" name="Xxx999429"></a><a id="Xxx999430" name="Xxx999430"></a>Bei l&auml;ngeren Scripts ist mir pers&ouml;nlich das Pluszeichen am Anfang nicht deutlich genug. Wenn Sie dies auch so empfinden, k&ouml;nnen Sie die Variable <span class="listing">PS4</span> gegen eine andere beliebige Zeichenkette austauschen. Ich verwende hierf&uuml;r sehr gern die Variable <span class="listing">LINENO</span>, die nach der Ausf&uuml;hrung immer durch die entsprechende Zeilennummer ersetzt wird. Die Zeilennummer hilft mir dann bei l&auml;ngeren Scripts, immer gleich die entsprechende Zeile zu finden. Hier ein Beispiel, wie Sie mit <span class="listing">PS4</span> effektiver Ihr Script debuggen k&ouml;nnen:</p>
+<pre>you@host &gt; export PS4='[--- Zeile: $LINENO ---] '
+you@host &gt; sh -x ./prozdat
+[--- Zeile: 6 ---] echo 'Anzahl laufender Prozesse:'
+Anzahl laufender Prozesse:
+[--- Zeile: 8 ---] ps -ef
+[--- Zeile: 8 ---] wc -l
+76
+[--- Zeile: 10 ---] echo 'Prozessinformationen unserer Shell:'
+Prozessinformationen unserer Shell:
+[--- Zeile: 12 ---] ps 10793
+  PID TTY      STAT   TIME COMMAND
+10793 pts/40   S+     0:00 sh -x ./prozdat</pre>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">1.8.10 Shellscript, das ein Shellscript erstellt und ausf&uuml;hrt<a id="RxxKap00300704004D701F0431E1" name="RxxKap00300704004D701F0431E1"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Hand aufs Herz: Wie oft haben Sie bis hierher schon einen Fluch ausgesto&szlig;en, weil Sie bspw. vergessen haben, das Ausf&uuml;hrrecht zu setzen, oder waren davon genervt, immer wiederkehrende Dinge zu wiederholen? Dazu lernen Sie ja eigentlich Shellscript-Programmierung, nicht wahr? Somit liegt nichts n&auml;her, als Ihnen hier eine kleine Hilfe mitzugeben. Ein Shellscript, welches ein neues Script erstellt oder ein bereits vorhandenes Script in den Editor Ihrer Wahl l&auml;dt. Nat&uuml;rlich soll auch noch das Ausf&uuml;hrrecht f&uuml;r den User gesetzt werden und bei Bedarf wird das Script ausgef&uuml;hrt. Hier das simple Script:</p>
+<pre># Ein Script zum Script erstellen ...
+# Name : scripter
+# Bitte entsprechend anpassen
+#
+# Verzeichnis, in dem sich das Script befindet
+dir=$HOME
+# Editor, der verwendet werden soll
+editor=vi
+# erstes Argument muss der Scriptname sein ...
+[ -z "$1" ] &amp;&amp; exit 1
+# Editor starten und Script laden (oder erzeugen)
+$editor $dir/$1
+# Ausf&uuml;hrrechte f&uuml;r User setzen ...
+chmod u+x $dir/$1
+# Script gleich ausf&uuml;hren? Nein? Dann auskommentieren ...
+$dir/$1</pre>
+<p>Sie m&uuml;ssen bei diesem Script lediglich die Variablen »dir« und »editor« anpassen. Mit der Variable »dir« geben Sie das Verzeichnis an, wohin das Script geladen oder eventuell abgespeichert werden soll. Im Beispiel wurde einfach mit der Shell-Variablen <span class="listing">HOME</span> das Heimverzeichnis des eingeloggten Users verwendet. Als Editor verwende ich <span class="listing">vi</span>. Hier k&ouml;nnen Sie auch einen Editor Ihrer Wahl eintragen. Mit <span class="listing">[</span> <span class="listing">–z</span> <span class="listing">"$1"</span> <span class="listing">]</span> (<span class="listing">z</span> steht f&uuml;r zero, also leer) wird &uuml;berpr&uuml;ft, ob das erste Argument der Kommandozeile (<span class="listing">$1</span>) vorhanden ist. Wurde hier keine Angabe gemacht, beendet sich das Script gleich wieder mit <span class="listing">exit</span> <span class="listing">1</span>. Die weitere Ausf&uuml;hrung spricht, glaube ich, erst einmal f&uuml;r sich. Aufgerufen wird das Script wie folgt:</p>
+<pre>you@host &gt; ./scripter example</pre>
+<p>Nat&uuml;rlich ist es nicht meine Absicht, dem Einsteiger mit diesem Script eine Einf&uuml;hrung in die Shellscript-Programmierung zu geben, sondern hier geht es nur darum, Ihnen eine kleine Hilfe an die Hand zu geben, um effektiver mit dem Buch arbeiten zu k&ouml;nnen.</p>
+<p>Nachdem bis hierhin alle Formalit&auml;ten gekl&auml;rt wurden, k&ouml;nnen Sie endlich damit loslegen, die eigentliche Shellscript-Programmierung zu erlernen. Zugegeben, es waren viele Formalit&auml;ten, aber dies war aus meiner Sicht unbedingt n&ouml;tig.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_003_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_003_008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_003_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:06 GMT -->
+</html>

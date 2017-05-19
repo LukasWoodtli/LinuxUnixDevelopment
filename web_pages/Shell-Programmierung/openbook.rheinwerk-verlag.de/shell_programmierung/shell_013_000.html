@@ -1,0 +1,605 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_013_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:04 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 11 Regul&auml;re Ausdr&uuml;cke und grep</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_012_002.html">
+<link rel="next" href="shell_013_001.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_012_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_013_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a class="navh" href="#RxxKap01300004004F851F035172">11 Regul&auml;re Ausdr&uuml;cke und grep</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01300004004F851F035174">11.1 Regul&auml;re Ausdr&uuml;cke – die Theorie</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01300004004F851F03517B">11.1.1 Elemente f&uuml;r regul&auml;re Ausdr&uuml;cke (POSIX-RE)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_013_001.html#RxxKap01300104004F9C1F039172">11.2 grep</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_013_001.html#RxxKap01300104004F9C1F039178">11.2.1 Wie arbeitet grep?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_013_001.html#RxxKap01300104004F9C1F039187">11.2.2 grep mit regul&auml;ren Ausdr&uuml;cken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_013_001.html#RxxKap01300104004F9C1F03920A">11.2.3 grep mit Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_013_001.html#RxxKap01300104004F9C1F039216">11.2.4 grep mit Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_013_001.html#RxxKap01300104004F9C1F039230">11.2.5 egrep (extended grep)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_013_001.html#RxxKap01300104004F9C1F03923E">11.2.6 fgrep (fixed oder fast grep)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_013_001.html#RxxKap01300104004F9C1F039240">11.2.7 rgrep</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<h1 class="t1">Kapitel 11 <a id="RxxKap0112RegulareAusdruckeundgrep" name="RxxKap0112RegulareAusdruckeundgrep"></a>Regul&auml;re Ausdr&uuml;cke und gre<a id="RxxKap01300004004F851F035172" name="RxxKap01300004004F851F035172"></a>p</h1>
+<p class="anleser"><i>Die Verwendung von regul&auml;ren Ausdr&uuml;cken und grep ist Grundlage eines jeden Linux-UNIX-Anwenders. Und f&uuml;r einen Systemadministrator ist sie sowieso unerl&auml;sslich, denn es gibt kein vern&uuml;nftiges System, in dem sie nicht vorkommen. Eine kurze Einf&uuml;hrung zu den regul&auml;ren Ausdr&uuml;cken wie auch zum Tool grep (und seinen Nachkommen wie bspw. egrep und fgrep) erscheint daher notwendig.</i></p>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">11.1 <a id="RxxKap0114RegulareAusdruckedieTheorie" name="RxxKap0114RegulareAusdruckedieTheorie"></a>Regul&auml;re Ausdr&uuml;cke – die Theori<a id="RxxKap01300004004F851F035174" name="RxxKap01300004004F851F035174"></a>e 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999280" name="Xxx999280"></a><a id="Xxx999281" name="Xxx999281"></a>Regul&auml;re Ausdr&uuml;cke (engl. regular expression) sind eine leistungsf&auml;hige formale Sprache, mit der sich eine bestimmte (Unter-)Menge von Zeichenketten beschreiben l&auml;sst. Es muss allerdings gleich erw&auml;hnt werden, dass regul&auml;re Ausdr&uuml;cke kein Tool oder eine Sammlung von Funktionen sind, die von einem Betriebssystem abh&auml;ngig sind, sondern es handelt sich in der Tat um eine echte Sprache mit einer formalen Grammatik, in der jeder Ausdruck eine pr&auml;zise Bedeutung hat.</p>
+<p>Regul&auml;ren Ausdr&uuml;cke werden von sehr vielen Texteditoren und Programmen eingesetzt. Meistens verwendet man sie, um bestimmte Muster zu suchen und diese dann durch etwas anderes zu ersetzen. In der Linux-UNIX-Welt werden regul&auml;re Ausdr&uuml;cke vorwiegend bei Programmen wie <span class="listing">grep</span>, <span class="listing">sed</span> und <span class="listing">awk</span> oder den Texteditoren <span class="listing">vi</span> und <span class="listing">Emacs</span> verwendet. Aber auch viele Programmiersprachen, u. a. Perl, Java, Python, Tcl, PHP oder Ruby, bieten regul&auml;re Ausdr&uuml;cke an.</p>
+<p>Die Entstehungsgeschichte der regul&auml;ren Ausdr&uuml;cke ist schnell erz&auml;hlt. Den Ursprung hat ein Mathematiker und Logiker, Stephen Kleene, gelegt. Er gilt &uuml;brigens auch als Mitbegr&uuml;nder der theoretischen Informatik, besonders der hier behandelten formalen Sprachen und der Automatentheorie. Stephen Kleene verwendete eine Notation, die er selbst regul&auml;re Menge nannte. Sp&auml;ter verwendete dann Ken Thompson (der Miterfinder der Programmiersprache C) diese Notationen f&uuml;r eine Vorg&auml;nger-Version des UNIX-Editors <span class="listing">ed</span> und f&uuml;r das Werkzeug <span class="listing">grep</span>. Nach der Fertigstellung von <span class="listing">grep</span> wurden die regul&auml;ren Ausdr&uuml;cke in sehr vielen Programmen implementiert. Viele davon benutzen die mittlerweile sehr bekannte Bibliothek <span class="listing">regex</span> von Henry Spencer.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Sofern Sie Erweiterungen wie R&uuml;ckw&auml;rtsrefernzen verwenden wollen, sei Perl empfohlen, weil grep hier leistungsm&auml;&szlig;ig »ins Gras bei&szlig;t«. </p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard">Wobei inzwischen ja verschiedene regexes (POSIX-RE, Extended-RE und pcre) unterschieden werden. Die Unterschiede sind in den Manuals regex und perlre zu finden. Ein Gro&szlig;teil der Scriptsprachen und Programme st&uuml;tzt sich auf die pcre (Perl Compatible Regular Expression), welche mittlerweile als die leistungsf&auml;higste gilt.</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">11.1.1 Elemente f&uuml;r regul&auml;re Ausdr&uuml;cke (POSIX-RE)<a id="RxxKap01300004004F851F03517B" name="RxxKap01300004004F851F03517B"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999292" name="Xxx999292"></a>Vorwiegend werden regul&auml;re Ausdr&uuml;cke dazu verwendet, bestimmte Zeichenketten in einer Menge von Zeichen zu suchen und zu finden. Die nun folgende Beschreibung ist eine sehr h&auml;ufig verwendete Konvention, welche von fast allen Programmen, die regul&auml;re Ausdr&uuml;cke verwenden, so eingesetzt wird. Gew&ouml;hnlich wird dabei ein regul&auml;rer Ausdruck aus den Zeichen des Alphabets in Kombination mit den Metazeichen (die hier gleich vorgestellt werden) gebildet.</p>
+<h4 class="t4">Zeichenliterale</h4>
+<p><a id="Xxx999295" name="Xxx999295"></a><a id="Xxx999296" name="Xxx999296"></a>Als Zeichenliterale bezeichnet man die Zeichen, die w&ouml;rtlich &uuml;bereinstimmen m&uuml;ssen. Diese werden im regul&auml;ren Ausdruck direkt (als Wort) notiert. Hierbei besteht je nach System auch die M&ouml;glichkeit, alles in hexadezimaler oder oktaler Form anzugeben.</p>
+<h4 class="t4">Beliebiges Zeichen</h4>
+<p><a id="Xxx999299" name="Xxx999299"></a><a id="Xxx999300" name="Xxx999300"></a>F&uuml;r ein einzelnes, beliebiges Zeichen verwendet man einen Punkt. Dieser Punkt kann dann f&uuml;r ein fast beliebiges Zeichen stehen.</p>
+<h4 class="t4">Zeichenauswahl<a id="Xxx999302" name="Xxx999302"></a></h4>
+<p><a id="Xxx999304" name="Xxx999304"></a><a id="Xxx999305" name="Xxx999305"></a>Die Zeichenauswahl kennen Sie ebenfalls bereits aus der Shell mit den eckigen Klammern <span class="listing">[auswahl]</span> (siehe Abschnitt 1.10.6). Alles, was Sie in den eckigen Klammern schreiben, gilt dann exakt f&uuml;r ein Zeichen aus dieser Auswahl. Bspw. <span class="listing">[axz]</span> steht f&uuml;r eines der Zeichen »a«, »x« oder »z«. Dies l&auml;sst sich nat&uuml;rlich auch in Bereiche aufteilen. Bspw. bei der Angabe von <span class="listing">[2–7]</span> besteht der Bereich aus den Ziffern 2 bis 7. Mit dem Zeichen <span class="listing">^</span> innerhalb der Zeichenauswahl k&ouml;nnen Sie auch Zeichen ausschlie&szlig;en. Bspw. mit <span class="listing">[^a–f]</span> schlie&szlig;en Sie die Zeichen »a«, »b«, »c«, »d«, »e« oder »f« aus.</p>
+<h4 class="t4">Vordefinierte Zeichenklassen<a id="Xxx999307" name="Xxx999307"></a></h4>
+<p><a id="Xxx999309" name="Xxx999309"></a>Manche Implementationen von regul&auml;ren Ausdr&uuml;cken bieten auch vordefinierte Zeichenklassen an. Sofern Sie keine solch vordefinierten Zeichenklassen finden, l&auml;sst sich dies auch selbst durch eine Zeichenauswahl in eckigen Klammern beschreiben. Die vordefinierten Zeichenklassen sind letztendlich auch nur eine Kurzform der Zeichenklassen. Tabelle 11.1 nennt einige bekannte vordefinierte Zeichenklassen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 11.1   
+    </b>Vordefinierte Zeichenklassen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Vordefiniert</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Selbstdefiniert</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\d
+</td>
+<td class="tabellentext" bgcolor="#000000">eine Zahl
+</td>
+<td class="tabellentext" bgcolor="#000000">[0–9]
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\D
+</td>
+<td class="tabellentext" bgcolor="#000000">keine Zahl
+</td>
+<td class="tabellentext" bgcolor="#000000">[^0–9]
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\w
+</td>
+<td class="tabellentext" bgcolor="#000000">ein Buchstabe, eine Zahl oder der Unterstrich
+</td>
+<td class="tabellentext" bgcolor="#000000">[a–zA–Z_0–9]
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\W
+</td>
+<td class="tabellentext" bgcolor="#000000">kein Buchstabe, keine Zahl und kein Unterstrich
+</td>
+<td class="tabellentext" bgcolor="#000000">[^a–zA–Z_0–9]
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\s
+</td>
+<td class="tabellentext" bgcolor="#000000">Whitespace-Zeichen
+</td>
+<td class="tabellentext" bgcolor="#000000">[ \f\n\r\t\v]
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\S
+</td>
+<td class="tabellentext" bgcolor="#000000">alle Zeichen au&szlig;er Whitespace-Zeichen
+</td>
+<td class="tabellentext" bgcolor="#000000">[^\f\n\r\t\v]
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Quantifizierer<a id="Xxx999364" name="Xxx999364"></a></h4>
+<p><a id="Xxx999366" name="Xxx999366"></a>Als Quantifizierer bzw. Quantoren bezeichnet man Elemente, die es erlauben, den vorherigen Ausdruck in unterschiedlicher Vielfalt in einer Zeichenkette zuzulassen (siehe Tabelle 11.2).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 11.2   
+    </b>Quantifizierer</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Quantifizierer</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">?
+</td>
+<td class="tabellentext" bgcolor="#000000">Der Ausdruck, der voransteht, ist optional, d. h., er kann ein Mal vorkommen, muss aber nicht. Der Ausdruck kommt also entweder null oder ein Mal vor.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">+
+</td>
+<td class="tabellentext" bgcolor="#000000">Der Ausdruck muss mindestens ein Mal vorkommen, darf aber auch mehrmals vorhanden sein.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">*
+</td>
+<td class="tabellentext" bgcolor="#000000">Der Ausdruck darf beliebig oft oder auch gar nicht vorkommen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">{min,}
+</td>
+<td class="tabellentext" bgcolor="#000000">Der voranstehende Ausdruck muss mindestens min-mal vorkommen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">{min,max}
+</td>
+<td class="tabellentext" bgcolor="#000000">Der voranstehende Ausdruck muss mindestens min-mal, darf aber nicht mehr als max-mal vorkommen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">{n}
+</td>
+<td class="tabellentext" bgcolor="#000000">Der voranstehende Ausdruck muss genau n-mal vorkommen.
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Gruppierung</h4>
+<p><a id="Xxx999406" name="Xxx999406"></a>Ausdr&uuml;cke k&ouml;nnen auch zwischen runden Klammern gruppiert werden. Einige Tools speichern diese Gruppierung ab und erm&ouml;glichen so eine Wiederverwendung im regul&auml;ren Ausdruck bzw. der Textersetzung &uuml;ber <span class="listing">\1</span>. Es lassen sich hiermit bis zu neun Muster abspeichern (<span class="listing">\1</span>, <span class="listing">\2</span> ... <span class="listing">\9</span>). Bspw. w&uuml;rde man mit</p>
+<pre>s/\(string1\) \(string2\) \(string3\)/\3 \2 \1/g</pre>
+<p>erreichen, dass in einer Textdatei alle Vorkommen von</p>
+<pre>string1 string2 string3</pre>
+<p>umge&auml;ndert werden in</p>
+<pre>string3 string2 string1</pre>
+<p><span class="listing">\1</span> bezieht sich also immer auf das erste Klammernpaar, <span class="listing">\2</span> auf das zweite usw.</p>
+<h4 class="t4">Alternativen</h4>
+<p><a id="Xxx999415" name="Xxx999415"></a>Selbstverst&auml;ndlich lassen sich auch Alternativen definieren. Hierf&uuml;r wird das Zeichen <span class="listing">|</span> verwendet. Bspw.:</p>
+<pre>(asdf|ASDF)</pre>
+<p>bedeutet, dass nach »asdf« oder »ASDF« gesucht wird, nicht aber nach »AsDf« oder »asdF«.</p>
+<h4 class="t4">Sonderzeichen</h4>
+<p><a id="Xxx999420" name="Xxx999420"></a>Da viele Tools direkt auf Textdateien zugreifen, finden Sie gew&ouml;hnlich noch folgende Sonderzeichen definiert (siehe Tabelle 11.3):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 11.3   
+    </b>Sonderzeichen bei regul&auml;ren Ausdr&uuml;cken</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Sonderzeichen</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">^<a id="Xxx999428" name="Xxx999428"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Steht f&uuml;r den Zeilenanfang.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$<a id="Xxx999433" name="Xxx999433"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Steht f&uuml;r das Zeilenende.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\b<a id="Xxx999438" name="Xxx999438"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Steht f&uuml;r die leere Zeichenkette am Wortanfang oder am Wortende.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\B<a id="Xxx999443" name="Xxx999443"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Steht f&uuml;r die leere Zeichenkette, die nicht den Anfang oder das Ende eines Wortes bildet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\&lt;<a id="Xxx999448" name="Xxx999448"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Steht f&uuml;r die leere Zeichenkette am Wortanfang.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\&gt;<a id="Xxx999453" name="Xxx999453"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Steht f&uuml;r die leere Zeichenkette am Wortende.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\d<a id="Xxx999458" name="Xxx999458"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Ziffer
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\D<a id="Xxx999463" name="Xxx999463"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Keine Ziffer
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\s<a id="Xxx999468" name="Xxx999468"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Whitespace
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\S<a id="Xxx999473" name="Xxx999473"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Kein Whitespace
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">.
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeichen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">+<a id="Xxx999482" name="Xxx999482"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Voriger Ausdruck mindestens ein Mal.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">*<a id="Xxx999487" name="Xxx999487"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Voriger Ausdruck beliebig oft.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">?<a id="Xxx999492" name="Xxx999492"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Voriger Ausdruck null oder ein Mal.
+</td>
+</tr>
+</table><br>
+<p>Jedes dieser Metazeichen l&auml;sst sich auch mit dem Backslash (<span class="listing">\</span>) maskieren.</p>
+<h4 class="t4">Zusammenfassung</h4>
+<p>Grau ist alle Theorie und trotzdem lie&szlig;e sich zu den regul&auml;ren Ausdr&uuml;cken noch viel mehr schreiben. Damit das hier Beschriebene f&uuml;r Sie kein Buch mit sieben Sigeln bleibt, soll im n&auml;chsten Abschnitt mit <span class="listing">grep</span> darauf zur&uuml;ckgegriffen werden. Auch in den Abschnitten zu <span class="listing">sed</span> und <span class="listing">awk</span> hilft Ihnen das Wissen &uuml;ber regul&auml;re Ausdr&uuml;cke weiter. Mehr zu den regul&auml;ren Ausdr&uuml;cken finden Sie im Internet unter <b><a href="http://www.lrz-muenchen.de/services/schulung/unterlagen/regul/" target="_blank">http://www.lrz-muenchen.de/services/schulung/unterlagen/regul/</a></b>. Wollen Sie gar wissen, wie man regul&auml;re Ausdr&uuml;cke selbst programmieren kann, finden Sie in »C von A bis Z« einen kleinen Abschnitt dazu, welchen Sie auch online auf meiner Webseite unter <b><a href="http://www.pronix.de/" target="_blank">www.pronix.de</a></b> einsehen k&ouml;nnen.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_012_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_013_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_013_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:04 GMT -->
+</html>

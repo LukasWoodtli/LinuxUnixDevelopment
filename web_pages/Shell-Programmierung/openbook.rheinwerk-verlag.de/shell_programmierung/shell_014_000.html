@@ -1,0 +1,464 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_014_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:04 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 12 Der Stream-Editor sed</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_013_001.html">
+<link rel="next" href="shell_014_001.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_013_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_014_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a class="navh" href="#RxxKap01400004004FA41F023172">12 Der Stream-Editor sed</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01400004004FA41F023174">12.1 Funktions- und Anwendungsweise von sed</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400004004FA41F023187">12.1.1 Wohin mit der Ausgabe?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_014_001.html#RxxKap01400104004FBB1F01A172">12.2 Der sed-Befehl</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_014_002.html#RxxKap01400204004FBC1F04F172">12.3 Adressen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F037172">12.4 Kommandos, Substitutionsflags und Optionen von sed</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F0371F1">12.4.1 Das a-Kommando – Zeile(n) anf&uuml;gen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F0371FB">12.4.2 Das c-Kommando – Zeilen ersetzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F037201">12.4.3 Das d-Kommando – Zeilen l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F03720D">12.4.4 Die Kommandos h, H, g, G und x – Arbeiten mit den Puffern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F03721C">12.4.5 Das Kommando i – Einf&uuml;gen von Zeilen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F037221">12.4.6 Das p-Kommando – Patternspace ausgeben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F03722F">12.4.7 Das Kommando q – Beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F037233">12.4.8 Die Kommandos r und w</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F03723E">12.4.9 Das Kommando s – substitute</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_003.html#RxxKap01400304004FBD1F03726C">12.4.10 Das Kommando y</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_014_004.html#RxxKap01400404004FBE1F046172">12.5 sed-Scripts</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<h1 class="t1">Kapitel 12 <a id="RxxKap0122DerStreamEditorsed" name="RxxKap0122DerStreamEditorsed"></a>Der Stream-Editor se<a id="RxxKap01400004004FA41F023172" name="RxxKap01400004004FA41F023172"></a>d</h1>
+<p class="anleser"><i>sed ist ein relativ altes Tool, wird aber immer noch vielfach eingesetzt, etwa um Zeilen einer Datei oder eines Datenstroms zu manipulieren. Besonders h&auml;ufig und gern wird sed zum Suchen und Ersetzen von Zeichenfolgen verwendet.</i></p>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">12.1 <a id="RxxKap0124FunktionsundAnwendungsweisevonsed" name="RxxKap0124FunktionsundAnwendungsweisevonsed"></a>Funktions- und Anwendungsweise von se<a id="RxxKap01400004004FA41F023174" name="RxxKap01400004004FA41F023174"></a>d 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999280" name="Xxx999280"></a><a id="Xxx999281" name="Xxx999281"></a><a id="Xxx999282" name="Xxx999282"></a>Bevor Sie sich mit dem Editor <span class="listing">sed</span> auseinander setzen, m&ouml;chte Ich Ihnen zun&auml;chst die grundlegende Funktionsweise des <span class="listing">sed</span>-Kommandos beschreiben. <span class="listing">sed</span> wurde bereits in den 70-ern von Lee E. McMahon in den Bell Labs entwickelt. Der Name sed steht f&uuml;r <b>S</b>tream <b>ED</b>itor. Nat&uuml;rlich ist sed kein Editor in dem Sinne, wie Sie es vielleicht von »vim« oder »Emacs« her kennen.</p>
+<p><a id="Xxx999284" name="Xxx999284"></a>Mittlerweile hat jede Linux- bzw. UNIX-Distribution eine eigene <span class="listing">sed</span>-Version. Linux verwendet gew&ouml;hnlich GNU-<span class="listing">sed</span>, was eine erweiterte Variante des Ur-<span class="listing">sed</span> ist. Bspw. bietet GNU-<span class="listing">sed</span> »in-place-editing«, womit eine &Auml;nderung direkt im Eingabefilter m&ouml;glich ist. Solaris wiederum bietet gleich drei Versionen von <span class="listing">sed</span> an, eine von AT&amp;T-abgeleitete, eine von BSD UNIX und eine weitere, die dem XPG4-Standard entspricht (nat&uuml;rlich kann unter Solaris und BSD auch GNU-<span class="listing">sed</span> verwendet werden). Generell unterscheiden sich die einzelnen Versionen in der Funktionsvielfalt, was hier allerdings kein Problem sein sollte, da vorwiegend auf die grundlegenden Funktionen von <span class="listing">sed</span> eingegangen wird, die jedes <span class="listing">sed</span> kennen sollte.</p>
+<p><a id="Xxx999286" name="Xxx999286"></a><span class="listing">sed</span> bekommt seine Kommandos entweder aus einer Datei oder von der Kommandozeile. Meistens handelt es sich aber um eine Datei. Diese Datei (bzw. das Kommando aus der Kommandozeile) liest <span class="listing">sed</span> Zeile f&uuml;r Zeile von der Standardeingabe ein, kopiert diese in einen extra daf&uuml;r angelegten Puffer (in den so genannten Patternspace), bearbeitet diesen Puffer nach einer von Ihnen bestimmten Regel und gibt den ver&auml;nderten Puffer anschlie&szlig;end wieder auf die Standardausgabe aus. Bei dem Puffer handelt es sich um eine Kopie einer jeden Zeile, das hei&szlig;t, jegliche Kommandoausf&uuml;hrung von <span class="listing">sed</span> bezieht sich von nun an auf diesen Puffer. Die Quelldatei bleibt hierbei immer unver&auml;ndert. Es sollte hier klar geworden sein, dass <span class="listing">sed</span> zeilenweise arbeitet – eine Zeile wird eingelesen, bearbeitet und wieder ausgegeben. Nat&uuml;rlich findet dieser ganze Arbeitsvorgang in einer Schleife statt (siehe Abbildung 12.1).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Dass die Quelldatei unver&auml;ndert bleibt, sorgt immer wieder f&uuml;r Verwirrung. </p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard">Aber eigentlich ist dies logisch, denn es ist nun mal nicht m&ouml;glich, gleichzeitig aus einer Datei zu lesen und in sie hineinzuschreiben. Man muss also die Ausgabe in einer tempor&auml;ren Datei speichern, zur&uuml;ckkopieren und die tempor&auml;re Datei wieder l&ouml;schen.</p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/12_01.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein12_01.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 12.1   
+    </b>Die Arbeitsweise von sed</p>
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999301" name="Xxx999301"></a><a id="Xxx999302" name="Xxx999302"></a><a id="Xxx999303" name="Xxx999303"></a><a id="Xxx999304" name="Xxx999304"></a>Neben dem Puffer Patternspace gibt es noch einen zweiten Puffer, den Holdspace. Diesen k&ouml;nnen Sie mit speziellen Kommandos verwenden, um Daten untereinander (zwischen dem Pattern- und Holdspace) auszutauschen. Die Puffergr&ouml;&szlig;e (oder auch die Zeichen, die pro Zeile aufgenommen werden k&ouml;nnen) ist bei moderneren <span class="listing">sed</span>-Versionen unbegrenzt. Bei &auml;lteren Versionen gibt es h&auml;ufig noch eine Begrenzung auf 8192 Zeichen.</p>
+<p><a id="Xxx999306" name="Xxx999306"></a>Die Syntax zu <span class="listing">sed</span> lautet:</p>
+<pre>sed [-option] Kommando [Datei] ... [Datei_n]
+sed -f Kommandodatei [Datei] ... [Datei_n]</pre>
+<p>Damit die Kommandos nicht mit der flei&szlig;igen Shell und deren M&uuml;hen, Metazeichen vorher zu interpretieren, kollidieren, sollten Sie die <span class="listing">sed</span>-Kommandos zwischen Single Quotes setzen.</p>
+<pre>sed [-option] 'Kommando' [Datei] ... [Datei_n]</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie auch mehrere Kommandos auf einmal verwenden. Hierzu m&uuml;ssen Sie entweder die einzelnen Kommandos mit einem Semikolon voneinander trennen oder aber Sie schreiben in jeder Zeile ein Kommando.</p>
+<pre>sed 'Kommando1 ; Kommando2 ; Kommando3' Date
+sed 'Kommando1
+&gt; Kommando2
+&gt; Kommando3' Datei</pre>
+<p>Hier als Beispiel drei verschiedene <span class="listing">sed</span>-Kommandos, welche alle drei zum selben Ziel f&uuml;hren:</p>
+<pre>you@host &gt; sed -n  '/Scott/p' mrolympia.dat
+Larry Scott USA 1965 1966
+you@host &gt; sed -n  '/Scott/p' &lt; mrolympia.dat
+Larry Scott USA 1965 1966
+you@host &gt; cat mrolympia.dat | sed -n '/Scott/p'
+Larry Scott USA 1965 1966</pre>
+<p><span class="listing">sed</span> liest immer von der Standardeingaben und schreibt standardm&auml;&szlig;ig auf die Standardausgabe. Mit dem letzten Parameter k&ouml;nnen Sie einen oder auch mehrere Dateinamen angeben, von denen <span class="listing">sed</span> aus dem Eingabestrom lesen soll. Wie Sie im Beispiel sehen konnten, k&ouml;nnen Sie sich hier auch der Umlenkungszeichen (<span class="listing">&lt;</span>, <span class="listing">&gt;</span>, <span class="listing">|</span>) bedienen. Die n&auml;here Bedeutung der <span class="listing">sed</span>-Befehle, die im Beispiel eben verwendet wurden, werden Sie in den folgenden Abschnitten n&auml;her kennen lernen.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">12.1.1 Wohin mit der Ausgabe?<a id="RxxKap01400004004FA41F023187" name="RxxKap01400004004FA41F023187"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999317" name="Xxx999317"></a><a id="Xxx999318" name="Xxx999318"></a>Wenn Sie den <span class="listing">sed</span>-Editor verwenden, werden Sie wohl im seltensten Fall eine Ausgabe auf dem Bildschirm machen wollen. Hierzu gibt es drei g&auml;ngige Anwendungsm&ouml;glichkeiten, die Ausgabe von <span class="listing">sed</span> in die richtigen Bahnen zu lenken. Hier werden erst mal die g&auml;ngigsten Methoden von <span class="listing">sed</span> behandelt, ohne jetzt auf die einzelnen Optionen bzw. Features von <span class="listing">sed</span> einzugehen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die Ausgabe von <span class="listing">sed</span> erfokgt auf den Standardausgabekanal, Fehlermeldungen erfolgen auf den Standardfehlerkanal. Der R&uuml;ckgabewert von sed ist dabei ungleich (meistens gr&ouml;&szlig;er als) 0.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Mehrere Dateien bearbeiten</h4>
+<p><a id="Xxx999325" name="Xxx999325"></a>Wenn Sie mehrere Dateien auf einmal mit <span class="listing">sed</span> bearbeiten wollen bzw. m&uuml;ssen, kann es sinnvoll sein, anstatt eines Kommandos eine Kommandodatei zu verwenden – man darf hierzu gern auch <span class="listing">sed</span>-Script sagen. Der Vorteil: Diese Kommandodatei k&ouml;nnen Sie jederzeit wieder verwenden. Also, statt eine Datei wie folgt mit <span class="listing">sed</span> zu bearbeiten</p>
+<pre>sed -n 'kommando ; kommando; kommando' Datei &gt; Zieldatei</pre>
+<p>k&ouml;nnen Sie ein <span class="listing">sed</span>-Script verwenden:</p>
+<pre>sed -f ased_script.sed Datei &gt; Zieldatei</pre>
+<p>Damit k&ouml;nnen Sie de facto mehrere Dateien komfortabel mit einem <span class="listing">sed</span>-Script bearbeiten. Theoretisch k&ouml;nnten Sie hierbei vorgefertigte <span class="listing">sed</span>-Scripts einsetzen, ohne dass Sie &uuml;berhaupt Kenntnisse von <span class="listing">sed</span> haben (was allerdings nicht sehr empfehlenswert ist). Wie Sie eigene <span class="listing">sed</span>-Scripts schreiben, erfahren Sie in Abschnitt 12.5. Gew&ouml;hnlich werden Sie das <span class="listing">sed</span>-Script auf mehrere Dateien auf einmal in einem Shellscript ansetzen. Dies k&ouml;nnen Sie dann bspw. folgenderma&szlig;en machen:</p>
+<pre># Alle Dateien im aktuellen Verzeichnis
+for file in *
+do
+   sed -f ased_script.sed $file &gt; temp
+   # Achtung, hier wird das Original ver&auml;ndert!!!
+   mv tmp $file
+done</pre>
+<h4 class="t4">Direkt aus einem Kommando bearbeiten</h4>
+<p>Im Beispiel oben wurden mehrere Dateien neu bearbeitet. Wenn Sie ein wenig vorausschauender arbeiten, k&ouml;nnten Sie diesen Schritt auch auslassen, indem Sie gleich von vorn herein darauf achten, dass man die Datei gar nicht bearbeiten muss (nat&uuml;rlich ist dies nicht immer m&ouml;glich). Dies l&auml;sst sich wieder mit einer Pipe realisieren:</p>
+<pre>kommando | sed -f ased_script.sed &gt; Datei
+kommando | sed -n 'kommando' &gt; Datei
+shellscript | sed -f ased_script.sed &gt; Datei
+shellscript | sed -f 'Kommando' &gt; Datei</pre>
+<p>Hierbei schreibt ein Prozess (ein Kommando oder auch ein Shellscript) seine Daten in die Standardausgabe durch die Pipe. Auf der anderen Seite der Pipe wartet <span class="listing">sed</span> mit der Standardeingabe auf diese Daten und verarbeitet sie zeilenweise mit dem <span class="listing">sed</span>-Script. Die Ausgabe wird mit einer Umlenkung in eine Datei geschrieben.</p>
+<h4 class="t4">Direkt aus einer Datei bearbeiten</h4>
+<p>Selbstverst&auml;ndlich k&ouml;nnen Sie mit <span class="listing">sed</span> auch einen Text aus einer Datei extrahieren, zerlegen und in eine neue Zieldatei speichern, ohne die Originaldatei zu ver&auml;ndern.</p>
+<pre>sed -n '/ein_wort/p' Datei &gt; Zieldatei</pre>
+<p>Damit extrahiert <span class="listing">sed</span> alle Zeilen mit dem Wort »ein_wort« aus Datei und schreibt diese Zeilen in die Zieldatei.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_013_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_014_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_014_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:06 GMT -->
+</html>

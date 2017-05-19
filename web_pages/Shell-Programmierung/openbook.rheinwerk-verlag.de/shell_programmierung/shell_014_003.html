@@ -1,0 +1,1065 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_014_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 12.4 Kommandos, Substitutionsflags und Optionen von sed</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_014_002.html">
+<link rel="next" href="shell_014_004.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_014_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_014_004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_014_000.html#RxxKap01400004004FA41F023172">12 Der Stream-Editor sed</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_014_000.html#RxxKap01400004004FA41F023174">12.1 Funktions- und Anwendungsweise von sed</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_014_000.html#RxxKap01400004004FA41F023187">12.1.1 Wohin mit der Ausgabe?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_014_001.html#RxxKap01400104004FBB1F01A172">12.2 Der sed-Befehl</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_014_002.html#RxxKap01400204004FBC1F04F172">12.3 Adressen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01400304004FBD1F037172">12.4 Kommandos, Substitutionsflags und Optionen von sed</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F0371F1">12.4.1 Das a-Kommando – Zeile(n) anf&uuml;gen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F0371FB">12.4.2 Das c-Kommando – Zeilen ersetzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F037201">12.4.3 Das d-Kommando – Zeilen l&ouml;schen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F03720D">12.4.4 Die Kommandos h, H, g, G und x – Arbeiten mit den Puffern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F03721C">12.4.5 Das Kommando i – Einf&uuml;gen von Zeilen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F037221">12.4.6 Das p-Kommando – Patternspace ausgeben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F03722F">12.4.7 Das Kommando q – Beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F037233">12.4.8 Die Kommandos r und w</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F03723E">12.4.9 Das Kommando s – substitute</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01400304004FBD1F03726C">12.4.10 Das Kommando y</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_014_004.html#RxxKap01400404004FBE1F046172">12.5 sed-Scripts</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">12.4 <a id="RxxKap01272KommandosSubstitutionsflagsundOptionenvonsed" name="RxxKap01272KommandosSubstitutionsflagsundOptionenvonsed"></a>Kommandos, Substitutionsflags und Optionen von se<a id="RxxKap01400304004FBD1F037172" name="RxxKap01400304004FBD1F037172"></a>d 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p>In den obigen Beispielen hatten Sie bisher immer die Option <span class="listing">–n</span> und das Kommando <span class="listing">p</span> verwendet. <span class="listing">sed</span> bietet neben <span class="listing">p</span> eine interessante F&uuml;lle von Kommandos an. Bevor Sie die einzelnen Kommandos und Optionen in der Praxis einsetzen, folgen hierzu die Tabellen 12.1 bis 12.3, welche die Optionen, Kommandos und so genannten Substitutionsflags zusammenfassen.</p>
+<p><a id="Xxx999278" name="Xxx999278"></a>Zuerst die wichtigsten Kommandos von <span class="listing">sed</span>:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.1   
+    </b>G&auml;ngige Basiskommandos von sed</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Kommando</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">a
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r append) F&uuml;gt eine oder mehrere Zeilen an die selektierte Zeile an.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">c
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r change) Ersetzt die selektierte Zeile durch eine oder mehrere neue.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">d
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r delete) L&ouml;scht Zeile(n).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">g
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r get »buffer«) Kopiert den Inhalt des tempor&auml;ren Puffers (Holdspace) in den Arbeitspuffer (Patternspace).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">G
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r GetNewline) F&uuml;gt den Inhalt des tempor&auml;ren Puffers (Holdspace) an den Arbeitspuffer (Patternspace) an.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">h
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r hold »buffer«) Gegenst&uuml;ck zu g; kopiert den Inhalt des Arbeitspuffers (Patternspace) in den tempor&auml;ren Puffer (Holdspace).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">H
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r HoldNewline) Gegenst&uuml;ck zu G; f&uuml;gt den Inhalt des Arbeitspuffers (Patternspace) an den tempor&auml;ren Puffer (Holdspace) an.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">i
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r insert) F&uuml;gt eine neue Zeile vor der selektierten Zeile ein.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">l
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r listing) Zeigt nicht druckbare Zeichen an.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">n
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r next) Verwendet das n&auml;chste Kommando statt des aktuellen auf die n&auml;chste Zeile an.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">p
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r print) Gibt die Zeilen aus.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">q
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r quit) Beendet sed.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">r
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r read) Datei integrieren; liest Zeilen aus einer Datei ein.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">s
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r substitute) Ersetzen einer Zeichenfolge durch eine andere.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">x
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r Xchange) Vertauschen des tempor&auml;ren Puffers (Holdspace) mit dem Arbeitspuffer (Patternspace).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">y
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r yank) Zeichen aus einer Liste ersetzen; Ersetzen eines Zeichens durch ein anderes.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">w
+</td>
+<td class="tabellentext" bgcolor="#000000">(f&uuml;r write) Schreibt Zeilen in eine Datei.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">!
+</td>
+<td class="tabellentext" bgcolor="#000000">Negation; wendet die Kommandos auf Zeilen an, die nicht zutreffen.
+</td>
+</tr>
+</table><br>
+<p>Bei Verwendung einer Substitution mittels <span class="listing">s/.../.../</span> k&ouml;nnen noch zus&auml;tzliche Flags (Substitutionsflags) angegeben werden, die am Ende des Befehls notiert werden. Bspw. findet mit <span class="listing">s/.../.../g</span> eine globale Ersetzung statt, das hei&szlig;t, es werden alle Vorkommen eines Musters in einer Zeile ersetzt. Ohne <span class="listing">g</span> w&uuml;rde nur das erste Vorkommen ersetzt. Hier einige dieser Flags und deren Bedeutung:<a id="Xxx999366" name="Xxx999366"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.2   
+    </b>Einige Substitutionsflags</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Flag</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">g
+</td>
+<td class="tabellentext" bgcolor="#000000">Globale Ersetzung (aller Vorkommen eines Musters in der Zeile).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">p
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausgabe der Zeile.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">w
+</td>
+<td class="tabellentext" bgcolor="#000000">Tauscht den Inhalt des Zwischenspeichers mit der aktuell selektierten Zeile aus.
+</td>
+</tr>
+</table><br>
+<p>Die Schalter-Optionen, die Sie mit <span class="listing">sed</span> verwenden k&ouml;nnen, lauten:<a id="Xxx999392" name="Xxx999392"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.3   
+    </b>G&auml;ngige Schalter-Optionen f&uuml;r sed</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–n
+</td>
+<td class="tabellentext" bgcolor="#000000">Schaltet »Default Output« aus; mit dem Default Output ist die Ausgabe des Puffers (Patternspace) gemeint.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–e
+</td>
+<td class="tabellentext" bgcolor="#000000">Mehrere Befehle nacheinander ausf&uuml;hren; man gibt praktisch ein Script bzw. die Kommandos direkt in der Kommandozeile ein.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–f
+</td>
+<td class="tabellentext" bgcolor="#000000">Die sed-Befehle in einem Script (sed-Script) zusammenfassen und dieses Script mittels –f &uuml;bergeben; praktisch wie die Option –e, nur dass hier anstatt des Scripts bzw. Kommandos in der Kommandozeile der Name eines Scriptfiles angegeben wird.
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die meisten <span class="listing">sed</span>-Versionen (GNU-<span class="listing">sed</span>, BSD-<span class="listing">sed</span>, FreeBSD-<span class="listing">sed</span> und <span class="listing">ssed</span>) bieten neben diesen Optionen noch einige weitere an, dessen Bedeutung Sie bei Bedarf der Manual-Page von <span class="listing">sed</span> entnehmen k&ouml;nnen.</p>
+</td>
+</tr>
+</table><br>
+<p>Wie <span class="listing">grep</span> versteht auch <span class="listing">sed</span> eine Menge regul&auml;rer Ausdr&uuml;cke. Auch hier bieten die unterschiedlichen <span class="listing">sed</span>-Versionen die ein oder andere Erweiterung an. Allerdings begn&uuml;gen wir uns hier wieder mit den Basic-Ausdr&uuml;cken. Die regul&auml;ren Ausdr&uuml;cke, die <span class="listing">sed</span> versteht, finden Sie in Tabelle 12.4 aufgelistet:<a id="Xxx999424" name="Xxx999424"></a><a id="Xxx999425" name="Xxx999425"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 12.4   
+    </b>Grundlegende regul&auml;re Ausdr&uuml;cke, die sed versteht</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Ausdruck</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Beispiel</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Erkl&auml;rung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">^
+</td>
+<td class="tabellentext" bgcolor="#000000">Anfang einer Zeile
+</td>
+<td class="tabellentext" bgcolor="#000000">/^wort/
+</td>
+<td class="tabellentext" bgcolor="#000000">Behandelt alle Zeilen, die mit der Zeichenfolge wort beginnen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">$
+</td>
+<td class="tabellentext" bgcolor="#000000">Ende einer Zeile
+</td>
+<td class="tabellentext" bgcolor="#000000">/wort$/
+</td>
+<td class="tabellentext" bgcolor="#000000">Behandelt alle Zeilen, die mit der Zeichenfolge wort enden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">.
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Zeichen
+</td>
+<td class="tabellentext" bgcolor="#000000">/w.rt/
+</td>
+<td class="tabellentext" bgcolor="#000000">Behandelt alle Zeilen mit den Zeichenfolgen wort, wert, wirt, wart etc. (Ausname ist das Newline-Zeichen).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">*
+</td>
+<td class="tabellentext" bgcolor="#000000">keine, eine oder mehrere Wiederholungen des vorhergehenden Zeichens (oder Gruppe)
+</td>
+<td class="tabellentext" bgcolor="#000000">/*wort/
+</td>
+<td class="tabellentext" bgcolor="#000000">Behandelt alle Zeilen, in denen vor wort kein, ein oder mehrere Zeichen stehen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[]
+</td>
+<td class="tabellentext" bgcolor="#000000">ein Zeichen aus der Menge
+</td>
+<td class="tabellentext" bgcolor="#000000">/[Ww]ort/
+</td>
+<td class="tabellentext" bgcolor="#000000">Behandelt alle Zeilen mit der Zeichenfolge wort oder Wort.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[^]
+</td>
+<td class="tabellentext" bgcolor="#000000">Kein Zeichen aus der Menge
+</td>
+<td class="tabellentext" bgcolor="#000000">/[^Ww]ort/
+</td>
+<td class="tabellentext" bgcolor="#000000">Behandelt alle Zeilen die nicht die Zeichenfolge wort oder Wort enthalten.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\(...\)
+</td>
+<td class="tabellentext" bgcolor="#000000">Speichern eines enthaltenen Musters
+</td>
+<td class="tabellentext" bgcolor="#000000">S/\(wort\)a/\1b/
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Zeichenfolge wort wird in \1 gespeichert. Diese Referenz auf das Muster wort verwenden Sie nun, um in der Zeichenfolge worta das Wort wortb zu ersetzen. Damit lassen sich bis zu 9 solcher Referenzen definieren, worauf Sie mit \1, \2 ... \9 zugreifen k&ouml;nnen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">&amp;
+</td>
+<td class="tabellentext" bgcolor="#000000">enth&auml;lt das Suchmuster
+</td>
+<td class="tabellentext" bgcolor="#000000">S/wort/Ant&amp;en/
+</td>
+<td class="tabellentext" bgcolor="#000000">Das Ampersand-Zeichen repr&auml;sentiert den Suchstring. Im Beispiel wird jeder Suchstring wort durch das Wort Antworten ersetzt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\&lt;
+</td>
+<td class="tabellentext" bgcolor="#000000">Wortanfang
+</td>
+<td class="tabellentext" bgcolor="#000000">/\&lt;wort/
+</td>
+<td class="tabellentext" bgcolor="#000000">Findet alle Zeilen mit einem Wort, das mit wort beginnt, also wortreich, wortarm, nicht aber Vorwort oder Nachwort.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">\&gt;
+</td>
+<td class="tabellentext" bgcolor="#000000">Wortende
+</td>
+<td class="tabellentext" bgcolor="#000000">/wort\&gt;/
+</td>
+<td class="tabellentext" bgcolor="#000000">Findet alle Zeilen mit einem Wort, das mit wort endet, also Vorwort, Nachwort, nicht aber wortreich oder wortarm.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">x\{m\}
+x\{m,\}
+x\{m,n\}
+</td>
+<td class="tabellentext" colspan="3" bgcolor="#000000">m-fache Wiederholung des Zeichens x
+mindestens m-fache Wiederholung des Zeichens x
+mindestens m-, maximal n-fache Wiederholung des Zeichens x
+</td>
+</tr>
+</table><br>
+<p>Nachdem Sie jetzt eine Menge Theorie und viele Tabellen gesehen haben, folgt nun ein Praxisteil zu der Verwendung der einzelnen Kommandos von <span class="listing">sed</span>. Als Beispiel soll wieder die Datei mrolympia.dat verwendet werden:</p>
+<pre>you@host &gt; cat mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Samir Bannout Libanon 1983
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Des Weiteren muss erw&auml;hnt werden, dass alle Beispiele auf dem Patternspace-Puffer ausgef&uuml;hrt werden. Somit bezieht sich die &Auml;nderung nur auf die Ausgabe auf dem Bildschirm (Standardausgabe). Sofern Sie hier gern eine bleibende &Auml;nderung vornehmen wollen (was in der Regel der Fall sein sollte), k&ouml;nnen Sie sich auf Abschnitt 12.1.1 beziehen. Die einfachste L&ouml;sung d&uuml;rfte hier wohl die Verwendung des Umlenkungszeichens am Ende des <span class="listing">sed</span>-Befehls sein.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">12.4.1 Das a-Kommando – Zeile(n) anf&uuml;gen<a id="RxxKap01400304004FBD1F0371F1" name="RxxKap01400304004FBD1F0371F1"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999539" name="Xxx999539"></a><a id="Xxx999540" name="Xxx999540"></a><a id="Xxx999541" name="Xxx999541"></a>Die Syntax:</p>
+<pre>a\
+neue Zeile
+# oder in neueren sed-Versionen auch
+a neue Zeile</pre>
+<p>Mit dem <span class="listing">a</span>-Kommando (append) k&ouml;nnen Sie eine neue Zeile hinter einer gefundenen Zeile einf&uuml;gen. Bspw.:</p>
+<pre>you@host &gt; sed '/2004/ a Jay Cutler 2005' mrolympia.dat
+...
+Samir Bannout Libanon 1983
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004
+Jay Cutler 2005</pre>
+<p>Sollte die Zeile l&auml;nger werden, k&ouml;nnen Sie der &Uuml;bersichtlichkeit zuliebe ein Backslash verwenden:</p>
+<pre>you@host &gt; sed '/2004/ a\
+&gt; Prognosse f&uuml;r 2005: J.Cutler; R.Coleman; M.R&uuml;hl' mrolympia.dat
+...
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004
+Prognosse f&uuml;r 2005: J.Cutler; R.Coleman; M.R&uuml;hl'</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Dass das Kommando <span class="listing">a</span> und die neue Zeile in derselben Zeile stehen, ist eine Erweiterung neuerer <span class="listing">sed</span>-Versionen. &Auml;ltere <span class="listing">sed</span>-Programme kennen h&auml;ufig nur das <span class="listing">a</span>-Kommando gefolgt von einem Backslash und die neue Zeile dann in der n&auml;chsten Zeile. Dies sollten Sie wissen, falls Sie auf einem etwas betagteren Rechner mit sed arbeiten m&uuml;ssen.</p>
+</td>
+</tr>
+</table><br>
+<p>Beachten Sie au&szlig;erdem, dass jedes Whitespace nach dem <span class="listing">a</span>-Kommando hinter dem Backslash ebenfalls als ein Zeichen interpretiert und verwendet wird.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">12.4.2 Das c-Kommando – Zeilen ersetzen<a id="RxxKap01400304004FBD1F0371FB" name="RxxKap01400304004FBD1F0371FB"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999554" name="Xxx999554"></a><a id="Xxx999555" name="Xxx999555"></a><a id="Xxx999556" name="Xxx999556"></a>Die Syntax:</p>
+<pre>c\
+neuer Text
+# oder in neueren sed-Versionen
+c neuer Text</pre>
+<p>Wollen Sie eine gefundene Zeile komplett durch eine neue Zeile ersetzen, k&ouml;nnen Sie das <span class="listing">c</span>-Kommando (change) verwenden. Die Funktionsweise entspricht der des <span class="listing">a</span>-Kommandos.</p>
+<pre>you@host &gt; sed '/\&lt;Oliva\&gt;/ c \
+&gt; Sergio Oliva Cuba 1967 1968 1969' mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva Cuba 1967 1968 1969
+...</pre>
+<p>Im Beispiel wurden alle Zeilen mit dem Vorkommen des Wortes »Oliva« durch die in der darauf folgenden Zeile vorgenommene Eingabe ersetzt. Hier wurde bspw. die Nationalit&auml;t ver&auml;ndert. Dem <span class="listing">c</span>-Kommando muss wie beim <span class="listing">a</span>-Kommando ein Backslash und ein Newline-Zeichen folgen – obgleich auch hier die neueren <span class="listing">sed</span>-Versionen ohne Backslash und Newline-Zeichen auskommen.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">12.4.3 Das d-Kommando – Zeilen l&ouml;schen<a id="RxxKap01400304004FBD1F037201" name="RxxKap01400304004FBD1F037201"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999563" name="Xxx999563"></a><a id="Xxx999564" name="Xxx999564"></a><a id="Xxx999565" name="Xxx999565"></a>Zum L&ouml;schen von Zeilen wird das <span class="listing">d</span>-Kommando (delete) verwendet. Damit wird die entsprechende Adresse im Puffer gel&ouml;scht. Ein paar Beispiele.</p>
+<p>L&ouml;scht die f&uuml;nfte Zeile:</p>
+<pre>you@host &gt; sed '5d' mrolympia.dat</pre>
+<p>L&ouml;scht ab der f&uuml;nften bis zur neunten Zeile:</p>
+<pre>you@host &gt; sed '5,9d' mrolympia.dat</pre>
+<p>L&ouml;scht alle Zeilen ab der f&uuml;nften Zeile bis zum Ende der Datei:</p>
+<pre>you@host &gt; sed '5,$d' mrolympia.dat</pre>
+<p>L&ouml;scht alle Zeilen, welche das Muster »USA« enthalten:</p>
+<pre>you@host &gt; sed '/USA/d' mrolympia.dat</pre>
+<p>L&ouml;scht alle Zeilen, die nicht das Muster »USA« enthalten:</p>
+<pre>you@host &gt; sed '/!USA/d' mrolympia.dat</pre>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">12.4.4 Die Kommandos h, H, g, G und x – Arbeiten mit den Puffern<a id="RxxKap01400304004FBD1F03720D" name="RxxKap01400304004FBD1F03720D"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999578" name="Xxx999578"></a><a id="Xxx999579" name="Xxx999579"></a><a id="Xxx999580" name="Xxx999580"></a><a id="Xxx999581" name="Xxx999581"></a><a id="Xxx999582" name="Xxx999582"></a><a id="Xxx999583" name="Xxx999583"></a><a id="Xxx999584" name="Xxx999584"></a><a id="Xxx999585" name="Xxx999585"></a><a id="Xxx999586" name="Xxx999586"></a>Mit den Kommandos <span class="listing">g</span> (get), <span class="listing">G</span> (GetNewline), <span class="listing">h</span> (hold), <span class="listing">H</span> (HoldNewline) und <span class="listing">x</span> (Xchange) k&ouml;nnen Sie mit den Puffern (Patternspace und Holdspace) arbeiten.</p>
+<p>Mit dem Kommando <span class="listing">h</span> k&ouml;nnen Sie den aktuellen Inhalt des Zwischenpuffers (Patternspace) in einen anderen Puffer (Holdspace) sichern. Mit <span class="listing">H</span> h&auml;ngen Sie ein Newline-Zeichen an das Ende des Puffers, gefolgt vom Inhalt des Zwischenpuffers.</p>
+<p>Mit <span class="listing">g</span>, dem Gegenst&uuml;ck zu <span class="listing">h</span>, ersetzen Sie die aktuelle Zeile des Zwischenpuffers durch den Inhalt des Puffers, den Sie zuvor mit <span class="listing">h</span> gesichert haben. Mit <span class="listing">G</span> h&auml;ngen Sie ein Newline-Zeichen an das Ende des Zwischenpuffers, gefolgt vom Inhalt des Puffers.</p>
+<p>Mit dem Kommando <span class="listing">x</span> hingegen tauschen Sie den Inhalt des Zwischenpuffers mit dem Inhalt des anderen Puffers aus.</p>
+<p>Ein Beispiel:</p>
+<pre>you@host &gt; sed -e '/Sergio/{h;d}' -e '$G' mrolympia.dat</pre>
+<p>Hierbei f&uuml;hren Sie zun&auml;chst eine Suche nach dem Muster »Sergio« in der Datei mrolympia.dat durch. Wird eine entsprechende Zeile gefunden, legen Sie diese in den Holdspace zum Zwischenspeichern (Kommando <span class="listing">h</span>). Im n&auml;chsten Schritt l&ouml;schen Sie diese Zeile (Kommando <span class="listing">d</span>). Anschlie&szlig;end f&uuml;hren Sie (Option <span class="listing">–e</span>) das n&auml;chste Kommando aus. Hier h&auml;ngen Sie praktisch die Zeile im Holdspace (<span class="listing">G</span>) mit einem beginnenden Newline-Zeichen an das Ende des Patternspace. Diese Zeile wird an das Ende angeh&auml;ngt (<span class="listing">$</span>-Zeichen). Wollen Sie diese Zeile bspw. in die f&uuml;nfte Zeile platzieren, gehen Sie wie folgt vor:</p>
+<pre>you@host &gt; sed -e '/Sergio/{h;d}' -e '5G' mrolympia.dat
+Larry Scott USA 1965 1966
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Sergio Oliva USA 1967 1968 1969
+Samir Bannout Libanon 1983
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Bitte beachten Sie, dass hierbei die gel&ouml;schte Zeile beim Einf&uuml;gen mit berechnet wird. Was passiert nun, wenn Sie die Zeile im Holdspace ohne Newline-Zeichen, wie dies mit <span class="listing">g</span> der Fall ist, im Patternspace einf&uuml;gen? Folgendes:</p>
+<pre>you@host &gt; sed -e '/Sergio/{h;d}' -e '5g' mrolympia.dat
+Larry Scott USA 1965 1966
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+Sergio Oliva USA 1967 1968 1969
+Samir Bannout Libanon 1983
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Hier wird praktisch gnadenlos eine Zeile (hier »Chris Dickerson«) &uuml;berschrieben. Beachten Sie dies bitte bei der Verwendung von <span class="listing">g</span> und <span class="listing">G</span> bzw. <span class="listing">h</span> und <span class="listing">H</span>.</p>
+<p>Noch ein Beispiel zum Kommando <span class="listing">x</span>:</p>
+<pre>you@host &gt; sed -e '/Sergio/{h;d}' -e '/Dorian/x' \
+&gt; -e '$G' mrolympia.dat
+Larry Scott USA 1965 1966
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Samir Bannout Libanon 1983
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Sergio Oliva USA 1967 1968 1969
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004
+Jay Cutler 2005
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997</pre>
+<p>Hier suchen Sie zun&auml;chst nach dem Muster »Sergio«, legen dies in den Holdspace (Kommando <span class="listing">h</span>) und l&ouml;schen daraufhin die Zeile im Patternspace (Kommando <span class="listing">d</span>). Jetzt suchen Sie nach dem Muster »Dorian« und tauschen den Inhalt des Patternspace (Zeile mit »Dorian«) mit dem Inhalt des Holdspace (Zeile »Sergio«). Jetzt befindet sich im Holdspace die Zeile mit »Dorian«, diese h&auml;ngen Sie mit einem weiteren Befehl (Option <span class="listing">–e</span>) an das Ende des Patternspace.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">12.4.5 Das Kommando i – Einf&uuml;gen von Zeilen<a id="RxxKap01400304004FBD1F03721C" name="RxxKap01400304004FBD1F03721C"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999602" name="Xxx999602"></a><a id="Xxx999603" name="Xxx999603"></a><a id="Xxx999604" name="Xxx999604"></a>Die Syntax:</p>
+<pre>i\
+text zum Einf&uuml;gen
+# oder bei neueren sed-Versionen
+i text zum Einf&uuml;gen</pre>
+<p>Bei diesem Kommando gilt all das, was schon zum Kommando <span class="listing">a</span> gesagt wurde. Damit k&ouml;nnen Sie eine neue Zeile vor der gefundenen Zeile einf&uuml;gen.</p>
+<pre>you@host &gt; sed '/Franco/ i \
+&gt; ---Zeile---' mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+---Zeile---
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+...</pre>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">12.4.6 Das p-Kommando – Patternspace ausgeben<a id="RxxKap01400304004FBD1F037221" name="RxxKap01400304004FBD1F037221"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999610" name="Xxx999610"></a><a id="Xxx999611" name="Xxx999611"></a>Dieses Kommando wurde schon zur Gen&uuml;ge verwendet. Mit <span class="listing">p</span> geben Sie den Patternspace aus. Wollen Sie bspw. einfach eine komplette Datei ausgeben lassen, k&ouml;nnen Sie folgenderma&szlig;en vorgehen:</p>
+<pre>you@host &gt; sed -n 'p' mrolympia.dat</pre>
+<p>Die Option <span class="listing">–n</span> ist hierbei n&ouml;tig, da sonst neben dem Patternspace-Puffer auch noch der Default Output mit ausgegeben w&uuml;rde und Sie somit eine doppelte Ausgabe h&auml;tten. Mit <span class="listing">–n</span> schalten Sie den Default Output aus. Dies wird gern vergessen und f&uuml;hrt zu Fehlern. Wollen Sie bspw. die letzte Zeile in einer Datei ausgeben lassen und vergessen dabei, den Default Output abzuschalten, bekommen Sie folgende Ausgabe zur&uuml;ck:</p>
+<pre>you@host &gt; sed '$p' mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Samir Bannout Libanon 1983
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Hier wird trotzdem die komplette Datei ausgegeben, da der Default Output weiterhin &uuml;ber den Bildschirm rauscht. Die letzte Zeile hingegen ist doppelt vorhanden, weil hier zum einen der Default Output seine Arbeit gemacht hat und zum anderen das <span class="listing">p</span>-Kommando auch noch einmal die letzte Zeile mit ausgibt. Richtig w&auml;re hier also:</p>
+<pre>you@host &gt; sed -n '$p' mrolympia.dat
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Noch einige typische Beispiele mit dem <span class="listing">p</span>-Kommando:</p>
+<pre>you@host &gt; sed -n '4p' mrolympia.dat
+Franco Columbu Argentinien 1976 1981</pre>
+<p>Hier wurde die vierte Zeile ausgegeben.</p>
+<pre>you@host &gt; sed -n '4,6p' mrolympia.dat
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Samir Bannout Libanon 1983</pre>
+<p>Hiermit werden die Zeilen 4 bis 6 ausgegeben.</p>
+<pre>you@host &gt; sed -n '/USA/p' mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Chris Dickerson USA 1982
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Hierbei werden alle Zeilen mit der Textfolge »USA« ausgegeben.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">12.4.7 Das Kommando q – Beenden<a id="RxxKap01400304004FBD1F03722F" name="RxxKap01400304004FBD1F03722F"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999626" name="Xxx999626"></a><a id="Xxx999627" name="Xxx999627"></a>Mit dem Kommando <span class="listing">q</span> k&ouml;nnen Sie das laufende <span class="listing">sed</span>-Script durch eine Verzweigung zum Scriptende beenden. Vorher wird aber noch der Patternspace ausgegeben. Ein einfaches Beispiel:</p>
+<pre>you@host &gt; sed -n '/USA/{p;q}' mrolympia.dat
+Larry Scott USA 1965 1966</pre>
+<p>Hier wird der <span class="listing">sed</span>-Befehl nach dem ersten gefundenen Muster »USA« beendet. Zuvor wird noch der Inhalt des Patternspace ausgegeben.</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">12.4.8 Die Kommandos r und w<a id="RxxKap01400304004FBD1F037233" name="RxxKap01400304004FBD1F037233"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999632" name="Xxx999632"></a><a id="Xxx999633" name="Xxx999633"></a>Mit dem Kommando <span class="listing">r</span> k&ouml;nnen Sie aus einer Datei einen Text einschieben. In den seltensten F&auml;llen werden Sie einen Text in nur einer Datei einf&uuml;gen wollen. Hierzu sei folgende einfache Textdatei gegeben:</p>
+<pre>you@host &gt; cat header.txt
+---------------------------------
+Vorname Name Nationalit&auml;t Jahr(e)
+---------------------------------</pre>
+<p>Der Inhalt dieser Datei soll jetzt mit dem Kommando <span class="listing">r</span> in die letzte Zeile eingef&uuml;gt werden:</p>
+<pre>you@host &gt; sed '$r header.txt' mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+...
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004
+Jay Cutler 2005
+---------------------------------
+Vorname Name Nationalit&auml;t Jahr(e)
+---------------------------------</pre>
+<p>Nat&uuml;rlich k&ouml;nnen Sie auch die Zeilennummer oder ein Muster als Adresse f&uuml;r das Einf&uuml;gen verwenden:</p>
+<pre>you@host &gt; sed -e '/Arnold/r header.txt' mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+---------------------------------
+Vorname Name Nationalit&auml;t Jahr(e)
+---------------------------------
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Samir Bannout Libanon 1983
+...</pre>
+<p>Ebenso k&ouml;nnen Sie auch mehr als nur eine Datei mithilfe der <span class="listing">–e</span>-Option aus einer Datei einlesen lassen und in die entsprechenden Zeilen einf&uuml;gen.</p>
+<pre>you@host &gt; sed -e '3r file1.dat' -e '7r file2.dat' mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+----------Ich bin file1------------
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson USA 1982
+Samir Bannout Libanon 1983
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+----------Ich bin file2------------
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Das entsprechende Gegenst&uuml;ck zum Kommando <span class="listing">r</span> erhalten Sie mit dem Kommando <span class="listing">w</span>, mit dem Sie das Ergebnis von <span class="listing">sed</span> in einer Datei speichern k&ouml;nnen:</p>
+<pre>you@host &gt; sed -n '/USA/w USA.dat' mrolympia.dat
+you@host &gt; cat USA.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Chris Dickerson USA 1982
+Lee Haney USA 1984 1985 1986 1987 1988 1989 1990 1991
+Ronnie Coleman USA 1998 1999 2000 2001 2002 2003 2004</pre>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">12.4.9 Das Kommando s – substitute<a id="RxxKap01400304004FBD1F03723E" name="RxxKap01400304004FBD1F03723E"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999645" name="Xxx999645"></a><a id="Xxx999646" name="Xxx999646"></a><a id="Xxx999647" name="Xxx999647"></a>Bei dem <span class="listing">s</span>-Kommando handelt sich wohl um das meistverwendete Kommando in <span class="listing">sed</span> und es ist auch einer der Hauptgr&uuml;nde, <span class="listing">sed</span> &uuml;berhaupt zu verwenden. Die Syntax:</p>
+<pre>sed -e 's/altes_Muster/neues_Muster/flag' datei
+sed -e 's?altes_Muster?neues_Muster?flag' datei</pre>
+<p>Damit k&ouml;nnen Sie das Muster »altes_Muster« (im Patternspace) von datei durch »neues_Muster« ersetzen. Als Trennzeichen (hier einmal mit <span class="listing">/</span> und <span class="listing">?</span>) k&ouml;nnen Sie praktisch jedes beliebige Zeichen verwenden (au&szlig;er Backslash und Newline-Zeichen), es darf nur nicht Bestandteil des Musters sein.</p>
+<p>In der Grundform, ohne Angabe von »flag«, ersetzt das Kommando <span class="listing">s</span> nur das erste Vorkommen eines Musters pro Zeile. Somit k&ouml;nnen Sie mit der Angabe von »flag« auch das Verhalten von <span class="listing">s</span> ver&auml;ndern. Am h&auml;ufigsten verwendet wird wohl das <a id="Xxx999652" name="Xxx999652"></a><a id="Xxx999653" name="Xxx999653"></a>Flag <span class="listing">g</span>, mit dem alle Vorkommen eines Musters in einer Zeile nacheinander ersetzt werden – also eine globale Ersetzung. Mit dem Flag <span class="listing">q</span> wird nach der letzten Ersetzung der Patternspace ausgegeben, mit dem Flag <span class="listing">w</span> k&ouml;nnen Sie den Patternspace in die angegebene Datei schreiben. Allerdings muss diese Option die letzte im Flag sein, da der Dateiname bis zum Ende der Zeile geht. Selbstverst&auml;ndlich werden gerade zu diesem Kommando jetzt massenhaft Beispiele folgen.</p>
+<pre>you@host &gt; sed 's/USA/Amerika/g' mrolympia.dat
+Larry Scott Amerika 1965 1966
+Sergio Oliva Amerika 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+Chris Dickerson Amerika 1982
+Samir Bannout Libanon 1983
+Lee Haney Amerika 1984 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien 1992 1993 1994 1995 1996 1997
+Ronnie Coleman Amerika 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Hier wurden global alle Zeichenfolgen »USA« durch »Amerika« ersetzt. Nat&uuml;rlich k&ouml;nnen Sie hierbei auch einzelnen Zeilen mithilfe einer Adresse ver&auml;ndern:</p>
+<pre>you@host &gt; sed '/Oliva/ s/USA/Cuba/' mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva Cuba 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+...</pre>
+<p>Hier wurde nur die Zeile ersetzt (»USA« durch »Cuba«), in der sich die Textfolge »Olivia« befindet. Wollen Sie nicht, dass hier die komplette Datei ausgegeben wird, sondern nur die Zeile(n), die ersetzt wurde(n), m&uuml;ssen Sie das Flag <span class="listing">p</span> (mit der Option <span class="listing">–n</span>) verwenden:</p>
+<pre>you@host &gt; sed -n '/Oliva/ s/USA/Cuba/p' mrolympia.dat
+Sergio Oliva Cuba 1967 1968 1969</pre>
+<p>Das n&auml;chste Beispiel:</p>
+<pre>you@host &gt; sed 's/[12][90]/-/' mrolympia.dat
+Larry Scott USA –65 1966
+Sergio Oliva USA –67 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich –70 1971 1972 1973 1974 1975 1980
+Franco Columbu Argentinien –76 1981
+Chris Dickerson USA –82
+Samir Bannout Libanon –83
+Lee Haney USA –84 1985 1986 1987 1988 1989 1990 1991
+Dorian Yates Grossbritannien –92 1993 1994 1995 1996 1997
+Ronnie Coleman USA –98 1999 2000 2001 2002 2003 2004</pre>
+<p>Hier konnten Sie zum ersten Mal den Einfluss des <span class="listing">g</span>-Flags erkennen. Es sollten wohl alle Zeichenfolgen »19« und »20« durch ein Minuszeichen ersetzt werden. Dasselbe nochmals mit dem Flag <span class="listing">g</span>:</p>
+<pre>you@host &gt; sed 's/[12][90]/-/g' mrolympia.dat
+Larry Scott USA –65 –66
+Sergio Oliva USA –67 –68 –69
+Arnold Schwarzenegger &Ouml;sterreich –70 –71 –72 –73 –74 –75 –80
+Franco Columbu Argentinien –76 –81
+Chris Dickerson USA –82
+Samir Bannout Libanon –83
+Lee Haney USA –84 –85 –86 –87 –88 –89 –90 –91
+Dorian Yates Grossbritannien –92 –93 –94 –95 –96 –97
+Ronnie Coleman USA –98 –99 –00 –01 –02 –03 –04</pre>
+<p>Hier werden auch die Zeichenfolgen »10«, »20« und »29« beachtet. Wollen Sie statt einer Ersetzung eine Erg&auml;nzung machen, k&ouml;nnen Sie das Ampersand-Zeichen (<span class="listing">&amp;</span>) beim Ersetzungsstring verwenden:</p>
+<pre>you@host &gt; sed -n 's/Franco Columbu/Dr. &amp;/p' mrolympia.dat
+Dr. Franco Columbu Argentinien 1976 1981</pre>
+<p>Hier wurde der Suchstring »Franco Columbu« exakt an der Position des »Ampersand-Zeichens« beim Ersetzungsstring verwendet und ein Titel davor gesetzt. Sofern Sie etwas Derartiges global durchf&uuml;hren m&uuml;ssen und nur die ersetzten Pattern ausgeben wollen, k&ouml;nnen Sie auch die Flags <span class="listing">g</span> und <span class="listing">p</span> gleichzeitig verwenden:</p>
+<pre>you@host &gt; sed -n 's/USA/&amp; (Amerika)/gp' mrolympia.dat
+Larry Scott USA (Amerika) 1965 1966
+Sergio Oliva USA (Amerika) 1967 1968 1969
+Chris Dickerson USA (Amerika) 1982
+Lee Haney USA (Amerika) 1984 1985 1986 1987 1988 1989 1990 1991
+Ronnie Coleman USA (Amerika) 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Mit der Option <span class="listing">–e</span> k&ouml;nnen Sie auch mehrere Ersetzungen auf einmal durchf&uuml;hren lassen:</p>
+<pre>you@host &gt; sed -e 's/USA/&amp; (Amerika)/g' \
+&gt; -e 's/[12][90]/-/g'  mrolympia.dat
+Larry Scott USA (Amerika) –65 –66
+Sergio Oliva USA (Amerika) –67 –68 –69
+Arnold Schwarzenegger &Ouml;sterreich –70 –71 –72 –73 –74 –75 –80
+Franco Columbu Argentinien –76 –81
+Chris Dickerson USA (Amerika) –82
+Samir Bannout Libanon –83
+Lee Haney USA (Amerika) –84 –85 –86 –87 –88 –89 –90 –91
+Dorian Yates Grossbritannien –92 –93 –94 –95 –96 –97
+Ronnie Coleman USA (Amerika) –98 –99 –00 –01 –02 –03 –04</pre>
+<p>Gleiches k&ouml;nnen Sie &uuml;brigens auch mit einer Referenz wie folgt machen:</p>
+<pre>you@host &gt; sed -n 's/\(USA\)/\1 (Amerika)/gp' mrolympia.dat
+Larry Scott USA (Amerika) 1965 1966
+Sergio Oliva USA (Amerika) 1967 1968 1969
+Chris Dickerson USA (Amerika) 1982
+Lee Haney USA (Amerika) 1984 1985 1986 1987 1988 1989 1990 1991
+Ronnie Coleman USA (Amerika) 1998 1999 2000 2001 2002 2003 2004</pre>
+<p>Hier wird <span class="listing">\1</span> als Referenz auf »USA« beim Ersetzungsstring verwendet.</p>
+<p>Betrachten Sie mal folgendes Beispiel:</p>
+<pre>you@host &gt; sed -n 's/\([12][90]\)\(..\)/\/\1\2\//gp' \
+&gt; mrolympia.dat</pre>
+<p>Beim Anblick dieser Zeile f&auml;llt es schon schwer, den &Uuml;berblick zu behalten. Hier sollen alle Jahreszeiten zwischen zwei Schr&auml;gstrichen gesetzt werden (/2000/, /2001/ etc). Bei der Verwendung solcher Zeichen-Orgien empfiehlt es sich, h&auml;ufiger mal ein anderes Trennzeichen zu verwenden:</p>
+<pre>you@host &gt; sed -n 's#\([12][90]\)\(..\)#\/\1\2\/#gp' \
+&gt; mrolympia.dat</pre>
+<p>Jetzt kann man wenigstens leichter zwischen dem Such- und Ersetzungsstring unterscheiden.</p>
+<p><a id="Xxx999677" name="Xxx999677"></a><a id="Xxx999678" name="Xxx999678"></a><a id="Xxx999679" name="Xxx999679"></a>Man k&ouml;nnte noch extremere Ausw&uuml;chse zum Suchen und Ersetzen mit <span class="listing">sed</span> schreiben, doch erscheint es mir an dieser Stelle wichtiger, ein Problem mit den regul&auml;ren Ausdr&uuml;cken zu erw&auml;hnen, das mich zur Wei&szlig;glut beim Schreiben eines Artikels zur Verwendung von <span class="listing">sed</span> in Verbindung mit HTML-Seiten gebracht hat. Erst ein Artikel im Internet von Thomas Pircher hat dann f&uuml;r klare Verh&auml;ltnisse gesorgt. Das Problem: Ein regul&auml;rer Ausdruck sucht sich immer den l&auml;ngsten passenden String. Bspw. folgende Textfolge in einem HTML-Dokument:</p>
+<pre>Dies ist ein &lt;strong&gt;verflixte&lt;/strong&gt; Stelle in einem &lt;strong&gt;verflixten&lt;/strong&gt; 
+HTML-Dokument.</pre>
+<p>Ich wollte alle HTML-Tags aus dem Dokument entfernen, um so eine normale Textdatei daraus zu machen. Mit folgendem Konstrukt wollte ich dies realisieren:</p>
+<pre>sed -e 's/&lt;.*&gt;//g' index.html</pre>
+<p>Mit folgendem Ergebnis:</p>
+<pre>Das ist ein HTML-Dokument.</pre>
+<p>Leider war mir nicht (mehr) klar, dass <span class="listing">.*</span> so gefr&auml;&szlig;ig ist (eigentlich war es mir aus Perl bekannt) und die l&auml;ngste Zeichenfolge sucht, also von</p>
+<pre>&lt;strong&gt;verflixte&lt;/strong&gt; Stelle in einem &lt;strong&gt;verflixten
+&lt;/strong&gt;</pre>
+<p>haben will. Um aber nur die Zeichen bis zum ersten Auftreten des Zeichens <span class="listing">&gt;</span> zu l&ouml;schen, muss man mit folgender Bereichsangabe arbeiten:</p>
+<pre>sed -e 's/&lt;[^&gt;]*&gt;//g' index.html</pre>
+<p>Hieran k&ouml;nnen Sie erkennen, dass die Verwendung regul&auml;rer Ausdr&uuml;cke recht kompliziert werden kann und man h&auml;ufig um eine intensivere Besch&auml;ftigung mit ihnen nicht herumkommt. Gerade, wenn Sie regul&auml;re Ausdr&uuml;cke beim Suchen und Ersetzen mehrerer Dateien verwenden, sollten Sie sich sicher sein, was Sie tun und gegebenenfalls einen Probelauf vornehmen bzw. ein Backup zur Hand haben. Zum Gl&uuml;ck – und vielleicht auch deswegen – wurde <span class="listing">sed</span> so konzipiert, dass die Manipulation erst mal nicht an der Originaldatei gemacht wird.</p>
+<p>Manch einer mag jetzt fragen, wie man Dateien vom DOS-Format ins UNIX-Format und umgekehrt konvertieren kann. Mit <span class="listing">sed</span> ist dies leichter als man denkt. Man gehe davon aus, dass eine DOS-Zeile mit CR und LF endet. Ich habe das Beispiel der <span class="listing">sed</span>-FAQ von Eric Pement entnommen:</p>
+<pre># 3. Under UNIX: convert DOS newlines (CR/LF) to Unix format
+sed 's/.$//' file    # assumes that all lines end with CR/LF
+sed 's/^M$// file    # in bash/tcsh, press Ctrl-V then Ctrl-M</pre>
+<p>Allerdings stellt sich die Frage, ob man hierbei nicht auf die Tools <span class="listing">dos2unix</span> bzw. <span class="listing">unix2dos</span> zur&uuml;ckgreifen will. Beim <span class="listing">vim</span> k&ouml;nnen Sie auch mittels <span class="listing">set</span> (<span class="listing">set</span> <span class="listing">fileformat=dos</span> oder <span class="listing">set</span> <span class="listing">fileformat=unix</span>) das Dateiformat angeben.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Man k&ouml;nnte fragen, warum in diesem Beispiel zur Konvertierung von DOS-Zeilen in UNIX-Zeilen nicht folgendes Konstrukt verwendet wurde:</p>
+<span class="listing">'s/\r\n/\n/g'</span>
+<p class="BStandard">Weil es so nicht &uuml;berall (bspw. Debian) zu funktionieren scheint.</p>
+</td>
+</tr>
+</table><br>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">12.4.10 Das Kommando y<a id="RxxKap01400304004FBD1F03726C" name="RxxKap01400304004FBD1F03726C"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999701" name="Xxx999701"></a><a id="Xxx999702" name="Xxx999702"></a><a id="Xxx999703" name="Xxx999703"></a>Ein weiteres Kommando, das neben dem Kommando <span class="listing">s</span> gern verwendet wird, ist <span class="listing">y</span> (yank), mit dem Sie eine Ersetzung von Zeichen aus einer Liste vornehmen k&ouml;nnen. Die Syntax:</p>
+<pre>y/Quellzeichen/Zielzeichen/</pre>
+<p>Hiermit werden alle Zeichen in »Quellzeichen« in die entsprechenden Zeichen in »Zielzeichen« umgewandelt. Ist eine der Listen leer oder unterschiedlich lang, wird <span class="listing">sed</span> mit einem Fehler beendet. Nat&uuml;rlich k&ouml;nnen Sie auch (wie schon beim Kommando <span class="listing">s</span>) als Trenner ein anderes Zeichen als <span class="listing">/</span> verwenden. Bspw. k&ouml;nnen Sie mit folgendem <span class="listing">sed</span>-Befehl eine Datei nach der »rot-13«-Methode verschl&uuml;sseln (hier nur auf die Kleinbuchstaben beschr&auml;nkt):</p>
+<pre>you@host &gt; cp mrolympia.dat mrolympia.bak
+you@host &gt; sed –e \
+&gt; 'y/abcdefghijklmnopqrstuvwxyz/nopqrstuvwxyzabcdefghijklm/' \
+&gt; mrolympia.bak &gt; mrolympia.dat
+you@host &gt; cat mrolympia.dat
+Lneel Spbgg USA 1965 1966
+Sretvb Oyvin USA 1967 1968 1969
+Aeabyq Spujnemrarttre &Ouml;fgrervpu 1970 1971 1972 1973 1974 1975
+Fenapb Cbyhzoh Aetragvavra 1976 1981
+...</pre>
+<p>Hiermit werden alle (Klein-)Buchstaben um 13 Zeichen verschoben, aus »a« wird »n«, aus »b« wird »o«, aus »c« wird »p« usw. Wollen Sie das Ganze wieder r&uuml;ckg&auml;ngig machen, brauchen Sie »Quellzeichen« und »Zielzeichen« aus dem Beispiel nur auszutauschen:</p>
+<pre>you@host &gt; cp mrolympia.dat mrolympia.bak
+you@host &gt; sed –e \
+&gt; 'y/nopqrstuvwxyzabcdefghijklm/abcdefghijklmnopqrstuvwxyz/' \
+&gt; mrolympia.bak &gt; mrolympia.dat
+you@host &gt; cat mrolympia.dat
+Larry Scott USA 1965 1966
+Sergio Oliva USA 1967 1968 1969
+Arnold Schwarzenegger &Ouml;sterreich 1970 1971 1972 1973 1974 1975
+Franco Columbu Argentinien 1976 1981
+...</pre>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_014_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_014_004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_014_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

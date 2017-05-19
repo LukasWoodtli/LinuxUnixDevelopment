@@ -1,0 +1,761 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 2.2 Zahlen</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_004_000.html">
+<link rel="next" href="shell_004_002.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_004_000.html#RxxKap00400004004D961F024172">2 Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_000.html#RxxKap00400004004D961F024174">2.1 Grundlagen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F024178">2.1.1 Zugriff auf den Wert einer Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F02417E">2.1.2 Variablen-Interpolation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00400104004DAD1F01D172">2.2 Zahlen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00400104004DAD1F01D174">2.2.1 Integer-Arithmetik (Bourne-Shell, Bash und Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00400104004DAD1F01D186">2.2.2 Integer-Arithmetik (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00400104004DAD1F01D1BE">2.2.3 bc – Rechnen mit Flie&szlig;kommazahlen und mathematische Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F021172">2.3 Zeichenketten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F021174">2.3.1 Stringverarbeitung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F0211CE">2.3.2 Erweiterte Funktionen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011172">2.4 Quotings und Kommando-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011180">2.4.1 Single und Double Quotings</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011196">2.4.2 Kommando-Substitution – Back Quotes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B172">2.5 Arrays (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B175">2.5.1 Werte an Arrays zuweisen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B180">2.5.2 Eine Liste von Werten an ein Array zuweisen (Bash)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B186">2.5.3 Eine Liste von Werten an ein Array zuweisen (Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B18A">2.5.4 Zugreifen auf die einzelnen Elemente eines Arrays</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_005.html#RxxKap00400504004DB11F020172">2.6 Variablen exportieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_006.html#RxxKap00400604004DB21F030172">2.7 Umgebungsvariablen eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_007.html#RxxKap00400704004DB31F023172">2.8 Shell-Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038172">2.9 Automatische Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038174">2.9.1 Der Name des Shellscripts – $0</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03817F">2.9.2 Die Prozessnummer des Shellscripts – $$</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038185">2.9.3 Der Beendigungsstatus eines Shellscripts – $?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038189">2.9.4 Die Prozessnummer des zuletzt gestarteten Hintergrundprozesses – $!</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03818C">2.9.5 Weitere vordefinierte Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03819D">2.9.6 Weitere automatische Variablen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">2.2 <a id="RxxKap00250Zahlen" name="RxxKap00250Zahlen"></a>Zahle<a id="RxxKap00400104004DAD1F01D172" name="RxxKap00400104004DAD1F01D172"></a>n 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a>Wenn Mathematik nie Ihr Parade-Fach war, dann haben Sie etwas mit der Shell (und dem Autor ;-)) gemeinsam. Die Bourne-Shell kann nicht mal die einfachsten arithmetischen Berechnungen durchf&uuml;hren. Zur Verteidigung muss man allerdings sagen, dass der Erfinder der Shell nie im Sinn gehabt hat, eine komplette Programmiersprache zu entwickeln. Bei der Bash und der Korn-Shell hingegen wurden einfache arithmetische Operationen eingebaut, obgleich diese auch nur auf einfache Integer-Berechnungen beschr&auml;nkt sind. Werden Flie&szlig;kommazahlen ben&ouml;tigt, dann m&uuml;ssen Sie auf ein externes Tool umsteigen, z. B. den Rechner <span class="listing">bc</span>.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">2.2.1 Integer-Arithmetik (Bourne-Shell, Bash und Korn-Shell)<a id="RxxKap00400104004DAD1F01D174" name="RxxKap00400104004DAD1F01D174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999280" name="Xxx999280"></a><a id="Xxx999281" name="Xxx999281"></a>Zwar bieten Ihnen die Bash und die Korn-Shell erheblich komfortablere Alternativen als die Bourne-Shell, aber wenn Sie nicht genau wissen, in welcher Shell Ihr Script verwendet wird, dann sind Sie mit der Integer-Arithmetik der Bourne-Shell gut beraten. Ihre Scripts werden dann auf jeder Shell laufen, also sowohl in der Bourne- und Korn-Shell als auch in der Bash.</p>
+<p><a id="Xxx999283" name="Xxx999283"></a><a id="Xxx999284" name="Xxx999284"></a><a id="Xxx999285" name="Xxx999285"></a>Zum Rechnen in der Bourne-Shell wird der alte UNIX-Befehl <span class="listing">expr</span> verwendet. Beim Aufruf dieses Befehls k&ouml;nnen regul&auml;re Ausdr&uuml;cke, Zeichenketten-, arithmetische oder Vergleichsausdr&uuml;cke als Parameter &uuml;bergeben werden. Daraufhin erhalten Sie das Ergebnis des Ausdrucks auf die Standardausgabe.</p>
+<pre>you@host &gt;  expr 8 / 2
+4
+you@host &gt;  expr 8 + 2
+10</pre>
+<p>Das Ganze l&auml;sst sich nat&uuml;rlich auch mit einem Shellscript nutzen:</p>
+<pre># Demonstriert die Verwendung von expr
+# zum Ausf&uuml;hren arithmetischer Ausdr&uuml;cke
+# Name : aexpr
+var1=100
+var2=50
+expr $var1 + $var2
+expr $var1 – $var2</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aexpr
+150
+50</pre>
+<p>Hierzu gibt es eigentlich nicht viel zu sagen. Wichtig ist es jedoch, in Bezug auf <span class="listing">expr</span> noch zu erw&auml;hnen, dass beim arithmetischen Ausdruck Leerzeichen zwischen den einzelnen Operatoren und Operanden unbedingt erforderlich sind!</p>
+<p>Wer schon weitere <span class="listing">expr</span>-Ausdr&uuml;cke probiert hat, wird beim Multiplizieren auf Probleme gesto&szlig;en sein. &Auml;hnliche Schwierigkeiten d&uuml;rften auch mit den Klammern auftreten.</p>
+<pre>you@host &gt;  expr 8 * 5
+expr: Syntaxfehler
+you@host &gt;  expr ( 5 + 5 ) * 5
+bash: syntax error near unexpected token `5'</pre>
+<p>Hier haben Sie das Problem, dass die Shell ein <span class="listing">*</span> eben als Datei-Expansion behandelt und bei den Klammern gern eine weitere Subshell &ouml;ffnen w&uuml;rde. Damit beides au&szlig;er Kraft gesetzt wird, m&uuml;ssen Sie hier nur vor den kritischen Zeichen ein Backslash setzen.</p>
+<pre>you@host &gt; expr 8 \* 5
+40
+you@host &gt; expr \( 5 + 5 \) \* 5
+50</pre>
+<p>Wollen Sie den Inhalt einer Berechnung in einer Variablen abspeichern, ben&ouml;tigen Sie eine Kommando-Substitution. Was das genau ist, erfahren Sie noch in Abschnitt 2.4. Wie Sie das hier einsetzen k&ouml;nnen, soll Ihnen aber nicht vorenthalten werden.</p>
+<pre># Demonstriert, wie Sie einen arithmetischen expr-Ausdruck
+# in einer Variablen speichern k&ouml;nnen
+# Name : aexpr2
+var1=100
+var2=50
+# Dies wird als Kommando-Substitution bezeichnet
+var3=`expr $var1 + $var2`
+echo $var3</pre>
+<p>Durch die Klammerung des Ausdrucks rechts vom Gleichheitszeichen (hier durch zwei Gravis-Zeichen) wird das, was durch die Anweisung <span class="listing">expr</span> normalerweise auf dem Bildschirm ausgegeben wird, an der entsprechenden Stelle in der Zuweisung eingesetzt und der links stehenden Variablen zugewiesen.</p>
+<pre>var3=`expr $var1 + $var2`</pre>
+<p>Richtig befriedigend d&uuml;rfte <span class="listing">expr</span> f&uuml;r keinen sein, denn die Verwendung bleibt ausschlie&szlig;lich auf Integerzahlen und die arithmetischen Operatoren <span class="listing">+</span>, –, <span class="listing">*</span>, <span class="listing">/</span> und <span class="listing">%</span> beschr&auml;nkt. Als Alternative und als eine gewisse Erleichterung bietet es sich an, mit dem UNIX-Kommando <span class="listing">bc</span> zu arbeiten. Hierauf wird anschlie&szlig;end in Abschnitt 2.2.3 eingegangen.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">2.2.2 Integer-Arithmetik (Bash und Korn-Shell only)<a id="RxxKap00400104004DAD1F01D186" name="RxxKap00400104004DAD1F01D186"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999303" name="Xxx999303"></a><a id="Xxx999304" name="Xxx999304"></a>Klar, die Bash und die Korn-Shell k&ouml;nnen das wieder besser, schlie&szlig;lich stellt jede dieser Shells eine Erweiterung der Bourne-Shell dar, wobei die Bash ja ohnehin alles kann. Es stehen auf jeden Fall mehrere M&ouml;glichkeiten zur Auswahl.</p>
+<pre>you@host &gt; ((z=5+5))
+you@host &gt; echo $z
+10</pre>
+<p>Hier wurden doppelte Klammerungen verwendet, um der Shell Bescheid zu geben, dass es sich hier um einen mathematischen Ausdruck handelt. Im Beispiel haben Sie eine Variable »z« definiert, welche den Wert von 5 + 5 erh&auml;lt. Hiermit k&ouml;nnen Sie jederzeit auf den Inhalt von »z« zur&uuml;ckgreifen. Neben dieser M&ouml;glichkeit k&ouml;nnen Sie auch eine andere Schreibweise verwenden, die allerdings denselben Effekt hat.</p>
+<pre>you@host &gt; y=$((8+8))
+you@host &gt; echo $y
+16
+you@host &gt; echo $((z+y))
+26</pre>
+<p>Und zu guter Letzt hat die Bash noch einen Spezialfall der Integer-Arithmetik mit eckigen Klammern eingebaut.</p>
+<pre>you@host &gt; w=$[z+y]
+you@host &gt; echo $w
+26
+you@host &gt; w=$[(8+2)*4]
+you@host &gt; echo $w
+40</pre>
+<p>Mir pers&ouml;nlich gef&auml;llt diese Version mit den eckigen Klammern am besten, aber wem n&uuml;tzt das, wenn man sein Script auch in der Korn-Shell ausf&uuml;hren muss. Dass die doppelte Klammerung nicht unbedingt leserlich wirkt, liegt auf der Hand. Deshalb finden Sie bei der Korn-Shell und der Bash auch das Builtin-Kommando <span class="listing">let</span>.</p>
+<h4 class="t4">let</h4>
+<p><a id="Xxx999313" name="Xxx999313"></a><a id="Xxx999314" name="Xxx999314"></a><a id="Xxx999315" name="Xxx999315"></a>Das Kommando <span class="listing">let</span> wertet arithmetische Ausdr&uuml;cke aus. Als Argumente werden hierbei mit Operatoren verbundene Ausdr&uuml;cke verwendet.</p>
+<pre>you@host &gt; let z=w+20
+you@host &gt; echo $z
+60</pre>
+<p>Allerdings besteht zwischen <span class="listing">let</span> und den doppelten Klammerungen – abgesehen von der Anwendung – kein Unterschied. Die Verwendung von <span class="listing">let</span> im Beispiel oben entspricht exakt folgender Klammerung:</p>
+<pre>you@host &gt; z=$((w+20))
+you@host &gt; echo $z
+60</pre>
+<p><span class="listing">let</span> dient hier lediglich dem Komfort. Zur Anschauung <span class="listing">let</span> in einem Shellscript:</p>
+<pre># Beispiel demonstriert das Kommando let
+# Name: alet
+varA=100
+varB=50
+let varC=$varA+$varB
+echo $varC</pre>
+<p>Was bei diesem Shellscript auff&auml;llt, ist, dass das Kommando <span class="listing">let</span> erst beim eigentlichen arithmetischen Ausdruck verwendet wird. Zwar k&ouml;nnen Sie <span class="listing">let</span> auch vor den einzelnen Variablen setzen, doch das ist im Grunde nicht n&ouml;tig.</p>
+<p>Wenn Sie mit einem <span class="listing">let</span>-Aufruf mehrere Ausdr&uuml;cke gleichzeitig auswerten lassen, oder wenn Sie der besseren Lesbarkeit wegen Leerzeichen einstreuen wollen, sind die Ausdr&uuml;cke jeweils in doppelte Anf&uuml;hrungszeichen einzuschlie&szlig;en, wie bspw. in</p>
+<pre>you@host &gt; let "a=5+5" "b=4+4"
+you@host &gt; echo $a
+10
+you@host &gt; echo $b
+8</pre>
+<h4 class="t4">typeset</h4>
+<p><a id="Xxx999326" name="Xxx999326"></a><a id="Xxx999327" name="Xxx999327"></a><a id="Xxx999328" name="Xxx999328"></a>Das Builtin-Kommando <span class="listing">typeset</span> oder <span class="listing">declare</span> kann Ihnen hier (und in vielen anderen F&auml;llen auch) das Shell-Leben noch etwas komfortabler gestalten. Mit beiden Kommandos k&ouml;nnen Sie entweder eine Shell-Variable erzeugen und/oder die Attribute einer Variablen setzen. Verwenden Sie z. B. die Option <span class="listing">–i</span> auf einer Variablen, so werden diese in der Shell als Integer-Variable behandelt und gekennzeichnet.</p>
+<pre>you@host &gt; typeset -i a b c
+you@host &gt; b=10
+you@host &gt; c=10
+you@host &gt; a=b+c
+you@host &gt; echo $a
+20</pre>
+<p>Was hier auch gleich ins Auge sticht: Dank der Integer-Deklaration entf&auml;llt beim Rechnen mit den Integer-Variablen auch das <span class="listing">$</span>-Zeichen bei der Anwendung.</p>
+<pre># Beispiel mit typeset
+# Name : atypeset
+typeset -i c
+a=5
+b=2
+c=a+b
+echo $c
+c=a*b
+echo $c
+c=\(a+b\)*2
+echo $c</pre>
+<p>Wie schon beim Kommando <span class="listing">let</span> ist es nicht n&ouml;tig, alle Variablen als Integer zu deklarieren, wie Sie dies sch&ouml;n im Shellscript »atypeset« sehen k&ouml;nnen. Es reicht aus, wenn Sie das Ergebnis als Integer kennzeichnen. Den Rest &uuml;bernimmt die Shell wieder f&uuml;r Sie.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bei jeder Version von Integer-Arithmetik, abgesehen von <span class="listing">expr</span>, wird das Sternchen auch als Rechenoperator erkannt und muss nicht erst als Expansions-Kandidat mit einem Backslash unsch&auml;dlich gemacht werden. Die Klammern m&uuml;ssen Sie allerdings nach wie vor mit einem Backslash sch&uuml;tzen.<a id="Xxx999337" name="Xxx999337"></a><a id="Xxx999338" name="Xxx999338"></a></p>
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 2.1   
+    </b>Arithmetische Operatoren (Bash und Korn-Shell)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Operator</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">+, –, *, /
+</td>
+<td class="tabellentext" bgcolor="#000000">Addition, Subtraktion, Multiplikation, Divison
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">%
+</td>
+<td class="tabellentext" bgcolor="#000000">Rest einer ganzzahligen Divison (Modulo-Operator)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">var+=n
+var–=n
+var*=n
+var/=n
+var%=n
+</td>
+<td class="tabellentext" bgcolor="#000000">Kurzformen f&uuml;r +, –, *, /, %
+Kurzform f&uuml;r bspw. Addition var+=n ist gleichwertig zu var=var+n
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">var&gt;&gt;n
+</td>
+<td class="tabellentext" bgcolor="#000000">Bitweise Linksverschiebung um n Stellen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">var&lt;&lt;n
+</td>
+<td class="tabellentext" bgcolor="#000000">Bitweise Rechtsverschiebung um n Stellen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">&gt;&gt;=
+&lt;&lt;=
+</td>
+<td class="tabellentext" bgcolor="#000000">Kurzformen f&uuml;r die Links- bzw. Rechtsverschiebung &lt;&lt; und &gt;&gt;
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">var1&amp;var2
+</td>
+<td class="tabellentext" bgcolor="#000000">Bitweises UND
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">var1^var2
+</td>
+<td class="tabellentext" bgcolor="#000000">Bitweises exklusives ODER (XOR)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">var1|var2
+</td>
+<td class="tabellentext" bgcolor="#000000">Bitweises ODER
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">~
+</td>
+<td class="tabellentext" bgcolor="#000000">Bitweise Negation
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">&amp;=
+^=
+|=
+</td>
+<td class="tabellentext" bgcolor="#000000">Kurzformen f&uuml;r bitweise UND, exklusives ODER sowie ODER (&amp;, | und ^)
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">2.2.3 <a id="Rxx_Ref108695396" name="Rxx_Ref108695396"></a>bc – Rechnen mit Flie&szlig;kommazahlen und mathematische Funktione<a id="RxxKap00400104004DAD1F01D1BE" name="RxxKap00400104004DAD1F01D1BE"></a>n 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Wohl <a id="Xxx999402" name="Xxx999402"></a><a id="Xxx999403" name="Xxx999403"></a><a id="Xxx999404" name="Xxx999404"></a><a id="Xxx999405" name="Xxx999405"></a><a id="Xxx999406" name="Xxx999406"></a><a id="Xxx999407" name="Xxx999407"></a><a id="Xxx999408" name="Xxx999408"></a>keine der oben vorgestellten L&ouml;sungen erschien Ihnen sonderlich elegant. Daher w&uuml;rde sich als Alternative und auf jeden Fall als Erleichterung das UNIX-Kommando <span class="listing">bc</span> anbieten.</p>
+<p><span class="listing">bc</span> ist ein Quasi-Tischrechner, der von der Standardeingabe (Tastatur) zeilenweise arithmetische Ausdr&uuml;cke erwartet und das Ergebnis wiederum zeilenweise auf der Standardausgabe (Bildschirm) ausgibt. <span class="listing">bc</span> arbeitet im Gegensatz zum verwandten Programm <span class="listing">dc</span> mit der gewohnten Infix-Schreibweise und verlangt kein Leerzeichen zwischen Operatoren und Operanden. Au&szlig;erdem muss der arithmetische Operator <span class="listing">*</span> vor der Shell nicht gesch&uuml;tzt werden. Entsprechendes gilt auch f&uuml;r runde Klammern.</p>
+<p><span class="listing">bc</span> ist eigentlich kein Befehl, sondern eher eine Art Shell mit einer Pr&auml;zisions-Kalkulationssprache. Allerdings l&auml;sst sich <span class="listing">bc</span> auch gut in jeder Shell als Befehl verwenden. Die Argumente schiebt man dem Befehl mithilfe einer Pipe unter. Und gegen&uuml;ber den Rechenoperationen, die sonst so in der Shell m&ouml;glich sind, hat <span class="listing">bc</span> den Vorteil, dass es mit Flie&szlig;kommazahlen rechnet.</p>
+<p>Die Verwendung von <span class="listing">bc</span> ist allerdings auf den ersten Blick etwas gew&ouml;hnungsbed&uuml;rftig, aber bei regelm&auml;&szlig;iger Anwendung sollten keine gr&ouml;&szlig;eren Probleme auftreten. Hier die Syntax:</p>
+<pre>Variable=`echo "[scale=n ;] Rechenoperation" | bc [-l]`</pre>
+<p>Angaben in eckigen Klammern sind optional. Mit <span class="listing">scale=n</span> k&ouml;nnen Sie die Genauigkeit (<span class="listing">n</span>) der Berechnung angeben. Die Rechenoperation besteht aus Ausdr&uuml;cken, die verbunden sind mit Operatoren. Hierbei k&ouml;nnen alle bekannten arithmetischen Operatoren verwendet werden (inklusive der Potenzierung mit <span class="listing">^</span> und dem Bilden einer Quadratwurzel mit <span class="listing">sqrt()</span>).</p>
+<p>Wird <span class="listing">bc</span> mit der Option <span class="listing">–l</span> (f&uuml;r library) aufgerufen, k&ouml;nnen Sie auch auf Funktionen einer mathematischen Bibliothek (math library) zugreifen. In Tabelle 2.2 finden Sie einige Funktionen (<span class="listing">x</span> wird dabei durch entsprechenden Wert bzw. eine Variable ersetzt).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 2.2   
+    </b>Zus&auml;tzliche mathematische Funktionen von bc mit der Option -l</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Funktion</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">s(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Sinus von x
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">c(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Cosinus von x
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">a(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Arcustangens von x
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">l(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Nat&uuml;rlicher Logaritmus von x
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">e(x)
+</td>
+<td class="tabellentext" bgcolor="#000000">Exponentialfunktion e hoch x
+</td>
+</tr>
+</table><br>
+<p>Ihnen <span class="listing">bc</span> bis ins Detail zu erl&auml;utern, ist wohl zu viel des Guten, aber zumindest verf&uuml;gen Sie damit &uuml;ber ein Werkzeug f&uuml;r alle wichtigen mathematischen Probleme, das Sie selbstverst&auml;ndlich auch f&uuml;r Integer-Arithmetik einsetzen k&ouml;nnen.</p>
+<p>Hier ein Shellscript mit einigen Anwendungsbeispielen von <span class="listing">bc</span> (inklusive der math library).</p>
+<pre># Demonstriert die Verwendung von bc
+# Name : abc
+echo Rechnen mit bc
+varA=1.23
+varB=2.34
+varC=3.45
+# Addieren, Genauigkeit 3 nach dem Komma
+gesamt=`echo "scale=2 ; $varA+$varB+$varC" | bc`
+echo $gesamt
+# Quadratwurzel
+varSQRT=`echo "scale=5 ; sqrt($varA)" | bc`
+echo $varSQRT
+# Einfache Integer-Arithmetik
+varINT=`echo "(8+5)*2" | bc`
+echo $varINT
+# Trigonometrische Berechnung mit der math library -l
+varRAD=`echo "scale=10 ; a(1)/45" | bc -l`
+echo -e "1° = $varRAD rad"
+# Sinus
+varSINUS45=`echo "scale=10 ; s(45*$varRAD)" | bc -l`
+echo "Der Sinus von 45° ist $varSINUS45"</pre>
+<p>Das Shellscript bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./abc
+Rechnen mit bc
+7.02
+1.10905
+26
+1° = .0174532925 rad
+Der Sinus von 45° ist .7071067805</pre>
+<h4 class="t4">Zahlen konvertieren mit bc: bin/hex/dec</h4>
+<p><a id="Xxx999455" name="Xxx999455"></a><a id="Xxx999456" name="Xxx999456"></a><a id="Xxx999457" name="Xxx999457"></a><a id="Xxx999458" name="Xxx999458"></a><a id="Xxx999459" name="Xxx999459"></a><a id="Xxx999460" name="Xxx999460"></a>Zum Konvertieren von Zahlen k&ouml;nnen Sie ebenfalls auf das Kommando <span class="listing">bc</span> setzen. Hierzu finden Sie bei <span class="listing">bc</span> zwei Variablen, <span class="listing">ibase</span> und <span class="listing">obase</span>. Das <span class="listing">i</span> steht f&uuml;r Input (Eingabe der Zahlenbasis), <span class="listing">o</span> f&uuml;r Output (gew&uuml;nschte Ausgabe der Zahlenbasis) und <span class="listing">base</span> f&uuml;r die gew&uuml;nschte Zahlenbasis. Beiden Variablen kann ein Wert von 2–16 &uuml;bergeben werden. Der Standardwert beider Variablen entspricht unserem Dezimalsystem, also 10. Wenn Sie <span class="listing">ibase</span> und <span class="listing">obase</span> gemeinsam benutzen, m&uuml;ssen Sie beim Umrechnen von bspw. bin&auml;r nach dezimal die Reihenfolge beachten, weil sonst das Ergebnis nicht stimmt (siehe das folgende Beispiel).</p>
+<pre># Demonstriert die Konvertierung verschiedener Zahlensysteme
+# Name : aconvert
+varDEZ=123
+echo $varDEZ
+# Dez2Hex
+var=`echo "obase=16 ; $varDEZ" | bc`
+echo $var
+# Dez2Oct
+var=`echo "obase=8 ; $varDEZ" | bc`
+echo $var
+# Dez2Bin
+var=`echo "obase=2 ; $varDEZ" | bc`
+echo $var
+# Bin2Dez – Reihenfolge von obase und ibase beachten
+dez=`echo "obase=10 ; ibase=2 ; $var" | bc`
+echo $dez</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aconvert
+123
+7B
+173
+1111011
+123</pre>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+</html>

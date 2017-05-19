@@ -1,0 +1,951 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_016_006.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 14.7 Dateisystem-Kommandos</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_016_005.html">
+<link rel="next" href="shell_016_007.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_016_005.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_016_007.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_016_000.html#RxxKap016000040050021F03F172">14 Linux-UNIX-Kommandoreferenz</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_000.html#RxxKap016000040050021F03F177">14.1 Kurz&uuml;bersicht</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_001.html#RxxKap016001040050191F018172">14.2 Dateiorientierte Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_002.html#RxxKap0160020400501A1F021172">14.3 Verzeichnisorientierte Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_003.html#RxxKap0160030400501B1F013172">14.4 Verwaltung von Benutzern und Gruppe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_004.html#RxxKap0160040400501C1F015172">14.5 Programm- und Prozessverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_005.html#RxxKap0160050400501D1F010172">14.6 Speicherplatzinformationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap0160060400501E1F010172">14.7 Dateisystem-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_007.html#RxxKap0160070400501F1F042172">14.8 Archivierung und Backup</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_008.html#RxxKap016008040050201F030172">14.9 Systeminformationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_009.html#RxxKap016009040050211F012172">14.10 System-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_010.html#RxxKap016010040050221F013172">14.11 Druckeradministration</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_011.html#RxxKap016011040050231F030172">14.12 Netzwerkbefehle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_012.html#RxxKap016012040050241F03D172">14.13 Benutzerkommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_013.html#RxxKap016013040050251F046172">14.14 Bildschirm- und Terminalkommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_014.html#RxxKap016014040050261F04E172">14.15 Online-Hilfen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_015.html#RxxKap016015040050271F037172">14.16 Alles rund um PostScript-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_016.html#RxxKap016016040050281F03E172">14.17 Gemischte Kommandos</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">14.7 <a id="RxxKap014400DateisystemKommandos" name="RxxKap014400DateisystemKommandos"></a>Dateisystem-Kommando<a id="RxxKap0160060400501E1F010172" name="RxxKap0160060400501E1F010172"></a>s 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p>Bei den Kommandos zu den Dateisystemen handelt es sich h&auml;ufig um Kommandos f&uuml;r Linux-Systeme, welche zumeist auch nur als root ausf&uuml;hrbar sind. Aus Erfahrung wei&szlig; ich aber, dass man schnell gern mit root-Rechten spielt, um mit solchen Kommandos zu experimentieren. Hiervor m&ouml;chte ich Sie aber warnen, sofern Sie nicht sicher sind, was Sie da tun. Mit zahlreichen dieser Kommandos verlieren Sie h&auml;ufig nicht nur ein paar Daten, sondern k&ouml;nnen z. T. ein ganzes Dateisystem korrumpieren – was sich so weit auswirken kann, dass Ihr Betriebssystem nicht mehr startet.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">badblocks – &uuml;berpr&uuml;ft, ob ein Datentr&auml;ger defekte Sektoren hat<a id="RxxKap0160060400501E1F010174" name="RxxKap0160060400501E1F010174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999279" name="Xxx999279"></a><a id="Xxx999280" name="Xxx999280"></a>Mit dem Kommando <span class="listing">badblocks</span> testen Sie den physischen Zustand eines Datentr&auml;gers. Dabei sucht <span class="listing">badblocks</span> auf einer Diskette oder Festplatte nach defekten Bl&ouml;cken.</p>
+<pre># badblocks -s -o block.log /dev/fd0 1440</pre>
+<p>Hier wird z. B. bei einer Diskette (1,44 MB) nach defekten Bl&ouml;cken gesucht. Das Fortschreiten der &Uuml;berpr&uuml;fung wird durch die Option <span class="listing">–s</span> simuliert. Mit <span class="listing">–o</span> schreiben Sie das Ergebnis defekter Bl&ouml;cke in die Datei block.log, welche wiederum von anderen Programmen verwendet werden kann, damit diese besch&auml;digten Bl&ouml;cke nicht mehr genutzt werden. Die Syntax sieht somit wie folgt aus:</p>
+<pre>badblocks [-optionen] ger&auml;tedatei [startblock]</pre>
+<p>Die »ger&auml;tedatei« ist der Pfad zum entsprechenden Speichermedium (bspw. /dev/hda1 = erste Festplatte). Es kann au&szlig;erdem auch optional der »startblock« festgelegt werden, von dem mit dem Testen angefangen werden soll. Die Ausf&uuml;hrung dieses Kommandos bleibt selbstverst&auml;ndlich nur dem Superuser &uuml;berlassen.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">cfdisk – Partitionieren von Festplatten<a id="RxxKap0160060400501E1F01017A" name="RxxKap0160060400501E1F01017A"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999287" name="Xxx999287"></a><a id="Xxx999288" name="Xxx999288"></a>Mit <span class="listing">cfdisk</span> teilen Sie eine formatierte Festplatte in verschiedene Partitionen ein. Nat&uuml;rlich kann man auch eine bestehende Partition l&ouml;schen oder eine vorhandene ver&auml;ndern (bspw. eine andere Systemkennung geben). Man kann mit <span class="listing">cfdisk</span> allerdings auch eine »rohe«, ganze Festplatte bearbeiten (nicht nur einzelne Partitionen). Die Ger&auml;tedatei ist also /dev/hda f&uuml;r die erste IDE-Festplatte, /dev/hdb f&uuml;r die zweite Festplatte, /dev/sda f&uuml;r die erste SCSI-Festplatte, /dev/sdb f&uuml;r die zweite SCSI-Festplatte ... usw.</p>
+<p>Starten Sie <span class="listing">cfdisk</span>, werden alle gefundene Partitionen mitsamt deren Gr&ouml;&szlig;e angezeigt. Mit den Pfeiltasten »nach-oben« und »nach-unten« k&ouml;nnen Sie sich hierbei eine Partition ausw&auml;hlen und mit den Pfeiltasten »nach-rechts« bzw. »nach-links« ein Kommando. Mit <b>(Q)</b> k&ouml;nnen Sie <span class="listing">cfdisk</span> beenden.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Achtung   </b>Selbstverst&auml;ndlich ist <span class="listing">cfdisk</span> nur als root ausf&uuml;hrbar. Sollten Sie solche Rechte haben und ohne Vorwissen mit <span class="listing">cfdisk</span> herumspielen, ist Ihnen mindestens ein Datenverlust sicher. Wenn Sie Ihre Festplatte wirklich »zerschneiden« wollen, so sollten Sie vor dem Partitionieren die alte Partitionstabelle sichern. Im Fall eines Missgeschicks kann so die alte Partitionstabelle wieder hergestellt werden, wodurch auf die Daten dann noch zugegriffen werden kann.</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">dd – Datenbl&ouml;cke zwischen Device (Low Level) kopieren (und konvertieren)<a id="RxxKap0160060400501E1F01017F" name="RxxKap0160060400501E1F01017F"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999296" name="Xxx999296"></a><a id="Xxx999297" name="Xxx999297"></a>Mit <span class="listing">dd</span> k&ouml;nnen Sie eine Datei lesen und den Inhalt in einer bestimmten Blockgr&ouml;&szlig;e mit verschiedenen Konvertierungen zwischen verschiedenen Speichermedien (Festplatte, Diskette usw.) &uuml;bertragen. Damit lassen sich neben einfachen Dateien auch ganze Festplattenpartitionen kopieren. Ein komplettes Backup kann mit diesem Kommando realisiert werden. Ein Beispiel:</p>
+<pre># dd if=/dev/hda bs=512 count=1</pre>
+<p>Damit geben Sie den Bootsektor (nur als root m&ouml;glich) auf dem Bildschirm aus. Wollen Sie jetzt auch noch ein Backup des Bootsektors auf einer Diskette sichern, dann gehen Sie folgenderma&szlig;en vor:</p>
+<pre># dd if=/dev/hda of=/dev/fd0 bs=512 count=1</pre>
+<p>Bevor Sie jetzt noch weitere Beispiele zum m&auml;chtigen Werkzeug <span class="listing">dd</span> sehen werden, m&uuml;ssen Sie sich zun&auml;chst mit den Optionen vertraut machen – im Beispiel mit <span class="listing">if</span>, <span class="listing">of</span>, <span class="listing">bs</span> und <span class="listing">count</span> verwendet.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.12   
+    </b>Optionen zur Steuerung des Kommandos dd</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">if=Datei
+</td>
+<td class="tabellentext" bgcolor="#000000">(input file) Hier gibt man den Namen der Eingabedatei (Quelldatei) an – ohne Angaben wird die Standardeingabe verwendet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">of=Datei
+</td>
+<td class="tabellentext" bgcolor="#000000">(output file) Hier kommt der Name der Ausgabedatei (Zieldatei) hin – ohne Angabe wird hier die Standardausgabe verwendet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">ibs=Schritt
+</td>
+<td class="tabellentext" bgcolor="#000000">(input block size) Hier wird die Blockgr&ouml;&szlig;e der Eingabedatei angegeben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">obs=Schritt
+</td>
+<td class="tabellentext" bgcolor="#000000">(output block size) Hier wird die Blockgr&ouml;&szlig;e der Ausgabedatei angegeben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">bs=Schritt
+</td>
+<td class="tabellentext" bgcolor="#000000">(block size) Hier legt man die Blockgr&ouml;&szlig;e f&uuml;r Ein- und Ausgabedatei fest.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cbs=Schritt
+</td>
+<td class="tabellentext" bgcolor="#000000">(conversion block size) Die Blockgr&ouml;&szlig;e f&uuml;r die Konvertierung wird bestimmt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">skip=Blocks
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier k&ouml;nnen Sie eine Anzahl Blocks angeben, die von der Eingabe zu Beginn ignoriert werden sollen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">seek=Blocks
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier k&ouml;nnen Sie eine Anzahl Blocks angeben, die von der Ausgabe am Anfang ignoriert werden sollen; unterdr&uuml;ckt am Anfang die Ausgabe der angegebenen Anzahl Blocks.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">count=Blocks
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier wird angegeben, wie viele Bl&ouml;cke kopiert werden sollen.
+</td>
+</tr>
+</table><br>
+<p>Eine spezielle Option steht Ihnen mit <span class="listing">conv=</span>Konvertierung zur Verf&uuml;gung. Folgende Konvertierungen sind dabei m&ouml;glich:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.13   
+    </b>Spezielle Optionen f&uuml;r Konvertierungen mit dem Kommando dd</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Konvertierung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=ascii
+</td>
+<td class="tabellentext" bgcolor="#000000">EBCDIC nach ASCII
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=ebcdic
+</td>
+<td class="tabellentext" bgcolor="#000000">ASCII nach EBCDIC
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=ibm
+</td>
+<td class="tabellentext" bgcolor="#000000">ASCII nach big blue special EBCDIC
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=block
+</td>
+<td class="tabellentext" bgcolor="#000000">Es werden Zeilen in Felder mit der Gr&ouml;&szlig;e cbs geschrieben und das Zeilenende wird durch Leerzeichen ersetzt. Der Rest des Feldes wird mit Leerzeichen aufgef&uuml;llt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=unblock
+</td>
+<td class="tabellentext" bgcolor="#000000">Abschlie&szlig;ende Leerzeichen eines Blocks der Gr&ouml;&szlig;e cbs werden durch ein Zeilenende ersetzt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=lcase
+</td>
+<td class="tabellentext" bgcolor="#000000">Gro&szlig;buchstaben in Kleinbuchstaben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=ucase
+</td>
+<td class="tabellentext" bgcolor="#000000">Kleinbuchstaben in Gro&szlig;buchstaben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=swab
+</td>
+<td class="tabellentext" bgcolor="#000000">Vertauscht je zwei Bytes der Eingabe. Ist die Anzahl der gelesenen Bytes ungerade, wird das letzte Byte einfach kopiert.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=noerror
+</td>
+<td class="tabellentext" bgcolor="#000000">Lesefehler werden ignoriert.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">conv=sync
+</td>
+<td class="tabellentext" bgcolor="#000000">F&uuml;llt Eingabebl&ouml;cke bis zur Gr&ouml;&szlig;e von ibs mit Nullen
+</td>
+</tr>
+</table><br>
+<p>Jetzt noch einige interessante Beispiel zu <span class="listing">dd</span>:</p>
+<pre># dd if=/vmlinuz of=/dev/fd0</pre>
+<p>Damit kopieren Sie den Kernel (hier in »vmlinuz« – bitte anpassen) in den ersten Sektor der Diskette, welche als Bootdiskette verwendet werden kann.</p>
+<pre># dd if=/dev/hda of=/dev/hdc</pre>
+<p>M&auml;chtig, hiermit klonen Sie praktisch in einem Schritt die erste Festplatte am Master IDE-Kontroller auf die Festplatte am zweiten Master-Anschluss. Somit haben Sie auf /dev/hdc denselben Inhalt wie auf /dev/hda. Nat&uuml;rlich kann die Ausgabedatei auch ganz woanders hingeschrieben werden, bspw. auf einen DVD-Brenner, eine Festplatte am USB-Anschluss oder in eine Datei.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Achtung   </b>Zwar ist <span class="listing">dd</span> ein m&auml;chtigeres Werkzeug, als es hier vielleicht den Anschein hat, doch trotzdem sollten Sie gewarnt sein vor wirren <span class="listing">dd</span>-Aufrufen. Der Datensalat ist auch hier schneller entstanden als sonstwo. Daher ben&ouml;tigt man wieder die allm&auml;chtigen root-Rechte. Falls Sie gr&ouml;&szlig;ere Datenmengen mit <span class="listing">dd</span> kopieren, k&ouml;nnen Sie dem Programm von einer anderen Konsole aus mittels <span class="listing">kill</span> das Signal <span class="listing">SIGUSR1</span> senden, um <span class="listing">dd</span> zu veranlassen, den aktuellen Fortschritt auszugeben.</p>
+</td>
+</tr>
+</table><br>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">dd_rescue – fehlertolerantes Kopieren von Dateibl&ouml;cken<a id="RxxKap0160060400501E1F0101BD" name="RxxKap0160060400501E1F0101BD"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999416" name="Xxx999416"></a><a id="Xxx999417" name="Xxx999417"></a>Falls Sie z. B. eine defekte Festplatte – oder eine Partition auf derselben – kopieren wollen, st&ouml;&szlig;t <span class="listing">dd</span> schnell an seine Grenzen. Zudem ist beim Retten von Daten eines defekten Speichermediums die Geschwindigkeit wichtig, da das Medium weitere Fehler verursachen kann und somit weitere Dateien korrumpiert werden k&ouml;nnen. Ein Fehlversuch mit <span class="listing">dd</span> kann hier also fatale Folgen haben.</p>
+<p>An dieser Stelle bietet sich <span class="listing">dd_rescue</span> an, welches inzwischen bei allen g&auml;ngigen Linux-Distributionen mitgeliefert wird. Sie k&ouml;nnen damit – &auml;hnlich wie mit <span class="listing">dd</span> – Dateibl&ouml;cke auf Low-Level-Basis auf ein anderes Medium kopieren. Als Zielort ist eine Datei auf einem anderen Speichermedium sinnvoll. Von diesem Abbild der defekten Festplatte k&ouml;nnen Sie eine Kopie erstellen, um das urspr&uuml;ngliche Abbild nicht zu ver&auml;ndern, und in einem der Abbilder versuchen, das Dateisystem mittels <span class="listing">fsck</span> wieder zu reparieren. Ist dies gelungen, k&ouml;nnen Sie das Abbild wieder mit <span class="listing">dd_rescue</span> auf eine neue Festplatte kopieren.</p>
+<p>Ein Beispiel:</p>
+<pre># dd_rescue -v /dev/hda1 /mnt/rescue/hda1.img</pre>
+<p>In dem Beispiel wird die Partition /dev/hda1 in die Abbilddatei /mnt/rescue/hda1.img kopiert.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">dumpe2fs – zeigt Informationen &uuml;ber ein ext2/ext3-Dateisystem an<a id="RxxKap0160060400501E1F0101C3" name="RxxKap0160060400501E1F0101C3"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999424" name="Xxx999424"></a><a id="Xxx999425" name="Xxx999425"></a><span class="listing">dumpe2fs</span> gibt eine Menge interne Informationen zum Superblock und anderen Block-Gruppen zu einem ext2/ext3-Dateisystem aus (vorausgesetzt, dieses Dateisystem wird auch verwendet – logisch), zum Beispiel:</p>
+<pre># dumpe2fs -b /dev/hda6</pre>
+<p>Mit der Option <span class="listing">–b</span> werden alle Bl&ouml;cke von /dev/hda6 auf die Konsole ausgegeben, die als »schlecht« markiert wurden.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">e2fsck – repariert ein ext2/ext3-Dateisystem<a id="RxxKap0160060400501E1F0101C7" name="RxxKap0160060400501E1F0101C7"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999430" name="Xxx999430"></a><a id="Xxx999431" name="Xxx999431"></a><span class="listing">e2fsck</span> &uuml;berpr&uuml;ft ein ext2/ext3 Dateisystem und repariert den Fehler. Damit <span class="listing">e2fsck</span> verwendet werden kann, muss <span class="listing">fsck.ext2</span> installiert sein, welches das eigentliche Programm ist. <span class="listing">e2fsck</span> ist nur ein »Frontend« daf&uuml;r.</p>
+<pre>e2fsck Ger&auml;tedatei</pre>
+<p>Mit der »Ger&auml;tedatei« geben Sie die Partition an, auf der das Dateisystem &uuml;berpr&uuml;ft werden soll (was selbstverst&auml;ndlich wieder ein ext2/ext3-Dateisystem sein muss). Bei den Dateien, bei denen die Inodes in keinem Verzeichnis notiert sind, werden sie von <span class="listing">e2fsck</span> im Verzeichnis lost+found eingetragen und k&ouml;nnen so repariert werden. <span class="listing">e2fsck</span> gibt beim &Uuml;berpr&uuml;fen einen Exit-Code zur&uuml;ck, den Sie mit <span class="listing">echo</span> <span class="listing">$?</span> abfragen k&ouml;nnen. Folgende wichtigen Exit-Codes und deren Bedeutung k&ouml;nnen dabei zur&uuml;ckgegeben werden:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.14   
+    </b>Exit-Codes des Kommandos e2fsck</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Exit-Code</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">Kein Fehler im Dateisystem
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1
+</td>
+<td class="tabellentext" bgcolor="#000000">Einen Fehler im Dateisystem gefunden und repariert
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">2
+</td>
+<td class="tabellentext" bgcolor="#000000">Schweren Fehler im Dateisystem gefunden und korregiert. Allerdings sollte das System neu gestartet werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+<td class="tabellentext" bgcolor="#000000">Fehler im Dateisystem gefunden, aber nicht korregiert
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">8
+</td>
+<td class="tabellentext" bgcolor="#000000">Fehler bei der Kommandoausf&uuml;hrung von e2fsck
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">16
+</td>
+<td class="tabellentext" bgcolor="#000000">Falsche Verwendung von e2fsck
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">128
+</td>
+<td class="tabellentext" bgcolor="#000000">Fehler in den Shared-Libraries
+</td>
+</tr>
+</table><br>
+<p>Wichtige Optionen, die Sie mit <span class="listing">e2fsck</span> angeben k&ouml;nnen, sind:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.15   
+    </b>Optionen f&uuml;r das Kommando e2fsck</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–p
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle Fehler automatisch reparieren ohne R&uuml;ckfragen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–c
+</td>
+<td class="tabellentext" bgcolor="#000000">Durchsucht das Dateisystem nach schlechten Bl&ouml;cken
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–f
+</td>
+<td class="tabellentext" bgcolor="#000000">Erzwingt eine &Uuml;berpr&uuml;fung des Dateisystems, auch wenn der Kernel das System f&uuml;r OK befunden hat (valid-Flag gesetzt)
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Einige <span class="listing">fsck</span>-Versionen fragen nach, ob das Kommando wirklich ausgef&uuml;hrt werden soll. Bei der Antwort gen&uuml;gt der Anfangsbuchstabe »j« oder »y« als Antwort nicht, sondern es muss »yes« oder »ja« (je nach Fragestellung) eingegeben werden. Ansonsten bricht <span class="listing">fsck</span> an dieser Stelle kommentarlos ab.</p>
+</td>
+</tr>
+</table><br>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">fdformat – formatiert eine Diskette<a id="RxxKap0160060400501E1F0101EC" name="RxxKap0160060400501E1F0101EC"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999507" name="Xxx999507"></a><a id="Xxx999508" name="Xxx999508"></a>Auch wenn viele Rechner mittlerweile ohne Diskettenlaufwerk ausgeliefert werden, wird das Diskettenlaufwerk immer wieder einmal ben&ouml;tigt (bspw. f&uuml;r eine Rettungsdiskette mit einem Mini-Linux). Mit dem Kommando <span class="listing">fdformat</span> formatieren Sie eine Diskette. Das Format wird dabei anhand vom Kernel gespeicherten Parametern erzeugt. Beachten Sie allerdings, dass die Diskette nur mit leeren Bl&ouml;cken beschrieben wird und nicht mit einem Dateisystem. Zum Erstellen von Dateisystemen stehen Ihnen die Kommandos <span class="listing">mkfs</span>, <span class="listing">mk2fs</span> oder <span class="listing">mkreiserfs</span> f&uuml;r Linux-Systeme zur Verf&uuml;gung.</p>
+<pre>fdformat Ger&auml;tedatei</pre>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">fdisk – Partitionieren von Speichermedien<a id="RxxKap0160060400501E1F0101EF" name="RxxKap0160060400501E1F0101EF"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999512" name="Xxx999512"></a><a id="Xxx999513" name="Xxx999513"></a><span class="listing">fdisk</span> ist die etwas unkomfortablere Alternative gegen&uuml;ber <span class="listing">cfdisk</span>, eine Festplatte in verschiedene Partitionen aufzuteilen, zu l&ouml;schen oder gegebenenfalls zu &auml;ndern. Im Gegensatz zu <span class="listing">cfisk</span> k&ouml;nnen Sie hier nicht mit den Pfeiltasten navigieren und m&uuml;ssen einzelne Tastenk&uuml;rzel verwenden. Allerdings hat <span class="listing">fdisk</span> den Vorteil, fast &uuml;berall und immer pr&auml;sent zu sein.</p>
+<p>Noch ein Vorzug ist, dass <span class="listing">fdisk</span> nicht interaktiv l&auml;uft. Man kann es z. B. benutzen, um einen ganzen Schlag Festplatten automatisch zu formatieren. Das ist ganz praktisch, wenn man ein System identisch auf einer ganzen Anzahl Rechner installieren muss. Man installiert nur auf einem, erzeugt mit <span class="listing">dd</span> ein Image, erstellt sich ein kleines Script, bootet die anderen Rechner z. B. von »damnsmall-Linux« (eine Mini-Distribution f&uuml;r u. a. den USB-Stick) und f&uuml;hrt das Script aus, das dann per <span class="listing">fdisk</span> formatiert und per <span class="listing">dd</span> das Image des Prototypen installiert. Danach muss man nur noch die IP-Adresse und den Hostname anpassen, was Sie auch scriptgesteuert vornehmen k&ouml;nnen.</p>
+<p>Einen komfortablen &Uuml;berblick zu allen Partitionen auf allen Festplatten k&ouml;nnen Sie sich mit der Option <span class="listing">–l</span> anzeigen lassen:</p>
+<pre>linux:/home/you # fdisk -l
+Platte /dev/hda: 30.0 GByte, 30005821440 Byte
+16 K&ouml;pfe, 63 Sektoren/Spuren, 58140 Zylinder
+Einheiten = Zylinder von 1008 * 512 = 516096 Bytes
+ Ger&auml;t Boot   Start         End      Blocks   Id  System
+/dev/hda1         1       26313    13261626    7  HPFS/NTFS
+/dev/hda2     26314       58140    16040808    f  W95 Ext'd (LBA)
+/dev/hda5     26314       27329      512032+  82  Linux Swap
+/dev/hda6     27330       58140    15528712+  83  Linux</pre>
+<p>Zum Partitionieren starten m&uuml;ssen Sie <span class="listing">fdisk</span> mit der Angabe der Ger&auml;tedatei:</p>
+<pre># fdisk /dev/hda</pre>
+<p>Die wichtigsten Tastenk&uuml;rzel zur Partitionierung selbst sind:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.16   
+    </b>Tastenk&uuml;rzel zur Verwendung von fdisk</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Taste</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(b)
+</td>
+<td class="tabellentext" bgcolor="#000000">»bsd disklabel« bearbeiten
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(d)
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Partition l&ouml;schen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(l)
+</td>
+<td class="tabellentext" bgcolor="#000000">Die bekannten Dateisystemtypen anzeigen (Sie ben&ouml;tigen die Nummer)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(m)
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Men&uuml; mit allen Befehlen anzeigen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(n)
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine neue Partition anlegen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(p)
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Partitionstabelle anzeigen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(q)
+</td>
+<td class="tabellentext" bgcolor="#000000">Ende ohne Speichern der &Auml;nderungen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(s)
+</td>
+<td class="tabellentext" bgcolor="#000000">Einen neuen leeren »Sun disklabel« anlegen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(t)
+</td>
+<td class="tabellentext" bgcolor="#000000">Den Dateisystemtyp einer Partition &auml;ndern
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(u)
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Einheit f&uuml;r die Anzeige/Eingabe &auml;ndern
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(v)
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Partitionstabelle &uuml;berpr&uuml;fen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(W)
+</td>
+<td class="tabellentext" bgcolor="#000000">Die Tabelle auf die Festplatte schreiben und das Programm beenden
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(X)
+</td>
+<td class="tabellentext" bgcolor="#000000">Zus&auml;tzliche Funktionen (nur f&uuml;r Experten)
+</td>
+</tr>
+</table><br>
+<p>Ansonsten gilt auch hier, Finger weg, wenn Sie nicht sicher sind, was Sie hier genau tun, es sei denn, Sie probieren dies alles an einem Testsystem aus.</p>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">fsck – Reparieren und &Uuml;berpr&uuml;fen von Dateisystemen<a id="RxxKap0160060400501E1F010217" name="RxxKap0160060400501E1F010217"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999588" name="Xxx999588"></a><a id="Xxx999589" name="Xxx999589"></a><span class="listing">fsck</span> ist ein unabh&auml;ngiges Frontend zum Pr&uuml;fen und Reparieren der Dateisystem-Struktur. <span class="listing">fsck</span> ruft gew&ouml;hnlich je nach Dateisystem das entsprechende Programm auf. Bei ext2/ext3 ist dies bspw. <span class="listing">fsck.ext2</span>, bei einem Minix-System <span class="listing">fsck.minix</span>, bei ReiserFS <span class="listing">reiserfsck</span> usw. Die Zuordnung des entsprechenden Dateisystems nimmt <span class="listing">fsck</span> anhand der Partitionstabelle oder durch eine Kommandozeilenoption vor. Die meisten dieser Programme unterst&uuml;tzen die Optionen <span class="listing">–a</span>, <span class="listing">–A</span>, <span class="listing">–l</span>, <span class="listing">–r</span>, <span class="listing">–s</span> und <span class="listing">–v</span>. Meistens wird hierbei die Option <span class="listing">–a</span> <span class="listing">–A</span> verwendet. Mit <span class="listing">–a</span> veranlassen Sie eine automatische Reparatur, sofern dies m&ouml;glich ist, und mit <span class="listing">–A</span> geben Sie an, alle Dateisysteme zu testen, die in /etc/fstab eingetragen sind.</p>
+<p><span class="listing">fsck</span> gibt beim &Uuml;berpr&uuml;fen einen Exit-Code zur&uuml;ck, den Sie mit <span class="listing">echo</span> <span class="listing">$?</span> abfragen k&ouml;nnen. Folgende wichtigen Exit-Codes und deren Bedeutung k&ouml;nnen dabei zur&uuml;ckgegeben werden:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.17   
+    </b>Exit-Codes von fsck und ihre Bedeutung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Exit-Code</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">Kein Fehler im Dateisystem
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">1
+</td>
+<td class="tabellentext" bgcolor="#000000">Einen Fehler im Dateisystem gefunden und repariert
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">2
+</td>
+<td class="tabellentext" bgcolor="#000000">Schweren Fehler im Dateisystem gefunden und korregiert. Allerdings sollte das System neu gestartet werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">4
+</td>
+<td class="tabellentext" bgcolor="#000000">Fehler im Dateisystem gefunden, aber nicht korregiert
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">8
+</td>
+<td class="tabellentext" bgcolor="#000000">Fehler bei der Kommandoausf&uuml;hrung von fsck
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">16
+</td>
+<td class="tabellentext" bgcolor="#000000">Falsche Verwendung von fsck
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">128
+</td>
+<td class="tabellentext" bgcolor="#000000">Fehler in den Shared-Libraries
+</td>
+</tr>
+</table><br>
+<p>Ganz wichtig ist es auch, <span class="listing">fsck</span> immer auf nicht eingebundene bzw. nur im readonly-Modus eingebundene Dateisysteme anzuwenden. Denn <span class="listing">fsck</span> kann sonst eventuell ein Dateisystem ver&auml;ndern (reparieren), ohne dass das System dies zu realisieren vermag. Ein Systemabsturz ist dann vorprogrammiert. Gew&ouml;hnlich wird <span class="listing">fsck</span> oder <span class="listing">reiserfsck</span> beim Systemstart automatisch ausgef&uuml;hrt, wenn eine Partition nicht sauber ausgebunden wurde oder nach jedem n-ten Booten. Wer mit einem ext2/ext3-Dateisystem arbeitet, kennt das wohl zu gen&uuml;ge, wenn <span class="listing">fsck</span> nach einem Systemabsturz beim Starten des Systems zun&auml;chst das komplette Dateisystem &uuml;berpr&uuml;ft (Kaffee holen war angesagt).</p>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">mkfs – Dateisystem einrichten<a id="RxxKap0160060400501E1F01022E" name="RxxKap0160060400501E1F01022E"></a> 
+      <a href="#t2t312"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999635" name="Xxx999635"></a><a id="Xxx999636" name="Xxx999636"></a>Mit <span class="listing">mkfs</span> k&ouml;nnen Sie auf einer zuvor formatierten Festplatte bzw. Diskette ein Dateisystem anlegen. Wie schon <span class="listing">fsck</span> ist <span class="listing">mkfs</span> ein unabh&auml;ngiges Frontend, das die Erzeugung des Dateisystems nicht selbst &uuml;bernimmt, sondern auch hier das spezifische Programm zur Erzeugung des entsprechenden Dateisystems verwendet. Auch hierbei richtet sich <span class="listing">mkfs</span> wieder nach den Dateisystemen, die in der Partitionstabelle aufgelistet sind, oder gegebenenfalls nach der Kommandozeilenoption.</p>
+<p>Abh&auml;ngig vom Dateisystemtyp ruft <span class="listing">mkfs</span> dann das Kommando <span class="listing">mkfs.minix</span> (f&uuml;r Minix), <span class="listing">mk2fs</span> (f&uuml;r ext2/ext3), <span class="listing">mkreiserfs</span> (f&uuml;r ReiserFS) usw. auf.</p>
+<pre>mkfs [option] Ger&auml;tedatei [bl&ouml;cke]</pre>
+<p>F&uuml;r die »Ger&auml;tedatei« m&uuml;ssen Sie den entsprechenden Pfad angeben (bspw. /dev/hda1). Es kann au&szlig;erdem auch die Anzahl von Bl&ouml;cken angegeben werden, die das Dateisystem belegen soll. Auch <span class="listing">mkfs</span> gibt einen Exit-Code &uuml;ber den Verlauf der Kommandoausf&uuml;hrung zur&uuml;ck, den Sie mit <span class="listing">echo</span> <span class="listing">$?</span> auswerten k&ouml;nnen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.18   
+    </b>Exit-Codes von mkfs und ihre Bedeutung</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Exit-Code</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">0
+</td>
+<td class="tabellentext" bgcolor="#000000">Alles erfolgreich durchgef&uuml;hrt
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">8
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Fehler bei der Programmausf&uuml;hrung
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">16
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Fehler in der Kommandozeile
+</td>
+</tr>
+</table><br>
+<p>Interessant ist auch noch die Option <span class="listing">–t</span>, womit Sie den Dateisystemtyp des zu erzeugenden Dateisystems selbst festlegen k&ouml;nnen. Ohne <span class="listing">–t</span> w&uuml;rde hier wieder versucht, das Dateisystem anhand der Partitionstabelle zu bestimmen. So erzeugen Sie bspw. mit</p>
+<pre>mkfs -f xiafs /dev/hda7</pre>
+<p>auf der Partition /dev/hda7 ein Dateisystem <span class="listing">xiafs</span> (alternativ zu ext2).</p>
+<a name="t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t312"></a><h3 class="t3">mkswap – eine Swap-Partition einrichten<a id="RxxKap0160060400501E1F010241" name="RxxKap0160060400501E1F010241"></a> 
+      <a href="#t2t313"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t311"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999670" name="Xxx999670"></a><a id="Xxx999671" name="Xxx999671"></a>Mit <span class="listing">mkswap</span> legen Sie eine Swap-Partition an. Diese k&ouml;nnen Sie z. B. dazu verwenden, schlafende Prozesse, die auf das Ende von anderen Prozessen warten, in die Swap-Partition der Festplatte auszulagern. So halten Sie Platz im Arbeitsspeicher f&uuml;r andere laufende Prozesse frei. Sofern Sie nicht schon bei der Installation die (gew&ouml;hnlich) vorgeschlagene Swap-Partiton eingerichtet haben (je nach Distribution), k&ouml;nnen Sie dies nachtr&auml;glich mit dem Kommando <span class="listing">mkswap</span> vornehmen. Zum Aktivieren einer Swap-Partition m&uuml;ssen Sie das Kommando <span class="listing">swapon</span> aufrufen.</p>
+<p>Ist Ihr Arbeitsspeicher wieder ausgelastet, k&ouml;nnen Sie auch kurzfristig solch einen Swap-Speicher einrichten. Ein Beispiel:</p>
+<pre># dd bs=1024 if=/dev/zero of=/tmp/myswap count=4096
+4096+0 Datens&auml;tze ein
+4096+0 Datens&auml;tze aus
+# mkswap -c /tmp/myswap 4096
+Swapbereich Version 1 wird angelegt, Gr&ouml;&szlig;e 4190 KBytes
+# sync
+# swapon /tmp/myswap</pre>
+<p>Zuerst legen Sie mit <span class="listing">dd</span> einen leere Swapdatei mit 4 Megabytes Gr&ouml;&szlig;e mit Null-Bytes an. Anschlie&szlig;end verwenden Sie diesen Bereich als Swap-Datei. Nach einem Aufruf von <span class="listing">sync</span> m&uuml;ssen Sie nur noch den Swap-Speicher aktivieren. Wie dieser Swap-Bereich allerdings verwendet wird, haben Sie nicht in der Hand, sondern wird vom Kernel mit dem »Paging« gesteuert.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Eine Datei, die als Swap-Bereich eingebunden wird, sollte nur genutzt werden, wenn keine Partition daf&uuml;r zur Verf&uuml;gung steht, da die Methode erheblich langsamer ist als eine Swap-Partition.</p>
+</td>
+</tr>
+</table><br>
+<a name="t312"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t313"></a><h3 class="t3">mount, umount – An- bzw. Abh&auml;ngen eines Dateisystems<a id="RxxKap0160060400501E1F010248" name="RxxKap0160060400501E1F010248"></a> 
+      <a href="#t2t314"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t312"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999681" name="Xxx999681"></a><a id="Xxx999682" name="Xxx999682"></a><a id="Xxx999683" name="Xxx999683"></a><a id="Xxx999684" name="Xxx999684"></a><span class="listing">mount</span> h&auml;ngt einzelne Dateisysteme mit den verschiedensten Medien (Festplatte, CD-ROM, Diskette ...) an einen einzigen Dateisystembaum an. Die einzelnen Partitionen werden dabei als Ger&auml;tedateien im Ordner /dev angezeigt. Rufen Sie <span class="listing">mount</span> ohne irgendwelche Argumente auf, werden alle »gemounteten« Dateisysteme aus /etc/mtab aufgelistet. Auch hier bleibt es wieder root &uuml;berlassen, ob ein Benutzer ein bestimmtes Dateisystem einbinden kann oder nicht. Hierzu muss nur ein entsprechender Eintrag in /etc/fstab vorgenommen werden.</p>
+<p>Einige Beispiele, wie verschiedene Dateisysteme eingeh&auml;ngt werden k&ouml;nnen:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.19   
+    </b>Anwendungsbeispiele des Kommandos mount</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Verwendung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">mount /dev/fd0
+</td>
+<td class="tabellentext" bgcolor="#000000">H&auml;ngt das Diskettenlaufwerk ein
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">mount /dev/hda9 /home/you
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier wird das Dateisystem /dev/hda9 an der Verzeichnis /home/you gemountet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">mount goliath:/progs /home/progs
+</td>
+<td class="tabellentext" bgcolor="#000000">Mountet ein Dateisystem per NFS von einem Rechner namens »goliath« und h&auml;ngt diesen an das lokale Verzeichnis /home/progs
+</td>
+</tr>
+</table><br>
+<p>Wollen Sie ein Dateisystem wieder aush&auml;ngen, egal ob jetzt lokale oder entfernte Partitionen, dann nehmen Sie dies mit <span class="listing">umount</span> vor:</p>
+<pre>umount /dev/fd0</pre>
+<p>Hier wird das Diskettenlaufwerk aus dem Dateisystem ausgeh&auml;ngt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wenn ein Eintrag f&uuml;r ein Dateisystem in der /etc/fstab besteht, reicht es aus, <span class="listing">mount</span> mit dem Device oder dem Mountpoint als Argument aufzurufen: »<span class="listing">mount</span> <span class="listing">/dev/fd0</span>«.</p>
+</td>
+</tr>
+</table><br>
+<a name="t313"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t314"></a><h3 class="t3">parted – Partitionen anlegen, verschieben, vergr&ouml;&szlig;ern oder verkleinern<a id="RxxKap0160060400501E1F01025B" name="RxxKap0160060400501E1F01025B"></a> 
+      <a href="#t2t315"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t313"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999720" name="Xxx999720"></a><a id="Xxx999721" name="Xxx999721"></a>Mit <span class="listing">parted</span> k&ouml;nnen Sie nicht nur – wie mit <span class="listing">fdisk</span> bzw. <span class="listing">cfdisk</span> – Partitionen anlegen oder l&ouml;schen, sondern auch vergr&ouml;&szlig;ern, verkleinern, kopieren und verschieben. <span class="listing">parted</span> wird gern verwendet, wenn man Platz auf der Festplatte schaffen will f&uuml;r ein neues Betriebssystem oder alle Daten einer Festplatte auf eine neue kopieren will. Mehr hierzu entnehmen Sie bitte der Manual-Seite von <span class="listing">parted</span>.</p>
+<a name="t314"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t315"></a><h3 class="t3">prtvtoc – Partitionstabellen ausgeben<a id="RxxKap0160060400501E1F01025D" name="RxxKap0160060400501E1F01025D"></a> 
+      <a href="#t2t316"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t314"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999724" name="Xxx999724"></a><a id="Xxx999725" name="Xxx999725"></a>Mit <span class="listing">prtvtoc</span> k&ouml;nnen Sie &auml;hnlich wie unter Linux mit <span class="listing">fdisk</span> die Partitionstabelle einer Festplatte ausgeben. Dieses Kommando ist bspw. unter Solaris vorhanden.</p>
+<a name="t315"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t316"></a><h3 class="t3">swapon, swapoff – Swap-Datei oder Partition (de)aktivieren<a id="RxxKap0160060400501E1F010260" name="RxxKap0160060400501E1F010260"></a> 
+      <a href="#t2t317"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t315"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999729" name="Xxx999729"></a><a id="Xxx999730" name="Xxx999730"></a><a id="Xxx999731" name="Xxx999731"></a><a id="Xxx999732" name="Xxx999732"></a>Wenn Sie auf dem System eine Swap-Partition eingerichtet haben (siehe <span class="listing">mkswap</span>), existiert diese zwar, muss aber noch mit dem Kommando <span class="listing">swapon</span> aktiviert werden. Den so aktivierten Bereich k&ouml;nnen Sie jederzeit mit <span class="listing">swapoff</span> wieder aus dem laufenden System deaktivieren.</p>
+<a name="t316"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t317"></a><h3 class="t3">sync – alle gepufferten Schreiboperationen ausf&uuml;hren<a id="RxxKap0160060400501E1F010262" name="RxxKap0160060400501E1F010262"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t316"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999735" name="Xxx999735"></a><a id="Xxx999736" name="Xxx999736"></a>Normalerweise verwendet Linux einen Puffer (Cache) im Arbeitsspeicher, worin sich ganze Datenbl&ouml;cke eines Massenspeichers befinden. So werden Daten h&auml;ufig tempor&auml;r erst im Arbeitsspeicher verwaltet, da sich ein dauernd schreibender Prozess &auml;u&szlig;erst negativ auf die Performance des Systems auswirken w&uuml;rde. Stellen Sie sich das einmal bei 100 Prozessen vor! Gew&ouml;hnlich &uuml;bernimmt ein Daemon die Arbeit und entscheidet, wann die ver&auml;nderten Datenbl&ouml;cke auf die Festplatte geschrieben werden.</p>
+<p>Mit dem Kommando <span class="listing">sync</span> k&ouml;nnen Sie nun veranlassen, dass ver&auml;nderte Daten sofort auf die Festplatte (oder auch jeden anderen Massenspeicher) geschrieben werden. Dies kann h&auml;ufig der letzte Rettungsanker sein, wenn das System sich nicht mehr richtig beenden l&auml;sst. K&ouml;nnen Sie hierbei noch schnell ein <span class="listing">sync</span> ausf&uuml;hren, werden alle Daten zuvor nochmals gesichert und der Datenverlust kann eventuell ganz verhindert werden.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_016_005.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_016_007.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_016_006.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

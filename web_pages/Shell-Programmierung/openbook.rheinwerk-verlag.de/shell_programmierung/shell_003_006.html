@@ -1,0 +1,1073 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_003_006.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:06 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 1.7 Crashkurs: einfacher Umgang mit der Kommandozeile</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_003_005.html">
+<link rel="next" href="shell_003_007.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_003_005.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_003_007.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_003_000.html#RxxKap00300004004D531F048172">1 Einf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_000.html#RxxKap00300004004D531F048174">1.1 Voraussetzungen an den Leser</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_000.html#RxxKap00300004004D531F048180">1.1.1 Zielgruppe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_000.html#RxxKap00300004004D531F048185">1.1.2 Notation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_001.html#RxxKap00300104004D6A1F02E172">1.2 Was ist eine Shell?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_002.html#RxxKap00300204004D6B1F033172">1.3 Hauptanwendungsgebiet</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_002.html#RxxKap00300204004D6B1F033176">1.3.1 Was ist ein Shellscript?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_002.html#RxxKap00300204004D6B1F033184">1.3.2 Vergleich mit anderen Sprachen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F172">1.4 Kommando, Programm oder Shellscript?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F174">1.4.1 Shell-eigene Kommandos (Builtin-Kommando)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F176">1.4.2 Aliase in der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F17B">1.4.3 Funktionen in der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F17D">1.4.4 Shellscripts (Shell-Prozeduren)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_003.html#RxxKap00300304004D6C1F01F17F">1.4.5 Programme (bin&auml;r)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033172">1.5 Die Shell-Vielfalt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033177">1.5.1 ksh (Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033179">1.5.2 Bash (Bourne-Again-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F03317B">1.5.3 zsh (Z-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F03317D">1.5.4 ash (A-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F03317F">1.5.5 rbash, rzsh (Restricted Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033181">1.5.6 tcsh (TC-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033183">1.5.7 Welche Shell-Variante wird in diesem Buch verwendet?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_004.html#RxxKap00300404004D6D1F033188">1.5.8 rsh und ssh</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_005.html#RxxKap00300504004D6E1F04A172">1.6 Betriebssysteme</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00300604004D6F1F04D172">1.7 Crashkurs: einfacher Umgang mit der Kommandozeile</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300604004D6F1F04D174">1.7.1 Grundlegende Befehle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300604004D6F1F04D181">1.7.2 Der Umgang mit Dateien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300604004D6F1F04D19F">1.7.3 Der Umgang mit Verzeichnissen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300604004D6F1F04D1D2">1.7.4 Datei- und Verzeichnisnamen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300604004D6F1F04D1D8">1.7.5 Ger&auml;tenamen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00300604004D6F1F04D1DE">1.7.6 Dateiattribute</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_007.html#RxxKap00300704004D701F043172">1.8 Shellscripts schreiben und ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F043174">1.8.1 Der Editor</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F043177">1.8.2 Der Name des Shellscripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F04317D">1.8.3 Ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F043195">1.8.4 Hintergrundprozess starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F043197">1.8.5 Ausf&uuml;hrende Shell festlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431BF">1.8.6 Kommentare</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431C4">1.8.7 Stil</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431CB">1.8.8 Ein Shellscript beenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431D6">1.8.9 Testen und Debuggen von Shellscripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_007.html#RxxKap00300704004D701F0431E1">1.8.10 Shellscript, das ein Shellscript erstellt und ausf&uuml;hrt</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_008.html#RxxKap00300804004D711F043172">1.9 Vom Shellscript zum Prozess</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_008.html#RxxKap00300804004D711F04317B">1.9.1 Ist das Shellscript ein Prozess?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_008.html#RxxKap00300804004D711F043182">1.9.2 Echte Login-Shell?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_009.html#RxxKap00300904004D721F048172">1.10 Datenstrom</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F04817A">1.10.1 Ausgabe umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F048188">1.10.2 Standardfehlerausgabe umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F0481A0">1.10.3 Eingabe umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F0481CA">1.10.4 Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F0481D4">1.10.5 Ein T-St&uuml;ck mit tee</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F0481DC">1.10.6 Ersatzmuster (Wildcards)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F04820D">1.10.7 Brace Extension (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F048217">1.10.8 Muster-Alternativen (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_003_009.html#RxxKap00300904004D721F04822A">1.10.9 Tilde-Expansion (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_003_010.html#RxxKap00301004004D731F01F172">1.11 Empfehlung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">1.7 <a id="RxxKap001109CrashkurseinfacherUmgangmitderKommandozeile" name="RxxKap001109CrashkurseinfacherUmgangmitderKommandozeile"></a>Crashkurs: einfacher Umgang mit der Kommandozeil<a id="RxxKap00300604004D6F1F04D172" name="RxxKap00300604004D6F1F04D172"></a>e 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a>Wahrscheinlich wird der ein oder andere im Umgang mit der Kommandozeile der Shell schon ge&uuml;bt sein. Trotzdem will ich hier einen kleinen »Crashkurs« zur Verwendung der Kommandozeile einer Shell geben – nat&uuml;rlich auf das N&ouml;tigste beschr&auml;nkt. Viele dieser Kommandos werden im Laufe der Kapitel immer wieder zu Demonstrationszwecken verwendet. Noch mehr Kommandos und eventuell auch mehr zu den m&ouml;glichen (wichtigsten) Optionen finden Sie in der »Linux-UNIX-Kommandoreferenz« am Ende des Buchs. Ich beschr&auml;nke mich im Crashkurs nur auf die grundlegenden Befehle und das Arbeiten mit Dateien und Verzeichnissen.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">1.7.1 Grundlegende Befehle<a id="RxxKap00300604004D6F1F04D174" name="RxxKap00300604004D6F1F04D174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Um &uuml;berhaupt einen Befehl auszuf&uuml;hren, muss nach dessen Eingabe die <b>(ENTER)</b>-Taste gedr&uuml;ckt werden. Danach wird das Linux-UNIX-System veranlassen, dass der Befehl das ausf&uuml;hrt, was er eben tun soll.</p>
+<h4 class="t4">Wer ist eingeloggt und wer bin ich – who und whoami</h4>
+<p><a id="Xxx999282" name="Xxx999282"></a><a id="Xxx999283" name="Xxx999283"></a>Wollen Sie wissen, wer alles auf dem System eingeloggt ist, dann kann der Befehl <span class="listing">who</span> (engl. wer) verwendet werden.<a id="Xxx999285" name="Xxx999285"></a></p>
+<pre>you@host &gt; who
+rot      tty2         Jan 30 14:14
+tot      :0           Jan 30 15:02 (console)
+you      tty1         Jan 30 11:14</pre>
+<p>Hier sind die User »rot«, »tot« und »you« eingeloggt. Neben der Benutzererkennung werden hierbei auch die Nummern der »tty« angezeigt. »tty1« und »tty2« sind beides echte Terminals ohne grafische Oberfl&auml;che. Hingegen scheint der User »tot« mit einer grafischen Oberfl&auml;che verbunden zu sein. Des Weiteren finden Sie hier das Datum und die Uhrzeit des Logins.</p>
+<p><a id="Xxx999288" name="Xxx999288"></a>Wollen Sie wissen, wer davon Sie sind, dann k&ouml;nnen Sie das mit <span class="listing">whoami</span> (engl. wer bin ich) abfragen (vielleicht sind Sie ja irgendwie an Root-Rechte gekommen).</p>
+<pre>you@host &gt; whoami
+you
+you@host &gt; su
+Password: ********
+# whoami
+root</pre>
+<h4 class="t4">Die Ausgabe von Zeichen – echo</h4>
+<p><a id="Xxx999292" name="Xxx999292"></a><a id="Xxx999293" name="Xxx999293"></a><a id="Xxx999294" name="Xxx999294"></a>Den Befehl <span class="listing">echo</span> werden Sie noch &ouml;fters einsetzen. Mit <span class="listing">echo</span> k&ouml;nnen Sie alles ausgeben, was hinter dem Befehl in der Eingabezeile folgt. H&ouml;rt sich zun&auml;chst recht trivial an, aber in der Praxis (bspw. bei der Ausgabe von Shellscripts, der Ausgabe von Shell-Variablen oder zu Debugging-Zwecke etc.) ist dieser Befehl unverzichtbar.</p>
+<pre>you@host &gt; echo Hallo
+Hallo
+you@host &gt; echo Mehrere Worte ausgeben
+Mehrere Worte ausgeben
+you@host &gt; echo
+you@host &gt; echo Mehrere Leerzeichen       werden        ignoriert
+Mehrere Leerzeichen werden ignoriert
+you@host &gt; echo $SHELL
+/bin/bash</pre>
+<p>Sicherlich ist Ihnen dabei auch aufgefallen, dass <span class="listing">echo</span> mehrere Leerzeichen zwischen den einzelnen W&ouml;rtern ignoriert. Das liegt daran, dass bei Linux/UNIX die Leerzeichen lediglich dazu dienen, mehrere Worte voneinander zu trennen – weil eben nur die Worte von Bedeutung sind. Werden mehr Leerzeichen oder Tabulatoren (siehe <span class="listing">IFS</span>) als Teil eines Befehls oder einer Befehlskette verwendet, werden diese grunds&auml;tzlich ignoriert. Wollen Sie dennoch mit <span class="listing">echo</span> mehrere Leerzeichen ausgeben, so k&ouml;nnen Sie den Text auch zwischen doppelte Anf&uuml;hrungsstriche stellen:</p>
+<pre>you@host &gt; echo "jetzt geht es auch mit mehreren     Leerzeichen"
+jetzt geht es auch mit mehreren     Leerzeichen</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">1.7.2 Der Umgang mit Dateien<a id="RxxKap00300604004D6F1F04D181" name="RxxKap00300604004D6F1F04D181"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Der Umgang mit Dateien wird dank einfacher M&ouml;glichkeiten unter Linux/UNIX zum Kinderspiel. Hier finden Sie die wichtigsten Befehle, die im Verlauf des Kapitels zum Einsatz kommen.</p>
+<h4 class="t4">Datei(en) auflisten – ls</h4>
+<p><a id="Xxx999302" name="Xxx999302"></a><a id="Xxx999303" name="Xxx999303"></a><a id="Xxx999304" name="Xxx999304"></a>Der Befehl <span class="listing">ls</span> (Abk&uuml;rzung f&uuml;r list = auflisten) ist wohl der am h&auml;ufigsten benutzte Befehl in einer Shell &uuml;berhaupt. Damit k&ouml;nnen Sie die Dateien auflisten, die sich in einem Verzeichnis befinden.</p>
+<pre>you@host &gt; ls
+bin      Documents  GNUstep  new_dir            public_html
+Desktop  Dokumente  Mail     OpenOffice.org1.1  Shellbuch</pre>
+<p>Sicherlich f&auml;llt Ihnen hierbei auf, dass <span class="listing">ls</span> neben gew&ouml;hnlichen Dateien auch Inhaltsverzeichnisse und Spezialdateien (Ger&auml;tedateien) mit ausgibt. Darauf m&ouml;chte ich ein paar Seiten sp&auml;ter n&auml;her eingehen.</p>
+<h4 class="t4">Inhalt einer Datei ausgeben – cat</h4>
+<p><a id="Xxx999309" name="Xxx999309"></a><a id="Xxx999310" name="Xxx999310"></a><a id="Xxx999311" name="Xxx999311"></a>Mit dem Befehl <span class="listing">cat</span> (Abk&uuml;rzung f&uuml;r catenate = verketten, aneinander reihen) k&ouml;nnen Sie den Inhalt einer Datei ausgeben lassen. Als Argument &uuml;bergibt man dem Befehl den Namen der Datei, deren Inhalt man lesen m&ouml;chte.</p>
+<pre>you@host &gt; cat beispiel.txt
+Dieser Text steht in der Textdatei "beispiel.txt"
+Beenden kann man diese Eingabe mit Strg+D
+you@host &gt; cat &gt;&gt; beispiel.txt
+Dieser Text wird ans Ende von "beispiel.txt" geschrieben.
+you@host &gt;  cat beispiel.txt
+Dieser Text steht in der Textdatei "beispiel.txt"
+Beenden kann man diese Eingabe mit Strg+D
+Dieser Text wird ans Ende von "beispiel.txt" geschrieben.</pre>
+<p>Im Beispiel konnten Sie sehen, dass <span class="listing">cat</span> f&uuml;r mehr als nur das Ausgeben von Dateien verwendet werden kann. Hier wurde zum Beispiel mit dem Ausgabeumlenkungszeichen <span class="listing">&gt;&gt;</span> der von Ihnen darauf folgend eingegebene Text an die Datei beispiel.txt geh&auml;ngt. Beenden k&ouml;nnen Sie die Eingabe &uuml;ber die Standardeingabe mit EOF (End Of File), die zugeh&ouml;rige Tastenkombination ist <b>(Strg)</b>+<b>(D)</b>. Mehr zur Ein-/Ausgabeumleitung erfahren Sie in Abschnitt 1.10.</p>
+<h4 class="t4">Zeilen, Worte und Zeichen z&auml;hlen – wc</h4>
+<p><a id="Xxx999316" name="Xxx999316"></a><a id="Xxx999317" name="Xxx999317"></a><a id="Xxx999318" name="Xxx999318"></a><a id="Xxx999319" name="Xxx999319"></a><a id="Xxx999320" name="Xxx999320"></a>Mit dem Kommando <span class="listing">wc</span> (Abk&uuml;rzung f&uuml;r word count = W&ouml;rter z&auml;hlen) k&ouml;nnen Sie die Anzahl der Zeilen, Worte und Zeichen einer Datei z&auml;hlen.</p>
+<pre>you@host &gt; wc beispiel.txt
+  3  22 150 beispiel.txt
+you@host &gt; wc -l beispiel.txt
+3 beispiel.txt
+you@host &gt; wc -w beispiel.txt
+22 beispiel.txt
+you@host &gt; wc -c beispiel.txt
+150 beispiel.txt</pre>
+<p>Geben Sie – wie im ersten Beispiel – <span class="listing">wc</span> nur mit dem Dateinamen als Argument an, werden Ihnen drei Zahlen ausgegeben. Die Bedeutung dieser drei Zahlen ist, der Reihe nach: die Anzahl der Zeilen, die Anzahl der W&ouml;rter und die Anzahl von Zeichen. Nat&uuml;rlich k&ouml;nnen Sie mit einer Angabe der entsprechenden Option auch einzeln die Anzahl von Zeilen (<span class="listing">–l</span> = line), Worten (<span class="listing">–w</span> = words) und Zeichen (<span class="listing">–c</span> = character) einer Datei ermitteln.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Fast jeder Linux-UNIX-Befehl bietet Ihnen solche speziellen Optionen an. Das Format ist generell immer gleich, gefolgt von einem Minuszeichen folgt die gew&uuml;nschte Option. Wollen Sie bspw. wissen, was Ihnen der ein oder andere Befehl noch so f&uuml;r Optionen bietet, dann hilft h&auml;ufig ein Aufruf des Befehls gefolgt von der Option <span class="listing">--help</span> aus. Mehr Details zu einzelnen Optionen eines Kommandos finden Sie in der Linux-UNIX-Kommandoreferenz (siehe Kapitel 14) und nat&uuml;rlich auf den man-Pages. Die Verwendung der man-Pages wird ebenfalls in der Kommandoreferenz erl&auml;utert.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Datei(en) kopieren – cp</h4>
+<p><a id="Xxx999329" name="Xxx999329"></a><a id="Xxx999330" name="Xxx999330"></a><a id="Xxx999331" name="Xxx999331"></a>Dateien kopieren k&ouml;nnen Sie mit dem Kommando <span class="listing">cp</span> (Abk&uuml;rzung f&uuml;r copy = kopieren). Als erstes Argument &uuml;bergeben Sie diesem Befehl den Namen der Datei (Quelldatei), die kopiert werden soll. Das zweite Argument ist dann der Name der Kopie (Zieldatei), die Sie erstellen wollen.</p>
+<pre>you@host &gt; cp beispiel.txt kopie_beispiel.txt
+you@host &gt; ls *.txt
+beispiel.txt  kopie_beispiel.txt</pre>
+<p>Beachten Sie allerdings, wenn Sie hier als zweites Argument (im Beispiel <span class="listing">kopie_beispiel.txt</span>) den Namen einer bereits vorhandenen Datei verwenden, dass diese gnadenlos &uuml;berschrieben wird.</p>
+<h4 class="t4">Datei(en) umbenennen oder verschieben – mv</h4>
+<p><a id="Xxx999336" name="Xxx999336"></a><a id="Xxx999337" name="Xxx999337"></a><a id="Xxx999338" name="Xxx999338"></a><a id="Xxx999339" name="Xxx999339"></a>Eine Datei k&ouml;nnen Sie mit dem Kommando <span class="listing">mv</span> (Abk&uuml;rzung f&uuml;r move = bewegen) umbenennen oder, sofern als Ziel ein anderes Verzeichnis angegeben wird, verschieben. Die Argumente entsprechen dabei demselben Prinzip wie beim Kommando <span class="listing">cp</span>. Das erste Argument ist der Name der Datei, die umbenannt oder verschoben werden soll, und das zweite Argument ist entweder der neue Name der Datei oder – wenn gew&uuml;nscht – das Verzeichnis, wohin <span class="listing">mv</span> die Datei schieben soll.</p>
+<pre>you@host &gt; ls
+beispiel.txt  kopie_beispiel.txt
+you@host &gt; mv kopie_beispiel.txt beispiel.bak
+you@host &gt; ls
+beispiel.bak  beispiel.txt
+you@host &gt; mv beispiel.bak /home/tot/ein_ordner
+you@host &gt; ls
+beispiel.txt
+you@host &gt; ls /home/tot/ein_ordner
+beispiel.bak</pre>
+<p>Wie beim <span class="listing">cp</span>-Befehl wird mit <span class="listing">mv</span> der als zweites Argument angegebene Name bzw. das Ziel &uuml;berschrieben, sofern ein gleicher Name bereits existiert.</p>
+<h4 class="t4">Datei(en) l&ouml;schen – rm</h4>
+<p><a id="Xxx999344" name="Xxx999344"></a><a id="Xxx999345" name="Xxx999345"></a><a id="Xxx999346" name="Xxx999346"></a>Wollen Sie eine Datei aus Ihrem System entfernen, hilft Ihnen der Befehl <span class="listing">rm</span> (Abk&uuml;rzung f&uuml;r remove = entfernen). Als Argument von <span class="listing">rm</span> geben Sie die Datei an, die Sie l&ouml;schen wollen. Nat&uuml;rlich d&uuml;rfen hierbei auch mehrere Dateien auf einmal angegeben werden.</p>
+<pre>you@host &gt; rm datei.txt
+you@host &gt; rm datei1.txt datei2.txt datei3.txt datei4.txt
+you@host &gt; rm beispiel.txt /home/tot/ein_ordner/beispiel.bak</pre>
+<h4 class="t4">Leere Datei erzeugen – touch</h4>
+<p><a id="Xxx999350" name="Xxx999350"></a><a id="Xxx999351" name="Xxx999351"></a><a id="Xxx999352" name="Xxx999352"></a>Mit diesem Befehl k&ouml;nnen Sie eine oder mehrere Dateien als Argument mit der Gr&ouml;&szlig;e 0 anlegen. Sofern eine Datei mit diesem Namen existiert, &auml;ndert <span class="listing">touch</span> nur das Datum der letzten &Auml;nderung – l&auml;sst aber den Inhalt der Datei in Ruhe. Ich verwende den Befehl gern zu Demonstrationszwecken im Buch, wenn ich mal schnell mehrere Dateien auf einmal erzeugen will und damit ohne gro&szlig;en Aufwand das ein oder andere Szenario darstellen kann.</p>
+<pre>you@host &gt; touch datei1.txt
+you@host &gt; ls *.txt
+datei1.txt
+you@host &gt; touch datei2.txt datei3.txt datei4.txt
+you@host &gt; ls *.txt
+datei1.txt  datei2.txt  datei3.txt  datei4.txt</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">1.7.3 Der Umgang mit Verzeichnissen<a id="RxxKap00300604004D6F1F04D19F" name="RxxKap00300604004D6F1F04D19F"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999356" name="Xxx999356"></a>Neben dem Umgang mit Dateien geh&ouml;ren der Umgang und das Verst&auml;ndnis von Verzeichnissen ebenso zu den grundlegenden Arbeiten. Daher hier die wichtigsten Befehle und Begriffe dazu.<a id="Xxx999358" name="Xxx999358"></a></p>
+<h4 class="t4">Verzeichnishierarchien und Home</h4>
+<p><a id="Xxx999360" name="Xxx999360"></a><a id="Xxx999361" name="Xxx999361"></a><a id="Xxx999362" name="Xxx999362"></a><a id="Xxx999363" name="Xxx999363"></a>In jedem Linux-UNIX-System finden Sie sich nach dem Einloggen (oder beim Starten einer »xterm«) automatisch im Heim-Inhaltsverzeichnis (home) wieder. Geht man bspw. davon aus, dass Ihr Heim-Inhaltsverzeichnis »you« lautet und dass dieses Verzeichnis ein Unterverzeichnis des Verzeichnisses /home ist (was gew&ouml;hnlich der Fall ist), dann lautet Ihr Heimverzeichnis /home/you. Die Rede ist von einem Verzeichnisbaum, an dessen Spitze sich immer ein<a id="Xxx999365" name="Xxx999365"></a><a id="Xxx999366" name="Xxx999366"></a> / befindet – das Wurzelinhaltsverzeichnis (Root-Verzeichnis, nicht zu verwechseln mit dem Benutzer root). Hierbei gibt es keine Laufwerksangaben, wie dies Windows-typisch der Fall ist. Das oberste Hauptverzeichnis geben Sie hier immer mit einem / an, welches Sie auch gern mit <span class="listing">ls</span> ausgeben lassen k&ouml;nnen.</p>
+<pre>you@host &gt; ls /
+bin   dev  home  media  opt   root  srv  tmp  var
+boot  etc  lib   mnt    proc  sbin  sys  usr  windows</pre>
+<p>So veranlassen Sie, dass <span class="listing">ls</span> den Inhalt vom Wurzelverzeichnis in alphabetischer Reihenfolge (hier von oben nach unten; dann von links nach rechts) ausgibt. Will man an dieser Stelle wissen, wo man sich gerade befindet (das aktuelle Arbeitsverzeichnis, also das Verzeichnis, welches <span class="listing">ls</span> ohne sonstige Angaben ausgeben w&uuml;rde), kann man den Befehl <span class="listing">pwd</span> (Abk&uuml;rzung f&uuml;r print working director = gib das Arbeitsverzeichnis aus) verwenden.<a id="Xxx999369" name="Xxx999369"></a><a id="Xxx999370" name="Xxx999370"></a><a id="Xxx999371" name="Xxx999371"></a></p>
+<pre>you@host &gt; pwd
+/home/you</pre>
+<p>Geben Sie also einen Pfadnamen beginnend mit einem Schr&auml;gstrich (   /  ) an, wird versucht, eine Datei oder ein Verzeichnis vom Wurzelverzeichnis aus zu erreichen. <a id="Xxx999374" name="Xxx999374"></a><a id="Xxx999375" name="Xxx999375"></a>Man spricht dabei von einer vollst&auml;ndigen oder absoluten Pfadangabe. Die weiteren Verzeichnisse, die Sie zur Datei oder zum Verzeichnis ben&ouml;tigen, werden mit einem / ohne Zwischenraum getrennt.</p>
+<pre>you@host &gt; cat /home/you/Dokumente/brief.txt</pre>
+<p>Hier wird die Datei brief.txt, welche sich im Verzeichnis /home/tot/Dokumente befindet, ausgegeben. Befindet sich diese Datei allerdings in Ihrem Heimverzeichnis (in der Annahme, es lautet hier /home/you), dann m&uuml;ssen Sie keine vollst&auml;ndige Pfadangabe vom Wurzelverzeichnis aus vornehmen. <a id="Xxx999378" name="Xxx999378"></a>Hier w&uuml;rde auch eine relative Pfadangabe gen&uuml;gen. Als »relativ« wird hier der Pfad vom aktuellen Arbeitsverzeichnis aus bezeichnet.</p>
+<pre>you@host &gt; pwd
+/home/you
+you@host &gt; cat Dokumente/brief.txt</pre>
+<p>Was hier angegeben wurde, wird auch als vollst&auml;ndige Dateiangabe bezeichnet, weil hier die Datei brief.txt direkt mitsamt Pfad (relativ zum aktuellen Arbeitsverzeichnis) angesprochen wird. Gibt man hingegen nur /home/you/Dokumente an, dann spricht man von einem (vollst&auml;ndigen) Pfadnamen.</p>
+<p><a id="Xxx999381" name="Xxx999381"></a><a id="Xxx999382" name="Xxx999382"></a><a id="Xxx999383" name="Xxx999383"></a><a id="Xxx999384" name="Xxx999384"></a>Fr&uuml;her oder sp&auml;ter werden Sie in Ihrem Inhaltsverzeichnis auch mal auf die Punkte <b>.</b> und <b>..</b> sto&szlig;en. Die (doppelten) Punkte <b>..</b> repr&auml;sentieren immer das Inhaltsverzeichnis, das eine Ebene h&ouml;her liegt. Befinden Sie sich also nach dem Einloggen im Verzeichnis /home/you, bezieht sich <b>..</b> auf das Inhaltsverzeichnis von you. So k&ouml;nnen Sie bspw. beim Wechseln des Verzeichnisses jederzeit mit Angabe von <b>..</b> in das n&auml;chsth&ouml;here Verzeichnis der Hierarchie wechseln. Selbst das h&ouml;chste Verzeichnis, die Wurzel /, besitzt solche Eintr&auml;ge, nur dass es sich beim Wurzelverzeichnis um einen Eintrag auf sich selbst handelt – h&ouml;her geht es eben nicht mehr.</p>
+<pre>you@host &gt; pwd
+/home/you
+you@host &gt; ls ..
+you
+you@host &gt; ls /..
+bin   dev  home  media  opt   root  srv  tmp  var
+boot  etc  lib   mnt    proc  sbin  sys  usr  windows</pre>
+<p>Der einfache Punkt hingegen verweist immer auf das aktuelle Inhaltsverzeichnis. So sind bspw. folgende Angaben absolut gleichwertig:</p>
+<pre>you@host &gt; ls
+you@host &gt; ls ./</pre>
+<p>In Tabelle 1.1 finden Sie eine Zusammenfassung der Begriffe, die in Bezug auf Verzeichnisse wichtig sind.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 1.1   
+    </b>Wichtige Begriffe im Zusammenhang mit Verzeichnissen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Begriff</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">Wurzelverzeichnis / (engl. root)
+</td>
+<td class="tabellentext" bgcolor="#000000">H&ouml;chstes Verzeichnis im Verzeichnisbaum
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">Aktuelles Arbeitsverzeichnis
+</td>
+<td class="tabellentext" bgcolor="#000000">Das Verzeichnis, in dem Sie sich im Augenblick befinden
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">Vollst&auml;ndige Pfadangabe
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Pfadname beginnend mit / (Wurzel); alle anderen Verzeichnisse werden ebenfalls mit einem / getrennt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">Relative Pfadangabe
+</td>
+<td class="tabellentext" bgcolor="#000000">Der Pfad ist relativ zum aktuellen Arbeitsverzeichnis; hierbei wird kein voranstehendes / verwendet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">Vollst&auml;ndiger Dateiname
+</td>
+<td class="tabellentext" bgcolor="#000000">Pfadangabe inklusive Angabe zur entsprechenden Datei (bspw. /home/you/Dokumente/brief.txt)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">Vollst&auml;ndiger Pfadname
+</td>
+<td class="tabellentext" bgcolor="#000000">Pfadangabe zu einem Verzeichnis, in dem sich die entsprechende Datei befindet (bspw. /home/you/Dokumente)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><b>..</b> (zwei Punkte)
+</td>
+<td class="tabellentext" bgcolor="#000000">Verweisen auf ein Inhaltsverzeichnis, das sich eine Ebene h&ouml;her befindet
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000"><b>. </b>(ein Punkt)
+</td>
+<td class="tabellentext" bgcolor="#000000">Verweist auf das aktuelle Inhaltsverzeichnis
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Inhaltsverzeichnis wechseln – cd</h4>
+<p><a id="Xxx999436" name="Xxx999436"></a><a id="Xxx999437" name="Xxx999437"></a><a id="Xxx999438" name="Xxx999438"></a>Das Wechseln von einem Inhaltsverzeichnis k&ouml;nnen Sie mit dem Befehl <span class="listing">cd</span> (Abk&uuml;rzung f&uuml;r change directory = wechsle Verzeichnis) ausf&uuml;hren. Als Argument &uuml;bergeben Sie diesem Befehl das Inhaltsverzeichnis, in das Sie wechseln wollen.</p>
+<pre>you@host &gt; pwd
+/home/you
+you@host &gt; cd Dokumente
+you@host &gt; pwd
+/home/you/Dokumente
+you@host &gt; ls
+Beispiele  FAQ.tmd  Liesmich.tmd
+you@host &gt; cd ..
+you@host &gt; pwd
+/home/you
+you@host &gt; cd ../..
+you@host &gt; pwd
+/
+you@host &gt; cd /home/you
+you@host &gt; pwd
+/home/you
+you@host &gt; cd /
+you@host &gt; pwd
+/
+you@host &gt; cd
+you@host &gt; pwd
+/home/you</pre>
+<p>Mit den vorherigen Erl&auml;uterungen sollte Ihnen dieses Beispiel keine Probleme mehr bereiten. Einzig der Sonderfall sollte erw&auml;hnt werden, die Funktion <span class="listing">cd</span>. Verwenden Sie <span class="listing">cd</span> allein, so gelangen Sie immer in das Heim-Inhaltsverzeichnis zur&uuml;ck, egal wo Sie sich gerade befinden.</p>
+<h4 class="t4">Ein Inhaltsverzeichnis erstellen – mkdir</h4>
+<p><a id="Xxx999443" name="Xxx999443"></a><a id="Xxx999444" name="Xxx999444"></a><a id="Xxx999445" name="Xxx999445"></a>Ein neues Inhaltsverzeichnis k&ouml;nnen Sie mit dem Befehl <span class="listing">mkdir</span> (Abk&uuml;rzung make directory = erzeuge Verzeichnis) anlegen. Als Argument erwartet dieser Befehl den Namen des neu zu erzeugenden Verzeichnisses. Ohne Angabe eines Pfadnamens als Argument wird das neue Verzeichnis im aktuellen Arbeitsverzeichnis angelegt.</p>
+<pre>you@host &gt; mkdir Ordner1
+you@host &gt; pwd
+/home/you
+you@host &gt; cd Ordner1
+you@host &gt; pwd
+/home/you/Ordner1
+tyou@host &gt; cd ..
+you@host &gt; pwd
+/home/you</pre>
+<h4 class="t4">Ein Verzeichnis l&ouml;schen – rmdir</h4>
+<p><a id="Xxx999449" name="Xxx999449"></a><a id="Xxx999450" name="Xxx999450"></a><a id="Xxx999451" name="Xxx999451"></a>Ein Verzeichnis k&ouml;nnen Sie mit dem Befehl <span class="listing">rmdir</span> (Abk&uuml;rzung f&uuml;r remove directory = l&ouml;sche Verzeichnis) wieder l&ouml;schen. Um aber ein Verzeichnis wirklich l&ouml;schen zu d&uuml;rfen, muss dieses leer sein. Das hei&szlig;t, im Verzeichnis darf sich au&szlig;er den Eintr&auml;gen <b>.</b> und <b>..</b> nichts mehr befinden. Die Verwendung von <span class="listing">rmdir</span> entspricht der von <span class="listing">mkdir</span>, nur dass Sie als Argument das Verzeichnis angeben, das gel&ouml;scht werden soll.</p>
+<pre>you@host &gt; cd Ordner1
+you@host &gt; touch testfile.dat
+you@host &gt; cd ..
+you@host &gt; rmdir Ordner1
+rmdir: Ordner1: Das Verzeichnis ist nicht leer</pre>
+<p>Um also alle Dateien in einem Verzeichnis zu l&ouml;schen, haben Sie ja bereits das Kommando <span class="listing">rm</span> kennen gelernt. Mit einer Datei ist das kein gro&szlig;er Aufwand, doch befinden sich in einem Verzeichnis mehrere Dateien, bietet Ihnen <span class="listing">rm</span> die Option <span class="listing">–r</span> zum rekursiven L&ouml;schen an.</p>
+<pre>you@host &gt; rm -r Ordner1</pre>
+<p>Dank dieser Option werden alle gew&uuml;nschten Verzeichnisse und die darin enthaltenen Dateien gel&ouml;scht, inklusive aller darin enthaltenen Unterverzeichnisse.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">1.7.4 Datei- und Verzeichnisnamen<a id="RxxKap00300604004D6F1F04D1D2" name="RxxKap00300604004D6F1F04D1D2"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999458" name="Xxx999458"></a><a id="Xxx999459" name="Xxx999459"></a><a id="Xxx999460" name="Xxx999460"></a><a id="Xxx999461" name="Xxx999461"></a>Bei der Verwendung von Datei- bzw. Verzeichnisnamen ist Linux/UNIX sehr flexibel. Hierbei ist fast alles erlaubt, dennoch gibt es auch einige Zeichen, die man in einem Dateinamen besser wegl&auml;sst.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> L&auml;nge – bei modernen Dateisystemen kann rein theoretisch eine L&auml;nge von 256 bis teilweise 1024 Zeichen verwendet werden. Nat&uuml;rlich ist diese L&auml;nge immer abh&auml;ngig vom Dateisystem.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sonderzeichen – als Sonderzeichen k&ouml;nnen Sie im Dateinamen <span class="listing">.</span> <span class="listing">,</span> – <span class="listing">_</span> und <span class="listing">%</span> ohne Bedenken einsetzen. Die Verwendung von Leerzeichen und des Schr&auml;gstrichs <span class="listing">/</span> ist zwar auch erlaubt, aber kann Probleme verursachen – daher sei von einer Verwendung dieser Zeichen im Dateinamen abgeraten. Ebenso sieht dies mit einigen anderen Sonderzeichen wie bspw. <span class="listing">#</span> oder <span class="listing">*</span> aus. Je nachdem, an welcher Position solche Sonderzeichen verwendet werden, k&ouml;nnten diese von der Shell falsch interpretiert werden.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Dateierweiterung – hier ist alles erlaubt, Sie k&ouml;nnen die wildesten Erweiterungsorgien feiern. Trotzdem sollten Sie nicht die &uuml;blichen Verd&auml;chtigen hierzu missbrauchen. Es macht recht wenig Sinn, eine reine Textdatei mit der Endung ».mp3« oder ein bin&auml;res Programm mit ».exe« zu versehen ;-).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Nationales – gerade die vielen nationalen Sonderzeichen im Dateinamen, wie hierzulande Umlaute, k&ouml;nnen beim Wechsel auf andere Systeme erhebliche Probleme bereiten. Deshalb sollte man wenn m&ouml;glich besser die Finger davon lassen.</td>
+</tr>
+</table>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">1.7.5 Ger&auml;tenamen<a id="RxxKap00300604004D6F1F04D1D8" name="RxxKap00300604004D6F1F04D1D8"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999468" name="Xxx999468"></a><a id="Xxx999469" name="Xxx999469"></a><a id="Xxx999470" name="Xxx999470"></a><a id="Xxx999471" name="Xxx999471"></a><a id="Xxx999472" name="Xxx999472"></a>Bisher haben Sie die Dateitypen der normalen Dateien und der (Datei-)Verzeichnisse kennen gelernt. Es gibt allerdings noch eine dritte Dateiart, die Ger&auml;tedateien (auch Spezialdateien genannt). Mit den Ger&auml;tedateien (device files) k&ouml;nnen Programme unter Verwendung des Kernels auf die Hardwarekomponenten im System zugreifen. Nat&uuml;rlich sind das keine Dateien, wie Sie sie eigentlich kennen, aber aus der Sicht der Programme werden diese wie gew&ouml;hnliche Dateien behandelt. Man kann daraus lesen, etwas dorthin schreiben oder sie auch f&uuml;r spezielle Zwecke benutzen – eben alles, was Sie mit einer Datei auch machen k&ouml;nnen (und noch mehr). Ger&auml;tedateien bieten Ihnen eine einfache Methode, um auf Systemressourcen wie bspw. den Bildschirm, den Drucker, das Diskettenlaufwerk oder die Soundkarte zuzugreifen, ohne dass Sie wissen m&uuml;ssen, wie dieses Ger&auml;t eigentlich funktioniert.</p>
+<p>Auf Linux-UNIX-Systemen finden Sie die Ger&auml;tedateien fast immer im Verzeichnis /dev. Hier finden Sie zu jedem Ger&auml;t einen entsprechenden Eintrag. /dev/ttyS0 steht bspw. f&uuml;r die erste serielle Schnittstelle, /dev/hda1 ist die erste Partition der ersten IDE-Festplatte. Neben echten Ger&auml;ten in der Ger&auml;tedatei gibt es auch so genannte Pseudo-Ger&auml;tedateien im /dev-Verzeichnis, wie beispielsweise den bekanntesten Vertreter /dev/null, das h&auml;ufig als Datengrab verwendet wird (dazu sp&auml;ter mehr).</p>
+<p>Beim Verwenden von Ger&auml;tedateinamen in Ihren Shellscripts sollten Sie allerdings Vorsicht walten lassen und wenn m&ouml;glich diese Eingabe dem Anwender &uuml;berlassen (etwa mit einer Konfigurationsdatei). Der Grund ist hierbei, dass viele Linux-UNIX-Systeme unterschiedliche Ger&auml;tenamen verwenden.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nat&uuml;rlich lie&szlig;e sich hierzu noch viel mehr schreiben – daher sei bei Bedarf mein Buch »Linux-Unix-Programmierung« empfohlen, das Sie auch online auf der Webseite <a href="http://www.pronix.de/" target="_blank">www.pronix.de</a> vorfinden. Hier werden die Ger&auml;tedateien in einem extra Kapitel etwas umfangreicher behandelt.</p>
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">1.7.6 Dateiattribute<a id="RxxKap00300604004D6F1F04D1DE" name="RxxKap00300604004D6F1F04D1DE"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999481" name="Xxx999481"></a><a id="Xxx999482" name="Xxx999482"></a>Nachdem Sie jetzt wissen, dass Linux/UNIX zwischen mehreren Dateiarten, insgesamt sechs, unterscheidet – nicht erw&auml;hnt wurden hierbei die Sockets, Pipes (named Pipes und FIFOs) und die Links (Softlinks bzw. Hardlinks) –, sollten Sie sich auf jeden Fall noch mit den Dateiattributen auseinander setzen. Gerade als angehender oder bereits leibhaftiger Administrator hat man h&auml;ufig mit unautorisierten Zugriffen auf bestimmte Dateien, Verzeichnisse oder Ger&auml;tedateien zu tun. Auch in Ihren Shellscripts werden Sie das eine oder andere Mal die Dateiattribute auswerten m&uuml;ssen und entsprechend darauf reagieren wollen.</p>
+<p>Am einfachsten erhalten Sie solche Informationen mit dem Befehl <span class="listing">ls</span> und der Option <span class="listing">–l</span> (f&uuml;r long). So gelangen Sie an eine recht &uuml;ppige Zahl von Informationen zu den einzelnen Dateien und Verzeichnissen.</p>
+<pre>you@host &gt; ls -l
+-rw-r--r--  1 you users 9689 2003–12–04 15:53 datei.dat</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Beachten Sie, dass die Ausgabe unter verschiedenen Betriebssystemen abweichen kann.</p>
+</td>
+</tr>
+</table><br>
+<p>Hier nun zu den einzelnen Bedeutungen der Ausgabe von <span class="listing">ls</span> <span class="listing">–l</span>, aufgelistet von links nach rechts.</p>
+<h4 class="t4">Dateiart (Dateityp)</h4>
+<p><a id="Xxx999492" name="Xxx999492"></a><a id="Xxx999493" name="Xxx999493"></a><a id="Xxx999494" name="Xxx999494"></a>Ganz links, beim ersten Zeichen (hier befindet sich ein Minuszeichen <span class="listing">–</span>) wird die Dateiart angegeben. Folgende Angaben k&ouml;nnen sich hier befinden (siehe Tabelle 1.2).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 1.2   
+    </b>M&ouml;gliche Angaben f&uuml;r die Dateiart (Dateityp)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Zeichen</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung (Dateiart)</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–
+</td>
+<td class="tabellentext" bgcolor="#000000">Normale Datei
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">d
+</td>
+<td class="tabellentext" bgcolor="#000000">Verzeichnis (d = directory)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">p
+</td>
+<td class="tabellentext" bgcolor="#000000">Named Pipe; steht f&uuml;r eine Art Pufferungsdatei, eine Pipe-Datei.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">c
+</td>
+<td class="tabellentext" bgcolor="#000000">(c = character oriented) steht f&uuml;r eine zeichenorientierte Ger&auml;tedatei.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">b
+</td>
+<td class="tabellentext" bgcolor="#000000">(b = block oriented) steht f&uuml;r eine blockorientierte Ger&auml;tedatei.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">s
+</td>
+<td class="tabellentext" bgcolor="#000000">(s = socket) steht f&uuml;r ein Socket (genauer einen UNIX-Domainsocket).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">l
+</td>
+<td class="tabellentext" bgcolor="#000000">Symbolische Links
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Zugriffsrechte</h4>
+<p><a id="Xxx999538" name="Xxx999538"></a><a id="Xxx999539" name="Xxx999539"></a><a id="Xxx999540" name="Xxx999540"></a>Die n&auml;chsten neun Zeichen, die Zugriffsrechte, sind in drei Dreiergruppen (<span class="listing">rwx</span>) aufgeteilt, von links nach rechts: Eigent&uuml;mer, Gruppe und allen anderen. In Tabelle 1.3 finden Sie die einzelnen Bedeutungen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 1.3   
+    </b>Zugriffsrechte des Eigent&uuml;mers, der Gruppe und aller anderen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Darstellung in ls</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[r––––––––]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">read (user; Leserecht f&uuml;r Eigent&uuml;mer)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[–w–––––––]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">write (user; Schreibrecht f&uuml;r Eigent&uuml;mer)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[––x––––––]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">execute (user; Ausf&uuml;hrrecht f&uuml;r Eigent&uuml;mer)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[rwx––––––]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">read, write, execute (user; Lese-, Schreib-, Ausf&uuml;hrungsrecht f&uuml;r Eigent&uuml;mer)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[–––r–––––]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">read (group; Leserecht f&uuml;r Gruppe)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[––––w––––]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">write (group; Schreibrecht f&uuml;r Gruppe)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[–––––x–––]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">execute (group; Ausf&uuml;hrungsrecht f&uuml;r Gruppe)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[–––rwx–––]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">read, write, execute (group; Lese-, Schreib-, Ausf&uuml;hrungsrecht f&uuml;r Gruppe)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[––––––r––]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">read (other; Leserecht f&uuml;r alle anderen Benutzer)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[–––––––w–]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">write (other; Schreibrecht f&uuml;r alle anderen Benutzer)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[––––––––x]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">execute (other; Ausf&uuml;hrungsrecht f&uuml;r alle anderen Benutzer)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p>[––––––rwx]</p>
+</td>
+<td class="tabellentext" bgcolor="#000000">read, write, execute (other; Lese-, Schreib-, Ausf&uuml;hrungsrecht f&uuml;r alle anderen Benutzer)
+</td>
+</tr>
+</table><br>
+<p>Sind bspw. die Rechte <span class="listing">rw–r––r––</span> f&uuml;r eine Datei gesetzt, so bedeutet dies, dass der Eigent&uuml;mer (<span class="listing">rw–</span>) der Datei diese sowohl lesen (<span class="listing">r</span>) als auch beschreiben (<span class="listing">w</span>) darf, nicht aber ausf&uuml;hren (hierzu fehlt ein <span class="listing">x</span>). Die Mitglieder in der Gruppe (<span class="listing">r––</span>) und alle anderen (<span class="listing">r––</span>) hingegen d&uuml;rfen diese Datei nur lesen.</p>
+<h4 class="t4">Der Rest</h4>
+<p>Als N&auml;chstes finden Sie die Verweise auf die Datei. Damit ist die Anzahl der Links (Referenzen) gemeint, die f&uuml;r diese Datei existieren. In diesem Fall gibt es keine Verweise auf die Datei, da hier die »1« steht. Jetzt kommt der Benutzername des Dateibesitzers (hier »you«), gefolgt vom Namen der Gruppe (hier »users«), welcher vom Eigent&uuml;mer der Datei festgelegt wird. Die n&auml;chsten Werte entsprechen der L&auml;nge der Datei in Bytes (hier 9689 Bytes) und dem Datum der letzten &Auml;nderung der Datei mitsamt Uhrzeit (2003–12–04 15:53). Am Ende finden Sie den Namen der Datei wieder (hier datei.dat).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Trotz dieser kleinen Einf&uuml;hrung konnten viele grundlegende Dinge von Linux/UNIX nicht behandelt werden. Sollten Sie mit diesem Buch tats&auml;chlich Ihre ersten Erfahrungen mit Linux/UNIX sammeln, so w&auml;re die Hinzuziehung zus&auml;tzlicher Literatur sinnvoll.</p>
+</td>
+</tr>
+</table><br>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_003_005.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_003_007.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_003_006.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:06 GMT -->
+</html>

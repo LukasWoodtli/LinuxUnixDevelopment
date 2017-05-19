@@ -1,0 +1,880 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_016_011.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 14.12 Netzwerkbefehle</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_016_010.html">
+<link rel="next" href="shell_016_012.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_016_010.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_016_012.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_016_000.html#RxxKap016000040050021F03F172">14 Linux-UNIX-Kommandoreferenz</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_000.html#RxxKap016000040050021F03F177">14.1 Kurz&uuml;bersicht</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_001.html#RxxKap016001040050191F018172">14.2 Dateiorientierte Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_002.html#RxxKap0160020400501A1F021172">14.3 Verzeichnisorientierte Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_003.html#RxxKap0160030400501B1F013172">14.4 Verwaltung von Benutzern und Gruppe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_004.html#RxxKap0160040400501C1F015172">14.5 Programm- und Prozessverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_005.html#RxxKap0160050400501D1F010172">14.6 Speicherplatzinformationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_006.html#RxxKap0160060400501E1F010172">14.7 Dateisystem-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_007.html#RxxKap0160070400501F1F042172">14.8 Archivierung und Backup</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_008.html#RxxKap016008040050201F030172">14.9 Systeminformationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_009.html#RxxKap016009040050211F012172">14.10 System-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_010.html#RxxKap016010040050221F013172">14.11 Druckeradministration</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap016011040050231F030172">14.12 Netzwerkbefehle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_012.html#RxxKap016012040050241F03D172">14.13 Benutzerkommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_013.html#RxxKap016013040050251F046172">14.14 Bildschirm- und Terminalkommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_014.html#RxxKap016014040050261F04E172">14.15 Online-Hilfen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_015.html#RxxKap016015040050271F037172">14.16 Alles rund um PostScript-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_016.html#RxxKap016016040050281F03E172">14.17 Gemischte Kommandos</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">14.12 <a id="RxxKap014696Netzwerkbefehle" name="RxxKap014696Netzwerkbefehle"></a>Netzwerkbefehl<a id="RxxKap016011040050231F030172" name="RxxKap016011040050231F030172"></a>e 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p>Netzwerkbefehle erfordern ein tieferes Verst&auml;ndnis. Wenn Sie als Administrator mit Begriffen wie IP-Adresse, MAC-Adresse, DNS, FTP, SSH usw. nichts anfangen k&ouml;nnen, w&auml;re eine fortf&uuml;hrende Lekt&uuml;re mehr als vonn&ouml;ten. Leider kann ich aufgrund des eingeschr&auml;nkten Umfangs nicht auf die Fachbegriffe der Netzwerktechnik eingehen. Nebenbei erw&auml;hnt, sind diese Themen zum Teil schon ein ganzes Buch wert, weshalb die Beschreibung hier wohl f&uuml;r die meisten eher entt&auml;uschend ausfallen d&uuml;rfte.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">arp – Ausgeben von MAC-Adressen<a id="RxxKap016011040050231F030174" name="RxxKap016011040050231F030174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999279" name="Xxx999279"></a><a id="Xxx999280" name="Xxx999280"></a>Wenn Sie die Tabelle mit den MAC-Adressen der kontaktierten Rechner ben&ouml;tigen, k&ouml;nnen Sie das Kommandos <span class="listing">arp</span> verwenden. Ein Beispiel:</p>
+<pre>you@host &gt; arp -a
+...
+juergen.penguin (192.168.0.xxx) at 00:30:84:7a:9e:0e on rl0 
+permanent [ethernet]
+...</pre>
+<p>Die MAC-Adresse ist hierbei die sechsstellige Hexadezimalzahl »00:30:84:7a:9e:0e«. Ben&ouml;tigen Sie hingegen die MAC-Nummer Ihrer eigenen Netzwerkkarte, so k&ouml;nnen Sie diese mit <span class="listing">ifconfig</span> ermitteln:</p>
+<pre># ifconfig -a
+eth0      Protokoll:Ethernet  Hardware Adresse 00:00:39:2D:01:A1
+...</pre>
+<p>In der Zeile »eth0« (unter Linux) finden Sie hierbei die entsprechende MAC-Adresse unter »Hardware Adresse«. Hier sind wieder systemspezifische Kenntnisse von Vorteil.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">ftp – Dateien zu einem anderen Rechner &uuml;bertragen<a id="RxxKap016011040050231F03017A" name="RxxKap016011040050231F03017A"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999287" name="Xxx999287"></a><a id="Xxx999288" name="Xxx999288"></a>Mit Hilfe von <span class="listing">ftp</span> (File Transfer Protocol) k&ouml;nnen Sie Dateien innerhalb eines Netzwerks (bspw. Internet) zwischen verschiedenen Rechnern transportieren. Da <span class="listing">ftp</span> &uuml;ber eine Menge Features und Funktionen verf&uuml;gt, soll hier nur auf den Hausgebrauch eingegangen werden, und zwar wie man Daten von einem entfernten Rechner abholt und hinbringt.</p>
+<p>Zun&auml;chst m&uuml;ssen Sie sich auf dem Server einloggen. Dies geschieht &uuml;blicherweise mit</p>
+<pre>ftp Server_Name</pre>
+<p>In meinem Beispiel lautet der Servername (und auch mein Webhoster) myhoster.de:</p>
+<pre>you@host &gt; ftp myhoster.de
+Connected to myhoster.de (194.150.178.34).
+220 194.150.178.34 FTP server ready
+Name (myhoster.de:you): us10129
+331 Password required for us10129.
+Password:********
+230 User us10129 logged in.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp&gt;</pre>
+<p>Nachdem <span class="listing">ftp</span> eine Verbindung mit dem Server aufgenommen hat, werden Sie aufgefordert, Ihren Benutzernamen (hier »us10129«) und anschlie&szlig;end das Passwort einzugeben. Wenn alles korrekt war, befindet sich vor dem Prompt <span class="listing">ftp&gt;</span> und wartet auf weitere Anweisungen. Jetzt k&ouml;nnen Sie im Eingabeprompt Folgendes machen:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Gew&uuml;nschtes Verzeichnis durchsuchen: <span class="listing">cd</span>, <span class="listing">dir</span>, <span class="listing">lcd</span> (lokales Verzeichnis)</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> FTP-Parameter einstellen: <span class="listing">type</span> <span class="listing">binary</span>, <span class="listing">hash</span>, <span class="listing">prompt</span></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Datei(en) abholen: <span class="listing">get</span>, <span class="listing">mget</span></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Datei(en) hinbringen: <span class="listing">put</span>, <span class="listing">mput</span></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Abmelden: <span class="listing">bye</span> oder <span class="listing">exit</span></td>
+</tr>
+</table>
+<p>Nat&uuml;rlich bietet <span class="listing">ftp</span> weitaus mehr Befehle als diese an, aber alles andere w&uuml;rde hier &uuml;ber den Rahmen des Buchs hinausgehen.</p>
+<p>Zun&auml;chst werden Sie sich wohl das Inhaltverzeichnis ansehen wollen. Hierzu k&ouml;nnen Sie den Befehl <span class="listing">dir</span> (welcher auf *nix Systemen meistens dem Aufruf von <span class="listing">ls</span> <span class="listing">–l</span> entspricht) zum Auflisten verwenden:</p>
+<pre>ftp&gt; dir
+200 PORT command successful
+150 Opening ASCII mode data connection for file list
+drwxrwx--x   9       4096 Apr  8 20:31 .
+drwxrwx--x   9       4096 Apr  8 20:31 ..
+-rw-------   1      26680 Apr 26 09:00 .bash_history
+...
+lrwxrwxrwx   1     18 Aug 10  2004 logs -&gt; /home/logs/us10129
+drwxrwxr-x   2   4096 Mar 28 16:03 mysqldump
+drwxr-xr-x  20   4096 Apr  3 08:13 www.pronix.de
+226 Transfer complete.</pre>
+<p>Wollen Sie nun in ein Verzeichnis wechseln, k&ouml;nnen Sie auch hier das schon bekannte Kommando <span class="listing">cd</span> verwenden. Ebenso sieht es aus, wenn Sie das aktuelle Arbeitsverzeichnis wissen wollen, in dem Sie sich gerade befinden. Hier leistet das bekannte <span class="listing">pwd</span> seine Dienste.</p>
+<p>Das aktuelle Verzeichnis auf dem lokalen Rechner k&ouml;nnen Sie mit dem Kommando <span class="listing">lcd</span> wechseln. Sie k&ouml;nnen &uuml;brigens auch die Befehle auf Ihrem lokalen Rechner verwenden, wenn Sie ein <span class="listing">!</span>-Zeichen davor setzen. Hierzu ein Beispiel, welches die Befehle nochmals demonstriert.</p>
+<pre>ftp&gt; pwd
+257 "/" is current directory.
+ftp&gt; cd backups/Shellbuch
+250 CWD command successful
+ftp&gt; pwd
+257 "/backups/Shellbuch" is current directory.
+ftp&gt; dir
+200 PORT command successful
+150 Opening ASCII mode data connection for file list
+drwxrwxr-x   2 us10129  us10129      4096 Apr 26 09:07 .
+drwx------   3 us10129  us10129      4096 Jan 15 14:15 ..
+...
+-rw-r--r--   1 us10129  us10129    126445 Mar 13 11:40 kap005.txt
+-rw-------   1 us10129  us10129      3231 Apr 20 05:26 whoami.txt
+226 Transfer complete.
+ftp&gt;</pre>
+<p>Hier befinde ich mich auf dem Rechner myhoster.de in meinem Heimverzeichnis in ~/backups/Shellbuch. Ich m&ouml;chte mir jetzt die Datei whoami.txt auf meinen lokalen Rechner kopieren. Ich hole sie mit dem Kommando <span class="listing">get</span>. Zuvor will ich aber noch auf meinem lokalen Rechner in ein Verzeichnis namens mydir wechseln.</p>
+<pre>ftp&gt; lcd mydir
+Local directory now /home/you/mydir
+ftp&gt; !pwd
+/home/you/mydir
+ftp&gt; !ls
+file1.txt  file2.txt  file3.txt  files.zip  hallo.c
+ftp&gt; get whoami.txt
+local: whoami.txt remote: whoami.txt
+200 PORT command successful
+150 Opening BINARY mode data connection whoami.txt (3231 bytes)
+226 Transfer complete.
+3231 bytes received in 0.0608 secs (52 Kbytes/sec)
+ftp&gt; !ls
+file1.txt  file2.txt  file3.txt  files.zip  hallo.c  whoami.txt
+ftp&gt;</pre>
+<p>Und schon habe ich die Datei whoami.txt auf meinem lokalen Rechner ins Verzeichnis mydir kopiert. Wollen Sie mehrere Dateien oder gar ganze Verzeichnisse holen, m&uuml;ssen Sie <span class="listing">mget</span> verwenden. Hierbei stehen Ihnen auch die Wildcard-Zeichen * und ? zur Verf&uuml;gung. Da <span class="listing">mget</span> Sie nicht jedes Mal bei mehreren Dateien fragt, ob Sie diese wirklich holen wollen, k&ouml;nnen Sie den interaktiven Modus mit <span class="listing">prompt</span> abstellen.</p>
+<p>Haben Sie jetzt die Datei whoami.txt bearbeitet und wollen diese wieder hochladen, verwenden Sie <span class="listing">put</span> (oder bei mehreren Dateien <span class="listing">mput</span>).</p>
+<pre>ftp&gt; put whoami.txt
+local: whoami.txt remote: whoami.txt
+200 PORT command successful
+150 Opening BINARY mode data connection for whoami.txt
+226 Transfer complete.
+3231 bytes sent in 0.000106 secs (3e+04 Kbytes/sec)
+ftp&gt;</pre>
+<p>Sie sehen au&szlig;erdem, dass hierbei die Daten&uuml;bertragung bin&auml;r (BINARY) stattgefunden hat. Wollen Sie hier auf ASCII umstellen, m&uuml;ssen Sie nur <span class="listing">type</span> verwenden:</p>
+<pre>ftp&gt; type ascii
+200 Type set to A
+ftp&gt; put whoami.txt
+local: whoami.txt remote: whoami.txt
+200 PORT command successful
+150 Opening ASCII mode data connection for whoami.txt
+226 Transfer complete.
+3238 bytes sent in 0.000487 secs (6.5e+03 Kbytes/sec)
+ftp&gt;</pre>
+<p>Zur&uuml;cksetzen k&ouml;nnen Sie das wieder mit <span class="listing">type</span> <span class="listing">binary</span>. Und wie schon erw&auml;hnt, beim &Uuml;bertragen mehrerer Dateien mit <span class="listing">mget</span> und <span class="listing">mput</span> werden Sie immer gefragt, ob Sie die Datei transferieren wollen. Diese Abfrage k&ouml;nnen Sie mit <span class="listing">prompt</span> abstellen. Je nachdem, ob Sie eine Fortschrittsanzeige w&uuml;nschen, k&ouml;nnen Sie dies mit einem Aufruf von <span class="listing">hash</span> ab- oder anschalten. Gerade bei umfangreicheren Dateien ist dies sinnvoll. Dabei wird w&auml;hrend der &Uuml;bertragung alle 1024 Zeichen ein »<span class="listing">#</span>« ausgegeben.</p>
+<p>Den Script-Betrieb k&ouml;nnen Sie verwenden, wenn sich eine Datei namens .netrc im Heimverzeichnis des FTP-Servers befindet. Dabei k&ouml;nnen Sie sich z. B. beim Einloggen die Abfrage von Usernamen und Passwort ersparen. Nat&uuml;rlich kann man solch eine Datei auch im heimischen Heimverzeichnis anlegen. Allerdings darf diese Datei nur vom Eigent&uuml;mer gelesen werden, also »<span class="listing">chmod</span> <span class="listing">0600</span>« f&uuml;r ~/.netrc.</p>
+<p>So sieht zum Beispiel der Vorgang, die Datei whoami.txt wie eben demonstriert vom Server zu holen, mit .netrc folgenderma&szlig;en aus:</p>
+<pre>machine myhoster.de
+login us10129
+password asdf1234
+macdef init
+cd $HOME/backups/Shellbuch
+get whoami.txt
+bye</pre>
+<p>Rufen Sie jetzt noch ftp wie folgt auf:</p>
+<pre>you@host &gt; ftp myhoster.de
+Connected to myhoster.de (194.150.178.34).
+220 194.150.178.34 FTP server ready
+331 Password required for us10129.
+230 User us10129 logged in.
+cd $HOME/backups/Shellbuch
+550 $HOME/backups/Shellbuch: No such file or directory
+get whoami.txt
+local: whoami.txt remote: whoami.txt
+200 PORT command successful
+550 whoami.txt: No such file or directory
+Remote system type is UNIX.
+Using binary mode to transfer files.
+bye
+221 Goodbye.</pre>
+<p>Und alles geschieht vollautomatisch. Ebenso sieht dies mit dem Hochladen von whoami.txt aus. Wenn die Datei editiert wurde, k&ouml;nnen Sie diese wieder wie folgt im Script-Modus hochladen. Hier die Datei .netrc:</p>
+<pre>machine myhoster.de
+login us10129
+password asdf1234
+macdef init
+lcd mydir
+cd $HOME/backups/Shellbuch
+put whoami.txt
+bye</pre>
+<p>Jetzt nur noch ftp aufrufen:</p>
+<pre>you@host &gt; ftp myhoster.de
+Connected to myhoster.de (194.150.178.34).
+220 194.150.178.34 FTP server ready
+331 Password required for us10129.
+230 User us10129 logged in.
+lcd mydir
+Local directory now /home/tot/mydir
+cd $HOME/backups/Shellbuch
+550 $HOME/backups/Shellbuch: No such file or directory
+put whoami.txt
+local: whoami.txt remote: whoami.txt
+200 PORT command successful
+150 Opening ASCII mode data connection for whoami.txt
+226 Transfer complete.
+3238 bytes sent in 0.000557 secs (5.7e+03 Kbytes/sec)
+bye
+221 Goodbye.</pre>
+<p>Noch mehr Hinweise f&uuml;r den Script-Modus und die Datei netrc entnehmen Sie bitte aus man-Seite von netrc (man netrc).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bitte bedenken Sie, dass <span class="listing">ftp</span> nicht ganz sicher ist, da Sie bei der Authentifizierung das Passwort unverschl&uuml;sselt &uuml;bertragen.</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">hostname – Rechnername ermitteln<a id="RxxKap016011040050231F0301A0" name="RxxKap016011040050231F0301A0"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999329" name="Xxx999329"></a><a id="Xxx999330" name="Xxx999330"></a>Das Kommando <span class="listing">hostname</span> k&ouml;nnen Sie verwenden, um den Namen des lokalen Rechners anzuzeigen bzw. zu setzen oder zu ver&auml;ndern. So ein Name hat eigentlich erst im Netzwerkbetrieb seine echte Bedeutung. Im Netz besteht ein vollst&auml;ndiger Rechnername (Fully Qualified Domain Name) aus einem Eigennamen und einem Domainnamen. Der (DNS-)Domainname bezeichnet das lokale Netz, an dem der Rechner h&auml;ngt.</p>
+<pre>you@host &gt; hostname
+goliath.myhoster.de
+you@host &gt; hostname -s
+goliath
+you@host &gt; hostname -d
+myhoster.de</pre>
+<p>Ohne Angabe einer Option wird der vollst&auml;ndige Rechnername ausgegeben. Mit der Option <span class="listing">–s</span> geben Sie nur den Eigennamen des Rechners aus und mit <span class="listing">–d</span> nur den (DNS-)Domainnamen des lokalen Netzes.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">ifconfig – Netzwerkzugang konfigurieren<a id="RxxKap016011040050231F0301A4" name="RxxKap016011040050231F0301A4"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999335" name="Xxx999335"></a><a id="Xxx999336" name="Xxx999336"></a>Mit dem Kommando <span class="listing">ifconfig</span> kann man die Einstellungen einer Netzwerk-Schnittstelle abfragen oder setzen. Alle Einstellungen k&ouml;nnen Sie sich mit der Option <span class="listing">–a</span> anzeigen lassen. Die Syntax zu <span class="listing">ifconfig</span>:</p>
+<pre>ifconfig schnittstelle [addresse [parameter]]</pre>
+<p>Dabei geben Sie den Namen der zu konfigurierenden Schnittstelle an. Befindet sich bspw. auf Ihrem Rechner eine Netzwerkkarte, so lautet unter Linux die Schnittstelle hierzu »eth0«, die zweite Netzwerkkarte im Rechner (sofern eine vorhanden ist) wird mit »eth1« angesprochen. Auf anderen Systemen lautet der Name der Schnittstelle zur Netzwerkkarte wiederum anders. Daher sollte man ja auch <span class="listing">ifconfig</span> mit der Option <span class="listing">–a</span> aufrufen, um mehr in Erfahrung dar&uuml;ber zu bringen. Die »adresse« ist die IP-Adresse, die der Schnittstelle zugewiesen werden soll. Hierbei kann man die Dezimalnotation (xxx.xxx.xxx.xxx) verwenden oder einen Namen, den <span class="listing">ifconfig</span> in /etc/host nachschl&auml;gt.</p>
+<p>Verwenden Sie <span class="listing">ifconfig</span> ohne die Option <span class="listing">–a</span>, um sich einen &Uuml;berblick zu verschaffen, dann werden die inaktiven Schnittstellen nicht mit angezeigt.</p>
+<p>Der Aufruf f&uuml;r die Schnittstelle zu Ethernetkarte »eth0« sieht beispielsweise wie folgt aus (Debian Sarge):</p>
+<pre># ifconfig
+eth0
+   Link encap:Ethernet  HWaddr 00:02:2A:D4:2C:EB
+   inet addr:192.168.1.1  Bcast:192.168.1.255  Mask:255.255.255.0
+   UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+   RX packets:80 errors:0 dropped:0 overruns:0 frame:0
+   TX packets:59 errors:0 dropped:0 overruns:0 carrier:0
+   collisions:0 txqueuelen:100
+   RX bytes:8656 (8.4 KiB)  TX bytes:8409 (8.2 KiB)
+   Interrupt:11 Base address:0xa000
+lo
+   Link encap:Local Loopback
+   inet addr:127.0.0.1  Mask:255.0.0.0
+   UP LOOPBACK RUNNING  MTU:16436  Metric:1
+   RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+   TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+   collisions:0 txqueuelen:0
+   RX bytes:560 (560.0 b)  TX bytes:560 (560.0 b)</pre>
+<p>Wenn IPv6 konfiguriert ist, kommt noch die IPv6-Adresse dazu.</p>
+<p>Aus der Ausgabe kann man entnehmen, dass auf dieser Netzwerkkarte 59 Pakete gesendet (TX) und 80 empfangen (RX) wurden. Die maximale Gr&ouml;&szlig;e einzelner Pakete betr&auml;gt 1500 bytes (MTU). Die MAC-Adresse (Hardware-Adresse), welche unsere Netzwerkkarte eindeutig identifiziert (au&szlig;er diese wird manipuliert) lautet »00:02:2A:D4:2C:EB«.</p>
+<p>Wollen Sie eine Schnittstelle ein- bzw. ausschalten, k&ouml;nnen Sie dies mit den zus&auml;tzlichen Parametern <span class="listing">up</span> (f&uuml;r Einschalten) und <span class="listing">down</span> (f&uuml;r Abschalten) vornehmen. Als Beispiel wieder die Netzwerkkarte mit dem Namen »eth0« als Schnittstelle:</p>
+<pre>ifconfig eth0 down</pre>
+<p>Hier haben Sie die Netzwerkkarte »eth0« abgeschaltet. Einschalten k&ouml;nnen Sie diese folgenderma&szlig;en:</p>
+<pre>ifconfig eth0 up</pre>
+<p>Eine IP-Adresse stellen Sie ein oder ver&auml;ndern Sie ebenfalls mit <span class="listing">ifconfig</span>:</p>
+<pre>ifconfig eth0 192.18.19.91</pre>
+<p>Wollen Sie bei der Schnittstelle die Netzmaske und Broadcast ver&auml;ndern, so ist dies mit <span class="listing">ifconfig</span> wenig Arbeit (unterlassen Sie es, wenn Sie nicht genau wissen, was die Netzmaske und Broadcast ist):</p>
+<pre>ifconfig eth0 10.25.38.41 netmask \
+  255.255.255.0 broadcast 10.25.38.255</pre>
+<p>Damit weisen Sie der Netzwerkkarte die IP-Adresse 10.25.38.41 aus dem Netz 10.25.38.xxx zu. Mit »netmask« geben Sie an, wie gro&szlig; das Netz ist (hier ein Netzwerk der Klasse C).</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">mail/mailx – E-Mails schreiben und empfangen (und auswerten)<a id="RxxKap016011040050231F0301B6" name="RxxKap016011040050231F0301B6"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999355" name="Xxx999355"></a><a id="Xxx999356" name="Xxx999356"></a><a id="Xxx999357" name="Xxx999357"></a><a id="Xxx999358" name="Xxx999358"></a>Mit dem Kommando <span class="listing">mail</span> k&ouml;nnen Sie aus einem Shellscript heraus E-Mails versenden. Mithilfe der Option <span class="listing">–s</span> k&ouml;nnen Sie eine einfache Textmail mit Betreff (<span class="listing">–s</span> = Subject) an eine Adresse schicken, beispielsweise:</p>
+<pre>you@host &gt; echo "Hallo" | mail -s "Betreff" pronix@t-online.de</pre>
+<p>Da nicht alle <span class="listing">mail</span>-Kommandos die Option <span class="listing">–s</span> f&uuml;r einen Betreff haben, k&ouml;nnen Sie gegebenenfalls auch auf <span class="listing">mailx</span> oder <span class="listing">Mail</span> (mit gro&szlig;en »M« ) zur&uuml;ckgreifen, die auf einigen Systemen vorhanden sind. Mit <span class="listing">cat</span> k&ouml;nnen Sie nat&uuml;rlich auch den Inhalt einer ganzen Datei an die Mailadresse senden:</p>
+<pre>you@host &gt; cat whoami.txt | mail -s "Ein Textdatei" \
+&gt; pronix@t-online.de</pre>
+<p>Dabei kann man allerlei Ausgaben eines Kommandos per <span class="listing">mail</span> an eine Adresse versenden:</p>
+<pre>you@host &gt; ps -ef | mail -s "Prozesse 12Uhr" pronix@t-online.de</pre>
+<p>Sinnvoll kann dies z. B. sein, wenn auf einem System ein bestimmtes Limit &uuml;berschritten wurde. Dann k&ouml;nnen Sie sich (oder einem anderen Benutzer) eine Nachricht zukommen lassen. Ebenso kann &uuml;berpr&uuml;ft werden, ob ein Server dauerhaft verf&uuml;gbar ist. Testen Sie etwa st&uuml;ndlich (bspw. mit <span class="listing">cron</span>) mittels <span class="listing">nmap</span> <span class="listing">(</span>hier kann man nicht nur nachsehen, ob die Netzwerkkarte das UDP-Paket zur&uuml;ckschickt, sondern kann direkt nachschauen, ob der Port des betreffenden Dienstes noch offen ist), ob der Server erreichbar ist, und ist er es einmal nicht, k&ouml;nnen Sie sich hierbei eine Nachricht zukommen lassen.</p>
+<p>Zus&auml;tzliche Optionen, die Sie mit <span class="listing">mail</span> bzw. <span class="listing">mailx</span> verwenden k&ouml;nnen, sind:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.27   
+    </b>Optionen f&uuml;r das Kommando mail/mailx</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–s Betreff
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier k&ouml;nnen Sie den Betreff (Subject) der E-Mail angeben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–c adresse
+</td>
+<td class="tabellentext" bgcolor="#000000">Diese Adresse bekommt eine Kopie der Mail.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–b adresse
+</td>
+<td class="tabellentext" bgcolor="#000000">Diese Adresse bekommt eine blind carbon copy der Mail.
+</td>
+</tr>
+</table><br>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">uuencode/uudecode – Text- bzw. Bin&auml;rdateien codieren<a id="RxxKap016011040050231F0301CA" name="RxxKap016011040050231F0301CA"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999393" name="Xxx999393"></a><a id="Xxx999394" name="Xxx999394"></a><a id="Xxx999395" name="Xxx999395"></a><a id="Xxx999396" name="Xxx999396"></a>Mit den Kommandos <span class="listing">uuencode</span>/<span class="listing">uudecode</span> k&ouml;nnen Sie Textdateien in Bin&auml;rdateien und wieder zur&uuml;ck umwandeln. Solche Umwandlungen werden zum Beispiel beim Datenaustausch &uuml;ber das Internet notwendig, weil sonst hierbei die Sonderzeichen (bspw. Umlaute bzw. alle ASCII-Zeichen &uuml;ber 127) auf manchen Rechnern nicht richtig dargestellt werden k&ouml;nnen. Was bei einer Textdatei nicht so wild ist, weil eben nicht darstellbare Zeichen »verhunzt« werden. Doch bei einer bin&auml;ren Datei bedeutet dies, dass diese schlicht nicht mehr funktioniert. Die meisten modernen E-Mail-Programme unterst&uuml;tzen MIME und erkennen solche codierten Dateien als Anhang automatisch, daher erfolgt hierbei die Umwandlung von selbst, ohne dass Sie als Benutzer etwas davon mitbekommen.</p>
+<p><span class="listing">uuencode</span> macht im Prinzip nichts anderes, als dass es jeweils drei 8-Bit-Zeichen zu vier 6-Bit-Zeichen umwandelt und f&uuml;r jedes Zeichen 32 addiert. Damit werden alle Zeichen in einen Satz von Standardzeichen umgewandelt, die relativ verl&auml;sslich &uuml;bertragen werden.</p>
+<p>Gew&ouml;hnlich werden Sie wohl <span class="listing">uuencode</span> verwenden, um Anh&auml;nge zu Ihren E-Mails mit dem Programm <span class="listing">mail</span>, <span class="listing">Mail</span> oder <span class="listing">mailx</span> hinzuzuf&uuml;gen. Wollen Sie einfach eine Datei namens archiv.tgz per Anhang mit <span class="listing">mail</span> versenden, gehen Sie wie folgt vor:</p>
+<pre>you@host &gt; uuencode archiv.tgz archiv.tgz | \
+&gt; mail -s 'Anhang: archiv.tgz' user@host</pre>
+<p>Das hierbei zweimal archiv.tgz verwendet wurde, ist &uuml;brigens kein Fehler, sondern wird von <span class="listing">uuencode</span> erwartet.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">netstat – Statusinformationen &uuml;ber das Netzwerk<a id="RxxKap016011040050231F0301D0" name="RxxKap016011040050231F0301D0"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999403" name="Xxx999403"></a><a id="Xxx999404" name="Xxx999404"></a>F&uuml;r die Anwendung von <span class="listing">netstat</span> gibt es viele M&ouml;glichkeiten. Mit einem einfachen Aufruf von <span class="listing">netstat</span> zeigen Sie den Zustand einer bestehenden Netzwerkverbindung an. Neben der &Uuml;berpr&uuml;fung von Netzwerkverbindungen k&ouml;nnen Sie mit <span class="listing">netstat</span> Routentabellen, Statistiken zu Schnittstellen, maskierte Verbindungen und noch vieles mehr anzeigen lassen. In der Praxis l&auml;sst sich somit ohne Problem die IP oder der Port eines ICQ-Users (Opfer) ermitteln oder ob ein Rechner mit einen Trojaner infiziert ist. Hier einige Beispiele:</p>
+<pre>you@host &gt; netstat -nr</pre>
+<p>Hiermit lassen Sie die Routingtabelle (<span class="listing">–r</span>) des Kernels ausgeben.</p>
+<pre>you@host &gt; netstat -i</pre>
+<p>Mit der Option <span class="listing">–i</span> erhalten Sie die Schnittstellenstatistik.</p>
+<pre>you@host &gt; netstat -ta</pre>
+<p>Mit <span class="listing">–ta</span> erhalten Sie die Anzeige aller Verbindungen. Die Option <span class="listing">–t</span> steht dabei f&uuml;r TCP. Mit <span class="listing">–u</span>, <span class="listing">–w</span> bzw. <span class="listing">–x</span> zeigen Sie die UDP-, RAW bzw. UNIX-Sockets an. Mit <span class="listing">–a</span> werden dabei auch die Sockets angezeigt, die noch auf eine Verbindung warten.</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">nslookup (host/dig) – DNS-Server abfragen<a id="RxxKap016011040050231F0301D8" name="RxxKap016011040050231F0301D8"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999413" name="Xxx999413"></a><a id="Xxx999414" name="Xxx999414"></a><a id="Xxx999415" name="Xxx999415"></a><a id="Xxx999416" name="Xxx999416"></a><a id="Xxx999417" name="Xxx999417"></a><a id="Xxx999418" name="Xxx999418"></a>Mit <span class="listing">nslookup</span> k&ouml;nnen Sie aus dem Domainnamen eine IP-Adresse bzw. die IP-Adresse zu einem Domainnamen ermitteln. Zur Aufl&ouml;sung des Namens wird gew&ouml;hnlich der DNS-Server verwendet.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bei der Verwendung von <span class="listing">nslookup</span> werden Sie lesen, dass <span class="listing">nslookup</span> k&uuml;nftig von den Kommandos <span class="listing">host</span> oder <span class="listing">dig</span> abgel&ouml;st wird.</p>
+</td>
+</tr>
+</table><br>
+<p>Hier <span class="listing">nslookup</span> und <span class="listing">host</span> bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; nslookup pronix.de
+Server:         217.237.150.141
+Address:        217.237.150.141#53
+Non-authoritative answer:
+Name:   pronix.de
+Address: 194.150.178.34
+you@host &gt; host pronix.de
+pronix.de has address 194.150.178.34
+you@host &gt; host 194.150.178.34
+34.178.150.194.in-addr.arpa domain name pointer goliath.myhoster.de.</pre>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">ping – Verbindung zu anderem Rechner testen<a id="RxxKap016011040050231F0301DE" name="RxxKap016011040050231F0301DE"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999427" name="Xxx999427"></a><a id="Xxx999428" name="Xxx999428"></a>Wollen Sie die Netzwerkverbindung zu einem anderen Rechner testen oder einfach nur den lokalen TCP/IP-Stack &uuml;berpr&uuml;fen, k&ouml;nnen Sie das Kommando <span class="listing">ping</span> (Paket Internet Groper) verwenden.</p>
+<pre>ping host</pre>
+<p><span class="listing">ping</span> &uuml;berpr&uuml;ft dabei, ob »host« (IP-Adresse oder Domainname) antwortet. <span class="listing">ping</span> bietet noch eine Menge Optionen an, die noch mehr Infos liefern, die allerdings hier nicht genauer erl&auml;utert werden. Zur &Uuml;berpr&uuml;fung sendet <span class="listing">ping</span> ein ICMP-Paket vom Type ICMP Echo Request an die Netzwerkstation. Hat die Netzwerkstation das Paket empfangen, sendet es ebenfalls ein ICMP-Paket, allerdings vom Typ ICMP Echo Reply zur&uuml;ck.</p>
+<pre>you@host &gt; ping -c5 www.pronix.de
+PING www.pronix.de (194.150.178.34) 56(84) bytes of data.
+64 bytes from goliath.myhoster.de (194.150.178.34): icmp_seq=1 ttl=56 time=79.0 ms
+64 bytes from goliath.myhoster.de (194.150.178.34): icmp_seq=2 ttl=56 time=76.8 ms
+64 bytes from goliath.myhoster.de (194.150.178.34): icmp_seq=3 ttl=56 time=78.2 ms
+64 bytes from goliath.myhoster.de (194.150.178.34): icmp_seq=4 ttl=56 time=76.8 ms
+64 bytes from goliath.myhoster.de (194.150.178.34): icmp_seq=5 ttl=56 time=79.2 ms
+--- www.pronix.de ping statistics ---
+5 packets transmitted, 5 received, 0  % packet loss, time 4001ms
+rtt min/avg/max/mdev = 76.855/78.058/79.228/1.061 ms</pre>
+<p>Hier wurden z. B. 5 Pakete (mit der Option <span class="listing">–c</span> kann die Anzahl der Pakete angegeben werden) an www.pronix.de gesendet und wieder erfolgreich empfangen, wie aus der Zusammenfassung am Ende zu entnehmen ist. Rufen Sie <span class="listing">ping</span> hingegen ohne eine Option auf</p>
+<pre>ping www.pronix.de</pre>
+<p>so m&uuml;ssen Sie selbst f&uuml;r eine Beendigung des Datenaustausches zwischen den Rechnern sorgen. Ein einfaches <b>(Strg)</b>+<b>(C)</b> tut da seinen Dienst und man erh&auml;lt ebenfalls wieder eine Zusammenfassung. Neben der M&ouml;glichkeit, auf die Verf&uuml;gbarkeit eines Rechners und des lokalen TCP/IP-Stacks zu pr&uuml;fen (<span class="listing">ping</span> <span class="listing">localhost</span>), k&ouml;nnen Sie au&szlig;erdem auch die Laufzeit von Paketen vom Sender zum Empf&auml;nger ermitteln. Hierzu wird die Zeit halbiert, bis das »Reply« eintrifft.</p>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">Die r-Kommandos von Berkeley (rcp, rlogin, rsh, rwho)<a id="RxxKap016011040050231F0301E6" name="RxxKap016011040050231F0301E6"></a> 
+      <a href="#t2t312"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999437" name="Xxx999437"></a><a id="Xxx999438" name="Xxx999438"></a><a id="Xxx999439" name="Xxx999439"></a><a id="Xxx999440" name="Xxx999440"></a><a id="Xxx999441" name="Xxx999441"></a><a id="Xxx999442" name="Xxx999442"></a><a id="Xxx999443" name="Xxx999443"></a><a id="Xxx999444" name="Xxx999444"></a><a id="Xxx999445" name="Xxx999445"></a><a id="Xxx999446" name="Xxx999446"></a>Aus Sicherheitsgr&uuml;nden sei empfohlen, diese Tools nicht mehr einzusetzen und stattdessen auf die mittlerweile sichereren Alternativen <span class="listing">ssh</span> und <span class="listing">scp</span> zu setzen. Es f&auml;ngt schon damit an, dass hier das Passwort beim Einloggen im Klartext, ohne jede Verschl&uuml;sselung &uuml;bertragen wird. Bedenken Sie, dass ein unverschl&uuml;sseltes Passwort, das zwischen zwei Rechnern im Internet &uuml;bertragen wird, jederzeit (bspw. mit einem »Sniffer«) abgefangen und mitgelesen werden kann. F&uuml;r Passw&ouml;rter gilt im Allgemeinen, dass man diese niemals im Netz unverschl&uuml;sselt &uuml;bertragen sollte. Da es mittlerweile zur Passwort&uuml;bertragung mit Secure Shell (<span class="listing">ssh</span>), SecureRPC von SUN und Kerberos vom MIT sehr gute L&ouml;sungen gibt, haben die r-Kommandos eigentlich keine Berechtigung mehr.</p>
+<p>Schlimmer noch, f&uuml;r die Befehle <span class="listing">rsh</span> und <span class="listing">rcp</span> war auf den Zielrechnern nicht einmal ein Passwort n&ouml;tig. Eine Authentifizierung erfolgte hierbei &uuml;ber die Datei /etc/hosts.equiv und ~/.rhosts. Darin wurden einzelne Rechner eingetragen, die als vertrauensw&uuml;rdig empfunden wurden und so die Passwort-Authentifizierung umgehen konnten.</p>
+<a name="t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t312"></a><h3 class="t3">ssh – sichere Shell auf anderem Rechner starten<a id="RxxKap016011040050231F0301E9" name="RxxKap016011040050231F0301E9"></a> 
+      <a href="#t2t313"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t311"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999450" name="Xxx999450"></a><a id="Xxx999451" name="Xxx999451"></a><span class="listing">ssh</span> (Sercure Shell) z&auml;hlt mittlerweile zu einem der wichtigsten Dienste &uuml;berhaupt. Mit diesem Dienst ist es m&ouml;glich, eine verschl&uuml;sselte Verbindung zwischen zwei Rechnern aufzubauen. <span class="listing">ssh</span> wurde aus der Motivation heraus entwickelt, sichere Alternativen zu <span class="listing">telnet</span> und den r-Kommandos von Berkeley zu schaffen.</p>
+<p>Wenn Sie zum ersten Mal eine Verbindung zu einem anderen Rechner herstellen, bekommen Sie gew&ouml;hnlich eine Warnung, in der <span class="listing">ssh</span> nachfragt, ob Sie dem anderen Rechner vertrauen wollen. Wenn Sie mit »yes« antworten, speichert <span class="listing">ssh</span> den Namen und den RSA-Fingerprint (ein Code zur eindeutigen Identifizierung des anderen Rechners) in der Datei ~/.ssh/know_hosts. Beim n&auml;chsten Starten von <span class="listing">ssh</span> erfolgt diese Abfrage dann nicht mehr.</p>
+<p>Im n&auml;chsten Schritt erfolgt die Passwortabfrage, welche verschl&uuml;sselt &uuml;bertragen wird. Bei korrekter Eingabe des Passworts beginnt die Sitzung am anderen Rechner (als w&uuml;rde man diesen Rechner vor sich haben). Die Syntax:</p>
+<pre>ssh -l loginname rechnername</pre>
+<p>In meinem Fall lautet der »loginname« bspw. »us10129« und der »rechnername« (mein Webhoster, auf dem sich pronix.de befindet) myhoster.de. Das Einloggen mit <span class="listing">ssh</span> verl&auml;uft hierbei wie folgt:</p>
+<pre>you@host &gt; hostname
+linux.home
+you@host &gt; ssh -l us10129 myhoster.de
+us10129@myhoster.de's password:********
+Last login:
+Sat Apr 30 12:52:05 2005 from p549b6d72.dip.t-dialin.net
+[us10129@goliath ~]$ hostname
+goliath.myhoster.de
+[us10129@goliath ~]$ exit
+Connection to myhoster.de closed.
+you@host &gt;</pre>
+<p>Oder ein weiteres Beispiel – ein Login zu meinem Fachgutachter auf einer FreeBSD-Jail:</p>
+<pre>you@host &gt; ssh -l juergen123 192.135.147.2
+Password:********
+Last login: Wed Apr 27 15:26:24 2005 from ftpmirror.speed
+Copyright (c) 1980, 1983, 1986, 1988, 1990, 1991, 1993, 1994
+FreeBSD 4.11-RELEASE (SEMA) #5: Mon Jan 31 14:06:17 CET 2005
+juergen@juergen$ hostname
+juergen123.penguin
+juergen123@juergen$</pre>
+<p>Noch ein paar Zeilen f&uuml;r die ganz &Auml;ngstlichen. F&uuml;r jede Verbindung &uuml;ber <span class="listing">ssh</span> wird zwischen den Rechnern immer ein neuer Sitzungsschl&uuml;ssel ausgehandelt. Will man einen solchen Schl&uuml;ssel knacken, ben&ouml;tigt der Angreifer unglaublich viel Zeit. Sobald Sie sich ausloggen, m&uuml;sste der Angreifer erneut versuchen, den Schl&uuml;ssel zu knacken. Dies nat&uuml;rlich nur rein theoretisch, denn hierbei handelt es sich immerhin um Schl&uuml;ssel wie RSA, BLOWFISH, IDEA und TRIPLEDES, zwischen denen man hier w&auml;hlen kann. Alle diese Schl&uuml;ssel gelten als sehr sicher.</p>
+<a name="t312"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t313"></a><h3 class="t3">scp – Dateien kopieren zwischen unterschiedlichen Rechnern<a id="RxxKap016011040050231F0301F3" name="RxxKap016011040050231F0301F3"></a> 
+      <a href="#t2t314"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t312"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999462" name="Xxx999462"></a><a id="Xxx999463" name="Xxx999463"></a>Das Kommando <span class="listing">scp</span> ist Teil einer <span class="listing">ssh</span>-Installation, womit man Dateien sicher zwischen unterschiedlichen Rechnern kopieren kann. <span class="listing">scp</span> funktioniert genauso wie das lokale <span class="listing">cp</span>. Der einzige Unterschied ist nat&uuml;rlich die Angabe der Pfade auf den entfernten Rechnern. Dabei sieht die Verwendung des Rechnernamens wie folgt aus:</p>
+<pre>benutzer@rechner:/verzeichnis/zum/ziel</pre>
+<p>Um auf meinen Account zur&uuml;ckzukommen, mein Benutzername lautet »us10129« und der Rechner myhoster.de:</p>
+<pre>you@host &gt; scp whoami.txt us10129@myhoster.de:~
+us10129@myhoster.de's password:********
+whoami.txt                         100  % 3231     3.2KB/s   00:00
+you@host &gt; scp us10129@myhoster.de:~/grafik/baum.gif $HOME
+us10129@myhoster.de's password:********
+baum.gif                           100  % 8583     8.4KB/s   00:00
+you@host &gt;</pre>
+<p>Zuerst wurde die Datei whoami.txt aus dem aktuellen lokalen Verzeichnis ins Heimverzeichnis von pronix.de kopiert (/home/us10129). Anschlie&szlig;end habe ich mir aus dem Verzeichnis /home/us10129/grafik die GIF-Datei baum.gif auf meinen lokalen Rechner kopiert. <span class="listing">scp</span> ist in der Tat eine interessante L&ouml;sung, um Dateien auf mehreren Rechnern mit einem Script zu kopieren.</p>
+<p>Was allerdings bei der Scriptausf&uuml;hrung st&ouml;ren d&uuml;rfte (besonders wenn es automatisch geschehen sollte), ist die Passwortabfrage (hierbei w&uuml;rde der Prozess angehalten). Hierzu bietet es sich an, sich mithilfe eines asymmetrischen Verschl&uuml;sselungsverfahrens ein Login ohne Passwort zu verschaffen. Dazu stellt man am besten auf dem Clientrechner mit dem Programm <span class="listing">ssh–keygen</span> ein entsprechendes Schl&uuml;sselpaar (hier mit einem RSA-Schl&uuml;ssel) bereit:<a id="Xxx999470" name="Xxx999470"></a><a id="Xxx999471" name="Xxx999471"></a></p>
+<pre>you@host &gt; ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/you/.ssh/id_rsa):(ENTER)
+Enter passphrase (empty for no passphrase):(ENTER)
+Enter same passphrase again:(ENTER)
+Your identification has been saved in /home/you/.ssh/id_rsa.
+Your public key has been saved in /home/you/.ssh/id_rsa.pub.
+The key fingerprint is:
+bb:d9:6b:b6:61:0e:46:e2:6a:8d:75:f5:b3:41:99:f9 you@linux</pre>
+<p>Hier wurden zwei RSA-Schl&uuml;ssel ohne Passphrase erstellt. Jetzt haben Sie zwei Schl&uuml;ssel, eine privaten (id_rsa.) und einen &ouml;ffentlichen (id_rsa.pub). Damit Sie jetzt alle <span class="listing">ssh</span>-Aktionen ohne Passwort durchf&uuml;hren k&ouml;nnen, m&uuml;ssen Sie den &ouml;ffentlichen Schl&uuml;ssel nur noch auf den Benutzeraccount des Servers hochladen.</p>
+<pre>you@host &gt; scp .ssh/id_rsa.pub us10129@myhoster.de:~/.ssh/
+us10129@myhoster.de's password:********
+id_rsa.pub                         100  %  219     0.2KB/s   00:00
+you@host &gt;</pre>
+<p>Jetzt nochmals einloggen und die Datei id_rsa.pub an die Datei ~/.ssh/ authorized_keys h&auml;ngen:</p>
+<pre>you@host &gt; ssh us10129@myhoster.de
+us10129@myhoster.de's password:********
+Last login:
+Sat Apr 30 13:25:22 2005 from p549b6d72.dip.t-dialin.net
+[us10129@goliath ~]$ cd ~/.ssh
+[us10129@goliath .ssh]$ ls
+id_rsa.pub  known_hosts
+[us10129@goliath .ssh]$ cat id_rsa.pub &gt;&gt; authorized_keys</pre>
+<p>Nach erneutem Einloggen &uuml;ber <span class="listing">ssh</span> oder dem Kopieren mit <span class="listing">scp</span> sollte die Passwortabfrage der Vergangenheit angeh&ouml;ren.</p>
+<a name="t313"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t314"></a><h3 class="t3">rsync – Replizieren von Dateien und Verzeichnissen<a id="RxxKap016011040050231F030200" name="RxxKap016011040050231F030200"></a> 
+      <a href="#t2t315"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t313"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999479" name="Xxx999479"></a><a id="Xxx999480" name="Xxx999480"></a><span class="listing">rsync</span> wird verwendet, um Dateien bzw. ganze Verzeichnis(b&auml;ume) zu synchronisieren. Hierbei kann sowohl eine lokale als auch eine entfernte Synchronisation vorgenommen werden. Der Ausdruck »synchronisieren« ist eigentlich rein syntaktisch nicht richtig. Man kann zwar bei einem Verzeichnisbaum »X« Daten hinzuf&uuml;gen, dass dieser exakt denselben Inhalt erh&auml;lt wie der Verzeichnisbaum »Y«. Dies funktioniert allerdings umgekehrt gleichzeitig nicht. Man spricht hierbei vom Replizieren. Wollen Sie echtes bidirektionales Synchronisieren realisieren (bspw. Daten zwischen zwei PCs), m&uuml;ssen Sie auf <span class="listing">unision</span> zur&uuml;ckgreifen.</p>
+<p>Die Syntax zu <span class="listing">rsync</span> lautet:</p>
+<pre>rsync [optionen] ziel quelle</pre>
+<p>Einige Beispiele:</p>
+<pre>rsync -avzb -e ssh pronix.de:/ /home/you/backups/</pre>
+<p>Damit wird meine Webseite im Internet pronix.de mit dem lokalen Verzeichnis /home/you/backups synchronisiert. Mit <span class="listing">a</span> verwenden Sie den archive-Modus, mit <span class="listing">b</span> werden Backups erstellt und mit <span class="listing">v</span> (f&uuml;r verbose) wird <span class="listing">rsync</span> etwas gespr&auml;chiger. Durch die Option <span class="listing">z</span> werden die Daten komprimiert &uuml;bertragen. Au&szlig;erdem wird mit der Option <span class="listing">–e</span> und <span class="listing">ssh</span> eine verschl&uuml;sselte Daten&uuml;bertragung verwendet.</p>
+<p>Geben Sie bei der Quelle als letztes Zeichen einen Slash (<span class="listing">/</span>) an, wird dieses Verzeichnis nicht mitkopiert, sondern nur der darin enthaltene Inhalt, beispielsweise:</p>
+<pre>rsync -av /home/you/Shellbuch/ /home/you/backups</pre>
+<p>Hier wird der Inhalt von /home/you/Shellbuch nach <span class="listing">/</span>home/you/backups kopiert. W&uuml;rden Sie hingegen Folgendes schreiben</p>
+<pre>rsync -av /home/you/Shellbuch /home/you/backups</pre>
+<p>so w&uuml;rde in /home/you/backups das Verzeichnis Shellbuch angelegt (/home/ you/backups/Shellbuch/) und alles dorthin kopiert. Das hat schon vielen einige Nerven gekostet.</p>
+<p>Es folgt nun ein &Uuml;berblick zu einigen Optionen von <span class="listing">rsync</span>.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.28   
+    </b>G&auml;ngige Optionen von rsync</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–a
+</td>
+<td class="tabellentext" bgcolor="#000000">(archive mode): Kopiert alle Unterverzeichnisse, mitsamt Attributen (Symlinks, Rechte, Dateidatum, Gruppe, Devices) und (wenn man root ist) den Eigent&uuml;mer der Datei(en)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–v
+</td>
+<td class="tabellentext" bgcolor="#000000">(verbose): Gibt w&auml;hrend der &Uuml;bertragung eine Liste der &uuml;bertragenen Dateien aus
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–n
+</td>
+<td class="tabellentext" bgcolor="#000000">(dry-run): Nichts schreiben, sondern den Vorgang nur simulieren – ideal zum Testen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–e Programm
+</td>
+<td class="tabellentext" bgcolor="#000000">Wenn in der Quelle oder dem Ziel ein Doppelpunkt enthalten ist, interpretiert rsync den Teil vor dem Doppelpunkt als Hostnamen und kommuniziert &uuml;ber das mit –e spezifizierte Programm. Gew&ouml;hnlich wird hierbei als Programm ssh verwendet. Weitere Parameter k&ouml;nnen Sie diesem Programm in Anf&uuml;hrungszeichen gesetzt &uuml;bergeben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–z
+</td>
+<td class="tabellentext" bgcolor="#000000">Der Parameter –z bewirkt, da&szlig; rsync die Daten komprimiert &uuml;bertr&auml;gt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">––delete ––force
+––delete–excluded
+</td>
+<td class="tabellentext" bgcolor="#000000">Damit werden alle Eintr&auml;ge im Zielverzeichnis gel&ouml;scht, die im Quellverzeichnis nicht (mehr) vorhanden sind.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">––partial
+</td>
+<td class="tabellentext" bgcolor="#000000">Wurde die Verbindung zwischen zwei Rechnern getrennt, wird die nicht vollst&auml;ndig empfangene Datei nicht gel&ouml;scht. So kann bei einem erneuten rsync die Daten&uuml;bertragung fortgesetzt werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">––exclude=Pattern
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier kann man Dateien (mit Pattern) angeben, die man ignorieren m&ouml;chte. Selbstverst&auml;ndlich sind hierbei regul&auml;re Ausdr&uuml;cke m&ouml;glich.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–x
+</td>
+<td class="tabellentext" bgcolor="#000000">Damit werden alle Dateien auf einem Filesystem ausgeschlossen, die in ein Quellverzeichnis hineingemountet sind.
+</td>
+</tr>
+</table><br>
+<p>Noch mehr zu <span class="listing">rsync</span> finden Sie auf der entsprechenden Webseite von <span class="listing">rsync</span> (<a href="http://rsync.samba.org/" target="_blank">http://rsync.samba.org/</a>) oder wie &uuml;blich auf der Manual-Seite.</p>
+<a name="t314"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t315"></a><h3 class="t3">traceroute – Route zu einem Rechner verfolgen<a id="RxxKap016011040050231F030225" name="RxxKap016011040050231F030225"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t314"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999544" name="Xxx999544"></a><a id="Xxx999545" name="Xxx999545"></a><span class="listing">traceroute</span> ist ein TCP/IP-Tool, mit dem Informationen dar&uuml;ber ermittelt werden k&ouml;nnen, welche Computer ein Datenpaket &uuml;ber ein Netzwerk passiert, bis es bei einem bestimmten Host ankommt. Beispielsweise:</p>
+<pre>you@host &gt; traceroute www.microsoft.com
+traceroute to www.microsoft.com.nsatc.net (207.46.199.30), 30 
+hops max, 38 byte packets
+ 1  164–138–193.gateway.dus1.myhoster.de (193.138.164.1)  0.350 ms  0.218 ms  0.198 ms
+ 2  ddf-b1-geth3–2–11.telia.net (213.248.68.129)  0.431 ms  0.185 ms  0.145 ms
+ 3  hbg-bb2-pos1–2–0.telia.net (213.248.65.109)  5.775 ms  5.785 ms  5.786 ms
+ 4  adm-bb2-pos7–0–0.telia.net (213.248.65.161)  11.949 ms  11.879 ms  11.874 ms
+ 5  ldn-bb2-pos7–2–0.telia.net (213.248.65.157)  19.611 ms  19.598 ms  19.585 ms
+...</pre>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_016_010.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_016_012.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_016_011.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

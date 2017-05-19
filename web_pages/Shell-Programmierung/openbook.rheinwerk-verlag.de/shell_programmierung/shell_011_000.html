@@ -1,0 +1,415 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_011_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:04 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 9 N&uuml;tzliche Funktionen</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_010_010.html">
+<link rel="next" href="shell_011_001.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_010_010.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_011_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a class="navh" href="#RxxKap01100004004F2F1F031172">9 N&uuml;tzliche Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01100004004F2F1F031174">9.1 Der Befehl eval</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_011_001.html#RxxKap01100104004F461F01E172">9.2 xargs</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_011_002.html#RxxKap01100204004F471F019172">9.3 dirname und basename</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_011_003.html#RxxKap01100304004F481F028172">9.4 umask</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_011_004.html#RxxKap01100404004F491F04A172">9.5 ulimit (Builtin)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_011_005.html#RxxKap01100504004F4A1F023172">9.6 time</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_011_006.html#RxxKap01100604004F4B1F036172">9.7 typeset</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<h1 class="t1">Kapitel 9 <a id="RxxKap0092NutzlicheFunktionen" name="RxxKap0092NutzlicheFunktionen"></a>N&uuml;tzliche Funktione<a id="RxxKap01100004004F2F1F031172" name="RxxKap01100004004F2F1F031172"></a>n</h1>
+<p class="anleser"><i>Dieses Kapitel zeigt Ihnen einige sehr hilfreiche »Funktionen«, auf die bisher noch nicht eingegangen werden konnte. Nat&uuml;rlich stellt dies noch lange nicht den kompletten Funktionsumfang der Shell-Funktionen dar, weshalb Sie neben der Linux-UNIX-Kommandoreferenz (Kapitel 14) in diesem Buch im Anhang noch einen &Uuml;berblick zu allen »Builtins« f&uuml;r die jeweilige Shell finden.</i></p>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">9.1 <a id="RxxKap0094DerBefehleval" name="RxxKap0094DerBefehleval"></a>Der Befehl eva<a id="RxxKap01100004004F2F1F031174" name="RxxKap01100004004F2F1F031174"></a>l 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999280" name="Xxx999280"></a><a id="Xxx999281" name="Xxx999281"></a>Ein auf den ersten Blick etwas ungew&ouml;hnliches Kommando lautet <span class="listing">eval</span>. Die Syntax:</p>
+<pre>eval Kommandozeile</pre>
+<p>Mit <span class="listing">eval</span> k&ouml;nnen Sie Kommandos ausf&uuml;hren, als w&uuml;rden Sie diese in der Kommandozeile von Tastatur eingeben. Schreiben Sie <span class="listing">eval</span> vor einem Kommando in die Kommandozeile, wird das Kommando oder die Kommandofolge zweimal ausgef&uuml;hrt. Im Fall einer einfachen Kommandoausf&uuml;hrung oder -folge ohne <span class="listing">eval</span> ist eine doppelte Bewertung nicht sinnvoll:</p>
+<pre>you@host &gt; eval ls -l | sort -r
+...</pre>
+<p>Anders hingegen sieht dies aus, wenn Sie eine Befehlsfolge in einer Variablen abspeichern wollen, um diese daraufhin ausf&uuml;hren zu lassen:</p>
+<pre>you@host &gt; LSSORT="ls -l | sort -r"
+you@host &gt; $LSSORT
+ls: |: Datei oder Verzeichnis nicht gefunden
+ls: sort: Datei oder Verzeichnis nicht gefunden</pre>
+<p>Sicherlich haben Sie etwas Derartiges schon einmal ausprobiert. Wollen Sie die Befehlsfolge, die Sie in der Variablen <span class="listing">LSSORT</span> gespeichert haben, jetzt ausf&uuml;hren, ist das Kommando <span class="listing">eval</span> erforderlich. Die anschlie&szlig;ende Fehlermeldung sagt alles. Verwenden Sie hier am besten mal <span class="listing">set</span> <span class="listing">–x</span> und sehen Sie sich an, was die Shell aus der Variablen <span class="listing">$LSSORT</span> macht:</p>
+<pre>you@host &gt; set -x
+you@host &gt; $LSSORT
++ ls -l '|' sort -r
+ls: |: Datei oder Verzeichnis nicht gefunden
+ls: sort: Datei oder Verzeichnis nicht gefunden</pre>
+<p>Das Problem ist hierbei also das Pipe-Zeichen. Dieses m&uuml;sste von der Shell ein zweites Mal bewertet werden, aber stattdessen wird die Befehlsfolge gleich ausgef&uuml;hrt, sodass hier das Pipe-Zeichen als Argument von <span class="listing">ls</span> bewertet wird. Sie k&ouml;nnen die Variable <span class="listing">LSSORT</span> drehen und wenden wie Sie wollen, die Shells verwenden grunds&auml;tzlich einen Ausdruck nur einmal. Hier greift <span class="listing">eval</span> mit seiner doppelten Ausf&uuml;hrung ein:</p>
+<pre>you@host &gt; eval $LSSORT
+...</pre>
+<p>Schalten Sie wieder die Option <span class="listing">–x</span> ein, k&ouml;nnen Sie erkennen, dass mithilfe von <span class="listing">eval</span> die Variable <span class="listing">LSSORT</span> zweimal ausgef&uuml;hrt wird:</p>
+<pre>you@host &gt; eval $LSSORT
++ eval ls -l '|' sort -r
+++ /bin/ls -l
+++ sort -r
+...</pre>
+<p><span class="listing">eval</span> eignet sich also in Shellscripts f&uuml;r die Ausf&uuml;hrung von Kommandos, die nicht im Script enthalten sind, sondern erst w&auml;hrend der Laufzeit des Scripts festgelegt werden. Sinnvoll ist dies beispielsweise, wenn Sie in Ihrem Script ein Kommando verwenden, das es auf einem bestimmten System nicht gibt. So k&ouml;nnen Sie dem etwas erfahreneren Anwender eine M&ouml;glichkeit geben, sich sein Kommando selbst zusammenzubasteln:</p>
+<pre># Name: aeval
+while true
+do
+   printf "Kommando(s) : "
+   read
+   eval $REPLY
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aeval
+Kommando(s) : var=hallo
+Kommando(s) : echo $var
+hallo
+Kommando(s) : who
+you      :0           Mar 30 14:45 (console)
+Kommando(s) : echo `expr 5 + 11`
+16
+Kommando(s) : asdf
+./script1: line 1: asdf: command not found
+Kommando(s) : ps
+  PID TTY          TIME CMD
+ 3242 pts/41   00:00:00 bash
+ 4719 pts/41   00:00:00 bash
+ 4720 pts/41   00:00:00 ps
+Kommando(s) : echo $$
+4719
+Kommando(s) : exit
+you@host &gt; echo $$
+3242</pre>
+<p>Man k&ouml;nnte meinen, man hat eine eigene Shell vor sich.</p>
+<p>Es gibt noch einen besonders &uuml;berzeugenden Anwendungsfall von <span class="listing">eval</span>. Mit <span class="listing">eval</span> haben Sie die M&ouml;glichkeit, indirekt auf eine Variable zuzugreifen. Alte C–Fanatiker werden feuchte Augen bekommen, da sich das Ganze wie bei den Zeigern in C anh&ouml;rt. Das Prinzip ist eigentlich einfach, aber nicht gleich durchschaubar. Daher ein Beispiel:</p>
+<pre># Name: aeval_cool
+Mo=backup1
+Di=backup2
+Mi=backup3
+Do=backup4
+Fr=backup5
+Sa=backup6
+So=backup7
+tag=`date +"%a"`
+eval backup=\$$tag
+echo "Heute wird das Backup-Script $backup ausgef&uuml;hrt"
+./$backup</pre>
+<p>Das Script bei der Ausf&uuml;hrung (an einem Mittwoch):</p>
+<pre>you@host &gt; ./aeval_cool
+Heute wird das Backup-Script backup3 ausgef&uuml;hrt
+./backup3</pre>
+<p>Durch die Kommando-Substitution wurde veranlasst, dass sich in der Variable »tag« die ersten zwei Zeichen des Wochentags befinden. Im Beispiel war es Mittwoch, daher ist <span class="listing">tag=Mi</span>. Danach wird es ein wenig seltsam, aber durchaus logisch:</p>
+<pre>eval backup=\$$tag</pre>
+<p>Wollen Sie wissen, was da in den zwei Durchl&auml;ufen passiert, verwenden Sie doch einfach wieder die Option <span class="listing">–x</span>:</p>
+<pre>set -x
+eval backup=\$$tag
+set +x</pre>
+<p>Ein erneuter Aufruf des Shellscripts:</p>
+<pre>you@host &gt; ./aeval_cool
+++ eval 'backup=$Mi'
++++ backup=backup3
+...</pre>
+<p>Im ersten Durchlauf wird aus <span class="listing">\$$tag</span> die Zeichenfolge <span class="listing">$Mi</span>. Die Variable »Mi« hat ja den Wert »backup3«, was korrekterweise im zweiten Durchlauf an die Variable »backup« &uuml;bergeben wird. Also wird im ersten Durchlauf der Ausdruck <span class="listing">backup=\$$tag</span> zu <span class="listing">backup=$Mi</span>. Die Zeichenfolge »Mi« hatten Sie ja zuvor aus der Kommando-Substitution erhalten. Anschlie&szlig;end durchl&auml;uft <span class="listing">eval</span> den Ausdruck <span class="listing">backup=$Mi</span> nochmals, sodass daraus <span class="listing">backup=backup3</span> wird. Das erste Dollarzeichen wurde im ersten Durchlauf mit einem Backslash maskiert und somit vor einem Zugriff der Shell gesch&uuml;tzt. Dadurch blieb im zweiten Durchlauf das Dollarzeichen bestehen, sodass hier tats&auml;chlich eine Variable an eine andere Variable &uuml;berwiesen wurde. Versuchen Sie doch einmal, das Ganze ohne <span class="listing">eval</span>-Anweisung so kurz und b&uuml;ndig zu gestalten.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_010_010.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_011_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_011_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:04 GMT -->
+</html>

@@ -1,0 +1,928 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_017_005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 15.6 CGI (Common Gateway Interface)</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_017_004.html">
+<link rel="next" href="shell_018_A_000.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_017_004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_018_A_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_017_000.html#RxxKap0170000400505D1F01A172">15 Die Praxis</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A182">15.1 Allt&auml;gliche L&ouml;sungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A183">15.1.1 Auf alphabetische und numerische Zeichen pr&uuml;fen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A18B">15.1.2 Auf Integer &uuml;berpr&uuml;fen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A190">15.1.3 echo mit oder ohne -n</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_001.html#RxxKap017001040050741F037172">15.2 Datei-Utilities</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_001.html#RxxKap017001040050741F037173">15.2.1 Leerzeichen im Dateinamen ersetzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_001.html#RxxKap017001040050741F037179">15.2.2 Dateiendungen ver&auml;ndern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_001.html#RxxKap017001040050741F037180">15.2.3 Nach ver&auml;nderten Dateien in zwei Verzeichnissen vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_002.html#RxxKap017002040050751F037172">15.3 Systemadministration</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_002.html#RxxKap017002040050751F037174">15.3.1 Benutzerverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_002.html#RxxKap017002040050751F03719F">15.3.2 System&uuml;berwachung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_003.html#RxxKap017003040050761F010172">15.4 Backup-Strategien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F010174">15.4.1 Warum ein Backup?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F01017C">15.4.2 Sicherungsmedien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F010182">15.4.3 Varianten der Sicherungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F010186">15.4.4 Bestimmte Bereiche sichern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F01018D">15.4.5 Backup &uuml;ber ssh mit tar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F0101AC">15.4.6 Daten mit rsync synchronisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F0101BB">15.4.7 Dateien und Verzeichnisse per E-Mail versenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F0101C2">15.4.8 Startup-Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_004.html#RxxKap017004040050771F019172">15.5 World Wide Web und HTML</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_004.html#RxxKap017004040050771F019177">15.5.1 Analysieren von access_log (Apache)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_004.html#RxxKap017004040050771F019188">15.5.2 Analysieren von error_log (Apache)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap017005040050781F026172">15.6 CGI (Common Gateway Interface)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017005040050781F026179">15.6.1 CGI-Scripts ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017005040050781F026187">15.6.2 CGI-Environment ausgeben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017005040050781F026193">15.6.3 Einfache Ausgabe als Text</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017005040050781F0261AC">15.6.4 Ausgabe als HTML formatieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017005040050781F0261BA">15.6.5 Systeminformationen ausgeben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017005040050781F0261C6">15.6.6 Kontaktformular</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017005040050781F0261ED">15.6.7 Noch ein Tipp</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">15.6 <a id="RxxKap015279CGICommonGatewayInterface" name="RxxKap015279CGICommonGatewayInterface"></a>CGI (Common Gateway Interface<a id="RxxKap017005040050781F026172" name="RxxKap017005040050781F026172"></a>) 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a>CGI ist eine Schnittstelle, mit der Sie z. B. Anwendungen f&uuml;r das Internet schreiben k&ouml;nnen. Diese CGI-Anwendungen laufen dabei auf einem (Web-)Server (wie beispielsweise dem Apache) und werden meistens von einer HTML-Webseite mithilfe eines Webbrowsers aufgerufen.</p>
+<p>Das Verfahren der CGI-Schnittstelle ist ziemlich einfach. Die Daten werden ganz normal von der Standardeingabe (<span class="listing">stdin</span>) oder von den Umgebungsvariablen empfangen und wenn n&ouml;tig &uuml;ber die Standardausgabe (<span class="listing">stdout</span>) ausgegeben. Im Allgemeinen handelt es sich dabei um ein dynamisch erzeugtes HTML-Dokument, das Sie in Ihrem Browser betrachten k&ouml;nnen. Sind diese Voraussetzungen gegeben, k&ouml;nnen CGI-Anwendungen praktisch mit jeder Programmiersprache erstellt werden. Das CGI-Programm selbst, welches Sie erstellen, ist ein ausf&uuml;hrbares Programm auf dem Webserver, das nicht von einem normalen User gestartet wird, sondern vom Webserver als ein neuer Prozess.</p>
+<p>Normalerweise setzt man f&uuml;r CGI-Scripts die Programmiersprachen Perl, PHP, Java, Python, Ruby oder C ein, aber im Grunde ist die Sprache absolut zweitrangig. Die Hauptsache ist, dass sie eine Standardein- und eine Standardausgabe besitzt und selbstverst&auml;ndlich auf dem Rechner, auf dem diese ausgef&uuml;hrt wird, auch verstanden wird. F&uuml;r kleinere Auf- bzw. Ausgaben k&ouml;nnen Sie selbstverst&auml;ndlich auch ein Shellscript verwenden. Damit k&ouml;nnen Sie beinahe alle Shellscripts, die Sie in diesem Buch geschrieben haben, auch &uuml;ber den Browser aufrufen und ausf&uuml;hren lassen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wer denkt, CGI in C ist etwas »Unm&ouml;gliches«, der darf gern auf meine Webseite kommen. Das komplette Content Management System (kurz CMS) wurde von meinem Fachgutachter in C geschrieben.</p>
+</td>
+</tr>
+</table><br>
+<p>Auch wenn es sich recht aufregend anh&ouml;rt, CGI-Scripts in Shell zu erstellen, finden Sie hier nur einen kurzen Anriss zu diesem Thema. Vorwiegend geht es mir darum, dass Sie mithilfe der Shellscripts eine Art Schnittstelle f&uuml;r Ihre geschrieben Shellscripts schreiben k&ouml;nnen, beispielsweise um die Auswertung von access_log auf dem Browser vorzunehmen.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">15.6.1 CGI-Scripts ausf&uuml;hren<a id="RxxKap017005040050781F026179" name="RxxKap017005040050781F026179"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999288" name="Xxx999288"></a>Um CGI-Scripts auf einem Server auszuf&uuml;hren, ist leider mehr als nur ein Browser erforderlich. Sofern Sie den ganzen Vorgang lokal testen wollen, ben&ouml;tigen Sie einen laufenden Webserver (im Beispiel ist immer vom Apache Webserver die Rede). Das Ganze ist gerade f&uuml;r Anf&auml;nger nicht ganz so einfach nachzuvollziehen. Einfach haben Sie es nat&uuml;rlich, wenn Sie Ihre Scripts auf einem bereits konfigurierten Webserver ausf&uuml;hren k&ouml;nnen – wie dies etwa bei einem Webhoster der Fall ist.</p>
+<p>Zuerst m&uuml;ssen Sie herausfinden, wo Sie die Shellscripts auf Ihrem Webserver ausf&uuml;hren k&ouml;nnen, gew&ouml;hnlich ist dies im /cgi-bin-Verzeichnis. Allerdings kann man einen Webserver auch so konfigurieren (httpd.conf), dass man aus jedem Unterverzeichnis ein Script ausf&uuml;hren kann. In der Regel verwendet man als Dateiendung ».cgi«. Wenn es nicht m&ouml;glich ist, ein CGI-Script auszuf&uuml;hren, kann es sein, dass Sie die Option <span class="listing">ExecCGI</span> in der Konfigurationsdatei httpd.conf anpassen oder die Schnittstelle mit der Datei .htaccess aktivieren m&uuml;ssen. Au&szlig;erdem muss beachtet werden, dass dieses Script f&uuml;r jedermann lesbar und ausf&uuml;hrbar ist, weil die meisten Webserver eine Webanfrage als User <span class="listing">nobody</span> oder <span class="listing">similar</span> ausf&uuml;hren. Leider kann ich hier nicht im Detail darauf eingehen, daher hierzu nochmals kurz die n&ouml;tigen (m&ouml;glichen) Schritte, um ein CGI-Script auf einem Webserver auszuf&uuml;hren (entsprechende Rechte vorausgesetzt):</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Speichern Sie das Script mit der Dateiendung ».cgi«.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Kopieren Sie das Script mittels <span class="listing">cp</span> oder <span class="listing">scp</span> in ein Verzeichnis des Webservers (bspw. /cgi-bin) – abh&auml;ngig von der Konfiguration, wo Sie CGI-Scripts ausf&uuml;hren k&ouml;nnen/d&uuml;rfen.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Setzen Sie die Zugriffsrechte f&uuml;r das entsprechende Script (<span class="listing">chmod</span> <span class="listing">go+rx</span> <span class="listing">script.cgi</span>).</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Starten Sie den Webserver, falls dies nicht schon geschehen ist.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Starten Sie einen Webbrowser Ihrer Wahl und rufen Sie das CGI-Script auf. Befindet es sich z. B. im Verzeichnis /cgi-bin auf dem lokalen Rechner, so lautet die URL gew&ouml;hnlich <span class="listing">http://localhost/cgi-bin/script.cgi</span> oder hier unter <span class="listing">http://www.pronix.de/cgi-bin/script.cgi</span>.</td>
+</tr>
+</table>
+<p>Noch ein paar Tipps, falls es nicht klappt:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Sind die Zugriffsrechte richtig gesetzt? Dies gilt sowohl f&uuml;r das CGI-Script als auch f&uuml;r den Zugriff auf die Verzeichnisse des Webservers &uuml;berhaupt.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Ein Fehlerstatus 500 des Browsers signalisiert h&auml;ufig einen Fehler in Ihrem Script. Testen Sie das Script am besten in der Kommandozeile.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Haben Sie die richtige URL im Browser eingegeben bzw. stimmt der Pfad zum Script?</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> L&auml;uft der Webserver &uuml;berhaupt?</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Ein Blick in access_log und error_log hilft Ihnen beim Suchen enorm weiter. Lassen Sie beispielsweise im Hintergrund <span class="listing">tail</span> <span class="listing">-f</span> <span class="listing">/pfad/zur/logdatei/ error_log</span> laufen, denn alle Fehler tauchen hier auf.</td>
+</tr>
+</table>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">15.6.2 CGI-Environment ausgeben<a id="RxxKap017005040050781F026187" name="RxxKap017005040050781F026187"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Das folgende Script gibt alle Umgebungsvariablen auf dem Browser aus. Diese Umgebungsvariablen enthalten Informationen zum Webserver wie auch zum Webclient (bspw. Browser). Aufgeteilt werden diese Informationen grob in drei verschiedene Bereiche (ohne n&auml;her darauf einzugehen):</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> HTTP-Anfrage-Paket</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> Webserver</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> HTTP-Anfrage-Header des Webbrowsers</td>
+</tr>
+</table>
+<blockquote>
+<pre>#!/bin/sh
+# myenv.cgi
+# Umgebungsvariablen auf einem Server anzeigen
+echo "Content-type: text/html"
+echo
+echo "&lt;html&gt;&lt;body&gt;&lt;h2&gt;Umgebungsvariablen von"\
+     " `uname -n` (`date`)&lt;/h2&gt;"
+echo "&lt;pre&gt;"
+# Wenn env nicht vorhanden, dann printenv ausf&uuml;hren ...
+env || printenv
+echo "&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;"</pre>
+</blockquote>
+<p>Das Script bei der Ausf&uuml;hrung sehen Sie in Abbildung 15.1.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_01.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_01.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.1   
+    </b>Das Script myenv.cgi bei der Ausf&uuml;hrung</p>
+</td>
+</tr>
+</table><br>
+<p>Einen Hinweis noch zu:</p>
+<pre>echo "Content-type: text/html"</pre>
+<p>Damit teilen Sie dem Webserver mit, dass Ihre CGI-Anwendung ein bestimmtes Dokument ausgibt (Content-Type-Dokument). Im Beispiel handelt es sich um ein HTML-Dokument. Au&szlig;erdem ist es von Bedeutung, dass hinter dieser Angabe zwei Newline-Zeichen stehen (hier durch die beiden <span class="listing">echo</span>-Aufrufe). Damit signalisieren Sie dem Webserver, dass es sich um die letzte »Headerzeile« handelt.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">15.6.3 Einfache Ausgabe als Text<a id="RxxKap017005040050781F026193" name="RxxKap017005040050781F026193"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>&Auml;hnlich einfach wie die Ausgabe der Umgebungsvariablen l&auml;sst sich jede andere Ausgabe auf dem Browser realisieren. Wollen Sie zum Beispiel ein Shellscript &uuml;ber einen Link starten, so m&uuml;ssen Sie sich nur ein HTML-Dokument wie folgt zusammenbasteln:</p>
+<pre>&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;TestCGIs&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;A HREF="/cgi-bin/areader.cgi?/srv/www/htdocs/docs/kap003.txt"&gt;Ein Link&lt;/A&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_02.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_02.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.2   
+    </b>Das HTML-Dokument zum Aufrufen eines Scripts (als Link)</p>
+</td>
+</tr>
+</table><br>
+<p>Das folgende Script areader.cgi macht wiederum nichts anderes, als die Textdatei kap003.txt mittels <span class="listing">cat</span> auf dem Browser auszugeben. Als Query-String geben Sie hinter dem Fragezeichen an, welche Datei hier gelesen werden soll. F&uuml;r das Shellscript stellt dies wiederum den ersten Positionsparameter <span class="listing">$1</span> dar. Der Link</p>
+<pre>/cgi-bin/areader.cgi?/srv/www/htdocs/docs/kap003.txt</pre>
+<p>besteht also aus zwei Werten, dem Pfad zum Shellscript</p>
+<pre>/cgi-bin/areader.cgi</pre>
+<p>und dem ersten Positionsparameter (Query-String)</p>
+<pre>/srv/www/htdocs/docs/kap003.txt</pre>
+<p>Ein solcher Query-String kann nat&uuml;rlich ganz andere Formen annehmen, dazu aber sp&auml;ter mehr. Hierzu nun das Shellscript areader.cgi:</p>
+<pre>#!/bin/sh
+# Name: areader.cgi
+echo "Content-type: text/plain"
+echo
+cat $1
+exit 0</pre>
+<p>Die Ausf&uuml;hrung ist in Abbildung 15.3 zu sehen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_03.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_03.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.3   
+    </b>Das Shellscript areader.cgi bei der Ausf&uuml;hrung im Browser</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Sicherheitsbedenken</h4>
+<p>Nat&uuml;rlich dienen diese Beispiele nur als Mittel zum Zweck, um Ihnen zu demonstrieren, wie Sie Shellscripts auch als CGI-Scripts verwenden k&ouml;nnen, ohne allerdings den Sicherheitsaspekt zu ber&uuml;cksichtigen. Denn im Grunde ist die Zeile</p>
+<pre>/cgi-bin/areader.cgi?/srv/www/htdocs/docs/kap003.txt</pre>
+<p>ein ganz b&ouml;ses Foul, das Hackern T&uuml;r und Tor &ouml;ffnet. Manipuliert man diese Zeile um in</p>
+<pre>/cgi-bin/areader.cgi?/etc/passwd
+/cgi-bin/areader.cgi?/etc/shadow</pre>
+<p>kann der Angreifer in aller Ruhe zu Hause per »Brute Force« das Passwort knacken (sofern dies nicht allzu stark ist – was leider meistens der Fall ist). Zumindest kann der Angreifer auf jeden Fall Systeminformationen sammeln, um eventuelle Schwachstellen des Rechners aufzusp&uuml;ren.</p>
+<p>Ein sicherere Alternative w&auml;re es beispielsweise, die Usereingabe auf [a-z] zu pr&uuml;fen. Wenn andere Zeichen vorkommen, dann abbrechen, und ansonsten den Pfad und die Endung vom Script erg&auml;nzen lassen.</p>
+<pre>if echo $1 | grep -q '[^a-z]'
+then
+   echo Schlingel
+   exit 0
+fi
+file="/pfad/nach/irgendwo/$1.txt"
+if [ -e $file ]
+then
+   echo Nueschte
+   exit 0
+fi</pre>
+<p>Des Weiteren sollten Sie bei CGI-Programmen immer 0 zur&uuml;ckgeben, wenn alles glatt verlaufen ist, damit &uuml;berhaupt etwas auf dem Bildschirm ausgegeben wird. Bei vielen Installationen entsteht n&auml;mlich bei R&uuml;ckgabe ungleich 0 der 500er-Fehler.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">15.6.4 Ausgabe als HTML formatieren<a id="RxxKap017005040050781F0261AC" name="RxxKap017005040050781F0261AC"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>In der Praxis werden Sie wohl kaum immer nur reinen Text ausgeben, sondern die Ausgabe mit vielen HTML- oder CSS-Elementen versch&ouml;nern wollen. Im Gegensatz zum Beispiel zuvor ist hierf&uuml;r nicht allzu viel n&ouml;tig (geringe HTML-Kenntnisse vorausgesetzt). Zuerst wieder das HTML-Dokument (unver&auml;ndert):</p>
+<pre>&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;TestCGIs&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;A HREF="/cgi-bin/a_html_reader.cgi?/srv/www/htdocs/docs/kap003.txt"&gt;Ein Link&lt;/A&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>Als N&auml;chstes das Shellscript areader.cgi, allerdings ein wenig umgeschrieben (und umbenannt) mit einigen HTML-Konstrukten, um den Text browsergerecht zu servieren:</p>
+<pre>#!/bin/sh
+# a_html_reader.cgi
+echo "Content-type: text/html"
+echo ""
+cat &lt;&lt; HEADER
+&lt;HTML&gt;
+&lt;HEAD&gt;&lt;TITLE&gt;Ausgabe der Datei: $1&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY bgcolor="#FFFF00" text="#000000"&gt;
+&lt;HR SIZE=3&gt;
+&lt;H1&gt;Ausgabe der Datei: $1 &lt;/H1&gt;
+&lt;HR SIZE=3&gt;
+&lt;P&gt;
+&lt;SMALL&gt;
+&lt;PRE&gt;
+HEADER
+cat $1
+cat &lt;&lt; FOOTER
+&lt;/PRE&gt;
+&lt;/SMALL&gt;
+&lt;P&gt;
+&lt;HR SIZE=3&gt;
+&lt;H1&gt;&lt;B&gt;Ende&lt;/B&gt; Ausgabe der Datei: $1 &lt;/H1&gt;
+&lt;HR SIZE=3&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+FOOTER
+exit 0</pre>
+<p>Das Script bei der Ausf&uuml;hrung zeigt Abbildung 15.4.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_04.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_04.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.4   
+    </b>Ein einfaches Textdokument, mit HTML formatiert</p>
+</td>
+</tr>
+</table><br>
+<p>Soweit haben Sie nun eine HTML-formatierte Ausgabe. Allerdings ist es noch praktischer, den HTML-Teil wiederum in eine extra Datei auszulagern. Dies erh&auml;lt zum einen die &Uuml;bersicht des Shellscripts, und zum anderen kann man jederzeit das »Layout« gegen ein anderes austauschen. Ich teile z. B. die beiden Bereiche um den eigentlichen Arbeitsteil des Shellscripts in einen Kopfteil (header.txt) und einen Fu&szlig;teil (footer.txt) auf. Zuerst die Datei header.txt:</p>
+<pre>&lt;HTML&gt;
+&lt;HEAD&gt;&lt;TITLE&gt;Ein Titel&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY bgcolor="#FFFF00" text="#000000"&gt;
+&lt;HR SIZE=3&gt;
+&lt;H1&gt;Ausgabe Anfang: &lt;/H1&gt;
+&lt;HR SIZE=3&gt;
+&lt;P&gt;
+&lt;SMALL&gt;
+&lt;PRE&gt;</pre>
+<p>Und jetzt noch die Datei footer.txt:</p>
+<pre>&lt;/PRE&gt;
+&lt;/SMALL&gt;
+&lt;P&gt;
+&lt;HR SIZE=3&gt;
+&lt;H1&gt;&lt;B&gt;Ende&lt;/B&gt; der Ausgabe&lt;/H1&gt;
+&lt;HR SIZE=3&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;</pre>
+<p>Beide Dateien k&ouml;nnen Sie nun auch wieder im Shellscript einfach mit <span class="listing">cat</span> ausgeben lassen. Somit sieht das eigentliche Shellscript gegen&uuml;ber der Version a_html_reader.cgi wie folgt aus:</p>
+<pre>#!/bin/sh
+echo "Content-type: text/html"
+echo ""
+cat /srv/www/htdocs/docs/header.txt
+cat $1
+cat /srv/www/htdocs/docs/footer.txt
+exit 0</pre>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">15.6.5 Systeminformationen ausgeben<a id="RxxKap017005040050781F0261BA" name="RxxKap017005040050781F0261BA"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Wie Sie im Beispiel eben den Befehl <span class="listing">cat</span> verwendet haben, so k&ouml;nnen Sie auch alle anderen Kommandos (je nach Rechten) bzw. ganze Shellscripts ausf&uuml;hren. Das folgende Script gibt z. B. Auskunft &uuml;ber alle aktuell laufenden Prozesse:</p>
+<pre>#!/bin/sh
+# Name: html_ps.cgi
+echo "Content-type: text/html"
+echo
+cat /srv/www/htdocs/docs/header.txt
+ps -ef
+cat /srv/www/htdocs/docs/footer.txt
+exit 0</pre>
+<p>Das Script bei der Ausf&uuml;hrung zeigt Abbildung 15.5.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_05.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_05.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.5   
+    </b>Ausgabe aller laufenden Prozesse auf einem entfernten System</p>
+</td>
+</tr>
+</table><br>
+<p>Ebenso einfach k&ouml;nnen Sie hierbei auch andere Shellscripts ausf&uuml;hren lassen. Sinnvoll erscheint mir hierbei die Ausgabe von access_log und error_log. Das folgende Beispiel verwendet das Script readaccess aus Abschnitt 15.5.1:</p>
+<pre>#!/bin/sh
+# Name: html_access_log.cgi
+# Apaches access_log analysieren und ausgeben
+echo "Content-type: text/html"
+echo
+cat /srv/www/htdocs/docs/header.txt
+./readaccess /pfad/zum/logfile/access_log
+cat /srv/www/htdocs/docs/footer.txt
+exit 0</pre>
+<p>Abbildung 15.6 zeigt das Script bei der Ausf&uuml;hrung.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_06.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_06.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.6   
+    </b>Auswertung von access_log mit dem Browser</p>
+</td>
+</tr>
+</table><br>
+<p>Sie sehen, CGI-Scripts k&ouml;nnen mit der Shell beinahe unbegrenzt verwendet werden.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">15.6.6 Kontaktformular<a id="RxxKap017005040050781F0261C6" name="RxxKap017005040050781F0261C6"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Ein Kontaktformular erfordert eine Eingabe vom Benutzer. Dies auszuwerten, ist wiederum nicht ganz so einfach. Zun&auml;chst muss man festlegen, mit welcher Methode diese Daten empfangen werden. Hierbei gibt es die M&ouml;glichkeit <span class="listing">GET</span>, bei der der Browser die Zeichenkette(n) der Eingaben am Ende der URL anh&auml;ngt. Bei einem Textfeld »name« mit der Benutzereingabe »Wolf« sieht die URL wie folgt aus:</p>
+<pre>http://www.pronix.de/cgi-bin/script.cgi?name=wolf</pre>
+<p>Befindet sich jetzt hier auch noch ein weiteres Textfeld namens »vorname« und die Benutzereingabe lautet »John«, so sieht die URL wie folgt aus:</p>
+<pre>http://www.pronix.de/cgi-bin/script.cgi?name=wolf&amp;vorname=john</pre>
+<p>Das Ampersandzeichen <span class="listing">&amp;</span> dient hier als Trenner zwischen den einzelnen Variablen/Werte-Paaren. Der Webserver entfernt gew&ouml;hnlich diese Zeichenkette und &uuml;bergibt dies der Variablen <span class="listing">QUERY_STRING</span>. Den <span class="listing">QUERY_STRING</span> auszuwerten ist die Aufgabe des Programmierers.</p>
+<p>Die zweite M&ouml;glichkeit ist die &Uuml;bergabe der Werte mit der <span class="listing">POST</span>-Methode. Bei ihr werden die Daten nicht in einer der Umgebungsvariablen abgelegt, sondern in die Standardeingabe (<span class="listing">stdin</span>). Sie k&ouml;nnen somit die CGI-Anwendung so schreiben, als w&uuml;rde die Eingabe von der Tastatur vorgenommen.</p>
+<p>Damit Sie sich schon ein Bild vom folgenden Beispiel machen k&ouml;nnen, soll hier das HTML-Formular bereits erstellt werden, in das anschlie&szlig;end die Eingabe des Benutzers vorgenommen werden kann:</p>
+<pre>&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Kontakt&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form method="post" action="/cgi-bin/contact.cgi"&gt;
+&lt;h2&gt;Kontakt-Formular&lt;/h2&gt;
+&lt;pre&gt;
+Name : &lt;input type="text" name="name"&gt;&lt;br&gt;
+Email: &lt;input type="text" name="email"&gt;&lt;br&gt;
+Ihre Nachricht:&lt;br&gt;
+&lt;textarea rows="5" cols="50" name="comments"&gt;&lt;/textarea&gt;&lt;br&gt;
+&lt;input type="submit" value="submit"&gt;
+&lt;/pre&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>Das Formular zeigt Abbildung 15.7.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_07.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_07.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.7   
+    </b>Das HTML-Kontakt-Formular</p>
+</td>
+</tr>
+</table><br>
+<p>In der Zeile</p>
+<pre>&lt;form method="post" action="/cgi-bin/contact.cgi"</pre>
+<p>k&ouml;nnen Sie erkennen, dass in diesem Beispiel die <span class="listing">POST</span>-Methode verwendet wird, womit Sie die Daten von der Standardeingabe erhalten.</p>
+<p>W&uuml;rden Sie jetzt in Ihrem Script von der Standardeingabe lesen und dies ausgeben lassen, so w&uuml;rde Folgendes angezeigt (eine Zeile):</p>
+<pre>name=Juergen+Wolf&amp;email=pronix%40t-online.de&amp;comments=
+Eine+Tolle+%22Seite%22+hast+Du+da%21</pre>
+<p>Also noch lange nicht das gew&uuml;nschte Ergebnis. Um hieraus die Ergebnisse zu extrahieren, m&uuml;ssen Sie die Standardeingabe parsen, sprich lesefreundlich dekodieren. Ein &Uuml;berblick &uuml;ber die Zeichen, die hier von besonderer Bedeutung sind:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> &amp;</span> – einzelne Formularelemente (sofern es mehrere sind) werden mit diesem Zeichen getrennt.</td>
+</tr>
+</table>
+<blockquote>
+<pre>name=Juergen+Wolf email=pronix%40t-online.de comments=
+Eine+Tolle+%22Seite%22+hast+Du+da%21</pre>
+</blockquote>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> =</span> – mit diesem Zeichen werden die Variable/Wert-Paare voneinander getrennt.</td>
+</tr>
+</table>
+<blockquote>
+<pre>name Juergen+Wolf email pronix%40t-online.de comments 
+Eine+Tolle+%22Seite%22+hast+Du+da%21</pre>
+</blockquote>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> +</span> – damit werden die Leerzeichen der eingegebenen Daten getrennt.</td>
+</tr>
+</table>
+<blockquote>
+<pre>name Juergen Wolf email pronix%40t-online.de comments 
+Eine Tolle %22Seite%22 hast Du da%21</pre>
+</blockquote>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"><span class="listing"> %</span>XX – Bei einem Prozentzeichen gefolgt von zwei hexadezimalen Ziffern handelt es sich um ASCII-Zeichen mit dem dezimalen Wert von 128 bis 255. Diese hexadezimalen Ziffern m&uuml;ssen in ASCII-Zeichen dekodiert werden.</td>
+</tr>
+</table>
+<blockquote>
+<pre>name Juergen Wolf email pronix@t-online.de comments 
+Eine Tolle "Seite" hast Du da!</pre>
+</blockquote>
+<p>Die ersten drei Punkte k&ouml;nnen Sie bspw. folgenderma&szlig;en dekodieren:</p>
+<pre>tr '&amp;+=' '\n \t'</pre>
+<p>Hiermit ersetzen Sie das Zeichen »<span class="listing">&amp;</span>« durch ein Newline-Zeichen, das »<span class="listing">+</span>«-Zeichen durch ein Leerzeichen und das »<span class="listing">=</span>«-Zeichen durch ein Tabulatorzeichen.</p>
+<p>Die hexadezimale Ziffer dekodieren Sie mit einer einzelnen <span class="listing">sed</span>-Zeile:</p>
+<pre>echo -e `sed 's/%\(..\)/\\\x\1/g'`</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nicht mit eingeschlossen sind hierbei die deutschen Umlaute »&uuml;&auml;&ouml;&szlig;...«.</p>
+</td>
+</tr>
+</table><br>
+<p>Mehr ist nicht erforderlich, um den Eingabestring von einem HTML-Formular zu parsen. Das folgende Script wertet den Inhalt eines solchen Kontaktformulars aus und sendet diesen mit <span class="listing">sendmail</span> an die Adresse »empfaenger«. Am Ende wird noch eine HTML-Seite als Best&auml;tigung auf dem Browser erzeugt.</p>
+<pre>#!/bin/sh
+# Name: contact.cgi
+# Auswerten der Formmail
+empfaenger="you@host"
+( cat &lt;&lt; MAIL
+From: www@`hostname`
+To: $empfaenger
+Subject: Kontakt-Anfrage Ihrer Webseite
+Inhalt der Eingabe lautet:
+MAIL
+# Eingabestring dekodieren
+cat – | tr '&amp;+=' '\n \t' | echo -e `sed 's/%\(..\)/\\\x\1/g'`
+  echo ""
+  echo "Abgeschickt am `date`"
+) | sendmail -t
+echo "Content-type: text/html"
+echo ""
+echo "&lt;html&gt;&lt;body&gt;"
+echo "Vielen Dank fuer Ihre Anfrage!"
+echo "&lt;/body&gt;&lt;/html&gt;"
+exit 0</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/15_08.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein15_08.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 15.8   
+    </b>Die Antwortseite nach dem Dr&uuml;cken des Submit-Buttons</p>
+</td>
+</tr>
+</table><br>
+<p>Wenn Sie jetzt einen Blick in Ihr Mail-Postfach werfen, werden Sie eine entsprechende E-Mail finden, die zeigt, was im Kontakt-Formular eingegeben wurde.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">15.6.7 Noch ein Tipp<a id="RxxKap017005040050781F0261ED" name="RxxKap017005040050781F0261ED"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Nat&uuml;rlich ist anzumerken, dass Sie nur einen ersten Einblick zum Thema CGI erhalten haben. Wie bereits erw&auml;hnt, k&ouml;nnen Sie sich hierzu auf meiner Homepage <a href="http://www.pronix.de/" target="_blank">http://www.pronix.de</a> (allerdings in der Programmiersprache C) einen etwas umfangreicheren &Uuml;berblick verschaffen, falls, Sie mehr Informationen dazu ben&ouml;tigen.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_017_004.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_018_A_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_017_005.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:58:11 GMT -->
+</html>

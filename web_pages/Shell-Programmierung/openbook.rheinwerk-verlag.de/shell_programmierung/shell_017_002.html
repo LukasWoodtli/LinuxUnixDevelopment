@@ -1,0 +1,1324 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_017_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 15.3 Systemadministration</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_017_001.html">
+<link rel="next" href="shell_017_003.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_017_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_017_003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_017_000.html#RxxKap0170000400505D1F01A172">15 Die Praxis</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A182">15.1 Allt&auml;gliche L&ouml;sungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A183">15.1.1 Auf alphabetische und numerische Zeichen pr&uuml;fen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A18B">15.1.2 Auf Integer &uuml;berpr&uuml;fen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_000.html#RxxKap0170000400505D1F01A190">15.1.3 echo mit oder ohne -n</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_001.html#RxxKap017001040050741F037172">15.2 Datei-Utilities</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_001.html#RxxKap017001040050741F037173">15.2.1 Leerzeichen im Dateinamen ersetzen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_001.html#RxxKap017001040050741F037179">15.2.2 Dateiendungen ver&auml;ndern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_001.html#RxxKap017001040050741F037180">15.2.3 Nach ver&auml;nderten Dateien in zwei Verzeichnissen vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap017002040050751F037172">15.3 Systemadministration</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017002040050751F037174">15.3.1 Benutzerverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap017002040050751F03719F">15.3.2 System&uuml;berwachung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_003.html#RxxKap017003040050761F010172">15.4 Backup-Strategien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F010174">15.4.1 Warum ein Backup?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F01017C">15.4.2 Sicherungsmedien</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F010182">15.4.3 Varianten der Sicherungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F010186">15.4.4 Bestimmte Bereiche sichern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F01018D">15.4.5 Backup &uuml;ber ssh mit tar</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F0101AC">15.4.6 Daten mit rsync synchronisieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F0101BB">15.4.7 Dateien und Verzeichnisse per E-Mail versenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_003.html#RxxKap017003040050761F0101C2">15.4.8 Startup-Scripts</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_004.html#RxxKap017004040050771F019172">15.5 World Wide Web und HTML</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_004.html#RxxKap017004040050771F019177">15.5.1 Analysieren von access_log (Apache)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_004.html#RxxKap017004040050771F019188">15.5.2 Analysieren von error_log (Apache)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_017_005.html#RxxKap017005040050781F026172">15.6 CGI (Common Gateway Interface)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F026179">15.6.1 CGI-Scripts ausf&uuml;hren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F026187">15.6.2 CGI-Environment ausgeben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F026193">15.6.3 Einfache Ausgabe als Text</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F0261AC">15.6.4 Ausgabe als HTML formatieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F0261BA">15.6.5 Systeminformationen ausgeben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F0261C6">15.6.6 Kontaktformular</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_017_005.html#RxxKap017005040050781F0261ED">15.6.7 Noch ein Tipp</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">15.3 <a id="RxxKap01554Systemadministration" name="RxxKap01554Systemadministration"></a>Systemadministratio<a id="RxxKap017002040050751F037172" name="RxxKap017002040050751F037172"></a>n 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a>Die Systemadministration d&uuml;rfte wohl eines der Hauptgr&uuml;nde sein, weshalb Sie sich entschieden haben, die Shellscript-Programmierung zu erlernen. Zur Systemadministration geh&ouml;ren u. a. zentrale Themen wie die Benutzer- und Prozessverwaltung, System&uuml;berwachung, Backup-Strategien und das Auswerten bzw. Analysieren von Log-Dateien. Zu jedem dieser Themen werden Sie ein Beispiel f&uuml;r die Praxis kennen lernen und, falls das Thema recht speziell ist, auch eine Einf&uuml;hrung.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">15.3.1 Benutzerverwaltung<a id="RxxKap017002040050751F037174" name="RxxKap017002040050751F037174"></a><a id="Xxx999279" name="Xxx999279"></a><a id="Xxx999280" name="Xxx999280"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<h4 class="t4">Plattenplatzbenutzung einzelner Benutzer auf dem Rechner</h4>
+<p><a id="Xxx999283" name="Xxx999283"></a><a id="Xxx999284" name="Xxx999284"></a>Wenn Sie einen Rechner mit vielen Benutzern verwalten m&uuml;ssen, so sollte man dem einzelnen Benutzer auch eine gewisse Grenze setzen, was den Plattenverbrauch betrifft. Die einfachste M&ouml;glichkeit ist es, die Heimverzeichnisse der einzelnen User zu &uuml;berpr&uuml;fen. Nat&uuml;rlich schlie&szlig;t dies nicht nur das /home-Verzeichnis ein (auch wenn es im Beispiel so verwendet wird). Am einfachsten sucht man in entsprechenden Verzeichnissen nach Dateien, die einen bestimmten Benutzer als Eigent&uuml;mer haben, und addiert die Gr&ouml;&szlig;e einer jeden gefundenen Datei.</p>
+<p>Damit auch alle Benutzer erfasst werden, deren User-ID gr&ouml;&szlig;er als 99 ist, werden sie einfach alle aus /etc/passwd extrahiert. Die Werte zwischen 1 und 99 sind gew&ouml;hnlich den System-Daemons bzw. dem root vorbehalten. Ein guter Grund &uuml;brigens, dass Sie, wenn Sie einen neuen User anlegen, die UID immer &uuml;ber 100 w&auml;hlen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Die meisten Systeme nutzen inzwischen auch UIDs f&uuml;r die User, die gr&ouml;&szlig;er als 1000 sind. Diese Angabe kann von System zu System variieren. Viele Systeme verwenden als »uid_start« auch den Wert 1000. Es k&ouml;nnte also sein, dass der Wert 100 – wie hier verwendet – zu niedrig ist. Allerdings sollte es f&uuml;r Sie wohl kein Problem darstellen, diesen Wert im Script zu &auml;ndern.</p>
+</td>
+</tr>
+</table><br>
+<p>Das folgende Shellscript analysiert also den Plattenplatzverbrauch einzelner Benutzer (im Beispiel beschr&auml;nken wir uns auf das /home-Verzeichnis). Gew&ouml;hnlich ben&ouml;tigt man root-Rechte, um dieses Script auszuf&uuml;hren. Ohne diese Rechte k&ouml;nnen Sie nur den eigenen Account &uuml;berpr&uuml;fen. Hat ein Benutzer den Plattenplatz, der mit »maxUsage« MB begrenzt ist, &uuml;berschritten, wird eine Mail mit entsprechender Nachricht gesendet. Im Beispiel wird das Kommando <span class="listing">mail</span> verwendet und kann jederzeit auch durch <span class="listing">sendmail</span> ausgetauscht werden (abh&auml;ngig vom System).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>An dieser Stelle sollte auch auf das Quota-System hingewiesen werden. Das Quota-System wird verwendet, wenn Benutzer/Gruppen, die an einem System arbeiten und dort ein eigenes Verzeichnis besitzen, zu viele Daten in diesem Verzeichnis speichern/sammeln. </p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard">Mit Quota k&ouml;nnen Sie als Systemadministrator den verf&uuml;gbaren Plattenplatz f&uuml;r jede/n Benutzer/Gruppe einschr&auml;nken. Hierbei existieren zwei Grenzen, das Softlimit und das Hardlimit. Beim Softlimit darf der Benutzer die Grenze f&uuml;r eine kurze Zeit &uuml;berschreiten. Dieser Zeitraum wird durch die »Grace Period« festgelegt. Beim Hardlimit darf der Benutzer (oder die Gruppe) diese Grenze keinesfalls &uuml;berschreiten. Es gibt also keine M&ouml;glichkeit, dieses Limit zu umgehen. Das Quota-System liegt gew&ouml;hnlich jeder Distribution bei. Mehr dazu finden Sie auch in einem Mini-Howto in deutscher Sprache.</p>
+</td>
+</tr>
+</table><br>
+<pre>#!/bin/sh
+# DiskQuota = Das Tool analysiert den Plattenplatzverbrauch
+# einzelner Benutzer
+# Limit der Speicherplatzbenutzung pro User in MB
+maxUsage=100
+# tempor&auml;re Log-Datei -&gt; besser w&auml;re in /tmp
+logfile="loghogs.$$"
+# Verzeichnis(se), das/die pro User erfasst werden sollen
+dirs="/home"
+# uid_start: Alle User-IDs unter 100 sind gew&ouml;hnlich dem root
+# und anderen Diensten vorbehalten. Echte User beginnen
+# gew&ouml;hnlich ab 100 oder manchmal gar ab 1000
+uid_start=99
+# Beim ordentlichen Beenden logfile wieder l&ouml;schen
+trap "/bin/rm -f $logfile" EXIT
+for name in `cut -d: -f1,3 /etc/passwd | \
+             awk -F: '$2 &gt; $uid_start { print $1 }'`
+do
+  echo -n "$name "
+  find $dirs -user $name -xdev -type f -ls | \
+      awk '{ sum += $7 } END { print sum / (1024*1024) }'
+done | awk "\$2 &gt; $maxUsage { print \$0 }" &gt; $logfile
+# Wenn vorhanden, haben wir einen "&Uuml;bertreter"
+# gefunden, ansonsten ...
+if [ ! -s $logfile ]
+then
+  echo "Kein User hat das Limit ${maxUsage}MB &uuml;berzogen"
+  exit 0
+fi
+while read user diskspace
+do
+   cat &lt;&lt;MARKE | mail -s "Achtung Limit &uuml;berzogen" $user
+Hallo $user,
+Soeben `date "+%Y-%h-%d %H:%M:%S "` wurde festgestellt, dass Sie
+Ihr Limit von ${maxUsage}MB &uuml;berzogen haben. Derzeit betr&auml;gt Ihr
+verwendeter Speicher ${diskspace}MB. Bitte beheben Sie den
+Umstand sobald wie m&ouml;glich. Vielen Dank f&uuml;r das Verst&auml;ndnis.
+MARKE
+   echo "User $user hat den Account &uuml;berzogen\
+         (Ist:${diskspace}MB Soll:${maxUsage}MB)"
+done &lt; $logfile</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre># ./DiskQuota
+User tot hat den Account &uuml;berzogen (Ist:543,72MB Soll:100MB)
+---- Inzwischen beim User tot ----
+tot@host &gt; mail
+ ... ... ...
+ N 14 tot@linux.site  Mon May  2 15:14  22/786  Limit &uuml;berzogen
+ ... ... ...
+? 14
+Message 14:
+From: you@host.site (J.Wolf)
+Hallo tot,
+Soeben 2005-Mai-02 15:14:47 wurde festgestellt, dass Sie Ihr
+Limit von 100MB &uuml;berzogen haben. Derzeit betr&auml;gt Ihr verwendeter
+Speicher 543,72MB. Bitte beheben Sie den Umstand sobald wie
+m&ouml;glich.
+Vielen Dank f&uuml;r das Verst&auml;ndnis.</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bitte beachten Sie, wenn Sie weitere Verzeichnisse angeben, in denen nach Dateien eines bestimmten Benutzers gesucht werden soll (oder gar das Wurzelverzeichnis), dass dies sehr viel Zeit in Anspruch nehmen kann.</p>
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Prozesse nach User sortiert mit Instanzen ausgeben</h4>
+<p><a id="Xxx999306" name="Xxx999306"></a><a id="Xxx999307" name="Xxx999307"></a>Einen weiteren Komfort, den man als Systemadministrator gern nutzen w&uuml;rde, w&auml;re eine Ausgabe der Prozess&uuml;berwachung einzelner Benutzer, sortiert nach diesen. Das folgende, gut kommentierte Script sortiert die Prozesse nach Benutzern und gar nach deren einzelnen Instanzen, wenn der Benutzer von einer Instanz mehrere ausf&uuml;hrt. F&uuml;hrt der Benutzer z. B. dreimal <span class="listing">bash</span> als Shell aus, finden Sie in der Zusammenfassung <span class="listing">3</span> <span class="listing">Instanz(en)</span> <span class="listing">von</span> <span class="listing">/bin/bash</span>, statt jede Instanz einzeln aufzulisten.</p>
+<pre>#!/bin/sh
+# Name: psusers
+# Voraussetzung, dass dieses Script funktioniert, ist, dass die
+# Ausgabe von ps -ef auf Ihrem Rechner folgendes Format hat:
+#
+# you@host &gt; ps -ef
+# UID        PID  PPID  C STIME TTY          TIME CMD
+# root         1     0  0 00:38 ?        00:00:04 init [5]
+# root         2     1  0 00:38 ?        00:00:00 [ksoftirqd/0]
+#
+# Wenn die Ausgabe bei Ihnen etwas anders aussieht, m&uuml;ssen Sie
+# das Script entsprechend anpassen (erste Zuweisung von USERNAME
+# und PROGNAME)
+# Variablen deklarieren
+#
+COUNTER=0; CHECKER=0; UCOUNT=1
+PSPROG='/bin/ps -ef'
+SORTPROG='/bin/sort +0 –1 +7 –8'
+TMPFILE=/tmp/proclist_$$
+# Beim ordentlichen Beenden TMPFILE wieder l&ouml;schen
+trap "/bin/rm -f $TMPFILE" EXIT
+# Die aktuelle Prozessliste in TMPFILE speichern
+#
+$PSPROG | $SORTPROG &gt; $TMPFILE
+# Daten in TMPFILE verarbeiten
+#
+grep -v 'UID[  ]*PID' $TMPFILE | while read LINE
+do
+   # Zeilen in einzelne Felder aufbrechen
+   set -- $LINE
+   # Einzelne Felder der Ausgabe von ps -ef lauten:
+   # UID PID PPID C STIME TTY TIME CMD
+   # Anzahl der Parameter einer Zeile gr&ouml;&szlig;er als 0 ...
+   if [ $# -gt 0 ]
+   then
+      # Erstes Feld (UID) einer Zeile der Variablen
+      # USERNAME zuordnen
+      USERNAME=$1
+      # Die ersten sieben Felder einer Zeile entfernen
+      shift 7
+      # Kommandonamen (CMD) der Variablen PROGNAME zuordnen
+      PROGNAME=$*
+   fi
+   # Testet die Kopfzeile
+   #
+   if [ "$USERNAME" = "UID" ]
+   then
+      continue # n&auml;chsten Wert in der Schleife holen ...
+   fi
+   # &Uuml;berpr&uuml;fen, ob es sich um die erste Zeile von Daten handelt
+   #
+   if [ "$CHECKER" = "0" ]
+   then
+      CHECKER=1
+      UCOUNT=0
+      LASTUSERNAME="$USERNAME"
+      # Programmname f&uuml;r die Ausgabe formatieren
+      # auf 40 Zeichen beschr&auml;nken ....
+      #
+      LASTPROGNAME=`echo $PROGNAME | \
+                    awk '{print substr($0, 0, 40)}'`
+      COUNTER=1; LASTCOUNT=1
+      echo ""
+      echo "$USERNAME f&uuml;hrt aus:....."
+      continue # n&auml;chsten Wert von USERNAME holen
+   fi
+   # Logische &Uuml;berpr&uuml;fung durchf&uuml;hren
+   #
+   if [ $CHECKER -gt 0 -a "$USERNAME" = "$LASTUSERNAME" ]
+   then
+      if [ "$PROGNAME" = "$LASTPROGNAME" ]
+         then
+            COUNTER=`expr $COUNTER + 1`
+         else
+         # Ausgabe auf dem Bildschirm ...
+         if [ $LASTCOUNT -gt 1 ]
+         then
+            echo "     $LASTCOUNT Instanz(en) von -&gt;"\
+                 " $LASTPROGNAME"
+         else
+            echo "         $LASTCOUNT Instanz(en) von -&gt;"\
+                 " $LASTPROGNAME"
+         fi
+         COUNTER=1
+      fi
+      # Programmname f&uuml;r die Ausgabe formatieren
+      # auf 40 Zeichen beschr&auml;nken ....
+      #
+      LASTPROGNAME=`echo $PROGNAME | \
+                    awk '{print substr($0, 0, 40)}'`
+      LASTCOUNT=$COUNTER
+   elif [ $CHECKER -gt 0 -a "$USERNAME" != "$LASTUSERNAME" ]
+   then
+      if [ $LASTCOUNT -gt 1 ]
+      then
+         echo "     $LASTCOUNT Instanz(en) von &gt;&gt; $LASTPROGNAME"
+      else
+         echo "         $LASTCOUNT Instanz(en) von &gt;&gt;"\
+              " $LASTPROGNAME"
+      fi
+      echo
+      echo "$USERNAME f&uuml;hrt aus:....."
+      LASTUSERNAME="$USERNAME"
+      # Programmname f&uuml;r die Ausgabe formatieren
+      # auf 40 Zeichen beschr&auml;nken ....
+      #
+      LASTPROGNAME=`echo $PROGNAME | \
+                    awk '{print substr($0, 0, 40)}'`
+      COUNTER=1
+      LASTCOUNT=$COUNTER
+   fi
+done
+# DISPLAY THE FINAL USER INSTANCE DETAILS
+#
+if [ $COUNTER -eq 1 -a $LASTCOUNT -ge 1 ]
+then
+   if [ $LASTCOUNT -gt 1 ]
+   then
+      echo "     $LASTCOUNT Instanz(en) von &gt;&gt; $LASTPROGNAME"
+   else
+      echo "         $LASTCOUNT Instanz(en) von &gt;&gt; $LASTPROGNAME"
+   fi
+fi
+echo "------"
+echo "Fertig"
+echo "------"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./psusers
+bin f&uuml;hrt aus:.....
+         1 Instanz(en) von &gt;&gt; /sbin/portmap
+lp f&uuml;hrt aus:.....
+         1 Instanz(en) von &gt;&gt; /usr/sbin/cupsd
+postfix f&uuml;hrt aus:.....
+         1 Instanz(en) von -&gt; pickup -l -t fifo -u
+         1 Instanz(en) von &gt;&gt; qmgr -l -t fifo -u
+root f&uuml;hrt aus:.....
+         1 Instanz(en) von -&gt; -:0
+         1 Instanz(en) von -&gt; [aio/0]
+         1 Instanz(en) von -&gt; /bin/bash /sbin/hotplug pci
+         1 Instanz(en) von -&gt; /bin/bash /etc/hotplug/pci.agent
+...
+you f&uuml;hrt aus:.....
+     3 Instanz(en) von -&gt; /bin/bash
+         1 Instanz(en) von -&gt; /bin/ps -ef
+         1 Instanz(en) von -&gt; /bin/sh /opt/kde3/bin/startkde
+         1 Instanz(en) von -&gt; /bin/sh ./testscript
+         1 Instanz(en) von -&gt; gpg-agent --daemon --no-detach
+         1 Instanz(en) von -&gt; kaffeine -session 117f000002000111
+         1 Instanz(en) von -&gt; kamix
+         1 Instanz(en) von -&gt; kdeinit: Running...
+...</pre>
+<h4 class="t4">Prozesse bestimmter Benutzer beenden</h4>
+<p><a id="Xxx999313" name="Xxx999313"></a><a id="Xxx999314" name="Xxx999314"></a><a id="Xxx999315" name="Xxx999315"></a>H&auml;ufig kommt es vor, dass bei einem Benutzer einige Prozesse »Amok« laufen bzw. man einen Prozess einfach beenden will (warum auch immer). Mit dem folgenden Script k&ouml;nnen Sie (als root) die Prozesse eines Benutzers mithilfe einer interaktiven Abfrage beenden. Nach der Eingabe des Benutzers werden alle laufenden Prozesse in einem Array gespeichert. Anschlie&szlig;end wird das komplette Array durchlaufen und nachgefragt, ob Sie den Prozess beenden wollen oder nicht. Zuerst wird immer versucht, den Prozess normal mit <a id="Xxx999317" name="Xxx999317"></a><span class="listing">SIGTERM</span> zu beenden. Gelingt dies nicht mehr, muss <a id="Xxx999318" name="Xxx999318"></a><span class="listing">SIGKILL</span> herhalten.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Da dieses Script Arrays verwendet, ist es nur in der <span class="listing">bash</span> bzw. Korn-Shell ausf&uuml;hrbar. Muss das Script unbedingt auch in einer Bourne-Shell laufen, so k&ouml;nnte man die einzelnen Prozesse statt in ein Array auch in eine Datei (zeilenweise) schreiben und aus dieser zeilenweise wieder lesen.</p>
+</td>
+</tr>
+</table><br>
+<pre>#!/bin/ksh
+# Name: killuser
+# Wegen der Benutzung von Arrays "nur" f&uuml;r bash und Korn-Shell
+# nicht aber f&uuml;r Bourne-Shell (sh) geeignet
+while true
+do
+   # Bildschirm l&ouml;schen
+   clear
+   echo "Diese Script erlaubt Ihnen bestimmte Benutzer Prozesse"
+   echo "zu beenden."
+   echo
+   echo "Name des Benutzers eingeben (mit q beenden) : " | \
+       tr -d '\n'
+   read unam
+   # Wurde kein Benutzer angegeben
+   unam=${unam:-null_value}
+   export unam
+   case $unam in
+      null_value)
+         echo "Bitte einen Namen eingeben!" ;;
+      [Qq])
+         exit 0 ;;
+      root)
+         echo "Benutzer 'root' ist nicht erlaubt!" ;;
+      *)
+         echo "&Uuml;berpr&uuml;fe $unam ..."
+         typeset -i x=0
+         typeset -i n=0
+         if $(ps -ef | grep "^[  ]*$unam" &gt; /dev/null)
+         then
+         for a in $(ps -ef |
+            awk -v unam="$unam" '$1 ~ unam { print $2, $8}'| \
+            sort -nr +1 –2 )
+         do
+         if [ $n -eq 0 ]
+         then
+            x=`expr $x + 1`
+            var[$x]=$a
+            n=1
+         elif [ $n -eq 1 ]
+         then
+            var2[$x]=$a
+            n=0
+         fi
+        done
+        if [ $x -eq 0 ]
+        then
+           echo "Hier gibt es keine Prozesse zum Beenden!"
+        else
+           typeset -i y=1
+           clear
+           while [ $y -le $x ]
+           do
+              echo "Prozess beenden PID: ${var[$y]} -&gt; CMD: "\
+                   " ${var2[$y]}  (J/N) : " | tr -d '\n'
+              read resp
+              case "$resp" in
+                 [Jj]*)
+                    echo "Prozess wird beendet ..."
+                    # Zuerst versuchen, "normal" zu beenden
+                    echo "Versuche, normal zu beenden " \
+                         " (15=SIGTERM)"
+                    kill –15 ${var[$y]} 2&gt;/dev/null
+                    # &Uuml;berpr&uuml;fen, ob es geklappt hat 
+                    # -&gt; ansonsten
+                    # mit dem Hammmer killen
+                    if ps -p ${var[$y]} &gt;/dev/null 2&gt;&amp;1
+                    then
+                       echo "Versuche, 'brutal' zu beenden"\
+                            " (9=SIGKILL)"
+                       kill –9 ${var[$y]} 2&gt;/dev/null
+                    fi
+                    ;;
+                 *)
+                    echo "Prozess wird weiter ausgef&uuml;hrt"\
+                         " ( ${var2[y]} )"
+                    ;;
+              esac
+              y=`expr $y + 1`
+              echo
+           done
+           fi
+        fi
+        ;;
+     esac
+sleep 2
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre># ./killuser
+Dieses Script erlaubt Ihnen, bestimmte Benutzer-Prozesse
+zu beenden.
+Name des Benutzers eingeben (mit q beenden) : john
+Prozess beenden PID: 4388 -&gt; CMD: sleep  (J/N) : J
+Prozess wird beendet ...
+Versuche, normal zu beenden (15=SIGTERM)
+Prozess beenden PID: 4259 -&gt; CMD: holdonrunning  (J/N) : N
+Prozess wird weiter ausgef&uuml;hrt ( holdonrunning )
+Prozess beenden PID: 4203 -&gt; CMD: -csh  (J/N) : ...</pre>
+<h4 class="t4">&Uuml;berwachung, wer sich im System einloggt</h4>
+<p><a id="Xxx999327" name="Xxx999327"></a>Einen &Uuml;berblick, wer sich alles im System einloggt und eingeloggt hat, k&ouml;nnen Sie sich wie bekannt mit dem Kommando <span class="listing">last</span> ermitteln lassen. Gern w&uuml;rde man sich den Aufruf von <span class="listing">last</span> ersparen, um so immer aktuell neu eingeloggte Benutzer im System zu ermitteln. Dies kann man dann z. B. verwenden, um dem Benutzer eine Nachricht zukommen zu lassen, oder eben zu &Uuml;berwachungszwecken.</p>
+<p>Das &Uuml;berwachen, ob sich ein neuer Benutzer im System eingeloggt hat, l&auml;sst sich auch in einem Shellscript mit <a id="Xxx999330" name="Xxx999330"></a><a id="Xxx999331" name="Xxx999331"></a><span class="listing">last</span> relativ leicht ermitteln. Hierzu m&uuml;ssen Sie eigentlich nur die Anzahl von Zeilen von <span class="listing">last</span> z&auml;hlen und in einer bestimmten Zeit wieder miteinander vergleichen, ob eine neue Zeile hinzugekommen ist. Die Differenz beider Werte l&auml;sst sich dann mit <span class="listing">last</span> und einer Pipe nach <a id="Xxx999332" name="Xxx999332"></a><a id="Xxx999333" name="Xxx999333"></a><span class="listing">head</span> ausgeben. Dabei werden immer nur die neu hinzugekommenen letzten Zeilen mit <span class="listing">head</span> ausgegeben. Im Beispiel wird die Differenz beider <span class="listing">last</span>-Aufrufe alle 30 Sekunden ermittelt. Dieser Wert l&auml;sst sich nat&uuml;rlich beliebig hoch- bzw. runtersetzen. Au&szlig;erdem wird im Beispiel nur eine Ausgabe auf das aktuelle Terminal (/dev/tty) vorgenommen. Hierzu w&uuml;rde sich beispielsweise das Kommando <span class="listing">write</span> oder <span class="listing">wall</span> sehr gut eignen. Als root k&ouml;nnten Sie somit jederzeit einem User eine Nachricht zukommen lassen, wenn dieser sich einloggt.</p>
+<pre>#! /bin/sh
+# Name: loguser
+# Das Script &uuml;berpr&uuml;ft, ob sich jemand im System eingeloggt hat
+# Pseudonym f&uuml;r das aktuelle Terminal
+outdev=/dev/tty
+fcount=0; newcount=0; timer=30; displaylines=0
+# Die Anzahl Zeilend des last-Kommandos z&auml;hlen
+fcount=`last | wc -l`
+while true
+do
+   # Erneut die Anzahl Zeilen des last-Kommandos z&auml;hlen ...
+   newcount=`last | wc -l`
+   # ... und vergleichen, ob neue hinzugekommen sind
+   if [ $newcount -gt $fcount ]
+   then
+      # Wie viele neue Zeilen sind hinzugekommen ...
+      displaylines=`expr $newcount – $fcount`
+      # Entsprechend neue Zeilen ausgeben auf outdev
+      # Hier w&uuml;rde sich auch eine Datei oder das Kommando
+      # write sehr gut eignen, damit die Kommandozeile
+      # nicht blockiert wird ...
+      last | head -$displaylines &gt; $outdev
+      # neuen Wert an fcount zuweisen
+      fcount=$newcount
+      # timer Sekunden warten, bis zur n&auml;chsten &Uuml;berpr&uuml;fung
+      sleep $timer
+   fi
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./loguser
+john     tty2                  Wed May  4 23:46   still logged in
+root     tty4                  Wed May  4 23:46   still logged in
+tot      tty2                  Wed May  4 23:47   still logged in
+you      tty5                  Wed May  4 23:49   still logged in</pre>
+<h4 class="t4">Benutzer komfortabel anlegen, l&ouml;schen, sperren und wieder aufheben</h4>
+<p><a id="Xxx999338" name="Xxx999338"></a><a id="Xxx999339" name="Xxx999339"></a>Eine ziemlich wichtige und regelm&auml;&szlig;ige Aufgabe, die Ihnen als Systemadministrator zuf&auml;llt, d&uuml;rfte das Anlegen und L&ouml;schen neuer Benutzerkonten sein.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Ich habe mir lange &uuml;berlegt, diesen Part der User-Verwaltung wieder zu streichen. Zum einen zeigt das Script hervorragend, wie man sich eine eigene Userverwaltung bauen kann und was dabei alles so zu beachten ist. Allerdings bietet mittlerweile jede Distribution mindestens eine solche Userverwaltung (und das meistens erheblich komfortabler) an. Das Script sollte eigentlich nur unter Linux ordentlich laufen, aber selbst hier k&ouml;nnten Sie noch Probleme mit der Portabilit&auml;t bekommen, weil auch die einzelnen Distributionen hier ihr eigenes S&uuml;ppchen kochen, mal hei&szlig;t es hier <a id="Xxx999344" name="Xxx999344"></a><a id="Xxx999345" name="Xxx999345"></a><a id="Xxx999346" name="Xxx999346"></a><a id="Xxx999347" name="Xxx999347"></a><span class="listing">useradd</span> dann wieder <span class="listing">adduser</span>, die Optionen von <span class="listing">passwd</span> bspw. sind teilweise auch unterschiedlich.</p>
+</td>
+</tr>
+</table><br>
+<p><a id="Xxx999349" name="Xxx999349"></a><a id="Xxx999350" name="Xxx999350"></a>Um einen neuen Benutzer-Account anzulegen, wird ein neuer Eintrag in der Datei /etc/passwd angelegt. Dieser Eintrag beinhaltet gew&ouml;hnlich einen Benutzernamen aus acht Zeichen, eine User-ID (UID), eine Gruppen-ID (GID), ein Heimverzeichnis (/home) und eine Login-Shell. Die meisten Linux-/UNIX-Systeme speichern dann noch ein verschl&uuml;sseltes Password in /etc/shadow – was nat&uuml;rlich bedeutet, dass Sie auch hier einen Eintrag (mit <span class="listing">passwd</span>) vornehmen m&uuml;ssen. Beim Anlegen eines neuen Benutzers k&ouml;nnen Sie entweder zum Teil vorgegebene Standardwerte verwenden oder eben eigene Eintr&auml;ge anlegen. Es ist au&szlig;erdem m&ouml;glich, die Dauer der G&uuml;ltigkeit des Accounts festzulegen.</p>
+<p>Im Beispiel ist es nicht m&ouml;glich, auch noch eine neue Gruppe anzulegen, sprich, Sie k&ouml;nnen nur einen neuen Benutzer anlegen und diesem eine bereits vorhandene Gruppe (setzt einen vorhandenen Eintrag in /etc/group voraus) zuweisen. Auf das Anlegen einer neuen Gruppe wurde aus &Uuml;bersichtlichkeitsgr&uuml;nden verzichtet, da sich das Script sonst unn&ouml;tig in die L&auml;nge ziehen w&uuml;rde. Allerdings sollte es Ihnen mit der Vorlage dieses Scripts nicht schwer fallen, ein recht &auml;hnliches Script f&uuml;r das Anlegen einer Gruppe zu schreiben.</p>
+<p>Nebenbei ist es auch realisierbar, einen Benutzer mit <span class="listing">passwd</span> zu sperren und die Sperre wieder aufzuheben. Beim L&ouml;schen eines Benutzers werden zuvor noch all seine Daten gesucht und gel&ouml;scht, bevor der eigentliche Benutzer-Account aus /etc/passwd gel&ouml;scht werden kann. Im Beispiel wird die Suche wieder nur auf das /home-Verzeichnis beschr&auml;nkt, was Sie allerdings in der Praxis wieder den Gegebenheiten anpassen sollten.</p>
+<pre>#! /bin/sh
+# Name: account
+# Mit diesem Script k&ouml;nnen Sie einen Benutzer
+# * Anlegen
+# * L&ouml;schen
+# * Sperren
+# * Sperre wieder aufheben
+# Pfade, die beim L&ouml;schen eines Accounts ben&ouml;tigt werden,
+# ggf. erweitern und erg&auml;nzen um bspw. /var /tmp ...
+# &uuml;berall eben, wo sich Dateien vom Benutzer befinden k&ouml;nnen
+searchpath="/home"
+usage() {
+   echo "Usage: $0 Benutzer      (Neuen Benutzer anlegen)"
+   echo "Usage: $0 -d Benutzer   (Benutzer l&ouml;schen)"
+   echo "Usage: $0 -l Benutzer   (Benutzer sperren)"
+   echo "Usage: $0 -u Benutzer   (Gesperrten Benutzer wieder freigeben)"
+}
+# Nur root darf dieses Script ausf&uuml;hren ...
+#
+if [ `id -u` != 0 ]
+then
+   echo "Es werden root-Rechte f&uuml;r dieses Script ben&ouml;tigt!"
+   exit 1
+fi
+# Ist das Kommando useradd auf dem System vorhanden ...
+#
+which useradd &gt; /dev/null 2&gt;1&amp;
+if [ $? -ne 0 ]
+then
+   echo "Das Kommando 'useradd' konnte auf dem System nicht "\
+        " gefunden werden!"
+   exit 1
+fi
+if [ $# -eq 0 ]
+then
+   usage
+   exit 0
+fi
+if [ $# -eq 2 ]
+then
+   case $1 in
+      -d)
+         # Existiert ein entsprechender Benutzer
+         if [ "`grep $2 /etc/passwd | \
+                awk -F : '{print $1}'`" = "$2" ]
+         then
+            echo "Dateien und Verzeichnisse von '$2' "\
+                 "werden gel&ouml;scht"
+            # Alle Dateien und Verz. des Benutzers l&ouml;schen
+            find $searchpath -user $2 -print | sort -r |
+            while read file
+            do
+              if [ -d $file ]
+              then
+                 rmdir $file
+              else
+                 rm $file
+              fi
+            done
+         else
+            echo "Ein Benutzer '$2' existiert nicht in "\
+                 "/etc/passwd!"
+            exit 1
+         fi
+         # Benutzer aus /etc/passwd und /etc/shadow l&ouml;schen
+         userdel -r $2 2&gt;/dev/null
+         echo "Benutzer '$2' erfolgreich gel&ouml;scht!"
+         exit 0 ;;
+      -l)
+         # Existiert ein entsprechender Benutzer
+         if [ "`grep $2 /etc/passwd | \
+                awk -F : '{print $1}'`" = "$2" ]
+         then
+            passwd -l $2
+         fi
+         echo "Benutzer '$2' wurde gesperrt"
+         exit 0 ;;
+      -u)
+         # Existiert ein entsprechender Benutzer
+         if [ "`grep $2 /etc/passwd | \
+                awk -F : '{print $1}'`" = "$2" ]
+         then
+            passwd -u $2
+         fi
+         echo "Benutzer '$2': Sperre aufgehoben"
+         exit 0 ;;
+      -h)   usage
+            exit 1 ;;
+      -*)   usage
+            exit 1 ;;
+       *)   usage
+            exit 1 ;;
+   esac
+fi
+if [ $# -gt 2 ]
+then
+   usage
+   exit 1
+fi
+#####################################################
+#        Einen neuen Benutzer anlegen
+#
+# Existiert bereits ein entsprechender Benutzer
+#
+if [ "`grep $1 /etc/passwd | awk -F : '{print $1}'`" = "$1" ]
+then
+   echo "Ein Benutzer '$1' existiert bereits in /etc/passwd ...!"
+   exit 1
+fi
+# Bildschirm l&ouml;schen
+clear
+# Zuerst wird die erste freie verwendbare User-ID gesucht,
+# vorgeschlagen und bei Best&auml;tigung verwendet, oder es wird eine
+# eingegebene User-ID verwendet, die allerdings ebenfalls
+# &uuml;berpr&uuml;ft wird, ob sie bereits in /etc/passwd existiert.
+#
+userid=`tail –1 /etc/passwd |awk -F : '{print $3 + 1}'`
+echo "Eingabe der UID [default: $userid] " | tr -d '\n'
+read _UIDOK
+# ... wurde nur ENTER bet&auml;tigt
+if [ "$_UIDOK" = "" ]
+then
+   _UIDOK=$userid
+# ... es wurde eine UID eingegeben -&gt;
+# &Uuml;berpr&uuml;fen ob bereits vorhanden ...
+elif [ `grep $_UIDOK /etc/passwd | awk -F : '{print $3}'` = "" ]
+then
+   _UIDOK=$userid
+else
+   echo "UID existiert bereits! ENTER=Neustart / STRG+C=Ende"
+   read
+   $0 $1
+fi
+# Selbiges mit Gruppen-ID
+#
+groupid=`grep users /etc/group |awk -F : '{print $3}'`
+echo "Eingabe der GID: [default: $groupid] " | tr -d '\n'
+read _GIDOK
+if [ "$_GIDOK" = "" ]
+then
+   _GIDOK=$groupid
+elif [ "`grep $_GIDOK /etc/group`" = "" ]
+then
+   echo "Dies Gruppe existiert nicht in /etc/group! "\
+        "ENTER=Neustart / STRG+C=Ende"
+   read
+   $0 $1
+fi
+# Das Benutzer-Heimverzeichnis /home abfragen
+#
+echo "Eingabe des Heimverzeichnisses: [default: /home/$1] " | \
+      tr -d '\n'
+read _HOME
+# Wurde nur ENTER gedr&uuml;ckt, default verwenden ...
+if [ "$_HOME" = "" ]
+then
+   _HOME="/home/$1"
+fi
+# Die Standard-Shell f&uuml;r den Benutzer festlegen
+#
+echo "Eingabe der Shell: [default: /bin/bash] " | tr -d '\n'
+read _SHELL
+# Wurde nur ENTER gedr&uuml;ckt, default verwenden ...
+if [ "$_SHELL" = "" ]
+then
+   _SHELL=/bin/bash
+# Gibt es &uuml;berhaupt eine solche Shell in /etc/shells ...
+elif [ "`grep $_SHELL /etc/shells`" = "" ]
+then
+   echo "'$_SHELL' gibt es nicht in /etc/shells! "\
+        " ENTER=Neustart / STRG+C=Ende"
+   read
+   $0 $1
+fi
+# Kommentar oder Namen eingeben
+echo "Eingabe eines Namens: [beliebig] " | tr -d '\n'
+read _REALNAME
+# Expire date
+echo "Ablaufdatum des Accounts: [MM/DD/YY] " | tr -d '\n'
+read _EXPIRE
+clear
+echo
+echo "Folgende Eingaben wurden erfasst:"
+echo "---------------------------------"
+echo "User-ID           : [$_UIDOK]"
+echo "Gruppen-ID        : [$_GIDOK]"
+echo "Heimverzeichnis : [$_HOME]"
+echo "Login-Shell       : [$_SHELL]"
+echo "Name/Komentar     : [$_REALNAME]"
+echo "Account l&auml;uft aus : [$_EXPIRE]"
+echo
+echo "Account erstellen? (j/n) "
+read _verify
+case $_verify in
+   [nN]*)
+      echo "Account wurde nicht erstellt!" | tr -d '\n'
+      exit 0 ;;
+   [jJ]*)
+        useradd -u $_UIDOK -g $_GIDOK -d $_HOME -s $_SHELL \
+                -c "$_REALNAME" -e "$_EXPIRE" $1
+        cp -r /etc/skel $_HOME
+        chown -R $_UIDOK:$_GIDOK $_HOME
+        passwd $1
+        echo "Benutzer $1 [$_REALNAME] hinzugef&uuml;gt "\
+             "am `date`" &gt;&gt; /var/adm/newuser.log
+        finger -m $1 |head –2
+        sleep 2
+        echo "Benutzer $1 erfolgreich hinzugef&uuml;gt!" ;;
+      *) exit 1;;
+esac</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>linux:/home/you # ./account jack
+Eingabe der UID [default: 1003](ENTER)
+Eingabe der GID: [default: 100](ENTER)
+Eingabe des Heimverzeichnisses: [default: /home/jack](ENTER)
+Eingabe der Shell: [default: /bin/bash](ENTER)
+Eingabe eines Namens: [beliebig] J.Wolf
+Ablaufdatum des Accounts : [MM/DD/YY](ENTER)
+...
+Folgende Eingaben wurden erfasst:
+---------------------------------
+User-ID           : [1003]
+Gruppen-ID        : [100]
+Heimverzeichnis   : [/home/jack]
+Login-Shell       : [/bin/bash]
+Name/Komentar     : [J.Wolf]
+Account l&auml;uft aus : []
+Account erstellen? (j/n) j
+Changing password for jack.
+New password:********
+Re-enter new password:********
+Password changed
+Login: jack                             Name: J.Wolf
+Directory: /home/jack                   Shell: /bin/bash
+Benutzer jack erfolgreich hinzugef&uuml;gt!
+linux:/home/you # ./account -l jack
+Passwort ge&auml;ndert.
+Benutzer 'jack' wurde gesperrt
+linux:/home/you # ./account -u jack
+Passwort ge&auml;ndert.
+Benutzer 'jack': Sperre aufgehoben
+linux:/home/you # ./account -d jack
+Dateien und Verzeichnisse von 'jack' werden gel&ouml;scht
+Benutzer 'jack' erfolgreich gel&ouml;scht!</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">15.3.2 System&uuml;berwachung<a id="RxxKap017002040050751F03719F" name="RxxKap017002040050751F03719F"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<h4 class="t4">Warnung, dass der Plattenplatz des Dateisystems an seine Grenzen st&ouml;&szlig;t</h4>
+<p><a id="Xxx999359" name="Xxx999359"></a><a id="Xxx999360" name="Xxx999360"></a>Gerade, wenn man mehrere Dateisysteme oder gar Server betreuen muss, f&auml;llt es oft schwer, sich auch noch &uuml;ber den Plattenplatz Gedanken zu machen. Hierzu eignet sich ein Script, mit dem Sie den f&uuml;nften Wert von »<span class="listing">df</span> <span class="listing">–k</span>« auswerten und daraufhin &uuml;berpr&uuml;fen, ob eine bestimmte von Ihnen festgelegte Grenze erreicht wurde. Ist die Warnschwelle erreicht, k&ouml;nnen Sie eine Mail an eine bestimmte Adresse verschicken oder eventuell ein weiteres Script starten lassen, welches diverse Aufr&auml;um- oder Komprimierarbeiten durchf&uuml;hrt. Nat&uuml;rlich macht dieses Script vor allem dann Sinn, wenn es im Intervall mit einem <span class="listing">cron</span>-Job gestartet wird.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Auch hier sei nochmals auf das schon beschriebene Quota-System vor dem Script »DiskQuota« hingewiesen.</p>
+</td>
+</tr>
+</table><br>
+<pre>#!/bin/sh
+# Name: chcklimit
+# Dieses Script verschickt eine Mail, wenn der Plattenverbrauch
+# eines Filesystems an ein bestimmtes Limit st&ouml;sst.
+# Ab wie viel Prozent soll ein Warnung verschickt werden
+WARN_CAPACITY=80
+# Wohin soll eine Mail verschickt werden
+TOUSER=user@host.de
+call_mail_fn() {
+   servername=`hostname`
+   msg_subject="$servername – Dateisystem(${FILESYSTEM}) "\
+               "verwendet ${FN_VAR1}% – festgestellt am: `date`"
+   echo $msg_subject | mail -s "${servername}:Warnung" $TOUSER
+}
+if [ $# -lt 1 ]
+then
+   echo "usage: $0 FILESYSTEM"
+   echo "Bpsw.: $0 /dev/hda6"
+fi
+# Format von df -k:
+# Dateisystem   1K-Bl&ouml;cke   Benutzt Verf&uuml;gbar Ben% Eingeh&auml;ngt auf
+# /dev/hda4     15528224    2610376 12917848  17  %  /
+# Den f&uuml;nften Wert wollen wir haben: 'Ben%'
+#
+VAR1=`df -k ${1} | /usr/bin/tail –1 | \
+     /usr/bin/awk '{print $5}' `
+# Prozentzeichen herausschneiden
+VAR2=`echo $VAR1 | \
+      /usr/bin/awk '{ print substr($1,1,length($1)-1) }' `
+# Wurde die Warnschwelle erreicht ... ?
+if [ $VAR2 -ge ${WARN_CAPACITY} ]
+then
+   FN_VAR1=$VAR2
+   call_mail_fn
+fi</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./chcklimit /dev/hda6
+...
+you@host &gt; mail
+&gt;N  1 tot@linux.site Mon May  2 16:18  18/602   linux:Warnung
+? 1
+Message  1:
+From: tot@linux.site (J.Wolf)
+linux – Dateisystem() verwendet 88  % – festgestellt am: Mo Mai 2 16:17:59 CEST 2005</pre>
+<h4 class="t4">Kommandos bzw. Scripts auf einem entfernten Rechner ausf&uuml;hren</h4>
+<p><a id="Xxx999370" name="Xxx999370"></a><a id="Xxx999371" name="Xxx999371"></a><a id="Xxx999372" name="Xxx999372"></a>Das Ausf&uuml;hren von Kommandos oder gar von Scripts auf mehreren Rechnern, gestartet vom lokalen Rechner, h&ouml;rt sich komplizierter an als es ist. Und vor allem es ist auch sicherer, als manch einer jetzt vielleicht denken mag. Dank guter Verschl&uuml;sselungstechnik und hoher Pr&auml;senz bietet sich hierzu <span class="listing">ssh</span> an (die r-Tools fallen wegen der Sicherheitsl&uuml;cken flach – siehe Abschnitt 14.12.10). Die Syntax, um mit <span class="listing">ssh</span> Kommandos oder Scripts auf einem anderen Rechner auszuf&uuml;hren, sieht wie folgt aus:</p>
+<pre>ssh username@hostname "kommando1 ; kommando2 ; script"</pre>
+<p>Mit diesem Wissen f&auml;llt es nicht schwer, sich ein entsprechendes Script zusammenzubasteln. Damit es ein wenig flexibler ist, soll es auch m&ouml;glich sein, Shellscripts, die noch nicht auf dem entfernten Rechner liegen, zuvor noch mit <span class="listing">scp</span> in ein bestimmtes Verzeichnis hochzuladen, um es anschlie&szlig;end auszuf&uuml;hren. Ebenso soll es m&ouml;glich sein, in ein bestimmtes Verzeichnis zu wechseln, um dann entsprechende Kommandos oder Scripts auszuf&uuml;hren. Nat&uuml;rlich setzt dies voraus, dass auf den Rechnern auch ein entsprechendes Verzeichnis existiert. Die Rechner, auf denen Kommandos oder Scripts ausgef&uuml;hrt werden sollen, tragen Sie in die Datei namens hostlist.txt ein. Bei mir sieht diese Datei wie folgt aus:</p>
+<pre>you@host &gt; cat hostlist.txt
+us10129@myhoster.de
+jwolf@192.135.147.2</pre>
+<p>Im Beispiel finden Sie also zwei entfernte Rechner, bei denen das gleich folgende Script daf&uuml;r sorgt, dass Sie von Ihrem lokalen Rechner aus schnell beliebige Kommandos bzw. Scripts ausf&uuml;hren k&ouml;nnen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Damit Sie nicht andauernd ein Passwort eingeben m&uuml;ssen, empfiehlt es sich auch hier, SSH-Schl&uuml;ssel zu verwenden (siehe Abschnitt 14.12.12).</p>
+</td>
+</tr>
+</table><br>
+<pre>#!/bin/sh
+# Name: sshell
+# Kommandos bzw. Scripts auf entfernten Rechnern ausf&uuml;hren
+# ggf. den Pfad zur Datei anpassen
+HOSTS="hostlist.txt"
+usage() {
+   echo "usage: progname [-option] [Verzeichnis] "\
+        " Kommando_oder_Script"
+   echo
+   echo "Option:"
+   echo "-d :in ein bestimmtes Verzeichnis auf dem Host wechseln"
+   echo "-s :Script in ein bestimmtes Verzeichnis hochladen und"\
+        " Ausf&uuml;hren"
+   echo
+   echo "Syntax der Host-Liste: "
+   echo "Username@hostname1"
+   echo "Username@hostname2"
+   echo "..."
+   exit 1
+}
+if [ $# -eq 0 ]
+then
+   usage
+fi
+# Datei 'hostlist.txt' &uuml;berpr&uuml;fen
+if [ -e $HOSTS ]
+then :
+else
+   echo "Datei $HOSTS existiert nicht ..."
+   touch hostlist.txt
+   if [ $? -ne 0 ]
+   then
+      echo "Konnte $HOSTS nicht anlegen ...!"
+      exit 1
+   else
+      echo "Datei $HOSTS erzeugt, aber noch leer ...!"
+      usage
+      exit 1
+   fi
+fi
+# Optionen &uuml;berpr&uuml;fen ...
+case $1 in
+   -d)
+      if [ $# -lt 3 ]
+      then
+         usage
+      fi
+      DIR=$2
+      shift; shift  ;;
+   -s)
+      if [ $# -lt 3 ]
+      then
+         usage
+      fi
+      DIR=$2
+      SCRIPT="yes"
+      shift; shift  ;;
+   -*)
+      usage ;;
+esac
+# Die einzelnen Hosts durchlaufen ...
+for host in `cat $HOSTS`
+do
+   echo "$host : "
+   CMD=$*
+   if [ "$SCRIPT" = "yes" ]
+   then
+      scp $CMD ${host}:${DIR}
+   fi
+   ret=`ssh $host "cd $DIR; $CMD"`
+   echo "$ret"
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<p>Inhalt des Heimverzeichnisses ausgeben:</p>
+<pre>you@host &gt; ./sshell ls -l
+us10129@myhoster.de :
+total 44
+drwx------   4 us10129 us10129 4096 May 14 13:45 backups
+drwxr-xr-x   8 us10129 us10129 4096 May  9 10:13 beta.pronix.de
+-rw-rw-r--   1 us10129 us10129   66 Dec  2 02:13 db_cms.bak
+drwxrwxr-x   2 us10129 us10129 4096 Mar 11 07:49 dump
+-rw-------   1 us10129 us10129  952 May 14 14:00 mbox
+drwxrwxr-x   2 us10129 us10129 4096 Mar 28 18:03 mysqldump
+drwxr-xr-x  20 us10129 us10129 4096 May 19 19:56 www.pronix.de
+jwolf@192.135.147.2 :
+total 24
+drwxr-xr-x  2 jwolf  jwolf    512 May  8 14:03 backups
+drwxr-xr-x  3 jwolf  jwolf  21504 Sep  2  2004 dev</pre>
+<p>Inhalt des Verzeichnisses $HOME/backups ausgeben:</p>
+<pre>you@host &gt; ./sshell -d backups ls -l
+us10129@myhoster.de :
+total 8
+drwxrwxr-x  3 us10129 us10129 4096 May 18 18:38 Shellbuch
+drwxrwxr-x  3 us10129 us10129 4096 May 14 13:46 Shellbuch_bak
+-rw-rw-r--  1 us10129 us10129    0 May 20 12:45 file1
+-rw-rw-r--  1 us10129 us10129    0 May 20 12:45 file2
+-rw-rw-r--  1 us10129 us10129    0 May 20 12:45 file3
+jwolf@192.135.147.2 :
+total 6
+-rw-r--r--  1 jwolf  jwolf   0 May  8 13:38 file1
+-rw-r--r--  1 jwolf  jwolf   0 May  8 13:38 file2
+-rw-r--r--  1 jwolf  jwolf   0 May  8 13:38 file3
+-rwx------  1 jwolf  jwolf  29 May  8 13:58 hallo.sh
+-rwx------  1 jwolf  jwolf  29 May  8 13:48 mhallo
+-rwx------  1 jwolf  jwolf  29 May  8 14:03 nhallo</pre>
+<p>Dateien beginnend mit »file*« im Verzeichnis $HOME/backups l&ouml;schen:</p>
+<pre>you@host &gt; ./sshell -d backups rm file*
+us10129@myhoster.de :
+jwolf@192.135.147.2 :</pre>
+<p>Inhalt des Verzeichnisses $HOME/backups erneut ausgeben:</p>
+<pre>you@host &gt; ./sshell -d backups ls -l
+us10129@myhoster.de :
+total 5
+drwxrwxr-x  3 us10129 us10129 4096 May 18 18:38 Shellbuch
+drwxrwxr-x  3 us10129 us10129 4096 May 14 13:46 Shellbuch_bak
+jwolf@192.135.147.2 :
+total 3
+-rwx------  1 jwolf  jwolf  29 May  8 13:58 hallo.sh
+-rwx------  1 jwolf  jwolf  29 May  8 13:48 mhallo
+-rwx------  1 jwolf  jwolf  29 May  8 14:03 nhallo</pre>
+<p>Neues Verzeichnis testdir anlegen:</p>
+<pre>you@host &gt; ./sshell mkdir testdir
+us10129@myhoster.de :
+jwolf@192.135.147.2 :</pre>
+<p>Script hallo.sh ins neue Verzeichnis (testscript) schieben und ausf&uuml;hren:</p>
+<pre>you@host &gt; ./sshell -s testdir ./hallo.sh
+us10129@myhoster.de :
+hallo.sh                            100  %   67     0.1KB/s   00:00
+Ich bin das Hallo Welt-Script!
+jwolf@192.135.147.2 :
+hallo.sh                            100  %   67     0.1KB/s   00:00
+Ich bin das Hallo Welt-Script!</pre>
+<p>Verzeichnis testdir wieder l&ouml;schen:</p>
+<pre>tot@linux:~&gt; ./sshell rm -r testdir
+us10129@myhoster.de :
+jwolf@192.135.147.2 :</pre>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_017_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_017_003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_017_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

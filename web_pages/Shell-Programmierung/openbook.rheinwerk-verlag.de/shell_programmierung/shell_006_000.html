@@ -1,0 +1,704 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_006_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:55:58 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 4 Kontrollstrukturen</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_005_008.html">
+<link rel="next" href="shell_006_001.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_005_008.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_006_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a class="navh" href="#RxxKap00600004004E0C1F017172">4 Kontrollstrukturen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00600004004E0C1F017174">4.1 Bedingte Anweisung mit if</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600004004E0C1F017182">4.1.1 Kommandos testen mit if</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600004004E0C1F017196">4.1.2 Kommandoverkettung &uuml;ber Pipes mit if</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_001.html#RxxKap00600104004E231F030172">4.2 Die else-Alternative f&uuml;r eine if-Verzweigung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_002.html#RxxKap00600204004E241F032172">4.3 Mehrfache Alternative mit elif</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_003.html#RxxKap00600304004E251F012172">4.4 Das Kommando test</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_003.html#RxxKap00600304004E251F01217B">4.4.1 Ganze Zahlen vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_003.html#RxxKap00600304004E251F0121A2">4.4.2 Ganze Zahlen vergleichen mit let (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_003.html#RxxKap00600304004E251F0121C6">4.4.3 Zeichenketten vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_003.html#RxxKap00600304004E251F0121EB">4.4.4 Zeichenketten vergleichen (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_004.html#RxxKap00600404004E261F04B172">4.5 Status von Dateien erfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F172">4.6 Logische Verkn&uuml;pfung von Ausdr&uuml;cken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F192">4.6.1 Negationsoperator !</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F198">4.6.2 Die UND-Verkn&uuml;pfung (-a und &amp;&amp;)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F1A6">4.6.3 Die ODER-Verkn&uuml;pfung (-o und ||)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F1B1">4.6.4 Klammerung und mehrere logische Verkn&uuml;pfungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_006.html#RxxKap00600604004E281F011172">4.7 Short Circuit-Tests – ergebnisabh&auml;ngige Befehlsausf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C172">4.8 Die Anweisung case</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C17E">4.8.1 Alternative Vergleichsmuster</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C185">4.8.2 case und Wildcards</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C18F">4.8.3 case und Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_008.html#RxxKap00600804004E2A1F031172">4.9 Schleifen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E172">4.10 for-Schleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E17A">4.10.1 Argumente bearbeiten mit for</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E182">4.10.2 for und die Dateinamen-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E18E">4.10.3 for und die Kommando-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E1A6">4.10.4 for und Array (Bash und Korn Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E1AB">4.10.5 for-Schleife mit Schleifenz&auml;hler (Bash only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_010.html#RxxKap00601004004E2C1F01B172">4.11 Die while-Schleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_011.html#RxxKap00601104004E2D1F03F172">4.12 Die until-Schleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_012.html#RxxKap00601204004E2E1F040172">4.13 Kontrollierte Spr&uuml;nge</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_012.html#RxxKap00601204004E2E1F040178">4.13.1 Der Befehl continue</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_012.html#RxxKap00601204004E2E1F040185">4.13.2 Der Befehl break</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_013.html#RxxKap00601304004E2F1F028172">4.14 Endlosschleifen</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<h1 class="t1">Kapitel 4 <a id="RxxKap0042Kontrollstrukturen" name="RxxKap0042Kontrollstrukturen"></a>Kontrollstrukture<a id="RxxKap00600004004E0C1F017172" name="RxxKap00600004004E0C1F017172"></a>n</h1>
+<p class="anleser"><i>Um aus der »Shell« eine »echte« Programmiersprache zu machen, sind so genannte Kontrollstrukturen erforderlich. Dabei handelt es sich um Entscheidungsverzweigungen oder Schleifen. Eine Programmiersprache ohne Verzweigungen w&auml;re wohl eine Katastrophe. Mit einer Verzweigung k&ouml;nnen Sie daf&uuml;r sorgen, dass die weitere Ausf&uuml;hrung des Scripts von einer bestimmten Bedingung abh&auml;ngt und eben entsprechend verzweigt wird. Ebenso sieht es mit den Schleifen aus. Anstatt immer Zeile f&uuml;r Zeile dieselben Anweisungen auszuf&uuml;hren, k&ouml;nnen Sie dies auch in einer Schleife zusammenfassen.</i></p>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">4.1 <a id="RxxKap0044BedingteAnweisungmitif" name="RxxKap0044BedingteAnweisungmitif"></a>Bedingte Anweisung mit i<a id="RxxKap00600004004E0C1F017174" name="RxxKap00600004004E0C1F017174"></a>f 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999280" name="Xxx999280"></a><a id="Xxx999281" name="Xxx999281"></a><a id="Xxx999282" name="Xxx999282"></a><a id="Xxx999283" name="Xxx999283"></a>Wenn Sie &uuml;berpr&uuml;fen wollen, ob eine Eingabe von der Kommandozeile oder der Tastatur (egal, ob eine Zahl oder eine Zeichenkette) korrekt war, ob das Auslesen einer Datei ein entsprechendes Ergebnis beinhaltet, Sie eine Datei bzw. ein bestimmtes Attribut pr&uuml;fen m&uuml;ssen oder den Erfolg einer Kommandoausf&uuml;hrung testen wollen, dann k&ouml;nnen Sie hierf&uuml;r die bedingte Anweisung (oder auch Verzweigung) mit <span class="listing">if</span> verwenden. Die korrekte Syntax der <span class="listing">if</span>-Verzweigung sieht wie folgt aus:</p>
+<pre>if Kommando_erfolgreich
+then
+   # Ja, Kommando war erfolgreich
+   # ... hier Befehle f&uuml;r erfolgreiches Kommando verwenden
+fi</pre>
+<p><a id="Xxx999286" name="Xxx999286"></a><a id="Xxx999287" name="Xxx999287"></a>Im Anschluss des Schl&uuml;sselwortes <span class="listing">if</span> muss ein Kommando oder eine Kommandofolge folgen. Wurde das Kommando (oder die Kommandofolge) erfolgreich ausgef&uuml;hrt, wird als R&uuml;ckgabewert 0 zur&uuml;ckgegeben (wie dies ja bei Kommandos &uuml;blich ist). Im Fall einer erfolgreichen Kommandoausf&uuml;hrung werden also die Befehle im darauf folgenden <span class="listing">then</span> (bis zum <span class="listing">fi</span>) ausgef&uuml;hrt. Bei einer fehlerhaften Kommandoausf&uuml;hrung wird die Ausf&uuml;hrung, sofern weitere Kommandos vorhanden sind, hinter dem <span class="listing">fi</span> fortgesetzt. Oder einfacher: Falls der Befehl einen Fehler zur&uuml;ckgab, wird der Anweisungsblock in der Verzweigung &uuml;bersprungen. <span class="listing">fi</span> (r&uuml;ckw&auml;rts geschriebenes <span class="listing">if</span>) schlie&szlig;t eine <span class="listing">if</span>-Anweisung bzw. den Anweisungsblock ab (siehe Abbildung 4.1).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/04_01.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein04_01.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 4.1   
+    </b>Bedingte Anweisung mit if</p>
+</td>
+</tr>
+</table><br>
+<p>Wenn Sie sich schon mal einige Scripts angesehen haben, werden Sie feststellen, dass h&auml;ufig folgende Syntax bei einer <span class="listing">if</span>-Verzweigung verwendet wird:</p>
+<pre>if [ bedingung ]
+then
+   # Ja, Bedingung war erfolgreich
+   # ... hier Befehle f&uuml;r erfolgreiche Bedingung verwenden
+fi</pre>
+<p>Selbstverst&auml;ndlich d&uuml;rfen Sie die <span class="listing">if</span>-Verzweigung zu einem etwas unleserlichen Code zusammenpacken, m&uuml;ssen dann aber entsprechend Semikolons zur Trennung verwenden (diese Schreibweise wird gew&ouml;hnlich verwendet, um eine Verzweigung auf der Kommandozeile einzugeben):</p>
+<pre>if [ bedingung ]; then befehl(e) ; fi</pre>
+<p>Bei einer Verwendung von eckigen Klammern handelt es sich um den <span class="listing">test</span>-Befehl, dessen symbolische Form eben <span class="listing">[</span> <span class="listing">...</span> <span class="listing">]</span> ist. Hierauf wird noch recht umfangreich eingegangen. Wir wollen uns jetzt weiter mit der <span class="listing">if</span>-Verzweigung ohne den <span class="listing">test</span>-Befehl befassen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Skurriles:</b> Wenn ich hier behaupte, dass die eckigen Klammern eine symbolische Form f&uuml;r <span class="listing">test</span> sind, stimmt das eigentlich nicht. Wer mal nach einem Kommando »[« sucht ( <span class="listing">which</span> <span class="listing">[</span> ), wird &uuml;berrascht sein, dass es tats&auml;chlich ein »Binary« mit diesem Namen gibt. Richtig gesehen handelt es sich somit nicht um eine andere Schreibweise von <span class="listing">test</span>, sondern um ein eigenst&auml;ndiges Programm, das als letzten Parameter die schlie&szlig;ende eckige Klammer auswertet.</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">4.1.1 Kommandos testen mit if<a id="RxxKap00600004004E0C1F017182" name="RxxKap00600004004E0C1F017182"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999307" name="Xxx999307"></a><a id="Xxx999308" name="Xxx999308"></a>Hierzu ein einfaches Shellscript, welches das Kommando <span class="listing">grep</span> auf erfolgreiche Ausf&uuml;hrung &uuml;berpr&uuml;ft. In der Datei /etc/passwd wird einfach nach einem Benutzer gesucht, den Sie als erstes Argument (Positionsparameter <span class="listing">$1</span>) in der Kommandozeile angeben (siehe Abbildung 4.2). Je nach Erfolg, bekommen Sie eine entsprechende Meldung ausgegeben.</p>
+<pre># Demonstriert eine Verzweigung mit if
+# Name: aif1
+# Benutzer in /etc/passwd suchen ...
+if grep "^$1" /etc/passwd
+then
+   # Ja, grep war erfolgreich
+   echo "User $1 ist bekannt auf dem System"
+   exit 0;  # Erfolgreich beenden ...
+fi
+# Angegebener User scheint hier nicht vorhanden zu sein ...
+echo "User $1 gibt es hier nicht"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aif1 you
+you:x:1001:100::/home/you:/bin/bash
+User you ist bekannt auf dem System
+you@host &gt; ./aif1 tot
+tot:x:1000:100:J.Wolf:/home/tot:/bin/bash
+User tot ist bekannt auf dem System
+you@host &gt; ./aif1 root
+root:x:0:0:root:/root:/bin/bash
+User root ist bekannt auf dem System
+you@host &gt; ./aif1 rot
+User rot gibt es hier nicht</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/04_02.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein04_02.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 4.2   
+    </b>Bedingte if-Anweisung in der Praxis</p>
+</td>
+</tr>
+</table><br>
+<p>Findet <span class="listing">grep</span> hier den Benutzer, den Sie als erstes Argument &uuml;bergeben haben, liefert es den Exit-Status 0 zur&uuml;ck und somit wird <span class="listing">then</span> in der <span class="listing">if</span>-Verzweigung ausgef&uuml;hrt. Bei erfolgloser Suche gibt <span class="listing">grep</span> einen Wert ungleich 0 zur&uuml;ck, womit nicht in die <span class="listing">if</span>-Verzweigung gewechselt, sondern mit der Ausf&uuml;hrung hinter dem <span class="listing">fi</span> der <span class="listing">if</span>-Verzweigung fortgefahren wird.</p>
+<p>Was in diesem Beispiel ein wenig st&ouml;rt, ist die Standardausgabe, die hier unerw&uuml;nscht »hereinplappert«. Hier l&auml;sst sich aber wie in der Kommandozeile eine einfache Umleitung in das Datengrab /dev/null legen. Hierzu m&uuml;ssen Sie nur die Zeile</p>
+<pre>if grep "^$1" /etc/passwd</pre>
+<p>um&auml;ndern in</p>
+<pre>if grep "^$1" /etc/passwd &gt; /dev/null</pre>
+<p>Nat&uuml;rlich kann die Fehlerausgabe (<span class="listing">stderr</span>) auch noch unterdr&uuml;ckt werden:</p>
+<pre>if grep "^$1" /etc/passwd &gt; /dev/null 2&gt;&amp;1</pre>
+<p>Somit w&uuml;rde die Ausf&uuml;hrung des Scripts jetzt wie folgt aussehen:</p>
+<pre>you@host &gt; ./aif1 you
+User you ist bekannt auf dem System
+you@host &gt; ./aif1 tot
+User tot ist bekannt auf dem System
+you@host &gt; ./aif1 root
+User root ist bekannt auf dem System
+you@host &gt; ./aif1 rot
+User rot gibt es hier nicht</pre>
+<p>Aus Abschnitt 1.8.8 kennen Sie ja bereits den Exit-Status und wissen, wie Sie diesen mit der Variablen <span class="listing">$?</span> abfragen k&ouml;nnen. Somit k&ouml;nnten Sie statt – wie im Beispiel geschehen – den Kommandoaufruf mit <span class="listing">if</span> auf Erfolg zu testen, den R&uuml;ckgabewert eines Kommandos testen. Allerdings ben&ouml;tigen Sie hierzu wieder das <span class="listing">test</span>-Kommando oder dessen »alternative« Schreibweise in eckigen Klammern. Zwar wurde das <span class="listing">test</span>-Kommando noch nicht behandelt, aber aus Referenzgr&uuml;nden will ich Ihnen das Beispiel hier nicht vorenthalten:</p>
+<pre># Demonstriert eine test-Verzweigung mit if
+# Name: aif2
+# Benutzer in /etc/passwd suchen ...
+grep "^$1" /etc/passwd &gt; /dev/null
+# Ist der Exit-Status in $? nicht gleich (not equal) 0 ...
+if [ $? -ne 0 ]
+   then
+   echo "Die Ausf&uuml;hrung von grep ist fehlgeschlagen"
+   echo "Vermutlich existiert User $1 hier nicht"
+   exit 1  # Erfolglos beenden
+fi
+# grep erfolgreich
+echo "User $1 ist bekannt auf dem System"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aif2 you
+User you ist bekannt auf dem System
+you@host &gt; ./aif2 rot
+Die Ausf&uuml;hrung von grep ist fehlgeschlagen
+Vermutlich existiert User rot hier nicht</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">4.1.2 Kommandoverkettung &uuml;ber Pipes mit if<a id="RxxKap00600004004E0C1F017196" name="RxxKap00600004004E0C1F017196"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999334" name="Xxx999334"></a><a id="Xxx999335" name="Xxx999335"></a><a id="Xxx999336" name="Xxx999336"></a>Wenn bei einer <span class="listing">if</span>-Abfrage mehrere Kommandos mit den Pipes verwendet werden, ist der R&uuml;ckgabewert immer der des letzten Kommandos. Dies scheint auch irgendwie logisch, denn es gibt nur eine Variable f&uuml;r den Exit-Status (<span class="listing">$?</span>). Somit wird in einer Kommandoverkettung immer die Variable <span class="listing">$?</span> mit einem neuen Exit-Status belegt – bis zum letzten Kommando in der Verkettung.</p>
+<p>Trotzdem hat eine solche Kommandoverkettung durchaus ihre T&uuml;cken. Denn wem n&uuml;tzt es, wenn das letzte Kommando erfolgreich war, aber eines der vorhergehenden Kommandos einen Fehler produziert hat? Hier ein Beispiel, das zeigt, worauf ich hinaus will:</p>
+<pre># Demonstriert eine Kommandoverkettung mit if
+# Name: aif3
+# In /usr/include nach erstem eingegebenen Argument suchen
+if ls -l /usr/include | grep $1 | wc -l
+   then
+   echo "Suche erfolgreich"
+   exit 0
+fi
+echo "Suche erfolglos"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aif3 l.h
+15
+Suche erfolgreich
+you@host &gt; ./aif3 std
+5
+Suche erfolgreich
+you@host &gt; ./aif3 asdfjkl&ouml;
+0
+Suche erfolgreich
+you@host &gt; ./aif3
+Aufruf: grep [OPTION]... MUSTER [DATEI]...
+»grep --help« gibt Ihnen mehr Informationen.
+0
+Suche erfolgreich</pre>
+<p>Wie Sie sehen konnten, gibt es bei den letzten zwei Suchanfragen eigentlich keine erfolgreichen Suchergebnisse mehr. Trotzdem wird »Suche erfolgreich« zur&uuml;ckgegeben – was ja auch klar ist, weil die Ausf&uuml;hrung des letzten Kommandos <span class="listing">wc</span> <span class="listing">–l</span> keinen Fehler produziert hat und 0 zur&uuml;ckgab. Sie haben zwar jetzt die M&ouml;glichkeit, die Standardfehlerausgabe zu &uuml;berpr&uuml;fen, aber dies wird mit jedem weiteren Befehl in der Pipe immer un&uuml;bersichtlicher.</p>
+<h4 class="t4">PIPESTATUS auswerten (Bash only)</h4>
+<p><a id="Xxx999344" name="Xxx999344"></a><a id="Xxx999345" name="Xxx999345"></a>In der Bash kann Ihnen hierbei die Shell-Variable <span class="listing">PIPESTATUS</span> helfen. Die Variable <span class="listing">PIPESTATUS</span> ist ein Array, welches die Exit-Status der zuletzt ausgef&uuml;hrten Kommandos enth&auml;lt. Der R&uuml;ckgabewert des ersten Befehls steht in <span class="listing">${PIPESTATUS[0]}</span>, der zweite in <span class="listing">${PIPESTATUS[1]}</span>, der dritte in <span class="listing">${PIPESTATUS[2]}</span> usw. Die Anzahl der Befehle, die in einer Pipe ausgef&uuml;hrt wurden, enth&auml;lt <span class="listing">${#PIPESTATUS[*]}</span> und alle R&uuml;ckgabewerte (getrennt mit einem Leerzeichen) erhalten Sie mit <span class="listing">${PIPESTATUS[*]}</span>. Hier die Verwendung von <span class="listing">PIPESTATUS</span> in der Praxis, angewandt auf das Beispiel <span class="listing">aif3</span>:</p>
+<pre># Demonstriert die Verwendung von PIPESTATUS in der Bash
+# Name: apipestatus
+# In /usr/include suchen
+ls -l /usr/include | grep $1 | wc -l
+# kompletten PIPESTATUS in die Variable STATUS legen
+STATUS=${PIPESTATUS[*]}
+# Die Variable STATUS auf die einzelnen
+# Positionsparameter aufteilen
+set $STATUS
+# Status einzeln zur&uuml;ckgeben
+echo "ls    : $1"
+echo "grep  : $2"
+echo "wc    : $3"
+# Fehler&uuml;berpr&uuml;fungen der einzelnen Werte ...
+if [ $1 -ne 0 ]; then
+  echo "Fehler bei ls" &gt;&amp;2
+fi
+if [ $2 -ne 0 ]; then
+  echo "Fehler bei grep" &gt;&amp;2
+fi
+if [ $3 -ne 0 ]; then
+  echo "Fehler bei wc" &gt;&amp;2
+fi</pre>
+<p>Das Shellscript bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./apipestatus std
+5
+ls    : 0
+grep  : 0
+wc    : 0
+you@host &gt; ./apipestatus
+Aufruf: grep [OPTION]... MUSTER [DATEI]...
+»grep --help« gibt Ihnen mehr Informationen.
+0
+ls    : 141
+grep  : 2
+wc    : 0
+Fehler bei ls
+Fehler bei grep
+you@host &gt; ./apipestatus asdf
+0
+ls    : 0
+grep  : 1
+wc    : 0
+Fehler bei grep</pre>
+<p>Wichtig ist, dass Sie <span class="listing">PIPESTATUS</span> unmittelbar nach der Kommandoverkettung abfragen. F&uuml;hren Sie dazwischen bspw. eine <span class="listing">echo</span>-Ausgabe durch, finden Sie im Array <span class="listing">PIPESTATUS</span> nur noch den Exit-Status des <span class="listing">echo</span>-Kommandos.</p>
+<h4 class="t4">Pipestatus auswerten (f&uuml;r alle Shells)</h4>
+<p><a id="Xxx999352" name="Xxx999352"></a>Mit einigen Klimmz&uuml;gen ist es auch m&ouml;glich, die Auswertung der Exit-Codes aller Kommandos in einer Pipe vorzunehmen. Zuerst werden neue Ausgabekan&auml;le angelegt und die Ausf&uuml;hrung der Pipe muss in einen <span class="listing">eval</span>-Anweisungsblock gepackt werden. Leitet man die entsprechenden Kan&auml;le in die richtigen Bahnen, erh&auml;lt man auch hier s&auml;mtliche Exit-Codes einer Pipe. Auf die Funktion <span class="listing">eval</span> wird noch in Kapitel 9, N&uuml;tzliche Funktionen, n&auml;her eingegangen, aber auch in diesem Fall will ich Ihnen vorab ein Beispiel anbieten (auf die <span class="listing">test</span>-&Uuml;berpr&uuml;fung wurde allerdings verzichtet).</p>
+<pre># Demonstriert, wie man alle Kommandos einer Pipe ohne
+# die Shell-Variable PIPESTATUS ermitteln kann
+# Name: apipestatus2
+exec 3&gt;&amp;1 # dritten Ausgabekanal &ouml;ffnen (f&uuml;r stdout)
+exec 4&gt;&amp;1 # vierten Ausgabekanal &ouml;ffnen (f&uuml;r Exit-Status)
+eval `
+{
+    {
+        ls -l /usr/include
+        echo lsexit=$? &gt;&amp;4;
+    } | {
+        grep $1
+        echo grepexit=$? &gt;&amp;4;
+    } | wc -l
+} 4&gt;&amp;1 &gt;&amp;3 # Umleitung
+`
+echo "ls    : $lsexit"
+echo "grep  : $grepexit"
+echo "wc    : $?"</pre>
+<p>Das Shellscript bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./apipestatus2
+Aufruf: grep [OPTION]... MUSTER [DATEI]...
+"grep --help" gibt Ihnen mehr Informationen.
+0
+ls    : 141
+grep  : 2
+wc    : 0
+you@host &gt; ./apipestatus2 std
+5
+ls    : 0
+grep  : 0
+wc    : 0
+you@host &gt; ./apipestatus2 asdfasf
+0
+ls    : 0
+grep  : 1
+wc    : 0</pre>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_005_008.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_006_001.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_006_000.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:02 GMT -->
+</html>

@@ -1,0 +1,525 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_016_004.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 14.5 Programm- und Prozessverwaltung</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_016_003.html">
+<link rel="next" href="shell_016_005.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_016_003.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_016_005.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_016_000.html#RxxKap016000040050021F03F172">14 Linux-UNIX-Kommandoreferenz</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_000.html#RxxKap016000040050021F03F177">14.1 Kurz&uuml;bersicht</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_001.html#RxxKap016001040050191F018172">14.2 Dateiorientierte Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_002.html#RxxKap0160020400501A1F021172">14.3 Verzeichnisorientierte Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_003.html#RxxKap0160030400501B1F013172">14.4 Verwaltung von Benutzern und Gruppe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap0160040400501C1F015172">14.5 Programm- und Prozessverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_005.html#RxxKap0160050400501D1F010172">14.6 Speicherplatzinformationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_006.html#RxxKap0160060400501E1F010172">14.7 Dateisystem-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_007.html#RxxKap0160070400501F1F042172">14.8 Archivierung und Backup</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_008.html#RxxKap016008040050201F030172">14.9 Systeminformationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_009.html#RxxKap016009040050211F012172">14.10 System-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_010.html#RxxKap016010040050221F013172">14.11 Druckeradministration</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_011.html#RxxKap016011040050231F030172">14.12 Netzwerkbefehle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_012.html#RxxKap016012040050241F03D172">14.13 Benutzerkommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_013.html#RxxKap016013040050251F046172">14.14 Bildschirm- und Terminalkommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_014.html#RxxKap016014040050261F04E172">14.15 Online-Hilfen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_015.html#RxxKap016015040050271F037172">14.16 Alles rund um PostScript-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_016.html#RxxKap016016040050281F03E172">14.17 Gemischte Kommandos</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">14.5 <a id="RxxKap014309ProgrammundProzessverwaltung" name="RxxKap014309ProgrammundProzessverwaltung"></a>Programm- und Prozessverwaltun<a id="RxxKap0160040400501C1F015172" name="RxxKap0160040400501C1F015172"></a>g 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">at – Kommando zu einem bestimmten Zeitpunkt ausf&uuml;hren lassen<a id="RxxKap0160040400501C1F015173" name="RxxKap0160040400501C1F015173"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a>Mit dem Kommando <span class="listing">at</span> k&ouml;nnen Sie ein Kommando zum angegebenen Zeitpunkt ausf&uuml;hren lassen, auch wenn der Benutzer zu diesem Zeitpunkt nicht angemeldet ist. Beispielsweise k&ouml;nnen Sie mit</p>
+<pre>at 2130 -f myscript</pre>
+<p>das Script »myscript« um 21:30 Uhr ausf&uuml;hren lassen. Nat&uuml;rlich lassen sich mehrere solcher zeitgesteuerten Kommandos einrichten. Jeder dieser <span class="listing">at</span>-Aufrufe wird an die at-Queue (<span class="listing">atq</span>) angeh&auml;ngt. Nat&uuml;rlich funktioniert dies auch mit Datum:</p>
+<pre>at 2200 apr 21 -f myscript</pre>
+<p>So w&uuml;rde das Script »myscript« am 2. April um 22 Uhr ausgef&uuml;hrt. Wollen Sie sich alle Auftr&auml;ge der <span class="listing">atq</span> auflisten lassen, m&uuml;ssen Sie die Option <span class="listing">–l</span> verwenden:</p>
+<pre>at -l</pre>
+<p>Wollen Sie den Status des Auftrags mit der Nummer 33 anzeigen lassen, geben Sie Folgendes ein:</p>
+<pre>at -l 33</pre>
+<p>Soll dieser Auftrag gel&ouml;scht werden, so kann die Option <span class="listing">–d</span> verwendet werden:</p>
+<pre>at -d 33</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">batch – Kommando irgendwann sp&auml;ter ausf&uuml;hren lassen<a id="RxxKap0160040400501C1F01517E" name="RxxKap0160040400501C1F01517E"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999291" name="Xxx999291"></a><a id="Xxx999292" name="Xxx999292"></a>Mit <span class="listing">batch</span> lesen Sie Kommandos von der Kommandozeile, welche zu einem sp&auml;teren Zeitpunkt ausgef&uuml;hrt werden, sobald das System Zeit hat. Dies wird bei extrem belasteten Rechnern gern verwendet, wenn man das Kommando bzw. Script zu einer Zeit ausf&uuml;hren lassen will, in der die Systemlast definitiv niedrig ist, und dies nicht nur zu vermuten ist. Die angegebenen Kommandos werden auch dann ausgef&uuml;hrt, wenn der Benutzer nicht angemeldet ist. Um <span class="listing">batch</span> auszuf&uuml;hren, muss auch hier der <span class="listing">at</span>-Daemon, der auch f&uuml;r das Kommando <span class="listing">at</span> verantwortlich ist, laufen.</p>
+<pre>you@host &gt; batch
+warning: commands will be executed using /bin/sh
+at&gt; ls -l
+at&gt; ./myscript
+at&gt; sleep 1
+at&gt; (Strg)+(D)
+job 1 at 2005–04–21 23:30</pre>
+<p>Das Ende der Kommandozeileneingabe von <span class="listing">batch</span> m&uuml;ssen Sie mit <b>(Strg)</b>+<b>(D)</b> angeben.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">bg – einen angehaltenen Prozess im Hintergrund fortsetzen<a id="RxxKap0160040400501C1F015182" name="RxxKap0160040400501C1F015182"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999297" name="Xxx999297"></a><a id="Xxx999298" name="Xxx999298"></a>Mit dem Kommando <span class="listing">bg</span> k&ouml;nnen Sie einen (z. B. mit <b>(Strg)</b>+<b>(Z)</b>) angehaltenen Prozess im Hintergrund fortsetzen. <span class="listing">bg</span> wurde bereits in Abschnitt 8.7 behandelt.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">cron/crontab – Programme in bestimmten Zeitintervallen ausf&uuml;hren lassen<a id="RxxKap0160040400501C1F015184" name="RxxKap0160040400501C1F015184"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999301" name="Xxx999301"></a><a id="Xxx999302" name="Xxx999302"></a>Mit <span class="listing">cron</span> k&ouml;nnen Sie beliebig viele Kommandos automatisch in bestimmten Zeitintervallen ausf&uuml;hren lassen. Einmal pro Minute sieht dieser D&auml;mon in einen Terminkalender (crontab) nach und f&uuml;hrt gegebenenfalls darin enthaltene Kommandos aus. <span class="listing">cron</span> wurde bereits ausf&uuml;hrlich in Abschnitt 8.8 behandelt.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">fg – einen angehaltenen Prozess im Vordergrund fortsetzen<a id="RxxKap0160040400501C1F015186" name="RxxKap0160040400501C1F015186"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999305" name="Xxx999305"></a><a id="Xxx999306" name="Xxx999306"></a>Mit dem Kommando <span class="listing">fg</span> k&ouml;nnen Sie einen (z. B. mit <b>(Strg)</b>+<b>(Z)</b>) angehaltenen Prozess im Vordergrund fortsetzen. <span class="listing">fg</span> wurde bereits in Abschnitt 8.7 behandelt.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">jobs – Anzeigen angehaltener bzw. im Hintergrund laufender Prozesse<a id="RxxKap0160040400501C1F015188" name="RxxKap0160040400501C1F015188"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999309" name="Xxx999309"></a><a id="Xxx999310" name="Xxx999310"></a>Mit <span class="listing">jobs</span> bekommen Sie eine Liste mit den aktuellen Jobs zur&uuml;ckgegeben. Neben der Jobnummer steht bei jedem Job der Kommandoname, der Status und eine Markierung. Die Markierung »+« steht f&uuml;r den aktuellen Job, »-« f&uuml;r den vorhergehenden Job. Das Kommando <span class="listing">job</span> wurde bereits in Abschnitt 8.7 behandelt.</p>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">kill – Signale an Prozesse mit einer Prozessnummer senden<a id="RxxKap0160040400501C1F01518A" name="RxxKap0160040400501C1F01518A"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999313" name="Xxx999313"></a><a id="Xxx999314" name="Xxx999314"></a>Mit <span class="listing">kill</span> senden Sie den Prozessen durch Angabe der Prozessnummer ein Signal. Standardm&auml;&szlig;ig wird das Signal <span class="listing">SIGTERM</span> zum Beenden des Prozesses gesendet. Es lassen sich aber auch beliebige andere Signale senden. Das Signal wird dabei als Nummer oder als Name &uuml;bermittelt. Einen &Uuml;berblick zu den m&ouml;glichen Signalnamen finden Sie mit der Option <span class="listing">–l</span>. Das Kommando <span class="listing">kill</span> wurde bereits ausf&uuml;hrlicher in Abschnitt 7.2 beschrieben.</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">killall – Signale an Prozesse mit einem Prozessnamen senden<a id="RxxKap0160040400501C1F01518C" name="RxxKap0160040400501C1F01518C"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999317" name="Xxx999317"></a><a id="Xxx999318" name="Xxx999318"></a>Der Name <span class="listing">killall</span> f&uuml;hrt schnell in die Irre. Damit lassen sich nicht etwa alle Prozesse »killen«, sondern <span class="listing">killall</span> stellt eher eine Erleichterung f&uuml;r <span class="listing">kill</span> dar. Anstatt wie mit <span class="listing">kill</span> einen Prozess mit der Prozessnummer zu beenden bzw. ein Signal zu senden, kann mit <span class="listing">killall</span> der Prozessname verwendet werden. Was gerade bei unz&auml;hlig vielen gleichzeitig laufenden Prozessen eine erhebliche Erleichterung darstellt, weil man hier nicht m&uuml;hsam erst nach der Prozessnummer (z. B. mit dem Kommando <span class="listing">ps</span>) suchen muss. Ansonsten l&auml;sst sich <span class="listing">killall</span> &auml;hnlich wie <span class="listing">kill</span> verwenden, nur dass der Signalname ohne das vorangestellte <span class="listing">SIG</span> angegeben wird. Eine Liste aller Signale erhalten Sie auch hier mit der Option <span class="listing">–l</span>.</p>
+<pre>you@host &gt; sleep 60 &amp;
+[1] 5286
+you@host &gt; killall sleep
+[1]+  Beendet                 sleep 60</pre>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">nice – Prozesse mit anderer Priorit&auml;t ausf&uuml;hren lassen<a id="RxxKap0160040400501C1F01518F" name="RxxKap0160040400501C1F01518F"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999322" name="Xxx999322"></a><a id="Xxx999323" name="Xxx999323"></a>Mit <span class="listing">nice</span> k&ouml;nnen Sie veranlassen, dass ein Kommando mit einer niedrigeren Priorit&auml;t ausgef&uuml;hrt wird.</p>
+<pre>nice [-n] kommando [argumente]</pre>
+<p>F&uuml;r n k&ouml;nnen Sie dabei eine Ziffer angeben, um wie viel die Priorit&auml;t ver&auml;ndert werden soll. Der Standardwert, falls keine Angabe erfolgt, lautet 10 (-20 ist die h&ouml;chste und 19 die niedrigste Priorit&auml;t). Priorit&auml;ten h&ouml;her als 0 darf ohnehin nur root starten. H&auml;ufig wird man das Kommando mit <span class="listing">nice</span> im Hintergrund starten wollen.</p>
+<pre>nice find / -name document -print &gt; /home/tmp/find.txt &amp;</pre>
+<p>Hier wird mit <span class="listing">find</span> nach einer Datei »document« gesucht und die Ausgabe in die Datei find.txt geschrieben. Der Hintergrundprozess <span class="listing">find</span> wird dabei von <span class="listing">nice</span> mit einer niedrigen (10) Priorit&auml;t gestartet. Dies stellt eine g&auml;ngige Verwendung von <span class="listing">nice</span> dar.</p>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">nohup – Prozesse beim Beenden einer Sitzung weiterlaufen lassenHH<a id="RxxKap0160040400501C1F015195" name="RxxKap0160040400501C1F015195"></a> 
+      <a href="#t2t312"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999330" name="Xxx999330"></a><a id="Xxx999331" name="Xxx999331"></a>Mit <span class="listing">nohup</span> sch&uuml;tzen Sie Prozesse vor dem HANGUP-Signal. Dadurch ist es m&ouml;glich, dass ein Prozess im Hintergrund weiterlaufen kann, auch wenn sich ein Benutzer abmeldet. Ohne <span class="listing">nohup</span> w&uuml;rden sonst alle Prozesse einer Login-Shell des Anwenders durch das Signal <span class="listing">SIGHUP</span> beendet. Allerdings tritt dieses Verhalten nicht auf allen Systemen auf. Mehr zu <span class="listing">nohup</span> finden Sie in Abschnitt 8.4, wo dieses Kommando ausf&uuml;hrlicher behandelt wurde.</p>
+<a name="t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t312"></a><h3 class="t3">ps – Prozessinformationen anzeigen<a id="RxxKap0160040400501C1F015197" name="RxxKap0160040400501C1F015197"></a> 
+      <a href="#t2t313"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t311"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><a id="Xxx999336" name="Xxx999336"></a><a id="Xxx999337" name="Xxx999337"></a><b>Hinweis   </b><span class="listing">ps</span> ist eines dieser Kommandos, welches vollkommen unterschiedliche Optionen auf den unterschiedlichen Betriebssystemen bietet. Die folgenden Beschreibung bezieht sich daher auf Linux.</p>
+</td>
+</tr>
+</table><br>
+<p><span class="listing">ps</span> ist wohl das wichtigste Kommando f&uuml;r Systemadministratoren, um an Informationen zu aktiven Prozessen zu gelangen (neben <span class="listing">top</span>). Rufen Sie <span class="listing">ps</span> ohne irgendwelche Argumente auf, werden Ihnen die zum jeweiligen Terminal gestarteten Prozesse aufgelistet. Zu jedem Prozess erhalten Sie die Prozessnummer (PID), den Terminal-Namen (TTY), die verbrauchte Rechenzeit (TIME) und den Kommandonamen (COMMAND). Aber neben diesen Informationen lassen sich &uuml;ber Optionen noch viele weitere Informationen entlocken. H&auml;ufig verwendet wird dabei der Schalter <span class="listing">–e</span>, womit Informationen zu allen Prozessen zu gewinnen sind (also nicht nur zum jeweiligen Terminal), und ebenso der Schalter <span class="listing">–f</span>, womit Sie noch vollst&auml;ndigere Informationen bekommen:</p>
+<pre>you@host &gt; ps -ef
+UID       PID  PPID  C STIME TTY        TIME CMD
+root        1     0  0 Apr21 ?      00:00:04 init [5]
+root        2     1  0 Apr21 ?      00:00:00 [ksoftirqd/0]
+root        3     1  0 Apr21 ?      00:00:00 [events/0]
+root       23     3  0 Apr21 ?      00:00:00 [kblockd/0]
+...
+postfix  5942  2758  0 00:17 ?      00:00:00 pickup -l -t fifo -u
+you      6270     1  0 00:26 ?      00:00:00 /opt/kde3/bin/kdesud
+you      7256  3188  0 01:50 pts/36 00:00:00 ps -ef</pre>
+<p>Mittlerweile beinhaltet das Kommando <span class="listing">ps</span> unglaublich viele Optionen, die zum Teil systemabh&auml;ngig sind, weshalb auf jeden Fall die <span class="listing">man</span>-Seite von <span class="listing">ps</span> zur Rate gezogen werden sollte. H&auml;ufig sucht man in der Liste von Prozessen nach einem bestimmten. Diesen k&ouml;nnen Sie folgenderma&szlig;en »herauspicken«:</p>
+<pre>you@host &gt; ps -ef | grep kamix
+tot       3171     1  0 Apr21 ?        00:00:00 kamix</pre>
+<p>Damit noch nicht zufrieden, will man gern auch gleich die Prozessnummer (PID) erhalten:</p>
+<pre>you@host &gt; ps -ef | grep kamix | awk '{ print $2; exit }'
+3171</pre>
+<p>Aber so umst&auml;ndlich muss dies nicht sein. Sie k&ouml;nnen hierzu auch <span class="listing">pgrep</span> (sofern vorhanden) verwenden.</p>
+<a name="t312"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t313"></a><h3 class="t3">pgrep – Prozesse &uuml;ber ihren Namen finden<a id="RxxKap0160040400501C1F0151A1" name="RxxKap0160040400501C1F0151A1"></a> 
+      <a href="#t2t314"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t312"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999348" name="Xxx999348"></a><a id="Xxx999349" name="Xxx999349"></a>Im Abschnitt zuvor wurde <span class="listing">pgrep</span> kurz angesprochen. Sofern Sie die Prozessnummer eines Prozessnamens ben&ouml;tigen, ist <span class="listing">pgrep</span> das Kommando der Wahl.</p>
+<pre>you@host &gt; pgrep kamix
+3171</pre>
+<p><span class="listing">pgrep</span> liefert zu jedem Prozessnamen die Prozessnummer, sofern ein entsprechender Prozess gerade aktiv ist und in der Prozessliste (<span class="listing">ps</span>) auftaucht.</p>
+<a name="t313"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t314"></a><h3 class="t3">pstree – Prozesshierachie in Baumform ausgeben<a id="RxxKap0160040400501C1F0151A5" name="RxxKap0160040400501C1F0151A5"></a> 
+      <a href="#t2t315"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t313"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999354" name="Xxx999354"></a><a id="Xxx999355" name="Xxx999355"></a>Mit <span class="listing">pstree</span> k&ouml;nnen Sie die aktuelle Prozesshierarchie in Baumform ausgeben lassen. Ohne Angabe von Argumenten zeigt <span class="listing">pstree</span> alle Prozesse an, angefangen vom ersten Prozess init (PID=1). Geben Sie hingegen eine PID oder einen Loginnamen an, so werden nur die Prozesse des Benutzers oder der Prozessnummer hierarchisch angezeigt.</p>
+<a name="t314"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t315"></a><h3 class="t3">renice – Priorit&auml;t laufender Prozesse ver&auml;ndern<a id="RxxKap0160040400501C1F0151A7" name="RxxKap0160040400501C1F0151A7"></a> 
+      <a href="#t2t316"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t314"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999358" name="Xxx999358"></a><a id="Xxx999359" name="Xxx999359"></a>Mit dem Kommando <span class="listing">renice</span> k&ouml;nnen Sie im Gegensatz zu <span class="listing">nice</span> die Priorit&auml;t von bereits laufenden Prozessen ver&auml;ndern. Ansonsten gilt auch hier alles schon beim Kommando <span class="listing">nice</span> Gesagte. Das Kommando <span class="listing">renice</span> wurde bereits in Abschnitt 8.1 beschrieben.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Tipp f&uuml;r Linux   </b>Komfortabler k&ouml;nnen Sie die Priorit&auml;t laufender Prozesse mit dem Kommando <span class="listing">top</span> ver&auml;ndern. Ein Tastendruck <b>(R)</b> fragt Sie nach der Prozessnummer und dem <span class="listing">nice</span>-Wert, von welchem Prozess Sie die Priorit&auml;t ver&auml;ndern wollen.</p>
+</td>
+</tr>
+</table><br>
+<a name="t315"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t316"></a><h3 class="t3">sleep – Prozesse suspendieren (schlafen legen)<a id="RxxKap0160040400501C1F0151AB" name="RxxKap0160040400501C1F0151AB"></a> 
+      <a href="#t2t317"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t315"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999366" name="Xxx999366"></a><a id="Xxx999367" name="Xxx999367"></a>Mit <span class="listing">sleep</span> legen Sie einen Prozess f&uuml;r n Sekunden schlafen. Voreingestellt sind zwar Sekunden, aber &uuml;ber Optionen k&ouml;nnen Sie hierbei auch Minuten, Stunden oder gar Tage verwenden.</p>
+<a name="t316"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t317"></a><h3 class="t3">su – &Auml;ndern der Benutzerkennung (ohne Neuanmeldung)<a id="RxxKap0160040400501C1F0151AD" name="RxxKap0160040400501C1F0151AD"></a> 
+      <a href="#t2t318"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t316"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999370" name="Xxx999370"></a><a id="Xxx999371" name="Xxx999371"></a>Dieses Kommando wird irrt&uuml;mlicherweise immer als <b>S</b>uper<b>U</b>ser abgek&uuml;rzt, hei&szlig;t aber in Wirklichkeit <b>S</b>witch<b>U</b>ser. <span class="listing">su</span> hat also zun&auml;chst &uuml;berhaupt nichts mit dem »Superuser« (alias root) zu tun. Dieses Missverst&auml;ndnis resultiert daraus, dass die meisten Anwender dieses Kommando dazu verwenden, sich kurz die Root-Rechte (sofern diese vorhanden sind) anzueignen. Durch die Angabe ohne Argumente wird hierbei gew&ouml;hnlich auch nach dem Passwort des Superusers gefragt.</p>
+<pre>you@host &gt; whoami
+you
+you@host &gt; su
+Password:********
+linux:/home/you # whoami
+root
+linux:/home/you # exit
+exit
+you@host &gt; whoami
+you
+you@host &gt; su john
+Password:********
+you@linux:/home/john&gt; whoami
+john
+you@linux:/home/john&gt; exit
+exit</pre>
+<p><span class="listing">su</span> startet immer eine neue Shell mit der neuen Benutzer- (UID) und Gruppenkennung (GID). Wie bei einem neuen Login wird nach einem Passwort gefragt. Geben Sie keinen Benutzernamen an, versucht <span class="listing">su</span> zu UID 0 zu wechseln, was ja der Superuser ist. Sofern Sie »Superuser« sind, k&ouml;nnen Sie auch die Identit&auml;t eines jeden Benutzers annehmen, ohne ein entsprechendes Passwort zu kennen.</p>
+<a name="t317"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t318"></a><h3 class="t3">sudo – Programm als anderer Benutzer ausf&uuml;hren<a id="RxxKap0160040400501C1F0151B1" name="RxxKap0160040400501C1F0151B1"></a> 
+      <a href="#t2t319"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t317"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999376" name="Xxx999376"></a><a id="Xxx999377" name="Xxx999377"></a><span class="listing">sudo</span> ist ein Kommando, womit ein bestimmter Benutzer ein Kommando ausf&uuml;hren kann, wozu er normalerweise nicht die Rechte hat (bspw. f&uuml;r administrative Aufgaben). Dazu legt root gew&ouml;hnlich in der Datei /etc/sudoers folgenden Eintrag ab:</p>
+<pre>john ALL=/usr/bin/kommando</pre>
+<p>Jetzt kann der User »john« das Kommando mit folgendem Aufruf starten:</p>
+<pre>you@host &gt; sudo /usr/bin/kommando
+Passwort: *********</pre>
+<p>Nachdem »john« sein Passwort eingegeben hat, wird das entsprechende Kommando ausgef&uuml;hrt, wozu er normalerweise ohne den Eintrag in /etc/sudoers nicht im Stande w&auml;re. Der Eintrag wird gew&ouml;hnlich mit dem Editor vi mit dem Aufruf <span class="listing">visudo</span> vorgenommen.</p>
+<p>Nat&uuml;rlich k&ouml;nnen Sie als normaler Benutzer auch mittels <span class="listing">sudo</span> Programme unter einem anderen Login-Namen ausf&uuml;hren. Dies erledigen Sie mit folgendem Aufruf (hier bspw. das Kommando <span class="listing">whoami</span> ausgef&uuml;hrt):</p>
+<pre>you@host &gt; whoami
+you
+you@host &gt; sudo -u john whoami
+Password:********
+john
+you@host &gt;</pre>
+<p>Das Kommando <span class="listing">sudo</span> hat bei mir bis vor kurzem eine Art Schattendasein gef&uuml;hrt. Wenn ich ein Kommando ben&ouml;tigt habe, dass root-Rechte erfordert, habe ich mich schnell mit <span class="listing">su</span> bef&ouml;rdert. Mittlerweile allerdings, seitdem ich das immer beliebter werdende »(k)ubuntu« verwende, bei dem es gar keinen root mehr gibt, sondern <span class="listing">sudo</span> f&uuml;r solche Zwecke verwendet wird, hat sich das Kommando einen »Stammplatz« erobert. Darauf wollte ich kurz hinweisen, bevor Sie auf die Idee kommen, »(k)ubuntu« nochmals zu installieren, weil Sie vielleicht vermuten, irgendwo das root-Passwort vergessen zu haben. »(k)ubuntu« ist da einfach anders als andere Distributionen.</p>
+<a name="t318"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t319"></a><h3 class="t3">time – Zeitmessung f&uuml;r Prozesse<a id="RxxKap0160040400501C1F0151BA" name="RxxKap0160040400501C1F0151BA"></a> 
+      <a href="#t2t320"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t318"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999387" name="Xxx999387"></a><a id="Xxx999388" name="Xxx999388"></a>Mit <span class="listing">time</span> f&uuml;hren Sie das in der Kommandozeile angegebene Kommando bzw. Script aus und bekommen die Zeit, die daf&uuml;r ben&ouml;tigt wurde zur&uuml;ck. Diese Zeit wird dabei aufgeteilt in die tats&auml;chlich ben&ouml;tigte Zeit (real), die Rechenzeit im Usermodus (user) und diejenige im Kernelmodus (sys). Das Kommando <span class="listing">time</span> wurde bereits in Abschnitt 9.6 behandelt.</p>
+<a name="t319"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t320"></a><h3 class="t3">top – Prozesse nach CPU-Auslastung anzeigen (betriebssystemspezifisch)<a id="RxxKap0160040400501C1F0151BC" name="RxxKap0160040400501C1F0151BC"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t319"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999391" name="Xxx999391"></a><a id="Xxx999392" name="Xxx999392"></a>Mit <span class="listing">top</span> bekommen Sie eine Liste der gerade aktiven Prozesse angezeigt. Die Liste wird nach CPU-Belastung sortiert. Standardm&auml;&szlig;ig wird <span class="listing">top</span> alle f&uuml;nf Sekunden aktualisiert; beendet wird <span class="listing">top</span> mit <b>(Q)</b>. <span class="listing">top</span> kann aber noch mehr, als die Auslastung der einzelnen Prozesse anzuzeigen, beispielsweise k&ouml;nnen Sie mit dem Tastendruck <b>(K)</b> (kill) einem bestimmten Prozess ein Signal senden oder mit <span class="listing">r</span> (renice) die Priorit&auml;t eines laufenden Prozesses ver&auml;ndern. Ein Blick auf die man-Seite von <span class="listing">top</span> bringt au&szlig;erdem noch einen gewaltigen &Uuml;berblick zu diesem auf den ersten Blick einfachen Kommando zum Vorschein.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_016_003.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_016_005.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_016_004.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

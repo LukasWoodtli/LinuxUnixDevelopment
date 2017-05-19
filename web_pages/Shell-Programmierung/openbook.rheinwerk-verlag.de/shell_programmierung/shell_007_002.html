@@ -1,0 +1,1326 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_007_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:54 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 5.3 Eingabe</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_007_001.html">
+<link rel="next" href="shell_007_003.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_007_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_007_003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_007_000.html#RxxKap00700004004E5B1F013172">5 Terminal-Ein- und Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_000.html#RxxKap00700004004E5B1F013174">5.1 Von Terminals zu Pseudo-Terminals</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_001.html#RxxKap00700104004E721F034172">5.2 Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F034174">5.2.1 Der echo-Befehl</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F034255">5.2.2 print (Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F034268">5.2.3 Der Befehl printf</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_001.html#RxxKap00700104004E721F03429C">5.2.4 Der Befehl tput – Terminalsteuerung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00700204004E731F04A172">5.3 Eingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A174">5.3.1 Der Befehl read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A18C">5.3.2 (Zeilenweise) Lesen einer Datei mit read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A198">5.3.3 Zeilenweise mit einer Pipe aus einem Kommando lesen (read)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A19E">5.3.4 Here-Dokumente (Inline-Eingabeumleitung)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A1B7">5.3.5 Here-Dokumente mit read verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A1BE">5.3.6 Die Variable IFS</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A1E4">5.3.7 Arrays einlesen mit read (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A1EF">5.3.8 Shell-abh&auml;ngige Anmerkungen zu read</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A1FE">5.3.9 Einzelnes Zeichen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A208">5.3.10 Einzelne Zeichen mit Escape-Sequenzen abfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00700204004E731F04A229">5.3.11 Passworteingabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_003.html#RxxKap00700304004E741F01B172">5.4 Umlenken mit dem Befehl exec</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_004.html#RxxKap00700404004E751F014172">5.5 Filedeskriptoren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_004.html#RxxKap00700404004E751F01417E">5.5.1 Einen neuen Filedeskriptor verwenden</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_004.html#RxxKap00700404004E751F01419B">5.5.2 Die Umlenkung &lt;&gt;</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_005.html#RxxKap00700504004E761F035172">5.6 Named Pipes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_006.html#RxxKap00700604004E771F038172">5.7 Men&uuml;s mit select (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_007.html#RxxKap00700704004E781F018172">5.8 dialog und Xdialog</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F01817C">5.8.1 Entscheidungsfrage --yesno</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F01818D">5.8.2 Nachrichtenbox mit Best&auml;tigung --msgbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F018195">5.8.3 Hinweisfenster ohne Best&auml;tigung --infobox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F01819A">5.8.4 Text-Eingabezeile --inputbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181A3">5.8.5 Ein einfacher Dateibetrachter --textbox</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181AB">5.8.6 Ein Men&uuml; --menu</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181B4">5.8.7 Auswahlliste zum Ankreuzen --checklist</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181BD">5.8.8 Radiobuttons zum Ausw&auml;hlen --radiolist</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181C5">5.8.9 Fortschrittszustand anzeigen --gauge</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181D1">5.8.10 Ver&auml;ndern von Aussehen und Ausgabe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181DE">5.8.11 Kleines Beispiel</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_007.html#RxxKap00700704004E781F0181E4">5.8.12 Zusammenfassung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_007_008.html#RxxKap00700804004E791F043172">5.9 gnuplot – Visualisierung von Messdaten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043179">5.9.1 Wozu wird gnuplot eingesetzt?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F04317D">5.9.2 gnuplot starten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043180">5.9.3 Das Kommando zum Plotten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043189">5.9.4 Variablen und Parameter f&uuml;r gnuplot</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043194">5.9.5 Ausgabe von gnuplot umleiten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431A3">5.9.6 Variablen und eigene Funktionen definieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431B0">5.9.7 Interpretation von Daten aus einer Datei</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431CA">5.9.8 Alles bitte nochmals zeichnen (oder besser speichern und laden)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431D5">5.9.9 gnuplot aus einem Shellscript heraus starten (der Batch-Betrieb)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F0431E8">5.9.10 Plot-Styles und andere Ausgaben festlegen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043243">5.9.11 Tricks f&uuml;r die Achsen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F04326A">5.9.12 Die dritte Dimension</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_007_008.html#RxxKap00700804004E791F043275">5.9.13 Zusammenfassung</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">5.3 <a id="RxxKap005109Eingabe" name="RxxKap005109Eingabe"></a>Eingab<a id="RxxKap00700204004E731F04A172" name="RxxKap00700204004E731F04A172"></a>e 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a>Neben der Ausgabe werden Sie relativ h&auml;ufig auch die Benutzereingaben ben&ouml;tigen, um ein Script entsprechend zu steuern. Darauf soll jetzt n&auml;her eingegangen werden.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">5.3.1 Der Befehl read<a id="RxxKap00700204004E731F04A174" name="RxxKap00700204004E731F04A174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999281" name="Xxx999281"></a><a id="Xxx999282" name="Xxx999282"></a><a id="Xxx999283" name="Xxx999283"></a>Mit dem Befehl <span class="listing">read</span> k&ouml;nnen Sie die (Standard-)Eingabe von der Tastatur lesen und in einer Variablen abspeichern. Selbstverst&auml;ndlich wird bei einem Aufruf von <span class="listing">read</span> die Programmausf&uuml;hrung angehalten, bis die Eingabe erfolgt ist und <b>(ENTER)</b> bet&auml;tigt wurde. Die Syntax f&uuml;r <span class="listing">read</span>:</p>
+<pre># Eingabe von Tastatur befindet sich in der variable
+read variable</pre>
+<p>Beispielsweise:</p>
+<pre>you@host &gt; read myname
+J&uuml;rgen
+you@host &gt; echo $myname
+J&uuml;rgen
+you@host &gt; read myname
+J&uuml;rgen Wolf
+you@host &gt; echo $myname
+J&uuml;rgen Wolf</pre>
+<p>Hier sehen Sie auch gleich, dass <span class="listing">read</span> die komplette Eingabe bis zum <b>(ENTER)</b> einliest, also inklusive Leerzeichen (Tab-Zeichen werden durch ein Leerzeichen ersetzt). Wollen Sie aber anstatt wie hier (Vorname, Nachname) beide Angaben in einer separaten Variablen speichern, m&uuml;ssen Sie <span class="listing">read</span> folgenderma&szlig;en verwenden:</p>
+<pre>read variable1 variable2 ... variable_n</pre>
+<p><span class="listing">read</span> liest hierbei f&uuml;r Sie die Zeile ein und trennt die einzelnen Worte anhand des Trennzeichens in der Variablen <span class="listing">IFS</span> auf. Wenn mehr W&ouml;rter eingegeben wurden, als Variablen vorhanden sind, bekommt die letzte Variable den Rest einer Zeile zugewiesen, zum Beispiel:</p>
+<pre>you@host &gt; read vorname nachname
+J&uuml;rgen Wolf
+you@host &gt; echo $vorname
+J&uuml;rgen
+you@host &gt; echo $nachname
+Wolf
+you@host &gt; read vorname nachname
+J&uuml;rgen Wolf und noch mehr Text
+you@host &gt; echo $vorname
+J&uuml;rgen
+you@host &gt; echo $nachname
+Wolf und noch mehr Text</pre>
+<p>Sie haben au&szlig;erdem die M&ouml;glichkeit, <span class="listing">read</span> mit einer Option zu verwenden:</p>
+<pre>read -option variable</pre>
+<p>Hierzu stehen Ihnen sehr interessante Optionen zur Verf&uuml;gung, die in Tabelle 5.9 aufgelistet sind.<a id="Xxx999295" name="Xxx999295"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 5.9   
+    </b>Optionen f&uuml;r das Kommando read</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–n anzahl
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier muss die Eingabe nicht zwangsl&auml;ufig mit (ENTER) abgeschlossen werden. Wenn die anzahl Zeichen erreicht wurde, wird auch ohne (ENTER) in die Variable geschrieben.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–s
+</td>
+<td class="tabellentext" bgcolor="#000000">(s = silent) Hierbei ist die Eingabe am Bildschirm nicht sichtbar, wie dies etwa bei einer Passworteingabe der Fall ist.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–t sekunden
+</td>
+<td class="tabellentext" bgcolor="#000000">Hiermit k&ouml;nnen Sie ein Timeout f&uuml;r die Eingabe vorgeben. Wenn read binnen Anzahl sekunden keine Eingabe erh&auml;lt, wird das Programm fortgesetzt. Der R&uuml;ckgabewert bei einer Eingabe ist 0. Wurde binnen vorgegebener Zeit keine Eingabe vorgenommen, wird 1 zur&uuml;ckgegeben. Hierf&uuml;r k&ouml;nnen Sie zur &Uuml;berpr&uuml;fung die Variable $? verwenden.
+</td>
+</tr>
+</table><br>
+<p>Auf den folgenden Seiten werden Sie verbl&uuml;fft sein, wie vielseitig das Kommando <span class="listing">read</span> wirklich ist. F&uuml;r die Eingabe (nicht nur) von der Tastatur ist <span class="listing">read</span> somit fast das Nonplusultra.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">5.3.2 (Zeilenweise) Lesen einer Datei mit read<a id="RxxKap00700204004E731F04A18C" name="RxxKap00700204004E731F04A18C"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999323" name="Xxx999323"></a><a id="Xxx999324" name="Xxx999324"></a>Eine wirklich bemerkenswerte Funktion erf&uuml;llt <span class="listing">read</span> mit dem zeilenweisen Auslesen von Dateien, beispielsweise:</p>
+<pre>you@host &gt; cat zitat.txt
+Des Ruhmes W&uuml;rdigkeit verliert an Wert,
+wenn der Gepriesene selbst mit Lob sich ehrt.
+you@host &gt; read variable &lt; zitat.txt
+you@host &gt; echo $variable
+Des Ruhmes W&uuml;rdigkeit verliert an Wert,</pre>
+<p>Damit hierbei allerdings auch wirklich alle Zeilen ausgelesen werden (Sie ahnen es schon), ist eine Schleife erforderlich. Trotzdem sieht die Verwendung von <span class="listing">read</span> garantiert anders aus, als Sie jetzt sicher vermuten:</p>
+<pre>while read var &lt; datei
+do
+ ...
+done</pre>
+<p>W&uuml;rden Sie <span class="listing">read</span> auf diese Weise verwenden, so w&auml;re es wieder nur eine Zeile, die gelesen wird. Hier m&uuml;ssen Sie die Datei in das komplette <span class="listing">while</span>-Konstrukt umleiten:</p>
+<pre>while read var
+do
+ ...
+done &lt; datei</pre>
+<p>Ohne gro&szlig;en Aufwand k&ouml;nnen Sie so zeilenweise eine Datei einlesen:</p>
+<pre># Demonstriert den Befehl read zum zeilenweisen Lesen einer Datei
+# Name : areadline
+if [ $# -lt 1 ]
+then
+   echo "usage: $0 datei_zum_lesen"
+   exit 1
+fi
+# Argument $1 soll zeilenweise eingelesen werden
+while read variable
+do
+   echo $variable
+done &lt; $1</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./areadline zitat.txt
+Des Ruhmes W&uuml;rdigkeit verliert an Wert,
+wenn der Gepriesene selbst mit Lob sich ehrt.</pre>
+<p>Diese Methode wird sehr h&auml;ufig verwendet, um aus gr&ouml;&szlig;eren Dateien einzelne Eintr&auml;ge herauszufiltern. Des Weiteren ist sie eine tolle M&ouml;glichkeit, um die Variable <span class="listing">IFS</span> in Schleifen zu &uuml;berlisten. Damit k&ouml;nnen Sie Schleifen nicht mehr einmal pro Wort, sondern einmal pro Zeile ausf&uuml;hren lassen. Es ist der Hack schlechthin, wenn etwa Dateien, deren Namen ein Leerzeichen enthalten, verarbeitet werden sollen.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">5.3.3 Zeilenweise mit einer Pipe aus einem Kommando lesen (read)<a id="RxxKap00700204004E731F04A198" name="RxxKap00700204004E731F04A198"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999337" name="Xxx999337"></a><a id="Xxx999338" name="Xxx999338"></a>Wenn das Umlenkungszeichen (wie im Abschnitt zuvor gesehen) in einer Schleife mit <span class="listing">read</span> funktioniert, um zeilenweise aus einer Datei zu lesen, sollte Gleiches auch mit einer Pipe vor einer Schleife und einem Kommando gelingen. Sie schieben so quasi die Standardausgabe eines Kommandos in die Standardeingabe der Schleife – immer vorausgesetzt nat&uuml;rlich, hier wird <span class="listing">read</span> verwendet, das ja auch etwas von der Standardeingabe erwartet. Und auch hier funktioniert das Prinzip so lange, bis <span class="listing">read</span> keine Zeile mehr lesen kann und somit 1 zur&uuml;ckgibt, was gleichzeitig das Ende der Schleife bedeutet. Hier die Syntax eines solchen Konstrukts:</p>
+<pre>kommando | while read line
+do
+   # Variable line bearbeiten
+done</pre>
+<p>Um beim Beispiel »areadline« vom Abschnitt zuvor zu bleiben, sieht das Script mit einer Pipe nun wie folgt aus:</p>
+<pre># Demonstriert den Befehl read zum zeilenweisen Lesen einer Datei
+# Name : areadline2
+if [ $# -lt 1 ]
+then
+   echo "usage: $0 datei_zum_lesen"
+   exit 1
+fi
+# Argument $1 soll zeilenweise eingelesen werden
+cat $1 | while read variable
+do
+   echo $variable
+done</pre>
+<p>Ausgef&uuml;hrt macht das Beispiel dasselbe, wie schon das Script »areadline« zuvor. Beachten Sie allerdings, dass nach jedem erneuten Schleifendurchlauf die Pipe geschlossen und die Variable somit verworfen wird.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">5.3.4 Here-Dokumente (Inline-Eingabeumleitung)<a id="RxxKap00700204004E731F04A19E" name="RxxKap00700204004E731F04A19E"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999345" name="Xxx999345"></a><a id="Xxx999346" name="Xxx999346"></a><a id="Xxx999347" name="Xxx999347"></a><a id="Xxx999348" name="Xxx999348"></a><a id="Xxx999349" name="Xxx999349"></a>Bisher wurde noch nicht auf das Umleitungszeichen <span class="listing">&lt;&lt;</span> eingegangen. Sie kennen bereits das Umleitungszeichen <span class="listing">&lt;</span>, mit dem Sie die Standardeingabe umlenken k&ouml;nnen. Das Umlenkungssymbol <span class="listing">&gt;&gt;</span> der Ausgabe hat ja die Ausgabedateien ans Ende einer Datei geh&auml;ngt. Bei der Standardeingabe macht so etwas keinen Sinn. Mit einfachen Worten ist es kompliziert, diese Umlenkung zu beschreiben, daher hier zun&auml;chst einmal die Syntax:</p>
+<pre>kommando &lt;&lt;TEXT_MARKE
+...
+TEXT_MARKE</pre>
+<p>Das Kommando nutzt in diesem Fall durch das doppelte Umlenkungszeichen alle nachfolgenden Zeilen f&uuml;r die Standardeingabe. Dies geschieht so lange, bis es auf das Wort trifft, welches hinter dem Umlenkungszeichen <span class="listing">&lt;&lt;</span> folgt (in der Syntaxbeschreibung ist dies das Wort <span class="listing">TEXT_MARKE</span>). Beachten Sie au&szlig;erdem, dass beide Textmarken absolut identisch sein m&uuml;ssen.</p>
+<p>Ein Beispiel:</p>
+<pre># Demonstriert die Verwendung von Here-Dokumenten
+# Name : ahere1
+cat &lt;&lt;TEXT_MARKE
+Heute ist `date`,
+Sie befinden sich im Verzeichnis `pwd`. Ihr
+aktuelles Terminal ist `echo -n $TERM` und
+Ihr Heimverzeichnis befindet sich in $HOME.
+TEXT_MARKE</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ahere1
+Heute ist Fr M&auml;r  4 00:36:37 CET 2005,
+Sie befinden sich im Verzeichnis /home/tot. Ihr
+aktuelles Terminal ist xterm und
+Ihr Heimverzeichnis befindet sich in /home/you.</pre>
+<p>In diesem Beispiel liest das Kommando <span class="listing">cat</span> so lange die nachfolgenden Zeilen, bis es auf das Wort <span class="listing">TEXT_MARKE</span> st&ouml;&szlig;t. Hierbei k&ouml;nnen auch Kommando-Substitutionen (was durchaus ein anderes Shellscript sein darf) und Variablen innerhalb des Textes verwendet werden. Die Shell k&uuml;mmert sich um entsprechende Ersetzung. Der Vorteil von »Here-Dokumenten« ist, dass Sie einen Text direkt an Befehle weiterleiten k&ouml;nnen, ohne diesen vorher in einer Datei unterbringen zu m&uuml;ssen. Gerade bei der Ausgabe von etwas umfangreicheren Texten oder Fehlermeldungen f&auml;llt einem die Ausgabe hier wesentlich leichter.</p>
+<p>Wollen Sie allerdings nicht, dass eine Kommando-Substitution oder eine Variable von der Shell interpretiert wird, m&uuml;ssen Sie nur zwischen dem Umlenkungszeichen <span class="listing">&lt;&lt;</span> und der Textmarke einen Backslash setzen:</p>
+<pre># Demonstriert die Verwendung von Here-Dokumenten
+# Name : ahere2
+cat &lt;&lt;\TEXT_MARKE
+Heute ist `date`,
+Sie befinden sich im Verzeichnis `pwd`. Ihr
+aktuelles Terminal ist `echo -n $TERM` und
+Ihr Heimverzeichnis befindet sich in $HOME.
+TEXT_MARKE</pre>
+<p>Dann sieht die Ausgabe folgenderma&szlig;en aus:</p>
+<pre>you@host &gt; ./ahere2
+Heute ist `date`,
+Sie befinden sich im Verzeichnis `pwd`. Ihr
+aktuelles Terminal ist `echo -n $TERM` und
+Ihr Heimverzeichnis befindet sich in $HOME.</pre>
+<p>Neben der M&ouml;glichkeit mit einem Backslash zwischen dem Umlenkungszeichen <span class="listing">&lt;&lt;</span> und der Textmarke, existiert auch die Variante, die Textmarke zwischen Single Quotes zu stellen:</p>
+<pre>kommando &lt;&lt;'MARKE'
+...
+MARKE</pre>
+<p>Befinden sich au&szlig;erdem im Text f&uuml;hrende Leer- oder Tabulatorzeichen, k&ouml;nnen Sie diese mit einem Minuszeichen zwischen dem Umlenkungszeichen und der Textmarke entfernen (<span class="listing">&lt;&lt;–MARKE</span> ).</p>
+<p>Nichts h&auml;lt Sie &uuml;brigens davon ab, die Standardeingabe mittels <span class="listing">&lt;&lt;</span> an eine Variable zu &uuml;bergeben:</p>
+<pre># Demonstriert die Verwendung von Here-Dokumenten
+# Name : ahere3
+count=`cat &lt;&lt;TEXT_MARKE
+\`ls -l | wc -l\`
+TEXT_MARKE`
+echo "Im Verzeichnis $HOME befinden sich $count Dateien"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ahere3
+Im Verzeichnis /home/tot befinden sich 40 Dateien</pre>
+<p>Damit in der Variable »count« nicht die Textfolge <span class="listing">ls</span> <span class="listing">l</span> <span class="listing">|</span> <span class="listing">wc</span> <span class="listing">–l</span> steht, sondern auch wirklich eine Kommando-Substitution durchgef&uuml;hrt wird, m&uuml;ssen Sie die Kommandos durch einen Backslash sch&uuml;tzen, weil hier bereits die Ausgabe der »Textmarke« als Kommando-Substitution verwendet wird.</p>
+<p>Ich pers&ouml;nlich verwende diese Inline-Eingabeumleitung gern in Verbindung mit Flie&szlig;kommaberechnungen und dem Kommando <span class="listing">bc</span> (siehe auch Abschnitt 2.2.3). Verwenden Sie hierbei zus&auml;tzlich noch eine Kommando-Substitution, k&ouml;nnen Sie das Ergebnis der Berechnung in einer Variablen speichern, wie Sie dies von <span class="listing">expr</span> her kennen. Au&szlig;erdem k&ouml;nnen Sie mit der Verwendung der mathematischen Bibliothek (anzugeben mit der Option <span class="listing">–l</span>) noch weitere Winkelfunktionen mit z. B. Sinus (<span class="listing">s()</span>) oder Kosinus (<span class="listing">c()</span>) nutzen. Hierzu das Script, womit jetzt Berechnungen komplexer Ausdr&uuml;cke nichts mehr im Wege steht:</p>
+<pre># Demonstriert die Verwendung von Here-Dokumenten
+# Name : ahere4
+if [ $# == 0 ]
+then
+   echo "usage: $0 Ausdruck"
+   exit 1
+fi
+# Option -l f&uuml;r die mathematische Bibliothek
+bc -l &lt;&lt;CALC
+$*
+quit
+CALC</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ahere4 123.12/5
+24.62400000000000000000
+you@host &gt; ./ahere4 1234.3*2
+2468.6
+you@host &gt; ./ahere4 '(12.34–8.12)/2'
+2.11000000000000000000
+you@host &gt; ./ahere4 sqrt\(24\)
+4.89897948556635619639
+you@host &gt; var=`./ahere4 1234.1234*2*1.2`
+you@host &gt; echo $var
+2961.89616</pre>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">5.3.5 Here-Dokumente mit read verwenden<a id="RxxKap00700204004E731F04A1B7" name="RxxKap00700204004E731F04A1B7"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999375" name="Xxx999375"></a><a id="Xxx999376" name="Xxx999376"></a>Wie beim Auslesen einer Datei mit <span class="listing">read</span> k&ouml;nnen Sie selbstverst&auml;ndlich auch Here-Dokumente verwenden. Dies verh&auml;lt sich dann so, als w&uuml;rde zeilenweise aus einer Datei gelesen. Und damit nicht nur die erste Zeile gelesen wird, geht man exakt genauso wie beim zeilenweise Einlesen einer Datei vor. Hier die Syntax:</p>
+<pre>while read line
+do
+   ...
+done &lt;&lt;TEXT_MARKE
+line1
+line2
+...
+line_n
+TEXT_MARKE</pre>
+<p>In der Praxis l&auml;sst sich diese Inline-Umlenkung mit <span class="listing">read</span> folgenderma&szlig;en einsetzen:</p>
+<pre># Demonstriert die Verwendung von Here-Dokumenten und read
+# Name : ahere5
+i=1
+while read line
+do
+   echo "$i. Zeile : $line"
+   i=`expr $i + 1`
+done &lt;&lt;TEXT
+Eine Zeile
+`date`
+Homeverzeichnis $HOME
+Das Ende
+TEXT</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ahere5
+1. Zeile : Eine Zeile
+2. Zeile : Fr M&auml;r  4 03:23:22 CET 2005
+3. Zeile : Homeverzeichnis /home/tot
+4. Zeile : Das Ende</pre>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">5.3.6 Die Variable IFS<a id="RxxKap00700204004E731F04A1BE" name="RxxKap00700204004E731F04A1BE"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999384" name="Xxx999384"></a><a id="Xxx999385" name="Xxx999385"></a><a id="Xxx999386" name="Xxx999386"></a><a id="Xxx999387" name="Xxx999387"></a><a id="Xxx999388" name="Xxx999388"></a>Die Variable <span class="listing">IFS</span> (Internal Field Separator) aus Ihrer Shell-Umgebung wurde in den letzten Abschnitten schon &ouml;fters erw&auml;hnt. Insbesondere scheint <span class="listing">IFS</span> eine spezielle Bedeutung bei der Ein- und Ausgabe von Daten als Trennzeichen zu haben. Wenn Sie allerdings versuchen, den Inhalt der Variablen mit <span class="listing">echo</span> auszugeben, werden Sie wohl nicht besonders schlau daraus. F&uuml;r Abhilfe kann hierbei das Kommando <span class="listing">od</span> sorgen, mit dem Sie den Inhalt der Variablen in hexadezimaler oder ASCII-Form betrachten k&ouml;nnen.</p>
+<pre>you@host &gt; echo -n "$IFS" | od -x
+0000000 0920 000a
+0000003</pre>
+<p>0000000 ist hierbei das Offset der Zahlenreihe, in der sich drei hexadezimale Werte befinden, die <span class="listing">IFS</span> beinhaltet. Damit das Newline von <span class="listing">echo</span> nicht mit enthalten ist, wurde hier die Option <span class="listing">–n</span> verwendet. Die Werte sind:</p>
+<pre>09 20 00 0a</pre>
+<p>Der Wert 00 hat hier keine Bedeutung. Jetzt k&ouml;nnen Sie einen Blick auf eine ASCII-Tabelle werfen, um festzustellen, f&uuml;r welches Sonderzeichen diese hexadezimalen Werte stehen.</p>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> 09 = Tabulator</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> 20 = Leerzeichen</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="baseline" width="16"><img src="common/gp.gif" width="8" height="9" border="0" alt="gp"> 
+        </td>
+<td valign="top" width="100%" align="left"> 0a = Newline-Zeichen (neue Zeile)</td>
+</tr>
+</table>
+<p>Das Ganze gelingt mit <span class="listing">od</span> auch im ASCII-Format, nur dass das Leerzeichen als ein »Leerzeichen« angezeigt wird:</p>
+<pre>you@host &gt; echo -n "$IFS" | od -c
+0000000      \t  \n
+0000003</pre>
+<p>Diese voreingestellten Trennzeichen der Shell dienen der Trennung der Eingabe f&uuml;r den Befehl <span class="listing">read</span>, der Variablen- sowie auch der Kommando-Substitution. Wenn Sie also z. B. <span class="listing">read</span> folgenderma&szlig;en verwenden</p>
+<pre>you@host &gt; read nachname vorname alter
+Wolf J&uuml;rgen 30
+you@host &gt; echo $vorname
+J&uuml;rgen
+you@host &gt; echo $nachname
+Wolf
+you@host &gt; echo $alter
+30</pre>
+<p>so verdanken Sie es der Variablen <span class="listing">IFS</span>, dass hierbei die entsprechenden Eingaben an die daf&uuml;r vorgesehenen Variablen &uuml;bergeben wurden.</p>
+<p>H&auml;ufig war aber in den Kapiteln zuvor die Rede davon, die Variable <span class="listing">IFS</span> den eigenen Bed&uuml;rfnissen anzupassen – sprich: das oder die Trennzeichen zu ver&auml;ndern. Wollen Sie beispielsweise, dass bei der Eingabe von <span class="listing">read</span> ein Semikolon statt eines Leerzeichens als Trennzeichen dient, so l&auml;sst sich dies einfach erreichen:</p>
+<pre>you@host &gt; BACKIFS="$IFS"
+you@host &gt; IFS=\;
+you@host &gt; echo -n "$IFS" | od -c
+0000000   ;
+0000001
+you@host &gt; read nachname vorname alter
+Wolf;J&uuml;rgen;30
+you@host &gt; echo $vorname
+J&uuml;rgen
+you@host &gt; echo $nachname
+Wolf
+you@host &gt; echo $alter
+30
+you@host &gt; IFS=$BACKIFS</pre>
+<p>Zuerst wurde eine Sicherung der Variablen <span class="listing">IFS</span> in <span class="listing">BACKIFS</span> vorgenommen. Der Vorgang, ein Backup von <span class="listing">IFS</span> zu erstellen, und das anschlie&szlig;ende Wiederherstellen ist wichtiger, als dies auf den ersten Blick erscheint. Unterl&auml;sst man es, kann man sich auf das aktuelle Terminal nicht mehr verlassen, da einige Programme nur noch Unsinn fabrizieren.</p>
+<p>Als N&auml;chstes &uuml;bergeben Sie im Beispiel der Variablen <span class="listing">IFS</span> ein Semikolon (gesch&uuml;tzt mit einem Backslash). Daraufhin folgt dasselbe Beispiel wie zuvor, nur mit einem Semikolon als Trennzeichen. Am Ende stellen wir den urspr&uuml;nglichen Wert von <span class="listing">IFS</span> wieder her.</p>
+<p>Nat&uuml;rlich spricht auch nichts dagegen, <span class="listing">IFS</span> mit mehr als einem Trennzeichen zu versehen, beispielsweise:</p>
+<pre>you@host &gt; IFS=$BACKIFS
+you@host &gt; IFS=:,
+you@host &gt; read nachname vorname alter
+Wolf,J&uuml;rgen:30
+you@host &gt; echo $vorname
+J&uuml;rgen
+you@host &gt; echo $nachname
+Wolf
+you@host &gt; echo $alter
+30
+you@host &gt; IFS=$BACKIFS</pre>
+<p>Im Beispiel wurde <span class="listing">IFS</span> mit den Trennzeichen <span class="listing">:</span> und <span class="listing">,</span> definiert. Wollen Sie bei einer Eingabe mit <span class="listing">read</span>, dass <span class="listing">IFS</span> nicht immer die f&uuml;hrenden Leerzeichen (falls vorhanden) entfernt, so m&uuml;ssen Sie <span class="listing">IFS</span> nur mittels <span class="listing">IFS=</span> auf »leer« setzen:</p>
+<pre>you@host &gt; IFS=$BACKIFS
+you@host &gt; read var
+          Hier sind f&uuml;hrende Leerzeichen vorhanden
+you@host &gt; echo $var
+Hier sind f&uuml;hrende Leerzeichen vorhanden
+you@host &gt; IFS=
+you@host &gt; read var
+          Hier sind f&uuml;hrende Leerzeichen vorhanden
+you@host &gt; echo $var
+          Hier sind f&uuml;hrende Leerzeichen vorhanden
+you@host &gt; IFS=$BACKIFS</pre>
+<p>Gleiches wird nat&uuml;rlich auch gern bei einer Variablen-Substitution verwendet. Im folgenden Beispiel wird die Variable durch ein Minuszeichen als Trenner zerteilt und mittels <span class="listing">set</span> auf die einzelnen Positionsparameter zerst&uuml;ckelt.</p>
+<pre># Demonstriert die Verwendung von IFS
+# Name : aifs1
+# IFS sichern
+BACKIFS="$IFS"
+# Minuszeichen als Trenner
+IFS=-
+counter=1
+var="Wolf-J&uuml;rgen-30-Bayern"
+# var anhand von Trennzeichen in IFS auftrennen
+set $var
+# Ein Zugriff auf $1, $2, ... w&auml;re hier auch m&ouml;glich
+for daten in "$@"
+do
+   echo "$counter. $daten"
+   counter=`expr $counter + 1`
+done
+IFS=$BACKIFS</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aifs1
+1. Wolf
+2. J&uuml;rgen
+3. 30
+4. Bayern</pre>
+<p>Wenn Sie das Script ein wenig umschreiben, k&ouml;nnen Sie hiermit zeilenweise alle Eintr&auml;ge der Shell-Variablen <span class="listing">PATH</span> ausgeben lassen, welche ja durch einen Doppelpunkt getrennt werden.</p>
+<pre># Demonstriert die Verwendung von IFS
+# Name : aifs2
+# IFS sichern
+BACKIFS="$IFS"
+# Minuszeichen als Trenner
+IFS=:
+# PATH anhand von Trennzeichen in IFS auftrennen
+set $PATH
+for path in "$@"
+do
+   echo "$path"
+done
+IFS=$BACKIFS</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aifs2
+/home/tot/bin
+/usr/local/bin
+/usr/bin
+/usr/X11R6/bin
+/bin
+/usr/games
+/opt/gnome/bin
+/opt/kde3/bin
+/usr/lib/java/jre/bin</pre>
+<p>Nat&uuml;rlich h&auml;tte man dies wesentlich effektiver mit folgender Zeile l&ouml;sen k&ouml;nnen:</p>
+<pre>you@host &gt; echo $PATH | tr ':' '\n'</pre>
+<p>Zu guter Letzt sei erw&auml;hnt, dass die Variable <span class="listing">IFS</span> noch recht h&auml;ufig in Verbindung mit einer Kommando-Substitution verwendet wird. Wollen Sie etwa mittels <span class="listing">grep</span> nach einem bestimmten User in /etc/passwd suchen, wird meistens eine Ausgabe wie folgt genutzt:</p>
+<pre>you@host &gt; grep you /etc/passwd
+you:x:1001:100::/home/you:/bin/bash</pre>
+<p>Dies in die Einzelteile zu zerlegen, sollte Ihnen jetzt mit der Variablen <span class="listing">IFS</span> nicht mehr schwer fallen.</p>
+<pre># Demonstriert die Verwendung von IFS
+# Name : aifs3
+# IFS sichern
+BACKIFS="$IFS"
+# Minuszeichen als Trenner
+IFS=:
+if [ $# -lt 1 ]
+then
+   echo "usage: $0 User"
+   exit 1
+fi
+# Ausgabe anhand von Trennzeichen in IFS auftrennen
+set `grep ^$1 /etc/passwd`
+echo "User             : $1"
+echo "User-Nummer      : $3"
+echo "Gruppen-Nummer   : $4"
+echo "Home-Verzeichnis : $6"
+echo "Start-Shell      : $7"
+IFS=$BACKIFS</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aifs3 you
+User             : you
+User-Nummer      : 1001
+Gruppen-Nummer   : 100
+Home-Verzeichnis : /home/you
+Start-Shell      : /bin/bash
+you@host &gt; ./aifs3 tot
+User             : tot
+User-Nummer      : 1000
+Gruppen-Nummer   : 100
+Home-Verzeichnis : /home/tot
+Start-Shell      : /bin/ksh
+you@host &gt; ./aifs3 root
+User             : root
+User-Nummer      : 0
+Gruppen-Nummer   : 0
+Home-Verzeichnis : /root
+Start-Shell      : /bin/ksh</pre>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">5.3.7 Arrays einlesen mit read (Bash und Korn-Shell only)<a id="RxxKap00700204004E731F04A1E4" name="RxxKap00700204004E731F04A1E4"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999427" name="Xxx999427"></a><a id="Xxx999428" name="Xxx999428"></a><a id="Xxx999429" name="Xxx999429"></a>Arrays lassen sich genauso einfach einlesen wie normale Variablen, nur dass man hier den Index beachten muss. Hierzu nur ein Script, da die Arrays bereits in Abschnitt 2.5 ausf&uuml;hrlich behandelt wurden.</p>
+<pre># Demonstriert die Verwendung von read mit Arrays
+# Name : ararray
+typeset -i i=0
+while [ $i -lt 5 ]
+do
+   printf "Eingabe machen : "
+   read valarr[$i]
+   i=i+1
+done
+echo "Hier, die Eingaben ..."
+i=0
+while [ $i -lt 5 ]
+do
+   echo ${valarr[$i]}
+   i=i+1
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ararray
+Eingabe machen : Testeingabe1
+Eingabe machen : Noch eine Eingabe
+Eingabe machen : Test3
+Eingabe machen : Test4
+Eingabe machen : Und Ende
+Hier, die Eingaben ...
+Testeingabe1
+Noch eine Eingabe
+Test3
+Test4
+Und Ende</pre>
+<p>Selbstverst&auml;ndlich lassen sich Arrays ganz besonders im Zusammenhang mit zeilenweisem Einlesen aus einer Datei mit <span class="listing">read</span> (siehe Abschnitt 5.3.2) verwenden:</p>
+<pre>typeset -i i=0
+while read vararray[$i]
+do
+   i=i+1
+done &lt; datei_zum_einlesen</pre>
+<p>Damit k&ouml;nnen Sie anschlie&szlig;end bequem mithilfe des Feldindexes auf den Inhalt einzelner Zeilen zugreifen und diesen weiterverarbeiten.</p>
+<p>In der Bash haben Sie au&szlig;erdem die M&ouml;glichkeit, mit <span class="listing">read</span> einzelne Zeichenketten zu zerlegen und diese Werte direkt in eine Variable zu legen. Die einzelnen Zeichenketten (abh&auml;ngig wieder vom Trennzeichen <span class="listing">IFS</span>) werden dann in extra Felder (einem Array) aufgeteilt. Hierf&uuml;r m&uuml;ssen Sie <span class="listing">read</span> allerdings mit der Option <span class="listing">–a</span> aufrufen:</p>
+<pre>read -a array &lt;&lt;TEXTMARKE
+$variable
+TEXTMARKE</pre>
+<p>Mit diesem Beispiel k&ouml;nnen Sie ganze Zeichenketten in ein Array aufsplitten (immer abh&auml;ngig davon, welche Trennzeichen Sie verwenden).</p>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">5.3.8 Shell-abh&auml;ngige Anmerkungen zu read<a id="RxxKap00700204004E731F04A1EF" name="RxxKap00700204004E731F04A1EF"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999441" name="Xxx999441"></a>Da <span class="listing">read</span> ein Builtin-Kommando der Shell ist, gibt es hier zwischen den einzelnen Shells noch einige unterschiedliche Funktionalit&auml;ten.</p>
+<h4 class="t4">Ausgabetext in read integrieren (Bash)</h4>
+<p><a id="Xxx999444" name="Xxx999444"></a>Verwenden Sie bei der Funktion <span class="listing">read</span> die Option <span class="listing">–p</span>, k&ouml;nnen Sie den Ausgabetext (f&uuml;r die Frage) direkt in die <span class="listing">read</span>-Abfrage integrieren. Die Syntax:</p>
+<pre>read -p Ausgabetext var1 var2 var3 ... var_n</pre>
+<p>In der Praxis sieht dies so aus:</p>
+<pre>you@host &gt; read -p "Ihr Vorname : " vorname
+Ihr Vorname : J&uuml;rgen
+you@host &gt; echo $vorname
+J&uuml;rgen</pre>
+<h4 class="t4">Ausgabetext in read integrieren (Korn-Shell)</h4>
+<p>Auch die Korn-Shell bietet Ihnen die M&ouml;glichkeit, eine Benutzerabfrage direkt in den <span class="listing">read</span>-Befehl einzubauen.</p>
+<pre>read var?"Ausgabetext"</pre>
+<p>In der Praxis:</p>
+<pre>you@host &gt; read name?"Ihr Name bitte: "
+Ihr Name bitte: J&uuml;rgen Wolf
+you@host &gt; echo $name
+J&uuml;rgen Wolf</pre>
+<h4 class="t4">Default-Variable f&uuml;r read (Bash und Korn-Shell only)</h4>
+<p><a id="Xxx999455" name="Xxx999455"></a><a id="Xxx999456" name="Xxx999456"></a><a id="Xxx999457" name="Xxx999457"></a>Verwenden Sie <span class="listing">read</span>, ohne eine Variable als Parameter, wird die anschlie&szlig;ende Eingabe in der Default-Variablen <span class="listing">REPLY</span> gespeichert.</p>
+<pre>you@host &gt; read
+J&uuml;rgen Wolf
+you@host &gt; echo $REPLY
+J&uuml;rgen Wolf</pre>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">5.3.9 Einzelnes Zeichen abfragen<a id="RxxKap00700204004E731F04A1FE" name="RxxKap00700204004E731F04A1FE"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999461" name="Xxx999461"></a><a id="Xxx999462" name="Xxx999462"></a><a id="Xxx999463" name="Xxx999463"></a>Eine h&auml;ufig gestellte Frage lautet, wie man einen einzelnen Tastendruck abfragen kann, ohne <b>(ENTER)</b> zu dr&uuml;cken. Das Problem an dieser Sache ist, dass ein Terminal gew&ouml;hnlich zeilengepuffert ist. Bei einer Zeilenpufferung wartet das Script z. B. bei einer Eingabeaufforderung mit <span class="listing">read</span> so lange mit der Weiterarbeit, bis die Zeile mit einem <b>(ENTER)</b> best&auml;tigt wird.</p>
+<p><a id="Xxx999465" name="Xxx999465"></a><a id="Xxx999466" name="Xxx999466"></a>Da ein Terminal mit unz&auml;hligen Eigenschaften versehen ist, ist es am einfachsten, all diese Parameter mit dem Kommando <span class="listing">stty</span> und der Option <a id="Xxx999468" name="Xxx999468"></a><span class="listing">raw</span> auszuschalten. Damit schalten Sie Ihr Terminal in einen rohen Modus, womit Sie praktisch »nackte« Zeichen behandeln k&ouml;nnen. Sobald Sie fertig sind, ein Zeichen einzulesen, sollten Sie diesen Modus auf jeden Fall wieder mit <span class="listing">–raw</span> verlassen!</p>
+<p>Wenn Sie Ihr Terminal in einen rohen Modus geschaltet haben, ben&ouml;tigen Sie eine Funktion, welche ein einzelnes Zeichen lesen kann. Die Funktion <span class="listing">read</span> f&auml;llt wegen der Zeilenpufferung aus. <a id="Xxx999470" name="Xxx999470"></a><a id="Xxx999471" name="Xxx999471"></a>Einzige M&ouml;glichkeit ist das Kommando <span class="listing">dd</span> (Dump Disk), worauf man zun&auml;chst gar nicht kommen w&uuml;rde. <span class="listing">dd</span> liest eine Datei und schreibt den Inhalt mit w&auml;hlbarer Blockgr&ouml;&szlig;e und verschiedenen Konvertierungen. Anstatt f&uuml;r eine Datei kann <span class="listing">dd</span> genauso gut f&uuml;r das Kopieren der Standardeingabe in die Standardausgabe verwandt werden. Hierzu reicht es, die Anzahl der Datens&auml;tze (<span class="listing">count</span> hier 1) anzugeben, und welche Blockgr&ouml;&szlig;e Sie in Bytes verwenden wollen (<span class="listing">bs</span>, auch hier 1 Byte). Da <span class="listing">dd</span> seine Meldung auf die Standardfehlerausgabe vornimmt, k&ouml;nnen Sie diese Ausgabe ins Datengrab schicken.</p>
+<p>Hier ein Script, das unerm&uuml;dlich auf den Tastendruck »q« f&uuml;r Quit zum Beenden einer Schleife wartet.</p>
+<pre># Demonstriert das Einlesen einzelner Zeichen
+# Name : areadchar
+echo "Bitte eine Taste bet&auml;tigen – mit q beenden"
+char=''
+# Terminal in den "rohen" Modus schalten
+stty raw -echo
+# In Schleife &uuml;berpr&uuml;fen, ob 'q' gedr&uuml;ckt wurde
+while [ "$char" != "q" ]
+do
+   char=`dd bs=1 count=1 2&gt;/dev/null`
+done
+# Den "rohen" Modus wieder abschalten
+stty -raw echo
+echo "Die Taste war $char"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./areadchar
+Bitte eine Taste bet&auml;tigen – mit q beenden (Q)
+Die Taste war q</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   <a id="Xxx999478" name="Xxx999478"></a></b>In der Bash k&ouml;nnen Sie auch die Abfrage einzelner Zeichen mit <span class="listing">read</span> und der Option <span class="listing">-n</span> vornehmen. Schreiben Sie etwa <span class="listing">read</span> <span class="listing">-n</span> <span class="listing">1</span> <span class="listing">var</span>, befindet sich in <span class="listing">var</span> das einzelne Zeichen. Allerdings unterst&uuml;tzt dies nur darstellbare ASCII-Zeichen. Bei Zeichen mit Escape-Folgen (siehe n&auml;chster Abschnitt) taugt auch dies nicht mehr.</p>
+</td>
+</tr>
+</table><br>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">5.3.10 Einzelne Zeichen mit Escape-Sequenzen abfragen<a id="RxxKap00700204004E731F04A208" name="RxxKap00700204004E731F04A208"></a> 
+      <a href="#t2t312"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999482" name="Xxx999482"></a><a id="Xxx999483" name="Xxx999483"></a><a id="Xxx999484" name="Xxx999484"></a><a id="Xxx999485" name="Xxx999485"></a>Im Beispiel zuvor haben Sie gesehen, wie Sie einzelne Tastendr&uuml;cke mithilfe der Kommandos <span class="listing">stty</span> und <span class="listing">dd</span> abfragen k&ouml;nnen. Aber sobald Sie hierbei Tastendr&uuml;cke wie <b>(F1)</b>, <b>(F2)</b>, <b>(ESC)</b>, <b>(½)</b>, <b>(¼)</b> usw. abfragen wollen, wird dies nicht mehr funktionieren. Testen Sie am besten selbst unser abgespecktes Script von eben:</p>
+<pre># Demonstriert das Einlesen einzelner Zeichen
+# Name : areadchar2
+echo "Bitte eine Taste bet&auml;tigen"
+stty raw -echo
+char=`dd bs=1 count=1 2&gt;/dev/null`
+stty -raw echo
+echo "Die Taste war $char"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./areadchar2
+Bitte eine Taste bet&auml;tigen (A)
+Die Taste war A
+you@host &gt; ./areadchar2
+Bitte eine Taste bet&auml;tigen (ESC)
+Die Taste war
+you@host &gt; ./areadchar2
+Bitte eine Taste bet&auml;tigen (F1)
+Die Taste war
+[A</pre>
+<p>Das Problem mit den Pfeil- oder Funktionstasten ist nun mal, dass hierbei Escape-Folgen zur&uuml;ckgegeben werden. Schlimmer noch, die Escape-Folgen sind h&auml;ufig unterschiedlich lang und – um es noch schlimmer zu machen – abh&auml;ngig vom Typ des Terminals und zus&auml;tzlich auch noch der nationalen Besonderheit (Umlaute und &Auml;hnliches).</p>
+<p>Somit scheint eine portable L&ouml;sung des Problems fast unm&ouml;glich, es sei denn, man kennt sich ein bisschen mit C aus. Da ich dies nicht voraussetzen kann, gebe ich Ihnen hier ein einfaches Rezept an die Hand, welches Sie bei Bedarf erweitern k&ouml;nnen.</p>
+<h4 class="t4">Escape-Sequenzen des Terminals ermitteln</h4>
+<p>Zuerst m&uuml;ssen Sie sich darum k&uuml;mmern, wie die Escape-Sequenzen f&uuml;r entsprechende Terminals aussehen. Welches Terminal Sie im Augenblick nutzen, k&ouml;nnen Sie mit <span class="listing">echo</span> <span class="listing">$TERM</span> in Erfahrung bringen. Im n&auml;chsten Schritt k&ouml;nnen Sie den Befehl <span class="listing">infocmp</span> verwenden, um vom entsprechenden Terminaltyp Informationen zu den Tasten zu erhalten.</p>
+<pre>you@host &gt; echo $TERM
+xterm
+you@host &gt; infocmp
+#       Reconstructed via infocmp from file: /usr/share/terminfo/x/xterm
+xterm|xterm terminal emulator (X Window System),
+        am, bce, km, mc5i, mir, msgr, npc, xenl,
+        colors#8, cols#80, it#8, lines#24, pairs#64,
+        bel=^G, blink=\E[5m, bold=\E[1m, cbt=\E[Z, civis=\E[?25l,
+        clear=\E[H\E[2J, cnorm=\E[?12l\E[?25h, cr=^M,
+        csr=\E[%i%p1  %d;%p2  %dr, cub=\E[%p1  %dD, cub1=^H,
+        cud=\E[%p1  %dB, cud1=^J, cuf=\E[%p1  %dC, cuf1=\E[C,
+        cup=\E[%i%p1  %d;%p2  %dH, cuu=\E[%p1  %dA, cuu1=\E[A,
+        cvvis=\E[?12;25h, dch=\E[%p1  %dP, dch1=\E[P, dl=\E[%p1  %dM,
+        dl1=\E[M, ech=\E[%p1  %dX, ed=\E[J, el=\E[K, el1=\E[1K,
+        enacs=\E(B\E)0, flash=\E[?5h$&lt;100/&gt;\E[?5l, home=\E[H,
+        hpa=\E[%i%p1  %dG, ht=^I, hts=\EH, ich=\E[%p1  %d@,
+        il=\E[%p1  %dL, il1=\E[L, ind=^J, indn=\E[%p1  %dS,
+        invis=\E[8m, is2=\E[!p\E[?3;4l\E[4l\E&gt;, kDC=\E[3;2~,
+        kEND=\E[1;2F, kHOM=\E[1;2H, kIC=\E[2;2~, kLFT=\E[1;2D,
+        kNXT=\E[6;2~, kPRV=\E[5;2~, kRIT=\E[1;2C, kb2=\EOE,
+        kbs=\177, kcbt=\E[Z, kcub1=\EOD, kcud1=\EOB, kcuf1=\EOC,
+        kcuu1=\EOA, kdch1=\E[3~, kend=\EOF, kent=\EOM, kf1=\EOP,
+        kf10=\E[21~, kf11=\E[23~, kf12=\E[24~, kf13=\EO2P,
+        ...</pre>
+<p>Hierbei werden Ihnen zun&auml;chst eine Menge Informationen um die Ohren gehauen, welche auf den ersten Blick wie Zeichensalat wirken. Bei genauerem Hinsehen aber k&ouml;nnen Sie alte Bekannte aus Abschnitt 5.2.4 zur Steuerung des Terminals mit <span class="listing">tput</span> wieder entdecken.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Wenn Sie &uuml;ber kein <span class="listing">infocmp</span> auf Ihrem Rechner verf&uuml;gen, liegt das wahrscheinlich daran, dass das ncurses-devel-Paket nicht installiert ist. Diesem Paket liegt auch <span class="listing">infocmp</span> bei.</p>
+</td>
+</tr>
+</table><br>
+<p><span class="listing">infocmp</span> gibt Ihnen hier Eintr&auml;ge wie</p>
+<pre>cuu1=\E[A</pre>
+<p>zur&uuml;ck. Dass man daraus nicht sonderlich schlau wird, leuchtet ein. Daher sollten Sie die Manual-Page von <span class="listing">terminfo(5)</span> befragen (oder genauer absuchen), wof&uuml;r denn hier <span class="listing">cuu1</span> steht:</p>
+<pre>you@host &gt; man 5 terminfo | grep cuu1
+Formatiere terminfo(5) neu, bitte warten...
+       cursor_up                 cuu1   up   up one line
+       key_up                    kcuu1  ku   up-arrow key
+       micro_up                  mcuu1  Zd   Like cursor_up in
+             kcuf1=\E[C, kcuu1=\E[A, kf1=\E[M, kf10=\E[V,</pre>
+<p>Also, die Pfeil-nach-oben-Taste (cursor_up) haben wir hier. Und diese wird bei der <span class="listing">xterm</span> mit <span class="listing">\E[A</span> »dargestellt«. Das <span class="listing">\E</span> ist hierbei das Escape-Zeichen und besitzt den ASCII-Codewert 27. Somit sieht der C-Quellcode zum &Uuml;berpr&uuml;fen der Pfeil-nach-oben-Taste wie folgt aus (fett hervorgehoben ist hier die eigentliche &Uuml;berpr&uuml;fung, die Sie bei Bedarf erweitern k&ouml;nnen):</p>
+<pre>/* getkey.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;termios.h&gt;
+enum { ERROR=-1, SUCCESS, ONEBYTE };
+/*Altes Terminal wiederherstellen*/
+static struct termios BACKUP_TTY; /*Altes Terminal wiederherstellen*/
+/* Eingabekanal wird so umge&auml;ndert, damit die Tasten einzeln */
+/* abgefragt werden k&ouml;nnen */
+int new_tty(int fd) {
+   struct termios buffer;
+/* Wir fragen nach den Attributen des Terminals und &uuml;bergeben  */
+/* diese dann an buffer. BACKUP_TTY dient bei Programmende zur */
+/* Wiederherstellung der alten Attribute und bleibt unber&uuml;hrt. */
+   if((tcgetattr(fd, &amp;BACKUP_TTY)) == ERROR)
+      return ERROR;
+   buffer = BACKUP_TTY;
+/* Lokale Flags werden gel&ouml;scht :               */
+/*     ECHO = Zeichenausgabe auf Bildschirm     */
+/*     ICANON = Zeilenorientierter Eingabemodus */
+/*     ISIG = Terminal Steuerzeichen            */
+   buffer.c_lflag = buffer.c_lflag &amp; ~(ECHO|ICANON|ISIG);
+/* VMIN=Anzahl der Bytes, die gelesen werden m&uuml;ssen, bevor    */
+/* read() zur&uuml;ckkehrt In unserem Beispiel 1Byte f&uuml;r 1 Zeichen */
+   buffer.c_cc[VMIN] = 1;
+/* Wir setzen jetzt die von uns gew&uuml;nschten Attribute */
+   if((tcsetattr(fd, TCSAFLUSH, &amp;buffer)) == ERROR)
+      return ERROR;
+   return SUCCESS;
+}
+/* Urspr&uuml;ngliches Terminal wiederherstellen */
+int restore_tty(int fd) {
+   if((tcsetattr(fd, TCSAFLUSH, &amp;BACKUP_TTY)) == ERROR)
+      return ERROR;
+   return SUCCESS;
+}
+int main(int argc, char **argv) {
+   int rd;
+   char c, buffer[10];
+/* Setzen des neuen Modus */
+   if(new_tty(STDIN_FILENO) == ERROR) {
+      printf("Fehler bei der Funktion new_tty()\n");
+      exit(EXIT_FAILURE);
+   }
+/* Erste Zeichen lesen */
+   if(read(STDIN_FILENO, &amp;c, 1) &lt; ONEBYTE) {
+      printf("Fehler bei read()\n");
+      restore_tty(STDIN_FILENO);
+      exit(EXIT_FAILURE);
+   }
+/* Haben wir ein ESC ('\E') gelesen? */
+   if(c == 27) {
+/* Jep eine Escape-Sequenz, wir wollen den Rest */
+/* der Zeichen auslesen                         */
+      rd=read(STDIN_FILENO, buffer, 4);
+      /*String terminieren*/
+      buffer[rd]='\0';
+/* Hier erfolgt die &Uuml;berpr&uuml;fung des Tastendrucks*/
+/* Wars der Pfeil-nach-oben \E[A   */
+      if(strcmp(buffer,"[A") == SUCCESS)
+         printf("Pfeil-nach-oben bet&auml;tigt\n");
+/* Nein, keine Escape-Sequenz */
+   }
+   else {
+      if((c &lt; 32) || (c == 127))
+         printf("--&gt; %d\n",c); /* Numerischen Wert ausgeben */
+      else
+         printf("--&gt; %c\n",c); /* Zeichen ausgeben */
+   }
+   restore_tty(STDIN_FILENO);
+   return EXIT_SUCCESS;
+}</pre>
+<p>Wird das Programm kompiliert, &uuml;bersetzt und anschlie&szlig;end ausgef&uuml;hrt, erhalten Sie folgende Ausgabe:</p>
+<pre>you@host &gt; gcc -Wall -o getkey getkey.c
+you@host &gt; ./getkey
+(1) --&gt; 1
+you@host &gt; ./getkey
+(A) --&gt; A
+you@host &gt; ./getkey
+(½) Pfeil-nach-oben bet&auml;tigt</pre>
+<p>Wie Sie jetzt im Beispiel vorgegangen sind, k&ouml;nnen Sie auch mit anderen Pfeil- und Funktionstasten vorgehen. Den Pfeil-nach-rechts k&ouml;nnen Sie z. B. wie folgt implementieren:</p>
+<pre>      if(strcmp(buffer,"[D") == SUCCESS)
+         printf("Pfeil-nach-rechts\n");</pre>
+<p>Aber anstatt einer Ausgabe empfehle ich Ihnen, einen R&uuml;ckgabewert mittels <span class="listing">return</span> zu verwenden, etwa:</p>
+<pre>...
+/* Hier erfolgt die &Uuml;berpr&uuml;fung des Tastendrucks*/
+/* Wars der Pfeil-nach-oben \E[A   */
+      if(strcmp(buffer,"[A") == SUCCESS) {
+         restore_tty(STDIN_FILENO);
+         return 10; /* R&uuml;ckgabewert f&uuml;r unser Shellscript */
+      }
+/* Wars der Pfeil-nach-links */
+      if(strcmp(buffer,"[D") == SUCCESS) {
+         restore_tty(STDIN_FILENO);
+         return 11;  /* R&uuml;ckgabewert f&uuml;r unser Shellscript */
+      }
+...</pre>
+<p>Damit k&ouml;nnen Sie das Beispiel auch mit einem Shellscript verwenden, indem Sie die Variable <span class="listing">$?</span> abfragen. Hier das Script:</p>
+<pre># Demonstriert das Einlesen einzelner Zeichen
+# Name : areadchar3
+echo "Bitte eine Taste bet&auml;tigen"
+./getkey
+ret=$?
+if [ $ret -eq 0 ]
+then
+   echo "Keine Pfeiltaste"
+fi
+if [ $ret -eq 10 ]
+then
+   echo "Die Pfeil-nach-oben-Taste wars"
+fi
+if [ $ret -eq 11 ]
+then
+   echo "Die Pfeil-nach-links-Taste wars"
+ fi</pre>
+<p>&Uuml;bersetzen Sie das C-Programm von Neuem mit den ge&auml;nderten Zeilen Code und f&uuml;hren Sie das Shellscript aus:</p>
+<pre>you@host &gt; ./areadchar3
+Bitte eine Taste bet&auml;tigen
+(d)--&gt; d
+Keine Pfeiltaste
+you@host &gt; ./areadchar3
+Bitte eine Taste bet&auml;tigen
+(½)Die Pfeil-nach-oben-Taste wars
+you@host &gt; ./areadchar3
+Bitte eine Taste bet&auml;tigen
+(æ)Die Pfeil-nach-links-Taste wars</pre>
+<p>Mit dem C-Programm haben Sie quasi Ihr eigenes Tool geschrieben, welches Sie am besten in ein <span class="listing">PATH</span>-Verzeichnis kopieren und auf welches Sie somit jederzeit zur&uuml;ckgreifen und nat&uuml;rlich erweitern k&ouml;nnen/sollen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Nat&uuml;rlich wurde das Thema hier nur gestreift, aber es w&uuml;rde keinen Sinn ergeben, noch mehr einzusteigen, da ich von Ihnen nicht auch noch C-Kenntnisse verlangen kann. Aber Sie konnten hierbei schon sehen, dass Sie mit zus&auml;tzlichen Programmierkenntnissen noch viel weiter kommen k&ouml;nnen. Fehlt ein bestimmtes Tool, programmiert man eben selbst eins.</p>
+<p class="BStandard"><b>Und noch ein Hinweis   </b>Noch mehr Lust auf die C-Programmierung bekommen? Ich k&ouml;nnte Ihnen mein Buch »C von A bis Z« empfehlen oder etwas zur Linux-UNIX-Programimerung. Auch hierzu finden Sie ein Buch aus meiner Feder (»Linux-Unix-Programmierung«). Beide B&uuml;cher sind bei Galileo Press erschienen.</p>
+</td>
+</tr>
+</table><br>
+<a name="t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t312"></a><h3 class="t3">5.3.11 Passworteingabe<a id="RxxKap00700204004E731F04A229" name="RxxKap00700204004E731F04A229"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t311"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999523" name="Xxx999523"></a><a id="Xxx999524" name="Xxx999524"></a><a id="Xxx999525" name="Xxx999525"></a>Wollen Sie in Ihrem Script eine Passworteingabe vornehmen und darauf verzichten, dass die Eingabe auf dem Bildschirm mit ausgegeben wird, k&ouml;nnen Sie auch hierf&uuml;r <span class="listing">stty</span> verwenden. Hierbei reicht es aus, die Ausgabe (<span class="listing">echo</span>) abzuschalten und nach der Passworteingabe wieder zu aktivieren.</p>
+<pre>stty -echo
+# Passwort einlesen
+stty echo</pre>
+<p>Ein Script als Beispiel:</p>
+<pre># Demonstriert das Einlesen einzelner Zeichen
+# Name : anoecho
+printf "Bitte Eingabe machen: "
+# Ausgabe auf dem Bildschirm abschalten
+stty -echo
+read passwort
+# Ausgabe auf dem Bildschirm wieder einschalten
+stty echo
+printf "\nIhre Eingabe lautete : %s\n" $passwort</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./anoecho
+Bitte Eingabe machen:
+Ihre Eingabe lautete: k3l5o6i8</pre>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_007_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_007_003.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_007_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:54 GMT -->
+</html>

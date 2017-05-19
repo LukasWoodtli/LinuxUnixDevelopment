@@ -1,0 +1,1101 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_016_001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 14.2 Dateiorientierte Kommandos</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_016_000.html">
+<link rel="next" href="shell_016_002.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_016_000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_016_002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_016_000.html#RxxKap016000040050021F03F172">14 Linux-UNIX-Kommandoreferenz</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_000.html#RxxKap016000040050021F03F177">14.1 Kurz&uuml;bersicht</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap016001040050191F018172">14.2 Dateiorientierte Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_002.html#RxxKap0160020400501A1F021172">14.3 Verzeichnisorientierte Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_003.html#RxxKap0160030400501B1F013172">14.4 Verwaltung von Benutzern und Gruppe</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_004.html#RxxKap0160040400501C1F015172">14.5 Programm- und Prozessverwaltung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_005.html#RxxKap0160050400501D1F010172">14.6 Speicherplatzinformationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_006.html#RxxKap0160060400501E1F010172">14.7 Dateisystem-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_007.html#RxxKap0160070400501F1F042172">14.8 Archivierung und Backup</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_008.html#RxxKap016008040050201F030172">14.9 Systeminformationen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_009.html#RxxKap016009040050211F012172">14.10 System-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_010.html#RxxKap016010040050221F013172">14.11 Druckeradministration</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_011.html#RxxKap016011040050231F030172">14.12 Netzwerkbefehle</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_012.html#RxxKap016012040050241F03D172">14.13 Benutzerkommunikation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_013.html#RxxKap016013040050251F046172">14.14 Bildschirm- und Terminalkommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_014.html#RxxKap016014040050261F04E172">14.15 Online-Hilfen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_015.html#RxxKap016015040050271F037172">14.16 Alles rund um PostScript-Kommandos</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_016_016.html#RxxKap016016040050281F03E172">14.17 Gemischte Kommandos</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">14.2 <a id="RxxKap01427DateiorientierteKommandos" name="RxxKap01427DateiorientierteKommandos"></a>Dateiorientierte Kommando<a id="RxxKap016001040050191F018172" name="RxxKap016001040050191F018172"></a>s 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">bzcat – Ausgabe von bzip2-komprimierten Dateien<a id="RxxKap016001040050191F018173" name="RxxKap016001040050191F018173"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a>Mit <span class="listing">bzcat</span> k&ouml;nnen Sie die Inhalte von bzip2-komprimierten Dateien ausgeben, ohne dass Sie hierbei die komprimierte Datei dekomprimieren m&uuml;ssen. Dies ist z. B. auch ein Grund, warum Sie mit einem Dateibrowser den Inhalt einer Datei sehen und sogar lesen k&ouml;nnen, obwohl Sie diese noch gar nicht dekomprimiert haben. Ansonsten funktioniert <span class="listing">bzcat</span> wie <span class="listing">cat</span>.</p>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">cat – Datei(en) nacheinander ausgeben<a id="RxxKap016001040050191F018175" name="RxxKap016001040050191F018175"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999282" name="Xxx999282"></a><a id="Xxx999283" name="Xxx999283"></a><span class="listing">cat</span> wurde bereits mehrfach in diesem Buch verwendet und auch beschrieben. Mit diesem Kommando werden gew&ouml;hnlich Dateien ausgegeben. Geben Sie <span class="listing">cat</span> beim Aufruf keine Dateien zum Lesen als Argument mit, liest <span class="listing">cat</span> so lange aus der Standardeingabe, bis <b>(Strg)</b>+<b>(D)</b> (EOF) bet&auml;tigt wurde.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.2   
+    </b>Anwendungen von cat</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Verwendung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cat file
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt den Inhalt von file aus
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cat file | kommando
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt den Inhalt von file via Pipe an die Standardeingabe von kommando weiter
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cat file1 file2 &gt; file_all
+</td>
+<td class="tabellentext" bgcolor="#000000">Dateien aneinander h&auml;ngen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cat &gt; file
+</td>
+<td class="tabellentext" bgcolor="#000000">Schreibt alle Zeilen, die von der Tastatur eingegeben wurden, in die Datei file, bis (Strg)+(D) bet&auml;tigt wurde
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b><span class="listing">cat</span> wurde bereits separat in Abschnitt 1.7.2 behandelt.</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">chgrp – Gruppe von Dateien oder Verzeichnissen &auml;ndern<a id="RxxKap016001040050191F018186" name="RxxKap016001040050191F018186"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999319" name="Xxx999319"></a><a id="Xxx999320" name="Xxx999320"></a>Mit <span class="listing">chgrp</span> &auml;ndern Sie die Gruppenzugeh&ouml;rigkeit einer Datei oder eines Verzeichnisses. Dieses Kommando bleibt somit nur dem Eigent&uuml;mer einer Datei/Verzeichnis oder dem Superuser vorbehalten. Als Eigent&uuml;mer k&ouml;nnen Sie au&szlig;erdem nur diejenigen Dateien oder Verzeichnisse einer bestimmten Gruppe zuordnen, der Sie selbst auch angeh&ouml;ren. Wollen Sie die Gruppenzugeh&ouml;rigkeit aller Dateien in einem Verzeichnis mit allen Unterverzeichnissen &auml;ndern, dann bietet sich hierzu die Option <span class="listing">–R</span> (f&uuml;r rekursiv) an.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">cksum/md5sum/sum – eine Pr&uuml;fsumme f&uuml;r eine Datei ermitteln<a id="RxxKap016001040050191F018188" name="RxxKap016001040050191F018188"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999323" name="Xxx999323"></a><a id="Xxx999324" name="Xxx999324"></a><a id="Xxx999325" name="Xxx999325"></a><a id="Xxx999326" name="Xxx999326"></a><a id="Xxx999327" name="Xxx999327"></a><a id="Xxx999328" name="Xxx999328"></a><a id="Xxx999329" name="Xxx999329"></a><a id="Xxx999330" name="Xxx999330"></a>Mit diesen Funktionen errechnet man die CRC-(cyclic redundancy check)-Pr&uuml;fsumme und die Anzahl Bytes (Anzahl Bytes gilt nur f&uuml;r <span class="listing">cksum</span>) f&uuml;r eine Datei. Wird keine Datei angegeben, liest <span class="listing">cksum</span> diejenige aus der Standardeingabe, bis <b>(Strg)</b>+<b>(D)</b> bet&auml;tigt wurde, und berechnet hieraus die Pr&uuml;fsumme.</p>
+<p>Diese Kommandos werden h&auml;ufig eingesetzt um festzustellen, ob zwei Daten identisch sind. So kann z. B. &uuml;berpr&uuml;ft werden, ob eine Datei, die Sie aus dem Netz geladen haben, auch korrekt &uuml;bertragen wurde. Voraussetzung hierf&uuml;r ist nat&uuml;rlich, dass Sie die Pr&uuml;fsumme der Quelle kennen. H&auml;ufig findet man dies beim Herunterladen von ISO-Distributionen. Ein anderer Anwendungsfall w&auml;re das &Uuml;berpr&uuml;fen auf Virenbefall. Hiermit kann ermittelt werden, ob sich jemand an einer Datei zu schaffen gemacht hat, beispielsweise:</p>
+<pre>you@host &gt; cksum data.conf
+2935371588 51 data.conf
+you@host &gt; cksum data.conf
+2935371588 51 data.conf
+you@host &gt; echo Hallo &gt;&gt; data.conf
+you@host &gt; cksum data.conf
+966396470 57 data.conf</pre>
+<p>Hier eine Konfigurationsdatei data.conf, bei der zweimal mit <span class="listing">cksum</span> derselbe Wert berechnet wurde (nur zur Demonstration). Kurz darauf wurde am Ende dieser Datei ein Text angeh&auml;ngt und erneut <span class="listing">cksum</span> ausgef&uuml;hrt. Jetzt erhalten Sie eine andere Pr&uuml;fsumme. Voraussetzung, dass dieses Prinzip funktioniert, ist nat&uuml;rlich auch eine Datei oder Datenbank, die solche Pr&uuml;fsummen zu den entsprechenden Dateien speichert. Dabei k&ouml;nnen Sie auch zwei Dateien auf einmal eingeben, um die Pr&uuml;fsummen zu vergleichen:</p>
+<pre>you@host &gt; cksum data.conf data.conf~bak
+966396470 57 data.conf
+2131264154 10240 data.conf~bak</pre>
+<p><span class="listing">cksum</span> ist gegen&uuml;ber <span class="listing">sum</span> zu bevorzugen, da diese Version neuer ist und auch dem POSIX.2-Standard entspricht. Beachten Sie allerdings, dass alle drei Versionen zum Berechnen von Pr&uuml;fsummen (<span class="listing">sum</span>, <span class="listing">cksum</span> und <span class="listing">md5sum</span>) untereinander inkompatibel sind und andere Pr&uuml;fsummen als Ergebnis berechnen:</p>
+<pre>you@host &gt; sum data.conf
+20121     1
+you@host &gt; cksum data.conf
+966396470 57 data.conf
+you@host &gt; md5sum data.conf
+5a04a9d083bc0b0982002a2c8894e406  data.conf</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b><span class="listing">md5sum</span> gibt es unter FreeBSD nicht, hier hei&szlig;t es <span class="listing">md5</span>.</p>
+</td>
+</tr>
+</table><br>
+<p>Noch ein beliebter Anwendungsfall von <span class="listing">md5sum</span> (bzw. <span class="listing">md5</span>):</p>
+<pre>cd /bin; md5 `ls -R /bin` | md5</pre>
+<p>Wenn sich jetzt jemand am Verzeichnis /bin zu schaffen gemacht hat, merkt man dies relativ schnell. Am besten l&auml;sst man hierbei einen <span class="listing">cron</span>-Job laufen und sich gegebenenfalls t&auml;glich per E-Mail benachrichtigen.</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">chmod – Zugriffsrechte von Dateien oder Verzeichnissen &auml;ndern<a id="RxxKap016001040050191F018195" name="RxxKap016001040050191F018195"></a> 
+      <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999346" name="Xxx999346"></a><a id="Xxx999347" name="Xxx999347"></a>Mit <span class="listing">chmod</span> setzen oder ver&auml;ndern Sie die Zugriffsrechte auf Dateien oder Verzeichnisse. Die Benutzung von <span class="listing">chmod</span> ist selbstverst&auml;ndlich nur dem Dateieigent&uuml;mer und dem Superuser gestattet. Die Bedienung von <span class="listing">chmod</span> muss eigentlich jedem Systemadministrator gel&auml;ufig sein, weil es ein sehr h&auml;ufig verwendetes Kommando ist. <span class="listing">chmod</span> kann zum Gl&uuml;ck sehr flexibel eingesetzt werden. Man kann einen numerischen Wert wie folgt verwenden:</p>
+<pre>chmod 755 file</pre>
+<p>oder</p>
+<pre>chmod 0755 file</pre>
+<p>Einfacher anzuwenden ist <span class="listing">chmod</span> &uuml;ber eine symbolische Angabe wie:</p>
+<pre>chmode u+x file</pre>
+<p>Hier bekommt der User (<span class="listing">u</span>; Eigent&uuml;mer) der Datei file das Ausf&uuml;hrrecht (<span class="listing">+x</span>) erteilt.</p>
+<pre>chmod g-x file</pre>
+<p>Damit wurde der Gruppe (<span class="listing">g</span>) das Ausf&uuml;hrrecht entzogen (<span class="listing">–x</span>). Wollen Sie hingegen allen Teilnehmern (<span class="listing">a</span>) ein Ausf&uuml;hrrecht erteilen, dann geht dies so:</p>
+<pre>chmod a+x file</pre>
+<p>Mit <span class="listing">chmod</span> k&ouml;nnen Sie auch die Spezialbits setzen (SUID=4000; SGUID=2000 oder Sticky=1000). Wollen Sie z. B. f&uuml;r eine Datei das setuid-(Set-User-ID)-Bit setzen, funktioniert dies folgenderma&szlig;en:</p>
+<pre>chmod 4744 file</pre>
+<p>Das setgid-(Set Group ID)-Bit hingegen setzen Sie mit »2xxx«.</p>
+<p>Zu erw&auml;hnen ist auch die Option <span class="listing">–R</span>, mit der Sie ein Verzeichnis rekursiv durchlaufen und alle Dateien, die sich darin befinden, entsprechend den neu angegebenen Rechten &auml;ndern.</p>
+<a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t37"></a><h3 class="t3">chown – Eigent&uuml;mer von Dateien oder Verzeichnissen &auml;ndern<a id="RxxKap016001040050191F0181A4" name="RxxKap016001040050191F0181A4"></a> 
+      <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999363" name="Xxx999363"></a><a id="Xxx999364" name="Xxx999364"></a>Mit <span class="listing">chown</span> k&ouml;nnen Sie den Eigent&uuml;mer von Dateien oder Verzeichnissen &auml;ndern. Als neuen Eigent&uuml;mer kann man entweder den Login-Namen oder die User-ID angeben. Name oder Zahl m&uuml;ssen selbstverst&auml;ndlich in der Datei /etc/passwd vorhanden sein. Dieses Kommando kann wiederum nur vom Eigent&uuml;mer selbst oder dem Superuser aufgerufen und auf Dateien bzw. Verzeichnisse angewendet werden.</p>
+<pre>chown john file1 file2</pre>
+<p>Hier wird der User »john« Eigent&uuml;mer der Datei file1 und file2. Wollen Sie auch hier ein komplettes Verzeichnis mitsamt den Unterverzeichnissen erfassen, so kann auch hierbei die Option <span class="listing">–R</span> verwendet werden.</p>
+<p>Wollen Sie sowohl den Eigent&uuml;mer als auch die Gruppe einer Datei &auml;ndern, nutzen Sie folgende Syntax:</p>
+<pre>chown john:user file1 file2</pre>
+<a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t38"></a><h3 class="t3">cmp – Dateien miteinander vergleichen<a id="RxxKap016001040050191F0181AA" name="RxxKap016001040050191F0181AA"></a> 
+      <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999371" name="Xxx999371"></a><a id="Xxx999372" name="Xxx999372"></a>Mit der Funktion <span class="listing">cmp</span> vergleichen Sie zwei Dateien Byte f&uuml;r Byte miteinander und erhalten die dezimale Position und Zeilennummer vom ersten Byte zur&uuml;ck, bei dem sich beide Dateien unterscheiden. <span class="listing">cmp</span> vergleicht auch Bin&auml;rdateien. Sind beide Dateien identisch, erfolgt keine Ausgabe.</p>
+<pre>you@host &gt; cmp out.txt textfile.txt
+out.txt textfile.txt differieren: Byte 52, Zeile 3.</pre>
+<a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t39"></a><h3 class="t3">comm – zwei sortierte Textdateien miteinander vergleichen<a id="RxxKap016001040050191F0181AD" name="RxxKap016001040050191F0181AD"></a> 
+      <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999376" name="Xxx999376"></a><a id="Xxx999377" name="Xxx999377"></a>Mit <span class="listing">comm</span> vergleichen Sie zwei sortierte Dateien und geben die gemeinsamen und die unterschiedlichen Zeilen jeweils in Spalten aus, indem die zweite und dritte Spalte von einem bzw. zwei Tabulatorenvorsch&uuml;ben angef&uuml;hrt werden.</p>
+<pre>comm [-123] file1 file2</pre>
+<p>Die erste Spalte enth&auml;lt die Zeilen, die nur in der Datei file1 enthalten sind. Die zweite Spalte hingegen beinhaltet die Zeilen, die in der zweiten Datei file2 enthalten sind, und die dritte Spalte die Zeilen, die in beiden Dateien enthalten sind.</p>
+<pre>you@host &gt; cat file1.txt
+# wichtige Initialisierungsdatei
+# noch eine Zeile
+Hallo
+you@host &gt; cat file2.txt
+# wichtige Initialisierungsdatei
+# noch eine Zeile
+Hallo
+you@host &gt; comm file1.txt file2.txt
+                # wichtige Initialisierungsdatei
+                # noch eine Zeile
+                Hallo
+you@host &gt; echo "Neue Zeile" &gt;&gt; file2.txt
+you@host &gt; comm file1.txt file2.txt
+                # wichtige Initialisierungsdatei
+                # noch eine Zeile
+                Hallo
+        Neue Zeile
+you@host &gt; comm –3 file1.txt file2.txt
+        Neue Zeile</pre>
+<p>In der letzten Zeile ist au&szlig;erdem zu sehen, wie Sie mit dem Schalter <span class="listing">–3</span> die Ausgabe der dritten Spalte ganz abschalten, um nur die Differenzen beider Dateien zu erkennen. <span class="listing">comm</span> arbeitet zeilenweise, weshalb hier keine Vergleiche mit bin&auml;ren Dateien m&ouml;glich sind. Weitere Schalterstellungen und ihre Bedeutung sind:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.3   
+    </b>Optionen f&uuml;r comm</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Verwendung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–23 file1 file2
+</td>
+<td class="tabellentext" bgcolor="#000000">Es werden nur Zeilen ausgegeben, die in file1 vorkommen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–123 file1 file2
+</td>
+<td class="tabellentext" bgcolor="#000000">Es wird keine Ausgabe erzeugt.
+</td>
+</tr>
+</table><br>
+<a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t310"></a><h3 class="t3">cp – Dateien kopieren<a id="RxxKap016001040050191F0181BC" name="RxxKap016001040050191F0181BC"></a> 
+      <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999405" name="Xxx999405"></a><a id="Xxx999406" name="Xxx999406"></a>Den Befehl <span class="listing">cp</span> zum Kopieren von Dateien und Verzeichnissen haben Sie schon des &Ouml;fteren verwendet, daher hier nur noch eine Auflistung der g&auml;ngigsten Verwendungen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.4   
+    </b>Anwendungen von cp</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Verwendung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cp file newfile
+</td>
+<td class="tabellentext" bgcolor="#000000">Es wird mit newfile eine Kopie von file erzeugt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cp –p file newfile
+</td>
+<td class="tabellentext" bgcolor="#000000">newfile erh&auml;lt dieselben Zugriffsrechte, Eigent&uuml;mer und Zeitstempel.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cp –r dir newdir
+</td>
+<td class="tabellentext" bgcolor="#000000">Es wird ein komplettes Verzeichnis rekursiv (–r) kopiert.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cp file1 file2 file3 dir
+</td>
+<td class="tabellentext" bgcolor="#000000">Es werden mehrere Dateien in ein Verzeichnis kopiert.
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>cp wurde bereits separat in Abschnitt 1.7.2 beschrieben.</p>
+</td>
+</tr>
+</table><br>
+<a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t311"></a><h3 class="t3">csplit – Zerteilen von Dateien (kontextabh&auml;ngig)<a id="RxxKap016001040050191F0181CD" name="RxxKap016001040050191F0181CD"></a> 
+      <a href="#t2t312"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999442" name="Xxx999442"></a><a id="Xxx999443" name="Xxx999443"></a>Mit <span class="listing">csplit</span> k&ouml;nnen Sie eine Datei in mehrere Teile aufteilen. Als Trennstelle kann hierbei ein Suchmuster, also auch ein regul&auml;rer Ausdruck angegeben werden. Dabei werden aus einer Eingabedatei mehrere Ausgabedateien erzeugt, deren Inhalt vom Suchmuster abh&auml;ngig gemacht werden kann. Ein Beispiel:</p>
+<pre>csplit Kapitel20.txt /Abschnitt 1/ /Abschnitt 2/ /Abschnitt 3/</pre>
+<p>Hier wird das Kapitel20.txt in vier Teile aufgeteilt. Zun&auml;chst vom Anfang bis zum »Abschnitt 1«, als N&auml;chstes von »Abschnitt 1« bis »Abschnitt 2«, dann »Abschnitt 2« bis »Abschnitt 3« und zu guter Letzt »Abschnitt 3« bis »Abschnitt4«. Hier k&ouml;nnen Sie allerdings auch einzelne Zeilen angeben, ab denen Sie eine Datei teilen wollen:</p>
+<pre>csplit -f Abschnitt Kapitel20.txt 20 40</pre>
+<p>Hier haben Sie mit der Option <span class="listing">–f</span> veranlasst, dass statt eines Dateinamens wie »xx01«, »xx02« usw. dem darauf folgenden Namen eine Datei wie »Abschnitt01«, »Abschnitt02« usw. erzeugt wird. Hier zerteilen Sie die Datei Kapitel20.txt in drei Dateien: »Abschnitt01« (Zeile 1–20), »Abschnitt02« (Zeile 21–40) und »Abschnitt03« (Zeile 41 bis zum Ende). Sie k&ouml;nnen mit <span class="listing">{n}</span> am Ende auch angeben, dass ein bestimmter Ausdruck n-mal angewendet werden soll. Beispielsweise:</p>
+<pre>csplit -k /var/spool/mail/$LOGNAME /^From / {100}</pre>
+<p>Hier zerteilen Sie in Ihrer Mailbox die einzelnen E-Mails in die einzelnen Dateien »xx01«, »xx02« ... »xx99«. Jeder Brief einer E-Mail im mbox-Format beginnt mit »From«, weshalb dies als Trennzeichen f&uuml;r die einzelnen Dateien dient. Weil Sie wahrscheinlich nicht genau wissen, wie viele Mails in Ihrer Mailbox liegen, k&ouml;nnen Sie durch die Angabe einer relativ hohen Zahl zusammen mit der Option <span class="listing">–k</span> erreichen, dass alle Mails getrennt und nach einem eventuell vorzeitigen Scheitern die bereits erzeugten Dateien nicht wieder gel&ouml;scht werden.</p>
+<a name="t311"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t312"></a><h3 class="t3">cut – Zeichen oder Felder aus Dateien herausschneiden<a id="RxxKap016001040050191F0181D5" name="RxxKap016001040050191F0181D5"></a> 
+      <a href="#t2t313"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t311"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999452" name="Xxx999452"></a><a id="Xxx999453" name="Xxx999453"></a>Mit <span class="listing">cut</span> schneiden Sie bestimmte Teile aus einer Datei heraus. Dabei liest <span class="listing">cut</span> von der angegebenen Datei und gibt die Teile auf dem Bildschirm aus, die Sie als gew&auml;hlte Option und per Wahl des Bereichs verwendet haben. Ein Bereich ist eine durch ein Komma getrennte Liste von einzelnen Zahlen bzw. Zahlenbereichen. Diese Zahlenbereiche werden in der Form »a-z« angegeben. Wird a oder z weggelassen, so wird hierzu der Anfang bzw. das Ende einer Zeile verwendet.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b><span class="listing">cut</span> wurde bereits in Abschnitt 2.3.1 ausf&uuml;hrlich beschrieben und demonstriert.</p>
+</td>
+</tr>
+</table><br>
+<a name="t312"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t313"></a><h3 class="t3">diff – Vergleichen zweier Dateien<a id="RxxKap016001040050191F0181D9" name="RxxKap016001040050191F0181D9"></a> 
+      <a href="#t2t314"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t312"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999460" name="Xxx999460"></a><a id="Xxx999461" name="Xxx999461"></a><span class="listing">diff</span> vergleicht den Inhalt von zwei Dateien. Da <span class="listing">diff</span> zeilenweise vergleicht, sind keine bin&auml;ren Dateien erlaubt. Ein Beispiel:</p>
+<pre>you@host &gt; diff file1.txt file2.txt
+2a3
+&gt; neueZeile</pre>
+<p>Hier wurden die Dateien file1.txt und file2.txt miteinander verglichen. Die Ausgabe »2a3« besagt lediglich, dass Sie in der Datei file1.txt zwischen der Zeile 2 und 3 die Zeile »neueZeile« einf&uuml;gen (<span class="listing">a</span> = append) m&uuml;ssten, damit die Datei exakt mit der Datei file2.txt &uuml;bereinstimmt. Noch ein Beispiel:</p>
+<pre>you@host &gt; diff file1.txt file2.txt
+2c2
+&lt; zeile2
+---
+&gt; zeile2 wurde ver&auml;ndert</pre>
+<p>Hier bekommen Sie mit »2c2« die Meldung, dass die zweite Zeile unterschiedlich (<span class="listing">c</span> = change) ist. Die darauf folgende Ausgabe zeigt auch den Unterschied dieser Zeile an. Eine sich &ouml;ffnende spitze Klammer (<span class="listing">&lt;</span>) zeigt file1.txt und die sich schlie&szlig;ende spitze Klammer bezieht sich auf file2.txt. Und eine dritte M&ouml;glichkeit, die Ihnen <span class="listing">diff</span> meldet, w&auml;re:</p>
+<pre>you@host &gt; diff file1.txt file2.txt
+2d1
+&lt; zeile2</pre>
+<p>Hier will Ihnen <span class="listing">diff</span> sagen, dass die zweite Zeile in file2.txt fehlt (<span class="listing">d</span> = delete) bzw. gel&ouml;scht wurde. Daraufhin wird die entsprechende Zeile auch ausgegeben. Nat&uuml;rlich beschr&auml;nkt sich die Verwendung von <span class="listing">diff</span> nicht ausschlie&szlig;lich auf Dateien. Mit der Option <span class="listing">–r</span> k&ouml;nnen Sie ganze Verzeichnisse miteinander vergleichen:</p>
+<pre>diff -r dir1 dir2</pre>
+<a name="t313"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t314"></a><h3 class="t3">diff3 – Vergleich von drei Dateien<a id="RxxKap016001040050191F0181E2" name="RxxKap016001040050191F0181E2"></a> 
+      <a href="#t2t315"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t313"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999471" name="Xxx999471"></a><a id="Xxx999472" name="Xxx999472"></a>Die Funktion entspricht etwa der von <span class="listing">diff</span>, nur dass Sie hierbei drei Dateien Zeile f&uuml;r Zeile miteinander vergleichen k&ouml;nnen. Folgendes besagt die Ausgabe von <span class="listing">diff3</span>:</p>
+<pre>diff file1 file2 file3</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.5   
+    </b>Bedeutung der Ausgabe von diff3</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Ausgabe</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">====
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle drei Dateien sind unterschiedlich.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">====1
+</td>
+<td class="tabellentext" bgcolor="#000000">file1 ist unterschiedlich.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">====2
+</td>
+<td class="tabellentext" bgcolor="#000000">file2 ist unterschiedlich.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">====3
+</td>
+<td class="tabellentext" bgcolor="#000000">file3 ist unterschiedlich.
+</td>
+</tr>
+</table><br>
+<a name="t314"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t315"></a><h3 class="t3">dos2unix – Dateien vom DOS- in UNIX-Format umwandeln<a id="RxxKap016001040050191F0181F2" name="RxxKap016001040050191F0181F2"></a> 
+      <a href="#t2t316"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t314"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999505" name="Xxx999505"></a><a id="Xxx999506" name="Xxx999506"></a>Mit <span class="listing">dos2unix</span> k&ouml;nnen Sie Textdateien vom DOS- in das UNIX-Format umwandeln. Alternativ gibt es au&szlig;erdem noch den Befehl <span class="listing">mac2unix</span>, mit dem Sie Textdateien vom MAC- in das UNIX-Format konvertieren k&ouml;nnen.</p>
+<pre>you@host &gt; dos2unix file1.txt file2.txt
+dos2unix: converting file file1.txt to UNIX format ...
+dos2unix: converting file file2.txt to UNIX format ...</pre>
+<a name="t315"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t316"></a><h3 class="t3">expand – Tabulatoren in Leerzeichen umwandeln<a id="RxxKap016001040050191F0181F5" name="RxxKap016001040050191F0181F5"></a> 
+      <a href="#t2t317"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t315"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999510" name="Xxx999510"></a><a id="Xxx999511" name="Xxx999511"></a><span class="listing">expand</span> ersetzt alle Tabulatoren einer Datei durch eine Folge von Leerzeichen. Standardm&auml;&szlig;ig sind dies acht Leerzeichen, allerdings kann dieser Wert explizit mit einem Schalter ver&auml;ndert werden. Wollen Sie z. B., dass alle Tabulatorzeichen mit nur drei Leerzeichen ersetzt werden, erreichen Sie dies folgenderma&szlig;en:</p>
+<pre>you@host &gt; expand –3 file</pre>
+<p>Allerdings erlaubt <span class="listing">expand</span> nicht das vollst&auml;ndige Entfernen von Tabulatorenzeichen – sprich ein Schalter mit <span class="listing">–0</span> gibt eine Fehlermeldung zur&uuml;ck. Hierzu k&ouml;nnen Sie alternativ z. B. das Kommando <span class="listing">tr</span> verwenden.</p>
+<a name="t316"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t317"></a><h3 class="t3">file – den Inhalt von Dateien analysieren<a id="RxxKap016001040050191F0181F9" name="RxxKap016001040050191F0181F9"></a> 
+      <a href="#t2t318"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t316"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999516" name="Xxx999516"></a><a id="Xxx999517" name="Xxx999517"></a>Das Kommando <span class="listing">file</span> versucht, die Art oder den Typ einer von Ihnen angegebenen Datei zu ermitteln. Hierzu f&uuml;hrt <span class="listing">file</span> einen Dateisystemtest, einen Kennzahlentest und einen Sprachtest durch. Je nach Erfolg wird eine entsprechende Ausgabe des Tests vorgenommen. Der Dateisystemtest wird mithilfe des Systemaufrufes <span class="listing">stat(2)</span> ausgef&uuml;hrt. Dieser Aufruf erkennt viele Arten von Dateien. Der Kennzahlentest wird anhand von festgelegten Kennzahlen (der Datei /etc/magic oder /etc/usr/share/magic) durchgef&uuml;hrt. In dieser Datei steht beispielsweise geschrieben, welche Bytes einer Datei zu untersuchen sind und auf welches Muster man dann den Inhalt dieser Datei zur&uuml;ckf&uuml;hren kann. Am Ende erfolgt noch ein Sprachtest. Hier versucht file, eine Programmiersprache anhand von Schl&uuml;sselw&ouml;rtern zu erkennen.</p>
+<pre>you@host &gt; cat &gt; hallo.c
+#include &lt;stdio.h&gt;
+int main(void) {
+   printf("Hallo Welt\n");
+   return 0;
+}
+(Strg)+(D)
+you@host &gt; file hallo.c
+hallo.c: ASCII C program text
+you@host &gt; gcc -o hallo hallo.c
+you@host &gt; ./hallo
+Hallo Welt
+you@host &gt; file hallo
+hallo: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), for GNU/Linux 2.2.5, 
+dynamically linked (uses shared libs), not stripped
+you@host &gt; file file1.txt
+file1.txt: ASCII text
+you@host &gt; mkfifo abc
+you@host &gt; file abc
+abc: fifo (named pipe)
+...</pre>
+<a name="t317"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t318"></a><h3 class="t3">find – Suchen nach Dateien<a id="RxxKap016001040050191F0181FC" name="RxxKap016001040050191F0181FC"></a> 
+      <a href="#t2t319"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t317"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999521" name="Xxx999521"></a><a id="Xxx999522" name="Xxx999522"></a>Zum Suchen nach Dateien wird h&auml;ufig auf das Kommando <span class="listing">find</span> zur&uuml;ckgegriffen. <span class="listing">find</span> durchsucht eine oder mehrere Verzeichnisebenen nach Dateien mit einer bestimmten vorgegebenen Eigenschaft. Die Syntax zu <span class="listing">find</span>:</p>
+<pre>find [Verzeichnis] [-Option ...] [-Test ...] [-Aktion ...]</pre>
+<p>Die Optionen, Tests und Aktionen k&ouml;nnen Sie mit Operatoren zusammenfassen. Dabei wertet <span class="listing">find</span> jede Datei in den Verzeichnissen hinsichtlich der Optionen, Tests und Aktionen von links nach rechts aus, bis ein Wert unwahr ist oder die Kommandozeilenargumente zu Ende sind. Wenn kein Verzeichnis angegeben wird, wird das aktuelle Verzeichnis verwendet – allerdings gilt dies nur bei GNU-<span class="listing">find</span>. Von daher sollte man aus Kompatibilit&auml;tsgr&uuml;nden m&ouml;glichst das Verzeichnis angeben. Wenn keine Aktion angegeben ist, wird meistens <span class="listing">–print</span> (abh&auml;ngig von einer eventuell angegebene Option) f&uuml;r die Ausgabe auf dem Bildschirm verwendet. Hierzu einige Beispiele.</p>
+<p>Alle Verzeichnisse und Unterverzeichnisse ab dem Heimverzeichnis ausgeben:</p>
+<pre>find $HOME -print</pre>
+<p>Gibt alle Dateien mit dem Namen »kapitel« aus dem Verzeichnis (und dessen Unterverzeichnisse) /dokus aus:</p>
+<pre>find /dokus -name kapitel -print</pre>
+<p>Gibt alle Dateien aus dem Verzeichnis (und dessen Unterverzeichnisse) dokus mit dem Namen »kap...«, bei denen »you« der Eigent&uuml;mer ist, aus:</p>
+<pre>find /dokus /usr -name 'kap*' -user you -print</pre>
+<p>Damit durchsuchen Sie ab dem Wurzelverzeichnis nach einem Verzeichnis (<span class="listing">–type</span> <span class="listing">d</span> = directory) mit dem Namen »dok...« und geben dies auf dem Bildschirm aus:</p>
+<pre>find / -type d -name 'dok*' -print</pre>
+<p>Sucht leere Dateien (<span class="listing">size</span> = 0) und l&ouml;scht diese nach einer R&uuml;ckfrage (<span class="listing">–ok</span>):</p>
+<pre>find / -size 0 -ok rm {} \;</pre>
+<p>Gibt alle Dateien ab dem Wurzelverzeichnis aus, die in den letzten sieben Tagen ver&auml;ndert wurden:</p>
+<pre>find / -mtime –7 -print</pre>
+<a name="t318"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t319"></a><h3 class="t3">fold – einfaches Formatieren von Dateien<a id="RxxKap016001040050191F01820C" name="RxxKap016001040050191F01820C"></a> 
+      <a href="#t2t320"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t318"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999539" name="Xxx999539"></a><a id="Xxx999540" name="Xxx999540"></a>Mit <span class="listing">fold</span> k&ouml;nnen Sie Textdateien ab einer bestimmten Zeilenl&auml;nge umbrechen. Standardm&auml;&szlig;ig sind hierbei 80 Zeichen pro Zeile eingestellt. Da <span class="listing">fold</span> die Bildschirmspalten und nicht die Zeichen z&auml;hlt, werden auch Tabulatorzeichen korrekt behandelt. Wollen Sie etwa eine Textdatei nach 50 Zeichen umbrechen, gehen Sie folgenderma&szlig;en vor:</p>
+<pre>you@host &gt; fold –50 Kap003.txt
+...
+Sicherlich erscheint Ihnen das Ganze nicht sonderl
+ich elegant oder sinnvoll, aber bspw. in Schleifen
+ eingesetzt, k&ouml;nnen Sie hierbei hervorragend alle A
+rgumente der Kommandozeile zur Verarbeitung von Op
+tionen heranziehen. Als Beispiel ein kurzer theoreti
+scher Code-Ausschnitt, wie so etwas in der Praxis
+realisiert werden kann.</pre>
+<p>Allerdings kann man an der Ausgabe erkennen, dass einfach die W&ouml;rter abgeschnitten und in der n&auml;chsten Zeile fortgef&uuml;hrt werden. Wollen Sie dies unterbinden, k&ouml;nnen Sie die Option <span class="listing">–s</span> verwenden. Damit findet der Zeilenumbruch beim letzten Leerzeichen der Zeile statt, wenn in der Zeile ein Leerzeichen vorhanden ist.</p>
+<pre>you@host &gt; fold -s –50 Kap003.txt
+...
+Sicherlich erscheint Ihnen das Ganze nicht
+sonderlich elegant oder sinnvoll, aber bspw. in
+Schleifen eingesetzt, k&ouml;nnen Sie hierbei
+hervorragend alle Argumente der Kommandozeile zur
+Verarbeitung von Optionen heranziehen. Als Beispiel
+ein kurzer theoretischer Code-Ausschnitt, wie so
+etwas in der Praxis realisiert werden kann.</pre>
+<p>Ein recht typischer Anwendungsfall ist es, Text f&uuml;r eine E-Mail zu formatieren:</p>
+<pre>you@host &gt; fold -s –72 text.txt | mail -s "Betreff" name@host.de</pre>
+<a name="t319"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t320"></a><h3 class="t3">head – Anfang einer Datei ausgeben<a id="RxxKap016001040050191F018213" name="RxxKap016001040050191F018213"></a> 
+      <a href="#t2t321"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t319"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999548" name="Xxx999548"></a><a id="Xxx999549" name="Xxx999549"></a>Mit der Funktion <span class="listing">head</span> geben Sie immer die ersten Zeilen einer Datei auf dem Bildschirm aus. Standardm&auml;&szlig;ig werden dabei die ersten zehn Zeilen ausgegeben. Wollen Sie selbst bestimmen, wie viele Zeilen vom Anfang der Datei ausgegeben werden sollen, k&ouml;nnen Sie dies explizit mit <span class="listing">–</span>n angeben:</p>
+<pre>you@host &gt; head –5 file</pre>
+<p>Hier werden die ersten f&uuml;nf Zeilen von file auf dem Bildschirm ausgegeben.</p>
+<a name="t320"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t321"></a><h3 class="t3">less – Datei(en) seitenweise ausgeben<a id="RxxKap016001040050191F018217" name="RxxKap016001040050191F018217"></a> 
+      <a href="#t2t322"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t320"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999554" name="Xxx999554"></a><a id="Xxx999555" name="Xxx999555"></a>Mit <span class="listing">less</span> geben Sie eine Datei seitenweise auf dem Bildschirm aus. Der Vorteil von <span class="listing">less</span> gegen&uuml;ber <span class="listing">more</span> ist, dass Sie mit <span class="listing">less</span> auch zur&uuml;ckbl&auml;ttern k&ouml;nnen. Da <span class="listing">less</span> von der Standardeingabe liest, ist so auch eine Umleitung eines anderen Kommandos mit einer Pipe m&ouml;glich. Mit der <b>(Leertaste)</b> bl&auml;ttern Sie eine Seite weiter und mit <b>(B)</b> k&ouml;nnen Sie jeweils eine Seite zur&uuml;ckbl&auml;ttern. Die meisten <span class="listing">less</span>-Versionen bieten au&szlig;erdem das Scrollen nach unten bzw. oben mit den Pfeiltasten an. Mit <b>(Q)</b> wird <span class="listing">less</span> beendet. <span class="listing">less</span> bietet au&szlig;erdem eine Unmenge von Optionen und weiterer Features an, &uuml;ber die Sie sich durch Dr&uuml;cken von <b>(H)</b> informieren k&ouml;nnen.</p>
+<a name="t321"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t322"></a><h3 class="t3">ln – Links auf eine Datei erzeugen<a id="RxxKap016001040050191F018219" name="RxxKap016001040050191F018219"></a> 
+      <a href="#t2t323"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t321"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999558" name="Xxx999558"></a><a id="Xxx999559" name="Xxx999559"></a>Wenn eine Datei erzeugt wird, werden im Verzeichnis der Name, ein Verweis auf eine Inode, die Zugriffsrechte, der Dateityp und gegebenenfalls die Anzahl der belegten Bl&ouml;cke eingetragen. Mit <span class="listing">ln</span> wiederum wird ein neuer Eintrag im Verzeichnis abgelegt, der auf die Inode einer existierenden Datei zeigt. Man spricht dabei von einem Hardlink. Er wird standardm&auml;&szlig;ig ohne weitere Angaben angelegt. Es ist allerdings nicht m&ouml;glich, diese Hardlinks &uuml;ber Dateisystemgrenzen hinweg anzulegen. Hierzu m&uuml;ssen Sie einen symbolischen Link mit der Option <span class="listing">–s</span> erzeugen.</p>
+<pre>ln -s filea fileb</pre>
+<p>Damit haben Sie einen symbolischen Link auf die bestehende Datei filea mit dem Namen fileb angelegt.</p>
+<p>Wollen Sie hingegen einen Hardlink auf die bestehende Datei filea mit dem Namen fileb anlegen, so gehen Sie wie folgt vor:</p>
+<pre>ln filea fileb</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Smalltalk   </b>Mit den Hardlinks kann man unter BSD und Jails nette Sachen machen. Unter BSD gibt es ja das »imutable flag« f&uuml;r Dateien, das das Schreiben auch f&uuml;r root verbietet. Nur root kann das Flag ver&auml;ndern. Man kann aber mit »make world« ein Betriebssystem in einem Verzeichnis f&uuml;r eine Jail bauen. Das Verzeichnis kann man dann rekursiv mit dem »imutable flag« versehen und per Hardlink in die Jail verlinken. Das »imutable flag« kann nur root vom Hostsystem aus ver&auml;ndern, Nicht-root aus der Jail. Somit kann man das root-Passwort im Internet bekannt geben (wurde auch schon oft gemacht) und es hat bisher noch nie jemand geschafft, solch eine Jail zu knacken.</p>
+</td>
+</tr>
+</table><br>
+<a name="t322"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t323"></a><h3 class="t3">ls – Verzeichnisinhalt auflisten<a id="RxxKap016001040050191F018221" name="RxxKap016001040050191F018221"></a> 
+      <a href="#t2t324"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t322"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999570" name="Xxx999570"></a><a id="Xxx999571" name="Xxx999571"></a>Mit <span class="listing">ls</span> wird der Inhalt eines Verzeichnisses auf dem Dateisystem angezeigt. Da <span class="listing">ls</span> bereits in Abschnitt 1.7.2 behandelt wurde, wird hier nicht mehr n&auml;her darauf eingegangen.</p>
+<a name="t323"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t324"></a><h3 class="t3">more – Datei(en) seitenweise ausgeben<a id="RxxKap016001040050191F018223" name="RxxKap016001040050191F018223"></a> 
+      <a href="#t2t325"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t323"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999574" name="Xxx999574"></a><a id="Xxx999575" name="Xxx999575"></a><span class="listing">more</span> wird genauso eingesetzt wie <span class="listing">less</span>, und zwar zum seitenweisen Lesen von Dateien. Allerdings bietet <span class="listing">less</span> gegen&uuml;ber <span class="listing">more</span> erheblich mehr Features und Funktionalit&auml;ten an.</p>
+<a name="t324"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t325"></a><h3 class="t3">mv – Datei(en) und Verzeichnisse verschieben oder umbenennen<a id="RxxKap016001040050191F018225" name="RxxKap016001040050191F018225"></a> 
+      <a href="#t2t326"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t324"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999578" name="Xxx999578"></a><a id="Xxx999579" name="Xxx999579"></a>Mit <span class="listing">mv</span> k&ouml;nnen Sie eine oder mehrere Dateien bzw. Verzeichnisse verschieben oder umbenennen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.6   
+    </b>Anwendungen von mv</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Verwendung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">mv file filenew
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Datei umbenennen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">mv file dir
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine Datei in ein Verzeichnis verschieben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">mv dir dirnew
+</td>
+<td class="tabellentext" bgcolor="#000000">Ein Verzeichnis in ein anderes Verzeichnis verschieben
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b><span class="listing">mv</span> wurde bereits in Abschnitt 1.7.2 behandelt.</p>
+</td>
+</tr>
+</table><br>
+<a name="t325"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t326"></a><h3 class="t3">nl – Datei mit Zeilennummer ausgeben<a id="RxxKap016001040050191F018234" name="RxxKap016001040050191F018234"></a> 
+      <a href="#t2t327"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t325"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999611" name="Xxx999611"></a><a id="Xxx999612" name="Xxx999612"></a>Mit <span class="listing">nl</span> geben Sie die Zeilen einer Datei mit deren Nummer auf dem Bildschirm aus. Dabei ist <span class="listing">nl</span> nicht nur ein »dummer« Zeilenz&auml;hler, sondern kann die Zeilen einer Seite auch in einen Header, Body und einen Footer unterteilen und in unterschiedlichen Stilen nummerieren, zum Beispiel:</p>
+<pre>you@host &gt; ls | nl -w3 -s') '
+  1) abc
+  2) bin
+  3) cxoffice
+  4) Desktop
+  5) Documents
+  6) file1.txt
+ ...</pre>
+<p>Wenn Sie mehrere Dateien verwenden, beginnt die Nummerierung allerdings nicht mehr neu, dann werden mehrere Dateien wie eine behandelt. Die Zeilennummer wird nicht zur&uuml;ckgesetzt. Ein weiteres Beispiel:</p>
+<pre>you@host &gt; nl hallo.c -s' : ' &gt; hallo_line
+you@host &gt; cat hallo_line
+     1 : #include &lt;stdio.h&gt;
+     2 : int main(void) {
+     3 :    printf("Hallo Welt\n");
+     4 :    return 0;
+     5 : }</pre>
+<p>Mit der Option <span class="listing">–s</span> (optional) geben Sie das Zeichen an, das zwischen der Zeilennummer und der eigentlichen Zeile stehen soll.</p>
+<a name="t326"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t327"></a><h3 class="t3">od – Datei(en) hexadezimal bzw. oktal ausgeben<a id="RxxKap016001040050191F01823A" name="RxxKap016001040050191F01823A"></a> 
+      <a href="#t2t328"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t326"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999619" name="Xxx999619"></a><a id="Xxx999620" name="Xxx999620"></a><span class="listing">od</span> liest von der Standardeingabe eine Datei ein und gibt diese – Byte f&uuml;r Byte – formatiert und kodiert auf dem Bildschirm aus. Standardm&auml;&szlig;ig wird dabei die siebenstellige Oktalzahl in je acht Spalten zu zwei Bytes verwendet:</p>
+<pre>you@host &gt; od file1.txt
+0000000 064546 062554 035061 062572 066151 030545 063012 066151
+0000020 030545 075072 064545 062554 005062 064546 062554 035062
+0000040 062572 066151 031545 000012
+0000047</pre>
+<p>Jede Zeile enth&auml;lt in der ersten Spalte die Positionsnummer in Bytes vom Dateianfang an. Mit der Option <span class="listing">–h</span> erfolgt die Ausgabe in hexadezimaler und mit <span class="listing">–c</span> in ASCII-Form.</p>
+<a name="t327"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t328"></a><h3 class="t3">paste – Dateien spaltenweise verkn&uuml;pfen<a id="RxxKap016001040050191F01823E" name="RxxKap016001040050191F01823E"></a> 
+      <a href="#t2t329"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t327"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999625" name="Xxx999625"></a><a id="Xxx999626" name="Xxx999626"></a>Mit <span class="listing">paste</span> f&uuml;hren Sie Zeilen von mehreren Dateien zusammen. Das Kommando wurde bereits in Abschnitt 2.3.1 behandelt, weshalb Sie gegebenenfalls hierhin zur&uuml;ckbl&auml;ttern sollten.</p>
+<a name="t328"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t329"></a><h3 class="t3">pcat – Ausgabe von pack-komprimierten Dateien<a id="RxxKap016001040050191F018240" name="RxxKap016001040050191F018240"></a> 
+      <a href="#t2t330"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t328"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999629" name="Xxx999629"></a><a id="Xxx999630" name="Xxx999630"></a>Mit <span class="listing">pcat</span> kann man den Inhalt von pack-komprimierten Dateien ausgeben, ohne dass man die komprimierte Datei dekomprimieren muss. Ansonsten funktioniert <span class="listing">pcat</span> wie <span class="listing">cat</span>.</p>
+<a name="t329"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t330"></a><h3 class="t3">rm – Dateien und Verzeichnisse l&ouml;schen<a id="RxxKap016001040050191F018242" name="RxxKap016001040050191F018242"></a> 
+      <a href="#t2t331"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t329"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999633" name="Xxx999633"></a><a id="Xxx999634" name="Xxx999634"></a>Mit dem Kommando <span class="listing">rm</span> k&ouml;nnen Sie Dateien und Verzeichnisse l&ouml;schen.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.7   
+    </b>Anwendungen von rm</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Verwendung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">rm datei
+</td>
+<td class="tabellentext" bgcolor="#000000">L&ouml;scht eine Datei
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">rm dir
+</td>
+<td class="tabellentext" bgcolor="#000000">L&ouml;scht ein leeres Verzeichnis
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">rm –r dir
+</td>
+<td class="tabellentext" bgcolor="#000000">L&ouml;scht ein Verzeichnis rekursiv
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">rm –rf dir
+</td>
+<td class="tabellentext" bgcolor="#000000">Erzwingt rekursives L&ouml;schen, ohne eine Warnung auszugeben
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Das Kommando <span class="listing">rm</span> wurde bereits in den Abschnitten 1.7.2 und 1.7.3 (<span class="listing">rmdir</span>) behandelt.</p>
+</td>
+</tr>
+</table><br>
+<a name="t330"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t331"></a><h3 class="t3">sort – Dateien sortieren<a id="RxxKap016001040050191F018253" name="RxxKap016001040050191F018253"></a> 
+      <a href="#t2t332"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t330"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999670" name="Xxx999670"></a><a id="Xxx999671" name="Xxx999671"></a>Gew&ouml;hnlich wird <span class="listing">sort</span> zum Sortieren einzelner Zeilen einer Datei oder der Standardeingabe verwendet. <span class="listing">sort</span> kann aber auch Dateien &uuml;berpr&uuml;fen, ob diese sortiert sind und mehrere sortierte oder auch unsortierte Dateien zu einer sortierten zusammenf&uuml;gen. Ohne Angabe einer Option sortiert <span class="listing">sort</span> eine Datei zeilenweise in alphabetischer Reihenfolge:</p>
+<pre>you@host &gt; sort kommandos.txt
+a2ps – Textdatei umwandeln nach Postscript
+accept – Druckerwarteschlange auf empfangsbereit setzen
+afio – Ein cpio mit zus&auml;tzlicher Komprimierung
+alias – Kurznamen f&uuml;r Kommandos vergeben
+...
+you@host &gt; ls | sort
+abc
+bin
+cxoffice
+Desktop
+Documents
+...</pre>
+<p>H&auml;ufig verwendete Optionen zum Sortieren, die mit <span class="listing">sort</span> benutzt werden:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.8   
+    </b>Optionen f&uuml;r das Kommando sort</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–n
+</td>
+<td class="tabellentext" bgcolor="#000000">Sortiert eine Datei numerisch
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–f
+</td>
+<td class="tabellentext" bgcolor="#000000">Unterscheidet nicht zwischen Klein- und Gro&szlig;buchstaben
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–r
+</td>
+<td class="tabellentext" bgcolor="#000000">Sortiert nach Alphabet in umgekehrter Reihenfolge
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–n –r
+</td>
+<td class="tabellentext" bgcolor="#000000">Sortiert numerisch in umgekehrter Reihenfolge
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–c
+</td>
+<td class="tabellentext" bgcolor="#000000">&Uuml;berpr&uuml;ft, ob die Dateien bereits sortiert sind. Wenn nicht, wird mit einer Fehlermeldung und dem R&uuml;ckgabewert 1 abgebrochen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–u
+</td>
+<td class="tabellentext" bgcolor="#000000">Gibt keine doppelt vorkommenden Zeilen aus
+</td>
+</tr>
+</table><br>
+<p>Alternativ gibt es hierzu noch das Kommando <span class="listing">tsort</span>, welches Dateien topologisch sortiert.</p>
+<a name="t331"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t332"></a><h3 class="t3">split – Dateien in mehrere Teile zerlegen<a id="RxxKap016001040050191F018269" name="RxxKap016001040050191F018269"></a> 
+      <a href="#t2t333"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t331"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999714" name="Xxx999714"></a><a id="Xxx999715" name="Xxx999715"></a>Mit <span class="listing">split</span> teilen Sie eine Datei in mehrere Teile auf. Ohne Angabe einer Option wird eine Datei in je 1000 Zeilen aufgeteilt. Die Ausgabe erfolgt in Dateien mit »x...« oder einem entsprechenden Pr&auml;fix, wenn eines angegeben wurde:</p>
+<pre>you@host &gt; split –50 kommandos.txt
+you@host &gt; ls x*
+xaa  xab  xac  xad  xae</pre>
+<p>Die Datei k&ouml;nnen Sie folgenderma&szlig;en wieder zusammensetzen:</p>
+<pre>for file in `ls x* | sort`; do cat $file &gt;&gt; new.txt; done</pre>
+<p>Hier wurde z. B. die Textdatei kommandos.txt in je 50-zeilige H&auml;ppchen aufgeteilt. Wollen Sie den Namen der neu erzeugten Datei ver&auml;ndern, gehen Sie wie folgt vor:</p>
+<pre>you@host &gt; split –50 kommandos.txt kommandos
+you@host &gt; ls komm*
+kommandosaa  kommandosab  kommandosac
+kommandosad  kommandosae  kommandos.txt</pre>
+<p>Das Kommando <span class="listing">split</span> wird h&auml;ufig eingesetzt, um gro&szlig;e Dateien zu splitten, die nicht auf ein einzelnes Speichermedium passen.</p>
+<a name="t332"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t333"></a><h3 class="t3">tac – Dateien r&uuml;ckw&auml;rts ausgeben<a id="RxxKap016001040050191F018271" name="RxxKap016001040050191F018271"></a> 
+      <a href="#t2t334"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t332"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999724" name="Xxx999724"></a><a id="Xxx999725" name="Xxx999725"></a>Vereinfacht ausgedr&uuml;ckt ist <span class="listing">tac</span> wie <span class="listing">cat</span> (daher auch der r&uuml;ckw&auml;rts geschriebene Kommandoname), nur dass <span class="listing">tac</span> die einzelnen Zeilen r&uuml;ckw&auml;rts ausgibt. Es wird somit zuerst die letzte Zeile ausgegeben, dann die vorletzte usw. bis zur ersten Zeile.</p>
+<pre>you@host &gt; cat file1.txt
+file1:zeile1
+file1:zeile2
+file2:zeile3
+you@host &gt; tac file1.txt
+file2:zeile3
+file1:zeile2
+file1:zeile1</pre>
+<a name="t333"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t334"></a><h3 class="t3">tail – Ende einer Datei ausgeben<a id="RxxKap016001040050191F018274" name="RxxKap016001040050191F018274"></a> 
+      <a href="#t2t335"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t333"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999729" name="Xxx999729"></a><a id="Xxx999730" name="Xxx999730"></a><span class="listing">tail</span> gibt die letzten Zeilen (standardm&auml;&szlig;ig, ohne spezielle Angaben die letzten zehn) einer Datei aus.</p>
+<pre>you@host &gt; tail –5 kommandos.txt
+write – Nachrichten an andere Benutzer verschicken
+zcat – Ausgabe von gunzip-komprimierten Dateien
+zip/unzip – (De-) Komprimieren von Dateien
+zless – gunzip-komprimierte Dateien seitenweise ausgeben
+zmore – gunzip-komprimierte Dateien seitenweise ausgeben</pre>
+<p>Hier gibt <span class="listing">tail</span> die letzten f&uuml;nf Zeilen der Datei kommandos.txt aus. Wollen Sie eine Datei ab einer bestimmten Zeile ausgeben lassen, gehen Sie wie folgt vor:</p>
+<pre>you@host &gt; tail +100 kommandos.txt</pre>
+<p>Hier werden alle Zeilen ab Zeile 100 ausgegeben. Wollen Sie <span class="listing">tail</span> wie <span class="listing">tac</span> verwenden, k&ouml;nnen Sie die Option <span class="listing">–r</span> verwenden:</p>
+<pre>you@host &gt; tail -r kommandos.txt</pre>
+<p>Hiermit wird die komplette Datei zeilenweise r&uuml;ckw&auml;rts, von der letzten zur ersten Zeile ausgegeben. H&auml;ufig verwendet wird auch die Option <span class="listing">–f</span> (follow), die immer wieder das Dateiende ausgibt. Dadurch kann man eine Datei beim Wachsen beobachten, da jede neu hinzugekommene Zeile angezeigt wird. Nat&uuml;rlich l&auml;sst sich diese Option nur auf eine Datei gleichzeitig anwenden.</p>
+<a name="t334"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t335"></a><h3 class="t3">tee – Ausgabe duplizieren<a id="RxxKap016001040050191F01827C" name="RxxKap016001040050191F01827C"></a> 
+      <a href="#t2t336"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t334"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999739" name="Xxx999739"></a><a id="Xxx999740" name="Xxx999740"></a>Mit <span class="listing">tee</span> lesen Sie von der Standardeingabe und verzweigen die Ausgabe auf die Standardausgabe und Datei. Da <span class="listing">tee</span> ein eigener Abschnitt (1.10.5) im Buch gewidmet ist, sei hier auf diesen verwiesen.</p>
+<a name="t335"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t336"></a><h3 class="t3">touch – Anlegen von Dateien oder Zeitstempel ver&auml;ndern<a id="RxxKap016001040050191F01827E" name="RxxKap016001040050191F01827E"></a> 
+      <a href="#t2t337"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t335"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999743" name="Xxx999743"></a><a id="Xxx999744" name="Xxx999744"></a>Mit <span class="listing">touch</span> ver&auml;ndern Sie die Zugriffs- und &Auml;nderungszeit einer Datei auf die aktuelle Zeit. Existiert eine solche Datei nicht, wird diese angelegt. <span class="listing">touch</span> wurde bereits in Abschnitt 1.7.2 behandelt, aber dennoch sollen hier noch einige Optionen zu <span class="listing">touch</span> und ihre jeweilige Bedeutung erw&auml;hnt werden:</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 14.9   
+    </b>Optionen f&uuml;r das Kommando touch</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Option</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–a
+</td>
+<td class="tabellentext" bgcolor="#000000">Damit &auml;ndern Sie nur die Zugriffszeit.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–c
+</td>
+<td class="tabellentext" bgcolor="#000000">Falls eine Datei nicht existiert, wird diese trotzdem nicht erzeugt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">–m
+</td>
+<td class="tabellentext" bgcolor="#000000">&Auml;ndert nur die &Auml;nderungszeit
+</td>
+</tr>
+</table><br>
+<a name="t336"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t337"></a><h3 class="t3">tr – Zeichen ersetzen bzw. Umformen von Dateien<a id="RxxKap016001040050191F01828B" name="RxxKap016001040050191F01828B"></a> 
+      <a href="#t2t338"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t336"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999772" name="Xxx999772"></a><a id="Xxx999773" name="Xxx999773"></a>Mit <span class="listing">tr</span> k&ouml;nnen Zeichen durch andere Zeichen ersetzt werden. Dies gilt auch f&uuml;r nicht druckbare Zeichen.</p>
+<pre>tr str1 str2 file</pre>
+<p>Wird in der Datei file ein Zeichen aus »str1« gefunden, wird es durch das entsprechende Zeichen in »str2« ersetzt.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b><span class="listing">tr</span> wurde bereits in Abschnitt 2.3.1 behandelt.</p>
+</td>
+</tr>
+</table><br>
+<a name="t337"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t338"></a><h3 class="t3">type – Kommandos klassifizieren<a id="RxxKap016001040050191F018291" name="RxxKap016001040050191F018291"></a> 
+      <a href="#t2t339"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t337"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999782" name="Xxx999782"></a><a id="Xxx999783" name="Xxx999783"></a>Mit <span class="listing">type</span> k&ouml;nnen Sie klassifizieren, wie die Shell den angegebenen Namen interpretieren w&uuml;rde, wenn Sie diesen in der Kommandozeile verwenden. <span class="listing">type</span> unterscheidet hierbei zwischen einem Alias, einem Builtin (Shellfunktion), einer Datei oder einer Scriptfunktion. Kann <span class="listing">type</span> nichts mit dem Namen anfangen, wird auch nichts ausgegeben.</p>
+<pre>you@host &gt; type ls echo ./hallo
+ls is aliased to `/bin/ls $LS_OPTIONS'
+echo is a shell builtin
+./hallo is ./hallo</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b><span class="listing">type</span> selbst ist ein Builtin und daher nicht in jeder Shell verf&uuml;gbar.</p>
+</td>
+</tr>
+</table><br>
+<a name="t338"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t339"></a><h3 class="t3">umask – Dateierstellungsmaske &auml;ndern bzw. ausgeben<a id="RxxKap016001040050191F018296" name="RxxKap016001040050191F018296"></a> 
+      <a href="#t2t340"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t338"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999791" name="Xxx999791"></a><a id="Xxx999792" name="Xxx999792"></a>Mit der Shell-Funktion <span class="listing">umask</span> setzen Sie eine Maske, mit der die Zugriffsrechte auf eine Datei bzw. auf Verzeichnisse direkt nach der Erzeugung durch einen von der Shell kontrollierten Prozess bestimmt wird. Die in der Maske gesetzten Bits werden bei den Zugriffsrechten f&uuml;r die neue Datei bzw. das Verzeichnis gel&ouml;scht (man spricht auch von: Sie werden maskiert). Mehr zu diesem Kommando entnehmen Sie bitte dem Abschnitt 9.4, wo es n&auml;her behandelt wurde.</p>
+<a name="t339"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t340"></a><h3 class="t3">uniq – doppelte Zeilen nur einmal ausgeben<a id="RxxKap016001040050191F018298" name="RxxKap016001040050191F018298"></a> 
+      <a href="#t2t341"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t339"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999795" name="Xxx999795"></a><a id="Xxx999796" name="Xxx999796"></a>Mit <span class="listing">uniq</span> k&ouml;nnen Sie doppelt vorhandene Zeilen l&ouml;schen. Voraussetzung ist allerdings, dass die Datei sortiert ist und die doppelten Zeilen direkt hintereinander folgen. Beispielsweise:</p>
+<pre>you@host &gt; cat file1.txt
+file1:zeile1
+file1:zeile2
+file1:zeile2
+file2:zeile3
+you@host &gt; uniq file1.txt
+file1:zeile1
+file1:zeile2
+file2:zeile3</pre>
+<a name="t340"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t341"></a><h3 class="t3">unix2dos – Dateien vom UNIX- in DOS-Format umwandeln<a id="RxxKap016001040050191F01829B" name="RxxKap016001040050191F01829B"></a> 
+      <a href="#t2t342"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t340"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999800" name="Xxx999800"></a><a id="Xxx999801" name="Xxx999801"></a>Das Gegenst&uuml;ck von <span class="listing">dos2unix</span>. Damit wandeln Sie eine Textdatei vom Unix-Format wieder zur&uuml;ck in das DOS-Format um.</p>
+<pre>unix2dos fileunix filedos</pre>
+<a name="t341"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t342"></a><h3 class="t3">wc – Zeilen, W&ouml;rter und Zeichen einer Datei z&auml;hlen<a id="RxxKap016001040050191F01829E" name="RxxKap016001040050191F01829E"></a> 
+      <a href="#t2t343"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t341"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999805" name="Xxx999805"></a><a id="Xxx999806" name="Xxx999806"></a>Mit <span class="listing">wc</span> k&ouml;nnen Sie die Zeichen, W&ouml;rter und/oder Zeilen einer Datei z&auml;hlen. Ohne spezielle Optionen wird eine Zeile mit den folgenden Zahlen ausgegeben:</p>
+<pre>you@host &gt; wc file1.txt
+ 4  4 52 file1.txt</pre>
+<p>Die erste Spalte enth&auml;lt die Anzahl der Zeilen, gefolgt von der Anzahl der Worte und am Ende die Anzahl der Zeichen. Einzeln k&ouml;nnen Sie dies mit der Option <span class="listing">–l</span> (lines = Zeilen), <span class="listing">–w</span> (words = W&ouml;rter) und <span class="listing">–c</span> (characters = Zeichen) ermitteln.</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b><span class="listing">wc</span> wurde bereits in Abschnitt 1.7.2 behandelt.</p>
+</td>
+</tr>
+</table><br>
+<a name="t342"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t343"></a><h3 class="t3">whereis – Suche nach Dateien<a id="RxxKap016001040050191F0182A4" name="RxxKap016001040050191F0182A4"></a> 
+      <a href="#t2t344"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t342"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999815" name="Xxx999815"></a><a id="Xxx999816" name="Xxx999816"></a>Mit dem Kommando <span class="listing">whereis</span> wird vorwiegend in wichtigen Pfaden (meistens allen Eintr&auml;ge in <span class="listing">PATH</span>) nach Bin&auml;rdateien oder <span class="listing">man</span>-Dateien gesucht. <span class="listing">whereis</span> ist nicht so flexibel wie <span class="listing">find</span>, aber daf&uuml;r erheblich schneller.</p>
+<pre>you@host &gt; whereis ls
+/bin/ls /usr/share/man/man1/ls.1.gz /usr/share/man/man1p/ls.1p.gz
+you@host &gt; whereis -b ls
+/bin/ls
+you@host &gt; whereis -m ls
+/usr/share/man/man1/ls.1.gz /usr/share/man/man1p/ls.1p.gz</pre>
+<p>Zuerst wurde der Pfad zum Programm <span class="listing">ls</span> ermittelt. Hierbei werden allerdings auch gleich die Pfade zu den <span class="listing">man</span>-Seiten mit ausgegeben. Wollen Sie nur den Pfad zum Bin&auml;rprogramm erhalten, m&uuml;ssen Sie die Option <span class="listing">–b</span> verwenden. W&uuml;nschen Sie nur den Pfad zu den <span class="listing">man</span>-Seiten, so verwenden Sie die Option <span class="listing">–m</span>, wie im Beispiel gesehen.</p>
+<a name="t343"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t344"></a><h3 class="t3">zcat, zless, zmore – (seitenweise) Ausgabe von gunzip-komprimierten Dateien<a id="RxxKap016001040050191F0182A8" name="RxxKap016001040050191F0182A8"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t343"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999821" name="Xxx999821"></a><a id="Xxx999822" name="Xxx999822"></a><a id="Xxx999823" name="Xxx999823"></a><a id="Xxx999824" name="Xxx999824"></a><a id="Xxx999825" name="Xxx999825"></a><a id="Xxx999826" name="Xxx999826"></a>Alle drei Funktionen haben dieselbe Funktionsweise wie Ihre Gegenst&uuml;cke ohne »z«, nur dass hiermit <span class="listing">gzip</span>- bzw. <span class="listing">gunzip</span>-komprimierte Dateien gelesen und ausgegeben werden k&ouml;nnen, ohne dass diese dekomprimiert werden m&uuml;ssen. Auf manchen Systemen gibt es mit <span class="listing">zgrep</span> <a id="Xxx999828" name="Xxx999828"></a>auch noch eine entsprechende <span class="listing">grep</span>-Version.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_016_000.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_016_002.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_016_001.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

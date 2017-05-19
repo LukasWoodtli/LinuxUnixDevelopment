@@ -1,0 +1,601 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_012_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 10.3 Fehlersuche</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_012_001.html">
+<link rel="next" href="shell_013_000.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_012_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_013_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_012_000.html#RxxKap01200004004F621F041172">10 Fehlersuche und Debugging</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_012_000.html#RxxKap01200004004F621F041174">10.1 Strategien zum Vermeiden von Fehlern</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_012_000.html#RxxKap01200004004F621F041176">10.1.1 Planen Sie Ihr Script</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_012_000.html#RxxKap01200004004F621F04117C">10.1.2 Testsystem bereitstellen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_012_000.html#RxxKap01200004004F621F04117E">10.1.3 Ordnung ist das halbe Leben</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_012_001.html#RxxKap01200104004F791F019172">10.2 Fehlerarten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap01200204004F7A1F023172">10.3 Fehlersuche</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01200204004F7A1F023174">10.3.1 Tracen mit set -x</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01200204004F7A1F023183">10.3.2 DEBUG und ERR-Signal</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01200204004F7A1F02319D">10.3.3 Variablen und Syntax &uuml;berpr&uuml;fen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01200204004F7A1F0231A3">10.3.4 Eine Debug-Ausgabe hinzuf&uuml;gen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap01200204004F7A1F0231A7">10.3.5 Debugging-Tools</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">10.3 <a id="RxxKap01046Fehlersuche" name="RxxKap01046Fehlersuche"></a>Fehlersuch<a id="RxxKap01200204004F7A1F023172" name="RxxKap01200204004F7A1F023172"></a>e 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a>Wenn der Fehler aufgetreten ist, dann bietet Ihnen die Shell einige Optionen, die Ihnen bei der Fehlersuche helfen. Aber egal, welche Fehler denn nun aufgetreten sind, als Erstes sollten Sie die Fehlermeldung lesen und auch verstehen k&ouml;nnen. Plausibel, aber leider werden immer wieder Fragen gestellt, warum dies oder jenes falsch l&auml;uft, obwohl die Antwort zum Teil schon eindeutig der Fehlermeldung zu entnehmen ist. Ganz klar im Vorteil ist hier derjenige, der das Buch durchgearbeitet, die Scripts abgetippt und ausprobiert hat. Durch »Trial and error« hat derjenige eine Menge Fehler produziert, aber auch gelernt, wann welche Fehlermeldung ausgegeben wird.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">10.3.1 Tracen mit set -x<a id="RxxKap01200204004F7A1F023174" name="RxxKap01200204004F7A1F023174"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999281" name="Xxx999281"></a><a id="Xxx999282" name="Xxx999282"></a><a id="Xxx999283" name="Xxx999283"></a>Der Trace-Modus (trace = verfolgen, untersuchen), den man mit <span class="listing">set</span> <span class="listing">–x</span> setzt, haben Sie schon des &Ouml;fteren in diesem Buch eingesetzt, etwa als es darum ging, zu sehen, wie das Script bzw. die Befehle ablaufen. Die Option <span class="listing">set</span> <span class="listing">–x</span> wurde bereits in Abschnitt 1.8.9 ausf&uuml;hrlich behandelt. Trotzdem muss noch erw&auml;hnt werden, dass die Verwendung der Trace-Option nur in der aktuellen Shell und den Subshells aktiv ist. Zum Beispiel wollen Sie wissen, was beim folgenden Script passiert:</p>
+<pre># Name: areweroot
+if [ $UID = 0 ]
+then
+   echo "Wir sind root!"
+   renice –5 $$
+else
+   echo "Wir sind nicht root!"
+   su -c 'renice –5 $$'
+fi</pre>
+<p>Wenn Sie das Script jetzt tracen wollen, gen&uuml;gt es nicht, einfach vor seiner Verwendung die Option <span class="listing">–x</span> zu setzen:</p>
+<pre>you@host &gt; ./areweroot
++ ./areweroot
+Wir sind nicht root!
+Password:********
+8967: Alte Priorit&auml;t: 0, neue Priorit&auml;t: –5</pre>
+<p>Das ist ein h&auml;ufiges Missverst&auml;ndnis. Sie m&uuml;ssen die Option selbstverst&auml;ndlich an der entsprechenden Stelle (oder am Anfang des Scripts) setzen:</p>
+<pre># Name: areweroot2
+# Trace-Modus einschalten
+set -x
+if [ $UID = 0 ]
+then
+   echo "Wir sind root!"
+   renice –5 $$
+else
+   echo "Wir sind nicht root!"
+   su -c 'renice –5 $$'
+fi</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./areweroot2
++ ./areweroot
+++ '[' 1000 = 0 ']'
+++ echo 'Wir sind nicht root!'
+Wir sind nicht root!
+++ su -c 'renice –5 $$'
+Password:*******
+9050: Alte Priorit&auml;t: 0, neue Priorit&auml;t: –5
+you@host &gt; su
+Password:********
+# ./areweroot2
+++ '[' 0 = 0 ']'
+++ echo 'Wir sind root!'
+Wir sind root!
+++ renice –5 9070
+9070: Alte Priorit&auml;t: 0, neue Priorit&auml;t: –5</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Alternativ bietet sich hier auch die M&ouml;glichkeit, die Option <span class="listing">-x</span> an das Script mit einem Shell-Aufruf zu &uuml;bergeben, z. B. <span class="listing">bash</span> <span class="listing">-x</span> <span class="listing">./script</span> oder <span class="listing">ksh</span> <span class="listing">-x</span> <span class="listing">./script</span>, wodurch sich eine Modifikation am Script vermeiden l&auml;sst. Oder Sie verwenden die She-Bang-Zeile: <span class="listing">#!/usr/bin/bash</span> –<span class="listing">x.</span></p>
+</td>
+</tr>
+</table><br>
+<p>H&auml;ufig finden Sie mehrere Pluszeichen am Anfang einer Zeile. Dies zeigt an, wie tief die Verschachtelungsebene ist, in der die entsprechende Zeile ausgef&uuml;hrt wird. Jedes weitere Zeichen bedeutet eine Ebene tiefer. So verwendet beispielsweise folgendes Script drei Schachtelungsebenen:</p>
+<pre># Name: datum
+# Trace-Modus einschalten
+set -x
+datum=`date`
+echo "Heute ist $datum</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./datum
++./script1
++++ date
+++ datum=Fr Apr  1 10:26:25 CEST 2005
+++ echo 'Heute ist Fr Apr  1 10:26:25 CEST 2005'
+Heute ist Fr Apr  1 10:26:25 CEST 2005</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">10.3.2 DEBUG und ERR-Signal<a id="RxxKap01200204004F7A1F023183" name="RxxKap01200204004F7A1F023183"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999301" name="Xxx999301"></a><a id="Xxx999302" name="Xxx999302"></a><a id="Xxx999303" name="Xxx999303"></a><a id="Xxx999304" name="Xxx999304"></a><a id="Xxx999305" name="Xxx999305"></a><a id="Xxx999306" name="Xxx999306"></a><a id="Xxx999307" name="Xxx999307"></a><a id="Xxx999308" name="Xxx999308"></a>F&uuml;r Bash und Korn-Shell gibt es eine echte Debugging-Alternative mit dem <span class="listing">DEBUG</span>-Signal. Das <span class="listing">ERR</span>-Signal hingegen ist nur der Korn-Shell vorbehalten. Angewendet werden diese Signale genauso, wie Sie dies von den Signalen her kennen. Sie richten sich hierbei einen Handler mit <span class="listing">trap</span> ein.</p>
+<pre>trap 'Kommando(s)' DEBUG
+# nur f&uuml;r die Korn-Shell
+trap 'Kommando(s)' ERR</pre>
+<p>Im folgenden Beispiel haben wir ein Script, welches st&auml;ndig in einer Endlosschleife l&auml;uft, aber wir sind zu blind, den Fehler zu erkennen:</p>
+<pre># Name: debug1
+val=1
+while [ "$val" -le 10 ]
+do
+   echo "Der ${val}. Schleifendurchlauf"
+   i=`expr $val + 1`
+done</pre>
+<p>Jetzt wollen wir dem Script einen »Entwanzer« mit <span class="listing">trap</span> einbauen:</p>
+<pre># Name: debug1
+trap 'printf "$LINENO :-&gt; " ; read line ; eval $line' DEBUG
+val=1
+while [ "$val" -le 10 ]
+do
+   echo "Der ${val}. Schleifendurchlauf"
+   i=`expr $val + 1`
+done</pre>
+<p>Beim Entwanzen wird gew&ouml;hnlich das Kommando <span class="listing">eval</span> verwendet, mit dem Sie im Script Kommandos so ausf&uuml;hren k&ouml;nnen, als w&auml;ren diese Teil des Scripts (siehe Abschnitt 9.1).</p>
+<pre>trap 'printf "$LINENO :-&gt; " ; read line ; eval $line' DEBUG</pre>
+<p>Mit <span class="listing">DEBUG</span> wird nach jedem Ausdruck ein <span class="listing">DEBUG</span>-Signal gesendet, welches Sie »trap(pen)« k&ouml;nnen, um eine bestimmte Aktion auszuf&uuml;hren. Im Beispiel wird zun&auml;chst die Zeilennummer des Scripts gefolgt von einem Prompt ausgegeben. Anschlie&szlig;end k&ouml;nnen Sie einen Befehl einlesen und mit <span class="listing">eval</span> ausf&uuml;hren lassen (bspw. Variablen erh&ouml;hen oder reduzieren, Datei(en) anlegen, l&ouml;schen, ver&auml;ndern, auflisten, &uuml;berpr&uuml;fen etc). Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./debug1
+5 :-&gt;(ENTER)
+7 :-&gt;(ENTER)
+9 :-&gt;(ENTER)
+Der 1. Schleifendurchlauf
+10 :-&gt; echo $val
+1
+7 :-&gt;(ENTER)
+9 :-&gt;(ENTER)
+Der 1. Schleifendurchlauf
+10 :-&gt; echo $val
+1
+7 :-&gt;(ENTER)
+9 :-&gt;(ENTER)
+Der 1. Schleifendurchlauf
+10 :-&gt; val=`expr $val + 1`
+7 :-&gt; echo $val
+2
+9 :-&gt;(ENTER)
+Der 2. Schleifendurchlauf
+10 :-&gt;(ENTER)
+7 :-&gt;(ENTER)
+9 :-&gt;(ENTER)
+Der 2. Schleifendurchlauf
+10 :-&gt; exit</pre>
+<p>Der Fehler ist gefunden, die Variable »val« wurde nicht hochgez&auml;hlt, und ein Blick auf die Zeile 10 zeigt Folgendes:</p>
+<pre>i=`expr $val + 1`</pre>
+<p>Hier haben wir »i« statt »val« verwendet. Etwas st&ouml;rend ist allerdings, dass nur die Zeilennummer ausgegeben wird. Bei l&auml;ngeren Scripts ist es schwer bzw. umst&auml;ndlich, die Zeilennummer parallel zum Debuggen zu behandeln. Daher macht es Sinn, wenn auch hier die entsprechende Zeile mit ausgegeben wird, die ausgef&uuml;hrt wird bzw. wurde. Dies ist im Grunde kein Problem, da hier die <span class="listing">DEBUG</span>-Signale nur in der Bash bzw. der Korn-Shell vorhanden sind, weshalb auch gleich das komplette Script in ein Array eingelesen werden kann. F&uuml;r den Index verwenden Sie einfach wieder die Variable <span class="listing">LINENO<a id="Xxx999322" name="Xxx999322"></a><a id="Xxx999323" name="Xxx999323"></a><a id="Xxx999324" name="Xxx999324"></a></span>. Die Zeile <span class="listing">eval</span> zum Ausf&uuml;hren von Kommandos packen Sie einfach in eine separate Funktion, die beliebig viele Befehle aufnehmen kann, bis eben <b>(ENTER)</b> gedr&uuml;ckt wird.</p>
+<pre># Name: debug2
+# ------- DEBUG Anfang --------- #
+# Die &uuml;bliche eval-Funktion
+debugging() {
+   printf "STOP &gt; "
+   while true
+   do
+      read line
+      [ "$line" = "" ] &amp;&amp; break
+      eval $line
+      printf " &gt; "
+   done
+}
+typeset -i index=1
+# Das komplette Script in ein Array einlesen
+while read zeile[$index]
+do
+   index=index+1
+done&lt;$0
+trap 'echo "${zeile[$LINENO]}" ; debugging' DEBUG
+# ------- DEBUG Ende   --------- #
+typeset -i val=1
+while (( $val &lt;= 10 ))
+do
+   echo "Der $val Schleifendurchlauf"
+   val=val+1
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./debug2
+typeset -i val=1
+STOP &gt;(ENTER)
+while (( $val &lt;= 10 ))
+STOP &gt; echo $val
+1
+ &gt; val=7
+ &gt; echo $val
+7
+ &gt;(ENTER)
+echo "Der $val Schleifendurchlauf"
+STOP &gt;(ENTER)
+Der 7 Schleifendurchlauf
+val=val+1
+STOP &gt;(ENTER)
+while (( $val &lt;= 10 ))
+STOP &gt;(ENTER)
+echo "Der $val Schleifendurchlauf"
+STOP &gt;(ENTER)
+Der 8 Schleifendurchlauf
+val=val+1
+STOP &gt;(ENTER)
+while (( $val &lt;= 10 ))
+STOP &gt;(ENTER)
+echo "Der $val Schleifendurchlauf"
+STOP &gt;(ENTER)
+Der 9 Schleifendurchlauf
+val=val+1
+STOP &gt;exit
+you@host &gt;</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Auch in der Bourne-Shell oder anderen Shells, die eben nicht das <span class="listing">DEBUG</span>-Signal unterst&uuml;tzen, k&ouml;nnen Sie die Funktion <span class="listing">debugging()</span> hinzuf&uuml;gen. </p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard">Nur m&uuml;ssen Sie diese Funktion mehrmals hinter oder/und vor den Zeilen einsetzen, von denen Sie vermuten, dass das Script nicht richtig funktioniert. Nat&uuml;rlich sollten Sie es nicht vers&auml;umen, dies aus Ihrem fertigen Script wieder zu entfernen.</p>
+</td>
+</tr>
+</table><br>
+<p>In der Korn-Shell finden Sie des Weiteren das Signal <span class="listing">ERR</span>, welches Sie ebenfalls mit <span class="listing">trap</span> einfangen k&ouml;nnen. Allerdings handelt es sich hierbei eher um ein Pseudo-Signal, denn das Signal bezieht sich immer auf den R&uuml;ckgabewert eines Kommandos. Ist dieser ungleich 0, wird das Signal <span class="listing">ERR</span> gesendet. Allerdings l&auml;sst sich dies nicht dort verwenden, wo bereits der Exit-Code eines Kommandos abgefragt wird (bspw. <span class="listing">if</span>, <span class="listing">while</span> ...). Auch hierzu ein simples Script, welches das Signal <span class="listing">ERR</span> abf&auml;ngt:</p>
+<pre># Name: debugERR
+error_handling() {
+   echo "Fehler: $ERRNO Zeile: $LINENO"
+   printf "Beenden (j/n) : " ; read
+   [ "$REPLY" = "j" ] &amp;&amp; exit 1
+}
+trap 'error_handling' ERR
+echo "Testen des ERR-Signals"
+# Sollte dem normalen Benutzer untersagt sein
+cat &gt; /etc/profile
+echo "Nach dem Testen des ERR-Signals"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ksh ./debugERR
+Testen des ERR-Signals
+Fehler: Permission denied  Zeile: 4
+Beenden (j/n) : j</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Zwar wird die Bash beim Signal <span class="listing">ERR</span> in den Dokumentationen nicht erw&auml;hnt, aber beim Testen hat dies auch unter der Bash zu funktionieren, nur dass es eben in der Bash nicht die Variable <span class="listing">ERRNO</span> gibt.</p>
+</td>
+</tr>
+</table><br>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">10.3.3 Variablen und Syntax &uuml;berpr&uuml;fen<a id="RxxKap01200204004F7A1F02319D" name="RxxKap01200204004F7A1F02319D"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999343" name="Xxx999343"></a><a id="Xxx999344" name="Xxx999344"></a><a id="Xxx999345" name="Xxx999345"></a><a id="Xxx999346" name="Xxx999346"></a>Um wirklich sicherzugehen, dass Sie nicht auf eine nicht gesetzte Variable zugreifen, k&ouml;nnen Sie <span class="listing">set</span> mit der Option <span class="listing">–u</span> verwenden. Wird hierbei auf eine nicht definierte Variable zugegriffen, wird eine entsprechende Fehlermeldung ausgegeben. Mit <span class="listing">+u</span> schalten Sie diese Option wieder ab.</p>
+<pre># Name: aunboundvar
+# Keine undefinierten Variablen zulassen
+set –u
+var1=100
+echo $var1 $var2</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./aunboundvar
+./aunboundvar: line 7: var2: unbound variable</pre>
+<p><a id="Xxx999351" name="Xxx999351"></a><a id="Xxx999352" name="Xxx999352"></a>Wollen Sie ein Script nicht ausf&uuml;hren, sondern nur dessen Syntax &uuml;berpr&uuml;fen lassen, k&ouml;nnen Sie die Option <span class="listing">–n</span> verwenden. Mit <span class="listing">+n</span> schalten Sie diese Option wieder aus.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">10.3.4 Eine Debug-Ausgabe hinzuf&uuml;gen<a id="RxxKap01200204004F7A1F0231A3" name="RxxKap01200204004F7A1F0231A3"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999355" name="Xxx999355"></a><a id="Xxx999356" name="Xxx999356"></a>Die primitivste Form aller Debugging-Techniken ist gleichzeitig wohl die meisteingesetzte Variante – nicht nur in der Shell-Programmierung. Sie setzen &uuml;berall dort, wo Sie einen Fehler vermuten, eine <span class="listing">echo</span>-Ausgabe &uuml;ber den Zustand der Daten (bspw. welchen Wert hat eine Variable). Gibt das Script sehr viel auf dem Bildschirm aus, kann man auch einfach hie und da mal ein einfaches <span class="listing">read</span> einbauen, wodurch auf einen <b>(ENTER)</b>-Tastendruck gewartet wird, ehe die Ausf&uuml;hrung des Scripts weiter fortf&auml;hrt, oder man kann auch die ein oder andere st&ouml;rende Ausgabe kurzeitig ins Datengrab /dev/null schicken. Ein einfaches Beispiel:</p>
+<pre># Name: maskieren
+nobody() {
+   echo "Die Ausgabe wollen wir nicht!!!"
+}
+echo "Ausgabe1"
+exec 1&gt;/dev/null
+nobody
+exec 1&gt;`tty`
+echo "Ausgabe2"</pre>
+<p>Hier interessieren wir uns nicht f&uuml;r die Ausgabe der Funktion »nobody« und schicken die Standardausgabe ins Datengrab. Nat&uuml;rlich m&uuml;ssen Sie das Ganze wieder r&uuml;ckg&auml;ngig machen. Hier erreichen wir dies mit einer Umleitung auf das aktuelle Terminal (das Kommando <span class="listing">tty</span> &uuml;bernimmt das f&uuml;r uns).</p>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">10.3.5 Debugging-Tools<a id="RxxKap01200204004F7A1F0231A7" name="RxxKap01200204004F7A1F0231A7"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999361" name="Xxx999361"></a><a id="Xxx999362" name="Xxx999362"></a>Wer ein fertiges Debugging-Tool sucht, dem seien f&uuml;r die Bash der Debugger <span class="listing">bashdb</span> (<b><a href="http://bashdb.sourceforge.net/" target="_blank">http://bashdb.sourceforge.net/</a></b>) und f&uuml;r die Korn-Shell <span class="listing">kshdb</span> ans Herz gelegt. Der Bash-Debugger ist nichts anderes als eine gepatchte Version der Bash, welche ein besseres Debugging, ebenso wie eine verbesserte Fehlerausgabe unterst&uuml;tzt.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_012_001.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_013_000.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_012_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:57:50 GMT -->
+</html>

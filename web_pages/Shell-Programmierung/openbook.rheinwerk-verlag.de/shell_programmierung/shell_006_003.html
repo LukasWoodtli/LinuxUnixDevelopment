@@ -1,0 +1,1052 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_006_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:36 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 4.4 Das Kommando test</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_006_002.html">
+<link rel="next" href="shell_006_004.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_006_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_006_004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_006_000.html#RxxKap00600004004E0C1F017172">4 Kontrollstrukturen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_000.html#RxxKap00600004004E0C1F017174">4.1 Bedingte Anweisung mit if</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_000.html#RxxKap00600004004E0C1F017182">4.1.1 Kommandos testen mit if</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_000.html#RxxKap00600004004E0C1F017196">4.1.2 Kommandoverkettung &uuml;ber Pipes mit if</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_001.html#RxxKap00600104004E231F030172">4.2 Die else-Alternative f&uuml;r eine if-Verzweigung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_002.html#RxxKap00600204004E241F032172">4.3 Mehrfache Alternative mit elif</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00600304004E251F012172">4.4 Das Kommando test</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600304004E251F01217B">4.4.1 Ganze Zahlen vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600304004E251F0121A2">4.4.2 Ganze Zahlen vergleichen mit let (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600304004E251F0121C6">4.4.3 Zeichenketten vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600304004E251F0121EB">4.4.4 Zeichenketten vergleichen (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_004.html#RxxKap00600404004E261F04B172">4.5 Status von Dateien erfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F172">4.6 Logische Verkn&uuml;pfung von Ausdr&uuml;cken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F192">4.6.1 Negationsoperator !</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F198">4.6.2 Die UND-Verkn&uuml;pfung (-a und &amp;&amp;)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F1A6">4.6.3 Die ODER-Verkn&uuml;pfung (-o und ||)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F1B1">4.6.4 Klammerung und mehrere logische Verkn&uuml;pfungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_006.html#RxxKap00600604004E281F011172">4.7 Short Circuit-Tests – ergebnisabh&auml;ngige Befehlsausf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C172">4.8 Die Anweisung case</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C17E">4.8.1 Alternative Vergleichsmuster</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C185">4.8.2 case und Wildcards</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C18F">4.8.3 case und Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_008.html#RxxKap00600804004E2A1F031172">4.9 Schleifen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E172">4.10 for-Schleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E17A">4.10.1 Argumente bearbeiten mit for</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E182">4.10.2 for und die Dateinamen-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E18E">4.10.3 for und die Kommando-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E1A6">4.10.4 for und Array (Bash und Korn Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_009.html#RxxKap00600904004E2B1F04E1AB">4.10.5 for-Schleife mit Schleifenz&auml;hler (Bash only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_010.html#RxxKap00601004004E2C1F01B172">4.11 Die while-Schleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_011.html#RxxKap00601104004E2D1F03F172">4.12 Die until-Schleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_012.html#RxxKap00601204004E2E1F040172">4.13 Kontrollierte Spr&uuml;nge</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_012.html#RxxKap00601204004E2E1F040178">4.13.1 Der Befehl continue</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_012.html#RxxKap00601204004E2E1F040185">4.13.2 Der Befehl break</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_013.html#RxxKap00601304004E2F1F028172">4.14 Endlosschleifen</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">4.4 <a id="RxxKap00471DasKommandotest" name="RxxKap00471DasKommandotest"></a>Das Kommando tes<a id="RxxKap00600304004E251F012172" name="RxxKap00600304004E251F012172"></a>t 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a>Wie Sie im Verlauf bereits festgestellt haben, scheint das <span class="listing">test</span>-Kommando das ultimative Werkzeug f&uuml;r viele Shellscripts zu sein. Und in der Tat w&auml;re das Shell-Leben ohne dieses Kommando nur halb so einfach. Das <span class="listing">test</span>-Kommando wird &uuml;berall dort eingebaut, wo ein Vergleich von Zeichenketten oder Zahlenwerten und eine &Uuml;berpr&uuml;fung von Zust&auml;nden einer Datei erforderlich sind. Da die <span class="listing">if</span>-Verzweigung eigentlich f&uuml;r Kommandos konzipiert wurde, ist es nicht so ohne weiteres m&ouml;glich, einfach zwei Zeichenketten oder Zahlen mit einem <span class="listing">if</span> zu &uuml;berpr&uuml;fen. W&uuml;rden Sie dies dennoch tun, w&uuml;rde die Shell entsprechende Zeichenketten oder Zahlenwerte als Befehl erkennen und versuchen, diesen auszuf&uuml;hren.</p>
+<p>Damit Sie also solche Vergleiche durchf&uuml;hren k&ouml;nnen, ben&ouml;tigen Sie ein weiteres Kommando, das <span class="listing">test</span>-Kommando. Erst mit <span class="listing">test</span> ist es Ihnen m&ouml;glich, verschiedene Ausdr&uuml;cke zu formulieren und auszuwerten. Hier die Syntax des <span class="listing">test</span>-Kommandos:</p>
+<pre>if test Ausdruck
+then
+   # Ausdruck ist wahr, der R&uuml;ckgabewert von test 0
+   # hier die weiteren Kommandos bei erfolgreichem Ausdruck
+fi</pre>
+<p>Das <span class="listing">test</span>-Kommando wird vorwiegend in seiner »symbolischen« Form mit den eckigen Klammern eingesetzt.</p>
+<pre>if [ Ausdruck ]
+then
+   # Ausdruck ist wahr, der R&uuml;ckgabewert von test 0
+   # hier die weiteren Kommandos bei erfolgreichem Ausdruck
+fi</pre>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Bitte beachten Sie, dass der Befehl <span class="listing">test</span> Leerzeichen zwischen den einzelnen Ausdr&uuml;cken erwartet. Dies gilt &uuml;brigens auch hinter jedem sich &ouml;ffnenden <span class="listing">[</span> und vor jedem schlie&szlig;enden <span class="listing">]</span>.</p>
+</td>
+</tr>
+</table><br>
+<p>Dass bei einem korrekten Ausdruck wieder 0 zur&uuml;ckgegeben wird, liegt daran, dass <span class="listing">test</span> letztendlich auch nichts anderes als ein Kommando ist.</p>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">4.4.1 Ganze Zahlen vergleichen<a id="RxxKap00600304004E251F01217B" name="RxxKap00600304004E251F01217B"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999290" name="Xxx999290"></a><a id="Xxx999291" name="Xxx999291"></a><a id="Xxx999292" name="Xxx999292"></a>Um ganze Zahlen mit <span class="listing">test</span> zu vergleichen, stehen Ihnen folgende Operatoren zur Verf&uuml;gung (siehe Tabelle 4.1):<a id="Xxx999294" name="Xxx999294"></a><a id="Xxx999295" name="Xxx999295"></a><a id="Xxx999296" name="Xxx999296"></a><a id="Xxx999297" name="Xxx999297"></a><a id="Xxx999298" name="Xxx999298"></a><a id="Xxx999299" name="Xxx999299"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 4.1   
+    </b>Ganze Zahlen mit test vergleichen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Ausdruck</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Liefert wahr (0) zur&uuml;ck, wenn ...</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ var1 –eq var2 ]
+</td>
+<td class="tabellentext" bgcolor="#000000">(eq = equal)
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 gleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ var1 –ne var2 ]
+</td>
+<td class="tabellentext" bgcolor="#000000">(ne = not equal)
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 ungleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ var1 –lt var2 ]
+</td>
+<td class="tabellentext" bgcolor="#000000">(lt = less than)
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 kleiner als var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ var1 –gt var2 ]
+</td>
+<td class="tabellentext" bgcolor="#000000">(gt = greater than)
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 gr&ouml;&szlig;er als var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ var1 –le var2 ]
+</td>
+<td class="tabellentext" bgcolor="#000000">(le = less equal)
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 kleiner oder gleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ var1 –ge var2 ]
+</td>
+<td class="tabellentext" bgcolor="#000000">(ge = greater equal)
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 gr&ouml;&szlig;er oder gleich var2 ist
+</td>
+</tr>
+</table><br>
+<p>Hier ein einfaches Script, das Ihnen die Zahlenvergleiche in der Praxis demonstriert:</p>
+<pre># Demonstriert das test-Kommando mit Zahlenwerten
+# Name: avalue
+a=6; b=7
+if [ $a -eq $b ]
+then
+   echo "\$a ($a) ist gleich mit \$b ($b)"
+else
+   echo "\$a ($a) ist nicht gleich mit \$b ($b)"
+fi
+if [ $a -gt $b ]
+then
+   echo "\$a ($a) ist gr&ouml;&szlig;er als \$b ($b)"
+elif [ $a -lt $b ]
+then
+   echo "\$a ($a) ist kleiner als \$b ($b)"
+else
+   echo "\$a ($a) ist gleich mit \$b ($b)"
+fi
+if [ $a -ne 5 ]
+then
+   echo "\$a ($a) ist ungleich 5"
+fi
+if [ 7 -eq $b ]
+then
+   echo "\$b ist gleich 7"
+fi</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./avalue
+$a (6) ist nicht gleich mit $b (7)
+$a (6) ist kleiner als $b (7)
+$a (6) ist ungleich 5
+$b ist gleich 7</pre>
+<p>Dass hier tats&auml;chlich numerische Zahlenvergleiche und keine String-Vergleiche stattfinden, ist den Ausdr&uuml;cken <span class="listing">–eq</span>, <span class="listing">–ne</span>, <span class="listing">–lt</span>, <span class="listing">–gt</span>, <span class="listing">–le</span> und <span class="listing">–ge</span> zu verdanken. Steht einer dieser Ausdr&uuml;cke zwischen zwei Zahlen, wandelt der Befehl <span class="listing">test</span> die Zeichenketten vorher noch in Zahlen um. Dabei ist das <span class="listing">test</span>-Kommando sehr »intelligent« und erkennt selbst folgende Werte als Zahlen an:</p>
+<pre>you@host &gt; a="00001"; b=1
+you@host &gt; [ $a -eq $b ]
+you@host &gt; echo $?
+0
+you@host &gt; a="        1"; b=1
+you@host &gt; [ $a -eq $b ]
+you@host &gt; echo $?
+0</pre>
+<p>Hier wurde auch die Zeichenkette <span class="listing">"00001"</span> und <span class="listing">"</span>    <span class="listing">1"</span> von <span class="listing">test</span> in eine numerische 1 umgewandelt.</p>
+<h4 class="t4">Argumente aus der Kommandozeile &uuml;berpr&uuml;fen</h4>
+<p><a id="Xxx999361" name="Xxx999361"></a>Eine fast immer verwendete Aktion des <span class="listing">test</span>-Kommandos ist das &Uuml;berpr&uuml;fen, ob die richtige Anzahl von Argumenten in der Kommandozeile eingegeben wurde. Die Anzahl der Argumente finden Sie in der Variablen <span class="listing">$#</span> – mit dem <span class="listing">test</span>-Kommando k&ouml;nnen Sie jetzt entsprechend reagieren.</p>
+<pre># &Uuml;berpr&uuml;ft die richtige Anzahl von Argumenten
+# aus der Kommandozeile
+# Name: atestarg
+if [ $# -ne 2 ]
+then
+   echo "Hier sind mindestens 2 Argumente erforderlich"
+   echo "usage: $0 arg1 arg2 ... [arg_n]"
+   exit 1
+else
+   echo "Erforderliche Anzahl Argumente erhalten"
+fi</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./atestarg
+Hier sind mindestens 2 Argumente erforderlich
+usage: atestarg arg1 arg2 ... [arg_n]
+you@host &gt; ./atestarg Hallo Welt
+Erforderliche Anzahl Argumente erhalten</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">4.4.2 Ganze Zahlen vergleichen mit let (Bash und Korn-Shell only)<a id="RxxKap00600304004E251F0121A2" name="RxxKap00600304004E251F0121A2"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999367" name="Xxx999367"></a><a id="Xxx999368" name="Xxx999368"></a><a id="Xxx999369" name="Xxx999369"></a>In der Bash und der Korn-Shell steht Ihnen noch eine weitere Alternative zum Vergleichen von Zahlen zur Verf&uuml;gung. Hier kommen auch die programmiertypischen Operatoren f&uuml;r den Vergleich zum Einsatz (siehe Tabelle 4.2).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 4.2   
+    </b>Ganze Zahlen mit test vergleichen (Bash und Korn-Shell)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Ausdruck</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Operator</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Liefert wahr (0) zur&uuml;ck, wenn ...</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(( var1 == var2 ))
+</td>
+<td class="tabellentext" bgcolor="#000000">==
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 gleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(( var1 != var2 ))
+</td>
+<td class="tabellentext" bgcolor="#000000">!=
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 ungleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(( var1 &lt;  var2 ))
+</td>
+<td class="tabellentext" bgcolor="#000000">&lt;
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 kleiner als var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(( var1 &gt;  var2 ))
+</td>
+<td class="tabellentext" bgcolor="#000000">&gt;
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 gr&ouml;&szlig;er als var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(( var1 &gt;= var2 ))
+</td>
+<td class="tabellentext" bgcolor="#000000">&gt;=
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 gr&ouml;&szlig;er oder gleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">(( var1 &lt;= var2 ))
+</td>
+<td class="tabellentext" bgcolor="#000000">&lt;=
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 kleiner oder gleich var2 ist
+</td>
+</tr>
+</table><br>
+<p>Wer sich vielleicht noch an den <span class="listing">let</span>-Abschnitt erinnert, dem d&uuml;rfte auffallen, was wir hier haben – richtig, bei der doppelten Klammerung <span class="listing">((</span> <span class="listing">...</span> <span class="listing">))</span> handelt es sich um nichts anderes als um eine symbolische Form f&uuml;r das <span class="listing">let</span>-Kommando, welches Sie bereits bei den Variablen mit arithmetischen Ausdr&uuml;cken verwendet haben. Nat&uuml;rlich k&ouml;nnen Sie hierbei auch anstatt der doppelten Klammerung das Kommando <span class="listing">let</span> verwenden. So kann beispielsweise statt</p>
+<pre>if (( $a &gt; $b ))</pre>
+<p>auch <span class="listing">let</span> verwendet werden:</p>
+<pre>if let "$a &gt; $b"</pre>
+<p>Im Gegensatz zur Verwendung von <span class="listing">–eq</span>, <span class="listing">–ne</span> usw. sind die Leerzeichen bei den Zahlenvergleichen hier nicht von Bedeutung und k&ouml;nnen bei Bedarf unleserlich zusammengequetscht werden ;-). Des Weiteren kann, wie Sie von <span class="listing">let</span> vielleicht noch wissen, das <span class="listing">$</span>-Zeichen vor den Variablen beim Vergleich in doppelter Klammerung entfallen.</p>
+<p>Wollen Sie bspw. aus dem Listing »atestarg« den Test, ob die richtige Anzahl von Argumenten in der Kommandozeile eingegeben wurde, umschreiben auf die alternative Schreibweise der Bash und Korn-Shell, so m&uuml;ssen Sie nur die Zeile</p>
+<pre>if [ $# -ne 2 ]</pre>
+<p>umschreiben in</p>
+<pre>if (( $# != 2 ))</pre>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">4.4.3 Zeichenketten vergleichen<a id="RxxKap00600304004E251F0121C6" name="RxxKap00600304004E251F0121C6"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999434" name="Xxx999434"></a><a id="Xxx999435" name="Xxx999435"></a><a id="Xxx999436" name="Xxx999436"></a>Das Vergleichen von Zeichenketten mit <span class="listing">test</span> funktioniert &auml;hnlich wie bei Zahlenwerten. Hierbei &uuml;bergeben Sie dem Kommando <span class="listing">test</span> eine Zeichenkette, einen Operanden und eine weitere Zeichenkette. Auch hier m&uuml;ssen Sie wieder jeweils (mindestens) ein Leerzeichen dazwischen einschieben. In Tabelle 4.3 sind die Operatoren zum Vergleichen von Zeichenketten aufgelistet:<a id="Xxx999438" name="Xxx999438"></a><a id="Xxx999439" name="Xxx999439"></a><a id="Xxx999440" name="Xxx999440"></a><a id="Xxx999441" name="Xxx999441"></a><a id="Xxx999442" name="Xxx999442"></a><a id="Xxx999443" name="Xxx999443"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 4.3   
+    </b>Zeichenketten vergleichen</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Ausdruck</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Operator</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Liefert wahr (0) zur&uuml;ck, wenn ...</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ "$var1" =  "$var2" ]
+</td>
+<td class="tabellentext" bgcolor="#000000">=
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 gleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ "$var1" != "$var2" ]
+</td>
+<td class="tabellentext" bgcolor="#000000">!=
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 ungleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ –z "$var" ]
+</td>
+<td class="tabellentext" bgcolor="#000000">–z
+</td>
+<td class="tabellentext" bgcolor="#000000">var leer ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[ –n "$var" ]
+</td>
+<td class="tabellentext" bgcolor="#000000">–n
+</td>
+<td class="tabellentext" bgcolor="#000000">var nicht leer ist
+</td>
+</tr>
+</table><br>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext" bgcolor="#000000">
+<p class="BStandard"><b>Hinweis   </b>Auch wenn es nicht vorgeschrieben ist, sollten Sie bei einem <span class="listing">test</span> mit Zeichenketten diese immer zwischen zwei doppelte Anf&uuml;hrungszeichen setzen. Dies hilft Ihnen zu vermeiden, dass beim Vergleich einer Variable, die nicht existiert oder kein <span class="listing">""</span> enth&auml;lt, Fehler auftreten.</p>
+</td>
+</tr>
+</table><br>
+<p>Auch hierzu ein einfaches Shellscript, das verschiedene Vergleiche von Zeichenketten durchf&uuml;hrt.</p>
+<pre># Demonstriert einfache Zeichenkettenvergleiche
+# ateststring
+name1=juergen
+name2=jonathan
+if [ $# -lt 1 ]
+then
+   echo "Hier ist mindestens ein Argument erforderlich"
+   echo "usage: $0 Zeichenkette"
+   exit 1
+fi
+if [ "$1" = "$name1" ]
+then
+   echo "Hallo juergen"
+elif [ "$1" = "$name2" ]
+then
+   echo "Hallo jonathan"
+else
+   echo "Hier wurde weder $name1 noch $name2 verwendet"
+fi
+if [ -n "$2" ]
+then
+   echo "Hier wurde auch ein zweites Argument verwendet ($2)"
+else
+   echo "Hier wurde kein zweites Argument verwendet"
+fi
+if [ -z "$name3" ]
+then
+   echo "Der String \$name3 ist leer oder existiert nicht"
+elif [ "$name3" != "you" ]
+then
+   echo "Bei \$name3 handelt es sich nicht um \"you\""
+else
+   echo "Hier ist doch \"you\" gemeint"
+fi</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ateststring
+Hier ist mindestens ein Argument erforderlich
+usage: ./ateststring Zeichenkette
+you@host &gt; ./ateststring test
+Hier wurde weder juergen noch jonathan verwendet
+Hier wurde kein zweites Argument verwendet
+Der String $name3 ist leer oder existiert nicht
+you@host &gt; ./ateststring juergen
+Hallo juergen
+Hier wurde kein zweites Argument verwendet
+Der String $name3 ist leer oder existiert nicht
+you@host &gt; ./ateststring juergen wolf
+Hallo juergen
+Hier wurde auch ein zweites Argument verwendet (wolf)
+Der String $name3 ist leer oder existiert nicht
+you@host &gt; name3=wolf
+you@host &gt; export name3
+you@host &gt; ./ateststring jonathan wolf
+Hallo jonathan
+Hier wurde auch ein zweites Argument verwendet (wolf)
+Bei $name3 handelt es sich nicht um "you"
+you@host &gt; export name3=you
+you@host &gt; ./ateststring jonathan wolf
+Hallo jonathan
+Hier wurde auch ein zweites Argument verwendet (wolf)
+Hier ist doch "you" gemeint</pre>
+<p>Wer jetzt immer noch denkt, man k&ouml;nne mit den bisherigen Mitteln noch kein vern&uuml;nftiges Shellscript schreiben, f&uuml;r den soll hier ein einfaches Backup-Script geschrieben werden. Das folgende Script soll Ihnen zwei M&ouml;glichkeiten bieten. Zum einen eine Eingabe wie:</p>
+<pre>you@host &gt; ./abackup1 save $HOME/Shellbuch</pre>
+<p>Hiermit soll der komplette Inhalt vom Verzeichnis <span class="listing">$HOME</span>/Shellbuch mittels <span class="listing">tar</span> archiviert werden (mitsamt den Meldungen des kompletten Verzeichnisbaums). Das Backup soll in einem extra erstellen Verzeichnis mit einem extra erstellten Namen (im Beispiel einfach TagMonatJahr.tar, bspw. 21Feb2005.tar) erstellt werden (nat&uuml;rlich komprimiert).</p>
+<p>Auf der anderen Seite soll es selbstverst&auml;ndlich auch m&ouml;glich sein, den Inhalt dieser Meldungen, der archivierten Backup-Datei, zu lesen, was gerade bei vielen Backup-Dateien auf der Platte unverzichtbar ist. Dies soll mit einem Aufruf wie</p>
+<pre>you@host &gt; ./abackup1 read $HOME/backup/21Feb2005.tar</pre>
+<p>erreicht werden. Mit <span class="listing">grep</span> hinter einer Pipe k&ouml;nnen Sie nun nach einer bestimmten Datei im Archiv suchen. Dies k&ouml;nnte man nat&uuml;rlich auch im Script extra einbauen. Aber der Umfang soll hier nicht ins Unermessliche wachsen. Hier ein einfaches, aber anspruchsvolles Backup-Script:</p>
+<pre># Ein einfaches Backup-Script
+# Name: abackup1
+# Beispiel: ./abackup1 save Verzeichnis
+# Beispiel: ./abackup1 read (backupfile).tar
+BACKUPDIR=$HOME/backup
+DIR=$2
+if [ $# != 2 ]
+then
+   echo "Hier sind 2 Argumente erforderlich"
+   echo "usage: $0 Option Verzeichnis/Backupfile"
+   echo
+   echo "M&ouml;gliche Angaben f&uuml;r Option:"
+   echo "save = F&uuml;hrt Backup vom kompletten Verzeichnis durch"
+   echo "       Verzeichnis wird als zweites Argument angegeben"
+   echo "read = Liest den Inhalt eines Backupfiles"
+   echo "       Backupfile wird als zweites Argument angegeben"
+   exit 1
+fi
+# Falls Verzeichnis f&uuml;r Backup nicht existiert ...
+if ls $BACKUPDIR &gt; /dev/null
+then
+   echo "Backup-Verzeichnis ($BACKUPDIR) existiert"
+elif mkdir $BACKUPDIR &gt; /dev/null
+then
+   echo "Backup-Verzeichnis angelegt ($BACKUPDIR)"
+else
+   echo "Konnte kein Backup-Verzeichnis anlegen"
+   exit 1
+fi
+# Wurde save oder read als erstes Argument verwendet ...
+if [ "$1" = "save" ]
+then
+   set `date`
+   BACKUPFILE="$3$2$6"
+   if tar czvf ${BACKUPDIR}/${BACKUPFILE}.tar $DIR
+   then
+      echo "Backup f&uuml;r $DIR erfolgreich in $BACKUPDIR angelegt"
+      echo "Backup-Name : ${BACKUPFILE}.tar"
+   else
+      echo "Backup wurde nicht durchgef&uuml;hrt !!!"
+   fi
+elif [ "$1" = "read" ]
+then
+   echo "Inhalt von $DIR : "
+   tar tzf $DIR
+else
+   echo "Falsche Scriptausf&uuml;hrung!!!"
+   echo "usage: $0 option Verzeichnis/Backupfile"
+   echo
+   echo "M&ouml;gliche Angaben f&uuml;r Option:"
+   echo "save = F&uuml;hrt ein Backup eines kompletten Verzeichnisses durch"
+   echo "       Verzeichnis wird als zweites Argument angegeben"
+   echo "read = Liest den Inhalt eines Backupfiles"
+   echo "       Backupfile wird als zweites Argument angegeben"
+fi</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./abackup1 save $HOME/Shellbuch
+ls: /home/you/backup: Datei oder Verzeichnis nicht gefunden
+Backup-Verzeichnis angelegt (/home/you/backup)
+tar: Entferne f&uuml;hrende `/' von Archivnamen.
+home/you/Shellbuch/
+home/you/Shellbuch/Planung_und_Bewerbung/
+home/you/Shellbuch/Planung_und_Bewerbung/shellprogrammierung.doc
+home/you/Shellbuch/Planung_und_Bewerbung/shellprogrammierung.sxw
+home/you/Shellbuch/kap004.txt
+home/you/Shellbuch/Kap003.txt~
+home/you/Shellbuch/kap004.txt~
+...
+Backup f&uuml;r /home/you/Shellbuch erfolgreich in /home/you/backup 
+angelegt
+Backup-Name : 21Feb2005.tar
+you@host &gt; ./abackup1 read $HOME/backup/21Feb2005.tar | \
+&gt; grep Kap002
+home/tot/Shellbuch/Kap002.doc
+home/tot/Shellbuch/Kap002.sxw
+you@host &gt; ./abackup1 read $HOME/backup/21Feb2005.tar | wc -l
+50</pre>
+<p>Hier wurde ein Backup vom kompletten Verzeichnis <span class="listing">$HOME</span>/Shellbuch durchgef&uuml;hrt. Anschlie&szlig;end wurde mit der Option <span class="listing">read</span> und <span class="listing">grep</span> nach »Kap002« gesucht, welches hier in zweifacher Ausf&uuml;hrung vorhanden ist. Ebenso einfach k&ouml;nnen Sie hiermit die Anzahl von Dateien in einem Archiv (hier mit <span class="listing">wc</span> <span class="listing">–l</span>) ermitteln.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">4.4.4 Zeichenketten vergleichen (Bash und Korn-Shell only)<a id="RxxKap00600304004E251F0121EB" name="RxxKap00600304004E251F0121EB"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999504" name="Xxx999504"></a><a id="Xxx999505" name="Xxx999505"></a>In der Bash und der Korn-Shell stehen Ihnen noch weitere alternative M&ouml;glichkeit zur Verf&uuml;gung, um Zeichenketten zu vergleichen (siehe Tabelle 4.4). Besonders interessant erscheint mir in diesem Zusammenhang, dass hiermit jetzt auch echte Mustervergleiche m&ouml;glich sind.<a id="Xxx999507" name="Xxx999507"></a><a id="Xxx999508" name="Xxx999508"></a><a id="Xxx999509" name="Xxx999509"></a><a id="Xxx999510" name="Xxx999510"></a><a id="Xxx999511" name="Xxx999511"></a><a id="Xxx999512" name="Xxx999512"></a><a id="Xxx999513" name="Xxx999513"></a></p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 4.4   
+    </b>Zeichenketten vergleichen (Bash und Korn-Shell)</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Ausdruck</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Operator</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Liefert wahr (0) zur&uuml;ck, wenn ...</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[[ "$var1" == "$var2" ]]
+</td>
+<td class="tabellentext" bgcolor="#000000">==
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 gleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[[ "$var1" != "$var2" ]]
+</td>
+<td class="tabellentext" bgcolor="#000000">!=
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 ungleich var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[[ –z "$var" ]]
+</td>
+<td class="tabellentext" bgcolor="#000000">–z
+</td>
+<td class="tabellentext" bgcolor="#000000">var leer ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[[ –n "$var" ]]
+</td>
+<td class="tabellentext" bgcolor="#000000">–n
+</td>
+<td class="tabellentext" bgcolor="#000000">var nicht leer ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[[ "$var1" &gt; "$var2" ]]
+</td>
+<td class="tabellentext" bgcolor="#000000">&gt;
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 alphabetisch gr&ouml;&szlig;er als var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[[ "$var1" &lt; "$var2" ]]
+</td>
+<td class="tabellentext" bgcolor="#000000">&lt;
+</td>
+<td class="tabellentext" bgcolor="#000000">var1 alphabetisch kleiner als var2 ist
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[[ "$var" == pattern ]]
+</td>
+<td class="tabellentext" bgcolor="#000000">==
+</td>
+<td class="tabellentext" bgcolor="#000000">var entspricht dem Muster pattern
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">[[ "$var" != pattern ]]
+</td>
+<td class="tabellentext" bgcolor="#000000">!=
+</td>
+<td class="tabellentext" bgcolor="#000000">var entspricht nicht dem Muster-Pattern
+</td>
+</tr>
+</table><br>
+<p>Das wirklich sehr interessante Feature bei den Vergleichen von Zeichenketten in Bash und Korn-Shell ist die M&ouml;glichkeit, Muster beim Vergleich zu verwenden. Hierbei gilt es zu beachten, dass sich das Muster auf der rechten Seite befindet und nicht zwischen Anf&uuml;hrungsstrichen stehen darf. Zur Verwendung von Mustern stehen Ihnen wieder die Metazeichen <span class="listing">*</span>, <span class="listing">?</span> und <span class="listing">[</span> <span class="listing">]</span> zur Verf&uuml;gung, deren Bedeutung und Verwendung Sie bereits in Abschnitt 1.10.6 kennen gelernt haben. Nat&uuml;rlich k&ouml;nnen Sie auch die Konstruktionen f&uuml;r alternative Muster nutzen, welche Sie in Abschnitt 1.10.8 verwendet haben. Hier ein Beispiel mit einfachen Mustervergleichen:</p>
+<pre># Demonstriert erweiterte Zeichenkettenvergleiche
+# ateststring2
+if [ $# -lt 1 ]
+then
+   echo "Hier ist mindestens ein Argument erforderlich"
+   echo "usage: $0 Zeichenkette"
+   exit 1
+fi
+if [[ "$1" = *ist* ]]
+then
+   echo "$1 enth&auml;lt die Textfolge \"ist\""
+elif [[ "$1" = ?art ]]
+then
+   echo "$1 enth&auml;lt die Textfolge \"art\""
+elif [[ "$1" = kap[0–9] ]]
+then
+   echo "$1 enth&auml;lt die Textfolge \"kap\""
+else
+   echo "Erfolgloser Mustervergleich"
+fi</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ateststring2 Bauart
+Erfolgloser Mustervergleich
+you@host &gt; ./ateststring2 zart
+zart enth&auml;lt die Textfolge "art"
+you@host &gt; ./ateststring2 kap7
+kap7 enth&auml;lt die Textfolge "kap"
+you@host &gt; ./ateststring2 kapa
+Erfolgloser Mustervergleich
+you@host &gt; ./ateststring2 Mistgabel
+Mistgabel enth&auml;lt die Textfolge "ist"</pre>
+<p>Eine weitere interessante Erneuerung ist der Vergleich auf gr&ouml;&szlig;er bzw. kleiner als. Hiermit werden Zeichenketten alphabetisch in lexikografischer Anordnung verglichen. Hierzu ein Script:</p>
+<pre># Demonstriert erweiterte Zeichenkettenvergleiche
+# ateststring3
+var1=aaa
+var2=aab
+var3=aaaa
+var4=b
+if [[ "$var1" &gt; "$var2" ]]
+then
+   echo "$var1 ist gr&ouml;&szlig;er als $var2"
+else
+   echo "$var1 ist kleiner als $var2"
+fi
+if [[ "$var2" &lt; "$var3" ]]
+then
+   echo "$var2 ist kleiner als $var3"
+else
+   echo "$var2 ist gr&ouml;&szlig;er als $var3"
+fi
+if [[ "$var3" &lt; "$var4" ]]
+then
+   echo "$var3 ist kleiner als $var4"
+else
+   echo "$var3 ist gr&ouml;&szlig;er als $var4"
+fi</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./ateststring3
+aaa ist kleiner als aab
+aab ist gr&ouml;&szlig;er als aaaa
+aaaa ist kleiner als b</pre>
+<p>An diesem Script k&ouml;nnen Sie sehr gut erkennen, dass hier nicht die L&auml;nge der Zeichenkette zwischen dem gr&ouml;&szlig;er bzw. kleiner entscheidet, sondern das Zeichen, womit die Zeichenkette beginnt. Somit ist laut Alphabet das Zeichen a kleiner als das Zeichen b. Beginnen beide Zeichenketten mit dem Buchstaben a, wird das n&auml;chste Zeichen verglichen – eben so, wie Sie dies von einem Lexikon her kennen.</p>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_006_002.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_006_004.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_006_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:36 GMT -->
+</html>

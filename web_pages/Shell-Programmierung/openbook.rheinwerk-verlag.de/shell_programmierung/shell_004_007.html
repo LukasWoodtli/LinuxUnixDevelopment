@@ -1,0 +1,879 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 2.8 Shell-Variablen</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_004_006.html">
+<link rel="next" href="shell_004_008.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_004_000.html#RxxKap00400004004D961F024172">2 Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_000.html#RxxKap00400004004D961F024174">2.1 Grundlagen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F024178">2.1.1 Zugriff auf den Wert einer Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_000.html#RxxKap00400004004D961F02417E">2.1.2 Variablen-Interpolation</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D172">2.2 Zahlen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D174">2.2.1 Integer-Arithmetik (Bourne-Shell, Bash und Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D186">2.2.2 Integer-Arithmetik (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_001.html#RxxKap00400104004DAD1F01D1BE">2.2.3 bc – Rechnen mit Flie&szlig;kommazahlen und mathematische Funktionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F021172">2.3 Zeichenketten</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F021174">2.3.1 Stringverarbeitung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_002.html#RxxKap00400204004DAE1F0211CE">2.3.2 Erweiterte Funktionen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011172">2.4 Quotings und Kommando-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011180">2.4.1 Single und Double Quotings</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_003.html#RxxKap00400304004DAF1F011196">2.4.2 Kommando-Substitution – Back Quotes</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B172">2.5 Arrays (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B175">2.5.1 Werte an Arrays zuweisen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B180">2.5.2 Eine Liste von Werten an ein Array zuweisen (Bash)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B186">2.5.3 Eine Liste von Werten an ein Array zuweisen (Korn-Shell)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_004.html#RxxKap00400404004DB01F03B18A">2.5.4 Zugreifen auf die einzelnen Elemente eines Arrays</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_005.html#RxxKap00400504004DB11F020172">2.6 Variablen exportieren</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_006.html#RxxKap00400604004DB21F030172">2.7 Umgebungsvariablen eines Prozesses</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00400704004DB31F023172">2.8 Shell-Variablen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038172">2.9 Automatische Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038174">2.9.1 Der Name des Shellscripts – $0</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03817F">2.9.2 Die Prozessnummer des Shellscripts – $$</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038185">2.9.3 Der Beendigungsstatus eines Shellscripts – $?</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F038189">2.9.4 Die Prozessnummer des zuletzt gestarteten Hintergrundprozesses – $!</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03818C">2.9.5 Weitere vordefinierte Variablen der Shell</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_004_008.html#RxxKap00400804004DB41F03819D">2.9.6 Weitere automatische Variablen f&uuml;r Bash und Korn-Shell</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">2.8 <a id="RxxKap002389ShellVariablen" name="RxxKap002389ShellVariablen"></a>Shell-Variable<a id="RxxKap00400704004DB31F023172" name="RxxKap00400704004DB31F023172"></a>n 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a>Im Beispiel zuvor war die Rede von benutzerdefinierten und von der Shell vordefinierten Umgebungsvariablen. Die von der Shell vorgegebenen Umgebungsvariablen werden auch als Shell-Variablen bezeichnet. Shell-Variablen werden von der Shell automatisch angelegt und auch verwaltet. Zwar kann man jetzt nicht einfach behaupten, Shell-Variablen seien dasselbe wie Umgebungsvariablen, aber da die Shell-Variablen in der Regel immer in die Umgebung exportiert werden, wollen wir hier keine Haarspalterei betreiben.</p>
+<p>Abh&auml;ngig von der Shell stehen Ihnen hierzu eine Menge vordefinierter (aber ver&auml;nderbarer) Variablen zur Verf&uuml;gung. In Tabelle 2.6 bis Tabelle 2.9 finden Sie einen &Uuml;berblick zu den g&auml;ngigsten Umgebungsvariablen einer Shell und deren Bedeutungen.</p>
+<h4 class="t4">Vordefinierte Shell-Variablen (f&uuml;r Bourne-Shell, Bash und Korn-Shell)</h4>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 2.6   
+    </b>Vordefinierte Variablen f&uuml;r alle Shells</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Shell-Variable</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">CDPATH<a id="Xxx999288" name="Xxx999288"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Suchpfad f&uuml;r das cd-Kommando
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">HOME<a id="Xxx999293" name="Xxx999293"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Heimverzeichnis f&uuml;r den Benutzer; Standardwert f&uuml;r cd
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">IFS<a id="Xxx999298" name="Xxx999298"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Wort-Trennzeichen (IFS = Internal Field Separator); Standardwerte sind Leerzeichen, Tabulator- und Newline-Zeichen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LOGNAME<a id="Xxx999303" name="Xxx999303"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Login-Name des Benutzers
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">MAIL<a id="Xxx999308" name="Xxx999308"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Pfadname der Mailbox-Datei, in der eingehende Mails abgelegt werden
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">MAILCHECK<a id="Xxx999313" name="Xxx999313"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Zeitangabe in Sekunden, wie lange die Shell wartet, bevor eine &Uuml;berpr&uuml;fung der Mailbox stattfindet, ob eine neue Mail eingegangen ist.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">MAILPATH<a id="Xxx999318" name="Xxx999318"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist diese Variable gesetzt, wird MAIL unwirksam, somit eine Alternative f&uuml;r MAIL. Allerdings k&ouml;nnen hier mehrere Pfadangaben getrennt mit einem : angegeben werden. Die zur Pfadangabe geh&ouml;rende Meldung kann mit % getrennt und nach diesem angegeben werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">MANPATH<a id="Xxx999323" name="Xxx999323"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Pfadnamen, in denen die man-Pages (Manual-Pages) gesucht werden
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">PATH<a id="Xxx999328" name="Xxx999328"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Suchpfad f&uuml;r die Kommandos (Programme); meistens handelt es sich um eine durch Doppelpunkte getrennte Liste von Verzeichnissen, in denen nach einem Kommando gesucht wird, das ohne Pfadangabe aufgerufen wurde; Standardwerte: PATH=:/bin:/usr/bin
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">PS1<a id="Xxx999333" name="Xxx999333"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Prim&auml;rer Prompt; Prompt zur Eingabe von Befehlen (im Buch lautet dies bspw. you@host &gt; f&uuml;r den normalen und # f&uuml;r den Superuser).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">PS2<a id="Xxx999338" name="Xxx999338"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Sekund&auml;rer Prompt, Prompt f&uuml;r mehrzeilige Befehle; im Buch und auch als Standardwert wird &gt; verwendet.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SHACCT<a id="Xxx999343" name="Xxx999343"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Datei f&uuml;r Abrechnungsinformationen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SHELL<a id="Xxx999348" name="Xxx999348"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Pfadname der Shell
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">TERM<a id="Xxx999353" name="Xxx999353"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Terminal-Einstellung des Benutzers (bspw. xterm oder vt100)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">TZ<a id="Xxx999358" name="Xxx999358"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Legt die Zeitzone fest (hierzulande MET = Middle European Time)
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Vordefinierte Shell-Variablen (f&uuml;r Korn-Shell und Bash)</h4>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 2.7   
+    </b>Vordefinierte Variablen f&uuml;r Bash und Korn-Shell</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Shell-Variable</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">COLUMNS<a id="Xxx999377" name="Xxx999377"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Weite des Editorfensters, das f&uuml;r den Kommandozeilen-Editor und die Men&uuml;s zur Verf&uuml;gung steht; Standardwert 80
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">EDITOR<a id="Xxx999382" name="Xxx999382"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Setzt den (Builtin-)Kommandozeilen-Editor, wenn VISUAL oder set –o nicht gesetzt sind
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">ENV<a id="Xxx999387" name="Xxx999387"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Enth&auml;lt den Pfadnamen zur Environment-Datei, die bei jedem (Neu-)Start einer (Sub-)Shell gelesen wird. Ist die reale User- und Gruppen-ID (UID/GID) ungleich der effektiven User- und Gruppen-ID (EUID/EGUID) und es wurde das su-Kommando ausgef&uuml;hrt, wird diese Datei nicht aufgerufen.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FCEDIT<a id="Xxx999392" name="Xxx999392"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Pfad zum Builtin-Editor f&uuml;r das fc-Kommando
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FPATH<a id="Xxx999397" name="Xxx999397"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Verzeichnisse, in denen der Autoload-Mechanismus nach Funktionsdefinitionen durchsucht; nicht definierte Funktionen k&ouml;nnen mittels typeset –fu gesetzt werden; FPATH wird auch durchsucht, wenn diese Funktionen zum ersten Mal aufgerufen werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">HISTFILE<a id="Xxx999402" name="Xxx999402"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Pfadname zur Befehls-Historydatei; Standardwert: $HOME/.sh_history
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">HISTSIZE<a id="Xxx999407" name="Xxx999407"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier wird festgelegt, wie viele Befehle in der Historydatei (HISTFILE) gespeichert werden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LC_ALL<a id="Xxx999412" name="Xxx999412"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Hier findet man die aktuelle L&auml;ndereinstellung; ist diese Variable gesetzt, sind LANG und die anderen LC_*-Variablen unwirksam. de steht bspw. f&uuml;r den deutschen Zeichensatz, C f&uuml;r ASCII (was auch der Standardwert ist).
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LC_COLLATE<a id="Xxx999417" name="Xxx999417"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">L&auml;ndereinstellung, nach der die Zeichen bei einem Vergleich sortiert (Sortierreihenfolge) werden
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LC_CTYPE<a id="Xxx999422" name="Xxx999422"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Die L&auml;ndereinstellung, welche f&uuml;r die Zeichenklassenfunktionen verwendet werden soll. Ist LC_ALL gesetzt, wird LC_TYPE unwirksam; LC_TYPE hingegen &uuml;berdeckt wiederum LANG, falls dieses gesetzt ist.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LC_MESSAGES<a id="Xxx999427" name="Xxx999427"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Sprache, in der die (Fehler-)Meldungen ausgegeben werden sollen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LANG<a id="Xxx999432" name="Xxx999432"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist keine LC_*-Variable gesetzt, wird LANG als Standardwert f&uuml;r alle eben beschriebenen verwendet. Gesetzte LC_*-Variablen haben allerdings Vorrang vor der Variable LANG.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">LINES<a id="Xxx999437" name="Xxx999437"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Gegenst&uuml;ck zu COLUMN; legt die H&ouml;he (Zeilenzahl) des Fensters fest; Standardwert 24.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">NLSPATH<a id="Xxx999442" name="Xxx999442"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Pfad f&uuml;r die (Fehler-)Meldungen von LC_MESSAGE
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">PS3<a id="Xxx999447" name="Xxx999447"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Prompt f&uuml;r Men&uuml;s (mit select); Standardwert #
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">PS4<a id="Xxx999452" name="Xxx999452"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Debugging-Promptstring f&uuml;r die Option –x; Standardwert +
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">TMOUT<a id="Xxx999457" name="Xxx999457"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Wird TMOUT Sekunden kein Kommando mehr eingegeben, beendet sich die Shell; Standardwert 0 steht f&uuml;r unendlich.
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Vordefinierte Shell-Variablen (f&uuml;r die Korn-Shell only)</h4>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 2.8   
+    </b>Vordefinierte Variablen nur f&uuml;r die Korn-Shell</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Shell-Variable</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">VISUAL<a id="Xxx999476" name="Xxx999476"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Setzt den Kommandozeilen-Editor; setzt EDITOR au&szlig;er Kraft, wenn gesetzt
+</td>
+</tr>
+</table><br>
+<h4 class="t4">Vordefinierte Shell-Variablen (f&uuml;r die Bash only)</h4>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 2.9   
+    </b>Vordefinierte Variablen, nur in der Bash vorhanden</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Shell-Variable</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">BASH_ENV<a id="Xxx999495" name="Xxx999495"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Enth&auml;lt eine Initialisierungsdatei, die beim Start von einer neuen (Sub-)Shell anstatt .bashrc f&uuml;r Scripts aufgerufen wird
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">BASH_VERSINFO<a id="Xxx999500" name="Xxx999500"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Versionsnummer der Bash
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">DIRSTACK<a id="Xxx999505" name="Xxx999505"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Array, um auf den Inhalt des Directory-Stacks, der mit den Kommandos pushd, popd und dirs verwaltet wird, zuzugreifen. set zeigt diesen Wert h&auml;ufig als leer an, er ist aber trotzdem besetzt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">FIGNORE<a id="Xxx999510" name="Xxx999510"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Alle hier angegebenen Dateiendungen werden bei der automatischen Erweiterung (Dateinamenserg&auml;nzung mit (<b>ÿ_</b>)) von Dateinamen ignoriert; mehrere Endungen werden durch : getrennt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GLOBIGNORE<a id="Xxx999515" name="Xxx999515"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Enth&auml;lt eine Liste von Mustern, die Namen definiert, welche bei der Dateinamen-Expansion mittels * ? [ ] nicht automatisch expandiert werden sollen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">GROUPS<a id="Xxx999520" name="Xxx999520"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Array mit einer Liste aller Gruppen-IDs des aktuellen Benutzers. Wird ebenfalls von set als leer angezeigt, ist aber immer belegt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">HISTCONTROL<a id="Xxx999525" name="Xxx999525"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Damit k&ouml;nnen Sie steuern, welche Zeilen im History-Puffer aufgenommen werden sollen. Zeilen, die mit einem Leerzeichen beginnen, werden mit ignorespace ignoriert. Mit ignoredups werden wiederholt angegebene Befehle nur einmal im History-Puffer gespeichert. Beide Optionen (ignorespace und ignoredups) gleichzeitig k&ouml;nnen Sie mit ignoreboth verwenden.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">HISTFILESIZE<a id="Xxx999530" name="Xxx999530"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">L&auml;nge der Kommando-Historydatei in Zeilen; HISTSIZE hingegen gibt die Anzahl der gespeicherten Kommandos an.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">HISTIGNORE<a id="Xxx999535" name="Xxx999535"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Eine weitere Variable, &auml;hnlich wie HISTCONTROL. Nur besteht hierbei die M&ouml;glichkeit, Zeilen von der Aufnahme in den History-Puffer auszuschlie&szlig;en. Es k&ouml;nnen hierbei Ausschlussmuster definiert werden. Alle Zeilen, die diesem Muster entsprechen, werden nicht im History-Puffer gespeichert. Mehrere Muster werden mit einem Doppelpunkt getrennt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">HOSTFILE<a id="Xxx999540" name="Xxx999540"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Datei, die wie /etc/hosts zur Vervollst&auml;ndigung des Hostnamens verwendet wird
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">HOSTNAME<a id="Xxx999545" name="Xxx999545"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Name des Rechners
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">IGNOREEOF<a id="Xxx999550" name="Xxx999550"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Anzahl der EOFs ((Strg)+(D)), die eingegeben werden m&uuml;ssen, um die interaktive Bash zu beenden; Standardwert 10
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">INPUTRC<a id="Xxx999555" name="Xxx999555"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Befindet sich hier eine Datei, dann wird diese zur Konfiguration des Kommandozeilen-Editors statt ~/.inputrc verwendet
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">MATCHTYPE<a id="Xxx999560" name="Xxx999560"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Die CPU-Architektur, auf der das System l&auml;uft
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">OPTERR<a id="Xxx999565" name="Xxx999565"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist der Wert dieser Variable 1, werden die Fehlermeldungen der getopts-Shell-Funktion ausgegeben. Enth&auml;lt sie eine 0, werden die Fehlermeldungen unterdr&uuml;ckt; Standardwert 1.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">PIPESTATUS<a id="Xxx999570" name="Xxx999570"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Es ist recht kompliziert, an den Exitstatus eines einzelnen Kommandos zu kommen, das in einer Pipeline ausgef&uuml;hrt wurde. Ohne PIPESTATUS ist es schwierig, zu ermitteln, ob alle vorhergehenden Kommandos erfolgreich ausgef&uuml;hrt werden konnten. PIPESTATUS ist ein Array, welches alle Exitcodes der einzelnen Befehle des zuletzt ausgef&uuml;hrten Pipe-Kommandos enth&auml;lt.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">SHELLOPTS<a id="Xxx999575" name="Xxx999575"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Liste aller aktiven Shell-Optionen. Hier k&ouml;nnen Optionen gesetzt werden, mit denen eine neue Shell aufgerufen werden soll.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">TIMEFORMAT<a id="Xxx999580" name="Xxx999580"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Ausgabeformat des time-Kommandos
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">allow_null_glob_expansion<a id="Xxx999586" name="Xxx999586"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Hat diese Variable den Wert 1, werden Muster, die bei der Pfadnamenserweiterung (Dateinamen-Expansion) nicht erweitert werden konnten, zu einer leeren Zeichenkette (Null-String) erweitert, anstatt unver&auml;ndert zu bleiben. Der Wert 0 hebt dies auf.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">cdable_vars<a id="Xxx999590" name="Xxx999590"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist diese Variable 1, kann dem cd-Kommando das Verzeichnis, in das gewechselt werden soll, auch in einer Variablen &uuml;bergeben werden. 0 hebt dies wieder auf.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">command_oriented_history<a id="Xxx999596" name="Xxx999596"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist der Wert dieser Variable 1, wird versucht, alle Zeilen eines mehrzeiligen Kommandos in einem History-Eintrag zu speichern. 0 hebt diese Funktion wieder auf.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">glob_dot_filenames<a id="Xxx999600" name="Xxx999600"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Wird f&uuml;r den Wert dieser Variablen 1 eingesetzt, werden auch die Dateinamen, die mit einem Punkt beginnen, in die Pfadnamenserweiterung einbezogen. Der Wert 0 setzt dies wieder au&szlig;er Kraft.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">histchars<a id="Xxx999605" name="Xxx999605"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Beinhaltet zwei Zeichen zur Kontrolle der Wiederholung von Kommandos aus dem Kommandozeilenspeicher. Das erste Zeichen leitet eine Kommandozeilenerweiterung aus dem History-Puffer ein. Die Voreinstellung ist das Zeichen !. Das zweite Zeichen kennzeichnet einen Kommentar, wenn es als erstes Zeichen eines Wortes auftaucht. Ein solcher Kommentar wird bei der Ausf&uuml;hrung eines Kommandos ignoriert.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">history_control<a id="Xxx999610" name="Xxx999610"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Werte, die gesetzt werden k&ouml;nnen, siehe HISTCONTROL
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">hostname_completion_file<a id="Xxx999616" name="Xxx999616"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Siehe HOSTFILE
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">no_exit_on_failed_exec<a id="Xxx999621" name="Xxx999621"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Ist der Wert dieser Variable 1, wird die Shell nicht durch ein abgebrochenes, mit exec aufgerufenes Kommando beendet. 0 bewirkt das Gegenteil.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">noclobber<a id="Xxx999625" name="Xxx999625"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Befindet sich hier der Wert 1, k&ouml;nnen bestehende Dateien nicht durch die Ausgabeumlenkungen &gt;, &gt;&amp; und &lt;&gt; &uuml;berschrieben werden. Das Anh&auml;ngen von Daten an eine existierende Datei ist aber auch bei gesetzten noclobber m&ouml;glich. 0 stellt den alten Zustand wieder her.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">nolinks<a id="Xxx999630" name="Xxx999630"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Soll bei einem Aufruf von cd nicht den symbolischen Links gefolgt werden, setzt man den Wert dieser Variable auf 1; Standardwert 0.
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">notify<a id="Xxx999635" name="Xxx999635"></a>
+</td>
+<td class="tabellentext" bgcolor="#000000">Soll bei einem Hintergrundprozess, der sich beendet, die Nachricht sofort und nicht erst bei der n&auml;chsten Eingabeaufforderung ausgegeben werden, dann setzt man notify auf 1; Standardwert 0.
+</td>
+</tr>
+</table><br>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_004_006.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_004_008.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_004_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:22 GMT -->
+</html>

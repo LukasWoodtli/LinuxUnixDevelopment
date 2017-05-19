@@ -1,0 +1,780 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_006_009.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:46 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: Shell-Programmierung – 4.10 for-Schleife</title>
+<meta name="title" content="Rheinwerk Computing :: Shell-Programmierung">
+<meta name="author" content="J&uuml;rgen Wolf">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2005">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2005">
+<meta name="description" content="Shell-Programmierung - Einf&uuml;hrung, Praxis, Referenz – ISBN 3-89842-683-1">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="shell_006_008.html">
+<link rel="next" href="shell_006_010.html"><script type="text/javascript" language="JavaScript"><!--
+function OpenWin(url,name,height,width)
+{
+  var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+  InfoWin.focus();
+}
+//--></script></head>
+<body vlink="#000099" link="#000099" alink="#000099">
+    <table width="100%" height="74" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+        <tr>
+            <td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+            <td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger." title="Rheinwerk Computing - Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger."></a></td>
+        </tr>
+    </table>
+    <div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Professionelle B&uuml;cher. Auch f&uuml;r Einsteiger.</a></div>
+    <br />
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="156" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+        <tr>
+            <td colspan="2" class="nav1" align="left" valign="top" height="150">
+                <table class="tbl1" width="150" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td class="tbl2" height="25"><A class="nav" href="index-2.html">Inhaltsverzeichnis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_001_000.html#Xxx999207">Vorwort des Autors</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_002_000.html#Xxx999207">Vorwort des Gutachters – die Shell: Fluch oder Segen?</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_003_000.html#Xxx999276">1 Einf&uuml;hrung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_004_000.html#Xxx999276">2 Variablen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_005_000.html#Xxx999276">3 Parameter und Argumente</A></td>
+</tr>
+<tr>
+<td><A class="navh" href="shell_006_000.html#Xxx999276">4 Kontrollstrukturen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_007_000.html#Xxx999276">5 Terminal-Ein- und Ausgabe</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_008_000.html#Xxx999276">6 Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_009_000.html#Xxx999276">7 Signale</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_010_000.html#Xxx999276">8 Rund um die Ausf&uuml;hrung von Scripts und Prozessen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_011_000.html#Xxx999276">9 N&uuml;tzliche Funktionen</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_012_000.html#Xxx999276">10 Fehlersuche und Debugging</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_013_000.html#Xxx999276">11 Regul&auml;re Ausdr&uuml;cke und grep</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_014_000.html#Xxx999276">12 Der Stream-Editor sed</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_015_000.html#Xxx999276">13 awk-Programmierung</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_016_000.html#Xxx999276">14 Linux-UNIX-Kommandoreferenz</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_017_000.html#Xxx999276">15 Die Praxis</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="shell_018_A_000.html#Xxx999299">A Anhang</A></td>
+</tr>
+<tr>
+<td><A class="navnav" href="stichwort.html">Index</A></td>
+</tr>
+<tr><td><br /><!--<a class="navnav" href="http://download.galileo-press.de/openbook/shell_programmierung/galileocomputing_shell_programmierung.zip"><strong>Download:</strong><br />- ZIP, ca. 2,4 MB</a></td></tr>
+<tr><td><a class="navnav" href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh">Buch bestellen</a></td></tr>
+<tr><td>--><a class="navnav" href="#kommentar">Ihre Meinung?</a><br /><br /></td></tr>
+</table></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10"></td>
+<td width="85%" valign="top" align="center">
+    <div align="center">
+        <table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+            <tr>
+                <td width="100%" class="start" colspan="1" height="22" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_006_008.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navnav">Rheinwerk Computing /</a><a class="navnav" href="https://www.rheinwerk-verlag.de/openbook/?GPP=opsh"> &lt;openbook&gt; /</a><a href="index-2.html" class="navnav"> Shell-Programmierung</a></div></td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_006_010.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" valign="top">
+    <table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+        <tr>
+            <td colspan="2"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh" class="buchtitel">Shell-Programmierung</a><span class="autor"> von J&uuml;rgen Wolf</span><br><span class="untertitel">Einf&uuml;hrung, Praxis, Referenz</span></td>
+        </tr>
+        <tr>
+            <td valign="top" width="90"><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><img src="common/9783898426831.gif" border="0" alt="Buch: Shell-Programmierung" title="Buch: Shell-Programmierung" align="left"></a><br/><br/><a href="https://www.rheinwerk-verlag.de/1007/?GPP=opsh"><span class="autor"><strong>Shell-Programmierung</strong><br />782 S., mit CD, 44,90 Euro<br />Rheinwerk Computing<br />ISBN 3-89842-683-1</span></a></a></td>
+            <td width="80%">
+<table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="3" class="kap"><b>Kapitel <a href="shell_006_000.html#RxxKap00600004004E0C1F017172">4 Kontrollstrukturen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_000.html#RxxKap00600004004E0C1F017174">4.1 Bedingte Anweisung mit if</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_000.html#RxxKap00600004004E0C1F017182">4.1.1 Kommandos testen mit if</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_000.html#RxxKap00600004004E0C1F017196">4.1.2 Kommandoverkettung &uuml;ber Pipes mit if</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_001.html#RxxKap00600104004E231F030172">4.2 Die else-Alternative f&uuml;r eine if-Verzweigung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_002.html#RxxKap00600204004E241F032172">4.3 Mehrfache Alternative mit elif</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_003.html#RxxKap00600304004E251F012172">4.4 Das Kommando test</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_003.html#RxxKap00600304004E251F01217B">4.4.1 Ganze Zahlen vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_003.html#RxxKap00600304004E251F0121A2">4.4.2 Ganze Zahlen vergleichen mit let (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_003.html#RxxKap00600304004E251F0121C6">4.4.3 Zeichenketten vergleichen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_003.html#RxxKap00600304004E251F0121EB">4.4.4 Zeichenketten vergleichen (Bash und Korn-Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_004.html#RxxKap00600404004E261F04B172">4.5 Status von Dateien erfragen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F172">4.6 Logische Verkn&uuml;pfung von Ausdr&uuml;cken</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F192">4.6.1 Negationsoperator !</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F198">4.6.2 Die UND-Verkn&uuml;pfung (-a und &amp;&amp;)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F1A6">4.6.3 Die ODER-Verkn&uuml;pfung (-o und ||)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_005.html#RxxKap00600504004E271F04F1B1">4.6.4 Klammerung und mehrere logische Verkn&uuml;pfungen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_006.html#RxxKap00600604004E281F011172">4.7 Short Circuit-Tests – ergebnisabh&auml;ngige Befehlsausf&uuml;hrung</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C172">4.8 Die Anweisung case</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C17E">4.8.1 Alternative Vergleichsmuster</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C185">4.8.2 case und Wildcards</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_007.html#RxxKap00600704004E291F02C18F">4.8.3 case und Optionen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_008.html#RxxKap00600804004E2A1F031172">4.9 Schleifen</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a class="navh" href="#RxxKap00600904004E2B1F04E172">4.10 for-Schleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600904004E2B1F04E17A">4.10.1 Argumente bearbeiten mit for</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600904004E2B1F04E182">4.10.2 for und die Dateinamen-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600904004E2B1F04E18E">4.10.3 for und die Kommando-Substitution</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600904004E2B1F04E1A6">4.10.4 for und Array (Bash und Korn Shell only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a class="navh" href="#RxxKap00600904004E2B1F04E1AB">4.10.5 for-Schleife mit Schleifenz&auml;hler (Bash only)</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_010.html#RxxKap00601004004E2C1F01B172">4.11 Die while-Schleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_011.html#RxxKap00601104004E2D1F03F172">4.12 Die until-Schleife</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_012.html#RxxKap00601204004E2E1F040172">4.13 Kontrollierte Spr&uuml;nge</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_012.html#RxxKap00601204004E2E1F040178">4.13.1 Der Befehl continue</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline"><b><a href="shell_006_012.html#RxxKap00601204004E2E1F040185">4.13.2 Der Befehl break</a></b></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="gp"></td>
+<td valign="baseline" colspan="2"><b><a href="shell_006_013.html#RxxKap00601304004E2F1F028172">4.14 Endlosschleifen</a></b></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td>
+<a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div>
+<h2 class="t2">4.10 <a id="RxxKap004254forSchleife" name="RxxKap004254forSchleife"></a>for-Schleif<a id="RxxKap00600904004E2B1F04E172" name="RxxKap00600904004E2B1F04E172"></a>e 
+      <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"></h2>
+<p><a id="Xxx999277" name="Xxx999277"></a><a id="Xxx999278" name="Xxx999278"></a><a id="Xxx999279" name="Xxx999279"></a>Die <span class="listing">for</span>-Schleife geh&ouml;rt zu der Familie der Aufz&auml;hlschleifen. Damit wird eine Befehlsfolge f&uuml;r W&ouml;rter in einer angegebenen Liste ausgef&uuml;hrt. Das hei&szlig;t, die <span class="listing">for</span>-Schleife ben&ouml;tigt eine Liste von Parametern. Die Anzahl der W&ouml;rter in dieser Liste bestimmt dann, wie oft die Schleife ausgef&uuml;hrt bzw. durchlaufen wird. Hier zun&auml;chst die Syntax der <span class="listing">for</span>-Schleife:</p>
+<pre>for var in liste_von_parameter
+do
+   kommando
+   ...
+   kommando
+done</pre>
+<p>Die Funktionsweise von <span class="listing">for</span> ist folgende: Vor jedem Eintritt in die Schleife wird das n&auml;chste Wort der Parameterliste in die Variable »var« gelegt. Die Liste der Parameter hinter dem Schl&uuml;sselwort <span class="listing">in</span> besteht aus W&ouml;rtern, die jeweils von mindestens einem Leerzeichen (bzw. auch abh&auml;ngig von der Variablen <span class="listing">IFS</span>) getrennt sein m&uuml;ssen. Dies kann bspw. so aussehen:</p>
+<pre>for var in wort1 wort2 wort3
+do
+...
+done</pre>
+<p><a id="Xxx999284" name="Xxx999284"></a><a id="Xxx999285" name="Xxx999285"></a><a id="Xxx999286" name="Xxx999286"></a><a id="Xxx999287" name="Xxx999287"></a>Somit w&uuml;rde beim ersten Schleifendurchlauf der Wert von »wort1« in die Variable »var« &uuml;bertragen. Jetzt werden die Kommandos zwischen den Schl&uuml;sselworten <span class="listing">do</span> und <span class="listing">done</span> ausgef&uuml;hrt. Wurden alle Kommandos abgearbeitet, beginnt der n&auml;chste Schleifendurchlauf, bei dem jetzt »wort2« in die Variable »var« &uuml;bertragen wird. Dieser Vorgang wird so lange wiederholt, bis alle Elemente der Parameterliste abgearbeitet wurden. Anschlie&szlig;end wird mit der Ausf&uuml;hrung hinter dem Schl&uuml;sselwort <span class="listing">done</span> fortgefahren (siehe Abbildung 4.11).</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellentext">
+<p><a name="bild"></a><a href="#bild" onClick="OpenWin('bilder/04_11.gif','Abbildung',600,600)"><img border="0" src="bilderklein/klein04_11.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu Vergr&ouml;&szlig;ern</span></a></p>
+<p class="tabunter"><b>Abbildung 4.11   
+    </b>Die for-Schleife</p>
+</td>
+</tr>
+</table><br>
+<a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t32"></a><h3 class="t3">4.10.1 Argumente bearbeiten mit for<a id="RxxKap00600904004E2B1F04E17A" name="RxxKap00600904004E2B1F04E17A"></a> 
+      <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p>Wenn Sie sich die <span class="listing">for</span>-Schleife mit der Parameterliste ansehen, d&uuml;rften Sie wohl gleich auf die Auswertung der Argumente in der Kommandozeile kommen. <span class="listing">for</span> scheint wie geschaffen, diese Argumente zu verarbeiten. Hierzu m&uuml;ssen Sie f&uuml;r die Parameterliste lediglich die Variable <span class="listing">$@</span> verwenden. Das folgende Script &uuml;berpr&uuml;ft alle Dateien, die Sie in der Kommandozeile mit angeben auf Ihren Typ.</p>
+<pre># Demonstriert die Verwendung von for mit Argumenten
+# afor1
+for datei in "$@"
+do
+   [ -f $datei ] &amp;&amp; echo "$datei: Regul&auml;re Datei"
+   [ -d $datei ] &amp;&amp; echo "$datei: Verzeichnis"
+   [ -b $datei ] &amp;&amp; echo "$datei: Ger&auml;tedatei(block special)"
+   [ -c $datei ] &amp;&amp; echo "$datei: Ger&auml;tedatei(character special)"
+   [ -t $datei ] &amp;&amp; echo "$datei: serielles Terminal"
+   [ ! -e $datei ] &amp;&amp; echo "$datei: existiert nicht"
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./afor1 Shellbuch backup afor1 /dev/tty \
+&gt; /dev/cdrom gibtsnicht
+Shellbuch: Verzeichnis
+backup: Verzeichnis
+afor1: Regul&auml;re Datei
+/dev/tty: Ger&auml;tedatei (character special)
+/dev/cdrom: Ger&auml;tedatei (block special)
+gibtsnicht: existiert nicht</pre>
+<p>Zwar k&ouml;nnten Sie in Ihrem Script auch die Positionsparameter <span class="listing">$1</span> bis <span class="listing">$n</span> verwenden, aber Sie sollten dies wenn m&ouml;glich vermeiden und stattdessen die Variable <span class="listing">$@</span> benutzen. Damit k&ouml;nnen Sie sichergehen, dass kein Argument aus der Kommandozeile vergessen wurde.</p>
+<p>Eine Besonderheit bez&uuml;glich der Variablen <span class="listing">$@</span> in der <span class="listing">for</span>-Schleife gibt es dann doch noch. Lassen Sie den Zusatz in <span class="listing">"$@"</span> weg, setzt die <span class="listing">for</span>-Schleife diesen automatisch ein:</p>
+<pre># Demonstriert die Verwendung von for mit Argumenten
+# afor1
+for datei
+do
+   [ -f $datei ] &amp;&amp; echo "$datei: Regul&auml;re Datei"
+   [ -d $datei ] &amp;&amp; echo "$datei: Verzeichnis"
+   [ -b $datei ] &amp;&amp; echo "$datei: Ger&auml;tedatei(block special)"
+   [ -c $datei ] &amp;&amp; echo "$datei: Ger&auml;tedatei(character special)"
+   [ -t $datei ] &amp;&amp; echo "$datei: serielles Terminal"
+   [ ! -e $datei ] &amp;&amp; echo "$datei: existiert nicht"
+done</pre>
+<a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t33"></a><h3 class="t3">4.10.2 for und die Dateinamen-Substitution<a id="RxxKap00600904004E2B1F04E182" name="RxxKap00600904004E2B1F04E182"></a><a id="Xxx999304" name="Xxx999304"></a> 
+      <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999306" name="Xxx999306"></a>Das Generieren von Dateinamen mit den Metazeichen <span class="listing">*</span>, <span class="listing">?</span> und <span class="listing">[]</span> kennen Sie ja bereits zur Gen&uuml;ge. Dieser Ersetzungsmechanismus wird standardm&auml;&szlig;ig von der Shell ausgef&uuml;hrt, sobald ein solches Sonderzeichen erkannt wird. Diese Dateinamen-Substitution k&ouml;nnen Sie auch in der <span class="listing">for</span>-Schleife verwenden. Dadurch wird eine Liste von Dateinamen f&uuml;r die Parameterliste der <span class="listing">for</span>-Schleife erzeugt. Die Frage, wie Sie ein ganzes Verzeichnis auslesen k&ouml;nnen, wird Ihnen hiermit so beantwortet:</p>
+<pre># Demonstriert die Verwendung von for und der Datei-Substitution
+# afor2
+# Gibt das komplette aktuelle Arbeitsverzeichnis aus
+for datei in *
+do
+   echo $datei
+done</pre>
+<p>Wenn Sie das Script ausf&uuml;hren, wird das komplette aktuelle Arbeitsverzeichnis ausgegeben. Selbstverst&auml;ndlich k&ouml;nnen Sie das Ganze auch einschr&auml;nken. Wollen Sie z. B. nur alle Dateien mit der Endung ».txt« ausgeben, k&ouml;nnen Sie folgenderma&szlig;en vorgehen:</p>
+<pre># Demonstriert die Verwendung von for und der Datei-Substitution
+# afor3
+# Gibt alle Textdateien des aktuellen Arbeitsverzeichnisses aus
+for datei in *.txt
+do
+   echo $datei
+   [ -r $datei ] &amp;&amp; echo "... ist lesbar"
+   [ -w $datei ] &amp;&amp; echo "... ist schreibbar"
+done</pre>
+<p>Sie k&ouml;nnen alle Metazeichen <span class="listing">*</span>, <span class="listing">?</span> und <span class="listing">[]</span> verwenden, wie Sie dies von der Shell her kennen. Einige Beispiele:</p>
+<pre># Nur Dateien mit der Endung *.txt und *.c ber&uuml;cksichtigen
+for datei in *.txt *.c
+# Nur die Dateien log1.txt log2.txt ... log9.txt ber&uuml;cksichtigen
+for datei in log[1–9].txt
+# Nur versteckte Dateien beachten (beginnend mit einem Punkt)
+for datei in * .*</pre>
+<p>Kann in der <span class="listing">for</span>-Schleife ein Suchmuster nicht aufgel&ouml;st werden, f&uuml;hrt das Script gew&ouml;hnlich keine Aktion durch. Solch einen Fall sollte man aber auch ber&uuml;cksichtigen, sofern Ihr Script benutzerfreundlich sein soll. Hierzu bietet sich eine <span class="listing">case</span>-Anweisung an, mit der Sie &uuml;berpr&uuml;fen, ob die entsprechende Variable (die in <span class="listing">for</span> ihren Wert von der Parameterliste erh&auml;lt) auf das gew&uuml;nschte Muster (Parameterliste) passt. Ganz klar, dass auch hierbei das Wildcard-Zeichen <span class="listing">*</span> verwendet wird.</p>
+<pre># Demonstriert die Verwendung von for und der Datei-Substitution
+# afor4
+# Bei erfolgloser Suche soll ein entsprechender Hinweis
+# ausgegeben werden
+for datei in *.jpg
+do
+   case "$datei" in
+      *.jpg)   echo "Keine Datei zum Muster *.jpg vorhanden" ;;
+      *)       echo $datei ;;
+   esac
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./afor4
+Keine Datei zum Muster *.jpg vorhanden</pre>
+<p>Die <span class="listing">case</span>-Verzweigung <span class="listing">*.jpg)</span> wird immer dann ausgef&uuml;hrt, wenn kein Suchmuster aufgel&ouml;st werden konnte. Ansonsten wird die Ausf&uuml;hrung bei <span class="listing">*)</span> weitergef&uuml;hrt, was hier wieder eine simple Ausgabe des Dateinamens darstellt.</p>
+<a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t34"></a><h3 class="t3">4.10.3 for und die Kommando-Substitution<a id="RxxKap00600904004E2B1F04E18E" name="RxxKap00600904004E2B1F04E18E"></a><a id="Xxx999318" name="Xxx999318"></a> 
+      <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999320" name="Xxx999320"></a>Mittlerweile d&uuml;rften Sie schon &uuml;berzeugt sein vom m&auml;chtigen Feature der <span class="listing">for</span>-Schleife. Ein weiteres unverzichtbares Mittel der Shell-Programmierung aber erhalten Sie aus der <span class="listing">for</span>-Schleife, die ihre Parameter aus einer Kommando-Substitution erh&auml;lt. Dazu k&ouml;nnten Sie die Ausgabe von jedem beliebigen Kommando f&uuml;r die Parameterliste verwenden. Allerdings setzt die Verwendung der Kommando-Substitution immer gute Kenntnisse der entsprechenden Kommandos voraus – insbesondere &uuml;ber deren Ausgabe.</p>
+<p>Hier ein einfaches Beispiel, bei dem Sie mit dem Kommando <span class="listing">find</span> alle Grafikdateien im <span class="listing">HOME</span>-Verzeichnis mit der Endung ».png« suchen und in ein separat daf&uuml;r angelegtes Verzeichnis kopieren. Dabei sollen auch die Namen der Dateien entsprechend neu durchnummeriert werden.</p>
+<pre># Demonstriert die Verwendung von for und der Kommando-Substitution
+# afor5
+count=1
+DIR=$HOME/backup_png
+# Verzeichnis anlegen
+mkdir $DIR 2&gt;/dev/null
+# &Uuml;berpr&uuml;fen, ob erfolgreich angelegt oder &uuml;berhaupt
+# vorhanden, ansonsten Ende
+[ ! -e $DIR ] &amp;&amp; exit 1
+for datei in `find $HOME -name "*.png" -print 2&gt;/dev/null`
+do
+   #  Wenn Leserecht vorhanden, k&ouml;nnen wir die Datei kopieren
+   if [ -r $datei ]
+   then
+      # PNG-Datei ins entsprechende Verzeichnis kopieren
+      # Als Namen bild1.png, bild2.png ... bildn.png verwenden
+      cp $datei $DIR/bild${count}.png
+      # Z&auml;hler um eins erh&ouml;hen
+      count=`expr $count + 1`
+   fi
+done
+echo "$count Bilder erfolgreich nach $DIR kopiert"</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./afor5
+388 Bilder erfolgreich nach /home/tot/backup_png kopiert
+you@host &gt; ls backup_png
+bild100.png  bild15.png   bild218.png  bild277.png  bild335.png
+bild101.png  bild160.png  bild219.png  bild278.png  bild336.png
+...</pre>
+<p>Da die Parameterliste der <span class="listing">for</span>-Schleife von der Variablen <span class="listing">IFS</span> abh&auml;ngt, k&ouml;nnen Sie standardm&auml;&szlig;ig hierbei auch zeilenweise mit dem Kommando <span class="listing">cat</span> etwas einlesen und weiterverarbeiten – denn in der Variable <span class="listing">IFS</span> finden Sie auch das Newline-Zeichen wieder. Es sei bspw. folgende Datei namens .userlist mit einer Auflistung aller User, die bisher auf dem System registriert sind, gegeben:</p>
+<pre>you@host &gt; cat .userlist
+tot
+you
+rot
+john
+root
+martin</pre>
+<p>Wollen Sie jetzt an alle User, die hier aufgelistet und nat&uuml;rlich im Augenblick eingeloggt sind, eine Nachricht senden, gehen Sie wie folgt vor:</p>
+<pre># Demonstriert die Verwendung von for und
+# der Kommando-Substitution
+# afor6
+# Komplette Argumentenliste f&uuml;r News an andere User verwenden
+NEU="$*"
+for user in `cat .userlist`
+do
+   if who | grep ^$user &gt; /dev/null
+   then
+      echo $NEU | write $user
+      echo "Verschickt an $user"
+   fi
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./afor6 Tolle Neuigkeiten: Der Chef ist weg!
+Verschickt an tot
+Verschickt an martin</pre>
+<p>Im Augenblick scheinen hierbei die User »tot« und »martin« eingeloggt zu sein. Bei diesen sollte nun in der Konsole Folgendes ausgegeben werden:</p>
+<pre>tot@host &gt;
+Message from you@host on pts/40 at 04:33
+Tolle Neuigkeiten: Der Chef ist weg!
+EOF
+tot@host &gt;</pre>
+<p>Wenn beim anderen User keine Ausgabe erscheint, kann es sein, dass er die entsprechende Option abgeschaltet hat. Damit andere User Ihnen mit dem <span class="listing">write</span>-Kommando Nachrichten zukommen lassen k&ouml;nnen, m&uuml;ssen Sie dies mit</p>
+<pre>tot@host &gt; mesg y</pre>
+<p>einschalten. Mit <span class="listing">mesg</span> <span class="listing">n</span> schalten Sie es wieder ab.</p>
+<h4 class="t4">Variablen-Interpolation<a id="Xxx999338" name="Xxx999338"></a></h4>
+<p><a id="Xxx999340" name="Xxx999340"></a>H&auml;ufig werden bei der Kommando-Substitution die Kommandos recht lang und kompliziert, weshalb sich hierf&uuml;r eine Variablen-Interpolation besser eignen w&uuml;rde. Also, anstatt die Kommando-Substitution in die Parameterliste von <span class="listing">for</span> zu quetschen, k&ouml;nnen Sie den Wert der Kommando-Substitution auch in einer Variablen abspeichern und diese Variable an <span class="listing">for</span> &uuml;bergeben. Um bei einem Beispiel von eben zu bleiben (afor5), w&uuml;rde man mit</p>
+<pre>for datei in `find $HOME -name "*.png" -print 2&gt;/dev/null`
+do
+   ...
+done</pre>
+<p>dasselbe erreichen wie mit der folgenden Variablen-Interpolation:</p>
+<pre>PNG=`find $HOME -name "*.png" -print 2&gt;/dev/null`
+for datei in $PNG
+do
+   ...
+done</pre>
+<p>Nur hat man hier ganz klar den Vorteil, dass dies &uuml;bersichtlicher ist als die »direkte« Version.</p>
+<a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t35"></a><h3 class="t3">4.10.4 for und Array (Bash und Korn Shell only)<a id="RxxKap00600904004E2B1F04E1A6" name="RxxKap00600904004E2B1F04E1A6"></a> 
+      <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="down"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999347" name="Xxx999347"></a><a id="Xxx999348" name="Xxx999348"></a>Selbstverst&auml;ndlich eignet sich die <span class="listing">for</span>-Schleife hervorragend f&uuml;r die Arrays. Die Parameterliste l&auml;sst sich relativ einfach mit <span class="listing">${array[*]}</span> realisieren.</p>
+<pre># Demonstriert die Verwendung von for und der Arrays
+# afor7
+# Liste von Werten in einem Array speichern
+# Version: Korn-Shell (auskommentiert)
+#set -A array 1 2 3 4 5 6 7 8 9
+# Version: bash
+array=( 1 2 3 4 5 6 7 8 9 )
+# Alle Elemente im Array durchlaufen
+for value in ${array[*]}
+do
+   echo $value
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./afor7
+1
+2
+3
+4
+5
+6
+7
+8
+9</pre>
+<a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing"></a></div><a name="t2t36"></a><h3 class="t3">4.10.5 for-Schleife mit Schleifenz&auml;hler (Bash only)<a id="RxxKap00600904004E2B1F04E1AB" name="RxxKap00600904004E2B1F04E1AB"></a> 
+      <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="top"></a></h3>
+<p><a id="Xxx999354" name="Xxx999354"></a>Ab Version 2.0.4 wurde der Bash eine zweite Form der <span class="listing">for</span>-Schleife spendiert. Die Syntax ist hierbei an die der Programmiersprache C angelehnt.</p>
+<pre>for (( var=Anfangswert ; Bedingung ; Z&auml;hler ))
+do
+   kommando1
+   ...
+   kommanodn
+done</pre>
+<p>Diese Form der <span class="listing">for</span>-Schleife arbeitet mit einem Schleifenz&auml;hler. Bei den einzelnen Parametern handelt es sich um arithmetische Substitutionen. Der erste Wert, hier »var«, wird gew&ouml;hnlich f&uuml;r die Zuweisung eines Anfangswertes an eine Schleifenvariable verwendet. Der Anfangswert (»var«) wird hierbei nur einmal beim Eintritt in die Schleife ausgewertet. Die Bedingung dient als Abbruchbedingung und der Z&auml;hler wird verwendet, um die Schleifenvariable zu erh&ouml;hen oder zu verringern. Die Bedingung wird vor jedem neuen Schleifendurchlauf &uuml;berpr&uuml;ft. Der Z&auml;hler hingegen wird nach jedem Schleifendurchlauf ver&auml;ndert. Den Z&auml;hler k&ouml;nnen Sie folgenderma&szlig;en ausdr&uuml;cken (siehe Tabelle 4.12):</p>
+<br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter">
+<p><span class="tabunter"><b>Tabelle 4.12   
+    </b>Z&auml;hler einer Schleifenvariablen ver&auml;ndern</span></p>
+</caption>
+<tr>
+<td class="tabellenkopf" bgcolor="#000000"><b>Z&auml;hler ver&auml;ndern</b>
+</td>
+<td class="tabellenkopf" bgcolor="#000000"><b>Bedeutung</b>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">var++
+</td>
+<td class="tabellentext" bgcolor="#000000">Den Wert nach jedem Schleifendurchlauf um 1 erh&ouml;hen (inkrementieren)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">var––
+</td>
+<td class="tabellentext" bgcolor="#000000">Den Wert nach jedem Schleifendurchlauf um 1 verringern (dekrementieren)
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">((var=var+n))
+</td>
+<td class="tabellentext" bgcolor="#000000">Den Wert nach jedem Schleifendurchlauf um n erh&ouml;hen
+</td>
+</tr>
+<tr>
+<td class="tabellentext" bgcolor="#000000">((var=var–n))
+</td>
+<td class="tabellentext" bgcolor="#000000">Den Wert nach jedem Schleifendurchlauf um n verringern
+</td>
+</tr>
+</table><br>
+<p>Sie k&ouml;nnen auch andere arithmetische Ausdr&uuml;cke verwenden. So toll sich das anh&ouml;rt, sollten Sie dennoch bedenken, dass dieses <span class="listing">for</span>-Konstrukt nur der Bash zur Verf&uuml;gung steht. Hier einige Beispiele, wie Sie diese Form der <span class="listing">for</span>-Schleife in der Praxis einsetzen k&ouml;nnen:</p>
+<pre># Demonstriert die Verwendung einer
+# zweiten for-Form (Bash only)
+# afor8
+[ $# -lt 1 ] &amp;&amp; echo "Mindestens ein Argument" &amp;&amp; exit 1
+# Liste von Argumenten in einem Array speichern
+array=( $* )
+for((i=0; i&lt;$#; i++))
+do
+   echo "Argument $i ist ${array[$i]}"
+done
+# Countdown
+for((i=5; i&gt;0; i--))
+do
+   echo $i
+   sleep 1   # Eine Sekunde anhalten
+done
+echo "...go"
+# Auch andere arithmetische Ausdr&uuml;cke als Z&auml;hler m&ouml;glich
+for((i=100; i&gt;0; ((i=i/2)) ))
+do
+   echo $i
+done</pre>
+<p>Das Script bei der Ausf&uuml;hrung:</p>
+<pre>you@host &gt; ./afor8 hallo welt wie gehts
+Argument 0 ist hallo
+Argument 1 ist welt
+Argument 2 ist wie
+Argument 3 ist gehts
+5
+4
+3
+2
+1
+...go
+100
+50
+25
+12
+6
+3
+1</pre>
+<br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                                                <p>Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen
+                                                   und kritischen Rückmeldungen.
+                                                </p>
+                                                <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/shell_programmierung/"><input type="hidden" name="buchtitel" value="Shell-Programmierung"><table border="0">
+                                                      <tbody>
+                                                         <tr>
+                                                            <td><label for="name">Name</label><br></td>
+                                                            <td><input type="text" name="name" id="name" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td><label for="email">E-Mail</label><br></td>
+                                                            <td><input type="text" name="email" id="email" size="40"><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+                                                            <td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td></td>
+                                                            <td><input type="submit" value="Kommentar absenden"></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/1007/">>> Zum Feedback-Formular</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a class="navnav" href="shell_006_008.html"> &lt;&lt; zur&uuml;ck</a></td>
+<td width="49%">
+<div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div>
+</td>
+<td align="right" width="25%">
+<div align="right"><a class="navnav" href="shell_006_010.html">vor &gt;&gt; </a></div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" width="160">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">
+                            &nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs">
+                            <strong>Zum Katalog</strong></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2">
+                            <img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><a href="https://www.rheinwerk-verlag.de/shell-programmierung_1007/?GPP=opsh">
+                                        <img src="common/683.gif" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung">
+                                        <br /><strong>Shell-Programmierung</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">bestellen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opsh" class="navs"><strong>Buchtipps</strong></a></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/shell-programmierung_3345/?GPP=opsh">
+                        <img src="common/2310.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Shell-Programmierung" title="Zum Katalog: Shell-Programmierung"><br /><br /><br /><br /><br /><br /><br />&nbsp;Shell-Programmierung</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-server_3685/?GPP=opsh">
+                        <img src="common/3020.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Server" title="Zum Katalog: Linux-Server"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-Server</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/das-komplettpaket-lpic-1-lpic-2_3782/?GPP=opsh">
+                        <img src="common/3529.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2" title="Zum Katalog: Das Komplettpaket LPIC-1 &amp; LPIC-2"><br /><br /><br /><br /><br /><br /><br />&nbsp;Das Komplettpaket<br />&nbsp;LPIC-1 &amp; LPIC-2</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux-hochverfugbarkeit_3420/?GPP=opsh">
+                        <img src="common/2542.gif" width="70" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux-Hochverfügbarkeit" title="Zum Katalog: Linux-Hochverfügbarkeit"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux-<br />&nbsp;Hochverfügbarkeit</a><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+                        <a href="https://www.rheinwerk-verlag.de/linux_3436/?GPP=opsh">
+                        <img src="common/2591.gif" width="79" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Linux Handbuch" title="Zum Katalog: Linux Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;Linux Handbuch</a><br /><br /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+                        <td valign="top">
+                            <table cellspacing="3">
+                                <tr>
+                                    <td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opsh"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<br /><br />
+<hr width="70%" align="center">
+<br><div align="center">
+<p class="standard"><b>Copyright © Rheinwerk Verlag GmbH 2005</b><br>F&uuml;r Ihren privaten Gebrauch d&uuml;rfen Sie die Online-Version nat&uuml;rlich ausdrucken. Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die gebundene Ausgabe: Das Werk einschlie&szlig;lich aller seiner Teile ist urheberrechtlich gesch&uuml;tzt. Alle Rechte vorbehalten einschlie&szlig;lich der Vervielf&auml;ltigung, &Uuml;bersetzung, Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/?GPP=opsh">[Rheinwerk Computing]</a><br><br>Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/shell_programmierung/shell_006_009.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 May 2017 19:56:48 GMT -->
+</html>
