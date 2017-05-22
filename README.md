@@ -27,7 +27,7 @@ I won't read all chapters.
 | 6  | System- und Benutzerdateien                             | ✓ |   -          |       ✓       |
 | 7  | Dämonen, Zombies und Prozesse                           | ✓ |   -          |       ✓       |
 | 8  | Signale                                                 | ✓ |   -          |       ✓       |
-| 9  | IPC - Interprozesskommunikation                         |   |   38         | sem.c, server_msq.c, client_msq.c, server_shm.c, client_shm.c |
+| 9  | IPC - Interprozesskommunikation                         |   |   38         | server_msq.c, client_msq.c, server_shm.c, client_shm.c |
 | 10 | Threads                                                 |   |   66         |         |
 | 11 | Netzwerkprogrammierung                                  |   |  133         |         |
 | 12 | MySQL und PostgreSQL                                    | ✗ |   -          |         |

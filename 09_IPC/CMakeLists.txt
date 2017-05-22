@@ -38,3 +38,5 @@ add_executable(server server.c)
 add_executable(key_ftok key_ftok.c)
 add_test(key_ftok key_ftok)
 
+add_executable(sem sem.c)
+
