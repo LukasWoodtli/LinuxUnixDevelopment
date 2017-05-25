@@ -39,4 +39,7 @@ add_executable(key_ftok key_ftok.c)
 add_test(key_ftok key_ftok)
 
 add_executable(sem sem.c)
+add_test(sem sem)
+
+add_executable(msq_server msq_server.c)
 
