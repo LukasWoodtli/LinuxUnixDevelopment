@@ -29,6 +29,8 @@ struct id_verwaltung {
   struct id_verwaltung *next;
 };
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 struct id_verwaltung *id_first = NULL;
 
 
@@ -80,6 +82,8 @@ static void mq_verwaltung_remove(int i) {
     ptr = ptr_tmp;
   }
 }
+
+#pragma GCC diagnostic pop
 
 typedef void (sigfunk) (int);
 sigfunk * signal (int sig_nr, sigfunk signalhandler) {

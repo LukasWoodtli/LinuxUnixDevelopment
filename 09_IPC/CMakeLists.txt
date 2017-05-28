@@ -43,3 +43,4 @@ add_test(sem sem)
 
 add_executable(msq_server msq_server.c)
 
+add_executable(msq_client msq_client.c)
