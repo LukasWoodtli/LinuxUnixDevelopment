@@ -24,7 +24,7 @@ static void mq_verwaltung_add(int i) {
     ptr = id_first;
     while (ptr->next != NULL)
       ptr = ptr->next;
-    id_first = malloc(sizeof(struct id_verwaltung));
+    ptr->next = malloc(sizeof(struct id_verwaltung));
     ptr = ptr->next;
     ptr->id = i;
     ptr->next = NULL;
@@ -86,7 +86,7 @@ static void verteilen(const char* str, int p) {
         if (res < 0)
             printf("Konnte Nachricht an Client MQ %d nicht zustellen ...\n", ptr->id);
         else
-            printf("Nachricht an Client MQ %d nicht zugestellt\n", ptr->id);
+            printf("Nachricht an Client MQ %d zugestellt\n", ptr->id);
         
         ptr = ptr->next;
     }
