@@ -10,6 +10,57 @@
 #include <unistd.h>
 
 
+
+static void mq_verwaltung_add(int i) {
+  struct id_verwaltung *ptr;
+  if (id_first == NULL) {
+    id_first = malloc(sizeof(struct id_verwaltung));
+    if (id_first == NULL)
+      exit(EXIT_FAILURE);
+    id_first->id = i;
+    id_first->next = NULL;
+  }
+  else {
+    ptr = id_first;
+    while (ptr->next != NULL)
+      ptr = ptr->next;
+    id_first = malloc(sizeof(struct id_verwaltung));
+    ptr = ptr->next;
+    ptr->id = i;
+    ptr->next = NULL;
+  }
+}
+
+
+static void mq_verwaltung_remove(int i) {
+  struct id_verwaltung *ptr_tmp;
+  struct id_verwaltung *ptr;
+
+  if (id_first == NULL)
+    return;
+  if (id_first->id == i) {
+    ptr = id_first->next;
+    free(id_first);
+    id_first = ptr;
+    printf("User %d hat sich asugeloggt\n", i);
+    return;
+  }
+
+  ptr = id_first;
+  while (ptr->next != NULL) {
+    ptr_tmp = ptr->next;
+    if (ptr_tmp->id == i) {
+      ptr->next = ptr_tmp->next;
+      free(ptr_tmp);
+      printf("User %d hat sich ausgeloggt\n", i);
+      break;
+    }
+
+    ptr = ptr_tmp;
+  }
+}
+
+
 static int setup_server(key_t key, int flag) {
     int res;
     res = msgget(key, flag);
