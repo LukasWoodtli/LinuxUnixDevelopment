@@ -31,7 +31,7 @@ static void mythread(void* arg) {
     
     pthread_cleanup_pop(1);
     
-    pthread_exit((void*)pthread_self());
+    pthread_exit((void*)(long)pthread_self());
 }
 
 
@@ -40,7 +40,7 @@ int main(void) {
     struct data *f;
     int i;
     
-    static int ret[MAX_THREADS];
+    static long ret[MAX_THREADS];
     
     time_t t;
     
@@ -66,10 +66,10 @@ int main(void) {
     }
     
     for (i=0; i< MAX_THREADS; ++i)
-        pthread_join(thread[i], (void*)&ret[i]);
+        pthread_join(thread[i], (void*)(&ret[i]));
     
     for (i=0; i < MAX_THREADS; ++i)
-        printf("<-Thread %ld ist fertig\n", (long)ret[i]);
+        printf("<-Thread %ld ist fertig\n", ret[i]);
     
     printf("<- Main-Thread beendet (ID:%ld)\n", (long)pthread_self());
     
