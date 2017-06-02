@@ -28,7 +28,7 @@ I won't read all chapters.
 | 7  | Dämonen, Zombies und Prozesse                           | ✓ |   -          |       ✓       |
 | 8  | Signale                                                 | ✓ |   -          |       ✓       |
 | 9  | IPC - Interprozesskommunikation                         |   |   15         | server_shm.c, client_shm.c |
-| 10 | Threads                                                 |   |   59         | thread2.c, thread3.c, thread4.c, thread5.c, thread6.c, thread8.c, thread9.c, thread10.c, thread11.c, thread12.c, thread13.c, thread14.c, thread15.c, thread17.c, thread18.c, thread19.c |
+| 10 | Threads                                                 |   |   55         | thread3.c, thread4.c, thread5.c, thread6.c, thread8.c, thread9.c, thread10.c, thread11.c, thread12.c, thread13.c, thread14.c, thread15.c, thread17.c, thread18.c, thread19.c |
 | 11 | Netzwerkprogrammierung                                  |   |  133         |         |
 | 12 | MySQL und PostgreSQL                                    | ✗ |   -          |         |
 | 13 | Terminal E/A und Benutzerschnittstellen für die Konsole |   |   ?          |         |
