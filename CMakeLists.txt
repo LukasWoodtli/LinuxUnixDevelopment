@@ -5,7 +5,10 @@ project(LinuxUnixDevelopment)
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_COLOR_MAKEFILE   ON)
 
-set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-W -Wall -Wextra  -Werror -std=c99 -pthread")
+if(UNIX AND NOT APPLE)
+  set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-W -Wall -Wextra  -Werror -std=c99 -pthread")
+endif()
+
 
 if(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE DEBUG)
