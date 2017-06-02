@@ -105,6 +105,41 @@ static void get_audio_status(int cdrom) {
 	}
 }
 
+static void content_cdrom(int cdrom) {
+	struct cdrom_tochdr tochdr;
+	struct cdrom_tocentry tocentry;
+	int track;
+
+	if (ioctl(cdrom, CDROMREADTOCHDR, &tochdr) == -1) {
+		perror("Kann den Header nicht holen");
+		exit(EXIT_FAILURE);
+	}
+
+	printf("\nInhalt %d Tracks:\n", tochdr.cdth_trk1);
+	track = tochdr.cdth_trk0;
+	while (track <= tochdr.cdth_trk1) {
+		tocentry.cdte_track = track;
+		tocentry.cdte_format = CDROM_MSF;
+		if (ioctl(cdrom, CDROMREADTOCENTRY, &tocentry) == -1) {
+			perror("Kann den Inhalt der CD nicht ermitteln");
+			exit(EXIT_FAILURE);
+		}
+
+		printf("%3d: %02d:%02d:%02d (%06d, %06d) %s%s\n",
+			tocentry.cdte_track,
+			tocentry.cdte_addr.msf.minute,
+			tocentry.cdte_addr.msf.second,
+			tocentry.cdte_addr.msf.frame,
+			tocentry.cdte_addr.msf.frame +
+			tocentry.cdte_addr.msf.second * 75,
+			tocentry.cdte_addr.msf.minute * 75 * 60 - 150,
+			(tocentry.cdte_ctrl & CDROM_DATA_TRACK) ?
+			"data" : "audio",
+			CDROM_LEADOUT == track ? " (leadout)" : "");
+		track++;
+	}
+}
+
 int main(void) {
 	return 1;
 }
