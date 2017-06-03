@@ -54,7 +54,7 @@ int main(void) {
     }
     
     for (i=0; i< MAX_THREADS; ++i) {
-        printf("Main-Thread: Daten empfangen:\n");
+        printf("Thread: Daten empfangen:\n");
         printf("\t\twert = \"%d\"\n", ret[i]->wert);
         printf("\t\tmsg = \"%s\"\n", ret[i]->msg);
         
