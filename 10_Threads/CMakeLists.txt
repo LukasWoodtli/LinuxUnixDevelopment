@@ -6,3 +6,6 @@ add_test(thread1 thread1)
 
 add_executable(thread2 thread2.c)
 add_test(thread2 thread2)
+
+add_executable(thread3 thread3.c)
+add_test(thread3 thread3)
