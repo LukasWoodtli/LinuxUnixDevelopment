@@ -9,3 +9,7 @@ add_test(thread2 thread2)
 
 add_executable(thread3 thread3.c)
 add_test(thread3 thread3)
+
+add_executable(thread4 thread4.c)
+add_test(thread4 thread4)
+
