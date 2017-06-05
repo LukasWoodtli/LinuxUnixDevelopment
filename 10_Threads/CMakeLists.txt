@@ -14,3 +14,6 @@ add_executable(thread4 thread4.c)
 add_test(thread4 thread4)
 
 add_executable(thread5 thread5.c)
+
+add_executable(thread6 thread6.c)
+
