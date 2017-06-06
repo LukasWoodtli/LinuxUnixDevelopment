@@ -35,6 +35,9 @@ static signalhandler_t my_signal(int sig_nr, signalhandler_t signalhandler) {
     return alt_sig.sa_handler;
 }
 
+static int DeleteSemid = 0;
+static int DeleteShmid = 0;
+
 static void delete(void) {
 	int res;
 	printf("\nServer wird beendet - Loesche Semaphor %d.\n", DeleteSemid);
@@ -43,9 +46,9 @@ static void delete(void) {
 	}
 	
 	/* delete segment automatically when server exits */
-	res = shmctl(DeleteSemid, IPC_RMID, NULL);
+	res = shmctl(DeleteShmid, IPC_RMID, NULL);
 	if (res == -1) {
-		printf("Fehler bei shmctl() shmid %d, Kommando %d\n", DeleteSemid, IPC_RMID);
+		printf("Fehler bei shmctl() shmid %d, Kommando %d\n", DeleteShmid, IPC_RMID);
 	}
 }
 

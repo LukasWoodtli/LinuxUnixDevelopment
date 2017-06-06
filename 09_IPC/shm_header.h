@@ -34,9 +34,6 @@ union semun {
 
 static int safesemop(int semid, struct sembuf *sops, unsigned nsops);
 
-static int DeleteSemid = 0;
-static int DeleteShmid = 0;
-
 static void locksem(int semid, int semnum) {
 	struct sembuf sb;
 	sb.sem_num = semnum;
