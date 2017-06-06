@@ -63,27 +63,6 @@ static void waitzero(int semid, int semnum) {
 }
 #endif
 
-static int safesemget(key_t key, int nsems, int semflg) {
-	int retval;
-	retval = semget(key, nsems, semflg);
-	if (retval == -1) {
-		printf("Semaphor-Schluessel %d, nsems %d konnte nicht erstellt werden\n",
-			key, nsems);
-	}
-
-	return retval;
-}
-
-static int safesemctl(int semid, int semnum, int cmd, union semun arg) {
-	int retval;
-	retval = semctl(semid, semnum, cmd, arg);
-	if (retval == -1) {
-		printf("Fehler: Semaphor mit ID %d, semnum %d, Kommando %d\n",
-			semid, semnum, cmd);
-	}
-
-	return retval;
-}
 
 static int safesemop(int semid, struct sembuf* sops, unsigned nsops) {
 	int retval;
@@ -91,19 +70,6 @@ static int safesemop(int semid, struct sembuf* sops, unsigned nsops) {
 	if (retval == -1) {
 		printf("Fehler: Semaphor mit ID %d, (%d Operation)\n", semid, nsops);
 	}
-	
+
 	return retval;
-}
-
-
-typedef void (*signalhandler_t)(int);
-
-static signalhandler_t my_signal(int sig_nr, signalhandler_t signalhandler) {
-	struct sigaction neu_sig, alt_sig;
-	neu_sig.sa_handler = signalhandler;
-	sigemptyset(&neu_sig.sa_mask);
-	neu_sig.sa_flags = SA_RESTART;
-	if (sigaction(sig_nr, &neu_sig, &alt_sig) < 0)
-		return SIG_ERR;
-	return alt_sig.sa_handler;
 }

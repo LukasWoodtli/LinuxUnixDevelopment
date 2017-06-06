@@ -42,7 +42,7 @@ add_executable(sem sem.c)
 add_test(sem sem)
 
 add_executable(msq_server msq_server.c)
-
 add_executable(msq_client msq_client.c)
 
 add_executable(shm_server shm_server.c)
+add_executable(shm_client shm_client.c)
