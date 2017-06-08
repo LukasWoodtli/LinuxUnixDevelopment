@@ -21,3 +21,7 @@ add_executable(thread8 thread8.c)
 
 add_executable(thread9 thread9.c)
 add_test(thread9 thread9)
+
+add_executable(thread10 thread10.c)
+add_test(thread10 thread10)
+
