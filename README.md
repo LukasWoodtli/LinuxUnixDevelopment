@@ -23,7 +23,7 @@ I won't read all chapters.
 | 2  | E/A-Funktionen                                          | ✓ |   -          |       ✓       |
 | 3  | Attribute von Dateien und Verzeichnissen                | ✓ |   -          |       ✓       |
 | 4  | Zugriff auf Systeminformationen                         | ✓ |   -          |       ✓       |
-| 5  | Devices - eine einfache Verbindung zur Hardware         | ✓ |   -          |       -       |
+| 5  | Devices - eine einfache Verbindung zur Hardware         | ✓ |   -          |       ✓       |
 | 6  | System- und Benutzerdateien                             | ✓ |   -          |       ✓       |
 | 7  | Dämonen, Zombies und Prozesse                           | ✓ |   -          |       ✓       |
 | 8  | Signale                                                 | ✓ |   -          |       ✓       |
