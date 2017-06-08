@@ -35,6 +35,6 @@ I won't read all chapters.
 | 14 | Xlib - X Window-Programmierung                          | ✗ |   -          |         |
 | 15 | GTK+                                                    | ✗ |   -          |         |
 | 16 | SDL                                                     | ✗ |   -          |         |
-| 17 | Werkzeuge für Programmierer                             |   |   89         |         |
+| 17 | Werkzeuge für Programmierer                             |   |   64         |         |
 | A  | Sicherheit unter Linux                                  | ✓ |   -          |         |
 | B  | Funktionsreferenz                                       |   |   82         |         |
