@@ -4,7 +4,8 @@ set -e
 mkdir build
 pushd build
 cmake -G 'Unix Makefiles' ..
-make && make test
+make
+make test
 popd
 
 # makefile example

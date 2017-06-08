@@ -19,7 +19,7 @@ static void *thread1(void* arg) {
 
 	ret = pthread_mutex_lock(&mutex);
 	if (ret != 0) {
-		printf("Fehler bei lock in Thread:%ld\n", pthread_self());
+		printf("Fehler bei lock in Thread:%ld\n", (long)pthread_self());
 		exit(EXIT_FAILURE);
 	}
 
@@ -33,7 +33,7 @@ static void *thread1(void* arg) {
 	pthread_cond_signal(&cond);
 	ret = pthread_mutex_unlock(&mutex);
 	if (ret != 0) {
-		printf("Fehler bei unlock in Thread:%ld\n", pthread_self());
+		printf("Fehler bei unlock in Thread:%ld\n", (long)pthread_self());
 		exit(EXIT_FAILURE);
 	}
 
