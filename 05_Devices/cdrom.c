@@ -140,15 +140,116 @@ static void content_cdrom(int cdrom) {
 	}
 }
 
-int main(void) {
-	return 1;
+static void play_cdrom(int cdrom, int flag) {
+    struct cdrom_tocentry, tocentry;
+    struct cdrom_msf play;
+    int track = flag;
+    int lead = flag;
+    
+    if (flag == FULL) {
+        track = 1;
+        lead = CDROM_LEADOUT;
+    }
+    else {
+        track = flag;
+        lead = flag + 1;
+    }
+    
+    /* beginning of first song */
+    tocentry.cdte_track = track;
+    tocentry.cdte_format = CDROM_MFS;
+    if (ioctl(cdrom, CDROMREADTOCENTRY, &tocentry) == -1) {
+        perror("Kann Inhalt der CD nicht ermitteln\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    play.cdmsf_min0 = tocentry.cdte_addr.msf.minute;
+    play.cdmsf_sec0 = tocentry.cdte_addr.msf.second;
+    play.cdmsf_frame0 = tocentry.cdte_addr.msf.frame;
+    
+    /* end of last song */
+    tocentry.cdte_track = lead;
+    tocentry.cdte_format = CDROM_MFS;
+    if (ioctl(cdrom, CDROMREADTOCENTRY, &tocentry) == -1) {
+        perror("Kann Inhalt der CD nicht ermitteln\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    play.cdmsf_min1 = tocentry.cdte_addr.msf.minute;
+    play.cdmsf_sec1 = tocentry.cdte_addr.msf.second;
+    play.cdmsf_frame1 = tocentry.cdte_addr.msf.frame;
+    
+    if (ioctl(cdrom, CDROMPLAYMSF, &play) == -1) {
+        perror("Kann CD nicht abspielen\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+static void stop_cdrom(int cdrom) {
+    if (ioctl(cdrom, CDROMSTOP) == -1) {
+        perror("Kann CD nicht anhalten\n");
+    }
+}
+
+static void pause_cdrom(int cdrom) {
+    if (ioctl(cdrom, CDROMPAUSE) == -1) {
+        perror("Kann CD nicht pausieren\n");
+    }
 }
 
 
+static void resume_cdrom(int cdrom) {
+    if (ioctl(cdrom, CDROMRESUME) == -1) {
+        perror("Kann CD nicht fortsetzen\n");
+    }
+}
 
+int main(void) {
+    int fd_cdrom;
+    int select;
+    int track;
+    
+    fd_cdrom = open_cdrom();
+    
+    do {
+        printf("-1- CD-Tray oeffnen\n");
+        printf("-2- CD-Tray schliessen\n");
+        printf("-3- CDROM-Faehigkeiten\n");
+        printf("-4- Audio-CD abspielen (komplett)\n");
+        printf("-5- Einzelnen Track abspielen\n");
+        printf("-6- <PAUSE>\n");
+        printf("-7- <FORTFAHREN>\n");
+        printf("-8- <STOP>\n");
+        printf("-9- Aktuellen Status ermitteln\n");
+        printf("-10- CD-Inhalt ausgeben\n");
+        printf("-11- Programmende\n");
+        
+        printf("Auswahl: ");
+        scanf("%d", &select);
+        
+        switch (select) {
+            case 1: open_tray(fd_cdrom); break;
+            case 2: close_tray(fd_cdrom); break;
+            case 3: capability_cdrom(fd_cdrom); break;
+            case 4: play_cdrom(fd_cdrom, FULL); break;
+            case 5:
+                printf("Welchen Track: ");
+                scanf("%d", &track);
+                play_cdrom(fd_cdrom, track);
+                break;
+            case 6: pause_cdrom(fd_cdrom); break;
+            case 7: resume_cdrom(fd_cdrom); break;
+            case 8: stop_cdrom(fd_cdrom); break;
+            case 9: get_audio_status(fd_cdrom); break;
+            case 10: content_cdrom(fd_cdrom); break;
+            case 11: printf("Bye!\n"); break;
+            default: printf("Was?");
+        }
+        
+    } while (select != 11);
+    
+    stop_cdrom(fd_cdrom);
+    close(fd_cdrom);
 
-
-
-
-
-
+    return 0;
+}
