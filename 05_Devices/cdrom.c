@@ -141,7 +141,7 @@ static void content_cdrom(int cdrom) {
 }
 
 static void play_cdrom(int cdrom, int flag) {
-    struct cdrom_tocentry, tocentry;
+    struct cdrom_tocentry tocentry;
     struct cdrom_msf play;
     int track = flag;
     int lead = flag;
@@ -157,7 +157,7 @@ static void play_cdrom(int cdrom, int flag) {
     
     /* beginning of first song */
     tocentry.cdte_track = track;
-    tocentry.cdte_format = CDROM_MFS;
+    tocentry.cdte_format = CDROM_MSF;
     if (ioctl(cdrom, CDROMREADTOCENTRY, &tocentry) == -1) {
         perror("Kann Inhalt der CD nicht ermitteln\n");
         exit(EXIT_FAILURE);
@@ -169,7 +169,7 @@ static void play_cdrom(int cdrom, int flag) {
     
     /* end of last song */
     tocentry.cdte_track = lead;
-    tocentry.cdte_format = CDROM_MFS;
+    tocentry.cdte_format = CDROM_MSF;
     if (ioctl(cdrom, CDROMREADTOCENTRY, &tocentry) == -1) {
         perror("Kann Inhalt der CD nicht ermitteln\n");
         exit(EXIT_FAILURE);
