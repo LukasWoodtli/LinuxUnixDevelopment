@@ -35,3 +35,7 @@ if(UNIX AND NOT APPLE) # unnamed semaphores are deprecated in macOS
 add_executable(thread13 thread13.c)
 add_test(thread13 thread13)
 endif()
+
+add_executable(thread14 thread14.c)
+add_test(thread14 thread14)
+
