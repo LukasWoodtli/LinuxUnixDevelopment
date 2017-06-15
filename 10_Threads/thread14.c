@@ -17,7 +17,7 @@ static void cancel_test1(void* arg) {
 	if (zufallszahl > 25) {
 		pthread_cancel(t3);
 		printf("\t->Thread %ld beendet thread %ld\n",
-		       (long)pthread_self(), t3);
+		       (long)pthread_self(), (long)t3);
 	}
 	
 	printf("\t->Thread %ld zu Ende\n",
@@ -34,7 +34,7 @@ static void cancel_test2(void* arg) {
 	if (zufallszahl <= 25) {
 		pthread_cancel(t2);
 		printf("\t->Thread %ld beendet thread %ld\n",
-		       (long)pthread_self(), t2);
+		       (long)pthread_self(), (long)t2);
 	}
 	
 	printf("\t->Thread %ld zu Ende\n",
