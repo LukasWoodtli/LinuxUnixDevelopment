@@ -34,7 +34,7 @@ static void cancel_test(void* arg) {
 int main(void) {
 
     pthread_t t1;
-    int abbruch;
+    long abbruch;
     
 	printf("\n-> Main-Thread gestartet (ID:%ld)\n", (long)pthread_self());
 
@@ -47,7 +47,7 @@ int main(void) {
     
 	pthread_join(t1, (void*)&abbruch);
 
-    if (abbruch == (int)PTHREAD_CANCELED) {
+    if (abbruch == (long)PTHREAD_CANCELED) {
         printf("Fehler bei pthread_setcancelstate()\n");
         exit(EXIT_FAILURE);
     }
