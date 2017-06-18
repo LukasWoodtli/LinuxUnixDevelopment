@@ -39,3 +39,7 @@ endif()
 add_executable(thread14 thread14.c)
 add_test(thread14 thread14)
 
+add_executable(thread15 thread15.c)
+add_test(thread15 thread15)
+
+
