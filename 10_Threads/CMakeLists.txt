@@ -44,3 +44,9 @@ add_test(thread15 thread15)
 
 add_executable(thread17 thread17.c)
 add_test(thread17 thread17)
+
+add_executable(thread18 thread18.c)
+add_test(thread18 thread18)
+
+add_executable(thread19 thread19.c)
+add_test(thread19 thread19)
