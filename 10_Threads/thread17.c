@@ -22,7 +22,7 @@ void* thread_tsd(void* args) {
 	char th_fpname[20];
 	FILE* th_fp;
 	
-	sprintf(th_fpname, "thread%ld.thread", (long)pthread_self());
+	snprintf(th_fpname, 20, "thread%ld.thread", (long)pthread_self());
 	
 	th_fp = fopen(th_fpname, "w");
 	if (th_fp == NULL)
