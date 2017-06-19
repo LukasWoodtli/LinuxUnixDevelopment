@@ -50,3 +50,7 @@ add_test(thread18 thread18)
 
 add_executable(thread19 thread19.c)
 add_test(thread19 thread19)
+
+add_executable(thread20 thread20.c)
+add_test(thread20 thread20)
+

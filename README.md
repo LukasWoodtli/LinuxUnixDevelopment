@@ -28,7 +28,7 @@ I won't read all chapters.
 | 7  | Dämonen, Zombies und Prozesse                           | ✓ |   -          |       ✓       |
 | 8  | Signale                                                 | ✓ |   -          |       ✓       |
 | 9  | IPC - Interprozesskommunikation                         | ✓ |   -          |       ✓       |
-| 10 | Threads                                                 |   |    7         | thread20.c    |
+| 10 | Threads                                                 | ✓ |   -          |       ✓       |
 | 11 | Netzwerkprogrammierung                                  |   |  133         | client.c, server.c, addr.c, hostent.c, servent.c, servent2.c, server.c, client.c, pserver.c, multi_server.c, client.c, http_server.c, thserver.c, server.c, client.c, uds_server.c, uds_client.c, fullduplex.c, server.c, client.c, non_block.c |
 | 12 | MySQL und PostgreSQL                                    | ✗ |   -          |         |
 | 13 | Terminal E/A und Benutzerschnittstellen für die Konsole |   |   ?          | my_eof.c, my_getpass.c, keystroke.c, my_getch.c, my_tty.c, sende.c, baud.c, setbaud.c, terminfo.c, terminfo2.c, cur1.c, cur2.c, cur3.c, cur4.c, cur5.c, cur6.c, cur7.c, cur8.c, cur9.c, cur10.c, cur11.c, cur12.c, cur13.c, cur14.c, cur15.c |
