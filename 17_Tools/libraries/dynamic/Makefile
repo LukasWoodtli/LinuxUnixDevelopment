@@ -2,7 +2,7 @@
 main: testlist dynamisch
 
 dynamisch: dynamisch.c libmyequal.so
-	gcc -o dynamisch dynamisch.c
+	gcc -o dynamisch dynamisch.c -ldl
 
 testlist: testlist.c libmyequal.so
 	gcc -L $(abspath $(dir libmyequal.so)) -o testlist testlist.c -lmyequal -isystem . 
