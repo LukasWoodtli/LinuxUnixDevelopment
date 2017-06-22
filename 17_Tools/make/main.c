@@ -9,5 +9,7 @@ int main(void) {
 	test1();
 	test2();
 	printf("%f", sqrt(3.43));
+
+	return 0;
 }
 
