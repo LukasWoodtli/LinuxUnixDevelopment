@@ -25,7 +25,7 @@ static char *my_getpass(void) {
     tcgetattr(0, &teststate);
     if (teststate.c_lflag & ECHO)
         printf("ECHO-Flag konnte nicht abgeschaltet werden\n");
-    if (!teststate.c_lflag & ECHONL)
+    if (!(teststate.c_lflag & ECHONL))
         printf("ECHONL-Flag konnte nicht eingeschaltet werden\n");
 
     fprintf(stdout, "Passwort eingeben: ");
