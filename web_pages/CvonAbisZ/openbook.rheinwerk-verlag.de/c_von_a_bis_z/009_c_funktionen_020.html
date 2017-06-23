@@ -1,0 +1,802 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/009_c_funktionen_020.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:45:03 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 9.20 Rekursive Funktionen (Rekursion)</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 9.20 Rekursive Funktionen (Rekursion)">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 9.20 Rekursive Funktionen (Rekursion)">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="009_c_funktionen_019.html">
+<link rel="next" href="009_c_funktionen_021.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="009_c_funktionen_019.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="009_c_funktionen_021.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465" class="navnav">9 Funktionen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_001.html#mj2023e3b1246145f366e067f6e6b92347" class="navnav">9.1 Was sind Funktionen?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_002.html#mjd0ecd880ed9753199a12e408d0d0a883" class="navnav">9.2 Wozu dienen Funktionen?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_003.html#mj732832491f722b5381f8a7f5757fe7dc" class="navnav">9.3 Definition von Funktionen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_004.html#mjdf9a752645c46e2afe9989858d1fe010" class="navnav">9.4 Funktionsaufruf</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_005.html#mje421cf9136c8c0c1fa1f340719d12e5b" class="navnav">9.5 Funktionsdeklaration</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_006.html#mj216ab914af27e0e969a73c2c502f3191" class="navnav">9.6 Lokale Variablen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_007.html#mj4fc0b488fe8ca390c0e218a3e906958e" class="navnav">9.7 Globale Variablen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_008.html#mjfaa118de66f0515eb22dd115f803c18a" class="navnav">9.8 Statische Variablen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_009.html#mja58b746e6c62eeb4c9588eda476dd37e" class="navnav">9.9 Schlüsselwörter für Variablen &#8211; Speicherklassen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_009.html#mj55a949ef923d07c71f1d81c945e3cad1" class="navnav">9.9.1 auto</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_009.html#mjcb68de53be6db8d42d7cd9a4c66c1db7" class="navnav">9.9.2 extern</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_009.html#mje9ad7099f5b19f469efb6907c4e077e5" class="navnav">9.9.3 register</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_009.html#mj38de93aba0aad40d090fd5b7d57efa6b" class="navnav">9.9.4 static</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_010.html#mj55ecf138922da42c4abea87b8fa792bc" class="navnav">9.10 Typ-Qualifizierer</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_010.html#mj347a8bbe7206e189cfc3764ade226922" class="navnav">9.10.1 volatile</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_010.html#mjea72761dd0686702b3b0ac3964b1f99f" class="navnav">9.10.2 const</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_011.html#mj19e69aaaa55d4a98fe6073fe2a99a2c6" class="navnav">9.11 Geltungsbereich von Variablen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_012.html#mjbf35ed49b293d7d8997216a5a8d46f8a" class="navnav">9.12 Speicherklassen-Spezifizierer für Funktionen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_012.html#mje295dd048dd4a1680a727ae8acd929b3" class="navnav">9.12.1 extern</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_012.html#mj0b621e1348f00fc0722c56d80393ff1e" class="navnav">9.12.2 static</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_012.html#mja20f562fb438bae194526e6a4bb0d412" class="navnav">9.12.3 volatile</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_013.html#mjf1792c5f033797f26e8a0e5cf017fe0f" class="navnav">9.13 Datenaustausch zwischen Funktionen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_014.html#mjf226932554e147030a8b6a27568f5620" class="navnav">9.14 Wertübergabe an Funktionen (call-by-value)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_015.html#mj1ee1b27a557aba80141324548a5e2b65" class="navnav">9.15 Der Rückgabewert von Funktionen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_016.html#mj83e1f6e18e918a88865939f619a20bc6" class="navnav">9.16 Die Hauptfunktion »main()«</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_017.html#mj82d3399d6552d04e1e2b590cfbce5fa4" class="navnav">9.17 Rückgabewert beim Beenden eines Programms</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="009_c_funktionen_017.html#mj0776b9a49423f233a1f52eda01d85adc" class="navnav">9.17.1 Programmende auswerten</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_018.html#mj1c7deb2798301a9eeeda52524b879478" class="navnav">9.18 Funktionen der Laufzeitbibliothek</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_019.html#mj58913b45fd4f8e5cbad7632da152ca54" class="navnav">9.19 Getrenntes Kompilieren von Quelldateien</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mjcb7f9a6438ebcc034d59c16904fdea4f" class="navh">9.20 Rekursive Funktionen (Rekursion)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj37b52c7d69c4a3e023b1c90a50b5fe93" class="navh">9.20.1 Exkurs: Stack</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj8167bc0895284c09be3f098a49eb1f01" class="navh">9.20.2 Rekursionen und der Stack</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj662d857aaecc01a2d0d005eefb5d8989" class="navh">9.20.3 Fakultät</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj6f1e47bfb0c92e3beb9ce625fad31629" class="navh">9.20.4 Fibonacci-Zahlen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj4336161298d0037c2838acbb432dc5ce" class="navh">9.20.5 Größter gemeinsamer Teiler (GGT)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="009_c_funktionen_021.html#mj333c4b82169d962e6176638f6644e310" class="navnav">9.21 »inline«-Funktionen</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mjcb7f9a6438ebcc034d59c16904fdea4f" name="mjcb7f9a6438ebcc034d59c16904fdea4f"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">9.20</span><span class="cfett"> Rekursive Funktionen (Rekursion)</span>  <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Kurz gesagt ist eine Rekursion eine Funktion, die sich selbst aufruft und sich selbst immer wieder neu definiert. Damit sich aber eine Rekursion nicht unendlich oft selbst aufruft, sondern irgendwann auch zu einem Ergebnis kommt, benötigen Sie unbedingt eine sogenannte <span class="ckursiv">Abbruchbedingung</span>. Sonst kann es irgendwann passieren, dass Ihr Computer abstürzt, da eine Funktion, die sich immer wieder selbst aufruft, eine Rücksprungadresse, den Wert der Variablen und &#8211; falls noch nicht freigegeben &#8211; den Rückgabewert speichert. Der dafür zur Verfügung stehende Speicher (Stack) wird so aber unweigerlich irgendwann voll sein beziehungsweise überlaufen (<span class="ckursiv">Stacküberlauf</span> oder <span class="ckursiv">Stack</span>-<span class="ckursiv">Overflow</span>).</p><a id="mj37b52c7d69c4a3e023b1c90a50b5fe93" name="mj37b52c7d69c4a3e023b1c90a50b5fe93"></a><a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t32"></a><h3 class="t3"><span class="cfett">9.20.1</span><span class="cfett"> Exkurs: Stack</span>  <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Der Stack wurde bereits öfter erwähnt. Er soll deshalb im Folgenden näher betrachtet werden.</p>
+<p>Der Stack dient dazu, den Speicherbereich für Funktionsaufrufe zu verwalten. Dieser Speicherbereich ist dynamisch, was bedeutet, dass der Speicher bei Bedarf automatisch anwächst und wieder schrumpft. Der Compiler, der diesen Stack verwaltet, legt hier alle Daten ab, die er zur Verwaltung von Funktionsaufrufen benötigt.</p>
+<p>Wenn eine Funktion aufgerufen wird, erweitert der Compiler den Stack um einen Datenblock. In diesem Datenblock werden die Parameter, die lokalen Variablen und die Rücksprungadresse zur aufrufenden Funktion angelegt. Dieser Datenblock wird als <span class="ckursiv">Stack-Frame</span> oder <span class="ckursiv">Stackrahmen</span> bezeichnet.</p>
+<p>Der Datenblock bleibt so lange bestehen, bis diese Funktion wieder endet. Wird in ihm aber eine weitere Funktion aufgerufen, wird ein weiterer Datenblock auf den (richtig wäre: unter den) aktuellen gepackt. Der Stack wächst nach unten an. Am Anfang des Stacks befindet sich der Startup-Code, der die <span class="clisting">main()</span>-Funktion aufruft, die eine Position unter dem Startup-Code liegt. An unterster Stelle befindet sich immer die aktuelle Funktion, die gerade ausgeführt wird. Eine Position &#8211; oder besser: einen Datenblock &#8211; darüber liegt die aufrufende Funktion in der Wartestellung. Sie wartet auf die Beendigung der nächsten aufgerufenen Funktion. Mit diesem Wissen über den Stack können Sie sich wieder den Rekursionen widmen.</p><a id="mj8167bc0895284c09be3f098a49eb1f01" name="mj8167bc0895284c09be3f098a49eb1f01"></a><a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t33"></a><h3 class="t3"><span class="cfett">9.20.2</span><span class="cfett"> Rekursionen und der Stack</span>  <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Mit Rekursionen haben Sie die Möglichkeit, den Computer zu etwas zu bewegen, was ihn intelligenter erscheinen lässt. Ein Beispiel wäre etwa Schach. Wenn Sie einen Zug machen, gehen Sie zuerst alle Möglichkeiten durch, um den Gegner in Bedrängnis bzw. den gegnerischen König in Gefahr zu bringen oder gar schachmatt zu setzen. Das ist eine logische Denkweise des Menschen. Mit einer Rekursion ist es ebenfalls möglich, den Computer eine Situation so oft durchgehen zu lassen, bis er auf eine Lösung kommt &#8211; oder auch nicht. Man spricht dabei vom »Trial and Error«-Verfahren (Versuch und Irrtum). Ein Beispiel: Sie bedrohen den König des Computers. Der Computer geht dann alle Züge durch, um den König aus dieser Bedrohung zu befreien, und dann, in einem zweiten Schritt, geht er nochmals alle Züge durch, die Sie als Nächstes theoretisch machen könnten. Wie viele Züge er untersucht, richtet sich danach, wie tief die Rekursion gehen soll. Zum besseren Verständnis folgt ein konkretes Beispiel.</p>
+<p>Eine Funktion soll zwei Zahlen dividieren. Der ganzzahlige Rest der Division soll angegeben werden. Zum Beispiel: 10/2=5 oder 10/3=3 Rest 1. Das Programm darf aber nicht die Operatoren <span class="clisting">/</span> und <span class="clisting">%</span> verwenden. Die Lösung soll die Form einer rekursiven Funktion haben:</p>
+<div class="listing"><pre class="prettyprint">int divide(int x, int y) {
+   if(x &gt;= y)
+      return (1 + divide(x - y, y));
+   if(x)
+      printf("Zahl nicht teilbar -&gt; Rest: %d -&gt; ", x);
+   return 0;
+}</pre></div>
+<p>Hier ein Fall, in dem der Funktion beispielsweise die Werte <span class="clisting">x=8</span> und <span class="clisting">y=2</span> übergeben werden:</p>
+<div class="listing"><pre class="prettyprint">/* Funktionsaufruf */
+printf("8/2 = Ergebnis : %d\n", divide(8, 2));</pre></div>
+<p>Innerhalb der Funktion wird zunächst die Abbruchbedingung überprüft:</p>
+<div class="listing"><pre class="prettyprint">if(x &gt;= y)</pre></div>
+<p>Da die Bedingung für <span class="clisting">x=8</span> und <span class="clisting">y=2</span> wahr ist, wird die nächste Anweisung ausgeführt:</p>
+<div class="listing"><pre class="prettyprint">return 1 + divide(x - y, y);</pre></div>
+<p>Die Funktion gibt mittels <span class="clisting">return</span> die Summe <span class="clisting">1+divide(x-y,x)</span> zurück. Damit wird, bevor das Ergebnis endgültig zurückgegeben wird, die Funktion <span class="clisting">divide</span> erneut aufgerufen. Die Funktion ruft sich also selbst auf. Hiermit beginnt die Rekursion. Aber was passiert jetzt mit dem Rückgabewert 1? Sehen Sie sich das Beispiel zum besseren Verständnis in Abbildung 9.5 an.</p>
+<div class="bildbox">
+<p><a name="IDACRUQ"></a><a onClick="OpenWin('bilder/09_005.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein09_005.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 9.5    </strong>Erster rekursiver Aufruf</p>
+<p>Auf den Stack wurde zuerst die <span class="clisting">main()</span>-Funktion gelegt, da diese zuerst die Funktion <span class="clisting">divide()</span> aufgerufen hat. Hier ist quasi gespeichert, wie Ihr Programm wieder zur <span class="clisting">main()</span>-Funktion zurückkommt. Sie können sich das in etwa so vorstellen: Bei jedem Funktionsaufruf in einem Programm &#8211; unabhängig davon, ob rekursiv oder nicht &#8211; wird der aktuelle Zustand der <span class="clisting">main()</span>-Funktion <span class="ckursiv">eingefroren</span> und auf dem Stack abgelegt. Damit das Programm weiß, wo die Adresse der <span class="clisting">main()</span>-Funktion ist, wird auf dem Stack eine Rücksprungadresse mit abgelegt.</p>
+<p>Kommen wir zurück zur Programmausführung des konkreten Beispiels. Die Funktion hat sich also selbst mit der Anweisung</p>
+<div class="listing"><pre class="prettyprint">return 1 + divide(x - y, y);</pre></div>
+<p>aufgerufen; in Zahlen also: <span class="clisting">divide(8-2,2)</span>, mit den Werten <span class="clisting">x=8</span> und <span class="clisting">y=2</span>. Im abermaligen Funktionsaufruf wird erneut überprüft:</p>
+<div class="listing"><pre class="prettyprint">if(x &gt;= y)</pre></div>
+<p>Da <span class="clisting">x=6</span> und <span class="clisting">y=2</span> und somit die <span class="clisting">if</span>-Abfrage wieder wahr ist, geht die Programmausführung wieder in der nächsten Zeile weiter. Es folgt ein erneuter Selbstaufruf der Funktion <span class="clisting">divide()</span>:</p>
+<div class="listing"><pre class="prettyprint">return 1 + divide(x - y, y);</pre></div>
+<p>Also wird Folgendes auf dem Stack abgelegt (siehe Abbildung 9.6).</p>
+<div class="bildbox">
+<p><a name="IDAISUQ"></a><a onClick="OpenWin('bilder/09_006.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein09_006.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 9.6    </strong>Zweiter rekursiver Aufruf</p>
+<p>Nun liegt auf dem Stack zweimal der Rückgabewert 1, inklusive der Rücksprungadressen (diese sind hier nicht mit abgebildet). Jetzt wiederholt sich das ganze Spiel noch zweimal, bis es auf dem Stack so aussieht wie in Abbildung 9.7 gezeigt.</p>
+<p>Der Funktionswert für <span class="clisting">x</span> im Aufruf der Funktion ist mittlerweile auf 2 reduziert worden. Danach wird erneut die Funktion <span class="clisting">divide()</span> aufgerufen, und zwar mit den Werten:</p>
+<div class="listing"><pre class="prettyprint">divide(2-2,2)</pre></div>
+<div class="bildbox">
+<p><a name="IDATSUQ"></a><a onClick="OpenWin('bilder/09_007.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein09_007.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 9.7    </strong>Der Stack nach vier rekursiven Aufrufen</p>
+<p>Jetzt wird die Abbruchbedingung aktiv:</p>
+<div class="listing"><pre class="prettyprint">if(x &gt;= y)</pre></div>
+<p>Denn jetzt ist <span class="clisting">x=0</span> und <span class="clisting">y=2</span>, und somit wird die Programmausführung nicht mehr in der nächsten Zeile fortgesetzt. Die nächste Abfrage</p>
+<div class="listing"><pre class="prettyprint">if(x)</pre></div>
+<p>dient dazu, den Rest auszugeben, falls <span class="clisting">x</span> ungleich 0 sein sollte. In unserem Beispiel gibt es keinen Rest. Es wird also der Wert 0 (<span class="clisting">return 0</span>) zurückgegeben. Das Programm muss nun zur nächsten Rücksprungadresse gehen, da sich die Funktion ja beendet hat. Sehen Sie sich anhand von Abbildung 9.8 nochmals den Stack an.</p>
+<p>Der Rückgabewert 0 wurde von dem Funktionsaufruf <span class="clisting">divide(2-2,2)</span> erzeugt. Dorthin führt auch die Rücksprungadresse, also <span class="clisting">return 0+1</span>. Die nächste Rücksprungadresse wurde von <span class="clisting">divide(4-2,2)</span> erzeugt, also folgt <span class="clisting">return 0+1+1</span>; anschließend folgt <span class="clisting">return 0+1+1+1</span> und zuletzt <span class="clisting">return 0+1+1+1+1</span>. Die <span class="clisting">main</span>-Funktion bekommt dann den Rückgabewert 0+1+1+1+1, also 4, und das ist auch korrekt, denn 8/2 ist 4.</p>
+<div class="bildbox">
+<p><a name="IDATTUQ"></a><a onClick="OpenWin('bilder/09_008.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein09_008.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 9.8    </strong>Die Abbruchbedingung greift jetzt ein.</p>
+<div class="bildbox">
+<p><a name="IDAXTUQ"></a><a onClick="OpenWin('bilder/09_009.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein09_009.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 9.9    </strong>Addieren der einzelnen Rückgabewerte auf dem Stack</p>
+<p>Sie werden sich möglicherweise fragen, welche Vorteile ein solches Programm gegenüber einem Programm in der folgenden Form hat:</p>
+<div class="listing"><pre class="prettyprint">/* divide.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void) {
+   int x = 8, y = 2;
+   printf("%d ", x/y);
+   if(x % y)
+      printf("Rest = %d\n",x%y);
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Dieses Programm erfüllt doch denselben Zweck und ist einfacher! Sie haben recht: Das rekursive Programm ist zum einen schwieriger und zum anderen langsamer, da ständig etwas auf den Stack geschoben und wieder von ihm geholt werden muss.</p>
+<p>Kurz gesagt: Die rekursive Lösung ist die schlechtere in diesem Beispiel. Schlimmer noch, die rekursive Lösung verbraucht viel Speicherplatz zum Anlegen von Parametern, lokalen Variablen, Rückgabewerten und Rücksprungadressen. Ein Beispiel: Sie wollen die Zahl 1.000.000 durch 2 teilen. Für die zwei Parameter <span class="clisting">x</span> und <span class="clisting">y</span> benötigen Sie schon acht Byte pro Aufruf. Für den Rückgabewert (<span class="clisting">return</span> <span class="clisting">1</span>) werden weitere vier Bytes benötigt, genauso wie für die Rücksprungadresse. Das heißt, Sie verwenden für eine Ablage auf dem Stack 16 Byte. Wenn Sie die Zahl 1.000.000 durch 2 teilen, bedeutet dies, dass auf dem Stack 500.000 Werte zu je 16 Bytes liegen. Das sind ca. 7,6 Megabyte Arbeitsspeicher, die Sie durch eine rekursive Lösung eines solch einfachen Problems verschwenden.</p>
+<p>Warum also Rekursionen anwenden, wenn die <span class="ckursiv">direkte</span> Lösung oftmals die bessere ist? In späteren Programmen werden Sie einige Beispiele kennenlernen (sogenannte binäre Bäume), die ohne Rekursion nicht so einfach realisierbar wären.</p>
+<p>Die Rekursion will ich Ihnen anhand von einigen Beispielen noch näher erläutern. Die verwendeten Programme sollen nur die Rekursion verdeutlichen. Es ist einleuchtend, dass die Programme ansonsten auch einfacher und meistens besser lösbar sind. Es sind typische, klassische Beispiele.</p><a id="mj662d857aaecc01a2d0d005eefb5d8989" name="mj662d857aaecc01a2d0d005eefb5d8989"></a><a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t34"></a><h3 class="t3"><span class="cfett">9.20.3</span><span class="cfett"> Fakultät</span>  <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>In diesem Beispiel soll eine Funktion geschrieben werden, die die Fakultät der Zahl <span class="ckursiv">n</span> berechnet. Die Fakultät der Zahl 6 ist zum Beispiel: <span class="clisting">1*2*3*4*5*6=720</span>. Die Fakultät von 10 ist <span class="clisting">1*2*3*4*5*6*7*8*9*10=3.628.800</span>.</p>
+<p>Wie schreiben Sie die Funktion am besten? Zuerst benötigen Sie eine Abbruchbedingung. Es muss lediglich überprüft werden, ob die Zahl, von der Sie die Fakultät berechnen wollen, ungleich 0 ist:</p>
+<div class="listing"><pre class="prettyprint">/* fakul.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+long fakul(long n) {
+   if(n)
+      return n * fakul(n-1);
+   return 1;
+}
+
+int main(void) {
+   printf("Fakultät von 5 = %ld\n",fakul(5));
+   printf("Fakultät von 9 = %ld\n",fakul(9));
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Die Funktion rechnet so lange <span class="clisting">n*n-1</span>, bis <span class="clisting">n</span> den Wert 0 hat. Denn <span class="clisting">n*0</span> würde sonst das Ergebnis 0 ergeben. Bei <span class="clisting">fakul(5)</span> wären dies dann 5*4*3*2*1=120, wobei <span class="clisting">n*1</span> eigentlich auch eingespart werden kann, denn mit <span class="clisting">n*1</span> wird sich der Wert nicht ändern. Natürlich will ich Ihnen die alternative direkte Lösung des Problems nicht vorenthalten:</p>
+<div class="listing"><pre class="prettyprint">long fakul(int n) {
+   int x = n;
+   while(--x)
+      n *= x;
+   return n;
+}</pre></div><a id="mj6f1e47bfb0c92e3beb9ce625fad31629" name="mj6f1e47bfb0c92e3beb9ce625fad31629"></a><a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t35"></a><h3 class="t3"><span class="cfett">9.20.4</span><span class="cfett"> Fibonacci-Zahlen</span>  <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Die Fibonacci-Zahlen sollen rekursiv berechnet werden. Fibonacci-Zahlen sind z. B. 1, 2, 3, 5, 8, 13, 21, ...</p>
+<p>Errechnet werden können sie mittels ... <span class="clisting">1+2=3, 2+3=5, 3+5=8, 5+8=13</span>. Die Formel lautet also:</p><span class="ckursiv">F(n+2)=F(n+1) +F(n)</span><p>Der Code dazu sieht so aus:</p>
+<div class="listing"><pre class="prettyprint">/* fibo.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+long fibo(long n) {
+   if(n)
+      return (n &lt;= 2) ? n : fibo(n-2) + fibo(n-1);
+  <span class="cfett"> return 0;</span>
+}
+int main(void) {
+   long f;
+   long i=0;
+
+   printf("Wie viele Fibonacci-Zahlen wollen Sie ausgeben:");
+   scanf("%ld",&amp;f);
+   while(i++ &lt; f)
+      printf("F(%ld) = %ld\n", i, fibo(i));
+   return EXIT_SUCCESS;
+}</pre></div><a id="mj4336161298d0037c2838acbb432dc5ce" name="mj4336161298d0037c2838acbb432dc5ce"></a><a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t36"></a><h3 class="t3"><span class="cfett">9.20.5</span><span class="cfett"> Größter gemeinsamer Teiler (GGT)</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Nun folgt ein Listing zum Ermitteln des größten gemeinsamen Teilers zweier Zahlen. Natürlich wird dafür der rekursive Weg eingeschlagen. Auch hier muss zuerst eine Abbruchbedingung gefunden werden. Sie haben drei Möglichkeiten zum Errechnen des GGT zweier Zahlen:</p>
+<div class="listing"><pre class="prettyprint">ist Zahl1 == Zahl2 dann Ergebnis = Zahl1
+ist Zahl1  &gt; Zahl2 dann Ergebnis = ggT(Zahl1-Zahl2, Zahl2)
+ist Zahl1  &lt; Zahl2 dann Ergebnis = ggT(Zahl1, Zahl2-Zahl1)</pre></div>
+<p>Das Programm sieht folgendermaßen aus:</p>
+<div class="listing"><pre class="prettyprint">/* ggt1.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+unsigned long ggt(unsigned long a, unsigned long b) {
+   if(a==b)
+      return a;
+   else if(a &lt; b)
+      return ggt(a, b-a);
+   else
+      return ggt(a-b, b);
+}
+
+int main(void) {
+   unsigned long a, b;
+
+   printf("ggt = größter gemeinsamer Teiler\n");
+   printf("Zahl 1: ");
+   scanf("%lu",&amp;a);
+   printf("Zahl 2: ");
+   scanf("%lu",&amp;b);
+   printf("Der ggT von %lu und %lu ist %lu\n", a, b, ggt(a,b));
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Beispiel: Sie geben für <span class="clisting">a=10</span> und für <span class="clisting">b=3</span> ein. Abbildung 9.10 zeigt, welche Wertepaare auf den Stack gelegt werden, bis das Programm den GGT von 1 zurückgibt.</p>
+<div class="bildbox">
+<p><a name="IDAI1UQ"></a><a onClick="OpenWin('bilder/09_010.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein09_010.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 9.10    </strong>Rekursive Ermittlung des größten gemeinsamen Teilers</p>
+<p>Eine alternative direkte Lösung wäre gewesen:</p>
+<div class="listing"><pre class="prettyprint">/* ggt2.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+unsigned long ggt(unsigned long a, unsigned long b) {
+   unsigned long count;
+
+   if(a==b)
+      return a;
+   else if( (a % b) == 0)
+      return b;
+   else
+      for(count = b; count &gt; 0; count--) {
+         if( ( (a % count) + (b % count) ) == 0)
+            return count;
+      }
+  <span class="cfett"> return 0;</span>
+}
+
+int main(void) {
+   unsigned long a, b, c;
+   printf("ggt = größter gemeinsamer Teiler\n");
+   printf("Zahl 1: ");
+   scanf("%lu",&amp;a);
+   printf("Zahl 2: ");
+   scanf("%lu",&amp;b);
+   if(a&lt;b) { /* a und b vertauschen */
+      c=a; a=b; b=c;
+   }
+   printf("Der ggT von %lu und %lu ist %lu\n", a, b, ggt(a,b));
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Nun soll der größte gemeinsame Teiler von beliebig vielen Zahlen ermittelt werden. Die Schwierigkeit besteht bei diesem Beispiel aber nicht in der rekursiven Funktion, sondern in der <span class="clisting">main()</span>-Funktion. Sie könnten die Funktion GGT, wie diese eben geschrieben wurde, benutzen, ohne sie zu verändern. Zuvor möchte ich Ihnen aber noch eine zweite Möglichkeit demonstrieren, wie Sie den GGT ermitteln können. Hier ist die Funktion dazu:</p>
+<div class="listing"><pre class="prettyprint">unsigned long ggt(unsigned long a, unsigned long b) {
+   if(b==0)
+      return a;
+   return ggt(b, a % b);
+}</pre></div>
+<p>Jetzt lassen sich womöglich die Vorteile einer Rekursion erkennen. Die rekursive Funktion erfüllt den gleichen Zweck wie die beiden Funktionen GGT zuvor. Mit <span class="clisting">return ggt(b, a%b)</span> rufen Sie die Funktion erneut auf. Wenn <span class="clisting">a%b==0</span> ergibt, haben Sie ja den GGT durch <span class="clisting">b</span> an <span class="clisting">a</span> übergeben. Hier sehen Sie die <span class="clisting">main()</span>-Funktion zum Ermitteln des GGT mehrerer Zahlen:</p>
+<div class="listing"><pre class="prettyprint">/* ggt3.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+unsigned long ggt(unsigned long a, unsigned long b) {
+   if(b == 0)
+      return a;
+   return ggt(b, a % b);
+}
+int main(void) {
+   unsigned long a, b;
+
+   printf("ggt = größter gemeinsamer Teiler(mit 0 beenden)\n");
+   printf("Zahl&gt; ");
+   scanf("%lu", &amp;a);
+   printf("Zahl&gt; ");
+   scanf("%lu", &amp;b);
+   a=ggt(a, b);
+
+   while(1) {
+      printf("Zahl&gt; ");
+      scanf("%lu", &amp;b);
+      if(b==0)
+         break;
+      a=ggt(a, b);
+   }
+   printf("--------&gt;ggt = %lu\n", a);
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>An dem Programm wurde nicht viel verändert. Es kam lediglich die <span class="clisting">while</span>-Schleife hinzu, die Sie mit der Eingabe 0 beenden können.</p>
+<p>Wichtig ist, dass Sie bei jedem Schleifendurchlauf den größten gemeinsamen Teiler an <span class="clisting">a</span> und die neue Zahl an <span class="clisting">b</span> übergeben. Somit wird immer der GGT aller Zahlen aktualisiert.</p>
+<p>Als letztes Beispiel will ich Ihnen zeigen, wie Sie eine rekursive Funktion zum Umwandeln von Dezimalzahlen nach Dualzahlen verwenden können. Um beispielsweise aus der Zahl 10 die entsprechende Dualzahl 1010 zu machen, ist folgender Vorgang nötig:</p>
+<div class="listing"><pre class="prettyprint">-&gt; Solange die Zahl ungleich null -&gt;
+-&gt; Zahl % 2 = kein Rest dann 0 oder = Rest dann 1 -&gt;
+-&gt; Zahl = Zahl / 2</pre></div>
+<p>Auf die Zahl 10 angewendet, sieht dieser Vorgang wie folgt aus:</p>
+<div class="listing"><pre class="prettyprint">10/2 = 5 kein Rest -&gt; 0
+5/2  = 2 Rest 1    -&gt; 1
+2/2  = 1 kein Rest -&gt; 0
+1/2  = 0 Rest 1    -&gt; 1</pre></div>
+<p>Damit liegen auf dem Stack (umgekehrte Reihenfolge):</p>
+<div class="listing"><pre class="prettyprint">1
+0
+1
+0</pre></div>
+<p>Hier sehen Sie das Listing dazu:</p>
+<div class="listing"><pre class="prettyprint">/* dez2bin.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#define ulong unsigned long
+
+void dez2bin(ulong dez) {
+   if(dez) {
+      dez2bin(dez / 2);
+      printf("%lu", dez % 2);
+   }
+}
+
+int main(void) {
+   ulong dezimal;
+
+   printf("Dezimalzahl in Dualzahl konvertieren\n");
+   printf("Welche Zahl : ");
+   scanf("%lu",&amp;dezimal);
+   printf("Dezimal = %lu Dual = ",dezimal);
+   dez2bin(dezimal);
+   printf("\n");
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Dies genügt nun zum Thema Funktionen. In Kapitel 18, »Arbeiten mit variablen langen Argumentlisten &#8211; &lt;stdarg.h&gt;«, wird es wieder aufgegriffen, wenn es darum geht, Funktionen mit beliebig vielen Parametern zu erstellen. Dafür müssen wir jedoch zuerst die Zeiger besprechen.</p><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/009_c_funktionen_020.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="9.20 Rekursive Funktionen (Rekursion)"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="009_c_funktionen_019.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="009_c_funktionen_021.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/009_c_funktionen_020.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:45:15 GMT -->
+</html>

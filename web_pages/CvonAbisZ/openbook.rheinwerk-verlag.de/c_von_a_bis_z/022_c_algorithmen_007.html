@@ -1,0 +1,811 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/022_c_algorithmen_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:50:37 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 22.7 Pattern Matching (reguläre Ausdrücke)</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 22.7 Pattern Matching (reguläre Ausdrücke)">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 22.7 Pattern Matching (reguläre Ausdrücke)">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="022_c_algorithmen_006.html">
+<link rel="next" href="022_c_algorithmen_008.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="022_c_algorithmen_006.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="022_c_algorithmen_008.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4" class="navnav">22 Algorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_001.html#mjad955691d6bbeab76c26bebeb46bfb5b" class="navnav">22.1 Was sind Algorithmen?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_002.html#mjdd65482f3fdbcd022155b3035e6f070c" class="navnav">22.2 Wie setze ich Algorithmen ein?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_003.html#mja4d6cf19b9113d221e26e0a19eb4148c" class="navnav">22.3 Sortieralgorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj1fdda2148808601a86a54a7701775bec" class="navnav">22.3.1 »Selection Sort« &#8211; sortieren durch Auswählen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj925248949647af9ef7f16d215f433a8c" class="navnav">22.3.2 Insertion Sort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mje2d240f1f56f6186232f65773fc37070" class="navnav">22.3.3 Bubble Sort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj62f350471ff0f91a8910f6d0e6c5cf18" class="navnav">22.3.4 Shellsort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj035bded10a26be556df779f234784e89" class="navnav">22.3.5 Quicksort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mjde22312f4b61457b2efb0f9f17a7b269" class="navnav">22.3.6 qsort()</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mje59f09c2df1dfa3ec926ae230eb00d31" class="navnav">22.3.7 Zusammenfassung der Sortieralgorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_004.html#mje1108bedaa52e56c3a2231952efc760d" class="navnav">22.4 Suchalgorithmen &#8211; Grundlage zur Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjd215dedb31c115ea3fc6aa2a9f3b3377" class="navnav">22.4.1 Lineare Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjc74f9bee71009b607d837f401fab37e1" class="navnav">22.4.2 Binäre Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj50e751f674a269097a8f867476f4e6ab" class="navnav">22.4.3 Binäre (Such-)Bäume</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj8a624d55f599e29effaab0089aa75a28" class="navnav">22.4.4 Elemente im binären Baum einordnen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj0a5e3b9745ce4405d8764546050bed3b" class="navnav">22.4.5 Binäre Bäume traversieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj4288fdcfb29e6adbcbf80c102c324f2f" class="navnav">22.4.6 Löschen eines Elements im binären Baum</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjfe709ec1d375f55e7805e53ce79c7880" class="navnav">22.4.7 Ein binärer Suchbaum in der Praxis</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjc0eebbc48d257496d83af8b5bcf3c5b9" class="navnav">22.4.8 Binäre Suchbäume mit Eltern-Zeiger und Threads</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj86c6493733dadbfb1f7710f0a687b1ef" class="navnav">22.4.9 Ausgeglichene Binärbäume</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjc53ab8c9ed2dac1cd824c4d3f972f754" class="navnav">22.4.10 Algorithmen für ausgeglichene Bäume &#8211; eine Übersicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_005.html#mj0a40e081a9df138f149a2f446fb499fd" class="navnav">22.5 Hashing (Zerhacken)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjbd1d8614064df7a2d1f74b2322070197" class="navnav">22.5.1 Wann wird Hashing verwendet?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mj6b2e95378544d9975a8312b6bb884a8f" class="navnav">22.5.2 Was ist für das Hashing erforderlich?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjffda6918d10dabde4c2d29ebb835e371" class="navnav">22.5.3 Hash-Funktion</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mj19e26fc27715d5ff46edac5940f4d5ff" class="navnav">22.5.4 Hashing mit direkter Adressierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjf182065dfeada5efe09d22e63762605f" class="navnav">22.5.5 Vergleich von Hashing mit binären Bäumen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_006.html#mj73dd4e072f6667a0f887c5a613a4691d" class="navnav">22.6 String-Matching</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_006.html#mjf7d6e5fb93d300365b9df366326bcc13" class="navnav">22.6.1 Brute-Force-Algorithmus</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_006.html#mjaaad91c95f148185e8ca3b36d2f7a8ca" class="navnav">22.6.2 Der Algorithmus von Knuth/Morris/Pratt (KMP)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_006.html#mj6e6634183f974a372635540c36053fdb" class="navnav">22.6.3 Weitere String-Matching-Algorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mjf4e645bb4920a03ebda8385b7b013724" class="navh">22.7 Pattern Matching (reguläre Ausdrücke)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_008.html#mj949af93bc0dacf07baf688227fc46cbf" class="navnav">22.8 Backtracking</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_008.html#mj3bad29bcf42f5c904880c75110704913" class="navnav">22.8.1 Der Weg durch den Irrgarten</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_008.html#mjdf73b2552404835ed8da47e6fc60f70c" class="navnav">22.8.2 Das 8-Dame-Problem</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mjf4e645bb4920a03ebda8385b7b013724" name="mjf4e645bb4920a03ebda8385b7b013724"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">22.7</span><span class="cfett"> Pattern Matching (reguläre Ausdrücke)</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Jeder, der mit einer UNIX/Linux-Maschine zu tun hat, kennt wohl die regulären Ausdrücke. Reguläre Ausdrücke sind auch eine Form der Suche nach Zeichenketten, nur erheblich komfortabler und komplexer.</p>
+<p>Der Begriff »regulärer Ausdruck« stammt von dem Sprachwissenschaftler Noam Chomsky und wird in der Informatik verwendet. Es gibt zwar mehrere Varianten von regulären Ausdrücken, doch haben alle dasselbe Ziel.</p>
+<p>Bei einem regulären Ausdruck geht es darum, Muster aus Buchstaben zu beschreiben, und dies zusammen mit Wiederholungen, Alternativen und Abkürzungen für Zeichenklassifizierungen wie Ziffern oder Buchstaben. Das bekannteste Beispiel, mit dem sogar MS-DOS klarkommt und das jeder kennen dürfte, ist die <span class="ckursiv">Wildcard</span> (<span class="clisting">*</span>):</p>
+<div class="listing"><pre class="prettyprint">dir t*.txt</pre></div>
+<p>oder unter UNIX:</p>
+<div class="listing"><pre class="prettyprint">ls -l t*.txt</pre></div>
+<p>So werden alle Textdateien ausgegeben, die mit »t« beginnen und mit ».txt« enden:</p>
+<div class="listing"><pre class="prettyprint">text.txt
+test.txt
+total.txt</pre></div>
+<p>Reguläre Ausdrücke sind keine Funktionen, sondern es handelt sich um eine echte Sprache mit formaler Grammatik, bei der jeder Ausdruck eine präzise Bedeutung hat.</p>
+<p>Hierzu folgen einige Funktionen in der Praxis, wobei diejenigen, die mit den regulären Ausdrücken überhaupt nicht vertraut sind, einen kleinen Einblick erhalten, und Anwender, die reguläre Ausdrücke schon häufiger verwendet haben, sehen werden, wie reguläre Ausdrücke in C geschrieben werden können.</p>
+<p>Es sei darauf hingewiesen, dass es sich dabei nicht um eine umfassende Anleitung zu regulären Ausdrücken handelt, sondern vielmehr um einen kurzen Überblick.</p>
+<p>Das Programm, das erstellt werden soll, liest Zeile für Zeile aus einer Datei aus. Die erste Funktion, die das Pattern Matching einleitet, sieht so aus:</p>
+<div class="listing"><pre class="prettyprint">int pmatch(char *ausdruck, char *text) {
+#ifdef __unix__
+   if(ausdruck[0] == '^')
+#elif __WIN32__
+   if(ausdruck[0] == '#')
+#endif
+      return match(ausdruck+1, text);
+   else {
+      for( ; *text != '\0'; *text++)
+         if(match(ausdruck, text))
+            return 1;
+   }
+   return 0;
+}</pre></div>
+<p>Zuerst wird überprüft, ob der zu matchende Ausdruck am Anfang einer Zeile vorkommt. Dies ist gegeben, wenn der Ausdruck mit dem Zeichen <span class="clisting">'^'</span> beginnt. Beispielsweise geben Sie als Suchstring folgenden Ausdruck an:</p>
+<div class="listing"><pre class="prettyprint">^hallo</pre></div>
+<p>Somit müssen die ersten fünf Zeichen einer Zeile in <span class="clisting">text</span> mit der Zeichenfolge <span class="clisting">"hallo"</span> übereinstimmen. Beispiele:</p>
+<div class="listing"><pre class="prettyprint">hallo welt wie gehts   (Gefunden, da am Anfang der Zeile)
+  hallo welt wie gehts (Missmatch -&gt; nicht gefunden)</pre></div>
+<p>Im Fall des Zeichens <span class="clisting">'^'</span> muss der zu matchende Ausdruck inkrementiert werden, damit dieses Zeichen nicht mit verglichen wird. Bei Nichtverwendung des Zeichens <span class="clisting">'^'</span> wird die Matching-Funktion ganz normal &#8211; Zeichen für Zeichen &#8211; aufgerufen.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Damit sich dieses Beispiel auch unter MS-DOS/Win32 realisieren lässt, verwenden Sie bitte statt des Zeichens <span class="clisting">'^'</span> das Zeichen <span class="clisting">'#'</span>. Daher auch die bedingte Kompilierung in der Funktion.</p>
+</td>
+</tr>
+</table><br><p>Jetzt folgt die Matching-Funktion <span class="clisting">match()</span>:</p>
+<div class="listing"><pre class="prettyprint">int match(char *ausdruck, char *text) {
+   if(ausdruck[0] == '\0')
+      return 1;
+   if(ausdruck[1] == '*')
+      return wildcard(ausdruck[0], ausdruck+2, text);
+   if(ausdruck[0] == '$' &amp;&amp; ausdruck[1] == '\0')
+      return *text == '\0';
+   if(*text != '\0' &amp;&amp; (ausdruck[0]== '.'||
+     ausdruck[0] == *text) )
+      return match(ausdruck+1, text+1);
+   return 0;
+}</pre></div>
+<p>Zuerst wird getestet, ob das Ende des Patterns schon gekommen ist (<span class="clisting">'\0'</span>). Danach wird überprüft, ob eine Wildcard (<span class="clisting">*</span>) angegeben ist. Falls ja, wird die entsprechende Funktion aufgerufen, worauf in Kürze eingegangen wird. Das Zeichen <span class="clisting">'$'</span> bedeutet beim Matching Zeilenende. Als Beispiel dient uns folgende Zeile:</p>
+<div class="listing"><pre class="prettyprint">match und$ *.txt</pre></div>
+<p>Damit werden alle Ausdrücke gefunden, bei denen die Zeile mit »und« endet. Einige Beispiele:</p>
+<div class="listing"><pre class="prettyprint">Ein Text, der mit und endet und            /* Gefunden */
+Der Text endet nicht mit und und.          /* Missmatch */
+qwert asdf qwert asdf qwert  und           /* Gefunden */
+und was jetzt                              /* Missmatch */</pre></div>
+<p>Um zu überprüfen, dass nicht nach dem Zeichen <span class="clisting">'$'</span> gesucht wird, sondern dass es auch wirklich das gewünschte »und« am Ende der Zeile ist (in diesem Fall) ist, wird gleich darauf getestet, ob das nächste Zeichen des Ausdrucks das Endzeichen <span class="clisting">'\0'</span> ist. Die nächste Überprüfung</p>
+<div class="listing"><pre class="prettyprint">if(*text != '\0' &amp;&amp;(ausdruck[0] == '.' ||  ausdruck[0] == *text))</pre></div>
+<p>testet, ob nicht schon das Ende gekommen ist, und das nächste Zeichen ein beliebiges sein darf (<span class="clisting">.</span>) oder das Zeichen im Ausdruck mit demjenigen im Text übereinstimmt. Der Punkt steht somit für ein beliebiges Zeichen, abgesehen vom Zeichenende. Falls diese Bedingung zutrifft, wird die Funktion rekursiv erneut mit den nächsten Zeichen aufgerufen. Der rekursive Aufruf erfolgt so lange, bis eine der Bedingungen in dieser Funktion einen <span class="clisting">return</span>-Wert (0 == keine Übereinstimmung oder 1 == Übereinstimmung gefunden) zurückliefert.</p>
+<p>Jetzt die (primitive) Wildcard-Funktion:</p>
+<div class="listing"><pre class="prettyprint">int wildcard(int c, char *ausdruck, char *text) {
+   for( ;*text != '\0' &amp;&amp; (*text == c || c == '.'); *text++)
+      if(match(ausdruck, text))
+         return 1;
+   return 0;
+}</pre></div>
+<p>Zugegeben, dies ist eine schwache Wildcard-Funktion; aber sie funktioniert. Was bedeutet aber dieses Sternchen beim Pattern Matching? Der Stern zeigt an, dass das letzte Zeichen (oder der Inhalt) mindestens einmal oder mehrmals vorkommen kann, aber nicht vorkommen muss. Zum Abschluss sehen Sie noch das vollständige Listing:</p>
+<div class="listing"><pre class="prettyprint">/* regular_expression.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#define BUF 4096
+
+int pmatch(char *, char *);
+int match(char *, char *);
+int wildcard(int, char *, char *);
+int my_grep(char *, FILE *, char *);
+
+int pmatch(char *ausdruck, char *text) {
+   if(ausdruck[0] == '^')
+      return match(ausdruck+1, text);
+   for( ; *text != '\0'; *text++)
+      if(match(ausdruck, text))
+         return 1;
+   return 0;
+}
+
+int match(char *ausdruck, char *text) {
+   if(ausdruck[0] == '\0')
+      return 1;
+#ifdef __unix__
+   if(ausdruck[1] == '*')
+#elif __WIN32__
+   if(ausdruck[1] == '~')
+#endif
+      return wildcard(ausdruck[0], ausdruck+2, text);
+   if(ausdruck[0] == '$' &amp;&amp; ausdruck[1] == '\0')
+      return *text == '\0';
+   if(*text != '\0' &amp;&amp; ( ausdruck[0] == '.' ||
+     ausdruck[0] == *text))
+      return match(ausdruck+1, text+1);
+   return 0;
+}
+int wildcard(int c, char *ausdruck, char *text) {
+   for( ;*text != '\0' &amp;&amp; (*text == c || c == '.'); *text++)
+      if(match(ausdruck, text))
+         return 1;
+   return 0;
+}
+
+int my_grep(char *ausdruck, FILE *f, char *name) {
+   int n, nmatch=0;
+   int line=0;
+   char buffer[BUF];
+
+   while(fgets(buffer, sizeof(buffer), f) != NULL) {
+      line++;
+      n = strlen(buffer);
+      if(n &gt; 0 &amp;&amp; buffer[n-1] == '\n')
+         buffer[n-1] = '\0';
+      if(pmatch(ausdruck, buffer)) {
+         nmatch++;
+         if(name != NULL)
+            printf("%d. ",line);
+      }
+   }
+   if(nmatch!=0)
+      printf("Zeile in der Datei %s (insg.%d)\n\n",name,nmatch);
+   return nmatch;
+}
+
+int main(int argc, char *argv[]) {
+   int i, nmatch=0;
+   FILE *f;
+
+   if(argc &lt;= 2) {
+      fprintf(stderr, "Verwendung des Programms : "
+         "%s pattern quelle\n\n",*argv);
+      return EXIT_FAILURE;
+   }
+   else {
+      for(i = 2; i &lt; argc; i++) {
+         f = fopen(argv[i], "r");
+         if(NULL == f) {
+            fprintf(stderr, "Konnte %s nicht "
+               "oeffnen\n",argv[i]);
+            continue;
+         }
+         if(my_grep(argv[1],f, argv[i]) &gt; 0)
+            nmatch++;
+         fclose(f);
+      }
+   }
+   printf("%d Dateien mit passenden Pattern %s gefunden\n",
+      nmatch, argv[1] );
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Hier folgen noch ein paar Matching-Beispiele zum Programm (der Programmname sei <span class="ckursiv">match</span> und der Name der Datei <span class="ckursiv">test.txt</span>). Folgende Textdatei soll gematcht werden:</p>
+<div class="listing"><pre class="prettyprint">ist
+ ist
+  ist.</pre></div><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 22.2    </strong>Einige Matching-Beispiele</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Matching</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Gefunden in Zeile</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match ^ist test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>1</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match ^ist$ test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>1</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match ist$ test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>1, 2</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match ist test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>1, 2, 3</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match .ist test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>2, 3</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match ist. test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>3</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match .s. test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>1, 2, 3</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match .s.$ test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>1, 2</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match ^...$ test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>1</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match i*. test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>1, 2, 3</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">match ^i*. test.txt</pre></div>
+</td>
+<td class="tabellentext">
+<p>1</p>
+</td>
+</tr>
+</table><br><p>Sie sehen schon, was für einen gewaltigen Funktionsumfang Sie mit wenigen Zeilen Code auf die Beine stellen können. Dabei stellt das Programm und das bisher vorgestellte Pattern Matching nur einen Bruchteil dessen dar, wozu Pattern Matching wirklich in der Lage ist.</p>
+<p>Sollten Sie also für Ihr Programm reguläre Ausdrücke benötigen, können Sie eigene Funktionen schreiben oder auf entsprechende Funktionen der Headerdatei <span class="ckursiv">&lt;regex.h&gt;</span> zugreifen. Allerdings entsprechen diese Funktionen dem POSIX-Standard und sind vorwiegend in der UNIX-Welt zu Hause. MS-Windows-Anwender können diese Bibliothek aber zum Beispiel mit dem <span class="clisting">gcc</span>-Compiler unter der Cygwin-Umgebung auch verwenden.</p><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/022_c_algorithmen_007.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="22.7 Pattern Matching (reguläre Ausdrücke)"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="022_c_algorithmen_006.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="022_c_algorithmen_008.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/022_c_algorithmen_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:50:37 GMT -->
+</html>

@@ -1,0 +1,823 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/021_c_dyn_datenstrukturen_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:48:09 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 21.2 Doppelt verkettete Listen</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 21.2 Doppelt verkettete Listen">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 21.2 Doppelt verkettete Listen">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="021_c_dyn_datenstrukturen_001.html">
+<link rel="next" href="021_c_dyn_datenstrukturen_003.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="021_c_dyn_datenstrukturen_001.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="021_c_dyn_datenstrukturen_003.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76" class="navnav">21 Dynamische Datenstrukturen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="021_c_dyn_datenstrukturen_001.html#mjd019c1a582bc18749ab77c2c95a22350" class="navnav">21.1 Lineare Listen (einfach verkettete Listen)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mje4a579c472948a9d6db7486a446e0ab3" class="navnav">21.1.1 Erstes Element der Liste löschen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mj6568edd64f0952e625773ee548f7cf5e" class="navnav">21.1.2 Ein beliebiges Element in der Liste löschen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mj7c56df0693563276c6713057fe39a2ef" class="navnav">21.1.3 Elemente der Liste ausgeben</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mj39ba9c20a2cec7034e966d7751c62a53" class="navnav">21.1.4 Eine vollständige Liste auf einmal löschen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mj4c9477ba0b30ea123687d37217c6ae2f" class="navnav">21.1.5 Element in die Liste einfügen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mj0230cca6aa7fb87181f7f69e396d6fd8" class="navh">21.2 Doppelt verkettete Listen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="021_c_dyn_datenstrukturen_003.html#mj99a62629378300e719376434889e7c56" class="navnav">21.3 Stacks nach dem LIFO-(Last-in-First-out-)Prinzip</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="021_c_dyn_datenstrukturen_004.html#mjbd6477c5d4f3e8b4b65d66940cb86b97" class="navnav">21.4 Queues nach dem FIFO-Prinzip</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="021_c_dyn_datenstrukturen_005.html#mj45d3def42c61a516f9bc6bd1a55e6a4b" class="navnav">21.5 Dynamisches Array mit flexiblen Elementen</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mj0230cca6aa7fb87181f7f69e396d6fd8" name="mj0230cca6aa7fb87181f7f69e396d6fd8"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">21.2</span><span class="cfett"> Doppelt verkettete Listen</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Im Gegensatz zu den einfach verketteten Listen haben doppelt verkettete Listen zusätzlich noch einen Zeiger auf den Vorgänger. Soll z. B. erst ein Element in der Liste gelöscht werden und wird gleich darauf auf den Vorgänger des gelöschten Elements zugegriffen, müsste bei der einfach verketteten Liste der vollständige Satz von Neuem durchlaufen werden. Mit der doppelt verketteten Liste kann hingegen sofort auf den Vorgänger zugegriffen werden.</p>
+<p>Zur Realisierung doppelt verketteter Listen muss nur der Struktur bei der Deklaration ein weiterer Zeiger hinzugefügt werden:</p>
+<div class="listing"><pre class="prettyprint">struct angestellt{
+   char name[20];
+   char vorname[20];
+   struct datum alter;
+   struct datum eingest;
+   long gehalt;
+   struct angestellt *next;       /* Nachfolger */
+  <span class="cfett"> struct angestellt *previous;</span>  <span class="cfett"> /* Vorgänger */</span>
+};</pre></div>
+<p>Außerdem sollten Sie noch einen Zeiger auf das letzte Element definieren. Wird z. B. nach einem Namen mit dem Anfangsbuchstaben »Z« gesucht, wäre es doch reine Zeitverschwendung, die Liste von vorn zu durchlaufen. Also gäbe es noch folgende Angaben:</p>
+<div class="listing"><pre class="prettyprint">struct angestellt *anfang;<span class="cfett">
+struct angestellt *ende;</span></pre></div>
+<p>Die Initialisierung mit NULL soll gleich in eine Funktion verpackt werden:</p>
+<div class="listing"><pre class="prettyprint">void start(void) {
+   anfang = ende = NULL;
+}</pre></div>
+<p>So sieht die Struktur jetzt mit dem Extra-Zeiger auf seinen Vorgänger aus (siehe Abbildung 21.22).</p>
+<div class="bildbox">
+<p><a name="IDARDUQ"></a><a onClick="OpenWin('bilder/21_022.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_022.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.22    </strong>Struktur einer doppelt verketteten Liste</p>
+<p>Bevor all dies in die Praxis umgesetzt wird, noch schnell ein Bild dazu, wie Sie sich eine doppelt verkettete Liste vorstellen können (siehe Abbildung 21.23).</p>
+<div class="bildbox">
+<p><a name="IDAWDUQ"></a><a onClick="OpenWin('bilder/21_023.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_023.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.23    </strong>Doppelt verkettete Liste</p>
+<p>Auf den kommenden Seiten werden die Funktionen, die im Abschnitt über die einfach verketteten Listen verwendet wurden, umgeschrieben, damit diese mit doppelt verketteten Listen eingesetzt werden können. Sie müssen dabei immer darauf achten, dass jetzt jedes Element in der Liste auch einen Vorgänger besitzt.</p>
+<p>Wir beginnen mit der Funktion <span class="clisting">anhaengen()</span>:</p>
+<div class="listing"><pre class="prettyprint">void anhaengen(char *n, char *v, int at, int am, int aj,
+               int eint, int einm, int einj, long g) {
+   /* Zeiger zum Zugriff auf die einzelnen Elemente
+    * der Struktur */
+   struct angestellt *zeiger, *zeiger1;
+
+   /* Wurde schon Speicher für den ende-Zeiger bereitgestellt? */
+   if(ende == NULL) {
+      if((ende=malloc(sizeof(struct angestellt))) == NULL) {
+         printf("Konnte keinen Speicherplatz für ende "
+                "reservieren\n");
+                return;
+      }
+   }
+
+   /* Wir fragen ab, ob es schon ein Element in der Liste gibt.
+    * Wir suchen das Element, auf das unser Zeiger *anfang
+    * zeigt. Falls *anfang immer noch auf NULL zeigt, bekommt
+    * *anfang die Adresse unseres 1. Elements und ist somit der
+    * Kopf (Anfang) unserer Liste. */
+   if(anfang == NULL) {
+      /* Wir reservieren Speicherplatz für unsere
+       * Struktur für das erste Element der Liste. */
+
+      if((anfang =malloc(sizeof(struct angestellt))) == NULL) {
+         fprintf(stderr,"Kein Speicherplatz vorhanden "
+                        "fuer anfang\n");
+         return;
+      }
+      strcpy(anfang-&gt;name,strtok(n, "\n"));
+      strcpy(anfang-&gt;vorname,strtok(v, "\n"));
+      anfang-&gt;alter.tag=at;
+      anfang-&gt;alter.monat=am;
+      anfang-&gt;alter.jahr=aj;
+      anfang-&gt;eingest.tag=eint;
+      anfang-&gt;eingest.monat=einm;
+      anfang-&gt;eingest.jahr=einj;
+      anfang-&gt;gehalt=g;</pre></div>
+<p>Bis hierhin stellt diese Funktion nichts Neues dar. Es wird davon ausgegangen, dass sich noch kein Element in der Liste befindet, und Sie fügen nun das erste Element ein:</p>
+<div class="listing"><pre class="prettyprint">      anfang-&gt;next=NULL;
+      ende=anfang;
+      ende-&gt;previous=NULL;
+   }</pre></div>
+<p>Der <span class="clisting">next</span>-Zeiger vom ersten Element zeigt zunächst auf gar nichts (<span class="clisting">NULL</span>). Der <span class="clisting">ende</span>-Zeiger, der auf das letzte Element verweist, zeigt am Anfang zunächst auf das erste Element, das gleichzeitig ja auch das letzte der Liste ist. Der <span class="clisting">previous</span>-Zeiger, der auf den Vorgänger zeigen soll, verweist ebenso auf <span class="clisting">NULL</span>. Genauso gut hätten Sie anstatt <span class="clisting">ende-&gt;previous=NULL</span> auch <span class="clisting">anfang-&gt;previous=NULL</span> schreiben können. Beides hätte denselben Effekt gehabt.</p>
+<p>Kommen wir jetzt zur zweiten Möglichkeit &#8211; das neue Element wird hinten angehängt:</p>
+<div class="listing"><pre class="prettyprint">   else {
+      zeiger=anfang;    /* Wir zeigen auf das 1. Element. */
+      while(zeiger-&gt;next != NULL)
+         zeiger=zeiger-&gt;next;
+      /* Wir reservieren einen Speicherplatz für das letzte
+       * Element der Liste und hängen es an. */
+      if((zeiger-&gt;next =
+        malloc(sizeof(struct angestellt))) == NULL) {
+
+         fprintf(stderr, "Kein Speicherplatz fuer "
+                         "letztes Element\n");
+         return;
+      }
+      zeiger1=zeiger;
+
+      zeiger=zeiger-&gt;next; /* zeiger auf neuen Speicherplatz */
+      strcpy(zeiger-&gt;name,strtok(n, "\n"));
+      strcpy(zeiger-&gt;vorname,strtok(v, "\n"));
+      zeiger-&gt;alter.tag=at;
+      zeiger-&gt;alter.monat=am;
+      zeiger-&gt;alter.jahr=aj;
+      zeiger-&gt;eingest.tag=eint;
+      zeiger-&gt;eingest.monat=einm;
+      zeiger-&gt;eingest.jahr=einj;
+      zeiger-&gt;gehalt=g;</pre></div>
+<p>Auch am Anfang bleibt beim Hintenanhängen alles beim Alten &#8211; bis auf den <span class="clisting">zeiger1</span>, der wie <span class="clisting">zeiger</span> auf das momentan (noch) letzte Element zeigt. Anschließend verweist man den Zeiger <span class="clisting">zeiger</span> auf den neuen Speicherplatz, der zuvor mit <span class="clisting">malloc()</span> reserviert wurde (siehe Abbildung 21.24).</p>
+<div class="bildbox">
+<p><a name="IDA4QUQ"></a><a onClick="OpenWin('bilder/21_024.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_024.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.24    </strong>Ein neues Element wurde hinten mit einfacher Verkettung angefügt.</p>
+<p>Die weiteren Schritte zum Einfügen des neuen Elements sind:</p>
+<div class="listing"><pre class="prettyprint">      zeiger-&gt;next=NULL;
+      ende=zeiger;
+      zeiger-&gt;previous=zeiger1;
+      zeiger1-&gt;next=zeiger;
+    }</pre></div>
+<p>Der <span class="clisting">next</span>-Zeiger des neuen Elements bekommt den <span class="clisting">NULL</span>-Zeiger. Der <span class="clisting">ende</span>-Zeiger verweist auf das neue Element, da es das letzte Element in der Liste ist. Zusätzlich bekommt das neue Element auch die Adresse des Vorgängers, auf die <span class="clisting">zeiger1</span> verweist. Und <span class="clisting">zeiger1-&gt;next</span> bekommt noch die Adresse des neuen Elements <span class="clisting">zeiger</span> übergeben. Somit ergibt sich folgendes Bild:</p>
+<div class="bildbox">
+<p><a name="IDAZRUQ"></a><a onClick="OpenWin('bilder/21_025.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_025.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.25    </strong>Ein neues Element wurde hinten mit doppelter Verkettung angefügt.</p>
+<p>Schwieriger wird die nächste Funktion, nämlich das Löschen eines Elements in der Liste:</p>
+<div class="listing"><pre class="prettyprint">void loesche(char *wen) {
+   struct angestellt *zeiger, *zeiger1, *zeiger2;
+
+   /* Ist überhaupt ein Element vorhanden? */
+   if(anfang != NULL) {
+      /* Ist unser 1. Element das von uns gesuchte (wen[])? */
+      if(strcmp(anfang-&gt;name,wen) == 0) {
+         zeiger=anfang-&gt;next;
+         if(zeiger == NULL) {
+            free(anfang);
+            anfang=NULL;
+            ende=NULL;
+            return;
+         }
+         zeiger-&gt;previous=NULL;
+         free(anfang);
+         anfang=zeiger;
+      }</pre></div>
+<p>Die erste Möglichkeit: Das erste Element ist das gesuchte und soll gelöscht werden. Als Erstes lassen Sie einen Zeiger auf die zukünftige Anfangsdatei zeigen &#8211; natürlich vorausgesetzt, es ist mehr als ein Element vorhanden. Falls nicht (<span class="clisting">if(zeiger == NULL)</span>), wird die Anweisung der <span class="clisting">if</span>-Bedingung aktiv. Abbildung 21.26 zeigt den momentanen Stand.</p>
+<div class="bildbox">
+<p><a name="IDAGTUQ"></a><a onClick="OpenWin('bilder/21_026.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_026.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.26    </strong>Das erste Element in der Liste (»anfang«) soll gelöscht werden.</p>
+<p>Es wird davon ausgegangen, dass bereits mehrere Elemente in der Liste vorhanden sind. Also folgt nur noch:</p>
+<div class="listing"><pre class="prettyprint">zeiger-&gt;previous=NULL;
+free(anfang);
+anfang=zeiger;</pre></div>
+<p>... und schon ist das erste Element in der Liste gelöscht:</p>
+<div class="bildbox">
+<p><a name="IDARTUQ"></a><a onClick="OpenWin('bilder/21_027.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_027.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.27    </strong>Das erste Element in der Liste wurde gelöscht.</p>
+<p>Die zweite Möglichkeit ist, dass das zu löschende Element das letzte in der Liste ist:</p>
+<div class="listing"><pre class="prettyprint">      else if(strcmp(ende-&gt;name,wen) == 0) {
+         zeiger=ende-&gt;previous;
+         zeiger-&gt;next=NULL;
+         zeiger1=ende;
+         ende=zeiger;
+         free(zeiger1);
+      }</pre></div>
+<p>Da der Vorgang ähnlich wie beim ersten Element abläuft, kann dieser auf einem Blatt Papier zur Übung selbst aufgezeichnet werden.</p>
+<p>Weiter geht es mit der dritten Möglichkeit: Das zu löschende Element ist irgendwo zwischendrin:</p>
+<div class="listing"><pre class="prettyprint">      zeiger=anfang;
+      while(zeiger-&gt;next != NULL) {
+         zeiger1=zeiger-&gt;next;
+
+      /* Ist die Adresse von zeiger1 der gesuchte Name? */
+      if(strcmp(zeiger1-&gt;name,wen) == 0) {
+         /* Falls ja, dann ... */
+         zeiger-&gt;next=zeiger1-&gt;next;
+         zeiger2=zeiger1-&gt;next;
+         zeiger2-&gt;previous=zeiger;
+         free(zeiger1);
+         break;
+      }
+      zeiger=zeiger1;
+   }</pre></div>
+<p>Wir nehmen hier wieder an, dass das zu löschende Element gefunden wurde und dass es das zweite Element ist (im Bild mit <span class="ckursiv">del</span> gekennzeichnet):</p>
+<div class="bildbox">
+<p><a name="IDAFVUQ"></a><a onClick="OpenWin('bilder/21_028.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_028.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.28    </strong>Das Element, auf das »zeiger1« verweist, soll gelöscht werden.</p>
+<p><span class="clisting">zeiger1</span> verweist auf das zu löschende Element. Dieses Element muss jetzt ausgehängt werden. Die weiteren Schritte sind somit:</p>
+<div class="listing"><pre class="prettyprint">zeiger-&gt;next=zeiger1-&gt;next;</pre></div>
+<div class="bildbox">
+<p><a name="IDANVUQ"></a><a onClick="OpenWin('bilder/21_029.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_029.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.29    </strong>Zu löschendes Element zum Teil aushängen</p>
+<div class="listing"><pre class="prettyprint">zeiger2=zeiger1-&gt;next;</pre></div>
+<div class="bildbox">
+<p><a name="IDASVUQ"></a><a onClick="OpenWin('bilder/21_030.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_030.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.30    </strong>Ein Zeiger auf den Vorgänger des zu löschenden Elements</p>
+<div class="listing"><pre class="prettyprint">zeiger2-&gt;previous=zeiger;</pre></div>
+<div class="bildbox">
+<p><a name="IDAXVUQ"></a><a onClick="OpenWin('bilder/21_031.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_031.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.31    </strong>Das zu löschende Element wurde komplett ausgehängt.</p>
+<div class="listing"><pre class="prettyprint">free(zeiger1);</pre></div>
+<div class="bildbox">
+<p><a name="IDA2VUQ"></a><a onClick="OpenWin('bilder/21_032.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_032.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.32    </strong>Speicherplatz freigegeben</p>
+<p>Der Vorgang lässt sich anhand der Grafiken recht einfach nachvollziehen. Hier folgt die vollständige Funktion zur Übersicht:</p>
+<div class="listing"><pre class="prettyprint">/* Funktion zum Löschen einer Datei */
+void loesche(char *wen) {
+   struct angestellt *zeiger, *zeiger1, *zeiger2;
+
+   /* Ist überhaupt ein Element vorhanden? */
+   if(anfang != NULL) {
+      /* Ist unser 1. Element das von uns gesuchte (wen[])? */
+      if(strcmp(anfang-&gt;name,wen) == 0) {
+         zeiger=anfang-&gt;next;
+         if(zeiger == NULL) {
+            free(anfang);
+            anfang=NULL;
+            ende=NULL;
+            return;
+         }
+         zeiger-&gt;previous=NULL;
+         free(anfang);
+         anfang=zeiger;
+      }
+      /* Ist das letzte Element das von uns gesuchte? */
+      else if(strcmp(ende-&gt;name,wen) == 0) {
+         zeiger=ende-&gt;previous;
+         zeiger-&gt;next=NULL;
+         zeiger1=ende;
+         ende=zeiger;
+         free(zeiger1);
+      }
+      else {
+         /* Es ist nicht das 1. Element zu löschen.
+          * Wir suchen in der weiteren Kette, ob das zu
+          * löschende Element vorhanden ist. */
+         zeiger=anfang;
+         while(zeiger-&gt;next != NULL) {
+            zeiger1=zeiger-&gt;next;
+            /* Ist die Adresse von zeiger1
+             * der gesuchte Name? */
+            if(strcmp(zeiger1-&gt;name,wen) == 0) {
+               /* Falls ja, dann ... */
+               zeiger-&gt;next=zeiger1-&gt;next;
+               zeiger2=zeiger1-&gt;next;
+               zeiger2-&gt;previous=zeiger;
+               free(zeiger1);
+               break;
+            }
+            zeiger=zeiger1;
+         }
+      }
+   }
+   else
+      printf("Es sind keine Daten zum Loeschen vorhanden!!!\n");
+}</pre></div>
+<p>Die Funktionen <span class="clisting">eingabe()</span> und <span class="clisting">ausgabe()</span> müssen nicht verändert werden.</p>
+<p>Die Funktion <span class="clisting">loesche_alles()</span> ist ebenfalls relativ einfach umzuschreiben. Es muss lediglich die ganze Liste durchlaufen werden, und dabei müssen alle bis auf das erste und letzte Element gelöscht werden:</p>
+<div class="listing"><pre class="prettyprint">void loesche_alles(void) {
+   struct angestellt *zeiger, *zeiger1;
+
+   /* Ist überhaupt eine Liste zum Löschen vorhanden? */
+   if(anfang != NULL) {
+      /* Es ist eine vorhanden ... */
+      zeiger=anfang-&gt;next;
+      while(zeiger != NULL) {
+         zeiger1=anfang-&gt;next-&gt;next;
+         if(zeiger1 == NULL)
+            break;
+         anfang-&gt;next=zeiger1;
+         zeiger1-&gt;previous=anfang;
+         free(zeiger);
+         zeiger=zeiger1;
+      }</pre></div>
+<div class="bildbox">
+<p><a name="IDAQ0UQ"></a><a onClick="OpenWin('bilder/21_033.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_033.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.33    </strong>Momentane Zeigerstellung der Funktion »loesche_alles()«</p>
+<p>Die <span class="clisting">if</span>-Abfrage, ob der Zeiger <span class="clisting">zeiger1</span> auf <span class="clisting">NULL</span> zeigt, wird als Abbruchbedingung benutzt, da &#8211; falls das wahr sein sollte &#8211; nur noch zwei Elemente in der Liste vorhanden sind. Genauso gut hätten Sie dies mit der <span class="clisting">while</span>-Abfrage vornehmen können: <span class="clisting">while(zeiger-&gt;next != NULL)</span>. Zu dieser Funktion sehen wir uns den Ablauf an. Zuerst wird das Element, auf das <span class="clisting">zeiger</span> verweist, ausgehängt:</p>
+<div class="listing"><pre class="prettyprint">      anfang-&gt;next=zeiger1;
+      zeiger1-&gt;previous=anfang;</pre></div>
+<div class="bildbox">
+<p><a name="IDAE1UQ"></a><a onClick="OpenWin('bilder/21_034.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_034.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.34    </strong>Zu löschendes Element aushängen</p>
+<p>Danach kann der Speicherplatz, auf den <span class="clisting">zeiger</span> zeigt, mit <span class="clisting">free()</span> freigegeben werden. Es ergibt sich in Abbildung 21.35.</p>
+<div class="bildbox">
+<p><a name="IDAN1UQ"></a><a onClick="OpenWin('bilder/21_035.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_035.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.35    </strong>Speicherplatz wurde freigegeben.</p>
+<p>Hier endet die <span class="clisting">while</span>-Schleife, da <span class="clisting">zeiger1=anfang-&gt;next-&gt;next</span> jetzt auf <span class="clisting">NULL</span> zeigt. Jetzt müssen nur noch die letzten beiden Elemente in der Liste gelöscht werden:</p>
+<div class="listing"><pre class="prettyprint">      free(anfang);
+      free(ende);
+      anfang=NULL;
+      ende=NULL;</pre></div>
+<p>Dazu müssen Sie den Speicherplatz freigeben, auf den <span class="clisting">anfang</span> und <span class="clisting">ende</span> zeigen. Anschließend bekommen die Zeiger <span class="clisting">anfang</span> und <span class="clisting">ende</span> den <span class="clisting">NULL</span>-Zeiger. Die Funktion <span class="clisting">loesche_alles()</span> sieht komplett so aus:</p>
+<div class="listing"><pre class="prettyprint">void loesche_alles(void) {
+   struct angestellt *zeiger, *zeiger1;
+
+   /* Ist überhaupt eine Liste zum Löschen vorhanden? */
+   if(anfang != NULL) {
+      /* Es ist eine vorhanden ... */
+      zeiger=anfang-&gt;next;
+      while(zeiger != NULL) {
+         zeiger1=anfang-&gt;next-&gt;next;
+         if(zeiger1 == NULL)
+            break;
+         anfang-&gt;next=zeiger1;
+         zeiger1-&gt;previous=anfang;
+         free(zeiger);
+         zeiger=zeiger1;
+      }
+
+      /* Jetzt löschen wir erst den Anfang der Liste und
+       * dann das Ende der Liste. */
+      free(anfang);
+      free(ende);
+      anfang=NULL;
+      ende=NULL;
+      printf("Liste erfolgreich geloescht!!\n");
+   }
+   else
+      fprintf(stderr, "Keine Liste zum Loeschen vorhanden!!\n");
+}</pre></div>
+<p>Als Nächstes soll die Funktion <span class="clisting">sortiert_eingeben()</span> umgeschrieben werden, damit diese für doppelt verkettete Listen verwendet werden kann:</p>
+<div class="listing"><pre class="prettyprint">void sortiert_eingeben(char *n, char *v, int at, int am,
+                       int aj, int et, int em, int ej,
+                       long geh) {
+   struct angestellt *zeiger, *zeiger1;
+
+   /* Ist es das 1. Element der Liste? */
+   if(anfang==NULL)
+      anhaengen(n,v,at,am,aj,et,em,ej,geh);
+   /* Es ist nicht das 1. Element. Wir suchen nun so lange, bis
+    * das gesuchte Element gefunden wird oder wir auf NULL
+    * stoßen. */
+   else {
+      zeiger=anfang;
+      while(zeiger != NULL &amp;&amp; (strcmp(zeiger-&gt;name,n) &lt; 0 ) )
+         zeiger=zeiger-&gt;next;
+      /* Falls der Zeiger auf NULL zeigt, können wir
+       * unser Element hinten anhängen, da unser neues Element
+       * das "größte" zu sein scheint. */
+      if(zeiger==NULL)
+         anhaengen(n,v,at,am,aj,et,em,ej,geh);
+      /* Ist unser neues Element das kleinste und somit
+       * kleiner als das 1. Element, so müssen wir es an den
+       * Anfang hängen. */
+      else if(zeiger == anfang) {
+         anfang=malloc(sizeof(struct angestellt));
+         if(NULL == anfang) {
+            fprintf(stderr, "Kein Speicherplatz vorhanden!!!\n");
+            return;
+         }
+         strcpy(anfang-&gt;name,strtok(n, "\n") );
+         strcpy(anfang-&gt;vorname,strtok(v, "\n") );
+         anfang-&gt;alter.tag=at;
+         anfang-&gt;alter.monat=am;
+         anfang-&gt;alter.jahr=aj;
+         anfang-&gt;eingest.tag=et;
+         anfang-&gt;eingest.monat=em;
+         anfang-&gt;eingest.jahr=ej;
+         anfang-&gt;gehalt=geh;
+         anfang-&gt;next=zeiger;
+         anfang-&gt;previous=NULL;
+      }</pre></div>
+<p>Die Erklärung dafür, ob es sich hier um das einzige, das erste oder das letzte Element der Liste handelt, können Sie bei der Funktion <span class="clisting">anhaengen()</span> in Abschnitt 21.1, »Lineare Listen (einfach verkettete Listen)«, nachlesen. Viel interessanter ist es, wie ein Element irgendwo dazwischen eingefügt wird. Hier sehen Sie zunächst den weiteren Codeverlauf:</p>
+<div class="listing"><pre class="prettyprint">      else {
+         zeiger1=anfang;
+         /* Wir suchen das Element, das vor dem
+          * Zeiger zeiger steht. */
+         while(zeiger1-&gt;next != zeiger)
+            zeiger1=zeiger1-&gt;next;
+         zeiger=malloc(sizeof(struct angestellt));
+         if(NULL == zeiger) {
+            fprintf(stderr, "Kein Speicherplatz vorhanden!!!\n");
+            return;
+         }
+         strcpy(zeiger-&gt;name, strtok(n, "\n") );
+         strcpy(zeiger-&gt;vorname, strtok(v, "\n") );
+         zeiger-&gt;alter.tag=at;
+         zeiger-&gt;alter.monat=am;
+         zeiger-&gt;alter.jahr=aj;
+         zeiger-&gt;eingest.tag=et;
+         zeiger-&gt;eingest.monat=em;
+         zeiger-&gt;eingest.jahr=ej;
+         zeiger-&gt;gehalt=geh;
+         /* Wir fügen das neue Element ein */
+         zeiger-&gt;next=zeiger1-&gt;next;
+         zeiger-&gt;previous=zeiger1;
+         zeiger1-&gt;next=zeiger;
+         zeiger1-&gt;next-&gt;previous=zeiger;
+      } /* Ende else */</pre></div>
+<p>Wir gehen davon aus, dass die Position für das neue Element bereits ermittelt wurde und dass sich <span class="clisting">zeiger1</span> vor diesem Element befindet. Somit ergibt sich folgender Zustand:</p>
+<div class="bildbox">
+<p><a name="IDATCVQ"></a><a onClick="OpenWin('bilder/21_036.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_036.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.36    </strong>Neues Element einfügen</p>
+<p>Jetzt soll das neue Element, auf das <span class="clisting">zeiger</span> verweist, zwischen dem zweiten und dem dritten Element eingefügt werden. Die weiteren Schritte sind:</p>
+<div class="listing"><pre class="prettyprint">zeiger-&gt;next=zeiger1-&gt;next;</pre></div>
+<div class="bildbox">
+<p><a name="IDA1CVQ"></a><a onClick="OpenWin('bilder/21_037.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_037.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.37    </strong>Zeiger auf den Nachfolger des neuen Elements</p>
+<div class="listing"><pre class="prettyprint">zeiger-&gt;previous=zeiger1;</pre></div>
+<div class="bildbox">
+<p><a name="IDAADVQ"></a><a onClick="OpenWin('bilder/21_038.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_038.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.38    </strong>Zeiger auf den Vorgänger des neuen Elements</p>
+<div class="listing"><pre class="prettyprint">zeiger1-&gt;next=zeiger;
+zeiger1-&gt;next-&gt;previous=zeiger;</pre></div>
+<div class="bildbox">
+<p><a name="IDAHDVQ"></a><a onClick="OpenWin('bilder/21_039.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_039.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.39    </strong>Zeiger vom Vorgänger und Nachfolger zum neuen Element</p>
+<p>Das soll es vorerst mit dem Abschnitt »Doppelt verkettete Listen« gewesen sein. Wenn Sie folgende Ratschläge zu diesem Thema beherzigen, dürften keine Probleme zu erwarten sein:</p>
+<ul class="gp">
+<li>Wenn Sie Zeiger benutzen, müssen Sie immer darauf achten, dass diese auf einen gültigen Speicherbereich (Adresse) zeigen. Ein häufiges Missverständnis bei Zeigern ist es, dass z. B. mit <span class="clisting">zeiger1=zeiger</span> kein Wert an <span class="clisting">zeiger1</span> übergeben wird, sondern die Adresse, auf die <span class="clisting">zeiger</span> verweist. Daher empfiehlt es sich, so oft wie möglich Fehlerüberprüfungen einzubauen.</li>
+</ul>
+<ul class="gp">
+<li>Sie sollten aussagekräftige Namen für einen Zeiger verwenden. Beispiele: <span class="clisting">next</span>, <span class="clisting">previous</span>, <span class="clisting">anfang</span> oder <span class="clisting">ende</span>. Dies ist eine enorme Erleichterung, wenn das Programm Fehler hat und nach ihnen gesucht werden muss. Denn unter <span class="clisting">anfang-&gt;next=ende</span> können Sie sich mehr vorstellen als unter <span class="clisting">a&ndash;&gt;n=e</span>.</li>
+</ul>
+<ul class="gp">
+<li>Einer der häufigsten Fehler ist ein Zeiger, der auf einen unerlaubten Speicherplatz zeigt. Daher lohnt es, sich die Zeit zu nehmen, den Ablauf des Programms auf einem Stück Papier zu zeichnen, um ihn besser nachvollziehen zu können. Gerade bei doppelt verketteten Listen passiert es ziemlich schnell, dass Sie ein Glied der Kette vergessen. Meist wird dieser Fehler am Anfang gar nicht bemerkt, denn der Compiler kann bei Übersetzung des Programms ja noch nicht wissen, ob ein Zeiger ins Nirwana verweist.</li>
+</ul>
+<ul class="gp">
+<li>And last but not least: Sie sollten immer den Rückgabewert überprüfen, wenn Speicherplatz reserviert wird. Denn alles, was schiefgehen kann, wird irgendwann einmal schiefgehen.</li>
+</ul>
+<p>Das vollständige Listing (<span class="ckursiv">double_list.c</span>) finden Sie selbstverständlich auf der Buch-CD. Dem Listing wurden noch einige Funktionen, unter anderem das Laden oder Speichern von Daten auf der Festplatte, hinzugefügt.</p><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/021_c_dyn_datenstrukturen_002.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="21.2 Doppelt verkettete Listen"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="021_c_dyn_datenstrukturen_001.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="021_c_dyn_datenstrukturen_003.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/021_c_dyn_datenstrukturen_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:48:53 GMT -->
+</html>

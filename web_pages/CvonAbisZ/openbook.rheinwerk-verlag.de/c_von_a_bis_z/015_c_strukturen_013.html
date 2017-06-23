@@ -1,0 +1,633 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/015_c_strukturen_013.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:47:27 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 15.13 Bitfelder</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 15.13 Bitfelder">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 15.13 Bitfelder">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="015_c_strukturen_012.html">
+<link rel="next" href="015_c_strukturen_014.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="015_c_strukturen_012.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="015_c_strukturen_014.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8" class="navnav">15 Strukturen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_001.html#mj5746e9498f0b42b5da5195dd8d304f5a" class="navnav">15.1 Struktur deklarieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_002.html#mjd4e56d29fc8197ecf142897054517996" class="navnav">15.2 Initialisierung und Zugriff auf Strukturen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_003.html#mj5db2bd787482bd929c5e321891a6d042" class="navnav">15.3 Strukturen als Wertübergabe an eine Funktion</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_004.html#mjf0db0a41c8d7f11d8a8fa4f92433b986" class="navnav">15.4 Strukturen als Rückgabewert einer Funktion</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_005.html#mj690ceaadd170181a825217f1528a0056" class="navnav">15.5 Strukturen vergleichen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_006.html#mj558e0e4fc0892fc3f91cd810f7c07860" class="navnav">15.6 Arrays von Strukturen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_007.html#mjbab204931f0ac95af858355cf81e6bd5" class="navnav">15.7 Strukturen in Strukturen (Nested Structures)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_008.html#mj8bfb506f0c4b39cf342201743b62f422" class="navnav">15.8 Kurze Zusammenfassung zu den Strukturen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_009.html#mj9e030e6d45f3619a80b6814a2ba14bea" class="navnav">15.9 Unions</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_010.html#mj259bc5aff9087f7c3548408b56b74318" class="navnav">15.10 Der Aufzählungstyp »enum«</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_011.html#mjccb5a85ebc674dd49050598bbc9b7627" class="navnav">15.11 Typendefinition mit »typedef«</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_012.html#mj94f54125b03d214b3f10816feef043dc" class="navnav">15.12 Attribute von Strukturen verändern (nicht ANSI C)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mj2f57db5965c2ac0ab2c8d3d97f038272" class="navh">15.13 Bitfelder</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="015_c_strukturen_014.html#mjcf48a74fc6a32108952fa69f8833c964" class="navnav">15.14 Das »offsetof«-Makro</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mj2f57db5965c2ac0ab2c8d3d97f038272" name="mj2f57db5965c2ac0ab2c8d3d97f038272"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">15.13</span><span class="cfett"> Bitfelder</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Bitfelder sind Strukturelemente, die mit weniger als 1 Byte in eine Struktur gepackt werden können. Laut ANSI C müssen die einzelnen Elemente von Bitfeldern vom Datentyp <span class="clisting">int</span> oder <span class="clisting">unsigned int</span> sein.</p>
+<p>Als Beispiel soll hier ein Roboter für eine Fließbandproduktion programmiert werden. Der Roboter muss ein bestimmtes Produkt von Position A nach Position B transportieren. Dazu sind folgende Arbeitsabläufe erforderlich:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>1.</strong></td>
+<td valign="top" width="100%" align="left"> Produkt zum Befördern vorhanden (Sensor 1 = aktiv). Wenn ja …</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>2.</strong></td>
+<td valign="top" width="100%" align="left"> Produkt erfassen und hochheben und auf das Fließband legen. Wenn Produkt auf Fließband liegt (Sensor 2 = aktiv), dann ...</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>3.</strong></td>
+<td valign="top" width="100%" align="left"> Fließband bewegen (Schalter 1) und warten, bis Produkt beim Sensor 3 ankommt. Dann wieder prüfen, ob ein Produkt auf Sensor 1 vorhanden ist. Falls an Sensor 1 ein Produkt vorhanden ist, alles wieder von vorn.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<p>Dieser Vorgang soll auch überprüft werden, und bei einem Fehler wird ein Fehlercode ausgegeben, für den es eine entsprechende Stringtabelle gibt. Außerdem wird dazu eine Anzeige benötigt. Es wird davon ausgegangen, dass der Roboter bereits mit dem PC verbunden ist. Hier sehen Sie die Struktur des Roboters:</p>
+<div class="listing"><pre class="prettyprint">struct robo {
+   unsigned char sensor1;
+   unsigned char sensor2;
+   unsigned char sensor3;
+   unsigned char schalter;
+   unsigend int Ausgabe;
+} Roboter1;</pre></div>
+<p>Mit dieser Struktur benötigt der Roboter 48 Bits (6 Bytes bzw. 8 Bytes wegen des Alignments des Betriebssystems). Wenn jetzt noch mehrere Roboter hinzukommen, ist das eine Speicherplatzverschwendung, und Speicherplatz ist bei solchen Systemen meistens kostbar. Häufig ist bei solchen Automatisierungsrobotern nicht unbegrenzt Speicherplatz vorhanden. Bei den Sensoren und Schaltern benötigen Sie in der Regel nur zwei Schaltstellungen: 1 für »betätigt« und 0 für »unbetätigt«. In C ist es auch möglich, einzelne Bits einer Struktur mit sogenannten Bitfeldern anzusprechen.</p>
+<p>Die Deklaration eines solchen Bitfelds hat folgende Syntax:</p>
+<div class="listing"><pre class="prettyprint">Typ Elementname : Breite ;</pre></div>
+<p>Für den <span class="clisting">Typ</span> können Sie einen beliebigen Ganzzahltyp wie <span class="clisting">int</span>, <span class="clisting">signed int</span>, <span class="clisting">unsigned int</span> oder <span class="clisting">_Bool</span> verwenden. Sie können auch Typqualifizierer nutzen. Den <span class="clisting">Elementnamen</span> benötigen Sie, um auf das Bitfeld zugreifen zu können. Sie können auch ein anonymes Bitfeld ohne <span class="clisting">Elementnamen</span> definieren. Solche namenlosen Bitfelder dienen zum Auffüllen eines Bitfeldes, um die Bitzahl auf ein bestimmtes Rechnerwort einzustellen. Mit <span class="clisting">Breite</span> geben Sie die Anzahl der Bits an, die für das Element verwendet werden sollen. Hierbei muss ein ganzzahliger positiver Ausdruck verwendet werden. Ein Bitfeld mit einer Breite von <span class="clisting">n</span> kann außerdem <span class="clisting">2n</span> verschiedene Werte speichern.</p>
+<p>Solche Bitfelder haben außerdem den Vorteil, dass sie wie gewöhnliche Struktur- bzw. Union-Elemente mit dem Elementnamen angesprochen werden.</p>
+<p>Bezogen auf das Beispiel unseres Automatisierungsroboters sieht dies folgendermaßen aus:</p>
+<div class="listing"><pre class="prettyprint">struct robo {
+   unsigned int sensor1:1;
+   unsigned int sensor2:1;
+   unsigned int sensor3:1;
+   unsigned int schalter:1;
+   unsigned int Ausgabe:4;
+} Roboter1;</pre></div>
+<p>Jetzt benötigt die Struktur im Grunde nur noch acht Bits (ein Byte). Wenn Sie allerdings mit <span class="clisting">sizeof</span> prüfen, werden Sie feststellen, dass dieses Bitfeld trotzdem vier Byte belegt. Dies liegt daran, dass das kleinstmögliche Rechnerwort, das der Compiler für ein Bitfeld reserviert, <span class="clisting">sizeof(int)</span> groß ist. Die restlichen drei Bytes in diesem Beispiel sind praktisch leer. Gleiches gilt hierbei natürlich auch, wenn Sie beispielsweise ein Bitfeld mit 40 Bits (fünf Bytes) erstellen. Hier muss der Compiler ein weiteres Rechnerwort (<span class="clisting">sizeof(int)</span>) reservieren, sodass das fünfte Byte am Anfang des nächsten Rechnerworts liegt und somit insgesamt 8 Bytes benötigt werden.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Da Bitfelder keine adressierbare Speicherstelle belegen, können Sie hierbei weder den Adressoperator <span class="clisting">&amp;</span> noch das Makro <span class="clisting">offsetof</span> anwenden.</p>
+</td>
+</tr>
+</table><br><p>Hier sehen Sie das Beispiel dazu:</p>
+<div class="listing"><pre class="prettyprint">/* bitfields.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+enum{ OFF, ON };
+
+struct robo {
+   unsigned int Sensor1:1;
+   unsigned int Sensor2:1;
+   unsigned int Sensor3:1;
+   unsigned int Schalter:1;
+   unsigned int Ausgabe:4;
+} Roboter1;
+
+char *msg[7] = {
+   "Kein Signal an Sensor 1!\n",
+   "Kein Signal an Sensor 2!\n",
+   "Kein Signal an Sensor 3!\n",
+   "Schalter 1 nicht betätigt!\n",
+   "Notaus betätigt!\n",
+   "Kein Strom!\n"
+};
+
+int main(void) {
+   int anzahl;
+
+   do {
+       printf("Wie viele Produkte von Pos.A nach Pos.B : ");
+       do{ scanf("%d",&amp;anzahl); } while(getchar() != '\n');
+
+       while((anzahl&gt;0) &amp;&amp; (anzahl--)) {
+
+          /* Sollte durch echte Schnittstelle ersetzt werden. */
+          Roboter1.Sensor1=ON;
+          printf("Sensor 1 ist aktiv\n");
+          if(Roboter1.Sensor1 == ON)
+             printf("Produkt wird aufgenommen und "
+                    "zum Fließband transportiert\n");
+          else {
+
+             /* Fehler: Sensor 1 nicht aktiv
+              * Fehlermeldung ausgeben */
+             Roboter1.Ausgabe = 0;
+             printf("%s\n", msg[Roboter1.Ausgabe]);
+          }
+            /* Sollte durch echte Schnittstelle ersetzt werden. */
+             Roboter1.Sensor2=ON;
+             printf("Sensor 2 ist aktiv\n");
+             if(Roboter1.Sensor2 == ON) {
+                printf("Produkt ist auf dem Fließband\n");
+                printf("Bitte &gt;&gt;ENTER&lt;&lt; drücken"
+                       " für den Schalter\n");
+                getchar();
+                printf("Schalter ist eingeschaltet!\n");
+                /* Sollte durch echte Schnittstelle
+                 * ersetzt werden. */
+                Roboter1.Schalter=ON;
+             }
+             else {
+                Roboter1.Ausgabe=1;
+                printf("%s\n",msg[Roboter1.Ausgabe]);
+                Roboter1.Ausgabe=3;
+                printf("%s\n", msg[Roboter1.Ausgabe]);
+             }
+             /* Sollte durch echte Schnittstelle
+              * ersetzt werden. */
+             Roboter1.Sensor3=ON;
+             printf("Sensor 3 aktiv\n");
+             if(Roboter1.Sensor3 == ON) {
+                printf("Produkt am Ziel angekommen!\n");
+                printf("Schalter für Fließband auf OFF\n");
+                printf("Roboter wieder betriebsbereit\n");
+                printf("Weiter mit &gt;&gt;ENTER&lt;&lt;\n");
+                getchar();
+                Roboter1.Schalter=OFF;
+             }
+             else {
+                Roboter1.Ausgabe = 2;
+                printf("%s\n", msg[Roboter1.Ausgabe]);
+             }
+       }
+   } while(anzahl &gt; 0);
+   Roboter1.Sensor1=OFF;
+   Roboter1.Sensor2=OFF;
+   Roboter1.Sensor3=OFF;
+   Roboter1.Ausgabe=0;
+   printf("%s\n",msg[Roboter1.Ausgabe]);
+   return EXIT_SUCCESS;
+}</pre></div>
+<div class="bildbox">
+<p><a name="IDASTUQ"></a><a onClick="OpenWin('bilder/15_011.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein15_011.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 15.11    </strong>Der Roboter im Einsatz</p>
+<p>Dass die Struktur <span class="clisting">robo</span> hier vier Bytes und nicht ein Byte groß ist, liegt am Alignment des Betriebssystems. Hier kann der Speicherplatz mit dem Keyword <span class="clisting">attribute</span> oder dem Pragma <span class="clisting">pack</span> auf ein Byte zusammengepackt werden. Vorausgesetzt, der Compiler unterstützt dies:</p>
+<div class="listing"><pre class="prettyprint">//#pragma pack(1)
+struct robo {
+   unsigned Sensor1:1;
+   unsigned Sensor2:1;
+   unsigned Sensor3:1;
+   unsigned Schalter:1;
+   unsigned Ausgabe:4;
+} __attribute__ ((packed)) Roboter1;</pre></div>
+<p>Abbildung 15.12 zeigt diese Struktur nochmals schematisch.</p>
+<div class="bildbox">
+<p><a name="IDANUUQ"></a><a onClick="OpenWin('bilder/15_012.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein15_012.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 15.12    </strong>Bitbelegung der einzelnen Bitfelder der Struktur »robo«</p>
+<p>Das Dumme an diesem Beispiel ist, dass es zu gar nichts taugt, da keine Verbindung mit einem Roboter besteht. Zeilen wie</p>
+<div class="listing"><pre class="prettyprint">Roboter1.Sensor1=ON;
+
+Roboter1.Sensor2=ON;</pre></div>
+<p>müssen selbst eingegeben werden.</p>
+<p>Daher folgt jetzt ein ausführbares Beispiel, das zeigt, was eine Schnittstelle bzw. eine Adresse zum PC genau ist. Es wird der Druckerstatus am Port LPT1 überprüft. Das Listing ist nur unter MS-DOS ausführbar und nicht ANSI-C-konform:</p>
+<div class="listing"><pre class="prettyprint">/* check_printer.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;dos.h&gt;
+/* 0x378 ist die Adresse der Schnittstelle von LPT1. */
+#define LPT1_PORT 0x378
+
+struct status {
+   unsigned        :3;     /* Bit 0-2 nicht verwendet */
+   unsigned fehler :1;     /* 0=Druckerfehler         */
+   unsigned online :1;     /* 1=Drucker online        */
+   unsigned papier :1;     /* 1=kein Papier           */
+   unsigned empfang:1;     /* Empfangsbestätigung     */
+   unsigned busy   :1;     /* Drucker bereit          */
+} LPT1_status;
+
+/* Status am LPT1-Port auslesen */
+void druckerstatus(char *statuszeiger) {
+   *statuszeiger = inp( LPT1_PORT+1 ) &amp; 0xF8;
+}
+
+int main(void) {
+   druckerstatus( (char *) &amp;LPT1_status);
+   if(LPT1_status.busy &amp;&amp; LPT1_status.online) {
+      printf("Drucker ist bereit!\n");
+      return EXIT_SUCCESS;
+   }
+   else if(!LPT1_status.online)
+      printf("Drucker nicht online!\n");
+   else if(LPT1_status.papier)
+      printf("Kein Papier vorhanden!\n");
+   else
+      printf("Drucker ist nicht bereit!\n");
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Die Adresse <span class="clisting">0x378</span> stellt die Adresse des Ports LPT1 dar. Das Statusregister, das hier überprüft wird, sieht so intern aus, wie in Abbildung 15.13 dargestellt.</p>
+<p>Diese Struktur ähnelt der Struktur, die oben bei den Robotern verwendet wurde. Die Bits 0&#8211;2 werden nicht verwendet. Die Bits 3&#8211;7 geben anschließend den Status des Druckers zurück &#8211; je nachdem, welche Bits gesetzt sind und welche nicht. Die Funktion <span class="clisting">druckerstatus()</span> liefert den Status zurück. Neu ist bei diesem Programm:</p>
+<div class="listing"><pre class="prettyprint">unsigned:3;</pre></div>
+<p>Hiermit werden drei Bits ohne Namen definiert. Im Beispiel sind es die ersten drei Bits, die ungenutzt bleiben. Sie können im Programm nicht verwendet werden und werden als anonyme Bitfelder bezeichnet.</p>
+<div class="bildbox">
+<p><a name="IDAOXUQ"></a><a onClick="OpenWin('bilder/15_013.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein15_013.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 15.13    </strong>Bitbelegung eines Druckers am LPT1-Port unter MS-DOS</p><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/015_c_strukturen_013.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="15.13 Bitfelder"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="015_c_strukturen_012.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="015_c_strukturen_014.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/015_c_strukturen_013.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:47:33 GMT -->
+</html>

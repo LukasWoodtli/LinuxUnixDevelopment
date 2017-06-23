@@ -1,0 +1,1471 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/022_c_algorithmen_004.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:49:53 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 22.4 Suchalgorithmen &#8211; Grundlage zur Suche</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 22.4 Suchalgorithmen &#8211; Grundlage zur Suche">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 22.4 Suchalgorithmen &#8211; Grundlage zur Suche">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="022_c_algorithmen_003.html">
+<link rel="next" href="022_c_algorithmen_005.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="022_c_algorithmen_003.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="022_c_algorithmen_005.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4" class="navnav">22 Algorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_001.html#mjad955691d6bbeab76c26bebeb46bfb5b" class="navnav">22.1 Was sind Algorithmen?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_002.html#mjdd65482f3fdbcd022155b3035e6f070c" class="navnav">22.2 Wie setze ich Algorithmen ein?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_003.html#mja4d6cf19b9113d221e26e0a19eb4148c" class="navnav">22.3 Sortieralgorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj1fdda2148808601a86a54a7701775bec" class="navnav">22.3.1 »Selection Sort« &#8211; sortieren durch Auswählen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj925248949647af9ef7f16d215f433a8c" class="navnav">22.3.2 Insertion Sort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mje2d240f1f56f6186232f65773fc37070" class="navnav">22.3.3 Bubble Sort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj62f350471ff0f91a8910f6d0e6c5cf18" class="navnav">22.3.4 Shellsort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj035bded10a26be556df779f234784e89" class="navnav">22.3.5 Quicksort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mjde22312f4b61457b2efb0f9f17a7b269" class="navnav">22.3.6 qsort()</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mje59f09c2df1dfa3ec926ae230eb00d31" class="navnav">22.3.7 Zusammenfassung der Sortieralgorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mje1108bedaa52e56c3a2231952efc760d" class="navh">22.4 Suchalgorithmen &#8211; Grundlage zur Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjd215dedb31c115ea3fc6aa2a9f3b3377" class="navh">22.4.1 Lineare Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjc74f9bee71009b607d837f401fab37e1" class="navh">22.4.2 Binäre Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj50e751f674a269097a8f867476f4e6ab" class="navh">22.4.3 Binäre (Such-)Bäume</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj8a624d55f599e29effaab0089aa75a28" class="navh">22.4.4 Elemente im binären Baum einordnen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj0a5e3b9745ce4405d8764546050bed3b" class="navh">22.4.5 Binäre Bäume traversieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj4288fdcfb29e6adbcbf80c102c324f2f" class="navh">22.4.6 Löschen eines Elements im binären Baum</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjfe709ec1d375f55e7805e53ce79c7880" class="navh">22.4.7 Ein binärer Suchbaum in der Praxis</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjc0eebbc48d257496d83af8b5bcf3c5b9" class="navh">22.4.8 Binäre Suchbäume mit Eltern-Zeiger und Threads</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj86c6493733dadbfb1f7710f0a687b1ef" class="navh">22.4.9 Ausgeglichene Binärbäume</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjc53ab8c9ed2dac1cd824c4d3f972f754" class="navh">22.4.10 Algorithmen für ausgeglichene Bäume &#8211; eine Übersicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_005.html#mj0a40e081a9df138f149a2f446fb499fd" class="navnav">22.5 Hashing (Zerhacken)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjbd1d8614064df7a2d1f74b2322070197" class="navnav">22.5.1 Wann wird Hashing verwendet?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mj6b2e95378544d9975a8312b6bb884a8f" class="navnav">22.5.2 Was ist für das Hashing erforderlich?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjffda6918d10dabde4c2d29ebb835e371" class="navnav">22.5.3 Hash-Funktion</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mj19e26fc27715d5ff46edac5940f4d5ff" class="navnav">22.5.4 Hashing mit direkter Adressierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjf182065dfeada5efe09d22e63762605f" class="navnav">22.5.5 Vergleich von Hashing mit binären Bäumen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_006.html#mj73dd4e072f6667a0f887c5a613a4691d" class="navnav">22.6 String-Matching</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_006.html#mjf7d6e5fb93d300365b9df366326bcc13" class="navnav">22.6.1 Brute-Force-Algorithmus</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_006.html#mjaaad91c95f148185e8ca3b36d2f7a8ca" class="navnav">22.6.2 Der Algorithmus von Knuth/Morris/Pratt (KMP)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_006.html#mj6e6634183f974a372635540c36053fdb" class="navnav">22.6.3 Weitere String-Matching-Algorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_007.html#mjf4e645bb4920a03ebda8385b7b013724" class="navnav">22.7 Pattern Matching (reguläre Ausdrücke)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_008.html#mj949af93bc0dacf07baf688227fc46cbf" class="navnav">22.8 Backtracking</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_008.html#mj3bad29bcf42f5c904880c75110704913" class="navnav">22.8.1 Der Weg durch den Irrgarten</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_008.html#mjdf73b2552404835ed8da47e6fc60f70c" class="navnav">22.8.2 Das 8-Dame-Problem</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mje1108bedaa52e56c3a2231952efc760d" name="mje1108bedaa52e56c3a2231952efc760d"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">22.4</span><span class="cfett"> Suchalgorithmen &#8211; Grundlage zur Suche</span>  <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Eine weitere grundlegende Arbeit, die ein PC zu verrichten hat, ist die Suche nach Daten. Daten mit bestimmten Informationen müssen aus einer großen Menge gespeicherter Informationen gefunden werden. Ein gutes Beispiel für die Suche ist eine Suchmaschine wie beispielsweise <span class="ckursiv">google.de</span>, die sich mittlerweile zu einer der schnellsten und besten Suchmaschinen gemausert hat, und zwar dank eines Top-Algorithmus.</p>
+<p>Idealerweise verfügt jeder Datensatz unter anderem auch über einen bestimmten Schlüssel. Er wird bei der Suche nach einem Datensatz verwendet, beispielsweise so:</p>
+<div class="listing"><pre class="prettyprint">struct data {
+   char ort[MAX];
+   unsigned int postleitzahlen;
+};</pre></div>
+<p>Dieses Beispiel stellt ein Verzeichnis für Postleitzahlen dar. Der Schlüssel ist in diesem Fall die Postleitzahl. Wird die Postleitzahl gefunden, gibt die Suche den zugehörigen Ort aus. Eine Voraussetzung der Suche ist natürlich ein vorangegangenes Sortieren. Schließlich werden Daten ja sortiert, um sich die Suche zu erleichtern.</p>
+<p>Mithilfe der Suche lassen sich folgende Operationen durchführen:</p>
+<ul class="gp">
+<li>Daten initialisieren</li>
+</ul>
+<ul class="gp">
+<li>Daten einfügen</li>
+</ul>
+<ul class="gp">
+<li>Daten löschen</li>
+</ul>
+<ul class="gp">
+<li>Daten sortieren</li>
+</ul>
+<p>Anhand dieser Operationen können Sie erkennen, dass ohne Suche kaum eine richtige Datenorganisation möglich ist.</p><a id="mjd215dedb31c115ea3fc6aa2a9f3b3377" name="mjd215dedb31c115ea3fc6aa2a9f3b3377"></a><a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t32"></a><h3 class="t3"><span class="cfett">22.4.1</span><span class="cfett"> Lineare Suche</span>  <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Die einfachste und bequemste Form der Suche von Daten ist die lineare Suche (sequenzielle Suche). Bei der sequenziellen Suche werden die Daten vom Anfang bis zum Ende durchlaufen, bis ein Datensatz mit dem Suchergebnis übereinstimmt. Die lineare Suche hat folgende Vorteile:</p>
+<ul class="gp">
+<li>einfachste Implementierung und Erstellung mit verketteten Listen oder Arrays</li>
+</ul>
+<ul class="gp">
+<li>Es kann auch in nicht sortierten Daten gesucht werden.</li>
+</ul>
+<ul class="gp">
+<li>Eine bereits sortierte Liste bleibt auch dann sortiert, wenn ein neues Element eingefügt wird.</li>
+</ul>
+<p>Der Nachteil der linearen Suche ist klar &#8211; bei einem großen Datensatz dauert die Suche ein wenig länger &#8211; speziell dann, wenn sich das gesuchte Element am Ende der Liste befindet. Hier sehen Sie ein einfaches Beispiel für eine sequenzielle Suche:</p>
+<div class="listing"><pre class="prettyprint">/* simple_search.c */
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAX 255
+
+struct plz{
+   char ort[MAX];
+   unsigned int postleit;
+};
+
+struct plz postleitzahlen[100];
+static int N;
+
+/* initialisieren */
+void init(void) {
+   N = 0;
+   postleitzahlen[N].postleit = 0;
+   strcpy(postleitzahlen[N].ort, "init");
+}
+
+void einfuegen(unsigned int p, char *o) {
+   postleitzahlen[++N].postleit = p;
+   strcpy(postleitzahlen[N].ort, o);
+}
+
+void suche(unsigned int key) {
+   int i;
+   for(i=0; i&lt;=N; i++)
+   if(postleitzahlen[i].postleit == key) {
+      printf("Der Ort zur Postleitzahl %d : %s\n",
+         key,postleitzahlen[i].ort);
+      return;
+   }
+   printf("Für den Wert %d konnte keine Postleitzahl "
+          "gefunden werden!\n",key);
+}
+
+int main(void) {
+   int wahl;
+   unsigned int search, post;
+   char new_ort[MAX];
+   init();
+
+   do {
+      printf("-1- Postleitzahl suchen\n");
+      printf("-2- Postleitzahl hinzufuegen\n");
+      printf("-3- Ende\n\n");
+      printf("Ihre Wahl : ");
+      scanf("%d",&amp;wahl);
+      getchar();
+
+      if(wahl == 1) {
+         printf("Welche Postleitzahl suchen Sie : ");
+         scanf("%5u",&amp;search);
+         suche(search);
+      }
+      else if(wahl == 2) {
+         printf("Neue Postleitzahl : ");
+         scanf("%5u",&amp;post);
+         getchar();
+         printf("Ort für PLZ %d : ",post);
+         fgets(new_ort, MAX, stdin);
+         einfuegen(post, strtok(new_ort, "\n") );
+      }
+   } while(wahl!=3);
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Natürlich kann die Suche auch so verändert werden, dass zu einem Ort die Postleitzahl gesucht wird. Dazu muss nur die Suchfunktion ein wenig umgeschrieben werden:</p>
+<div class="listing"><pre class="prettyprint">void suche(char *o) {
+   int n=N;
+   int i;
+   for(i=0; i&lt;=N; i++)
+      if(strcmp(postleitzahlen[i].ort,o) == 0) {
+         printf("Der Ort zur Postleitzahl %d : %s\n",
+            key,postleitzahlen[i].ort);
+         return;
+      }
+   printf("Für den Wert %s konnte keine Postleitzahl "
+          "gefunden werden!\n",o);
+}</pre></div>
+<p>In den einfachsten Fällen &#8211; bei wenigen Daten &#8211; dürfte die lineare Suche völlig ausreichend sein.</p><a id="mjc74f9bee71009b607d837f401fab37e1" name="mjc74f9bee71009b607d837f401fab37e1"></a><a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t33"></a><h3 class="t3"><span class="cfett">22.4.2</span><span class="cfett"> Binäre Suche</span>  <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Die binäre Suche eignet sich sehr gut bei etwas größeren Datensätzen. Sie arbeitet nach dem Prinzip »Teile und herrsche«. Der vollständige Datensatz wird (sortiert!) in zwei Teile zerlegt. Ist das aktuelle Element größer als das gesuchte, wird mit dem Element, das links vom aktuellen Element liegt, verglichen. Ist das aktuelle kleiner, wird mit dem Element rechts verglichen. Ist die Suche erfolglos, wird die Liste wieder in zwei Teile aufgeteilt &#8211; natürlich unter der Bedingung, dass das Element in der Mitte größer oder kleiner als das gesuchte ist. Im schlechtesten Fall wird das erste oder das letzte Element gesucht.</p>
+<p>Diese Art der Suche scheint für reine Suchergebnisse optimal zu sein. Sollten Sie aber vorhaben, Elemente in den Datensatz einzufügen, ist das schnelle Suchergebnis wieder dahin. Beim Einfügen eines neuen Elements muss wieder dafür gesorgt sein, dass die Liste sortiert bleibt.</p>
+<p>Hierzu folgt das Beispiel, das voraussetzt, dass die Liste bereits sortiert ist. Eine Sortierfunktion können Sie ja zur Übung selbst implementieren.</p>
+<div class="listing"><pre class="prettyprint">/* bin_search.c */
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAX 255
+
+struct plzn{
+   char ort[MAX];
+   unsigned int plz;
+};
+
+struct plzn postleitzahlen[100];
+static int N;
+
+/* initialisieren */
+void init(void) {
+   N = 0;
+   postleitzahlen[N].plz = 0;
+   strcpy(postleitzahlen[N].ort, "dummy");
+}
+
+void einfuegen(unsigned int p, char *o) {
+   postleitzahlen[++N].plz = p;
+   strcpy(postleitzahlen[N].ort, o);
+}
+
+int binaere_suche(unsigned int key) {
+   int l=1;
+   int r=N;
+   int x;
+
+   while(r &gt;= l) {
+      x=(l+r)/2;
+      if(key &lt; postleitzahlen[x].plz) /* kleiner? */
+         r=x-1;  /* Rechte Seite ist nicht mehr so interessant. */
+       else      /* dann halt größer */
+         l=x+1;  /* Linke Seite ist nicht mehr so interessant. */
+       if(key == postleitzahlen[x].plz)
+          return x;     /* gefunden; x = Position */
+   }
+   return -1; /* nicht gefunden */
+}
+
+int main(void) {
+   int wahl, ret;
+   unsigned int search, post;
+   char new_ort[MAX];
+
+   init();
+   do {
+      printf("-1- Postleitzahl suchen\n");
+      printf("-2- Postleitzahl hinzufuegen\n");
+      printf("-3- Ende\n\n");
+      printf("Ihre Wahl : ");
+      scanf("%d",&amp;wahl);
+      getchar();
+      if(wahl == 1) {
+         printf("Welche Postleitzahl suchen Sie : ");
+         scanf("%5u",&amp;search);
+         ret=binaere_suche(search);
+         if(ret == -1)
+            printf("Kein Ergebnis auf Ihre Anfrage!\n");
+         else
+            printf("Die Antwort auf %d : "
+                   "%s\n",search,postleitzahlen[ret].ort);
+      }
+      else if(wahl == 2) {
+         printf("Neue Postleitzahl : ");
+         scanf("%5u",&amp;post);
+         getchar();
+         printf("Ort für PLZ %d : ",post);
+         fgets(new_ort, MAX, stdin);
+         einfuegen(post, strtok(new_ort, "\n") );
+      }
+   } while(wahl!=3);
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Die binäre Suche eignet sich also für eine kleinere, bereits sortierte Datenmenge hervorragend.</p><a id="mj50e751f674a269097a8f867476f4e6ab" name="mj50e751f674a269097a8f867476f4e6ab"></a><a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t34"></a><h3 class="t3"><span class="cfett">22.4.3</span><span class="cfett"> Binäre (Such-)Bäume</span>  <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Binäre Suchbäume dürfen wohl als <span class="ckursiv">die</span> Methode der Informatik schlechthin angesehen werden. Binäre Bäume sind im Prinzip den verketteten Listen sehr ähnlich, allerdings mit dem Unterschied, dass binäre Bäume nicht linear angeordnet sind. Hierzu zwei Grafiken, die das verdeutlichen sollen:</p>
+<div class="bildbox">
+<p><a name="IDAC1UQ"></a><a onClick="OpenWin('bilder/22_016.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_016.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.16    </strong>Doppelt verkettete Liste</p>
+<div class="bildbox">
+<p><a name="IDAG1UQ"></a><a onClick="OpenWin('bilder/22_017.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_017.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.17    </strong>Binärer Baum</p>
+<p>Welchen Vorteil bietet hierbei der binäre Baum? Am besten ist, Sie zählen die Schritte, die benötigt werden, um vom Anfang des Baums bis zum Wert 5 zu gelangen. Dasselbe machen Sie jetzt mit der verketteten Liste. Der Anfang (Wurzel) beim binären Baum ist hier die Ziffer 3. Mit binären Suchbäumen lassen sich also die Suchwege erheblich verkürzen. Bei solch kleinen Beispielen ist das nicht der Rede wert, aber je größer der Datenbestand wird, desto stärker wirkt sich dies auf die Performance aus.</p>
+<p>Zudem ist bei der grafischen Darstellung des binären Baums auffällig, dass alle Werte, die sich auf der linken Seite befinden, kleiner sind, und dass sich die größeren Werte auf der rechten Seite befinden. Aber dazu gleich mehr.</p>
+<h4 class="t4"><span class="cfett">Grundbegriffe von binären Bäumen</span></h4>
+<p>Der Begriff <span class="ckursiv">Baum</span> (engl. <span class="ckursiv">Tree</span>) wurde hier verwendet, da diese Struktur die Form eines Baums hat, der allerdings auf den Kopf gestellt ist. Auch die einzelnen Elemente heißen ähnlich wie die eines Baums. Bäume sind hierarchische Datenstrukturen, die folgendermaßen aufgeteilt werden:</p>
+<div class="bildbox">
+<p><a name="IDAT1UQ"></a><a onClick="OpenWin('bilder/22_018.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_018.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.18    </strong>Gliederung eines binären Baums</p>
+<p>Ein Baum besteht aus folgenden Elementen:</p>
+<ul class="gp">
+<li><span class="ckursiv">Wurzel</span> (engl. <span class="ckursiv">root</span>) &#8211; Dieser Knoten ist der einzige, der keinen Vorgänger besitzt. Wie bei einem echten Baum können Sie sich das als Wurzel vorstellen &#8211; nur dass in der Informatik die Wurzel oben ist.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Ast, Kante</span> (engl. <span class="ckursiv">edges</span>) &#8211; Jeder Baum besteht aus einzelnen Knoten, die mit einem Ast verbunden sind.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Knoten</span> (engl. <span class="ckursiv">node</span>) &#8211; Knoten sind die eigentlichen Elemente, die über alle Informationen wie Daten und Zeiger zum rechten und linken Knoten verfügen. Ein Knoten ist die Struktur selbst. Beim binären Baum hat jeder Knoten nicht mehr als zwei Nachfolger (daher auch »bi« = zwei). Es gibt zwar auch Bäume mit mehreren Nachfolgern, allerdings handelt es sich dann nicht mehr um einen binären Baum.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Blatt</span> (engl. <span class="ckursiv">leaf</span>  ) &#8211; Blätter sind Knoten, die keinen Nachfolger besitzen.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Teilbaum</span> &#8211; Ein Knoten mit einem linken und einem rechten Nachfolger wird als Teilbaum bezeichnet.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Tiefe</span> (engl. <span class="ckursiv">level</span>) &#8211; Als Tiefe wird die Anzahl der Nachfolgeroperationen bezeichnet, die erforderlich sind, um von der Wurzel des Baums zu einem bestimmten Knoten zu gelangen. Die Tiefe <span class="clisting">n</span> kann dann 2n &#8211;1 einzelne Knoten beinhalten.</li>
+</ul>
+<p>Mit diesem Grundwissen können Sie beginnen, einen binären Baum zu programmieren. Zuerst wird die Struktur eines Knotens benötigt:</p>
+<div class="listing"><pre class="prettyprint">struct knoten {
+   int wert;
+   struct knoten *links;
+   struct knoten *rechts;
+};</pre></div>
+<p>Damit der Umfang des Beispiels nicht zu sehr anwächst, begnügen wir uns hier mit der Eingabe eines Werts (<span class="clisting">int wert</span>) in die Struktur. Außer dem <span class="clisting">int</span>-Wert besitzt die Struktur noch jeweils einen Zeiger auf den linken und einen auf den rechten Nachfolger des Knotens. Somit können Sie sich die Struktur vom Typ <span class="clisting">knoten</span> so vorstellen:</p>
+<div class="bildbox">
+<p><a name="IDAR4UQ"></a><a onClick="OpenWin('bilder/22_019.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_019.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.19    </strong>Die Datenstruktur eines binären Baumes</p><a id="mj8a624d55f599e29effaab0089aa75a28" name="mj8a624d55f599e29effaab0089aa75a28"></a><a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t35"></a><h3 class="t3"><span class="cfett">22.4.4</span><span class="cfett"> Elemente im binären Baum einordnen</span>  <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Als Erstes wird eine Funktion benötigt, mit der Werte in den binären Baum eingeordnet werden. Die kleineren Werte sollen dabei immer auf der linken Seite und die größeren Werte auf der rechten Seite eingeordnet werden. Hier folgt nochmals die Struktur. Es wurde außerdem mit <span class="clisting">typedef</span> ein neuer Datentyp namens <span class="clisting">KNOTEN</span> definiert:</p>
+<div class="listing"><pre class="prettyprint">struct knoten   {
+   int wert;
+   struct knoten *links;
+   struct knoten *rechts;
+};
+
+typedef struct knoten KNOTEN;
+
+KNOTEN *einordnen(KNOTEN *zeiger) {
+   //----&gt;Funktionen ...</pre></div>
+<p>Folgende drei Möglichkeiten können beim Einordnen in den binären Baum auftreten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>1.</strong></td>
+<td valign="top" width="100%" align="left"> Es befindet sich noch kein Element (genauer: es fehlt noch die Wurzel &#8211; root) im Baum, und das eingefügte ist das erste Element und somit die Wurzel des Baums:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">
+<div class="listing"><pre class="prettyprint">   if(zeiger==NULL) {
+      zeiger=(KNOTEN*)malloc(sizeof(KNOTEN));
+      zeiger-&gt;wert=zahl;
+      zeiger-&gt;links=zeiger-&gt;rechts=NULL;
+   }</pre></div></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>2.</strong></td>
+<td valign="top" width="100%" align="left"> Der neue Wert ist kleiner als die Wurzel bzw. bei weiterem Verlauf kleiner als der Knoten, und somit wird der neue Wert links von der Wurzel bzw. dem Knoten eingeordnet:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">
+<div class="listing"><pre class="prettyprint">   else if(zeiger-&gt;wert &gt;= zahl)
+      zeiger-&gt;links=einordnen(zeiger-&gt;links);</pre></div>
+Hier erfolgt der erste rekursive Aufruf. Der Zeiger <span class="clisting">zeiger</span>, der nach <span class="clisting">links</span> verweist, erhält die Adresse <span class="clisting">links</span> vom aktuellen Knoten durch einen erneuten Funktionsaufruf mit <span class="clisting">einordnen(zeiger-&gt;links)</span>. Dieser erneute Funktionsaufruf muss natürlich noch nicht die Adresse zurückliefern. Der Baum wird so lange weiter nach unten abgesucht, bis ein passender Platz gefunden wurde.</td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>3.</strong></td>
+<td valign="top" width="100%" align="left"> Die dritte und letzte Möglichkeit: Der Wert des neuen Elements ist größer als die Wurzel bzw. der Knoten. Somit kommt dieses auf die rechte Seite der Wurzel bzw. des Knotens:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">
+<div class="listing"><pre class="prettyprint">   else if(zeiger-&gt;wert &lt; zahl)
+      zeiger-&gt;rechts=einordnen(zeiger-&gt;rechts);</pre></div>
+Trifft die zweite oder dritte Möglichkeit zu, wird der Baum so lange nach rechts oder links durchlaufen (durch weitere rekursive Aufrufe), bis keine der beiden Möglichkeiten mehr zutrifft. Dann wurde der Platz für das neue Element gefunden.</td>
+</tr>
+</table>
+<p>Hier sehen Sie die vollständige Funktion zum Einordnen eines neuen Elements in den binären Baum mitsamt der <span class="clisting">main()</span>-Funktion:</p>
+<div class="listing"><pre class="prettyprint">/* btree1.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct knoten{
+   int wert;
+   struct knoten *links;
+   struct knoten *rechts;
+};
+typedef struct knoten KNOTEN;
+
+/* globale Variable */
+int zahl;
+
+KNOTEN *einordnen(KNOTEN *zeiger)  {
+   if(zeiger == NULL) {
+      zeiger = malloc(sizeof(KNOTEN));
+      if(zeiger==NULL) {
+         printf("Konnte keinen Speicherplatz reservieren!\n");
+         exit (EXIT_FAILURE);
+      }
+      zeiger-&gt;wert=zahl;
+      zeiger-&gt;links=zeiger-&gt;rechts=NULL;
+   }
+   else if(zeiger-&gt;wert &gt;= zahl)
+      zeiger-&gt;links=einordnen(zeiger-&gt;links);
+   else if(zeiger-&gt;wert &lt; zahl)
+      zeiger-&gt;rechts=einordnen(zeiger-&gt;rechts);
+   return (zeiger);
+}
+
+int main(void) {
+   KNOTEN *wurzel=NULL;
+
+   do {
+      printf("Bitte Zahl eingeben : ");
+      scanf("%d",&amp;zahl);
+      wurzel=einordnen(wurzel);
+   } while(zahl != 0);
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Nun betrachten wir den theoretischen Ablauf des Programms: Das Programm wurde gestartet, und der erste Wert sei die 10. Jetzt wird mit <span class="clisting">wurzel=einordnen(wurzel)</span> die Funktion aufgerufen. Bei der ersten Eingabe trifft gleich die erste <span class="clisting">if</span>-Bedingung zu:</p>
+<p><span class="clisting">if(zeiger == NULL)</span></p>
+<p>Womit die Zahl 10 das erste Element und gleichzeitig die Wurzel des Baums ist. Die beiden Zeiger <span class="clisting">links</span> und <span class="clisting">rechts</span> bekommen den <span class="clisting">NULL</span>-Zeiger zugewiesen:</p>
+<div class="bildbox">
+<p><a name="IDA3DVQ"></a><a onClick="OpenWin('bilder/22_020.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_020.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.20    </strong>Die Wurzel des Baums</p>
+<p>Als Nächstes sei die Zahl 8 gegeben. Wieder wird über die <span class="clisting">main()</span>-Funktion die Funktion <span class="clisting">einordnen()</span> aufgerufen. Dieses Mal ist es aber (<span class="clisting">zeiger==NULL</span>) falsch, denn das erste Element bzw. die Wurzel des Baums ist die Zahl 10. Die nächste <span class="clisting">else if</span>-Bedingung ist:</p>
+<div class="listing"><pre class="prettyprint">else if(zeiger-&gt;wert &gt;= zahl)</pre></div>
+<p>Das trifft zu, denn <span class="clisting">zeiger-&gt;wert</span> (10) ist größer als die eingegebene Zahl. Es folgt der erste Funktionsselbstaufruf:</p>
+<div class="listing"><pre class="prettyprint">zeiger-&gt;links=einordnen(zeiger-&gt;links);</pre></div>
+<p>Jetzt soll der Zeiger <span class="clisting">zeiger</span>, der auf <span class="clisting">links</span> verweist, die Adresse vom erneuten Funktionsaufruf <span class="clisting">einordnen(zeiger-&gt;links)</span> zugewiesen bekommen. Alles beginnt wieder von vorn:</p>
+<div class="listing"><pre class="prettyprint">if(zeiger==NULL)</pre></div>
+<p>Und tatsächlich zeigt der Zeiger <span class="clisting">zeiger</span> jetzt auf <span class="clisting">NULL</span>, da er ja zuvor durch den erneuten Aufruf die Adresse von der linken Seite des ersten Elements (10) erhalten hat. Also wird erst Speicher alloziert und dann das neue Element eingefügt. Der linke und der rechte Zeiger des neuen Elements bekommen wieder jeweils den <span class="clisting">NULL</span>-Zeiger zugewiesen:</p>
+<div class="bildbox">
+<p><a name="IDA4EVQ"></a><a onClick="OpenWin('bilder/22_021.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_021.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.21    </strong>Kleinere Elemente wie die Wurzel kommen auf die linke Seite.</p>
+<p>Als Nächstes sei die Zahl 9 gegeben. Im ersten Durchlauf wird</p>
+<div class="listing"><pre class="prettyprint">else if(zeiger-&gt;wert &gt;= zahl)
+   zeiger-&gt;links=einordnen(zeiger-&gt;links);</pre></div>
+<p>wie schon zuvor ausgeführt. Jetzt verweist der Zeiger <span class="clisting">zeiger</span> auf die Adresse mit dem Wert 8. Also ist <span class="clisting">zeiger==NULL</span> nicht wahr, und die Bedingung</p>
+<div class="listing"><pre class="prettyprint">else if(zeiger-&gt;wert &gt;= zahl)</pre></div>
+<p>ist auch nicht wahr, denn <span class="clisting">zeiger-&gt;wert</span> (8) ist dieses Mal nicht größer oder gleich der aktuellen Zahl (9). Die nächste <span class="clisting">else if</span>-Anweisung</p>
+<div class="listing"><pre class="prettyprint">else if(zeiger-&gt;wert &lt; zahl)</pre></div>
+<p>ist jetzt wahr, denn (8 &lt; 9) trifft zu. Dies ist der zweite rekursive Funktionsaufruf (einer liegt ja schon auf dem Stack):</p>
+<div class="listing"><pre class="prettyprint">zeiger-&gt;rechts=einordnen(zeiger-&gt;rechts);</pre></div>
+<p>Jetzt bekommt der Zeiger <span class="clisting">zeiger</span>, der auf <span class="clisting">rechts</span> verweist, die Adresse von <span class="clisting">einordnen(zeiger-&gt;rechts)</span>. Das ist übrigens auch der Grund, weshalb die Funktion einen Rückgabewert vom Typ <span class="clisting">KNOTEN *</span> hat. Auf zum erneuten Durchlauf der Funktion: <span class="clisting">zeiger==NULL</span> trifft jetzt zu, also wurde der Platz für das neue Element gefunden:</p>
+<div class="bildbox">
+<p><a name="IDA5FVQ"></a><a onClick="OpenWin('bilder/22_022.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_022.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.22    </strong>Das neue Element ist kleiner als die Wurzel, 
+aber größer als der Nachfolgerknoten.</p>
+<p>Als Nächstes sei die Zahl 20 gegeben. Hierzu soll eine Grafik genügen, die Sie als Übung selbst durchgehen können:</p>
+<div class="bildbox">
+<p><a name="IDAGGVQ"></a><a onClick="OpenWin('bilder/22_023.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_023.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.23    </strong>Elemente, die größer als die Wurzel sind, kommen auf die rechte Seite.</p><a id="mj0a5e3b9745ce4405d8764546050bed3b" name="mj0a5e3b9745ce4405d8764546050bed3b"></a><a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t36"></a><h3 class="t3"><span class="cfett">22.4.5</span><span class="cfett"> Binäre Bäume traversieren</span>  <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Die einzelnen Knoten, die zuvor erzeugt wurden, werden nun besucht bzw. in diesem Fall ausgeben. Dies wird <span class="ckursiv">Traversieren der Bäume</span> genannt. Es gibt zwei gängige Möglichkeiten, die Bäume zu traversieren. Zur Demonstration wird der eben erstellte binäre Baum verwendet:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>1.</strong></td>
+<td valign="top" width="100%" align="left"> Die erste Variante ist die Preorder-Traversierung. Gemäß der Preorder-Traversierung wird zuerst die Wurzel mit dem Wert 10 besucht, anschließend der Knoten mit dem Wert 8. Es folgt der Knoten mit dem Wert 9. Als Letztes wird der Knoten mit dem Wert 20 besucht. Diese Preorder-Taktik läuft wie folgt ab: »Besuche die Wurzel, dann besuche den linken Unterbaum, als Nächstes besuche den rechten Unterbaum.« Die Funktion, die das Verfahren realisiert, sieht so aus:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">
+<div class="listing"><pre class="prettyprint">void zeige_baum(KNOTEN *zeiger) {
+   if(zeiger != NULL) {
+      printf("\n%d-&gt;",zeiger-&gt;wert);
+      zeige_baum(zeiger-&gt;links);
+      zeige_baum(zeiger-&gt;rechts);
+   }
+}</pre></div></td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>2.</strong></td>
+<td valign="top" width="100%" align="left"> Die zweite Möglichkeit ist die sogenannte Inorder-Traversierung. Bei dieser Möglichkeit werden die Knoten in folgender Reihenfolge besucht:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">
+<div class="listing"><pre class="prettyprint">8-&gt;9-&gt;10-&gt;20</pre></div>
+im Gegensatz zum Preorder:
+<div class="listing"><pre class="prettyprint">10-&gt;8-&gt;9-&gt;20</pre></div>
+Daraus lässt sich folgende Inorder-Taktik konstatieren: »Besuche den linken Unterbaum, dann besuche die Wurzel, und besuche zuletzt den rechten Unterbaum.« Die Funktion der Inorder-Taktik sieht dann wie folgt aus:
+<div class="listing"><pre class="prettyprint">void zeige_baum(KNOTEN *zeiger) {
+   if(zeiger != NULL) {
+      zeige_baum(zeiger-&gt;links);
+      printf("\n%d-&gt;",zeiger-&gt;wert);
+      zeige_baum(zeiger-&gt;rechts);
+   }
+}</td>
+</tr>
+</table>
+<p>Es ist kaum eine Änderung zur Preorder-Traversierung festzustellen, nur dass bei der Inorder-Traversierung zuerst mit dem am weitesten links unten liegenden Knoten oder Blatt angefangen wird und beim Preorder mit der Wurzel.</p>
+<p>Es gibt noch eine dritte Möglichkeit: »Besuche den linken Unterbaum, besuche den rechten Unterbaum und dann besuche die Wurzel.« Diese Methode benötigen Sie eigentlich nur bei Postfix-Notationen.</p><a id="mj4288fdcfb29e6adbcbf80c102c324f2f" name="mj4288fdcfb29e6adbcbf80c102c324f2f"></a><a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t37"></a><h3 class="t3"><span class="cfett">22.4.6</span><span class="cfett"> Löschen eines Elements im binären Baum</span>  <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Jetzt folgt ein etwas komplizierteres Problem: das Löschen eines Elements im Baum. Hierbei gibt es erneut drei Möglichkeiten:</p>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>1.</strong></td>
+<td valign="top" width="100%" align="left"> Die einfachste Form ist die Entfernung eines Blatts, da dieses keinen Nachfolger mehr hat.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>2.</strong></td>
+<td valign="top" width="100%" align="left"> Die zweite Möglichkeit ist die Entfernung eines Knotens mit nur einem Nachfolger.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>3.</strong></td>
+<td valign="top" width="100%" align="left"> Die letzte Möglichkeit ist gleichzeitig auch die schwierigste. Es muss ein Knoten gelöscht werden, der zwei Nachfolger hat.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<p>Zuerst benötigen Sie eine Funktion, die den zu löschenden Knoten sucht:</p>
+<div class="listing"><pre class="prettyprint">void loesche(KNOTEN **zeiger, int such) {
+   if((*zeiger) == NULL)
+      printf("Baum ist leer\n");
+   else if((*zeiger)-&gt;wert == such) /* Gefunden! */
+      loesche_knoten(zeiger);
+   else if((*zeiger)-&gt;wert &gt;= such)
+      loesche(&amp;((*zeiger)-&gt;links),such);
+   else
+      loesche(&amp;((*zeiger)-&gt;rechts),such);
+}</pre></div>
+<p>Der Funktion <span class="clisting">loesche()</span> werden als Argumente die Wurzel (<span class="clisting">zeiger</span>) und der zu suchende Wert (<span class="clisting">such</span>) übergeben. Als Erstes wird überprüft, ob überhaupt eine Wurzel vorhanden ist (<span class="clisting">if((*zeiger) == NULL)</span>). Danach wird getestet, ob der Wert schon gefunden wurde (<span class="clisting">else if((*zeiger)-&gt;wert == such)</span>). Wurde der Wert gefunden, wird die Funktion <span class="clisting">loesche_knoten()</span> mit dem <span class="clisting">zeiger</span> auf den gefundenen Wert aufgerufen. Als Nächstes (falls der Knoten noch nicht gefunden wurde) wird überprüft, ob der Wert, auf den der Zeiger <span class="clisting">zeiger</span> verweist, größer oder gleich dem gesuchten Wert <span class="clisting">such</span> ist (<span class="clisting">else if((*zeiger)-&gt;wert &gt;= such)</span> ). Ist dies der Fall, ist der gesuchte Wert kleiner als der, auf den der Zeiger <span class="clisting">zeiger</span> verweist, und muss sich somit auf der linken Seite der aktuellen Adresse <span class="clisting">zeiger</span> befinden (<span class="clisting">loesche(&amp;((*zeiger)&ndash;&gt; links),such)</span>). Hier erfolgt der erste rekursive Aufruf mit dem Adressoperator. Die letzte <span class="clisting">else</span>-Anweisung ergibt sich dadurch, dass der gesuchte Wert größer als der ist, auf den der Zeiger <span class="clisting">zeiger</span> gerade verweist. In diesem Fall wird auf der rechten Seite mit dem rekursiven Aufruf (<span class="clisting">loesche(&amp;((*zeiger)-&gt; rechts),such)</span>) weiter gesucht.</p>
+<p>Es wird jetzt davon ausgegangen, dass der Knoten gefunden wurde, und nun wird die Funktion <span class="clisting">loesche_knoten(zeiger)</span> aufgerufen:</p>
+<div class="listing"><pre class="prettyprint">void loesche_knoten(KNOTEN **zeiger) {
+   KNOTEN *temp;
+   int tempwert;
+
+   if(globale_wurzel == *zeiger) {
+      printf("Kann die Wurzel nicht loeschen!!\n");
+      return;
+   }
+   if((*zeiger)!=NULL) { /* Blatt! */
+      if((*zeiger)-&gt;links==NULL &amp;&amp; (*zeiger)-&gt;rechts==NULL) {
+         free(*zeiger);
+         *zeiger=NULL;
+      }
+      else if((*zeiger)-&gt;links==NULL) {
+         /* Nur rechter Nachfolger */
+         temp = *zeiger;
+         *zeiger=(*zeiger)-&gt;rechts;
+         free(temp);
+      }
+      else if((*zeiger)-&gt;rechts==NULL) {
+         /* Nur linker Nachfolger */
+         temp = *zeiger;
+         *zeiger=(*zeiger)-&gt;links;
+         free(temp);
+      }
+      else { /* 2 Nachfolger, wir suchen Ersatzelement */
+        suche_ersatz(&amp;tempwert, &amp;((*zeiger)-&gt;rechts));
+        (*zeiger)-&gt;wert=tempwert;
+      }
+   }
+}</pre></div>
+<p>Zunächst wird überprüft, ob der gefundene Wert die Wurzel ist. In diesem Fall wird kein Element gelöscht und die Funktion beendet (dazu unten mehr). Als Nächstes wird getestet, ob das zu löschende Element ein Blatt ist (ein Element ohne Nachfolger):</p>
+<div class="listing"><pre class="prettyprint">if((*zeiger)-&gt;links==NULL &amp;&amp; (*zeiger)-&gt;rechts==NULL)</pre></div>
+<p>Falls es ein Blatt ist, wird es entfernt. Ansonsten wird mit den nächsten beiden <span class="clisting">else if</span>-Bedingungen ermittelt, ob das zu löschende Element einen rechten oder linken Nachfolger hat. Die letzte und die schwierigste Möglichkeit ist, dass der zu löschende Knoten zwei Nachfolger besitzt. Dafür wird am besten eine spezielle Funktion geschrieben, die für den zu löschenden Knoten ein Ersatzelement sucht:</p>
+<div class="listing"><pre class="prettyprint">else { /* 2 Nachfolger, wir suchen Ersatzelement */
+    suche_ersatz(&amp;tempwert, &amp;((*zeiger)-&gt;rechts));
+    (*zeiger)-&gt;wert=tempwert;
+}</pre></div>
+<p>Hier wird ein Ersatzelement auf der rechten Seite gesucht. Die Funktion <span class="clisting">suche_ersatz()</span> sieht so aus:</p>
+<div class="listing"><pre class="prettyprint">void suche_ersatz(int *neuwert, KNOTEN **zeiger) {
+   KNOTEN *temp;
+
+   if(*zeiger != NULL) {
+      if((*zeiger)-&gt;links==NULL) {
+         neuwert=(*zeiger)-&gt;wert;
+         temp=*zeiger;
+         *zeiger=(*zeiger)-&gt;rechts;
+         free(temp);
+      }
+      else
+         suche_ersatz(neuwert, &amp;((*zeiger)-&gt;links));
+   }
+}</pre></div>
+<p>Die Funktion <span class="clisting">suche_ersatz()</span> läuft jetzt durch einen rekursiven Aufruf (<span class="clisting">suche_ersatz(neuwert, &amp;((*zeiger)-&gt;links));</span>) so lange die linke Seite des Baums hinab, bis die Bedingung (<span class="clisting">if((*zeiger)-&gt;links==NULL)</span>) wahr ist. Dann wurde ein Ersatzelement gefunden, auf das gleich der Zeiger <span class="clisting">*neuwert</span> verweist.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Tipp</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Zum besseren Verständnis hilft es oft, sich den Vorgang mit einer Zeichnung auf einem Blatt Papier zu vergegenwärtigen.</p>
+</td>
+</tr>
+</table><br><p>Das vollständige Listing (<span class="ckursiv">btree2.c</span>) &#8211; mit einigen zusätzlichen Funktionen &#8211; finden Sie natürlich wieder auf der Buch-CD.</p><a id="mjfe709ec1d375f55e7805e53ce79c7880" name="mjfe709ec1d375f55e7805e53ce79c7880"></a><a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t38"></a><h3 class="t3"><span class="cfett">22.4.7</span><span class="cfett"> Ein binärer Suchbaum in der Praxis</span>  <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Jetzt soll der binäre Suchbaum mit dem Postleitzahlen-Programm verwendet werden. Zuerst wird die grundlegende Knotenstruktur für den binären Baum festgelegt:</p>
+<div class="listing"><pre class="prettyprint">struct binaer_knoten{
+   char ort[255];
+   unsigned int plz;
+   struct binaer_knoten *links;
+   struct binaer_knoten *rechts;
+};</pre></div>
+<p>Jetzt schreiben wir eine spezielle Struktur für den Baum:</p>
+<div class="listing"><pre class="prettyprint">struct binaer_baum{
+   struct binear_knoten *root;
+   unsigned int counter;
+};</pre></div>
+<p>Dank dieser Struktur werden die rekursiven Aufrufe des vorigen Beispiels aufgehoben. Dies ist möglich, weil beim ersten Aufruf der Funktion als Argument immer die Adresse der Wurzel des Baums mit übergeben wird.</p>
+<p>Als Nächstes benötigen Sie eine Funktion, um den binären Baum zu initialisieren:</p>
+<div class="listing"><pre class="prettyprint">struct binaer_baum *init(void) {
+   struct binaer_baum *baum =malloc(sizeof *baum);
+   if(baum == NULL) {
+      fprintf(stderr, "Speicherplatzmangel!!!\n");
+      return NULL;
+   }
+   else { /* initialisieren */
+      baum-&gt;root = NULL;
+      baum-&gt;counter=0;
+      return baum;
+   }
+}</pre></div>
+<p>Es folgt eine Funktion zum Einfügen einzelner Knoten in den binären Baum ohne einen rekursiven Funktionsaufruf:</p>
+<div class="listing"><pre class="prettyprint">int einfuegen(struct binaer_baum *baum, unsigned int p, char *o){
+   struct binaer_knoten *knoten, **neu;
+
+   neu =(struct binaer_knoten **) &amp;baum-&gt;root;
+   knoten= (struct binaer_knoten *) baum-&gt;root;
+   for(;;) {
+      if(knoten == NULL) {
+         /* Haben wir einen freien Platz gefunden? */
+         knoten = *neu = malloc(sizeof *knoten);
+         if(knoten != NULL) {
+            /* Daten einfügen */
+            knoten-&gt;plz = p;
+            strcpy(knoten-&gt;ort, o);
+            knoten-&gt;links=knoten-&gt;rechts=NULL;
+            baum-&gt;counter++;
+            /* Beendet die Funktion erfolgreich. */
+            return 1;
+         }
+         else {
+            fprintf(stderr, "Speicherplatzmangel\n");
+            return 0;
+         }
+      }
+      /* Ist die aktuelle Postleitzahl größer? */
+      else if(p &gt; knoten-&gt;plz)  {
+         /* Dann gehts rechts weiter im Baum. */
+         neu = &amp;knoten-&gt;rechts;
+         knoten = knoten-&gt;rechts;
+      }
+      else { /* Der letzte Fall, die aktuelle PLZ ist kleiner, */
+         /* dann eben nach links weiter im Baum. */
+         neu = &amp;knoten-&gt;links;
+         knoten = knoten-&gt;links;
+      }
+   }
+}</pre></div>
+<p>Das Thema binäre Bäume ist erheblich einfacher, wenn die Rekursion beseitigt wird. Wichtig ist bei dieser Funktion, dass sich die Endlosschleife auch irgendwann einmal beendet. In diesem Beispiel beendet sich die Funktion bei Erfolg mit dem Rückgabewert 1 (<span class="clisting">return 1</span>), wenn das neue Element eingefügt wurde. Bei Mangel an Speicherplatz gibt diese Funktion 0 zurück. Das Einfügen eines neuen Elements berücksichtigt übrigens keine doppelten Einträge. Dies können Sie zur Übung gern selbst nachtragen.</p>
+<p>Jetzt soll die Suchfunktion erstellt werden (um die es ja eigentlich in diesem Kapitel geht). Begonnen wird an der Wurzel (<span class="clisting">root</span>) des Baums. Ist das gesuchte Element größer, geht die Suche auf der rechten Seite des Baums weiter. Ist das gesuchte Element kleiner, wird auf der linken Seite weitergesucht. Bei einem perfekt ausgeglichenen Baum führt dies zu optimalen Ergebnissen. Hier sehen Sie die Suchfunktion, die sich relativ einfach erstellen lässt:</p>
+<div class="listing"><pre class="prettyprint">void binaere_suche_plz(const struct binaer_baum *baum,
+                       unsigned int p) {
+   const struct binaer_knoten *knoten;
+
+   /* zuerst an die Wurzel */
+   knoten = (struct binaer_knoten *) baum-&gt;root;
+   for(;;) {
+      if(knoten == NULL) {
+         printf("Keine erfolgreiche Suche!\n");
+         return;
+      }
+      if(p == knoten-&gt;plz) {  /* Gefunden */
+
+         printf("Ort zu Postleitzahl %d : %s\n",
+            p,knoten-&gt;ort);
+         return;
+      }
+      else if(p &gt; knoten-&gt;plz)   /* Gesuchtes Element größer:  */
+         knoten=knoten-&gt;rechts;  /* rechts am Baum weiter.     */
+      else                       /* Gesuchtes Element kleiner: */
+         knoten=knoten-&gt;links;   /* links am Baum weiter.      */
+   }
+}</pre></div>
+<p>Mit dieser Funktion haben Sie auch schon die Grundlage für das Löschen eines Elements im Baum geschaffen. Nur müssen Sie anstatt</p>
+<div class="listing"><pre class="prettyprint">      if(p == knoten-&gt;plz) {  /* Gefunden */
+         printf("Ort zu Postleitzahl %d : %s\n",
+            p,knoten-&gt;ort);
+         return;
+      }</pre></div>
+<p><span class="clisting">break</span> verwenden, um nach der <span class="clisting">for</span>-Schleife weitere Operationen durchzuführen:</p>
+<div class="listing"><pre class="prettyprint">   if(p == knoten-&gt;plz) /* Gefunden */
+      break;</pre></div>
+<p>Das Löschen eines Elements im binären Baum wurde ja schon einmal präsentiert. Da aber schon beim Einfügen eines Knotens auf weitere Funktionsaufrufe, insbesondere Rekursionen, verzichtet wurde, soll auch die Funktion zum Löschen eines Knotens entsprechend umgeschrieben werden, und zwar so, dass alle Operationen in dieser Funktion ausgeführt werden. Hier sehen Sie die Funktion:</p>
+<div class="listing"><pre class="prettyprint">int bin_delete(struct binaer_baum *baum, unsigned int p) {
+   /* pointer_z ist das zu löschende Element */
+   struct binaer_knoten **pointer_q, *pointer_z,
+                         *pointer_y, *pointer_x;
+
+   pointer_q = (struct binaer_knoten **)&amp;baum-&gt;root;
+   pointer_z =  (struct binaer_knoten *)baum-&gt;root;
+   for(;;) {
+      if(pointer_z == NULL)
+         return 0;
+      else if(p == pointer_z-&gt;plz)
+         /* zu löschendes Element gefunden */
+         break;
+      else if(p &gt; pointer_z-&gt;plz) {
+         /* Das zu löschende Element ist größer. */
+         pointer_q = &amp;pointer_z-&gt;rechts;
+         /* rechts weitersuchen */
+         pointer_z = pointer_z-&gt;rechts;
+      }
+      else { /* Das zu löschende Element ist kleiner. */
+         pointer_q = &amp;pointer_z-&gt;links;
+         /* links weitersuchen */
+         pointer_z = pointer_z-&gt;links;
+      }
+   } /* Hierher kommen wir nur durch ein break. */
+
+   /* Jetzt müssen wir das zu löschende Element untersuchen.
+    * pointer_z hat rechts keinen Nachfolger, somit können wir
+    * es austauschen gegen den linken Nachfolger ... */
+   if(pointer_z-&gt;rechts == NULL)
+      *pointer_q = pointer_z-&gt;links;
+   else {
+      /* pointer_z hat einen rechten Nachfolger, aber
+       * keinen linken. */
+      pointer_y = pointer_z-&gt;rechts;
+      if(pointer_y-&gt;links == NULL) {
+         /* pointer_z-&gt;rechts hat keinen linken Nachfolger ... */
+         pointer_y-&gt;links = pointer_z-&gt;links;
+         *pointer_q = pointer_y;
+      }
+      else {  /* Es gibt einen linken Nachfolger. */
+         pointer_x = pointer_y-&gt;links;
+         /* Jetzt suchen wir so lange, bis es keinen linken
+          * Nachfolger mehr gibt */
+         while(pointer_x-&gt;links != NULL) {
+            pointer_y = pointer_x;
+            pointer_x = pointer_y-&gt;links;
+         }
+         /* Jetzt haben wir alle Punkte zusammen und
+          * können diese verknüpfen. */
+         pointer_y-&gt;links = pointer_x-&gt;rechts;
+         pointer_x-&gt;links = pointer_z-&gt;links;
+         pointer_x-&gt;rechts = pointer_z-&gt;rechts;
+         *pointer_q = pointer_x;
+      }
+   }
+    /* Zu guter Letzt können wir pointer_z freigeben. */
+   baum-&gt;counter--;
+   free(pointer_z);
+   return 1;
+}</pre></div>
+<p>Zugegeben, auf den ersten Blick dürfte diese Funktion etwas abschreckend wirken. Aber zeichnen Sie sich einen binären Baum auf ein Blatt Papier, und gehen Sie dabei diese Funktion Schritt für Schritt durch: Sie werden sich wundern, wie einfach diese Funktion im Gegensatz zur rekursiven Variante ist.</p>
+<p>Zum Schluss folgt hier noch der vollständige Quellcode zu diesem Abschnitt:</p>
+<div class="listing"><pre class="prettyprint">/* btree3.c */
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAX 255
+
+struct binaer_knoten{
+   char ort[MAX];
+   unsigned int plz;
+   struct binaer_knoten *links;
+   struct binaer_knoten *rechts;
+};
+
+struct binaer_baum{
+   struct binear_knoten *root;
+   unsigned int counter;
+};
+
+struct binaer_baum *init(void) {
+   struct binaer_baum *baum =malloc(sizeof *baum);
+   if(baum == NULL) {
+      fprintf(stderr, "Speicherplatzmangel!!!\n");
+
+      return NULL;
+   }
+   else { /*Initialisieren*/
+      baum-&gt;root = NULL;
+      baum-&gt;counter=0;
+      return baum;
+   }
+}
+
+int einfuegen(struct binaer_baum *baum, unsigned int p, char *o){
+   struct binaer_knoten *knoten, **neu;
+
+   neu =(struct binaer_knoten **) &amp;baum-&gt;root;
+   knoten= (struct binaer_knoten *) baum-&gt;root;
+   for(;;) {
+      if(knoten == NULL) {
+         /* Haben wir einen freien Platz gefunden? */
+         knoten = *neu =malloc(sizeof *knoten);
+         if(knoten != NULL) {
+            /* Daten einfuegen */
+            knoten-&gt;plz = p;
+            strcpy(knoten-&gt;ort, o);
+            knoten-&gt;links=knoten-&gt;rechts=NULL;
+            baum-&gt;counter++;
+            /* Beendet die Funktion erfolgreich. */
+            return 1;
+         }
+         else {
+            fprintf(stderr, "Speicherplatzmangel\n");
+            return 0;
+         }
+      }
+      /* Ist die aktuelle Postleitzahl größer? */
+      else if(p &gt; knoten-&gt;plz)  {
+         /* Dann gehts rechts weiter im Baum. */
+         neu = &amp;knoten-&gt;rechts;
+         knoten = knoten-&gt;rechts;
+      }
+      else { /* Der letzte Fall, die aktuelle PLZ ist kleiner, */
+         /* dann eben nach links weiter im Baum. */
+         neu = &amp;knoten-&gt;links;
+         knoten = knoten-&gt;links;
+      }
+   }
+}
+
+void binaere_suche_plz(const struct binaer_baum *baum,
+                       unsigned int p) {
+   const struct binaer_knoten *knoten;
+
+   /* zuerst an die Wurzel */
+   knoten = (struct binaer_knoten *) baum-&gt;root;
+   for(;;) {
+      if(knoten == NULL) {
+         printf("Keine erfolgreiche Suche!\n");
+         return;
+      }
+      if(p == knoten-&gt;plz) {  /* Gefunden */
+         printf("Ort zu Postleitzahl %d : %s\n",
+            p,knoten-&gt;ort);
+         return;
+      }
+      else if(p &gt; knoten-&gt;plz)   /* Gesuchtes Element größer:  */
+         knoten=knoten-&gt;rechts;  /* rechts am Baum weiter.     */
+      else                       /* Gesuchtes Element kleiner: */
+         knoten=knoten-&gt;links;   /* links am Baum weiter.      */
+   }
+}
+
+int bin_delete(struct binaer_baum *baum, unsigned int p) {
+   /* pointer_z ist das zu löschende Element. */
+   struct binaer_knoten **pointer_q, *pointer_z,
+                         *pointer_y, *pointer_x;
+
+   pointer_q = (struct binaer_knoten **)&amp;baum-&gt;root;
+   pointer_z =  (struct binaer_knoten *)baum-&gt;root;
+   for(;;) {
+      if(pointer_z == NULL)
+         return 0;
+      else if(p == pointer_z-&gt;plz)
+         /* zu löschendes Element gefunden */
+         break;
+      else if(p &gt; pointer_z-&gt;plz) {
+         /* Das zu löschende Element ist größer. */
+         pointer_q = &amp;pointer_z-&gt;rechts;
+         /* rechts weitersuchen */
+         pointer_z = pointer_z-&gt;rechts;
+      }
+      else { /* Das zu löschende Element ist kleiner. */
+         pointer_q = &amp;pointer_z-&gt;links;
+         /* links weitersuchen */
+         pointer_z = pointer_z-&gt;links;
+      }
+   } /* Hierher kommen wir nur durch ein break. */
+
+   /* Jetzt müssen wir das zu löschende Element untersuchen.
+    * pointer_z hat rechts keinen Nachfolger, somit können wir
+    * es austauschen gegen den linken Nachfolger ... */
+   if(pointer_z-&gt;rechts == NULL)
+      *pointer_q = pointer_z-&gt;links;
+   else {
+      /* pointer_z hat einen rechten Nachfolger, aber
+       * keinen linken. */
+      pointer_y = pointer_z-&gt;rechts;
+      if(pointer_y-&gt;links == NULL) {
+         /* pointer_z-&gt;rechts hat keinen linken Nachfolger ... */
+         pointer_y-&gt;links = pointer_z-&gt;links;
+         *pointer_q = pointer_y;
+      }
+      else {  /* Es gibt einen linken Nachfolger. */
+         pointer_x = pointer_y-&gt;links;
+         /* Jetzt suchen wir so lange, bis es keinen linken
+          * Nachfolger mehr gibt. */
+         while(pointer_x-&gt;links != NULL) {
+            pointer_y = pointer_x;
+            pointer_x = pointer_y-&gt;links;
+         }
+         /* Jetzt haben wir alle Punkte zusammen und
+          * können diese verknüpfen. */
+         pointer_y-&gt;links = pointer_x-&gt;rechts;
+         pointer_x-&gt;links = pointer_z-&gt;links;
+         pointer_x-&gt;rechts = pointer_z-&gt;rechts;
+         *pointer_q = pointer_x;
+      }
+   }
+    /* Zu guter Letzt können wir pointer_z freigeben. */
+   baum-&gt;counter--;
+   free(pointer_z);
+   return 1;
+}
+
+int main(void) {
+   struct binaer_baum *re;
+   char o[MAX];
+   unsigned int p;
+   int wahl, r;
+
+   re = init();
+   if(re == NULL) {
+      printf("Konnte keinen neuen binaeren Baum erzeugen!\n");
+      return EXIT_FAILURE;
+   }
+   else
+      printf("Binaerbaum wurde erfolgreich initialisiert\n");
+
+   do {
+      printf("\n-1- Neue PLZ hinzufuegen\n");
+      printf("-2- PLZ suchen\n");
+      printf("-3- PLZ loeschen\n");
+      printf("-4- Ende\n\n");
+      printf("Ihre Wahl : ");
+      scanf("%d",&amp;wahl);
+
+      if(wahl == 1) {
+         printf("Bitte geben Sie eine neue PLZ ein : ");
+         do{ scanf("%5u",&amp;p); }while( (getchar()) != '\n' );
+         printf("Der Ort dazu : ");
+         fgets(o, MAX, stdin);
+         r=einfuegen(re, p, strtok(o, "\n") );
+         if(r == 0)
+            return EXIT_FAILURE;
+       }
+       else if(wahl == 2) {
+          printf("Für welche PLZ suchen Sie einen Ort : ");
+          scanf("%5u",&amp;p);
+          binaere_suche_plz(re, p);
+       }
+       else if(wahl == 3) {
+          printf("Welche PLZ wollen Sie loeschen : ");
+          scanf("%5d",&amp;p);
+          bin_delete(re, p);
+       }
+    } while(wahl != 4);
+   return EXIT_SUCCESS;
+}</pre></div><a id="mjc0eebbc48d257496d83af8b5bcf3c5b9" name="mjc0eebbc48d257496d83af8b5bcf3c5b9"></a><a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t39"></a><h3 class="t3"><span class="cfett">22.4.8</span><span class="cfett"> Binäre Suchbäume mit Eltern-Zeiger und Threads</span>  <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Es gibt noch mehrere andere Wege, binäre Bäume zu implementieren, um sich z. B. das Traversieren des Baums zu erleichtern. Bereits gesehen haben Sie das Durchlaufen der Bäume mittels Preorder- und Inorder-Traversierung. Wenn Sie aber das Durchlaufen (Traversieren) eines Baums iterativ und nicht mehr rekursiv vornehmen wollen, können Sie die Struktur um einen Zeiger zum Elternknoten erweitern:</p>
+<div class="listing"><pre class="prettyprint">struct binaer_knoten{
+   char ort[255];
+   unsigned int plz;
+   struct binaer_knoten *links;
+   struct binaer_knoten *rechts;
+   struct binaer_knoten *eltern;
+};</pre></div>
+<p>Jetzt kann jeder Knoten sein Umfeld kontrollieren. Dieser Eltern-Zeiger vereinfacht das Traversieren des Baums, doch der Schreibaufwand für das Programm steigt. Außerdem wird auch das Einfügen und Löschen eines Elements verlangsamt, da ein Zeiger mehr verwaltet werden muss. Dem Eltern-Zeiger der Wurzel übergeben Sie hingegen den <span class="clisting">NULL</span>-Zeiger.</p>
+<p>Mit Threads (<span class="ckursiv">Threading</span>) haben Sie die Möglichkeit, einen Baum noch schneller zu traversieren. Denn anstatt zu überprüfen, ob der linke oder rechte Teil eines Knotens leer (<span class="clisting">NULL</span>) ist, was zu einer schlechteren Laufzeit führen könnte, müssen Sie nur zwei Extra-Bits (Bit-Felder) in die Struktur einfügen:</p>
+<div class="listing"><pre class="prettyprint">struct binaer_knoten{
+   char ort[255];
+   unsigned int plz;
+   struct binaer_knoten *links;
+   struct binaer_knoten *rechts;
+   unsigned linker_thread:1;
+   unsigned rechter_thread:1;
+};</pre></div>
+<p>Wenn sich z. B. auf der linken Seite eines Knotens ein weiterer Knoten befindet, steht das Bit <span class="clisting">linker_tread</span> auf 1. Falls sich dort noch kein Knoten befindet, steht es auf 0. Natürlich lässt sich auf diese Weise nicht generell eine bessere Laufzeit garantieren, da diese davon abhängt, wie der Compiler Bit-Felder optimiert. Aber eine Erleichterung dürfte es auf jeden Fall darstellen.</p><a id="mj86c6493733dadbfb1f7710f0a687b1ef" name="mj86c6493733dadbfb1f7710f0a687b1ef"></a><a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t310"></a><h3 class="t3"><span class="cfett">22.4.9</span><span class="cfett"> Ausgeglichene Binärbäume</span>  <a href="#t2t311"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Es gibt leider einen negativen Aspekt bei den binären Bäumen, die Sie eben kennengelernt haben. Betrachten Sie bitte den Binärbaum aus Abbildung 22.24.</p>
+<div class="bildbox">
+<p><a name="IDAIHWQ"></a><a onClick="OpenWin('bilder/22_024.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_024.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.24    </strong>Entarteter Binärbaum</p>
+<p>Bei diesem Beispiel handelt es sich tatsächlich um einen binären Baum und nicht, wie Sie vielleicht vermuten würden, um einen verkettete Liste. Der Baum hat die Tiefe 4 und könnte normalerweise 15 Elemente aufnehmen (24&#8211;1). Es handelt sich dabei um einen entarteten Baum. So etwas kann passieren, wenn ein relativ kleiner oder großer Wert als Wurzel des Baums verwendet wird. Zugegeben, dieses Beispiel ist ein ungünstiger Fall, aber es könnte dazu kommen.</p>
+<p>Es gibt, um entartete Binärbäume auszugleichen, Algorithmen, die allerdings nicht einfach zu verstehen sind. Aber was heißt perfekt ausbalanciert (ausgeglichen) im Sinne von Binärbäumen? Ein Binärbaum ist perfekt ausgeglichen, wenn sich die Höhen (oder auch Tiefen) der linken und rechten Teilbäume höchstens um den Wert 1 unterscheiden. Solche Bäume werden <span class="ckursiv">AVL-Bäume</span> genannt.</p>
+<p>Um also Probleme zu vermeiden, müssen Sie den Baum immer ausgeglichen halten. Dies ist allerdings auch mit einem erhöhten Speicheraufwand verbunden. Denn wenn ein neues Element eingefügt oder ein Element gelöscht wird, kann es sein, dass der komplette Baum wieder neu organisiert werden muss. Diesen Aufwand sollten Sie jedoch nur betreiben, wenn es denn tatsächlich auf ein schnelleres Suchergebnis ankommt. Ein solches schnelleres Suchergebnis wird durch die Verkürzung der Pfadlänge erreicht.</p><a id="mjc53ab8c9ed2dac1cd824c4d3f972f754" name="mjc53ab8c9ed2dac1cd824c4d3f972f754"></a><a name="t310"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t311"></a><h3 class="t3"><span class="cfett">22.4.10</span><span class="cfett"> Algorithmen für ausgeglichene Bäume &#8211; eine Übersicht</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t310"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Zu diesem Thema könnte man ganze Bücher schreiben. Einige weiterführende Hinweise sollen zu den binären Bäumen dennoch gegeben werden.</p>
+<h4 class="t4"><span class="cfett">AVL-Bäume</span></h4>
+<p>Ein AVL-Baum (AVL nach seinen Erfindern Adelson-Velsky und Landis) ist ein Suchbaum, dessen Knoten sich in der Höhe (Tiefe) von derjenigen der Teilbäume um höchstens 1 unterscheidet, also ein perfekt ausbalancierter Baum. Wird diese Bedingung verletzt, muss eine Ausgleichsfunktion ausgeführt werden. Folgende drei Bedingungen können dabei auftreten (auch Balance-Grad genannt):</p>
+<ul class="gp">
+<li><span class="clisting">balance &gt; 0</span> &#8211; Der rechte Teilbaum besitzt eine größere Höhe als der linke.</li>
+</ul>
+<ul class="gp">
+<li><span class="clisting">balance &lt; 0</span> &#8211; Der linke Teilbaum besitzt eine größere Höhe als der rechte.</li>
+</ul>
+<ul class="gp">
+<li><span class="clisting">balance = 0</span> &#8211; Die Teilbäume haben die gleiche Höhe und sind optimal ausbalanciert. Dieser Zustand wird angestrebt.</li>
+</ul>
+<p>Um gegen diese Verletzung vorzugehen, werden sogenannte <span class="ckursiv">Rotationen</span> vorgenommen. Dabei müssen Sie zwischen rechtsseitiger Rotation (betrifft die rechte Seite des Teilbaums eines Knotens) und linksseitiger Rotation (betrifft die linke Seite des Teilbaums eines Knotens) unterscheiden. Außerdem gibt es noch einfache und doppelte Rotationen. Dass all diese Operationen sehr rechenintensiv sind, lässt sich wohl leicht erschließen.</p>
+<h4 class="t4"><span class="cfett">B-Bäume (Bayerbäume)</span></h4>
+<p>Wenn Sie sich für die Programmierung einer eigenen Datenbank interessieren, dann sollten Sie sich mit diesem Baum befassen. Der B-Baum wird durch eine variable Anzahl von Elementen (Blättern) pro Knoten an die Blockgröße des Dateisystems angepasst. Dadurch ist eine effektive und optimale Geschwindigkeitsausnutzung auf verschiedenen Systemen möglich. Die einzelnen Knoten eines B-Baums sind nicht immer belegt und variieren zwischen dem Kleinst- und dem Höchstwert. Somit ist immer Platz für Änderungen von Strukturen bei Manipulationen (Einfügen, Löschen, Ändern …) an der Datenbank vorhanden.</p>
+<p>Dies waren lange noch nicht alle Algorithmen, mit denen Sie ausgeglichene Bäume erstellen können. Zu erwähnen sind hier noch die Top-Down 2-3-4-Bäume und die <span class="ckursiv">Rot-Schwarz-Bäume</span>.</p><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/022_c_algorithmen_004.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="22.4 Suchalgorithmen &#8211; Grundlage zur Suche"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="022_c_algorithmen_003.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="022_c_algorithmen_005.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/022_c_algorithmen_004.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:50:13 GMT -->
+</html>

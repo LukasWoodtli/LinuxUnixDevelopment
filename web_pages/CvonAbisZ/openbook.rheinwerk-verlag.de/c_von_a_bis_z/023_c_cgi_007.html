@@ -1,0 +1,1048 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/023_c_cgi_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:51:13 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 23.7 Der Webserver</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 23.7 Der Webserver">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 23.7 Der Webserver">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="023_c_cgi_006.html">
+<link rel="next" href="023_c_cgi_008.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="023_c_cgi_006.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="023_c_cgi_008.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8" class="navnav">23 CGI mit C</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_001.html#mj753bda1c0feeb96471a6fd3507e78471" class="navnav">23.1 Was ist CGI?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_002.html#mj1c41e4288dfdb0c00282e7f355aeaa9f" class="navnav">23.2 Vorteile von CGIs in C</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_003.html#mjba994bed8bd4ef92ec7942f9d4bf360f" class="navnav">23.3 Andere Techniken der Webprogrammierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_004.html#mje31b0468de9a6775e240739f74c869b2" class="navnav">23.4 Das dreistufige Webanwendungsdesign</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_004.html#mj784201c3d2f30eccccfea683d0cf7bf6" class="navnav">23.4.1 Darstellungsschicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_004.html#mje39605f3b437d685802be297b35155a9" class="navnav">23.4.2 Verarbeitungsschicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_004.html#mj7d321c39df88af1ebf71b508407fce6b" class="navnav">23.4.3 Speicherschicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_005.html#mjb28b02e3339269fcd271c6805808d095" class="navnav">23.5 Clientseitige Programmierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_005.html#mj5a8f8115ea7f290fec7e4d69744df07d" class="navnav">23.5.1 JavaScript</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_005.html#mj74dc3ff9efbe0425db8caf4228c62ea3" class="navnav">23.5.2 Java-Applets</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_006.html#mjae9786f0e8b66329366dd5020d11ea24" class="navnav">23.6 Serverseitige Programmierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mj953622e10f930a8262378a3b8d1af353" class="navh">23.7 Der Webserver</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj1275ef287ecf27bd23a407e1df4d8bee" class="navh">23.7.1 Das Client/Server-Modell des Internets</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mje745ab77530f29271e1cf393659c1ee3" class="navh">23.7.2 Serverimplementierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj7456a25fa957c5d5c1e6fb6f1b8e51ac" class="navh">23.7.3 Hosting-Services</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj03fcae8d34e70f2bd333a6b103a37aa8" class="navh">23.7.4 Schlüsselfertige Lösung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjce2ea6f4ed0702c32f081bae27e68360" class="navh">23.7.5 Weitere Möglichkeiten</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj464e0e321247e44496cedab2c842ea5b" class="navh">23.7.6 Apache</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_008.html#mj2b0939e8af690d0ec6266500fedc9ffa" class="navnav">23.8 Das HTTP-Protokoll</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_008.html#mj8a70459247f5ba115f4a5fa93400236e" class="navnav">23.8.1 Web-Protokolle</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_008.html#mj24b27af5edc8278f18e4df88f534d77c" class="navnav">23.8.2 Wozu dienen Protokolle?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_008.html#mj491046404289233a9e9e8df32c1a4f89" class="navnav">23.8.3 Was ist ein Protokoll?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_008.html#mj94e75d737d6c99f0eb1b40a87775a1cc" class="navnav">23.8.4 Normen für die Netzwerktechnik</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_008.html#mjb7232dd442661d7ce111749a1b172adc" class="navnav">23.8.5 Das OSI-Schichtenmodell</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_008.html#mj6eeb35459ee40823c55526c0d43f34d6" class="navnav">23.8.6 Die Elemente einer URL</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_008.html#mj5bb5e909c12c5816dad92a19681c031c" class="navnav">23.8.7 Client-Anfrage &#8211; HTTP-Request (Browser-Request)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_008.html#mj09828f14735c9eb1238f74eca50e06d3" class="navnav">23.8.8 Serverantwort (Server-Response)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_008.html#mjd01b8cb558fb8718dbd7f11163871d91" class="navnav">23.8.9 Zusammenfassung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_009.html#mj55aa43d3854686f279b9a2995d0e7856" class="navnav">23.9 Das Common Gateway Interface (CGI)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_009.html#mj84eb3b3a8b994c00e61cceeb82845a62" class="navnav">23.9.1 Filehandles</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_009.html#mj8a88b70c9ea857f625bc33cf9111ab38" class="navnav">23.9.2 CGI-Umgebungsvariablen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_009.html#mj092417d7813dd1c70bcbc7e9ae741468" class="navnav">23.9.3 CGI-Ausgabe</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_010.html#mj4dff274d0bc1fff0b99f596c9b5bfd82" class="navnav">23.10 HTML-Formulare</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_010.html#mjd677b465f7e12e59f34b1617b357ef76" class="navnav">23.10.1 Die Tags und ihre Bedeutung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_011.html#mj2b0c7c08b2e6bbf223343aa9f7d5fbd6" class="navnav">23.11 CGI-Eingabe</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_011.html#mj7c6f1fbfc9dccbb876a35161a36a02bb" class="navnav">23.11.1 Die Anfrage des Clients an den Server</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_011.html#mj3200134c102e6d9fe1294ab668e2e386" class="navnav">23.11.2 Eingabe parsen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_012.html#mjb5dc8d227df3a4a3853d41b01ce13059" class="navnav">23.12 Ein Gästebuch</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_012.html#mj82f7f5f2569036a3b2bc8403beeeb7dc" class="navnav">23.12.1 Das HTML-Formular (»guestbook.html«)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_012.html#mj7c61b8637748679b60117a0df0706a56" class="navnav">23.12.2 Das CGI-Programm (»auswert.cgi«)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_012.html#mjbea5f4c766c0367a2d9a61bdcf1a50a6" class="navnav">23.12.3 Das HTML-Gästebuch (»gaeste.html«)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_013.html#mj55d5fdaf89ed49f761a7c0d097b650ad" class="navnav">23.13 Ausblick</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mj953622e10f930a8262378a3b8d1af353" name="mj953622e10f930a8262378a3b8d1af353"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">23.7</span><span class="cfett"> Der Webserver</span>  <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2><a id="mj1275ef287ecf27bd23a407e1df4d8bee" name="mj1275ef287ecf27bd23a407e1df4d8bee"></a><a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t32"></a><h3 class="t3"><span class="cfett">23.7.1</span><span class="cfett"> Das Client/Server-Modell des Internets</span>  <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Das Internet oder genauer das World Wide Web wurde nach dem Client/Server-Prinzip entwickelt. Der Webbrowser ist in dieser Architektur der Client. Geben Sie z. B. in den Webbrowser die Adresse <a href="http://www.pronix.de/">http://www.pronix.de/</a> ein, ruft der Browser Dienste im Web ab. In diesem Fall wird eine HTTP-Anforderung über das Netzwerk verschickt. Mit dem HTTP-Protokoll haben Sie jetzt Zugriff auf Dateien von Servern in Netzwerken. Der Server oder genauer der Webserver verarbeitet nun die Anfrage des Clients. Dabei ist der Standort des Webservers egal. Dieser kann sich im selben Gebäude, auf der anderen Seite der Erde oder auch auf demselben Computer befinden. Meistens besteht die Aufgabe des Webservers im Internet darin, ein angefordertes Dokument an den Client zurückzuschicken, beispielsweise HTML-Daten zur Darstellung einer Webseite. Der Webserver wird häufig auch als HTTP-Dämon (<span class="ckursiv">Hypertext Transfer Protocol Daemon</span>) bezeichnet. Abbildung 23.2 stellt den Vorgang einer solchen Transaktion bildlich dar:</p>
+<div class="bildbox">
+<p><a name="IDA2HUQ"></a><a onClick="OpenWin('bilder/23_002.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein23_002.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 23.2    </strong>Transaktion einer HTTP-Anfrage</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Ein Webserver ist nichts anderes als ein Programm bzw. eine Anwendung (meist in C geschrieben) ohne visuelle Oberfläche auf dem Server. Das Programm können Sie nicht sehen. Es nimmt über Ports (meistens Port 80) einen Auftrag entgegen und führt diesen aus, zumeist handelt es sich dabei um das Anzeigen einer HTML-Seite. Häufig wird irrtümlicherweise der Server als Hardware mit dem Serverprogramm darauf gleichgesetzt, allerdings ist die Beziehung hier so eng, dass dies auch wieder nicht ganz verkehrt ist.</p>
+</td>
+</tr>
+</table><br><a id="mje745ab77530f29271e1cf393659c1ee3" name="mje745ab77530f29271e1cf393659c1ee3"></a><a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t33"></a><h3 class="t3"><span class="cfett">23.7.2</span><span class="cfett"> Serverimplementierung</span>  <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Bevor Sie sich, sei es privat oder für eine Organisation, für eine Webpräsenz entscheiden, müssen Sie zunächst überlegen, wie oder mit wem Sie ins Web gehen. Entscheidend für die Organisationsstrategie werden wohl die Kosten und der Zweck Ihrer Präsenz sein.</p>
+<p>In der Regel werden Sie sich für eine der zwei gebräuchlichsten Strategien zur Webserverimplementierung entscheiden:</p>
+<ul class="gp">
+<li><span class="ckursiv">Hosting-Service</span> &#8211; Der Webserver wird remote über den <span class="ckursiv">Internet Service Provider</span> (ISP) unterstützt.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Schlüsselfertige Lösungen</span> &#8211; Dies ist eine komplette Soft- und Harwarelösung, die lokal am physischen Standort verwaltet wird.</li>
+</ul><a id="mj7456a25fa957c5d5c1e6fb6f1b8e51ac" name="mj7456a25fa957c5d5c1e6fb6f1b8e51ac"></a><a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t34"></a><h3 class="t3"><span class="cfett">23.7.3</span><span class="cfett"> Hosting-Services</span>  <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Die meisten Anwender dürften sich für einen Hosting-Service entscheiden. Dabei geht der Kunde über einen <span class="ckursiv">Web Service Provider</span> (WSP) ins Netz. Verwechseln Sie aber den WSP nicht mit dem <span class="ckursiv">Internet Service Provider</span> (ISP). Mit dem ISP wählen Sie sich ins Internet ein, mit einem WSP richten Sie Ihre Internetpräsenz ein. Allerdings bieten heute viele ISPs auch schon Hosting-Services an. Sie bekommen z. B. bei großen ISPs wie AOL oder T-Online auch schon 10 MB Platz für eine Internetpräsenz. Dabei müssen Sie aber auf Extras und eine eigene Domain wie <span class="ckursiv">www.mein_wunschname.de</span> verzichten.</p>
+<p>Bei den vielen Hosting-Services, die es mittlerweile im Netz gibt, ist es schon schwer, sich einen Überblick zu verschaffen. Da Sie wahrscheinlich die Beispiele im Buch erst einmal am lokalen Rechner testen, müssen Sie sich jetzt noch keine Gedanken darüber machen, wo Sie Ihre Webseite hosten. Aber Sie sollten, falls Sie eigene Skripte auf den Webserver hochladen wollen, darauf achten, dass bei den Leistungen Dinge dabei sind wie: eigene CGIs ausführen, PHP ausführen, Zugriff auf eine MySQL-Datenbank haben. Gute Hosting-Services kosten so in etwa 10 bis 50 Euro monatlich. Geben Sie einfach in einer Suchmaschine den Begriff »Hosting-Service« ein, und Sie bekommen unzählige Ergebnisse zurück.</p>
+<p>Die Vorteile solcher Hosting-Services sind ganz klar der günstige Preis und die Tatsache, dass Sie keinerlei Verwaltungsaufgaben und Aufwand haben und somit über keinerlei technische Erfahrung mit Webservern verfügen müssen. Ebenso ist ein enormer Vorteil, dass die meisten Hosting-Services eine Bereitschaft rund um die Uhr, an sieben Tagen in der Woche bieten.</p><a id="mj03fcae8d34e70f2bd333a6b103a37aa8" name="mj03fcae8d34e70f2bd333a6b103a37aa8"></a><a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t35"></a><h3 class="t3"><span class="cfett">23.7.4</span><span class="cfett"> Schlüsselfertige Lösung</span>  <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Bei einer schlüsselfertigen Lösung handelt es sich um eine vollständige in sich geschlossene Soft- und Hardwarelösung. Der Vorteil gegenüber dem Hosting-Service liegt darin, dass Sie bei einem technischen Problem nicht vom WSP abhängig sind. Es wird dabei praktisch nur noch ein Server am Netzwerk und am Stromnetz angeschlossen, und Sie sind im Web. Dabei ist aber schon ein gewisses Maß an Know-how notwendig. Solche Server-Applikationen sind vorwiegend für kleinere bis mittlere Organisationen gedacht. Die Konfiguration des Webservers wird meistens über den Client, den Webbrowser, vorgenommen, der mit einer einfach zu bedienenden Oberfläche ausgestattet ist. Oft wird bei der Software Linux als Betriebssystem und Apache als Webserver verwendet, da bei beiden kaum lizenzrechtliche Bestimmungen beachtet werden müssen.</p><a id="mjce2ea6f4ed0702c32f081bae27e68360" name="mjce2ea6f4ed0702c32f081bae27e68360"></a><a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t36"></a><h3 class="t3"><span class="cfett">23.7.5</span><span class="cfett"> Weitere Möglichkeiten</span>  <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Theoretisch haben Sie aber auch die Möglichkeit, einen Server von zu Hause aus zu betreiben. Dabei installieren Sie einen Webserver auf Ihrem PC. Danach wählen Sie sich ins Internet ein und bekommen meist eine dynamische IP-Adresse. Unter dieser IP-Adresse können jetzt die Surfer Ihre Webseite ansteuern und das Internetangebot auch nutzen. Der Vorteil: Diese Lösung kostet keinen Cent. Aber bei einer ständig wechselnden IP-Adresse Ihrer Webseite dürfte wohl kaum ein Websurfer Ihre Seite finden. Dieses Problem können Sie theoretisch mit kostenlosen Diensten wie www.dyndns.org beheben. Damit können Sie sich auch ohne DENIC eine Webadresse einrichten lassen &#8211; wobei logischerweise die Bandbreite der Besucher, die sich gleichzeitig auf Ihrer Seite tummeln können, beschränkt ist. Aber probieren macht gewöhnlich Spaß, und so lernen Sie auch noch einiges dabei.</p>
+<p>Eine weitere Möglichkeit stellt das Intranet dar, ob nun privat oder geschäftlich. Wenn Sie das Glück haben, in einer Firma ein größeres Intranet zu betreiben, können Sie schalten und walten, wie Sie wollen.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Wenn Sie die folgenden Beispiele lokal auf Ihrem System testen wollen, wird ein (Web&ndash;)Server benötigt. Die folgenden Beispiele wurden mit dem Apache als Serversoftware getestet.</p>
+</td>
+</tr>
+</table><br><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">DENIC</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Die DENIC ist in Deutschland für das Vergeben von *.de-Domänen zuständig. Wenn Sie also eine eigene Domäne registrieren lassen möchten, so muss dies bei der DENIC geschehen. Die meisten WSPs kümmern sich in der Regel für den Kunden darum.</p>
+</td>
+</tr>
+</table><br><a id="mj464e0e321247e44496cedab2c842ea5b" name="mj464e0e321247e44496cedab2c842ea5b"></a><a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t37"></a><h3 class="t3"><span class="cfett">23.7.6</span><span class="cfett"> Apache</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>1995 schlossen sich mehrere Entwickler zusammen, um den damals dominierenden, aber sehr fehlerhaften Webserver NCSA weiterzuentwickeln. Was dabei herauskam, wurde wegen der vielen Fehlerbehebungen (Patches) »a patchy Server« oder einfach »Apache« genannt.</p>
+<h4 class="t4"><span class="cfett">Warum Apache?</span></h4>
+<p>Warum in diesem Kapitel der Apache-Webserver verwendet wird, lässt sich recht einfach erklären. Der Apache ist für viele Systeme erhältlich, und ist für ein System einmal keine Binary-Version vorhanden, können Sie den Quellcode, der in C geschrieben wurde und frei vorliegt, auf dem System anpassen und übersetzen (kompilieren) lassen. Natürlich können Sie sich auch auf gängigen Systemen Ihre eigene Version des Apache <span class="ckursiv">zusammenbasteln</span>. Der zweite Grund: Apache liegt in freier Form vor. In freier Form heißt, der Quellcode liegt offen, somit werden Sicherheitslücken schneller gefunden als bei Webservern, bei denen Sie sich auf den Hersteller verlassen müssen. Und der dritte Grund ist auch der ausschlaggebende: Der Apache ist der am meisten verwendete Webserver im Internet, wie folgende Auswertung von der Webseite <a href="http://www.netcraft.com/survey">http://www.netcraft.com/survey</a> zeigt:</p>
+<div class="bildbox">
+<p><a name="IDAZLUQ"></a><a onClick="OpenWin('bilder/23_003.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein23_003.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 23.3    </strong>Verwendete Webserver im Internet</p>
+<p>And last, but not least: Apache ist kostenlos. Der Webserver finanziert sich durch die <span class="ckursiv">Apache Software Foundation</span>, der große Firmen wie IBM gewisse Beträge spenden und so die Weiterentwicklung des Webservers unterstützen. Firmen und Entwickler, die dieses Projekt unterstützen wollen, sind immer willkommen. Mehr dazu finden Sie unter <a href="http://www.apache.org./">http://www.apache.org.</a></p>
+<h4 class="t4"><span class="cfett">Apache installieren und testen</span></h4>
+<p>Damit Sie in den folgenden Abschnitten die Beispiele auf Ihrem lokalen Rechner testen können, müssen Sie zunächst Apache auf dem System installieren, sofern dies noch nicht geschehen ist. Es empfiehlt sich im Allgemeinen, die CGI-Anwendungen zuerst auf einem lokalen Rechner zu testen, ehe Sie sie im Web der Öffentlichkeit vorstellen.</p>
+<p>Den Vorgang der Installation zeige ich anhand der Binary-Version des Apache, da dies wohl die Installationsart ist, die am häufigsten verwendet wird. Für eine Beschreibung, wie Sie mit dem Sourcecode einen <span class="ckursiv">persönlichen</span> Apache erstellen können, sei die Homepage <a href="http://www.apache.org/">http://www.apache.org</a> empfohlen.</p>
+<h4 class="t4"><span class="cfett">Windows</span></h4>
+<p>In der Regel kann der Apache auf jeder Windows-Version ohne Probleme betrieben werden. Die Funktionalität kann hierbei für Windows 2000 (w2k), Windows Server 2003 (R2), Windows XP (SP2 und SP3) und Windows Vista garantiert werden. Nicht mehr offiziell unterstützt wird Windows 98SE, obgleich auch hier der Apache noch läuft.</p>
+<p>Für die Installation können Sie sich zwar die aktuellste Version von Apache von der offiziellen Apache-Webseite (<a href="http://www.apache.org/">http://www.apache.org/</a>) herunterladen, aber ich empfehle Ihnen, sofern Sie noch nie etwas mit Webservern zu tun gehabt haben, hierfür das Komplettpaket <span class="ckursiv">XAMPP für Windows</span>. Der Vorteil des Pakets ist, dass Sie sich für den Hausgebrauch keine Gedanken um die Konfigurationen machen müssen, und außerdem sind neben dem Apache auch gleich MySQL, PHP, phpMyAdmin, FileZilla FTP Server und der Mercury E-Mail-Server dabei. Und um das alles zu steuern, gibt es auch gleich mit dem <span class="ckursiv">XAMPP Control Panel</span> eine grafische Oberfläche dazu. Die aktuellste Version können Sie sich von der Webseite <a href="http://www.apachefriends.org/">http://www.apachefriends.org/</a> herunterladen und mithilfe des Installers installieren.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Wenn Sie noch Perl und Tomcat dazu benötigen, können Sie diese ebenfalls von derselben Webseite als Add-Ons nachinstallieren.</p>
+</td>
+</tr>
+</table><br><p>Nach der Installation von XAMPP können Sie über das <span class="ckursiv">XAMPP Control Panel</span> die Server starten und stoppen (siehe Abbildung 23.4). Hier können Sie auch gleich die Server als Dienst installieren bzw. deinstallieren, wenn Sie die Checkbox des entsprechenden Servers aktivieren bzw. deaktivieren.</p>
+<div class="bildbox">
+<p><a name="IDAQNUQ"></a><a onClick="OpenWin('bilder/23_004.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein23_004.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 23.4    </strong>Das XAMPP Control Panel zum Starten und Stoppen der Server</p>
+<p>Für dieses Kapitel benötigen Sie zunächst nur den Apache als Webserver. Daher reicht es aus, wenn Sie nur diesen über den Button <span class="kapitalchen">Start</span> ausführen.</p>
+<p>Wenn Sie jetzt XAMPP installiert haben und den Apache-Server gestartet haben, können Sie den Webbrowser öffnen und hier die Adresse <span class="clisting">http://localhost</span> eingeben und mit <img src="common/icons/Enter.gif" align="top" title="Taste Enter" alt="Taste Enter"> bestätigen. Jetzt sollten Sie die Ansicht aus Abbildung 23.5 erhalten.</p>
+<div class="bildbox">
+<p><a name="IDA2NUQ"></a><a onClick="OpenWin('bilder/23_005.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein23_005.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 23.5    </strong>Der Apache-Webserver läuft &#8211; hier können Sie außerdem auch gleich einige Tests und Demos ausführen.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Wenn Sie unter Vista das Benutzerkonto (UAC &#8211; User Account Control) aktiviert haben, müssen Sie das Setup natürlich als Administrator durchführen. Auch die entsprechenden Ports müssen gegebenenfalls bei der Firewall freigeschaltet werden. Sofern Sie das Benutzerkonto (UAC) nicht deaktivieren wollen bzw. können, sollten Sie außerdem XAMPP in ein anderes Verzeichnis als C:\Programme installieren (beispielsweise c:\xampp) weil Sie sonst nur eingeschränkte Schreibrechte haben, womit sich beispielsweise Änderungen in Skripten nicht durchführen lassen. Mehr dazu finden Sie auf der Webseite <a href="http://www.apachefriends.org/">http://www.apachefriends.org/</a> in der FAQ.</p>
+</td>
+</tr>
+</table><br><h4 class="t4"><span class="cfett">Linux</span></h4>
+<p>Die Installation unter Linux gestaltet sich recht einfach, da der Apache-Webserver in der Regel mit der Distribution mitgeliefert wird. Das heißt, Sie müssen nur noch das Paket von Ihrer Linux-Distribution nachinstallieren.</p>
+<div class="bildbox">
+<p><a name="IDAYOUQ"></a><a onClick="OpenWin('bilder/23_006.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein23_006.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 23.6    </strong>Paketauswahl bei der Ubuntu-Distribution mit 
+der Paketverwaltung »Synaptic«</p>
+<p>Natürlich können Sie auch die neueste Version des Apache herunterladen und installieren, was allerdings für die Beispiele dieses Buchs nicht nötig ist. Diese wurden unter anderem auch mit dem Apache der Version 1.3 und 2.2 getestet. Als Nächstes müssen Sie gegebenenfalls den Webserver in einer Konsole mit folgendem Befehl starten:</p>
+<div class="listing"><pre class="prettyprint">$<span class="cfett"> sudo /etc/init.d/apache2 start</span>
+[sudo] password for user:<span class="cfett"> ******</span>
+* Starting web server apache2 [ OK ]
+$</pre></div>
+<p>Sollte dies nicht funktionieren, können Sie mit Administrator-Rechten das <span class="clisting">apache2ctl</span>-Skript verwenden, um Apache zu starten. Dann sollte es mit folgendem Aufruf klappen:</p>
+<div class="listing"><pre class="prettyprint">$<span class="cfett"> sudo apache2ctl start</span>
+[sudo] password for user:<span class="cfett"> ******</span>
+* Starting web server apache2 [ OK ]
+$</pre></div>
+<p>Das Steuerskript <span class="clisting">apache2ctl</span> ist die empfohlene Methode, um den Apache zu steuern. Mit welchem Parameter dabei Apache gesteuert wird, können Sie Tabelle 23.1 entnehmen.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 23.1    </strong>Steuern des Apache mit dem Shellskript »apach2ectl« (Linux)</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Befehl</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Bedeutung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">apache2ctl start</pre></div>
+</td>
+<td class="tabellentext">
+<p>Startet den Apache.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">apache2ctl stop</pre></div>
+</td>
+<td class="tabellentext">
+<p>Stoppt den Apache.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">apache2ctl restart</pre></div>
+</td>
+<td class="tabellentext">
+<p>Neustart des Apache mit der HUP-Methode</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">apache2ctl graceful</pre></div>
+</td>
+<td class="tabellentext">
+<p>Neustart des Apache mit der USR1-Methode</p>
+</td>
+</tr>
+</table><br><p>Wenn Sie Apache installiert und gestartet haben, können Sie den Webbrowser öffnen und hier die Adresse http://localhost eingeben und mit <img src="common/icons/Enter.gif" align="top" title="Taste Enter" alt="Taste Enter"> bestätigen. Die Startseite des Apache kann von Distribution zu Distribution unterschiedlich aussehen (siehe Abbildung 23.7).</p>
+<div class="bildbox">
+<p><a name="IDA2ZUQ"></a><a onClick="OpenWin('bilder/23_007.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein23_007.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 23.7    </strong>Schnörkellos, aber klar: die Antwortseite bei Ubuntu</p>
+<h4 class="t4"><span class="cfett">htdocs-Verzeichnis</span></h4>
+<p>Die Begrüßungsseite in den verschiedensten Sprachen finden Sie im <span class="ckursiv">htdocs</span>-Verzeichnis. Bei den vielen verschiedenen Distributionen und Betriebssystemen ist es gar nicht so einfach, das Verzeichnis zu finden. Gerade bei Linux/Unix-Systemen, wo vieles selbst kompiliert wird, hängt das Verzeichnis (auch als Direktive <span class="clisting">DocumentRoot</span> bekannt) vom vordefinierten Layout ab. In Tabelle 23.2 finden Sie einige dieser vordefinierten Layouts (ohne Garantie auf Vollständigkeit).</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 23.2    </strong>Verschiedene vordefinierte Layouts für das »htdocs«-Verzeichnis</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">System/Distribution</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Verzeichnis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>Apache (Standardlayout)</p>
+</td>
+<td class="tabellentext">
+<p>/usr/local/apache2/htdocs</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>Beos</p>
+</td>
+<td class="tabellentext">
+<p>/boot/home/apache/htdocs</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>BSD</p>
+</td>
+<td class="tabellentext">
+<p>/var/www/htdocs</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>Darwin (MacOS X)</p>
+</td>
+<td class="tabellentext">
+<p>/Library/WebServer/Documents</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>Debian</p>
+</td>
+<td class="tabellentext">
+<p>/usr/share/apache2/default-site/htdocs</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>FreeBSD</p>
+</td>
+<td class="tabellentext">
+<p>/usr/local/www/data</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>GNU</p>
+</td>
+<td class="tabellentext">
+<p>/usr/local/share/apache2/htdocs</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>MacOS X Server</p>
+</td>
+<td class="tabellentext">
+<p>/Local/Library/WebServer/Documents</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>OpenBSD</p>
+</td>
+<td class="tabellentext">
+<p>/var/www/htdocs</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>opt-Verzeichnis</p>
+</td>
+<td class="tabellentext">
+<p>/opt/apache/share/htdocs</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>Red Hat</p>
+</td>
+<td class="tabellentext">
+<p>/var/www/html</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>Solaris</p>
+</td>
+<td class="tabellentext">
+<p>/var/apache/htdocs</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>SuSE</p>
+</td>
+<td class="tabellentext">
+<p>/usr/local/httpd/htdocs</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>Ubuntu</p>
+</td>
+<td class="tabellentext">
+<p>/usr/share/apache2/default-site/htdocs</p>
+</td>
+</tr>
+</table><br><p>Unter Windows kann der Pfad ebenfalls recht unterschiedlich sein. Bei XAMPP beispielsweise finden Sie das <span class="ckursiv">htdocs</span>-Verzeichnis in <span class="ckursiv">c:\xampp\htdocs</span> bzw. <span class="ckursiv">c:\Programme\xampp\htdocs</span>.</p>
+<p>Wenn Sie jetzt eine HTML-Seite auf dem lokalen Webserver speichern und mit einem Webbrowser betrachten wollen, müssen Sie dazu nur die Webseiten, Bilder und, falls benötigt, weitere Unterordner im <span class="ckursiv">htdocs</span>-Verzeichnis des Apache-Servers ablegen.</p>
+<p>Erstellen Sie z. B. eine HTML-Seite mit dem Namen <span class="ckursiv">testseite.html</span> und speichern diese im <span class="ckursiv">htdocs</span>-Verzeichnis, dann können Sie diese Seite mit einem Browser über die URL <a href="http://localhost/testseite.html">http://localhost/testseite.html</a> aufrufen und anzeigen.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Wo sich das Basisverzeichnis für die Webseiten des Hauptservers (wie hier eben mit dem Standardwert /htdocs) befindet, wird in der Konfigurationsdatei httpd.conf bzw. apache2.conf von Apache mit der Direktive <span class="clisting">DocumentRoot</span> festgelegt.</p>
+</td>
+</tr>
+</table><br><h4 class="t4"><span class="cfett">Apache für CGI-Anwendungen konfigurieren</span></h4>
+<p>Wenn Sie irgendetwas beim Apache konfigurieren müssen, ist die Konfigurationsdatei <span class="ckursiv">httpd.conf</span> Ihre erste Anlaufstelle. Bei Linux/Unix benötigen Sie zum Editieren dieser Datei natürlich Administratorrechte. Bei vielen Distributionen wird der Dateiname <span class="ckursiv">httpd.conf</span> gar nicht mehr verwendet, sondern die Datei heißt <span class="ckursiv">apache2.conf</span>.</p>
+<p>Auch der Pfad zur Konfigurationsdatei des Apache lässt sich nicht auf Anhieb genau nennen. So finden Sie beispielsweise bei Windows mit XAMPP die Konfigurationsdatei im <span class="ckursiv">xampp</span>-Verzeichnis unter <span class="ckursiv">C:\Pfad_zu_XAMPP\apache\conf</span> und bei Linux (hier beispielsweise bei Ubuntu) im Verzeichnis <span class="ckursiv">/</span><span class="ckursiv">etc/apache2</span>. Allerdings kann dieser Pfad auch woanders liegen.</p>
+<p>Enorm von Bedeutung ist hier die Direktive <span class="clisting">ScriptAlias</span>, mit der Sie den Namen für das CGI-Verzeichnis (traditionell lautet der Name <span class="ckursiv">cgi-bin</span>) und den Pfad dahin festlegen. Standardmäßig ist dieses Verzeichnis ein anderes als das <span class="clisting">DocumentRoot</span>-Verzeichnis (das <span class="ckursiv">htdocs</span>-Verzeichnis). Gewöhnlich wird dieses Verzeichnis mit dem Modul <span class="clisting">mod_alias</span> (bzw. <span class="clisting">alias_module</span>) und der Direktive <span class="clisting">ScriptAlias</span> bereitgestellt.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Sollten Sie vorhaben, die CGI-Anwendungen im vorgegebenen cgi-bin-Verzeichnis auszuführen, müssen Sie in der Regel nichts in der Konfigurationsdatei ändern.</p>
+</td>
+</tr>
+</table><br><p>Beispielsweise sieht diese Zeile bei XAMPP unter Microsoft Windows wie folgt aus:</p>
+<div class="listing"><pre class="prettyprint">    ScriptAlias /cgi-bin/ "C:/xampp/cgi-bin/"</pre></div>
+<p>Und unter Linux so:</p>
+<div class="listing"><pre class="prettyprint">    ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"</pre></div>
+<p>Hier wurde der traditionelle Name <span class="clisting">cgi-bin</span> verwendet, gefolgt vom Verzeichnis, wo sich dieses befindet und wo Sie (hier bspw. /var/www/cgi-bin/) Ihre CGI-Anwendungen ausführen können. Die Werte können Sie selbstverständlich an Ihre Bedürfnisse anpassen. Ein Zugriff auf <a href="http://localhost/cgi-bin/test.cgi">http://localhost/cgi-bin/test.cgi</a> entspricht dann praktisch unter Windows einem Zugriff auf <span class="ckursiv">C:\xampp\cgi-bin\test.cgi</span> bzw. bei Linux einem Zugriff auf <span class="ckursiv">/var/www/cgi-bin/test.cgi</span>.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Wenn Sie mehrere Verzeichnisse CGI-fähig machen wollen, können Sie auch die Direktive <span class="clisting">ScriptAliasMatch</span> verwenden.</p>
+</td>
+</tr>
+</table><br><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Es sollte klar sein, dass in diesem Buch der Umfang von httpd.conf bzw. apache2.conf und Apache nicht ausreichend beschrieben werden kann. Für die Ausführung von CGI-Skripten reicht es zwar, aber für mehr Informationen empfehle ich Ihnen, die Apache-Dokumentation (<a href="http://httpd.apache.org/docs/">http://httpd.apache.org/docs/</a>) zu lesen. Wenn Sie auf der Suche nach Literatur zu Apache sind, kann ich Ihnen ohne Bedenken das Buch »Apache 2.4 &#8211; Das umfassende Handbuch« von Sascha Kersken (erschienen beim Rheinwerk Verlag; ISBN 978-3-8362-1777-4) empfehlen.</p>
+</td>
+</tr>
+</table><br><p>Hier sehen Sie eine erste CGI-Anwendung, die Sie in Ihrem Webbrowser zum Testen starten können:</p>
+<div class="listing"><pre class="prettyprint">/* time.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+
+/* die Kopfzeile eines Standard-HTML-Dokuments;
+ * Titel: String, der als Titel erscheinen soll
+ */
+void print_html_header(char *titel) {
+   printf("&lt;html&gt;&lt;head&gt;\n");
+   printf("&lt;title&gt;%s&lt;/title&gt;\n",titel);
+   printf("&lt;/head&gt;&lt;body&gt;\n");
+}
+
+/* das Ende eines HTML-Dokuments */
+void print_html_end(void) {
+   printf("&lt;/body&gt;&lt;/html&gt;\n");
+}
+
+/* damit überhaupt ein HTML-Dokument ausgegeben wird */
+void print_header(void) {
+   printf("Content-Type: text/html\n\n");
+}
+
+void print_time(void) {
+   time_t zeit;
+
+   time(&amp;zeit);
+   printf("Aktuelle Systemzeit: ");
+   printf("%s\n",ctime(&amp;zeit));
+}
+
+int main(void) {
+   print_header();
+   print_html_header("Hallo Welt in CGI mit Zeit\n");
+   print_time();
+   print_html_end();
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Die Funktion <span class="clisting">print_html_header()</span> enthält die Kopfdaten eines HTML-Dokuments. Der String, den Sie der Funktion übergeben, wird als Titel der HTML-Seite verwendet. Und die Funktion <span class="clisting">print_html_end()</span> enthält das Ende eines HTML-Dokuments. Zur Zeile <span class="clisting">print_header()</span> erfahren Sie später mehr. Mit der Funktion <span class="clisting">print_time()</span> wird die aktuelle Systemzeit ausgegeben. Da sich diese zwischen den Funktionen <span class="clisting">print_html_header()</span> und <span class="clisting">print_html_end()</span> befindet, also im Body-Teil des HTML-Dokuments, stellt die Ausgabe praktisch den Inhalt der HTML-Seite dar. Jetzt soll dieses CGI-Programm mit dem Webbrowser Ihrer Wahl aufgerufen werden.</p>
+<p>Ein CGI-Programm erstellen und starten Sie in den folgenden Schritten (der Programmname sei <span class="clisting">time.c</span>):</p>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>1.</strong></td>
+<td valign="top" width="100%" align="left"> Übersetzen Sie den Quellcode wie gewohnt.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>2.</strong></td>
+<td valign="top" width="100%" align="left"> Verändern Sie die Extension der ausführbaren Datei. Bei Linux hat diese binäre Datei keine Extension, und Sie sollten eine hinzufügen. Aus time wird hierbei time.cgi. Unter Windows läuft dies ähnlich ab, aus time.exe machen Sie time.cgi. Es kann dabei vorkommen, dass Ihr System Sie warnt, das Programm sei danach nicht mehr ausführbar. Das können Sie ignorieren.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>3.</strong></td>
+<td valign="top" width="100%" align="left"> Kopieren Sie die übersetzte Datei in das cgi-bin-Verzeichnis des Webservers. Unter Linux/Unix werden Sie hierbei Administratorrechte benötigen, um auf das Verzeichnis schreibend zugreifen zu können.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>4.</strong></td>
+<td valign="top" width="100%" align="left"> CGIZugriffsrechteUnter Linux müssen Sie noch die Zugriffsrechte der Datei time.cgi ändern. Ein einfaches chmod a+x time.cgi sollte dabei reichen (voraussichtlich werden Superuser-Rechte dazu benötigt).</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>5.</strong></td>
+<td valign="top" width="100%" align="left"> Jetzt können Sie einen Webbrowser Ihrer Wahl starten und, falls es nicht schon geschehen ist, den Apache-Webserver ebenfalls.</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">     </td>
+</tr>
+</table>
+<table width="100%" border="0">
+<tr>
+<td valign="top" width="10"><strong>6.</strong></td>
+<td valign="top" width="100%" align="left"> Jetzt wird es Zeit, die CGI-Anwendung zu starten. Geben Sie in der Adressleiste Ihres Browser folgende URL ein:</td>
+</tr>
+<tr>
+<td valign="baseline" width="16">     </td>
+<td valign="top" width="100%" align="left">
+<div class="listing"><pre class="prettyprint"><a href="http://localhost/cgi-bin/time.cgi">http://localhost/cgi-bin/time.cgi</a></pre></div></td>
+</tr>
+</table>
+<p>Wenn alles richtig verlaufen ist, müssten Sie folgende Ausgabe auf Ihrem Bildschirm erhalten:</p>
+<div class="bildbox">
+<p><a name="IDA1IVQ"></a><a onClick="OpenWin('bilder/23_008.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein23_008.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 23.8    </strong>Ausgabe der Systemzeit mit Mozilla (SUSE Linux)</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Tipp</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" rowspan="2">
+<p class="BStandard">Unter Linux können Sie sich das Verändern der Extension ersparen, wenn Sie der ausführbaren Datei gleich beim Übersetzen diese Extension übergeben:</p>
+<p class="BStandard"><span class="clisting">gcc</span> <span class="clisting">-o</span> <span class="clisting">time.cgi</span> <span class="clisting">time.c.</span></p>
+</td>
+</tr>
+</table><br><h4 class="t4"><span class="cfett">Troubleshooting</span></h4>
+<p>Sollten Sie die CGI-Anwendung nicht zum Laufen bekommen, sehen Sie in der folgenden Checkliste nach, welche möglichen Ursachen dies haben könnte:</p>
+<ul class="gp">
+<li>Haben Sie die Zugriffsrechte auf die CGI-Anwendung richtig gesetzt? Wenn Sie keine Rechte auf die Datei haben, sollten Sie dies nachholen.</li>
+</ul>
+<ul class="gp">
+<li>Liegt ein Fehler im Programm vor? Meistens bekommen Sie dabei von Ihrem Webbrowser einen Fehler mit der Nummer 500 zurück.</li>
+</ul>
+<ul class="gp">
+<li>Führen Sie das Programm in der Kommandozeile aus, und achten Sie auf die Ausgabe.</li>
+</ul>
+<ul class="gp">
+<li>Haben Sie die richtige URL im Browser eingegeben?</li>
+</ul>
+<ul class="gp">
+<li>Testen Sie nochmals, ob der Webserver richtig oder überhaupt läuft 
+(http://localhost/).</li>
+</ul>
+<ul class="gp">
+<li>Ein Blick ins Apache-Log kann auch nicht schaden. In der Regel ist dies in             <span class="ckursiv">/var/log/apache/</span> zu finden. Interessant sind hier die Dateien <span class="ckursiv">error.log</span> und <span class="ckursiv">access.log</span>. Gerade beim Testen von neuen CGIs sollten Sie durch Eingabe in einer Konsole <span class="clisting">tail -f /var/log/apache/error.log</span> mitlaufen lassen. Alle Fehlermeldungen, die dann über <span class="clisting">stderr</span> ausgegeben werden, tauchen im Log auf.</li>
+</ul>
+<p>Bevor Sie jetzt weitere CGI-Anwendungen erstellen, benötigen Sie noch ein wenig Grundwissen zum HTTP-Protokoll.</p><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/023_c_cgi_007.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="23.7 Der Webserver"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="023_c_cgi_006.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="023_c_cgi_008.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/023_c_cgi_007.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:51:43 GMT -->
+</html>

@@ -1,0 +1,1171 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/021_c_dyn_datenstrukturen_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:48:53 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 21.3 Stacks nach dem LIFO-(Last-in-First-out-)Prinzip</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 21.3 Stacks nach dem LIFO-(Last-in-First-out-)Prinzip">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 21.3 Stacks nach dem LIFO-(Last-in-First-out-)Prinzip">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="021_c_dyn_datenstrukturen_002.html">
+<link rel="next" href="021_c_dyn_datenstrukturen_004.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="021_c_dyn_datenstrukturen_002.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="021_c_dyn_datenstrukturen_004.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76" class="navnav">21 Dynamische Datenstrukturen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="021_c_dyn_datenstrukturen_001.html#mjd019c1a582bc18749ab77c2c95a22350" class="navnav">21.1 Lineare Listen (einfach verkettete Listen)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mje4a579c472948a9d6db7486a446e0ab3" class="navnav">21.1.1 Erstes Element der Liste löschen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mj6568edd64f0952e625773ee548f7cf5e" class="navnav">21.1.2 Ein beliebiges Element in der Liste löschen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mj7c56df0693563276c6713057fe39a2ef" class="navnav">21.1.3 Elemente der Liste ausgeben</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mj39ba9c20a2cec7034e966d7751c62a53" class="navnav">21.1.4 Eine vollständige Liste auf einmal löschen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="021_c_dyn_datenstrukturen_001.html#mj4c9477ba0b30ea123687d37217c6ae2f" class="navnav">21.1.5 Element in die Liste einfügen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="021_c_dyn_datenstrukturen_002.html#mj0230cca6aa7fb87181f7f69e396d6fd8" class="navnav">21.2 Doppelt verkettete Listen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mj99a62629378300e719376434889e7c56" class="navh">21.3 Stacks nach dem LIFO-(Last-in-First-out-)Prinzip</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="021_c_dyn_datenstrukturen_004.html#mjbd6477c5d4f3e8b4b65d66940cb86b97" class="navnav">21.4 Queues nach dem FIFO-Prinzip</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="021_c_dyn_datenstrukturen_005.html#mj45d3def42c61a516f9bc6bd1a55e6a4b" class="navnav">21.5 Dynamisches Array mit flexiblen Elementen</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mj99a62629378300e719376434889e7c56" name="mj99a62629378300e719376434889e7c56"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">21.3</span><span class="cfett"> Stacks nach dem LIFO-(Last-in-First-out-)Prinzip</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Der Stack ist ebenfalls eine Datenstruktur von verketteten Listen, nur dass hierbei die Anordnung der einzelnen Elemente ein wenig anders ist. Der Stack funktioniert nach dem LIFO-Prinzip (Last-in-First-out), was bedeutet, dass die Daten, die als letzte eingefügt wurden, als erste wieder vom Stack genommen werden &#8211; etwa wie bei einem Stapel schmutziger Teller, die Sie abwaschen.</p>
+<p>Sie haben bei einem Stack also immer nur Zugriff auf das oberste Element. Verwenden könnten Sie das Prinzip beispielsweise zum rückgängigen Löschen einer Operation. Im Prinzip besteht ein Stack aus zwei grundlegenden Funktionen:</p>
+<ul class="gp">
+<li><span class="clisting">push()</span> &#8211; ein neues Element auf dem Stack ablegen</li>
+</ul>
+<ul class="gp">
+<li><span class="clisting">pop()</span> &#8211; holt das oberste Element wieder vom Stack herunter</li>
+</ul><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Die Datenstruktur des Stacks wird als <span class="ckursiv">abstrakte Datenstruktur</span> (ADT steht eigentlich für »Abstrakter Datentyp«) bezeichnet. Es wird auch von einer abstrakten Datenstruktur gesprochen, wenn die konkrete Umsetzung der Datenstrukturen verborgen bleibt und der Anwender des Stacks nur die Stack-Operationen zur Verfügung hat.</p>
+</td>
+</tr>
+</table><br><div class="bildbox">
+<p><a name="IDA1DUQ"></a><a onClick="OpenWin('bilder/21_040.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_040.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.40    </strong>Der Stack und seine grundlegende Funktion</p>
+<p>Als Beispiel dient wieder das Programm, das Sie schon im Abschnitt zuvor entwickelt haben. Hierzu soll eine Funktion erstellt werden, die gelöschte Datensätze auf einen Stack ablegt und bei Bedarf diese Aktion wieder rückgängig machen kann. An der Struktur selbst ändert sich nichts. Hier sehen Sie nochmals die Struktur zur Erinnerung:</p>
+<div class="listing"><pre class="prettyprint">struct angestellt  {
+   char name[20];
+   char vorname[20];
+   struct datum alter;
+   struct datum eingest;
+   long gehalt;
+   struct angestellt *next;      // Nachfolger
+   struct angestellt *previous;  // Vorgänger
+};</pre></div>
+<p>Hinzu kommen zwei neue globale Strukturzeiger vom Typ <span class="clisting">angestellt</span>:</p>
+<div class="listing"><pre class="prettyprint">struct angestellt *stack_ptr, *stack_help;</pre></div>
+<p>Für den Stack soll hier eine Unterlage erstellt werden, auf der alle anderen Elemente abgeladen werden. Dafür wird eine Funktion erstellt, die eine Auflage erstellt und den Stack initialisiert.</p>
+<div class="listing"><pre class="prettyprint">int stackinit(void) {
+   if((stack_ptr=
+     malloc(sizeof(struct angestellt))) != NULL) {
+      stack_ptr-&gt;next = NULL;
+      strcpy(stack_ptr-&gt;name,"dummy");
+      strcpy(stack_ptr-&gt;vorname,"dummy");
+      stack_ptr-&gt;alter.tag=0;
+      stack_ptr-&gt;alter.monat=0;
+      stack_ptr-&gt;alter.jahr=0;
+      stack_ptr-&gt;eingest.tag=0;
+      stack_ptr-&gt;eingest.monat=0;
+      stack_ptr-&gt;eingest.jahr=0;
+      stack_ptr-&gt;gehalt=0;
+      return 1;
+   }
+   else
+      return 0;
+}</pre></div>
+<p>Zuerst wird Speicherplatz für die »Auflagefläche« der weiteren Elemente, die noch folgen werden, reserviert. Als Inhalt für die Auflagefläche werden einfach irgendwelche Werte verwendet. Der Zeiger <span class="clisting">stack_ptr</span> verweist jetzt auf diese Auflagefläche (siehe Abbildung 21.41).</p>
+<div class="bildbox">
+<p><a name="IDA2FUQ"></a><a onClick="OpenWin('bilder/21_041.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_041.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.41    </strong>Ein »leerer« Stack</p>
+<p>Danach folgt die Funktion <span class="clisting">push()</span>, mit der ein Element auf den Stack geladen werden kann. Die Funktion <span class="clisting">push()</span> soll im Programm dann aufgerufen werden, wenn der User einen Datensatz aus der Liste löscht. Praktisch bedeutet dies, dass überall im Programm, wo Sie mit <span class="clisting">free()</span> einen Speicherplatz freigeben würden, die Funktion <span class="clisting">push()</span> platziert wird.</p>
+<div class="listing"><pre class="prettyprint">int push(struct angestellt *neu) {
+   neu-&gt;next = stack_ptr-&gt;next;
+   stack_ptr-&gt;next=neu;
+   return 1;
+}</pre></div>
+<p>Der Speicherplatz für die Elemente, die auf dem Stack abgelegt werden, muss nicht mehr reserviert werden, da dies ja schon beim Einfügen des Elements in der verketteten Liste vorgenommen wurde. Natürlich müssen Sie dabei auch die Funktion <span class="clisting">loesche()</span> abändern, damit diese wirklich den Speicherplatz nicht mehr mittels <span class="clisting">free()</span> hergibt. Der Funktion <span class="clisting">push()</span> wird einfach diese Adresse als Argument (<span class="clisting">struct angestellt *neu</span>) übergeben. Beachten Sie bitte, falls Sie vorhaben, den Stack in ein anderes Programm zu implementieren, dass Sie für die Speicherverwaltung der Daten selbst verantwortlich sind. Die erste Zeile in der Funktion sieht so aus:</p>
+<div class="listing"><pre class="prettyprint">neu-&gt;next = stack_ptr-&gt;next;</pre></div>
+<p>Damit verweist der <span class="clisting">next</span>-Zeiger des neuen Elements auf die Adresse von <span class="clisting">stack_ptr-&gt;next</span>, was zunächst der <span class="clisting">NULL</span>-Zeiger ist, wie Sie hier erkennen können:</p>
+<div class="bildbox">
+<p><a name="IDADHUQ"></a><a onClick="OpenWin('bilder/21_042.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_042.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.42    </strong>Ein neues Element auf den Stack legen</p>
+<p>Anschließend bekommt die »Auflagefläche« die Adresse des neuen Elements:</p>
+<div class="listing"><pre class="prettyprint">stack_ptr-&gt;next=neu;</pre></div>
+<div class="bildbox">
+<p><a name="IDAJHUQ"></a><a onClick="OpenWin('bilder/21_043.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_043.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.43    </strong>Der Stack nach dem Funktionsaufruf »push()«</p>
+<p>Bei einem erneuten Aufruf der Funktion <span class="clisting">push()</span> würde der Stack folgendermaßen aussehen:</p>
+<div class="bildbox">
+<p><a name="IDAQHUQ"></a><a onClick="OpenWin('bilder/21_044.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_044.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.44    </strong>Der Stack nach einem weiteren »push«</p>
+<p>Das erste Element im Stapel, vom <span class="clisting">DUMMY</span>-Element abgesehen, zeigt immer auf <span class="clisting">NULL</span>, da es auch das letzte ist, das wieder vom Stapel entfernt wird.</p>
+<p>Als Nächstes folgt die Funktion zum rückgängigen Löschen eines Datensatzes. Diese Funktion verwendet den Zeiger <span class="clisting">stack_ptr-&gt;next</span>, um an die Daten heranzukommen, die oben auf dem Stack liegen. Sind die Daten ausgelesen, werden sie wieder in die verkettete Liste eingefügt.</p>
+<div class="listing"><pre class="prettyprint">void rueckgaengig_loeschen(void) {
+   char n[20],vn[20];
+   int at,am,aj,et,em,ej;
+   long geh;
+
+   if(stack_ptr-&gt;next != NULL) {
+      strcpy(n,stack_ptr-&gt;next-&gt;name);
+      strcpy(vn,stack_ptr-&gt;next-&gt;vorname);
+      at=stack_ptr-&gt;next-&gt;alter.tag;
+      am=stack_ptr-&gt;next-&gt;alter.monat;
+      aj=stack_ptr-&gt;next-&gt;alter.jahr;
+      et=stack_ptr-&gt;next-&gt;eingest.tag;
+      em=stack_ptr-&gt;next-&gt;eingest.monat;
+      ej=stack_ptr-&gt;next-&gt;eingest.jahr;
+      geh=stack_ptr-&gt;next-&gt;gehalt;
+      sortiert_eingeben(n,vn,at,am,aj,et,em,ej,geh);
+
+      /* jetzt runter damit vom Stack */
+      pop();
+   }
+   else {
+      printf("Kein Element mehr vorhanden zu \"Rückgängig"
+             " Löschen\"\n");
+      printf("&lt;ENTER&gt;");
+      getchar();
+   }
+}</pre></div>
+<p>Am Ende kann das oberste Element vom Stack wieder entfernt werden, wie dies hier bei der Funktion <span class="clisting">rueckgaengig_loeschen()</span> mit der Funktion <span class="clisting">pop()</span> geschieht. Jetzt müssen Sie noch die Funktion <span class="clisting">pop()</span> schreiben:</p>
+<div class="listing"><pre class="prettyprint">void pop(void) {
+   stack_help = stack_ptr-&gt;next;
+   stack_ptr-&gt;next=stack_help-&gt;next;
+   printf("%s\n",stack_help-&gt;vorname);
+   free(stack_help);
+}</pre></div>
+<p>Zuerst bekommt der Zeiger <span class="clisting">stack_help</span> die Adresse des obersten Elements (<span class="clisting">stack_ptr-&gt;next</span>) auf dem Stapel:</p>
+<div class="bildbox">
+<p><a name="IDALSUQ"></a><a onClick="OpenWin('bilder/21_045.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_045.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.45    </strong>Das oberste Element soll vom Stack entfernt werden.</p>
+<p>Danach folgt eine kleine Stolperstelle, die häufig für Verwirrung sorgt:</p>
+<div class="listing"><pre class="prettyprint">stack_ptr-&gt;next=stack_help-&gt;next;</pre></div>
+<p>Aber dafür ist es nun mal ein Stapel. Wird das oberste Element entfernt, welches ist dann das nächste Element, das oben liegt? Richtig, eines darunter. Und so sieht es nach dieser Zeile aus:</p>
+<div class="bildbox">
+<p><a name="IDASSUQ"></a><a onClick="OpenWin('bilder/21_046.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_046.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.46    </strong>Das oberste Element vom Stack »aushängen«</p>
+<p>Jetzt kann der Speicherplatz, auf den der Zeiger <span class="clisting">stack_help</span> verweist, freigegeben werden:</p>
+<div class="listing"><pre class="prettyprint">free(stack_help);</pre></div>
+<div class="bildbox">
+<p><a name="IDA0SUQ"></a><a onClick="OpenWin('bilder/21_047.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein21_047.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 21.47    </strong>Den Speicherplatz des obersten Elements freigeben</p>
+<p>Hierzu folgt jetzt das vollständige finale Listing von Kapitel 21 mit allen Funktionen, die in diesem Kapitel geschrieben wurden:</p>
+<div class="listing"><pre class="prettyprint">/* datenstruktur_final.c */
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAX 20
+
+struct datum{
+   int tag;
+   int monat;
+   int jahr;
+};
+
+struct angestellt{
+   char name[MAX];
+   char vorname[MAX];
+   struct datum alter;
+   struct datum eingest;
+   long gehalt;
+   struct angestellt *next;
+   struct angestellt *previous;
+};
+
+/* globale Variablen */
+struct angestellt *next, *anfang, *ende, *stack_ptr, *stack_help;
+static int counter=0;
+static char datname[] = "personal.dat";
+/* Prototypen der Funktionen */
+void start(void);
+void anhaengen(char *,char *,int,int,int,int,int,int,long);
+void loesche(char *);
+void ausgabe(void);
+void eingabe(void);
+void loesche_alles(void);
+void sortiert_eingeben(char *,char *,
+                       int,int,int,int,int,int,long);
+int vergleiche(struct angestellt *, struct angestellt *);
+int laden(FILE *);
+void speichern(FILE *);
+int datei_oeffnen_lesen(FILE **);
+int datei_oeffnen_erstellen(FILE **);
+int datei_oeffnen_lesen_schreiben(FILE **);
+int stackinit(void);
+int push(struct angestellt *);
+void pop(void);
+
+/* Startadressen für die Zeiger next, anfang und ende */
+void start(void) {
+   next=anfang=ende=NULL;
+   if((ende=
+     malloc(sizeof(struct angestellt))) == NULL) {
+      printf("Konnte keinen Speicherplatz für ende "
+             "reservieren\n");
+      exit(EXIT_FAILURE);
+   }
+}
+
+/* "Auflagefläche" für stack_ptr. Wir benutzen
+ * einen Stack, um loeschen() rückgängig zu machen. */
+int stackinit(void) {
+    if((stack_ptr=
+      malloc(sizeof(struct angestellt))) != NULL) {
+       stack_ptr-&gt;next = NULL;
+       strcpy(stack_ptr-&gt;name,"dummy");
+       strcpy(stack_ptr-&gt;vorname,"dummy");
+       stack_ptr-&gt;alter.tag=0;
+       stack_ptr-&gt;alter.monat=0;
+       stack_ptr-&gt;alter.jahr=0;
+       stack_ptr-&gt;eingest.tag=0;
+       stack_ptr-&gt;eingest.monat=0;
+       stack_ptr-&gt;eingest.jahr=0;
+       stack_ptr-&gt;gehalt=0;
+       return 1;
+    }
+    else
+       return 0;
+}
+
+/* Funktion zum Ablegen von gelöschten Dateien, um sie bei Bedarf
+ * rückgängig zu machen */
+int push(struct angestellt *neu) {
+   neu-&gt;next = stack_ptr-&gt;next;
+   stack_ptr-&gt;next=neu;
+   return 1;
+}
+
+/* Funktion zum Freigeben eines Elements vom Stack */
+void pop(void) {
+   stack_help = stack_ptr-&gt;next;
+   stack_ptr-&gt;next=stack_help-&gt;next;
+   free(stack_help);
+}
+
+/* Wir hängen einen Datensatz an oder geben einen neuen ein:
+ * n=name,v=vornam,at=alter.tage,am=alter.monat,aj=alter.jahr
+ * eint=eigestellt tag,einm=eingestellt monat,einj=eingest. jahr
+ * g=gehalt */
+void anhaengen(char *n, char *v, int at, int am, int aj,
+               int eint, int einm, int einj, long g) {
+   /* Zeiger für den Zugriff auf die einzelnen
+    * Elemente der Struktur */
+   struct angestellt *zeiger, *zeiger1;
+
+   /* Wurde schon Speicher für den ende-Zeiger bereitgestellt? */
+   if(ende == NULL) {
+      if((ende=
+        malloc(sizeof(struct angestellt))) == NULL) {
+          printf("Konnte keinen Speicherplatz für ende "
+                 "reservieren\n");
+          exit(EXIT_FAILURE);
+      }
+   }
+
+   /* Wir fragen ab, ob es schon ein Element in der Liste gibt.
+    * Wir suchen das Element, auf das unser Zeiger *anfang zeigt.
+    * Falls *anfang immer noch auf NULL zeigt, bekommt *anfang
+    * die Adresse unseres 1. Elements und ist somit der Kopf
+    * (Anfang) unserer Liste. */
+   if(anfang == NULL) {
+      /* Wir reservieren Speicherplatz für unsere Struktur
+       * für das erste Element der Liste. */
+      if((anfang =
+        malloc(sizeof(struct angestellt))) == NULL) {
+         fprintf(stderr,"Kein Speicherplatz vorhanden "
+                        "fuer anfang\n");
+         return;
+      }
+      counter++;
+      strcpy(anfang-&gt;name,strtok(n, "\n") );
+      strcpy(anfang-&gt;vorname,strtok(v, "\n") );
+      anfang-&gt;alter.tag=at;
+      anfang-&gt;alter.monat=am;
+      anfang-&gt;alter.jahr=aj;
+      anfang-&gt;eingest.tag=eint;
+      anfang-&gt;eingest.monat=einm;
+      anfang-&gt;eingest.jahr=einj;
+      anfang-&gt;gehalt=g;
+
+      /* Somit haben wir unseren Anfang der Liste. Von nun
+       * an zeigt der Zeiger anfang immer auf das Element
+       * vor ihm. Da dies aber jetzt das 1. Element der Liste
+       * war, zeigt der Zeiger anfang auf den Zeiger next.
+       * next zeigt am Ende immer wieder NULL. Da es das erste
+       * Element der Liste ist, zeigt somit ende auf
+       * dasselbe Element wie anfang. Und das Element vor dem
+       * 1. Element ist somit NULL. */
+      anfang-&gt;next=NULL;
+      ende=anfang;
+      ende-&gt;previous=NULL;
+   }
+   /* Es scheint schon mindestens ein Element in der Liste
+    * vorhanden zu sein, da der Anfang nicht == NULL ist.
+    * Jetzt suchen wir so lange nach dem nächsten Element,
+    * bis der *next-Zeiger auf NULL zeigt. Somit haben
+    * wir das Ende der Liste gefunden und können einen
+    * neuen Datensatz anhängen. */
+   else {
+      zeiger=anfang;    /* Wir zeigen auf das 1. Element. */
+      while(zeiger-&gt;next != NULL)
+         zeiger=zeiger-&gt;next;
+
+
+
+
+      /* Wir reservieren einen Speicherplatz für das
+       * letzte Element der Liste und hängen es an. */
+      if((zeiger-&gt;next =
+       malloc(sizeof(struct angestellt))) == NULL) {
+         fprintf(stderr, "Kein Speicherplatz fuer "
+                         "letztes Element\n");
+         return;
+      }
+      zeiger1=zeiger;
+      zeiger=zeiger-&gt;next; /* zeiger auf neuen Speicherplatz */
+      counter++;
+      strcpy(zeiger-&gt;name, strtok(n, "\n") );
+      strcpy(zeiger-&gt;vorname,strtok(v, "\n") );
+      zeiger-&gt;alter.tag=at;
+      zeiger-&gt;alter.monat=am;
+      zeiger-&gt;alter.jahr=aj;
+      zeiger-&gt;eingest.tag=eint;
+      zeiger-&gt;eingest.monat=einm;
+      zeiger-&gt;eingest.jahr=einj;
+      zeiger-&gt;gehalt=g;
+      zeiger-&gt;next=NULL;
+      ende=zeiger;
+      zeiger-&gt;previous=zeiger1;
+      zeiger1-&gt;next=zeiger;
+   }
+}
+
+/* Funktion zum Löschen einer Datei */
+void loesche(char *wen) {
+   struct angestellt *zeiger ,*zeiger1, *zeiger2;
+
+   /* Ist überhaupt ein Element vorhanden? */
+   if(anfang != NULL) {
+      /* Ist unser 1. Element das von uns gesuchte (wen[])? */
+      if(strcmp(anfang-&gt;name,wen) == 0) {
+         zeiger=anfang-&gt;next;
+         if(zeiger == NULL) {
+            push(anfang);
+            anfang=NULL;
+            ende=NULL;
+            counter--;
+            return;
+         }
+         push(anfang);
+         zeiger-&gt;previous=NULL;
+         /* free(anfang); */
+         counter--;
+         anfang=zeiger;
+      }
+      /* Ist das letzte Element das von uns gesuchte? */
+      else if(strcmp(ende-&gt;name, wen) == 0) {
+         zeiger=ende-&gt;previous;
+         zeiger-&gt;next=NULL;
+         zeiger1=ende;
+         ende=zeiger;
+         push(zeiger1);
+         /* free(zeiger1); */
+         counter--;
+      }
+      else {
+         /* Es ist nicht das 1. Element zu löschen.
+          * Wir suchen in der weiteren Kette, ob das zu
+          * löschende Element vorhanden ist. */
+         zeiger=anfang;
+         while(zeiger-&gt;next != NULL) {
+            zeiger1=zeiger-&gt;next;
+            /* Ist die Adresse von zeiger1 der
+               gesuchte Name? */
+            if(strcmp(zeiger1-&gt;name,wen) == 0) {
+               /* Falls ja, dann ... */
+               zeiger-&gt;next=zeiger1-&gt;next;
+               zeiger2=zeiger1-&gt;next;
+               zeiger2-&gt;previous=zeiger;
+               push(zeiger1);
+               counter--;
+               break;
+            }
+            zeiger=zeiger1;
+         }
+      }
+   }
+   else
+      printf("Es sind keine Daten zum Loeschen vorhanden\n");
+}
+
+/* Funktion zum Ausgeben der Dateien */
+void ausgabe(void) {
+   struct angestellt *zeiger = anfang;
+
+
+   printf("||==================================================="
+          "====||\n");
+   printf("|%10cName%10c |Geburtsdatum|Eingestellt|Gehalt|\n"
+                                                      ,' ',' ');
+   printf("||==================================================="
+          "====||\n");
+
+   while(zeiger != NULL) {
+      printf("|%12s,%-12s|  %02d.%02d.%04d| %02d.%02d.%04d|"
+             "%06ld|\n", zeiger-&gt;name,zeiger-&gt;vorname,
+         zeiger-&gt;alter.tag, zeiger-&gt;alter.monat,
+         zeiger-&gt;alter.jahr,zeiger-&gt;eingest.tag,
+         zeiger-&gt;eingest.monat,zeiger-&gt;eingest.jahr,
+         zeiger-&gt;gehalt);
+         printf("|---------------------------------------------"
+                "------------|\n");
+         zeiger=zeiger-&gt;next;
+   }
+   printf("\n\nWeiter mit &lt;ENTER&gt;\n");
+   getchar();
+}
+
+/* Funktion zur Eingabe der Daten */
+void eingabe(void) {
+   char nam[MAX],vorn[MAX];
+   int atag,amon,ajahr,eintag,einmon,einjahr;
+   long gehalt;
+   char *ptr;
+   printf("Name........................: ");
+   fgets(nam, MAX, stdin);
+   ptr = strrchr(nam, '\n');
+   *ptr = '\0';
+   printf("Vorname.....................: ");
+   fgets(vorn, MAX, stdin);
+   ptr = strrchr(vorn, '\n');
+   *ptr = '\0';
+   printf("Alter...........(tt.mm.jjjj): ");
+   scanf("%2d.%2d.%4d",&amp;atag,&amp;amon,&amp;ajahr);
+   printf("Eingestellt am..(tt.mm.jjjj): ");
+   scanf("%2d.%2d.%4d",&amp;eintag,&amp;einmon,&amp;einjahr);
+   printf("Monatsgehalt................: ");
+   scanf("%ld",&amp;gehalt);
+   getchar();
+
+
+   sortiert_eingeben(nam, vorn, atag, amon, ajahr, eintag,
+      einmon, einjahr, gehalt);
+}
+
+/* Funktion zum Löschen der gesamten Liste */
+void loesche_alles(void) {
+   struct angestellt *zeiger, *zeiger1;
+
+   /* Ist überhaupt eine Liste zum Löschen vorhanden? */
+   if(anfang != NULL) {
+      /* Es ist eine vorhanden ... */
+      zeiger=anfang-&gt;next;
+      while(zeiger != NULL) {
+         zeiger1=anfang-&gt;next-&gt;next;
+         if(zeiger1 == NULL)
+            break;
+         anfang-&gt;next=zeiger1;
+         zeiger1-&gt;previous=anfang;
+         push(zeiger);
+         zeiger=zeiger1;
+      }
+      /* Jetzt löschen wir erst den Anfang der Liste
+       * und das Ende der Liste. */
+      push(anfang);
+      push(ende);
+      anfang=NULL;
+      ende=NULL;
+      counter=0;
+      printf("Liste erfolgreich geloescht!!\n");
+   }
+   else
+      fprintf(stderr,"Keine Liste zum Loeschen vorhanden!!\n");
+}
+
+void sortiert_eingeben(char *n, char *v, int at, int am, int aj,
+                       int et, int em, int ej, long geh ) {
+   struct angestellt *zeiger, *zeiger1, *zeiger2;
+
+   zeiger2=malloc(sizeof(struct angestellt));
+   if(NULL == zeiger2) {
+      fprintf(stderr, "Speicherplatzmangel\n");
+      return;
+   }
+   strcpy(zeiger2-&gt;name,strtok(n, "\n") );
+   strcpy(zeiger2-&gt;vorname,strtok(v, "\n") );
+   zeiger2-&gt;alter.tag=at;
+   zeiger2-&gt;alter.monat=am;
+   zeiger2-&gt;alter.jahr=aj;
+   zeiger2-&gt;eingest.tag=et;
+   zeiger2-&gt;eingest.monat=em;
+   zeiger2-&gt;eingest.jahr=ej;
+   zeiger2-&gt;gehalt=geh;
+
+   /* Ist es das 1. Element der Liste? */
+   if(anfang==NULL)
+      anhaengen(n,v,at,am,aj,et,em,ej,geh);
+   /* Es ist nicht das 1. Element. Wir suchen nun so lange,
+    * bis das gesuchte Element gefunden wird oder wir auf
+    * NULL stoßen. */
+   else {
+      zeiger=anfang;
+      while(zeiger != NULL &amp;&amp; (vergleiche(zeiger,zeiger2)&lt;0))
+         zeiger=zeiger-&gt;next;
+
+      /* Falls der Zeiger auf NULL zeigt, können wir unser
+       * Element hinten anhängen, da unser neues Element das
+       * "größte" zu sein scheint. */
+      if(zeiger==NULL)
+         anhaengen(n,v,at,am,aj,et,em,ej,geh);
+      /* Ist unser neues Element das kleinste und somit
+       * kleiner als das 1. Element, so müssen wir es an
+       * den Anfang hängen. */
+      else if(zeiger==anfang &amp;&amp; (vergleiche(zeiger,zeiger2))) {
+         anfang=malloc(sizeof(struct angestellt));
+         if(NULL == anfang) {
+            fprintf(stderr, "Speicherplatzmangel\n");
+            return;
+         }
+         counter++;
+         strcpy(anfang-&gt;name, strtok(n, "\n") );
+         strcpy(anfang-&gt;vorname, strtok(v, "\n") );
+         anfang-&gt;alter.tag=at;
+         anfang-&gt;alter.monat=am;
+         anfang-&gt;alter.jahr=aj;
+         anfang-&gt;eingest.tag=et;
+         anfang-&gt;eingest.monat=em;
+         anfang-&gt;eingest.jahr=ej;
+         anfang-&gt;gehalt=geh;
+         anfang-&gt;next=zeiger;
+         anfang-&gt;previous=NULL;
+      }
+      /* Die letzte Möglichkeit ist, dass wir das Element
+       * irgendwo in der Mitte einfügen müssen. */
+      else if(vergleiche(zeiger,zeiger2)) {
+         zeiger1=anfang;
+         /* Wir suchen das Element, das vor dem Zeiger
+          * zeiger steht. */
+         while(zeiger1-&gt;next != zeiger)
+            zeiger1=zeiger1-&gt;next;
+         zeiger=malloc(sizeof(struct angestellt));
+         if(NULL == zeiger) {
+            fprintf(stderr, "Speicherplatzmangel\n");
+            return;
+         }
+         counter++;
+         strcpy(zeiger-&gt;name, strtok(n, "\n") );
+         strcpy(zeiger-&gt;vorname, strtok(v, "\n") );
+         zeiger-&gt;alter.tag=at;
+         zeiger-&gt;alter.monat=am;
+         zeiger-&gt;alter.jahr=aj;
+         zeiger-&gt;eingest.tag=et;
+         zeiger-&gt;eingest.monat=em;
+         zeiger-&gt;eingest.jahr=ej;
+         zeiger-&gt;gehalt=geh;
+
+         /* Wir fügen das neue Element ein. */
+         zeiger-&gt;next=zeiger1-&gt;next;
+         zeiger-&gt;previous=zeiger1;
+         zeiger1-&gt;next=zeiger;
+         zeiger1-&gt;next-&gt;previous=zeiger;
+      }
+      else {
+         printf("Name wurde nicht eingefuegt!!! "
+                "(Weiter mit &lt;ENTER&gt;");
+         getchar();
+      }
+   }
+}
+
+/* Funktion zum Vergleichen von Nachname und bei Gleichheit
+ * Vorname. Somit wird bei gleichem Nachnamen nach dem Anfangs-
+ * buchstaben des Vornamens sortiert. */
+int vergleiche(struct angestellt *n1, struct angestellt *n2) {
+   int z = strcmp(n1-&gt;name,n2-&gt;name);
+
+   /* Falls z einen Wert ungleich 0 hat, gibt es den Namen noch
+    * nicht. Somit können wir den Wert an die Funktion
+    * zurückgeben, den wir durch strcmp erhalten haben. */
+   if(z)
+      return z;
+   /* Wenn diese Funktion ausgeführt wird, so existiert dieser
+    * Name schon. Somit vergleichen wir die Vornamen. */
+   return(strcmp(n1-&gt;vorname,n2-&gt;vorname));
+}
+
+/* die gesamte Liste in der Datei "personal.dat" speichern */
+void speichern(FILE *datei) {
+   struct angestellt *zeiger;
+
+   /* im "w+" - Modus öffnen */
+   if(datei_oeffnen_lesen_schreiben(&amp;datei)) {
+      zeiger=anfang;
+      while(zeiger != NULL) {
+         fwrite(zeiger,sizeof(struct angestellt),1,datei);
+         zeiger=zeiger-&gt;next;
+      }
+   }
+   fclose(datei);
+}
+
+/* Beim Start des Programms alle Elemente aus der Datei
+ * "personal.dat" laden. "Laden" ist nicht ganz richtig.
+ * Wir lesen zuerst die einzelnen Elemente aus der Datei
+ * "personal.dat" und übergeben jedes einzelne Element
+ * an die Funktion sortiert_eingeben. */
+int laden(FILE *datei) {
+   struct angestellt zeiger;
+
+   if(datei_oeffnen_lesen(&amp;datei)) {
+      while(fread(&amp;zeiger,sizeof(struct angestellt),1,datei)) {
+         sortiert_eingeben(zeiger.name,zeiger.vorname,
+            zeiger.alter.tag,zeiger.alter.monat,
+            zeiger.alter.jahr,zeiger.eingest.tag,
+            zeiger.eingest.monat,zeiger.eingest.jahr,
+            zeiger.gehalt );
+      }
+      return 1;
+   }
+   return 0;
+}
+/* Funktion zum Öffnen einer Datei im Nur-Lesen-Modus "r" */
+int datei_oeffnen_lesen(FILE **datei) {
+   if((*datei = fopen(datname,"r")) == NULL) {
+      fprintf(stderr,"Konnte \"personal.dat\" "
+                     "nicht oeffnen!\n");
+      printf("&lt;ENTER&gt;"); getchar();
+      return 0;
+   }
+   return 1;
+}
+
+/* Falls die Datei "personal.dat" noch nicht existiert, wird sie
+ * erzeugt. */
+int datei_oeffnen_erstellen(FILE **datei) {
+   if((*datei = fopen(datname,"w+")) == NULL) {
+      printf("Konnte \"personal.dat\" nicht erstellen\n");
+      return 0;
+   }
+   return 1;
+}
+
+/* Datei zum Lesen und Schreiben öffnen. Der Inhalt der Datei
+ * wird dabei überschrieben. */
+int datei_oeffnen_lesen_schreiben(FILE **datei) {
+   if((*datei = fopen(datname,"w+")) == NULL) {
+      printf("Kann \"personal.dat\" nicht zum"
+             " beschreiben oeffnen!\n");
+      printf("&lt;ENTER&gt;"); getchar();
+      return 0;
+   }
+   return 1;
+}
+
+/* Funktion, um einen Löschvorgang rückgängig zu machen */
+void rueckgaengig_loeschen(void) {
+   char n[MAX],vn[MAX];
+   int at,am,aj,et,em,ej;
+   long geh;
+
+   if(stack_ptr-&gt;next != NULL) {
+      strcpy(n, stack_ptr-&gt;next-&gt;name);
+      strcpy(vn,stack_ptr-&gt;next-&gt;vorname);
+      at=stack_ptr-&gt;next-&gt;alter.tag;
+      am=stack_ptr-&gt;next-&gt;alter.monat;
+      aj=stack_ptr-&gt;next-&gt;alter.jahr;
+      et=stack_ptr-&gt;next-&gt;eingest.tag;
+      em=stack_ptr-&gt;next-&gt;eingest.monat;
+      ej=stack_ptr-&gt;next-&gt;eingest.jahr;
+      geh=stack_ptr-&gt;next-&gt;gehalt;
+      sortiert_eingeben(n,vn,at,am,aj,et,em,ej,geh);
+      pop();
+   }
+   else {
+      printf("Kein Element mehr vorhanden zum"
+             " \"Rueckgängig Loeschen\"\n");
+      printf("&lt;ENTER&gt;");
+      getchar();
+   }
+}
+
+int main(void) {
+   int wahl;
+   char dname[MAX];
+   FILE *datei;
+   struct angestellt *emptystack;
+   /* Stack mit dummy initialisieren */
+   stackinit();
+
+   if(laden(datei))
+      ;
+   else if(datei_oeffnen_erstellen(&amp;datei)) {
+      start();
+      printf("\"personal.dat\" neu erstellt\n");
+      printf("&lt;ENTER&gt;"); getchar();
+      fclose(datei);
+   }
+   else {
+      fprintf(stderr,"Konnte \"personal.dat\" weder"
+                     " erstellen noch finden\n");
+      return EXIT_FAILURE;
+   }
+   do {
+      printf("Personaldaten - Verwaltung\n");
+      printf("==========================\n");
+      printf("1 : Eingabe\n");
+      printf("2 : Ausgabe\n");
+      printf("3 : Namen loeschen\n");
+      printf("4 : Alles loeschen\n");
+      printf("5 : Speichern\n");
+      printf("6 : Rueckgängig Loeschen\n");
+      printf("0 : Ende\n");
+      printf("Sie haben %d Leute an Personal\n",counter);
+      printf("Ihre Wahl : ");
+      scanf("%d",&amp;wahl);
+      getchar();
+      switch(wahl) {
+         case 1  : eingabe();
+                   break;
+         case 2  : ausgabe();
+                   break;
+         case 3  : printf("Welchen Namen : ");
+                   fgets(dname, MAX, stdin);
+                   loesche( strtok(dname, "\n") );
+                   break;
+         case 4  : loesche_alles();
+                   break;
+         case 5  : speichern(datei);
+                   break;
+         case 6  : rueckgaengig_loeschen();
+                   break;
+         case 0  : break;
+         default : printf("Falsche Eingabe!!!\n");
+      }
+   } while(wahl != 0);
+   /* Wir entleeren unseren stack_ptr. */
+   while((emptystack=stack_ptr-&gt;next) != NULL)
+      pop();
+   free(stack_ptr);
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>In diesem Listing ist der Einsatz der Funktionen <span class="clisting">push()</span> und <span class="clisting">pop()</span> noch einigermaßen überschaubar. Bei umfangreichen Projekten passiert es aber schnell, dass man den Überblick vor lauter <span class="clisting">push()</span> und <span class="clisting">pop()</span> verliert. Damit Sie dann im Fall der Fälle beim Debuggen Ihres Quellcodes wenigstens beim Stack den Überblick behalten, sollten Sie die Anzahl der Pushs und Pops mitzählen und entsprechend reagieren. Ein mögliches Beispiel könnte dabei so aussehen:</p>
+<div class="listing"><pre class="prettyprint">/* count_push_pop.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#define DEBUG 1
+
+#ifdef DEBUG
+   int push_cnt=0, pop_cnt=0;
+#endif
+
+void push(void) {
+   #ifdef DEBUG
+      push_cnt++;
+      printf("Anzahl push : %d\n", push_cnt);
+   #endif
+   /* Ausführung von push */
+}
+
+void pop(void) {
+   #ifdef DEBUG
+      pop_cnt++;
+      printf("\t\tAnzahl pop : %d\n", pop_cnt);
+      if(pop_cnt &gt; push_cnt)
+         printf("Schwerer Fehler: pop_cnt darf nie groesser"
+                " als push_cnt sein\n");
+   #endif
+ /* Ausführung von pop */
+}
+
+int main(void) {
+   push();
+   push();
+   pop();
+   push();
+   pop();
+   pop();
+   pop();    /* Fehler */
+   return EXIT_SUCCESS;
+}</pre></div><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/021_c_dyn_datenstrukturen_003.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="21.3 Stacks nach dem LIFO-(Last-in-First-out-)Prinzip"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="021_c_dyn_datenstrukturen_002.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="021_c_dyn_datenstrukturen_004.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/021_c_dyn_datenstrukturen_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:49:09 GMT -->
+</html>

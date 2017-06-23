@@ -1,0 +1,871 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/022_c_algorithmen_006.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:50:23 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 22.6 String-Matching</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 22.6 String-Matching">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 22.6 String-Matching">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="022_c_algorithmen_005.html">
+<link rel="next" href="022_c_algorithmen_007.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="022_c_algorithmen_005.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="022_c_algorithmen_007.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4" class="navnav">22 Algorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_001.html#mjad955691d6bbeab76c26bebeb46bfb5b" class="navnav">22.1 Was sind Algorithmen?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_002.html#mjdd65482f3fdbcd022155b3035e6f070c" class="navnav">22.2 Wie setze ich Algorithmen ein?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_003.html#mja4d6cf19b9113d221e26e0a19eb4148c" class="navnav">22.3 Sortieralgorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj1fdda2148808601a86a54a7701775bec" class="navnav">22.3.1 »Selection Sort« &#8211; sortieren durch Auswählen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj925248949647af9ef7f16d215f433a8c" class="navnav">22.3.2 Insertion Sort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mje2d240f1f56f6186232f65773fc37070" class="navnav">22.3.3 Bubble Sort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj62f350471ff0f91a8910f6d0e6c5cf18" class="navnav">22.3.4 Shellsort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mj035bded10a26be556df779f234784e89" class="navnav">22.3.5 Quicksort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mjde22312f4b61457b2efb0f9f17a7b269" class="navnav">22.3.6 qsort()</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_003.html#mje59f09c2df1dfa3ec926ae230eb00d31" class="navnav">22.3.7 Zusammenfassung der Sortieralgorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_004.html#mje1108bedaa52e56c3a2231952efc760d" class="navnav">22.4 Suchalgorithmen &#8211; Grundlage zur Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjd215dedb31c115ea3fc6aa2a9f3b3377" class="navnav">22.4.1 Lineare Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjc74f9bee71009b607d837f401fab37e1" class="navnav">22.4.2 Binäre Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj50e751f674a269097a8f867476f4e6ab" class="navnav">22.4.3 Binäre (Such-)Bäume</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj8a624d55f599e29effaab0089aa75a28" class="navnav">22.4.4 Elemente im binären Baum einordnen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj0a5e3b9745ce4405d8764546050bed3b" class="navnav">22.4.5 Binäre Bäume traversieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj4288fdcfb29e6adbcbf80c102c324f2f" class="navnav">22.4.6 Löschen eines Elements im binären Baum</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjfe709ec1d375f55e7805e53ce79c7880" class="navnav">22.4.7 Ein binärer Suchbaum in der Praxis</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjc0eebbc48d257496d83af8b5bcf3c5b9" class="navnav">22.4.8 Binäre Suchbäume mit Eltern-Zeiger und Threads</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj86c6493733dadbfb1f7710f0a687b1ef" class="navnav">22.4.9 Ausgeglichene Binärbäume</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjc53ab8c9ed2dac1cd824c4d3f972f754" class="navnav">22.4.10 Algorithmen für ausgeglichene Bäume &#8211; eine Übersicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_005.html#mj0a40e081a9df138f149a2f446fb499fd" class="navnav">22.5 Hashing (Zerhacken)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjbd1d8614064df7a2d1f74b2322070197" class="navnav">22.5.1 Wann wird Hashing verwendet?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mj6b2e95378544d9975a8312b6bb884a8f" class="navnav">22.5.2 Was ist für das Hashing erforderlich?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjffda6918d10dabde4c2d29ebb835e371" class="navnav">22.5.3 Hash-Funktion</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mj19e26fc27715d5ff46edac5940f4d5ff" class="navnav">22.5.4 Hashing mit direkter Adressierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjf182065dfeada5efe09d22e63762605f" class="navnav">22.5.5 Vergleich von Hashing mit binären Bäumen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mj73dd4e072f6667a0f887c5a613a4691d" class="navh">22.6 String-Matching</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjf7d6e5fb93d300365b9df366326bcc13" class="navh">22.6.1 Brute-Force-Algorithmus</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjaaad91c95f148185e8ca3b36d2f7a8ca" class="navh">22.6.2 Der Algorithmus von Knuth/Morris/Pratt (KMP)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj6e6634183f974a372635540c36053fdb" class="navh">22.6.3 Weitere String-Matching-Algorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_007.html#mjf4e645bb4920a03ebda8385b7b013724" class="navnav">22.7 Pattern Matching (reguläre Ausdrücke)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_008.html#mj949af93bc0dacf07baf688227fc46cbf" class="navnav">22.8 Backtracking</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_008.html#mj3bad29bcf42f5c904880c75110704913" class="navnav">22.8.1 Der Weg durch den Irrgarten</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_008.html#mjdf73b2552404835ed8da47e6fc60f70c" class="navnav">22.8.2 Das 8-Dame-Problem</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mj73dd4e072f6667a0f887c5a613a4691d" name="mj73dd4e072f6667a0f887c5a613a4691d"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">22.6</span><span class="cfett"> String-Matching</span>  <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Textverarbeitungsprogramme verwenden für die Bearbeitung von Texten Zeichenkettenfolgen in Form von einzelnen Buchstaben, Nummern oder Sonderzeichen.</p>
+<p>Wenn Sie einen Texteditor oder Ähnliches entwickeln wollen, werden Sie auch Funktionen wie das Suchen von Strings oder Teilstrings benötigen; oder etwa die Syntaxhervorhebung einer bestimmten Programmiersprache. Eine weitere Möglichkeit ist das Pattern Matching, das Sie vielleicht aus Perl oder von den Linux-Shells kennen.</p>
+<p>Für solche und weitere Anwendungsmöglichkeiten werden String-Matching-Algorithmen genutzt. Sie funktionieren nach folgendem Prinzip: In einer Textzeichenfolge, wie etwa dem Text in diesem Buch, soll mit einem Suchmuster die Häufigkeit der enthaltenen N-Zeichen und M-Zeichen verglichen werden.</p>
+<p>Das Ziel des Kapitels ist es nicht, die Algorithmen anhand mathematischer Formeln zu erklären, sondern eher, die Algorithmen so zu erklären, dass Sie das Prinzip verstehen, nach dem sie funktionieren.</p>
+<p>Als Schnittstelle zu diesen Beispielen soll eine Struktur verwendet werden, die die Daten von der Kommandozeile nimmt und für eventuelle Auswertungen speichert.</p>
+<div class="listing"><pre class="prettyprint">struct datei{
+   char name[LEN];  /* Name der Datei  */
+   int gefunden;    /* Anzahl gefunden */
+};
+
+typedef struct datei DATEI;</pre></div>
+<p>Sie können diese Struktur gern um weitere Informationen wie die Position der Fundstelle erweitern. In den Beispielen wird jeweils ein Array von Strukturen verwendet. In der Praxis können Sie auch verkettete Listen einsetzen.</p>
+<p>Der Aufruf der Programme lautet hierbei immer:</p>
+<div class="listing"><pre class="prettyprint">programmname suchstring datei1 ... bis datei_n</pre></div>
+<p>Bei all den Zusätzen sollten Sie dennoch das Hauptaugenmerk auf die einzelnen Algorithmen richten. Alle Matching-Algorithmen suchen nach einer bestimmten Textfolge. Sofern Sie an ganzen Wörtern interessiert sind, können Sie den Algorithmus entsprechend anpassen. Dabei sollten Sie darauf achten, dass vor und nach dem Suchstring alle Whitespace-Zeichen beachtet werden (Newline, Tabulator und Space).</p><a id="mjf7d6e5fb93d300365b9df366326bcc13" name="mjf7d6e5fb93d300365b9df366326bcc13"></a><a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t32"></a><h3 class="t3"><span class="cfett">22.6.1</span><span class="cfett"> Brute-Force-Algorithmus</span>  <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Der einfachste Algorithmus liegt auf der Hand. Es werden alle infrage kommenden Positionen des Musters in einem Text überprüft, bis das Muster mit dem Text übereinstimmt oder das Ende des Texts gekommen ist. Das komplette Muster wird also beim Vergleich des Texts um eine Position nach vorn gezählt. Dies ist ein Brute-Force-Algorithmus (oder auch <span class="ckursiv">grober Algorithmus</span> oder <span class="ckursiv">naiver Algorithmus</span>). Abbildung 22.30 zeigt das simple Beispiel.</p>
+<div class="bildbox">
+<p><a name="IDA2HUQ"></a><a onClick="OpenWin('bilder/22_030.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_030.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.30    </strong>Ablauf des Brute-Force-Algorithmus</p>
+<p>Hier sehen Sie den Quellcode zu diesem einfachen String-Matching-Algorithmus:</p>
+<div class="listing"><pre class="prettyprint">/* bruteforce.c */
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#define LEN 255
+#define MAX_DAT 10
+#define MAX_LINE 4096
+#define LINE "---------------------------------------\n"
+
+struct datei{
+   char name[LEN];  /* Name der Datei  */
+   int gefunden;    /* Anzahl gefunden */
+};
+
+typedef struct datei DATEI;
+
+/* int i = der Textzählerstand
+ * int j = der Musterzählerstand */
+int BruteForce(char *muster, char *text) {
+   int i = 0, j, cnt = 0;
+   int m=strlen(muster); /* Länge Muster */
+   int n=strlen(text);   /* Länge Text   */
+   while (i&lt;=n-m) {      /* solange i kleiner als n-m  */
+      /* solange Muster und Text gleich j++ */
+      for(j=0; j&lt;m &amp;&amp; muster[j]==text[i+j]; j++);
+      if(j==m) { /* Ist die Länge von j gleich der vom Muster? */
+         printf("Pos. %3d, ",i);
+         cnt++;
+      }
+      i++; /* im Text eine Position weiter */
+   }
+   return cnt;
+}
+
+int main(int argc, char *argv[]) {
+   DATEI suche[MAX_DAT];
+   char suchstring[LEN];
+   char read_line[MAX_LINE];
+   FILE *f;
+   int i, j , ret, zeile;
+
+   if(argc &lt; 3) {
+      fprintf(stderr, "Verwendung: %s suchstring datei1"
+         " &lt;datei2&gt;  - &lt;datei%d&gt;\n",argv[0],MAX_DAT);
+      return EXIT_FAILURE;
+   }
+
+   strncpy(suchstring, argv[1], LEN);
+   /* Kommandozeilen-Argumente auswerten */
+   for(i=2,j=0; j &lt; MAX_DAT &amp;&amp; i &lt; argc; i++,j++) {
+      strncpy(suche[j].name, argv[i], LEN);
+      suche[j].gefunden = 0;
+   }
+   for(i = 0; i &lt; argc-2; i++) {
+      f = fopen(suche[i].name, "r");
+      if(f == NULL) {
+         perror(NULL);
+         continue;
+      }
+      zeile = 0;
+      printf("\nDatei \"%s\": \n",suche[i].name);
+      while( fgets(read_line, MAX_LINE, f) != NULL) {
+         zeile++;
+         ret = BruteForce(suchstring, read_line);
+         if(ret != 0) {
+            suche[i].gefunden+=ret;
+            printf(" in Zeile %d\n",zeile);
+            ret = 0;
+         }
+      }
+      printf("Suchergebnisse in \"%s\": %d\n",
+         suche[i].name, suche[i].gefunden);
+      printf(LINE);
+      fclose(f);
+   }
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Wenn wir als Beispiel den Suchstring <span class="clisting">"ex"</span> und als Muster <span class="clisting">"a example text"</span> verwenden, wird die innere <span class="clisting">for</span>-Schleife dabei nur dreimal inkrementiert, und zwar bei jedem Vorkommen des Buchstabens <span class="clisting">'e'</span>. Zweimal wird ein Ergebnis gefunden. Die Laufzeit des Algorithmus hängt natürlich vom Suchmuster ab, aber im Durchschnitt hat der Brute-Force-Algorithmus immer ein lineares Zeitverhalten.</p><a id="mjaaad91c95f148185e8ca3b36d2f7a8ca" name="mjaaad91c95f148185e8ca3b36d2f7a8ca"></a><a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t33"></a><h3 class="t3"><span class="cfett">22.6.2</span><span class="cfett"> Der Algorithmus von Knuth/Morris/Pratt (KMP)</span>  <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Der Nachteil des Brute-Force-Algorithmus ist der, dass dieser stur Zeichen für Zeichen, Position um Position vergleicht. Die Programmierer Knuth, Morris und Pratt, nach denen dieser Algorithmus auch benannt ist, haben diesen Algorithmus verbessert (verfeinert). Sie hatten die Idee, die Fehlvergleiche (sogenanntes <span class="ckursiv">Missmatch</span>) in den weiteren Algorithmus mit einzubeziehen. Als Beispiel sei diese Textfolge gegeben (<span class="clisting">text</span>):</p>
+<div class="listing"><pre class="prettyprint">lu lalalala lule lulalalas</pre></div>
+<p>Der Suchstring (<span class="clisting">suchmuster</span>) lautet <span class="clisting">alalas</span>. Der Vorgang beginnt wie beim Brute-Force-Algorithmus:</p>
+<div class="bildbox">
+<p><a name="IDACWUQ"></a><a onClick="OpenWin('bilder/22_031.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_031.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.31    </strong>Auf der Suche nach dem Suchstring »alalas« &#8211; Start</p>
+<p>Hier haben Sie zwischen <span class="clisting">text[i]</span> und <span class="clisting">suchmuster[j]</span> keine Übereinstimmung. Daher kann <span class="clisting">suchmuster</span> um eine Position weitergeschoben werden:</p>
+<div class="bildbox">
+<p><a name="IDANWUQ"></a><a onClick="OpenWin('bilder/22_032.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_032.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.32    </strong>Keine Übereinstimmung &#8211; der Suchstring wandert eine Position weiter.</p>
+<p>Dies wird so lange wiederholt, bis zwei gleiche Zeichen aufeinandertreffen:</p>
+<div class="bildbox">
+<p><a name="IDASWUQ"></a><a onClick="OpenWin('bilder/22_033.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_033.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.33    </strong>Das erste Zeichen stimmt überein.</p>
+<p>Solange <span class="clisting">text[i]</span> jetzt gleich mit <span class="clisting">suchmuster[j]</span> ist, werden <span class="clisting">i</span> und <span class="clisting">j</span> inkrementiert:</p>
+<div class="bildbox">
+<p><a name="IDA5WUQ"></a><a onClick="OpenWin('bilder/22_034.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_034.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.34    </strong>Nach fünf Zeichen tritt ein Fehlvergleich auf.</p>
+<p>An Position <span class="clisting">text[9]</span> und <span class="clisting">suchmuster[5]</span> tritt hier eine Ungleichheit auf. Beim Brute-Force-Algorithmus würde jetzt das Muster wieder um eine Position nach vorn gesetzt werden. Und genau hier greift der Algorithmus von Knuth, Morris und Pratt ein. Die kleinstmögliche Verschiebung, bei der »alalas« sich mit sich selbst deckt, ist um zwei Stellen:</p>
+<div class="bildbox">
+<p><a name="IDAIXUQ"></a><a onClick="OpenWin('bilder/22_035.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_035.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.35    </strong>Kleinstmögliche Verschiebung des Suchstrings selbst</p>
+<p>Im nächsten Schritt werden dabei auch zwei Stellen weitergeschoben, da Sie ja nun wissen, dass sich der Anfang nicht überlappt. Genauer gesagt: Sie wissen es jetzt, weil ich es Ihnen gesagt habe, wissen aber nicht, wie dies programmtechnisch geschieht. Hierfür ist eine Vorlaufphase erforderlich. Aber dazu gleich mehr.</p>
+<div class="bildbox">
+<p><a name="IDANXUQ"></a><a onClick="OpenWin('bilder/22_036.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_036.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.36    </strong>Verschiebung um zwei Stellen anstatt um eine</p>
+<p>In der Theorie hört sich das alles natürlich recht interessant an. Aber es in die Praxis umzusetzen, ist wesentlich komplizierter. Wie realisieren Sie eine kleinstmögliche Verschiebung um den Suchstring (<span class="clisting">suchmuster</span>) selbst?</p>
+<p>Da die Berechnung einer solchen Verschiebung nicht vom Text abhängig ist, in dem die Suche stattfindet, sondern nur vom Suchtext (<span class="clisting">suchmuster</span>), kann sie schon vor der eigentlichen Suche erstellt werden. Es wird dabei von einer <span class="ckursiv">Vorlaufphase (Preprocessing)</span> gesprochen. Hier sehen Sie den Algorithmus, der eine Sprungtabelle aus dem Suchstring selbst für den eigentlichen Suchalgorithmus erstellt:</p>
+<div class="listing"><pre class="prettyprint">void init_next(char *suchmuster, int m) {
+   int i, j;
+
+   i = 0;
+   j = next[0] = -1;
+   /* solange i kleiner als der Suchstring ist */
+   while (i &lt; m) {
+      while (j &gt; -1 &amp;&amp; suchmuster[i] != suchmuster[j])
+         j = next[j];
+      i++;
+      j++;
+      if (suchmuster[i] == suchmuster[j])
+         next[i] = next[j];
+      else
+         next[i] = j;
+   }
+}</pre></div>
+<p>Um nochmals zum Szenario zu kommen: Sie verwenden gerade einen Brute-Force-Algorithmus und vergleichen einzelne Zeichen. Findet jetzt ein Missmatch (<span class="clisting">suchmuster!=text</span>) statt, wird in den bisher gefundenen und übereinstimmenden Zeichen von hinten ein String mit maximaler (<span class="clisting">L</span>) Länge gesucht, der zugleich Anfang eines weiteren Strings ist. Danach wird das Zeichen mit <span class="clisting">L+1</span> (<span class="clisting">=next[j]</span>) und dem <span class="clisting">i</span>-ten Zeichen im Text verglichen. Dafür gibt es zwei Möglichkeiten:</p>
+<ul class="gp">
+<li>Das Zeichen <span class="clisting">next[j]</span> des Suchstrings stimmt mit dem <span class="clisting">i</span>-ten Zeichen des Texts überein. Somit wird entweder ganz normal wie beim Brute-Force-Algorithmus fortgefahren, bis der ganze String gefunden wurde oder erneut ein Missmatch auftritt. In diesem Fall wird genauso fortgefahren wie beim ersten Missmatch.</li>
+</ul>
+<ul class="gp">
+<li>Das Zeichen <span class="clisting">next[j]</span> des Suchstrings stimmt nicht mit dem <span class="clisting">i</span>-ten Zeichen des Texts überein. <span class="clisting">next[j]</span> wird somit um den Wert 1 reduziert, und der Vergleich geht weiter. Tritt wieder ein Missmatch auf, wird <span class="clisting">next[j]</span> dekrementiert, bis das erste Zeichen des Suchstrings erreicht wurde. In diesem Fall wird <span class="clisting">i</span> inkrementiert, und das Ganze beginnt von vorn.</li>
+</ul>
+<p><span class="clisting">Mit next[i] = j</span> stellen Sie sicher, dass <span class="clisting">j-1</span> die Länge des größten Endstücks, aber auch das Anfangsstück des Suchstrings ist. Ist <span class="clisting">suchmuster[i]</span> gleich <span class="clisting">suchmuster[j]</span>, wird mit <span class="clisting">next[++i]=++j</span> der Wert zugewiesen, da das <span class="clisting">next</span>-Array immer das nächste Zeichen beinhaltet. Ist dies nicht der Fall, werden der Anfangsteil und der längste Endteil mit dem Muster verglichen, bis es zu einem positiven Vergleich zwischen <span class="clisting">muster[i]</span> und <span class="clisting">muster[j]</span> kommt.</p>
+<p>Nun folgt noch der eigentliche Algorithmus mit dem Suchstring und dem Textbeispiel, das eben verwendet wurde (<span class="clisting">alalas</span>).</p>
+<div class="listing"><pre class="prettyprint">/* kmp.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#define MAX 4096
+
+void init_next(char *, int);
+void kmpSearch(char *, char *);
+int next[MAX];
+
+/* i = Position im Text */
+/* j = Position im Muster */
+void kmpSearch(char *muster, char *text) {
+   int i=0, j=0;
+   int m=strlen(muster);  /* Länge Muster */
+   int n=strlen(text);    /* Länge Text   */
+
+   init_next(muster, m);  /* Tabelle für next berechnen */
+   while (i&lt;n) {  /* solange wir nicht am Ende vom Text sind */
+      while (j&gt;=0 &amp;&amp; text[i]!=muster[j])j=next[j];
+      i++; j++;
+      if (j==m) {
+         printf("Gefunden an Pos. %d\n", i-j);
+         j = next[j];
+      }
+   }
+}
+
+void init_next(char *muster, int m) {
+   int i, j;
+
+   i = 0;
+   j = next[0] = -1;
+   /* solange i kleiner als der Suchstring ist */
+   while (i &lt; m) {
+      while (j &gt; -1 &amp;&amp; muster[i] != muster[j])
+         j = next[j];
+      i++;
+      j++;
+      (muster[i] == muster[j]) ? (next[i]=next[j]) : (next[i]=j);
+   }
+}
+
+int main(void)  {
+   kmpSearch("alalas", "lu lalalala lule lulalalas");
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Das vollständige Listing des »Brute-Force-Algorithmus« umgeschrieben auf das Programmbeispiel:</p>
+<div class="listing"><pre class="prettyprint">/* kmpsearch.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#define LEN 255
+#define MAX_DAT 10
+#define MAX_LINE 4096
+#define MAX 255
+#define LINE "_______________________________________\n"
+
+struct datei{
+   char name[LEN];  /* Name der Datei  */
+   int gefunden;    /* Anzahl gefunden */
+};
+
+typedef struct datei DATEI;
+
+int next[MAX];
+
+int kmp_Search(char *, char *);
+void init_next(char *, int);
+
+int kmp_Search(char *muster, char *text) {
+   int i=0, j=0, cnt=0;
+   int m=strlen(muster);  /* Länge Muster */
+   int n=strlen(text);    /* Länge Text */
+
+   init_next(muster, m);  /* Tabelle für next berechnen */
+   while (i&lt;n) {   /* solange wir nicht am Ende vom Text sind */
+      while (j&gt;=0 &amp;&amp; text[i]!=muster[j])j=next[j];
+      i++; j++;
+      if (j==m) {
+         printf("Gefunden an Pos. %d\n", i-j);
+         cnt++;
+         j=next[j];
+      }
+   }
+   return cnt;
+}
+
+void init_next(char *muster, int m) {
+   int i, j;
+
+   i = 0;
+   j = next[0] = -1;
+   /* solange i kleiner als der Suchstring ist */
+   while (i &lt; m) {
+      while (j &gt; -1 &amp;&amp; muster[i] != muster[j])
+         j = next[j];
+      i++;
+      j++;
+      (muster[i]==muster[j]) ? (next[i]=next[j]) : (next[i]=j);
+   }
+}
+
+int main(int argc, char **argv) {
+   DATEI suche[MAX_DAT];
+   char suchstring[LEN];
+   char read_line[MAX_LINE];
+   FILE *f;
+   int i, j , ret, zeile;
+
+   if(argc &lt; 3) {
+      fprintf(stderr, "Verwendung: %s suchstring datei1 "
+         "&lt;datei2&gt; ... &lt;datei%d&gt;\n",argv[0],MAX_DAT);
+
+      return EXIT_FAILURE;
+   }
+
+   strncpy(suchstring, argv[1], LEN);
+   /* Kommandozeilen-Argumente auswerten */
+   for(i=2,j=0; j &lt; MAX_DAT &amp;&amp; i &lt; argc; i++,j++) {
+      strncpy(suche[j].name, argv[i], LEN);
+      suche[j].gefunden = 0;
+   }
+   for(i = 0; i &lt; argc-2; i++) {
+      f = fopen(suche[i].name, "r");
+      if(f == NULL) {
+         perror(NULL);
+         continue;
+      }
+      zeile = 0;
+      printf("\nDatei \"%s\": \n",suche[i].name);
+      while( fgets(read_line, MAX_LINE, f) != NULL) {
+         zeile++;
+         ret = kmp_Search(suchstring, read_line);
+         if(ret != 0) {
+            suche[i].gefunden+=ret;
+            printf(" in Zeile %d\n",zeile);
+            ret=0;
+         }
+      }
+      printf("Suchergebnisse in \"%s\": %d\n",
+         suche[i].name, suche[i].gefunden);
+      printf(LINE);
+      fclose(f);
+   }
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Der eine oder andere wird mir jetzt entgegnen, dass Kapitel sei viel zu schwer für ein Einsteiger-Buch. Im Prinzip muss ich dem zustimmen. Allerdings möchte ich zum Knuth-Morris-Pratt-Algorithmus sagen, dass ich hierbei versucht habe, diesen Algorithmus möglichst einfach zu erklären, ohne viele technische Begriffe aus der Welt der Mathematik und Informatik.</p>
+<p>Außerdem soll nicht unerwähnt bleiben, dass der Knuth-Morris-Pratt-Algorithmus immer noch einer der leichteren String-Matching-Algorithmen ist.</p><a id="mj6e6634183f974a372635540c36053fdb" name="mj6e6634183f974a372635540c36053fdb"></a><a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t34"></a><h3 class="t3"><span class="cfett">22.6.3</span><span class="cfett"> Weitere String-Matching-Algorithmen</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<h4 class="t4"><span class="cfett">Boyer Moore</span></h4>
+<p>Der Boyer-Moore-Algorithmus ähnelt dem Brute-Force-Algorithmus und ist eine weitere Verbesserung gegenüber dem Knuth-Morris-Pratt-Algorithmus. Auch mit diesem Algorithmus werden Verschiebungen vorgenommen, und nicht mehr infrage kommende Verschiebungen werden übersprungen. Hierfür sind gleich zwei Vorlaufphasen (Preprocessing) notwendig &#8211; genauer gesagt zwei Heuristiken, die die Schrittweite bei der nächsten Verschiebung vorschlagen:</p>
+<ul class="gp">
+<li><span class="ckursiv">Schlechter-Buchstabe-Heuristik</span> &#8211; Dabei wird untersucht, ob ein Zeichen im Text, das nicht mehr mit dem Pattern übereinstimmt, an einer anderen Stelle im Pattern vorkommt, und dann wird eine entsprechende Schrittweite vorgeschlagen.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Gutes-Suffix-Heuristik</span> &#8211; Dabei wird untersucht, ob das Suffix des Patterns, das mit dem Text übereinstimmt, an einer anderen Stelle vorkommt, und dann wird auch hier eine entsprechende Schrittweite vorgeschlagen.</li>
+</ul>
+<h4 class="t4"><span class="cfett">Karp Rabin</span></h4>
+<p>Beim Karp-Rabin-Algorithmus wird jeder mögliche String des Musters in eine Hash-Tabelle eingetragen. Dafür wird eine spezielle Hash-Funktion geschrieben, die die Eigenschaft hat, dass sie bei dem Text für Startindex <span class="clisting">i</span> effizient aus dem vorhergehenden Hash-Wert (Startindex = <span class="clisting">i-1</span>) berechnet werden kann. Sind dabei zwei Hash-Werte gleich, wird wie beim Brute-Force-Algorithmus vorgegangen. Dies funktioniert nach folgendem Pseudocode:</p>
+<div class="listing"><pre class="prettyprint">hash_pattern = hash_wert_des_pattern
+hash_text    = hash_wert_der_ersten_m_Zeichen_im_text
+
+do {
+   if(hash_pattern == hash_text)
+      bruteforce_vergleich
+   hash_text = hash_wert_der_nächsten_m_Zeichen_des_Textes
+} while(Text_zu_Ende || bruteforce == wahr);</pre></div><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/022_c_algorithmen_006.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="22.6 String-Matching"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="022_c_algorithmen_005.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="022_c_algorithmen_007.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/022_c_algorithmen_006.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:50:37 GMT -->
+</html>

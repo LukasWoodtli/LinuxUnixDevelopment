@@ -1,0 +1,1147 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/023_c_cgi_008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:51:43 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 23.8 Das HTTP-Protokoll</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 23.8 Das HTTP-Protokoll">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 23.8 Das HTTP-Protokoll">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="023_c_cgi_007.html">
+<link rel="next" href="023_c_cgi_009.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="023_c_cgi_007.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="023_c_cgi_009.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8" class="navnav">23 CGI mit C</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_001.html#mj753bda1c0feeb96471a6fd3507e78471" class="navnav">23.1 Was ist CGI?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_002.html#mj1c41e4288dfdb0c00282e7f355aeaa9f" class="navnav">23.2 Vorteile von CGIs in C</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_003.html#mjba994bed8bd4ef92ec7942f9d4bf360f" class="navnav">23.3 Andere Techniken der Webprogrammierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_004.html#mje31b0468de9a6775e240739f74c869b2" class="navnav">23.4 Das dreistufige Webanwendungsdesign</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_004.html#mj784201c3d2f30eccccfea683d0cf7bf6" class="navnav">23.4.1 Darstellungsschicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_004.html#mje39605f3b437d685802be297b35155a9" class="navnav">23.4.2 Verarbeitungsschicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_004.html#mj7d321c39df88af1ebf71b508407fce6b" class="navnav">23.4.3 Speicherschicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_005.html#mjb28b02e3339269fcd271c6805808d095" class="navnav">23.5 Clientseitige Programmierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_005.html#mj5a8f8115ea7f290fec7e4d69744df07d" class="navnav">23.5.1 JavaScript</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_005.html#mj74dc3ff9efbe0425db8caf4228c62ea3" class="navnav">23.5.2 Java-Applets</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_006.html#mjae9786f0e8b66329366dd5020d11ea24" class="navnav">23.6 Serverseitige Programmierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_007.html#mj953622e10f930a8262378a3b8d1af353" class="navnav">23.7 Der Webserver</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_007.html#mj1275ef287ecf27bd23a407e1df4d8bee" class="navnav">23.7.1 Das Client/Server-Modell des Internets</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_007.html#mje745ab77530f29271e1cf393659c1ee3" class="navnav">23.7.2 Serverimplementierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_007.html#mj7456a25fa957c5d5c1e6fb6f1b8e51ac" class="navnav">23.7.3 Hosting-Services</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_007.html#mj03fcae8d34e70f2bd333a6b103a37aa8" class="navnav">23.7.4 Schlüsselfertige Lösung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_007.html#mjce2ea6f4ed0702c32f081bae27e68360" class="navnav">23.7.5 Weitere Möglichkeiten</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_007.html#mj464e0e321247e44496cedab2c842ea5b" class="navnav">23.7.6 Apache</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mj2b0939e8af690d0ec6266500fedc9ffa" class="navh">23.8 Das HTTP-Protokoll</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj8a70459247f5ba115f4a5fa93400236e" class="navh">23.8.1 Web-Protokolle</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj24b27af5edc8278f18e4df88f534d77c" class="navh">23.8.2 Wozu dienen Protokolle?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj491046404289233a9e9e8df32c1a4f89" class="navh">23.8.3 Was ist ein Protokoll?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj94e75d737d6c99f0eb1b40a87775a1cc" class="navh">23.8.4 Normen für die Netzwerktechnik</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjb7232dd442661d7ce111749a1b172adc" class="navh">23.8.5 Das OSI-Schichtenmodell</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj6eeb35459ee40823c55526c0d43f34d6" class="navh">23.8.6 Die Elemente einer URL</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj5bb5e909c12c5816dad92a19681c031c" class="navh">23.8.7 Client-Anfrage &#8211; HTTP-Request (Browser-Request)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj09828f14735c9eb1238f74eca50e06d3" class="navh">23.8.8 Serverantwort (Server-Response)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjd01b8cb558fb8718dbd7f11163871d91" class="navh">23.8.9 Zusammenfassung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_009.html#mj55aa43d3854686f279b9a2995d0e7856" class="navnav">23.9 Das Common Gateway Interface (CGI)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_009.html#mj84eb3b3a8b994c00e61cceeb82845a62" class="navnav">23.9.1 Filehandles</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_009.html#mj8a88b70c9ea857f625bc33cf9111ab38" class="navnav">23.9.2 CGI-Umgebungsvariablen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_009.html#mj092417d7813dd1c70bcbc7e9ae741468" class="navnav">23.9.3 CGI-Ausgabe</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_010.html#mj4dff274d0bc1fff0b99f596c9b5bfd82" class="navnav">23.10 HTML-Formulare</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_010.html#mjd677b465f7e12e59f34b1617b357ef76" class="navnav">23.10.1 Die Tags und ihre Bedeutung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_011.html#mj2b0c7c08b2e6bbf223343aa9f7d5fbd6" class="navnav">23.11 CGI-Eingabe</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_011.html#mj7c6f1fbfc9dccbb876a35161a36a02bb" class="navnav">23.11.1 Die Anfrage des Clients an den Server</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_011.html#mj3200134c102e6d9fe1294ab668e2e386" class="navnav">23.11.2 Eingabe parsen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_012.html#mjb5dc8d227df3a4a3853d41b01ce13059" class="navnav">23.12 Ein Gästebuch</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_012.html#mj82f7f5f2569036a3b2bc8403beeeb7dc" class="navnav">23.12.1 Das HTML-Formular (»guestbook.html«)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_012.html#mj7c61b8637748679b60117a0df0706a56" class="navnav">23.12.2 Das CGI-Programm (»auswert.cgi«)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="023_c_cgi_012.html#mjbea5f4c766c0367a2d9a61bdcf1a50a6" class="navnav">23.12.3 Das HTML-Gästebuch (»gaeste.html«)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="023_c_cgi_013.html#mj55d5fdaf89ed49f761a7c0d097b650ad" class="navnav">23.13 Ausblick</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mj2b0939e8af690d0ec6266500fedc9ffa" name="mj2b0939e8af690d0ec6266500fedc9ffa"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">23.8</span><span class="cfett"> Das HTTP-Protokoll</span>  <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Das <span class="ckursiv">Hypertext Transfer Protocol</span> (kurz HTTP) ist das Protokoll, mit dem sich der Webbrowser und der Webserver über das Internet miteinander unterhalten. Und da CGI auf dem HTTP-Protokoll aufbaut, ist es recht sinnvoll, sich auch ein wenig damit auszukennen. Natürlich ist es nicht meine Absicht, Ihnen alles über das Thema mitzuteilen, sondern nur das Wichtigste. Sollten Sie mehr Informationen benötigen, kann ich Ihnen die Webseite <a href="http://www.w3.org/Protocols/">www.w3.org/Protocols/</a> empfehlen.</p><a id="mj8a70459247f5ba115f4a5fa93400236e" name="mj8a70459247f5ba115f4a5fa93400236e"></a><a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t32"></a><h3 class="t3"><span class="cfett">23.8.1</span><span class="cfett"> Web-Protokolle</span>  <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Der Sinn dieses Abschnitts ist es, zu erklären, wo das HTTP-Protokoll seinen Platz in der Netzwerktechnik hat. Es gibt natürlich weitaus mehr Protokolle für das Web als nur HTTP. Beispiele wären das File-Transfer-Protokoll (besser bekannt als FTP), das TELNET-Protokoll, das Simple-Mail-Transfer-Protokoll (SMTP) und noch eine Menge mehr. Für Sie als CGI-Programmierer ist das HTTP-Protokoll am meisten von Interesse.</p><a id="mj24b27af5edc8278f18e4df88f534d77c" name="mj24b27af5edc8278f18e4df88f534d77c"></a><a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t33"></a><h3 class="t3"><span class="cfett">23.8.2</span><span class="cfett"> Wozu dienen Protokolle?</span>  <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Im Prinzip können Sie die Protokolle der Netzwerktechnik mit Sprachen vergleichen. In aller Welt sprechen die Menschen gut tausend verschiedene Sprachen. Wenn Sie sich mit jedem Menschen auf der Welt unterhalten wollten, müssten Sie alle diese Sprachen beherrschen &#8211; ein schwieriges Unterfangen. Würde dasselbe auf Computer angewendet, ließe sich wohl kaum noch eine Webseite darstellen. Sie würden dann wahrscheinlich eine Fehlermeldung erhalten wie: Diese Webseite kann nicht angezeigt werden, da Ihr System das Protokoll nicht versteht.</p><a id="mj491046404289233a9e9e8df32c1a4f89" name="mj491046404289233a9e9e8df32c1a4f89"></a><a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t34"></a><h3 class="t3"><span class="cfett">23.8.3</span><span class="cfett"> Was ist ein Protokoll?</span>  <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Protokolle sind eine Mischung aus Kommunikationsregeln und Nachrichtenformaten, deren Regeln vernetzte Computer befolgen müssen, wenn Sie Daten miteinander austauschen wollen. Werden z. B. Daten von Computer <span class="ckursiv">Ernie</span> zum Computer <span class="ckursiv">Bert</span> versendet, so werden diese zunächst in eine Nachricht verpackt. Diese Nachricht wird in einer bestimmten Kommunikationsregel des Protokolls definiert. In der Kommunikationsregel wird z. B. beschrieben, wie die Nachricht beim Zielrechner Bert behandelt werden soll, wenn ein Fehler bei der Übertragung auftritt. Zur Übertragung von Daten wird das IP-Protokoll (Internet Protocol) verwendet.</p>
+<p>Die Sprache der Computer ist nicht ganz so komplex wie die des Menschen. Der Computer verständigt sich mit anderen Gleichgesinnten durch die Binärzahlen 0 und 1. Trotz dieser universellen Sprache sind nicht alle Computer vom gleichen Typ. Angefangen bei unterschiedlicher Hardware bis hin zu einem anderen Betriebssystem kann es dabei ziemliche Verständigungsprobleme geben. Und Protokolle sind sozusagen die Dolmetscher, die die Probleme der Kommunikation lösen. Damit ist es erst möglich, dass sich unterschiedliche Computertypen mit unterschiedlichen Betriebssystemen verständigen können.</p><a id="mj94e75d737d6c99f0eb1b40a87775a1cc" name="mj94e75d737d6c99f0eb1b40a87775a1cc"></a><a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t35"></a><h3 class="t3"><span class="cfett">23.8.4</span><span class="cfett"> Normen für die Netzwerktechnik</span>  <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Damit jetzt die vernetzten Computer mit einheitlichen Protokollen miteinander kommunizieren können, musste zunächst eine einheitliche Netzwerktechnik entwickelt werden. Eine Normung war auch allmählich notwendig, denn durch die fortschreitende Entwicklung von Netzwerkkomponenten kamen im Laufe der Zeit immer mehr herstellerspezifische Netzwerke und Protokolle zustande. Dass dabei mit zunehmender Vernetzung immer mehr Probleme auftraten, liegt auf der Hand.</p>
+<p>1978 hat sich dann ein Gremium mit dem Namen ISO (<span class="ckursiv">International Organization for Standardization</span>) zusammengefunden, mit dem Ziel, eine Schnittstelle zu standardisieren, die für die Vernetzung von PCs in Betracht kommen könnte. Es dauerte danach weitere sechs Jahre, bis das ISO-Komitee einen Standard bekanntgab. Der Standard wurde <span class="ckursiv">Open System Interconnection</span> (kurz OSI) genannt. Mit OSI wurde festgelegt, wie die Kommunikation der unterschiedlichen Rechner mit diversen Protokollen stattzufinden hat.</p><a id="mjb7232dd442661d7ce111749a1b172adc" name="mjb7232dd442661d7ce111749a1b172adc"></a><a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t36"></a><h3 class="t3"><span class="cfett">23.8.5</span><span class="cfett"> Das OSI-Schichtenmodell</span>  <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Mit Einführung des OSI-Modells wurden endlich einheitliche Produkte für den Netzwerkeinsatz entwickelt, da die Hersteller gezwungen waren, sich an diesen Vorgaben zu orientieren. Es muss aber hinzugefügt werden, dass dies allein noch lange keine Realisierung aller Standards bedeutet. Beim OSI-Referenzmodell handelt es sich um ein geprüftes und bewährtes Modell für die Hard- und Softwareentwicklung. Ob und wie die Hersteller dieses Modell anwenden, bleibt immer noch deren Angelegenheit.</p>
+<p>Das genormte OSI-Schichtenmodell wurde auf sieben Schichten verteilt. Jede Schicht hat dabei ihre eigene Aufgabe. Abbildung 23.9 gibt einen kurzen Überblick über diese sieben Schichten und die Protokolle, die die einzelnen Schichten nutzen können.</p>
+<div class="bildbox">
+<p><a name="IDANJUQ"></a><a onClick="OpenWin('bilder/23_009.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein23_009.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 23.9    </strong>Das OSI-Schichtenmodell und die Protokolle</p>
+<p>Nicht abgebildet sind hier die UDP-Protokolle. Das HTTP-Protokoll (in der Abbildung grau eingefärbt), das Sie zur CGI-Programmierung verwenden, ist über dem TCP-Protokoll angesiedelt. Der gesamte Webverkehr verläuft über das TCP/IP-Protokoll.</p><a id="mj6eeb35459ee40823c55526c0d43f34d6" name="mj6eeb35459ee40823c55526c0d43f34d6"></a><a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t37"></a><h3 class="t3"><span class="cfett">23.8.6</span><span class="cfett"> Die Elemente einer URL</span>  <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Häufig begegnen Sie einer URL (<span class="ckursiv">Uniform Resource Locator</span>), deren Bedeutung einem zunächst fremd erscheint. Betrachten Sie folgende URL:</p>
+<div class="listing"><pre class="prettyprint"><a href="http://www.pronix.de/cgi/name.cgi?vorname=Clint&amp;nachname=East">http://www.pronix.de:80/cgi/name.cgi?vorname=Clint&amp;nachname=East</a></pre></div>
+<p>Diese URL soll jetzt in ihre Einzelteile zerlegt werden.</p>
+<h4 class="t4"><span class="cfett">»http« (Schema)</span></h4>
+<p><span class="clisting">http</span> ist das verwendete Protokoll, über das der Webbrowser mit dem Webserver kommuniziert. Es gibt natürlich noch mehr Protokolle außer dem HTTP. Mehr dazu erfahren Sie gleich bei den Ports. Danach folgt der Rechnername.</p>
+<h4 class="t4"><span class="cfett">»www.pronix.de« (Rechnername)</span></h4>
+<p>Bei <span class="clisting">www.pronix.de</span> handelt es sich um den Namen des Rechners, auf dem sich die Webseite oder das Dokument befindet. Dies kann aber auch eine IP-Adresse (beispielsweise <a href="http://127.0.0.1/">http://127.0.0.1</a>) und muss nicht immer ein Domainname (<span class="ckursiv"><a href="http://www.pronix.de/">http://www.pronix.de</a></span>) sein.</p>
+<h4 class="t4"><span class="cfett">»80« (Portnummer)</span></h4>
+<p>Der Webserver nimmt hier über Port 80 einen Auftrag entgegen. Dass dieser Port bei der URL nicht angegeben werden muss, liegt daran, dass Port 80 der voreingestellte Port des HTTP-Protokolls ist.</p>
+<p>Die Daten müssen aber nicht immer über Port 80 übertragen werden. Sie können genauso gut einen Server konfigurieren, mit dem Sie Daten über den Port 85 empfangen können. Folgende Ports und ihre Protokolle sind in der Regel voreingestellt:</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 23.3    </strong>Gängige Protokolle und deren Ports</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Protokoll</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Port</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>FTP (Datenverbindung)</p>
+</td>
+<td class="tabellentext">
+<p>20</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>FTP (Steuerverbindung)</p>
+</td>
+<td class="tabellentext">
+<p>21</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>Telnet</p>
+</td>
+<td class="tabellentext">
+<p>23</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>SMTP</p>
+</td>
+<td class="tabellentext">
+<p>25</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>DNS</p>
+</td>
+<td class="tabellentext">
+<p>53</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>http</p>
+</td>
+<td class="tabellentext">
+<p>80</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>HTTPS (SSL-verschlüsselt)</p>
+</td>
+<td class="tabellentext">
+<p>443</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>POP3</p>
+</td>
+<td class="tabellentext">
+<p>110</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>NNTP</p>
+</td>
+<td class="tabellentext">
+<p>119</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>LDAP (Standard)</p>
+</td>
+<td class="tabellentext">
+<p>389</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>LDAP (SSL-verschlüsselt)</p>
+</td>
+<td class="tabellentext">
+<p>636</p>
+</td>
+</tr>
+</table><br><h4 class="t4"><span class="cfett">»/cgi/name.cgi« (Pfadangabe)</span></h4>
+<p>Damit wird der Ort des gespeicherten Dokuments auf dem Webserver bezeichnet.</p>
+<h4 class="t4"><span class="cfett">»?vorname=Clint&amp;nachname=East« (Query-String)</span></h4>
+<p>Der Query-String kann aus mehreren Paaren von Namen und den dazugehörenden Werten bestehen. Die einzelnen Paare werden mit dem Zeichen <span class="clisting">&amp;</span> voneinander getrennt. Die Variable und der Wert werden mit einem <span class="clisting">=</span> getrennt. In diesem Beispiel haben Sie folgende zwei Paare:</p>
+<div class="listing"><pre class="prettyprint">Variable des ersten Paars:<span class="cfett"> vorname</span>; Wert des ersten Paars:<span class="cfett"> Clint</span>
+Variable des zweiten Paars:<span class="cfett"> nachname</span>;Wert des zweiten Paars:<span class="cfett"> East</span></pre></div>
+<p>Der Query-String wird noch ausführlicher behandelt.</p><a id="mj5bb5e909c12c5816dad92a19681c031c" name="mj5bb5e909c12c5816dad92a19681c031c"></a><a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t38"></a><h3 class="t3"><span class="cfett">23.8.7</span><span class="cfett"> Client-Anfrage &#8211; HTTP-Request (Browser-Request)</span>  <a href="#t2t39"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Das Erste bei einer HTTP-Verbindung ist immer die Anfrage (HTTP-Request) des Webbrowsers an den Webserver. Wenn Sie beispielsweise in Ihrem Browser die URL</p>
+<div class="listing"><pre class="prettyprint"><a href="http://www.pronix.de/">http://www.pronix.de/</a></pre></div>
+<p>eingeben und <img src="common/icons/Enter.gif" align="top" title="Taste Enter" alt="Taste Enter"> drücken, schickt der Browser eine Anfrage an den Webserver, die aus zwei Teilen besteht: zum einen aus der Anforderungszeile und zum anderen aus den Header-Feldern. Das sieht dann so aus:</p>
+<div class="listing"><pre class="prettyprint">GET /index.html HTTP/1.1
+
+Host: www.pronix.de
+Accept: image/gif, image/jpeg, image/pjpeg, */*
+Accept-Language: de
+Connection: Keep-Alive
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+Referer: ...
+...</pre></div>
+<p>Die erste Zeile ist die sogenannte Request-Zeile:</p>
+<div class="listing"><pre class="prettyprint">GET /index.html HTTP/1.1</pre></div>
+<p><span class="clisting">GET</span> ist dabei die Request-Methode, mit der eine Ressource vom Server angefordert wird, ohne dass dabei irgendwelche Daten auf dem Server verändert werden. <span class="clisting">GET</span> ist die Standard-Methode, wenn ein Browser per HTTP ein Dokument anfordert. In diesem Beispiel wird die Datei <span class="ckursiv">index.html</span> angefordert. Das Protokoll, durch das der Webbrowser und der Webserver sich unterhalten sollen, ist hier HTTP mit der Versionsnummer 1.1.</p>
+<p>Eine andere häufig verwendete Request-Methode ist <span class="clisting">POST</span>. Im Wesentlichen unterscheiden sich diese beiden Methoden zur Datenübermittlung in der Art, wie die Daten an den Webserver übergeben werden.</p>
+<p>Um Ihnen den Unterschied zwischen den beiden Request-Methoden <span class="clisting">GET</span> und <span class="clisting">POST</span> etwas deutlicher zu machen, folgt hier eine kurze theoretische Beschreibung.</p>
+<h4 class="t4"><span class="cfett">GET</span></h4>
+<p>Hier soll bei einem HTML-Formular einfach die Eingabe eines Textfeldes ausgewertet werden. Ich verwende hierfür folgenden HTML-Code:</p>
+<div class="listing"><pre class="prettyprint">&lt;form action="<a href="http://localhost/cgi-bin/auswert.cgi">http://localhost/cgi-bin/auswert.cgi</a>" method=get&gt;
+  &lt;b&gt;Bitte geben Sie Ihren Namen ein : &lt;/b&gt;
+  &lt;input value="hallo" name="Textfeld" size="20"&gt;
+  &lt;input type=submit value="abschicken"&gt;
+&lt;/form&gt;</pre></div>
+<p>Dadurch entsteht das folgende Textfeld mit einem Button:</p>
+<div class="bildbox">
+<p><a name="IDAA0UQ"></a><a onClick="OpenWin('bilder/23_010.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein23_010.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 23.10    </strong>Eingabefeld mit Button</p>
+<p>Mit der Zeile</p>
+<div class="listing"><pre class="prettyprint">&lt;form action="<a href="http://localhost/cgi-bin/auswert.cgi">http://localhost/cgi-bin/auswert.cgi</a>"<span class="cfett"> method=get</span>&gt;</pre></div>
+<p>fordern Sie das CGI-Programm <span class="ckursiv">auswert.cgi</span> mit der Methode <span class="clisting">GET</span> (<span class="clisting">method=get</span>) an. Dabei können Sie auch gleich sehen, wie Sie die Methode des HTTP-Requests bestimmen können. Beim Drücken des Buttons wird die CGI-Anwendung auf dem Server aufgerufen. Ein Blick auf die URL des Webbrowsers zeigt Folgendes:</p>
+<div class="listing"><pre class="prettyprint"><a href="http://localhost/cgi-bin/auswert.cgi?Textfeld=hallo">http://localhost/cgi-bin/auswert.cgi?Textfeld=hallo</a></pre></div>
+<p>Den Query-String können Sie jetzt auf dem Webserver mit der CGI-Anwendung <span class="ckursiv">auswert.cgi</span> aus der gleichnamigen Umgebungsvariablen <span class="clisting">QUERY_STRING</span> auslesen. In dieser Variablen befindet sich jetzt folgender String:</p>
+<div class="listing"><pre class="prettyprint">QUERY_STRING= Textfeld=hallo</pre></div>
+<h4 class="t4"><span class="cfett">POST</span></h4>
+<p>Wollen Sie das Gleiche mit der <span class="clisting">POST</span>-Methode machen, müssen Sie nur Folgendes im HTML-Code umändern:</p>
+<div class="listing"><pre class="prettyprint">&lt;form action="<a href="http://localhost/cgi-bin/auswert.cgi">http://localhost/cgi-bin/auswert.cgi</a>"<span class="cfett"> method=post</span>&gt;</pre></div>
+<p>Jetzt befindet sich in der URL, beim Klicken des Buttons, kein Query-String mehr. In diesem Beispiel müssen Sie die Umgebungsvariable <span class="clisting">CONTENT_LENGTH</span> nach der Anzahl der Bytes abfragen, die diese Nachricht enthält. Anschließend können Sie <span class="clisting">CONTENT_LENGTH</span> Bytes von der Standardeingabe (<span class="clisting">stdin</span>) einlesen &#8211; zum Beispiel mit <span class="clisting">fgets()</span>:</p>
+<div class="listing"><pre class="prettyprint">fgets(puffer, CONTENT_LENGTH, stdin);</pre></div>
+<p>Danach befindet sich die komplette Eingabe (<span class="clisting">Textfeld=IhrName</span>) vom HTML-Formular im String <span class="clisting">puffer</span>.</p>
+<p>Sowohl bei der Methode <span class="clisting">GET</span> als auch bei der <span class="clisting">POST</span>-Methode liegen die Daten kodiert vor und müssen noch dekodiert werden. Wie das geht, erfahren Sie in Kürze.</p>
+<h4 class="t4"><span class="cfett">Weitere Methoden</span></h4>
+<p>Es gibt noch einige weitere Methoden, auf die ich hier aber nicht eingehe. Diese Methoden werden in der Praxis kaum eingesetzt. Hier nur ein schneller Überblick zu den weiteren möglichen Anforderungen, die Sie an den Webserver stellen könnten:</p>
+<ul class="gp">
+<li><span class="clisting">HEAD</span> &#8211; holt nur die HTTP-Header und keinen Inhalt vom Webserver.</li>
+</ul>
+<ul class="gp">
+<li><span class="clisting">PUT</span> &#8211; erzeugt eine Ressource auf dem Server.</li>
+</ul>
+<ul class="gp">
+<li><span class="clisting">DELETE</span> &#8211; löscht eine Ressource auf dem Server.</li>
+</ul>
+<ul class="gp">
+<li><span class="clisting">OPTIONS</span> &#8211; dient zur Abfrage der möglichen Request-Methoden des Servers.</li>
+</ul>
+<h4 class="t4"><span class="cfett">Request Header</span></h4>
+<p>Außer der Request-Zeile schickt der Browser dem Webserver noch einige Informationen, den sogenannten Request-Header, mit. Diese Informationen bestehen aus dem Feldnamen, der mit einem Doppelpunkt von seinem Wert getrennt wird. Dazu nochmals zur Erinnerung das Beispiel eines HTTP-Request, das Sie weiter oben schon gesehen haben:</p>
+<div class="listing"><pre class="prettyprint">GET /index.html HTTP/1.1<span class="cfett">
+
+Host: www.pronix.de
+Accept: image/gif, image/jpeg, image/pjpeg, */*
+Accept-Language: de
+Connection: Keep-Alive
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+Referer: ...</span></pre></div>
+<p>In diesem Beispiel ist das Fettgedruckte der Request-Header.</p>
+<p>In Tabelle 23.4 finden Sie einen Überblick zu einigen HTTP-Request-Headern. Diese Informationen schicken Sie praktisch immer mit, wenn Sie mit einem Webbrowser unterwegs sind und eine neue Webseite vom Webserver anfordern.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 23.4    </strong>Einige Request-Header und deren Bedeutung</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Request-Header</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Bedeutung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Host</pre></div>
+</td>
+<td class="tabellentext">
+<p>Der <span class="clisting">Host</span> ist der Zielrechner, auf dem sich das angeforderte Dokument befindet.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Content-Length</pre></div>
+</td>
+<td class="tabellentext">
+<p>Damit der Server weiß, wie viele Daten er aus dem Nachrichten-Body des HTTP-Requests lesen soll, wird dieser Header verwendet. Natürlich gilt dies nur für den <span class="clisting">POST</span>-Request (siehe <span class="clisting">POST</span>). Bei einer Anforderung mit der Methode <span class="clisting">GET</span> wird dieses Feld nicht mit angegeben.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Content-Type</pre></div>
+</td>
+<td class="tabellentext">
+<p>Besitzt ein Request einen Nachrichten-Body, muss der <span class="clisting">Content-Type</span>-Header mitgeschickt werden. Damit wird der Medientyp des Nachrichten-Bodys angegeben.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">User-Agent</pre></div>
+</td>
+<td class="tabellentext">
+<p>Darin befinden sich Angaben darüber, mit welchem Webbrowser und Betriebssystem die Anfrage vorgenommen wurde &#8211; wobei diese Angaben nicht immer stimmen müssen. Viele Programme und auch Webbrowser bieten eine Option an, diesen Header zu manipulieren.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Referer</pre></div>
+</td>
+<td class="tabellentext">
+<p>Darin befindet sich in der Regel die URL, die der Anwender zuletzt besucht hat. Wenn der User aber eine URL direkt in den Webbrowser eingibt oder ein Bookmark verwendet, befindet sich nichts in diesem Header.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Accept</pre></div>
+</td>
+<td class="tabellentext">
+<p>Es gibt mehrere <span class="clisting">Accept</span>-Header. Darin schickt der Browser dem Server Daten, welche Arten von Response (Antworten vom Server) er verstehen kann. Zum Beispiel:</p>
+Accept: Liste der Medientypen, die der Browser (Client) akzeptiert.
+Accept-Charset: Liste der Zeichensätze, die der Browser akzeptiert.
+Accept-Language: Sprachen, die der Browser akzeptiert.
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Cookies</pre></div>
+</td>
+<td class="tabellentext">
+<p>Damit teilt der Browser dem Server mit, ob er <span class="clisting">Cookies</span> akzeptiert. Deaktivieren Sie zum Beispiel in Ihrem Browser die <span class="clisting">Cookies</span>, so wird dieser Header nicht mitgeschickt. Der Server kann, falls Cookies akzeptiert werden, ein <span class="clisting">Cookie</span> setzen.</p>
+</td>
+</tr>
+</table><br><a id="mj09828f14735c9eb1238f74eca50e06d3" name="mj09828f14735c9eb1238f74eca50e06d3"></a><a name="t38"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t39"></a><h3 class="t3"><span class="cfett">23.8.8</span><span class="cfett"> Serverantwort (Server-Response)</span>  <a href="#t2t310"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t38"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Nachdem Sie einen HTTP-Request des Webbrowsers ausführlich durchgearbeitet haben, wird Ihnen der Webserver auch irgendwann mit einer HTTP-Response antworten. Die Antwort besteht aus einer Statuszeile, ebenfalls aus einigen Header-Feldern und häufig auch aus einem Nachrichten-Body. Hier sehen Sie ein Antwort-Beispiel des Webservers:</p>
+<div class="listing"><pre class="prettyprint">HTTP/1.1 200 OK
+Date: Wed, 30 Oct 2002 01:21:22 GMT
+Server: Apache/1.3.14
+Last Modified: Tue, 29 Oct 2002 22:21:19 GMT
+
+Content-Length: 2232
+Content-Type: text/html
+
+&lt;html&gt;
+...
+&lt;/html&gt;</pre></div>
+<h4 class="t4"><span class="cfett">Der Statuscode</span></h4>
+<p>In der ersten Zeile, der Statuszeile, wird außer dem Protokoll mit der Versionsnummer ein dreistelliger Statuscode angegeben.</p>
+<div class="listing"><pre class="prettyprint">HTTP/1.1 200 OK</pre></div>
+<p>Anhand dieses Statuscodes bekommt der Webbrowser die Antwort auf seine Anforderung. In diesem Beispiel wird der Statuscode 200 zurückgegeben, was einem erfolgreichen Request vorangeht. Recht häufig dürfte Ihnen der Statuscode 404 im Internet begegnet sein. Dieser wird zurückgegeben, wenn das angeforderte Dokument nicht gefunden wurde.</p>
+<p>Hierzu folgt ein Überblick über die möglichen Statuscodes. Tabelle 23.5 listet die fünf Gruppen von Codes auf, die anhand der ersten Ziffer unterschieden werden.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 23.5    </strong>Einzelne Bereiche von Statuscodes</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Statusbereich</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Bedeutung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>100&#8211;199</p>
+</td>
+<td class="tabellentext">
+<p>Allgemeine Informationen. Die Anfrage wird trotzdem noch zur Bearbeitung ausgeführt.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>200&#8211;299</p>
+</td>
+<td class="tabellentext">
+<p>Alles in Ordnung. Erfolgreiche Anfrage</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>300&#8211;399</p>
+</td>
+<td class="tabellentext">
+<p>Veränderungsstatus, Verlagerungen (bzw. Umleitungen), weitere Maßnahmen müssen getroffen werden, um eine erfolgreiche Anfrage zu gewährleisten.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>400&#8211;499</p>
+</td>
+<td class="tabellentext">
+<p>Fehlermeldung vom Client (meistens Webbrowser)</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>500&#8211;599</p>
+</td>
+<td class="tabellentext">
+<p>Fehlermeldung vom Server</p>
+</td>
+</tr>
+</table><br><p>Tabelle 23.6 zeigt die in der Praxis etwas häufiger auftretenden Statuscodes und ihre Bedeutungen:</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 23.6    </strong>Häufige Statuscodes und deren Bedeutung</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Statuscode</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Bedeutung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>200</p>
+</td>
+<td class="tabellentext">
+<p>alles okay</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>201</p>
+</td>
+<td class="tabellentext">
+<p>POST-Befehl erfolgreich</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>202</p>
+</td>
+<td class="tabellentext">
+<p>Anforderung akzeptiert</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>203</p>
+</td>
+<td class="tabellentext">
+<p>GET-Anforderung erfüllt</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>204</p>
+</td>
+<td class="tabellentext">
+<p>Anforderung erfüllt, aber Rücksendung nicht verstanden</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>300</p>
+</td>
+<td class="tabellentext">
+<p>Datenquelle an mehreren Stellen gefunden</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>301</p>
+</td>
+<td class="tabellentext">
+<p>Datenquelle war dauernd in Bewegung.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>302</p>
+</td>
+<td class="tabellentext">
+<p>Datenquelle war zeitweise in Bewegung.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>304</p>
+</td>
+<td class="tabellentext">
+<p>Datenquelle konnte nicht näher bestimmt werden.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>400</p>
+</td>
+<td class="tabellentext">
+<p>unverständliche Anforderung vom Client</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>401</p>
+</td>
+<td class="tabellentext">
+<p>ein File wurde angefragt, für das sich der User ausweisen muss</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>403</p>
+</td>
+<td class="tabellentext">
+<p>Anfrage war verständlich, der Server weigert sich jedoch, das Dokument zu senden, da dieser oder der Client keine Berechtigung hat. Beispiel: keine Leserechte der Datei.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>404</p>
+</td>
+<td class="tabellentext">
+<p>Datenquelle nicht gefunden</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>405</p>
+</td>
+<td class="tabellentext">
+<p>Verfahren an Datenquelle nicht erlaubt. Zum Beispiel ist die Abfrage-Methode POST explizit gesperrt.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>406</p>
+</td>
+<td class="tabellentext">
+<p>Art der Datenquelle nicht erwünscht</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>408</p>
+</td>
+<td class="tabellentext">
+<p>Anfrage Timeout -&gt; Server überlastet? Fehlkonfiguriert?</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>500</p>
+</td>
+<td class="tabellentext">
+<p>Fehler im CGI-Skript, falsche Zugriffsrechte, Server falsch konfiguriert</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>501</p>
+</td>
+<td class="tabellentext">
+<p>Anfrage wird vom Server nicht unterstützt, da notwendige Module nicht implementiert sind.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>502</p>
+</td>
+<td class="tabellentext">
+<p>schlechte Netzverbindung oder Server überladen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>503</p>
+</td>
+<td class="tabellentext">
+<p>Dienst steht nicht zur Verfügung &#8211; Timeout, wenn z. B. ein Datenbankserver nicht reagiert.</p>
+</td>
+</tr>
+</table><br><h4 class="t4"><span class="cfett">Server-Header</span></h4>
+<p>Es folgt eine kurze Beschreibung der gängigsten HTTP-Server-Header, die der Webserver dem Webbrowser sendet.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 23.7    </strong>Einige Server-Header und deren Bedeutung</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Server-Header</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Bedeutung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Date</pre></div>
+</td>
+<td class="tabellentext">
+<p>Datum und Uhrzeit, wann die Antwort geschickt wurde</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Server</pre></div>
+</td>
+<td class="tabellentext">
+<p>Name und Versionsnummer des Webservers</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Content-Length</pre></div>
+</td>
+<td class="tabellentext">
+<p>Länge des Nachrichten-Body in Bytes</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Content-Type</pre></div>
+</td>
+<td class="tabellentext">
+<p>Art des Dokuments im Nachrichten-Body. <span class="clisting">text/html</span> steht beispielsweise für eine HTML-Datei. Geben Sie dafür hingegen <span class="clisting">text/plain</span> an, dann handelt es sich um eine reine Textdatei. Dieser Header wird bei fast allen CGI-Anwendungen benötigt, die einen Nachrichten-Body besitzen.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Last Modified</pre></div>
+</td>
+<td class="tabellentext">
+<p>Datum der letzten Änderung des angeforderten Dokuments</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Set-Cookie</pre></div>
+</td>
+<td class="tabellentext">
+<p>Damit können Sie ein Cookie setzen.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">Location</pre></div>
+</td>
+<td class="tabellentext">
+<p>Speicherort des Dokuments</p>
+</td>
+</tr>
+</table><br><a id="mjd01b8cb558fb8718dbd7f11163871d91" name="mjd01b8cb558fb8718dbd7f11163871d91"></a><a name="t39"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t310"></a><h3 class="t3"><span class="cfett">23.8.9</span><span class="cfett"> Zusammenfassung</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t39"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Jetzt haben Sie mit dem HTTP-Protokoll das schwierigste und wahrscheinlich auch langweiligste Kapitel hinter sich. Im Laufe der nächsten Seiten wird Ihnen einiges, was Ihnen vielleicht noch nicht so klar ist, in einem anderen Licht erscheinen. Speziell in den nächsten Abschnitten werden Sie sehen, wie Sie mit CGI-Anwendungen und dem HTTP-Webserver zusammenarbeiten können, um dynamische Webseiten zu erstellen.</p><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/023_c_cgi_008.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="23.8 Das HTTP-Protokoll"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="023_c_cgi_007.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="023_c_cgi_009.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/023_c_cgi_008.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:51:51 GMT -->
+</html>

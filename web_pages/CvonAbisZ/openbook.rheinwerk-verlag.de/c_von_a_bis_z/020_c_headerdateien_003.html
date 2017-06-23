@@ -1,0 +1,1438 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/020_c_headerdateien_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:48:04 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 20.3 Mathematische Funktionen &#8211; &lt;math.h&gt;, &lt;tgmath.h&gt; und &lt;complex.h&gt;</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 20.3 Mathematische Funktionen &#8211; <math.h>, <tgmath.h> und <complex.h>">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 20.3 Mathematische Funktionen &#8211; <math.h>, <tgmath.h> und <complex.h>">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="020_c_headerdateien_002.html">
+<link rel="next" href="020_c_headerdateien_004.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="020_c_headerdateien_002.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="020_c_headerdateien_004.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8" class="navnav">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="020_c_headerdateien_001.html#mj9f8d3b308134a5aaa46461b1a2589550" class="navnav">20.1 &lt;assert.h&gt; &#8211; Testmöglichkeiten und Fehlersuche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="020_c_headerdateien_002.html#mj0a6bced37e99b8b7065f85e18fdf8b71" class="navnav">20.2 &lt;ctype.h&gt; &#8211; Zeichenklassifizierung und Umwandlung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mj0f16c6b725afe9b7ffd4996bb672f61f" class="navh">20.3 Mathematische Funktionen &#8211; &lt;math.h&gt;, &lt;tgmath.h&gt; und &lt;complex.h&gt;</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj1bfb5c2a4254dafa5d130a0b496b8b14" class="navh">20.3.1 Funktionen für reelle und komplexe Gleitpunkttypen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj416efc0fd9cf73abf278d7e788cb268f" class="navh">20.3.2 Funktionen nur für reelle Gleitpunkttypen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj7fa0739503abf63b431bc987b3ade924" class="navh">20.3.3 Funktionen nur für komplexe Gleitpunkttypen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj33c76324b88b714ce9d4a6eb231cfecd" class="navh">20.3.4 Typengenerische Makros &#8211; &lt;tgmath.h&gt;</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjcb4411acd264e6126686705c07d0f648" class="navh">20.3.5 Gleitpunktwerte klassifizieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjd213e5099b73a25f9e709c3bf41f25bc" class="navh">20.3.6 Makro zum Vergleichen von reellen Zahlen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjbcf4d91be50bcf5aac0190cd3f4d17ff" class="navh">20.3.7 Zugriff auf die Gleitpunkt-Umgebung &#8211; &lt;fenv.h&gt;</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="020_c_headerdateien_004.html#mj8cf74868e591d838ac6bbb39870c16f9" class="navnav">20.4 &lt;stdlib.h&gt;</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_004.html#mja290ae24149243d0c27b1263dbea5ca6" class="navnav">20.4.1 Programmbeendigung &#8211; »exit()«, »_exit()«, »atexit()« und »abort()«</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_004.html#mj7a0db78d2aab8c704b99a76bb707811e" class="navnav">20.4.2 Strings in numerische Werte konvertieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_004.html#mj2d5204ba382ea3d12e15e4afed3edd06" class="navnav">20.4.3 Bessere Alternative &#8211; Strings in numerische Werte konvertieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_004.html#mj5f75e2e5e52fe8e44485e26cdd9a7033" class="navnav">20.4.4 Zufallszahlen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_004.html#mjeb70e1048b4b6e44c59c87ba2872d927" class="navnav">20.4.5 Absolutwerte, der Quotient und der Rest von Divisionen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_004.html#mj2319f64dfed6d47fc1635eaa1710f61f" class="navnav">20.4.6 Suchen und Sortieren &#8211; »qsort()« und »bsearch()«</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_004.html#mjc5b2f4cf59a876a6169f98eb2ce5af69" class="navnav">20.4.7 system()</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="020_c_headerdateien_005.html#mjd60db72bc09fbac4333c4cc6675bddf8" class="navnav">20.5 &lt;locale.h&gt; &#8211; länderspezifische Eigenheiten</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="020_c_headerdateien_006.html#mj70d7263e226c962a009018276d98df74" class="navnav">20.6 Nicht-lokale Sprünge &#8211; &lt;setjmp.h&gt;</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="020_c_headerdateien_007.html#mj2f65e0fff3842c9c42eeb875d5195d9a" class="navnav">20.7 &lt;signal.h&gt;</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="020_c_headerdateien_008.html#mjc47d9d3942da5f467e4a707d52056aae" class="navnav">20.8 &lt;string.h&gt; &#8211; die »mem…«-Funktionen zur Speichermanipulation</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_008.html#mj30a1672cf88a8a218edce85e59b34fda" class="navnav">20.8.1 »memchr()« &#8211; Suche nach einzelnen Zeichen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_008.html#mj89123d88032785aac1c497156d40b0c2" class="navnav">20.8.2 »memcmp()« &#8211; bestimmte Anzahl von Bytes vergleichen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_008.html#mjf5d0bcd9c03e8bd44b91050efaffdb2c" class="navnav">20.8.3 »memcpy()« &#8211; bestimmte Anzahl von Bytes kopieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_008.html#mj00b467f0860e9b679fa3138df5b58a03" class="navnav">20.8.4 »memmove()« &#8211; bestimmte Anzahl von Bytes kopieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="020_c_headerdateien_008.html#mja091d2fbcbb374c513cf4df41d62621c" class="navnav">20.8.5 »memset()« &#8211; Speicherbereich mit bestimmten Zeichen auffüllen</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mj0f16c6b725afe9b7ffd4996bb672f61f" name="mj0f16c6b725afe9b7ffd4996bb672f61f"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">20.3</span><span class="cfett"> Mathematische Funktionen &#8211; &lt;math.h&gt;, &lt;tgmath.h&gt; und &lt;complex.h&gt;</span>  <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Die Standard-Bibliothek beinhaltet mittlerweile eine gewaltige Sammlung von mathematischen Funktionen. Die meisten dieser Funktionen sind in der Headerdatei <span class="ckursiv">&lt;math.h&gt;</span> deklariert. Die meisten dieser Funktionen sind für Gleitpunktzahlen und zum Teil auch für komplexe Gleitpunkttypen (aus der Headerdatei <span class="ckursiv">&lt;complex.h&gt;</span>) geeignet. Zwar bietet die Standard-Bibliothek auch einige Funktionen für ganzzahlige Typen, diese sind aber alle vorwiegend in der Headerdatei <span class="ckursiv">&lt;stdlib.h&gt;</span> bzw. für den Typ <span class="clisting">intmax_t</span> in <span class="ckursiv">&lt;inttypes.h&gt;</span> deklariert. Des Weiteren sind in der Headerdatei <span class="ckursiv">&lt;tgmath.h&gt;</span> typengenerische Makros definiert, mit denen es möglich ist, mathematische Funktionen mit einem einheitlichen Namen, unabhängig vom Typ der Argumente, aufzurufen.</p>
+<p>Um mit den anschließenden Tabellen nicht den Rahmen des Buches zu sprengen, werden zur besseren Übersicht nur die Funktionen für die Gleitpunkttypen <span class="clisting">double</span> und <span class="clisting">double _Complex</span> aufgelistet. Zu jeder dieser Funktionen gibt es auch eine Version mit <span class="clisting">float</span> bzw. <span class="clisting">float _Complex</span> und eine Version für <span class="clisting">long double</span> bzw. <span class="clisting">long double _Complex</span>. Die Versionen von <span class="clisting">float</span> bzw. <span class="clisting">float _Complex</span> haben das Suffix <span class="clisting">f</span> am Ende des Funktionsnamens, und die Versionen für <span class="clisting">long double</span> bzw. <span class="clisting">long double _Complex</span> haben das Suffix <span class="clisting">l</span> am Ende. Sofern Sie allerdings die Headerdatei <span class="ckursiv">&lt;tgmath.h&gt;</span> verwenden, können Sie dies außer Acht lassen. Mehr dazu erfahren Sie in Abschnitt 20.3.4.</p>
+<p>Wenn ich beispielsweise die Funktion zum Ziehen der Quadratwurzel für reelle Zahlen wie folgt aufliste:</p>
+<div class="listing"><pre class="prettyprint">double sqrt(double zahl);</pre></div>
+<p>dann existieren von dieser Funktion noch die Versionen:</p>
+<div class="listing"><pre class="prettyprint">float sqrt<span class="cfett">f</span>(float zahl);
+long double sqrt<span class="cfett">l</span>(long double zahl);</pre></div>
+<p>Gleiches gilt auch für die aufgelistete komplexe Gleitpunkttyp-Version, nur dass diese Funktionen noch zusätzlich mit dem Präfix <span class="clisting">c</span> beginnen:</p>
+<div class="listing"><pre class="prettyprint">double complex<span class="cfett"> c</span>sqrt(double complex z);</pre></div>
+<p>Auch von dieser Version gibt es noch zwei weitere Versionen:</p>
+<div class="listing"><pre class="prettyprint">float complex<span class="cfett"> c</span>sqrt<span class="cfett">f</span>(float complex z);
+long double complex<span class="cfett"> c</span>sqrt<span class="cfett">l</span>(long double complex z);</pre></div><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis für Linux-User</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" rowspan="2">
+<p class="BStandard">Damit ein Programm die &lt;math.h&gt;-Bibliothek verwenden kann, muss diese erst mit dem Compiler-Flag <span class="clisting">-lm</span> hinzugelinkt werden. Beispiel:</p>
+<p class="BStandard"><span class="clisting">gcc</span> <span class="clisting">-o</span> <span class="clisting">programm</span> <span class="clisting">programm.c</span> <span class="clisting">-lm</span></p>
+</td>
+</tr>
+</table><br><a id="mj1bfb5c2a4254dafa5d130a0b496b8b14" name="mj1bfb5c2a4254dafa5d130a0b496b8b14"></a><a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t32"></a><h3 class="t3"><span class="cfett">20.3.1</span><span class="cfett"> Funktionen für reelle und komplexe Gleitpunkttypen</span>  <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>In Tabelle 20.2 finden Sie Funktionen aus der Headerdatei <span class="ckursiv">&lt;complex.h&gt;</span> und <span class="ckursiv">&lt;math.h&gt;,</span> die Sie für reelle und komplexe Gleitpunkttypen verwenden können.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">&lt;complex.h&gt; wurde erst mit dem C99-Standard eingeführt, was natürlich wieder heißt, dass der Compiler dies wiederum nur unterstützt, wenn er C99-konform ist.</p>
+</td>
+</tr>
+</table><br><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 20.2    </strong>Mathematische Funktionen für reelle und komplexe Gleitpunkttypen</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Funktion in
+&lt;math.h&gt;</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Funktion in
+&lt;complex.h&gt;</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Beschreibung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double cosh<span class="clisting">(</span>
+  double z ); <sup>1)  </sup>
+double sinh<span class="clisting">(</span>
+  double z ); <sup>1)  </sup>
+double tanh<span class="clisting">(</span>
+  double z); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex ccosh<span class="clisting">(</span>
+  double complex z );
+double complex csinh<span class="clisting">(</span>
+  double complex z );
+double complex ctanh<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Hyperbolische Funktionen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double acos<span class="clisting">(</span>
+  double z );</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex cacos<span class="clisting">(</span>
+  double complex z );</pre></div>
+</td>
+<td class="tabellentext">
+<p>Arcuscosinus</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double asin<span class="clisting">(</span>
+  double z );</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex casin<span class="clisting">(</span>
+  double complex z );</pre></div>
+</td>
+<td class="tabellentext">
+<p>Arcussinus</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double atan<span class="clisting">(</span>
+  double z );</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex catan<span class="clisting">(</span>
+  double complex z );</pre></div>
+</td>
+<td class="tabellentext">
+<p>Arcustangens</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double cos<span class="clisting">(</span>
+  double z );</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex ccos<span class="clisting">(</span>
+  double complex z );</pre></div>
+</td>
+<td class="tabellentext">
+<p>Cosinus</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double sin<span class="clisting">(</span>
+  double z );</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex csin<span class="clisting">(</span>
+  double complex z );</pre></div>
+</td>
+<td class="tabellentext">
+<p>Sinus</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double tan<span class="clisting">(</span>
+  double z);</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex ctan<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Tangens</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double cosh<span class="clisting">(</span>
+  double z);</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex ccosh<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Cosinus hyperbolicus</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double sinh<span class="clisting">(</span>
+  double z);</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex casinh<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Sinus hypberbolicus</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double tanh<span class="clisting">(</span>
+  double z);</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex ctanh<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Tangens hypberbolicus</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double exp<span class="clisting">(</span>
+  double z);</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex cexp<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Exponentialfunktion berechnen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double log<span class="clisting">(</span>
+  double z);</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex clog<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Logarithmus von <span class="clisting">z</span> zur Basis 
+e = 2.71828 ...</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double sqrt<span class="clisting">(</span>
+  double z);</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex csqrt<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Quadratwurzel</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double fabs<span class="clisting">(</span>
+  double z);</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double cabs<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Absolutwert</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double pow<span class="clisting">(</span>
+  double z1,
+  double z2) ;</pre></div>
+</td>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex cpow<span class="clisting">(</span>
+  double complex x,
+  double complex y);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Potenz <span class="clisting">z1z2</span></p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" colspan="3">
+<p><sup>1)  </sup> Diese Funktionen wurden erst mit dem C99-Standard eingeführt.</p>
+</td>
+</tr>
+</table><br><a id="mj416efc0fd9cf73abf278d7e788cb268f" name="mj416efc0fd9cf73abf278d7e788cb268f"></a><a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t33"></a><h3 class="t3"><span class="cfett">20.3.2</span><span class="cfett"> Funktionen nur für reelle Gleitpunkttypen</span>  <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Die Funktionen in Tabelle 20.3 stehen nur für reelle Gleitpunkttypen zur Verfügung und sind in der Headerdatei <span class="ckursiv">&lt;math.h&gt;</span> definiert.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 20.3    </strong>Mathematische Funktionen für reelle Gleitpunkttypen</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Funktion</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Beschreibung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double atan2<span class="clisting">(</span>
+  double x1, double x2);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Arcustangens von <span class="clisting">x1</span> und <span class="clisting">x2</span></p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double exp<span class="clisting">(</span>double x);
+double exp2<span class="clisting">(</span>double x); <sup>1)  </sup>
+double frexp<span class="clisting">(</span>
+  double x, int x2);
+double ldexp<span class="clisting">(</span>
+   double x, int exp);
+double scalbn<span class="clisting">(</span>
+   double x, int n); <sup>1)  </sup>
+double scalbln<span class="clisting">(</span>
+   double x, long int n); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Exponentialfunktionen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double log<span class="clisting">(</span>double x);
+double log10<span class="clisting">(</span>double x)
+double log1p<span class="clisting">(</span>double x); <sup>1)  </sup>
+double log2<span class="clisting">(</span>double x); <sup>1)  </sup>
+double logb<span class="clisting">(</span>double x); <sup>1)  </sup>
+int ilogb<span class="clisting">(</span>double x); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Logarithmusfunktionen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double fabs<span class="clisting">(</span>double x);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Absolutwert</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double nextafter<span class="clisting">(</span>
+  double x, double y); <sup>1)  </sup>
+double nexttoward<span class="clisting">(</span>
+  double x, long double y); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Nächste darstellbare Zahl</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double fma<span class="clisting">(</span>
+   double x,
+   double y,
+   double z); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Multiplikation und Addition</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double fdim<span class="clisting">(</span>
+  double x, double y); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Positive Differenz</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double trunc<span class="clisting">(</span>double x); <sup>1)  </sup>
+long long int llround<span class="clisting">(</span>
+   double x); <sup>1)  </sup>
+long int lround<span class="clisting">(</span>double x); <sup>1)  </sup>
+double round<span class="clisting">(</span>double x); <sup>1)  </sup>
+long long int llrint<span class="clisting">(</span>
+   double x); <sup>1)  </sup>
+long int lrint<span class="clisting">(</span>double x); <sup>1)  </sup>
+double rint<span class="clisting">(</span>double x); <sup>1)  </sup>
+double nearbyint<span class="clisting">(</span>double x); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Rundungsfunktionen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double floor<span class="clisting">(</span>double x);
+double ceil(double x);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Nächste Ganzzahl runden</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double modf<span class="clisting">(</span>
+  double1 x1, double2 *x2);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Zerlegt den Wert von <span class="clisting">x1</span> in einen gebrochenen und einen ganzzahligen Wert. Der ganzzahlige Wert (Vorkommateil) befindet sich dann in der Adresse von <span class="clisting">x2</span>.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">int fmod<span class="clisting">(</span>
+   double x1, double x2);
+double remainder<span class="clisting">(</span>
+   double x, double y); <sup>1)  </sup>
+double remquo<span class="clisting">(</span>
+   double x,
+   double y,
+   int *quo); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Rest einer Division</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double hypot<span class="clisting">(</span>
+   double x, double y);
+double cbrt(double x); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Wurzelfunktionen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double erf<span class="clisting">(</span>double x); <sup>1)  </sup>
+double erfc<span class="clisting">(</span>double x); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Fehlerfunktionen zur Normalverteilung</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double fmin<span class="clisting">(</span>
+   double x, double y);
+double fmax<span class="clisting">(</span>
+   double x, double y);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Minimum und Maximum</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double lgamma<span class="clisting">(</span>double x); <sup>1)  </sup>
+double tgamma<span class="clisting">(</span>double x); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Gammafunktionen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double copysign<span class="clisting">(</span>
+   double x, double y); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Vorzeichen zuordnen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double nan<span class="clisting">(</span>
+   const char *tagp); <sup>1)  </sup></pre></div>
+</td>
+<td class="tabellentext">
+<p>Ein NaN erzeugen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" colspan="2">
+<p><sup>1)  </sup> Diese Funktionen wurden erst mit dem C99-Standard eingeführt.</p>
+</td>
+</tr>
+</table><br><a id="mj7fa0739503abf63b431bc987b3ade924" name="mj7fa0739503abf63b431bc987b3ade924"></a><a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t34"></a><h3 class="t3"><span class="cfett">20.3.3</span><span class="cfett"> Funktionen nur für komplexe Gleitpunkttypen</span>  <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Zum Schluss fehlt nur noch die Tabelle mit den mathematischen Funktionen aus der Headerdatei <span class="ckursiv">&lt;complex.h&gt;,</span> die nur für komplexe Gleitpunkttypen vorhanden sind.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 20.4    </strong>Mathematische Funktionen für komplexe Gleitpunkttypen</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Funktion</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Beschreibung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double cimag<span class="clisting">(</span>double complex z);
+double creal<span class="clisting">(</span>double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>der Imaginär- bzw. komplexe Teil der komplexen Zahl</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex cproj<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>komplexe Projektion auf die Riemann&#8216;sche Sphäre</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double complex conj<span class="clisting">(</span>
+  double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>konjugierte komplexe Zahl</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">double carg<span class="clisting">(</span>double complex z);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Winkel in den Polarkoordinaten (komplexes Argument)</p>
+</td>
+</tr>
+</table><br><p>Hierzu folgt ein einfaches Beispiel, das diese Funktionen in der Praxis demonstrieren soll. Da immer noch diverse Compiler den C99-Standard implementiert haben und somit komplexe Zahlen nicht verwenden können, habe ich hier das Makro zur Überprüfung auf den neueren C99-Standard verwendet.</p>
+<div class="listing"><pre class="prettyprint">/* mathematik1.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+/* bei Linux das Compiler-Flag -lm mit angeben */
+#include &lt;math.h&gt;
+#if __STDC_VERSION__ &gt;= 19901L
+   #include &lt;complex.h&gt;
+#endif
+
+int main(void) {
+   double i=5.5, pi;
+#if __STDC_VERSION__ &gt;= 19901L
+   double complex c;
+#endif
+
+   // Berechnungen mit reellen Zahlen
+   printf("Quadratwurzel von %f = %f\n",i,sqrt(i));
+   printf("Der Sinus von %f = %f\n",i,sin(i));
+   printf("Der Tangens von %f = %f\n",i,tan(i));
+   printf("Der Cosinus von %f = %f\n",i,cos(i));
+
+#if __STDC_VERSION__ &gt;= 19901L
+   // Berechnung mit komplexen Zahlen
+   pi = 4 * atan(1.0);
+   c = cexp(I * pi);
+   printf("%f + %f * i\n", creal(c), cimag(c));
+#endif
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Sollte der <span class="clisting">double</span>-Wert nicht mehr richtig darstellbar sein, geben all diese Funktionen die Konstante <span class="clisting">HUGE_VAL</span> zurück, die ebenfalls in der Headerdatei <span class="ckursiv">&lt;math.h&gt;</span> deklariert ist. Für die <span class="clisting">float</span>- bzw. <span class="clisting">long double</span>-Funktionen sind für die Makros <span class="clisting">HUGE_VALF</span> und <span class="clisting">HUGE_VALL</span> definiert.</p><a id="mj33c76324b88b714ce9d4a6eb231cfecd" name="mj33c76324b88b714ce9d4a6eb231cfecd"></a><a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t35"></a><h3 class="t3"><span class="cfett">20.3.4</span><span class="cfett"> Typengenerische Makros &#8211; &lt;tgmath.h&gt;</span>  <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p><span class="ckursiv">&lt;tgmath.h&gt;</span> wurde mit dem C99-Standard eingeführt. In <span class="ckursiv">&lt;tgmath.h&gt;</span> sind die Headerdateien <span class="ckursiv">&lt;math.h&gt;</span> und <span class="ckursiv">&lt;complex.h&gt;</span> inkludiert und definieren typengenerische Makros. Der Vorteil dieser Makros liegt darin, dass Sie unabhängig vom Typ des Arguments die mathematischen Funktionen mit demselben Namen aufrufen können. Das bedeutet, Sie können außer Acht lassen, welche mathematische Funktionen Sie für den Typ <span class="clisting">float</span>, <span class="clisting">double</span>, <span class="clisting">long double</span>, <span class="clisting">float complex</span>, <span class="clisting">double complex</span> und <span class="clisting">long double complex</span> aufrufen.</p>
+<p>Wollen Sie beispielsweise eine Funktion zum Ziehen der Quadratwurzel verwenden, so mussten Sie, abhängig vom Datentyp, zwischen sechs verschiedenen Varianten mit <span class="clisting">sqrtf()</span>, <span class="clisting">sqrt()</span>, <span class="clisting">sqrtl()</span>, <span class="clisting">csqrtf()</span>, <span class="clisting">csqrt()</span> und <span class="clisting">csqrtl()</span> unterscheiden. Mit den typengenerischen Makros in <span class="ckursiv">&lt;tgmath.h&gt;</span> brauchen Sie sich darum keine Gedanken mehr machen. Hier müssen Sie lediglich die Funktionen der <span class="clisting">double</span>- bzw. <span class="clisting">double complex</span>-Variante kennen, und ein Aufruf von <span class="clisting">sqrt()</span> führt automatisch die entsprechende Erweiterung aus. Rufen Sie beispielsweise <span class="clisting">sqrt()</span> mit einem <span class="clisting">float complex</span>-Argument aus, wird automatisch die Erweiterung <span class="clisting">csqrtf()</span> ausgeführt.</p>
+<p>Hierzu folgt ein Beispiel, das diese typengenerischen Makros demonstrieren soll. In diesem Beispiel wird für alle reellen und komplexen Gleitpunkttypen die Funktion <span class="clisting">sqrt()</span> zum Ziehen der Quadratwurzel aufgerufen, was ohne die typengenerischen Makros nicht möglich gewesen wäre (und bei Compilern, die den C99-Standard nicht vollständig unterstützen, auch nicht möglich ist). Hier sehen Sie das Listing:</p>
+<div class="listing"><pre class="prettyprint">/* mathematik2.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+/* bei Linux den Compiler-Flag -lm mit angeben */
+#include &lt;tgmath.h&gt;
+
+int main(void) {
+   float f = 1.1;
+   double d=2.2;
+   long double ld = 3.3;
+   float complex fc = 1.0 + 2.0*I, fcval;
+   double complex dc = 4.0 + 2.0*I, dcval;
+   long double complex ldc = 8.0 + 9.0*I, ldcval;
+
+   // Berechnungen mit reellen Zahlen
+   printf("Quadratwurzel von %f = %f\n",f,sqrt(f));
+   printf("Quadratwurzel von %f = %f\n",d,sqrt(d));
+   printf("Quadradwurzel von %Lf = %Lf\n",ld,sqrt(ld));
+   fcval = sqrt(fc);
+   printf("Quadratwurzel von %f + %fi = Lf\n",
+      creal(fcval), cimag(fcval));
+   dcval = sqrt(dc);
+   printf("Quadratwurzel von %f + %fi\n",
+      creal(dcval), cimag(dcval));
+   ldcval = sqrt(ldc);
+   printf("Quadratwurzel von %Lf + %Lfi\n",
+      creal(ldcval), cimag(ldcval));
+   return EXIT_SUCCESS;
+}</pre></div><a id="mjcb4411acd264e6126686705c07d0f648" name="mjcb4411acd264e6126686705c07d0f648"></a><a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t36"></a><h3 class="t3"><span class="cfett">20.3.5</span><span class="cfett"> Gleitpunktwerte klassifizieren</span>  <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Ein weiteres interessantes Feature sind Makros zur Bestimmung der Kategorie von Gleitpunktzahlen. Seit dem C99-Standard werden die Gleitpunktzahlen in folgende fünf Kategorieren unterteilt (Konstanten aus der Headerdatei <span class="ckursiv">&lt;math.h&gt;</span>):</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 20.5    </strong>Bestimmung der Gleitpunktzahl-Kategorie</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Konstante</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Kategorie</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FP_NAN</pre></div>
+</td>
+<td class="tabellentext">
+<p><span class="clisting">NAN</span> steht für <span class="ckursiv">Not</span> <span class="ckursiv">a</span> <span class="ckursiv">Number</span> und bedeutet, dass es sich bei dem Wert um keine gültige Gleitpunktdarstellung handelt.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FP_NORMAL</pre></div>
+</td>
+<td class="tabellentext">
+<p>eine Gleitpunktzahl in normaler Darstellung</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FP_INFINITE</pre></div>
+</td>
+<td class="tabellentext">
+<p>Die Gleitpunktzahl wird als unendlicher Wert dargestellt.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FP_ZERO</pre></div>
+</td>
+<td class="tabellentext">
+<p>eine Gleitpunktzahl mit dem Wert 0</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FP_SUBNORMAL</pre></div>
+</td>
+<td class="tabellentext">
+<p>eine Gleitpunktzahl, mit der besonders kleine Zahlen dargestellt werden können</p>
+</td>
+</tr>
+</table><br><p>Abfragen, in welche Kategorie eine bestimmte Gleitpunktzahl fällt, können Sie mit den folgenden Makros vornehmen:</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 20.6    </strong>Makros zur Bestimmung der Gleitpunktzahl-Kategorie</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Makro</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Bedeutung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">isnan<span class="clisting">(</span>x)</pre></div>
+</td>
+<td class="tabellentext">
+<p>Ist die Gleitpunktzahl gleich <span class="clisting">FP_NAN</span>, wird 1 zurückgegeben, ansonsten 0.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">isnormal<span class="clisting">(</span>x)</pre></div>
+</td>
+<td class="tabellentext">
+<p>Ist die Gleitpunktzahl gleich <span class="clisting">FP_NORMAL</span>, wird 1 zurückgegeben, ansonsten 0.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">isfinite<span class="clisting">(</span>x)</pre></div>
+</td>
+<td class="tabellentext">
+<p>Ist die Gleitpunktzahl eine unendliche Zahl, wird 1 zurückgegeben, ansonsten 0.</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">isinf<span class="clisting">(</span>x)</pre></div>
+</td>
+<td class="tabellentext">
+<p>Ist die Gleitpunktzahl gleich <span class="clisting">FP_INFINITE</span>, wird 1 zurückgegeben, ansonsten 0.</p>
+</td>
+</tr>
+</table><br><p>Intern werden alle diese Makros jedoch mithilfe des Makros <span class="clisting">fpclassify()</span> ausgewertet. Selbstverständlich können Sie <span class="clisting">fpclassify()</span> auch mithilfe der vordefinierten Konstanten wie folgt verwenden:</p>
+<div class="listing"><pre class="prettyprint">if ( fpclassify(x) == FP_NORMAL ) {
+   /* … */
+}
+// ... gleichwertig zu ...
+if( isnormal(x) ) {
+   /* ... */
+}</pre></div><a id="mjd213e5099b73a25f9e709c3bf41f25bc" name="mjd213e5099b73a25f9e709c3bf41f25bc"></a><a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t37"></a><h3 class="t3"><span class="cfett">20.3.6</span><span class="cfett"> Makro zum Vergleichen von reellen Zahlen</span>  <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Makros zum Vergleichen von Gleitpunktzahlen sind nicht unbedingt nötig. In Abschnitt 5.9, »Numerische Gleitpunktprobleme«, haben Sie bereits erfahren, dass abgesehen von Gleichheit (<span class="clisting">==</span>) alle Vergleiche von Gleitpunktzahlen möglich sind. Dennoch gibt es noch ein Problem, das hier nicht angesprochen wurde: Ist einer der Werte keine gültige Gleitpunktzahl, lassen sich die Operanden nicht miteinander vergleichen und es wird die Exception <span class="clisting">FE_INVALID</span> ausgelöst. Wollen Sie vermeiden, dass diese Exception ausgelöst wird, müssen Sie die entsprechenden Makros aus der Headerdatei <span class="ckursiv">&lt;math.h&gt;</span> verwenden. Die Makros führen einen stillen Vergleich der Operanden durch, womit keine Exception ausgelöst wird. Tabelle 20.7 zeigt die entsprechenden Makros und deren Bedeutung.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 20.7    </strong>Makros zum Vergleichen von Gleitpunktzahlen</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Makro</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Bedeutung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">isgreater<span class="clisting">(</span>x, y)</pre></div>
+</td>
+<td class="tabellentext">
+<p><span class="clisting">x</span> größer als <span class="clisting">y</span></p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">isgreaterequal<span class="clisting">(</span>x, y)</pre></div>
+</td>
+<td class="tabellentext">
+<p><span class="clisting">x</span> größer als oder gleich <span class="clisting">y</span></p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">isless<span class="clisting">(</span>x, y)</pre></div>
+</td>
+<td class="tabellentext">
+<p><span class="clisting">x</span> kleiner als <span class="clisting">y</span></p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">islessequal<span class="clisting">(</span>x, y)</pre></div>
+</td>
+<td class="tabellentext">
+<p><span class="clisting">x</span> kleiner als oder gleich <span class="clisting">y</span></p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">islessgreater<span class="clisting">(</span>x, y)</pre></div>
+</td>
+<td class="tabellentext">
+<p><span class="clisting">x</span> kleiner als <span class="clisting">y</span> ODER <span class="clisting">x</span> größer als <span class="clisting">y</span></p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">isunordered<span class="clisting">(</span>x, y)</pre></div>
+</td>
+<td class="tabellentext">
+<p>Sind <span class="clisting">x</span> und <span class="clisting">y</span> nicht miteinander vergleichbar, gibt dieses Makro 1 zurück, ansonsten 0.</p>
+</td>
+</tr>
+</table><br><a id="mjbcf4d91be50bcf5aac0190cd3f4d17ff" name="mjbcf4d91be50bcf5aac0190cd3f4d17ff"></a><a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t38"></a><h3 class="t3"><span class="cfett">20.3.7</span><span class="cfett"> Zugriff auf die Gleitpunkt-Umgebung &#8211; &lt;fenv.h&gt;</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>In der Headerdatei <span class="ckursiv">&lt;fenv.h&gt;</span> (für <span class="cfett">F</span>loating <span class="cfett">Env</span>ironment = Gleitpunktumgebung) wurden zwei neue Typen, mehrere Makros und einige Funktionen zum Testen auf Fehlersituationen beim Rechnen mit Gleitpunktzahlen implementiert. Diese Umgebung enthält die Systemvariable <span class="clisting">fexcept_t</span>, die von Gleitpunkt-Exceptions-Funktionen gesetzt werden kann, und die Variable <span class="clisting">fenv_t</span>, die für den Kontrollmodus (beispielsweise des Rundungsverhaltens) verwendet wird. Die Headerdatei <span class="ckursiv">&lt;fenv.h&gt;</span> ist erst seit dem C99-Standard vorhanden.</p>
+<p>Um mit dem Programm auf diese Gleitpunkt-Umgebung zuzugreifen, empfiehlt es sich, dies dem Compiler mit dem Pragma <span class="clisting">STDC FENV_ACCESS</span> mitzuteilen:</p>
+<div class="listing"><pre class="prettyprint">// Compiler informieren, damit dieser
+// Optimierungen verhindert
+#pragma STDC FENV_ACCESS ON</pre></div>
+<p>Mit <span class="clisting">OFF</span> können Sie das Pragma wieder abschalten. Ob dieses Pragma mit dem Status <span class="clisting">ON</span> oder <span class="clisting">OFF</span> implementiert ist, hängt vom Compiler ab. Das Pragma ist ebenfalls in der Headerdatei <span class="ckursiv">&lt;fenv.h&gt;</span> definiert.</p>
+<h4 class="t4"><span class="cfett">Zugriff auf die Exception-Statusflags</span></h4>
+<p>Für den Zugriff auf die Exception-Statusflags von Gleitpunktzahlen stehen Ihnen mehrere Funktionen zur Verfügung, die in Tabelle 20.8 aufgelistet sind.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 20.8    </strong>Funktionen für den Zugriff auf die Exception-Statusflags</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Funktion</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Beschreibung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">int feclearexcept<span class="clisting">(</span>int excepts);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Exception wieder löschen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">int fegetexceptflag<span class="clisting">(</span>
+   fexcept_t *flagp,
+   int excepts);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Exception-Statusflags speichern</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">int feraiseexcept<span class="clisting">(</span>int excepts);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Exception manuell auslösen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">int fesetexceptflag<span class="clisting">(</span>
+   const fexcept_t *flagp,
+   int excepts);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Exception-Statusflags wiederherstellen</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">int fetestexcept<span class="clisting">(</span>int excepts);</pre></div>
+</td>
+<td class="tabellentext">
+<p>Exception-Statusflags testen</p>
+</td>
+</tr>
+</table><br><p>Zur genauen Identifizierung der Exception-Statusflags sind in der Headerdatei <span class="ckursiv">&lt;fenv.h&gt;</span> folgende Exceptions als ganzzahlige Makros implementiert:</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 20.9    </strong>Verschiedene Typen von Exceptions in &lt;fenv.h&gt;</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Makro</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Beschreibung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_DIVBYZERO</pre></div>
+</td>
+<td class="tabellentext">
+<p>Division durch null</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_INEXACT</pre></div>
+</td>
+<td class="tabellentext">
+<p>Ungenauigkeit bei der Gleitpunktberechnung</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_INVALID</pre></div>
+</td>
+<td class="tabellentext">
+<p>ungültige Gleitpunktberechnung</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_OVERFLOW</pre></div>
+</td>
+<td class="tabellentext">
+<p>Überlauf bei der Gleitpunktberechnung</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_UNDERFLOW</pre></div>
+</td>
+<td class="tabellentext">
+<p>Unterlauf bei der Gleitpunktberechnung</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_ALL_EXCEPT</pre></div>
+</td>
+<td class="tabellentext">
+<p>Zugriff auf alle unterstützten Exceptions</p>
+</td>
+</tr>
+</table><br><p>Hierzu ein einfaches Beispiel, in dem wir zunächst alle Exception-Statusflags mit der Funktion <span class="clisting">fegetexceptflag()</span> sichern. Anschließend lösen wir mit Absicht mit einer Division durch 0 die Exception <span class="clisting">FE_DIVBYZERO</span> aus, was die Überprüfung mit <span class="clisting">fetestexcept()</span> auch bestätigt. Anschließend stellen wir die zuvor gesicherte Gleitpunkt-Umgebung mit <span class="clisting">fesetexceptflag()</span> wieder im Ursprungszustand her. Hier sehen Sie das Listing dazu (das natürlich nur bei C99-konformen Compilern läuft):</p>
+<div class="listing"><pre class="prettyprint">/* mathematik3.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+/* bei Linux den Compiler-Flag -lm mit angeben */
+#include &lt;math.h&gt;
+#include &lt;fenv.h&gt;
+#pragma STDC FENV_ACCESS ON
+
+int main(void) {
+   double d1=0, d2=1.0, dges;
+   fexcept_t flagp;
+   // Exception-Statusflags sichern
+   fegetexceptflag(&amp;flagp, FE_ALL_EXCEPT );
+   // mit Absicht eine Division durch 0 auslösen
+   dges = d2 / d1;
+   if( fetestexcept( FE_DIVBYZERO ) ) {
+      printf("Exception ausgelöst: Divsion durch 0 !\n");
+   }
+   // Exception-Statusflags wiederherstellen
+   fesetexceptflag(&amp;flagp, FE_ALL_EXCEPT);
+   // Sollte jetzt nicht mehr ausgeführt werden.
+   if( fetestexcept( FE_DIVBYZERO ) ) {
+      printf("Exception ausgelöst: Divsion durch 0 !\n");
+   }
+   return EXIT_SUCCESS;
+}</pre></div>
+<h4 class="t4"><span class="cfett">Rundungsmodus</span></h4>
+<p>Neben den Exception-Statusflags können Sie auch das Rundungsverhalten der Gleitpunktarithmetik mit Funktionen und Makros der Headerdatei <span class="ckursiv">&lt;fenv.h&gt;</span> einrichten. Hier sind die beiden dazu nötigen Funktionen:</p>
+<div class="listing"><pre class="prettyprint">// Gibt den aktuellen Rundungsmodus zurück,
+// gewöhnlich ist hier FE_TONEAREST eingestellt.
+int fegetround(void);
+
+// Setzt den Rundungsmodus auf round
+// Mögliche Modi dazu finden Sie in der Tabelle 20.10.
+int fesetround(int round);</pre></div>
+<p>In der Headerdatei <span class="ckursiv">&lt;fenv.h&gt;</span> sind die in Tabelle 20.10 aufgelisteten Makros definiert, die von <span class="clisting">fegetround()</span> zurückgegeben bzw. mit <span class="clisting">fesetround()</span> gesetzt werden können.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 20.10    </strong>Mögliche Makros für den Rundungsmodus der Gleitpunktarithmetik</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Makro</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Beschreibung</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_DOWNWARD</pre></div>
+</td>
+<td class="tabellentext">
+<p>Gleitpunktzahl zum nächsten Integer abrunden</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_UPWARD</pre></div>
+</td>
+<td class="tabellentext">
+<p>Gleitpunktzahl zum nächsten Integer aufrunden</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_TONEAREST</pre></div>
+</td>
+<td class="tabellentext">
+<p>Gleitpunktzahl auf nächstmöglichen Integer auf- oder abrunden (Standardeinstellung)</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<div class="listing"><pre class="prettyprint">FE_TOWARDZERO</pre></div>
+</td>
+<td class="tabellentext">
+<p>Gleitpunktzahl auf den nächstmöglichen Integer in der Nähe von 0 runden.</p>
+</td>
+</tr>
+</table><br><p>Die Verwendung ist entsprechend einfach:</p>
+<div class="listing"><pre class="prettyprint">#include &lt;fenv.h&gt;
+...
+int save;
+...
+// Rundungsmodus sichern
+save = fegetround();
+// neuen Rundungsmodus festlegen
+fesetround(FE_UPWARD);
+...
+...
+// Rundungsmodus wiederherstellen
+fesetround(save);</pre></div>
+<h4 class="t4"><span class="cfett">Zugriff auf die komplette Gleitpunktumgebung</span></h4>
+<p>Es gibt auch noch Funktionen, mit denen Sie auf die komplette Gleitpunkt-Umgebung zugreifen können:</p>
+<div class="listing"><pre class="prettyprint">// Gleitpunkt-Umgebung speichern
+int fegetenv(fenv_t *envp);
+// Gleitpunkt-Umgebung in einen Non-Stop-Modus setzen.
+// Hierbei unterbricht eine Exception nicht die
+// Programmausführung.
+int feholdexcept(fenv_t *envp);
+// Gleitpunkt-Umgebung wiederherstellen
+int fesetenv(const fenv_t *envp);
+// eine gespeicherte Gleitpunkt-Umgebung wiederherstellen
+// und alle zur Laufzeit gesetzten Exceptions erneut auslösen
+int feupdateenv(const fenv_t *envp);</pre></div><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/020_c_headerdateien_003.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="20.3 Mathematische Funktionen &#8211; <math.h>, <tgmath.h> und <complex.h>"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="020_c_headerdateien_002.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="020_c_headerdateien_004.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/020_c_headerdateien_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:48:04 GMT -->
+</html>

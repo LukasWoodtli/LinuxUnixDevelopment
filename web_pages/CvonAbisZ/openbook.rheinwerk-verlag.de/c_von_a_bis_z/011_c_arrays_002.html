@@ -1,0 +1,703 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/011_c_arrays_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:45:30 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 11.2 Initialisierung und Zugriff auf Arrays</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 11.2 Initialisierung und Zugriff auf Arrays">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 11.2 Initialisierung und Zugriff auf Arrays">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="011_c_arrays_001.html">
+<link rel="next" href="011_c_arrays_003.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="011_c_arrays_001.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="011_c_arrays_003.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8" class="navnav">11 Arrays</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_001.html#mj469d744c5b30cb3373d80818643836c5" class="navnav">11.1 Arrays deklarieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mjeeec3416c1c4f4eb7d05f3f09d9349be" class="navh">11.2 Initialisierung und Zugriff auf Arrays</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj79e145f1f171660666f1ef3950e06b24" class="navh">11.2.1 Gültigkeitsbereich von Arrays</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_003.html#mjb2e1028233d347a20027fc172326f792" class="navnav">11.3 Arrays vergleichen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_004.html#mj3f5445113443dfa117781b465336c610" class="navnav">11.4 Anzahl der Elemente eines Arrays ermitteln</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_005.html#mjf3c5aa0fd5920b4832a21324776dbfff" class="navnav">11.5 Übergabe von Arrays an Funktionen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_006.html#mj9e02213623cea72143af952a11ac85df" class="navnav">11.6 Arrays aus Funktionen zurückgeben</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_007.html#mj14166ef13e23fe9df6fdcce79ba9dfa2" class="navnav">11.7 Programmbeispiel zu den Arrays</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_008.html#mjb13001449f3d3d61c5e9ec50a26ed7ea" class="navnav">11.8 Einlesen von Array-Werten</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_009.html#mj1fafabf9621c60d77f7be86a236b292d" class="navnav">11.9 Mehrdimensionale Arrays</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_009.html#mj760b5cacdde1f5e176a39559fbba3ecb" class="navnav">11.9.1 Mehrdimensionale Arrays initialisieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_009.html#mj556ba85ff5cddc85b2f38765b20c2288" class="navnav">11.9.2 Übergabe von zwei- bzw. mehrdimensionalen Arrays an Funktionen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_010.html#mjd98650d82a88b3a4fa0c440564fda48b" class="navnav">11.10 Arrays in Tabellenkalkulation einlesen (*.CSV&ndash;Dateien)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_011.html#mja452663858fd23e86c51cfa3b9139f64" class="navnav">11.11 Strings/Zeichenketten (»char«-Array)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_011.html#mj5694f3948b911efec75fb2de32213fcf" class="navnav">11.11.1 Vom String zur Binärzahl</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_012.html#mj274b2aae304e932bd677724af7d7a9cf" class="navnav">11.12 Einlesen von Strings</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="011_c_arrays_013.html#mj607c824f6d89b1e3f8edb08abdc187d4" class="navnav">11.13 Die Standard-Bibliothek &lt;string.h&gt;</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mj2c229c43f35747a779cb6c76b917fadc" class="navnav">11.13.1 »strcat()« &#8211; Strings aneinanderhängen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mjb1558c148971ed949d838c71595a3490" class="navnav">11.13.2 »strchr()« &#8211; ein Zeichen im String suchen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mjd148b11ca58a4e84fc80121d3c99dbdf" class="navnav">11.13.3 »strcmp()« &#8211; Strings vergleichen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mj998c101ba9353f937a31637fe2cd8773" class="navnav">11.13.4 »strcpy()« &#8211; einen String kopieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mj98579a51cd0f9a9f3ef15549df429720" class="navnav">11.13.5 »strcspn()« &#8211; einen Teilstring ermitteln</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mj7b1a432ff2ba45460be212f4f46446b9" class="navnav">11.13.6 »strlen()« &#8211; Länge eines Strings ermitteln</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mjccc16dd28ed90de5421a8a3978677beb" class="navnav">11.13.7 »strncat()« &#8211; String mit n Zeichen aneinanderhängen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mj7a694abb9835dd5170196f2d9adde460" class="navnav">11.13.8 »strncmp()« &#8211; n Zeichen von zwei Strings miteinander vergleichen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mj8db45eea1aafc53773a6c66dd0858f5d" class="navnav">11.13.9 »strncpy()« &#8211; String mit n Zeichen kopieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mjbe8b332bdac004c1f733083e3f4481eb" class="navnav">11.13.10 »strpbrk()« &#8211; nach dem Auftreten bestimmter Zeichen suchen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mja5abfae994daf2a2d88881a7f243e0f7" class="navnav">11.13.11 »strrchr()« &#8211; das letzte Auftreten eines bestimmten Zeichens im String suchen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mj54260c868d0c4b76970e1f88a3d5b372" class="navnav">11.13.12 »strspn()« &#8211; das erste Auftreten eines Zeichens, das nicht vorkommt</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mja214ed64e5acc62362ef373f80645ef9" class="navnav">11.13.13 »strstr()« &#8211; einen String nach dem Auftreten eines Teilstrings durchsuchen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="011_c_arrays_013.html#mj9a581d570646dd5edcc5d0e97de7a230" class="navnav">11.13.14 »strtok()« &#8211; einen String anhand bestimmter Zeichen zerlegen</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mjeeec3416c1c4f4eb7d05f3f09d9349be" name="mjeeec3416c1c4f4eb7d05f3f09d9349be"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">11.2</span><span class="cfett"> Initialisierung und Zugriff auf Arrays</span>  <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>In dem folgenden Listing wird gezeigt, wie ein Array mit Werten initialisiert wird und wie darauf zugegriffen werden kann:</p>
+<div class="listing"><pre class="prettyprint">/* array1.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void) {
+   int i[5];     /* Array mit 5 int-Elementen */
+
+   /* Wertzuweisungen des Arrays */
+   i[0] = 5;
+   i[1] = 100;
+   i[2] = 66;
+   i[3] = 77;
+   i[4] = 1500;
+
+   /*Ausgabe der einzelnen Array-Elemente*/
+   printf("Array-Element i[0]= %d\n", i[0]);
+   printf("Array-Element i[1]= %d\n", i[1]);
+   printf("Array-Element i[2]= %d\n", i[2]);
+   printf("Array-Element i[3]= %d\n", i[3]);
+   printf("Array-Element i[4]= %d\n", i[4]);
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Bei diesem Beispiel wurde an alle fünf Feldelemente ein Wert mithilfe des Indizierungsoperators <span class="clisting">[]</span> übergeben. Und wie der Name des Operators schon sagt, dient dieser dem indizierten Zugriff auf Datentypen, die typischerweise hintereinander im Speicher abgelegt sind.</p>
+<p>Warum lautet der Index des letzten Elements <span class="clisting">[4]</span> und nicht <span class="clisting">[5]</span>? Für den Computer ist die Zahl 0 auch ein Wert, und somit fängt dieser stets bei 0 an zu zählen:</p>
+<div class="bildbox">
+<p><a name="IDA2HUQ"></a><a onClick="OpenWin('bilder/11_002.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein11_002.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 11.2    </strong>Ein Array mit Werten initialisieren</p>
+<p>Sie sehen hier 5 Zahlen: 0, 1, 2, 3 und 4. Befände sich im Programm die Zeile</p>
+<div class="listing"><pre class="prettyprint">i[5] = 111;
+printf("i[5] = %d\n",i[5]);</pre></div>
+<p>würde versucht, auf einen nicht reservierten Speicher zuzugreifen. Es wurde aber nur Speicher für fünf Adressen vom Datentyp <span class="clisting">int</span> reserviert. Gefährlicher kann das werden, wenn dies in einer <span class="clisting">for</span>-Schleife geschieht. Wird hier der Indexbereich überschritten, kann es passieren, dass mit falschen Werten weitergearbeitet wird. Hier ein Beispiel für einen Fehler, der leider oft gemacht wird:</p>
+<div class="listing"><pre class="prettyprint">/* array2.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void) {
+   int test[10];
+   int i;
+
+   for(i = 0; i &lt;= 10; i++)  /*  !!Bereichsüberschreitung!! */
+      test[i] = i;
+   for(i = 0; i &lt;= 10; i++)
+      printf("%d, ", test[i]);
+   printf("\n");
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Das Programm macht nichts anderes, als das Array <span class="clisting">test[10]</span> mit 11(!) Werten zu initialisieren, und anschließend werden diese Werte auf dem Bildschirm ausgegeben. Haben Sie den Fehler schon gefunden? Der Fehler liegt in der <span class="clisting">for</span>-Schleife:</p>
+<div class="listing"><pre class="prettyprint">for(i = 0; i &lt;= 10; i++)</pre></div>
+<p>Die <span class="clisting">for</span>-Schleife wird insgesamt elfmal durchlaufen: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10. Es kann (oder besser es wird) bei diesem Programm passieren, dass <span class="clisting">test[10]</span> tatsächlich den Wert 10 enthält.</p>
+<p>Sobald aber irgendwo im Programm diese Speicheradresse für eine andere Variable benötigt wird, wird der aktuelle Wert von <span class="clisting">test[10]</span> überschrieben. Es kann also nicht garantiert werden, dass der Wert von <span class="clisting">test[10]</span> erhalten bleibt, was zwangsläufig zu ungewollten Effekten und schwer aufzuspürenden Fehlern im Programm führt.</p>
+<p>Wenn Sie das Programm gegenwärtig ausführen wollen, ohne dass solch ein Fehler auftritt, müssen Sie nur den Zuweisungsoperator aus den beiden <span class="clisting">for</span>-Schleifen entfernen:</p>
+<div class="listing"><pre class="prettyprint">for(i = 0; i &lt; 10; i++)  /* ohne '='-Zeichen richtig */</pre></div>
+<p>In dem Programm haben Sie gesehen, wie auf ein Array zugegriffen werden kann, um es mit Werten zu initialisieren:</p>
+<div class="listing"><pre class="prettyprint">for(i = 0; i &lt; 10; i++)
+   test[i] = i;</pre></div>
+<p>Damit wird die Schleife abgebrochen, sobald <span class="clisting">i</span> den Wert 10 erreicht. Generell ist also bei der Verwendung von Arrays im Zusammenhang mit Schleifen Vorsicht geboten, und Sie müssen genau darauf achten, dass der Wertebereich des Feldes nicht unter- bzw. überschritten wird. Solche Unter- oder Überschreitungen werden vom Compiler nicht überprüft oder moniert.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Auf manchen Systemen gibt es eine Compiler-Option (<span class="ckursiv">range-checking</span>), womit ein solcher Über- bzw. Unterlauf eines Arrays zur Laufzeit des Programms geprüft wird. Das fertige Programm sollte allerdings nicht mehr mit dieser Option übersetzt werden, da dies zu einem schlechten Laufzeitverhalten führt.</p>
+</td>
+</tr>
+</table><br><p>Statt einer konstanten Ganzzahl wurde hier die Variable <span class="clisting">i</span> verwendet. Das funktioniert deshalb, weil diese Variable vom Datentyp <span class="clisting">int</span> ist und somit auch einer Ordinalzahl entspricht. Die Variable wird von der <span class="clisting">for</span>-Schleife bei jedem Durchlauf um den Wert eins erhöht (inkrementiert). Daraus ergibt sich, dass als Index nur Ganzzahlwerte erlaubt sind. Oftmals wird zur Bezeichnung des Index auch eine <span class="clisting">define</span>-Konstante verwendet, wie das folgende Beispiel demonstriert:</p>
+<div class="listing"><pre class="prettyprint">/* array3.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#define SIZE 10
+
+int main(void) {
+   int zahlen[SIZE] = { 0 };
+
+   printf("Anz. Elemente : %d\n", sizeof(zahlen) / sizeof(int));
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Solche Konstanten können die Lesbarkeit bei längeren Programmen erheblich verbessern und tragen dazu bei, Fehler zu vermeiden. Ein weiterer Vorteil entsteht, wenn Sie die Anzahl der Elemente des Arrays erhöhen wollen. Sie müssen nur den Wert der <span class="clisting">define</span>-Konstante ändern und nicht mühsam im Programm danach suchen.</p>
+<p>Arrays lassen sich auch anders, nämlich direkt bei der Deklaration, initialisieren. Die Werte müssen dabei zwischen geschweiften Klammern stehen:</p>
+<div class="listing"><pre class="prettyprint">int numbers[] = { 1, 2, 4, 5, 9 };</pre></div>
+<p>Wenn Sie das Array so initialisieren, können Sie die Größe des Arrays auch weglassen. C kümmert sich darum, dass genügend Speicher zur Verfügung steht. Die einzelnen Initializer werden immer mit einem Komma getrennt und stehen in geschweiften Klammern. Dadurch ist das Feld wie folgt mit Werten belegt:</p>
+<div class="listing"><pre class="prettyprint">numbers[0] = 1;
+numbers[1] = 2;
+numbers[2] = 4;
+numbers[3] = 5;
+numbers[4] = 9;</pre></div>
+<p>Natürlich können Sie trotzdem die Größe des Arrays angeben. Bei einem größeren Array hat diese Initialisierung den Vorteil, dass Sie alle anderen Werte gleich mit 0 vorbelegen können. Anstatt eine <span class="clisting">for</span>-Schleife zu schreiben, wie etwa:</p>
+<div class="listing"><pre class="prettyprint">int bigarray[1000];
+
+for(i = 0; i &lt; 1000; i++)
+   bigarray[i] = 0;</pre></div>
+<p>lässt sich das auch einfacher formulieren:</p>
+<div class="listing"><pre class="prettyprint">int bigarray[1000] = { 0 };</pre></div>
+<p>Hier wurde nur das Array mit dem Index <span class="clisting">[0]</span>, also <span class="clisting">bigarray[0]</span>, mit dem Wert 0 initialisiert. Die restlichen 999, die nicht ausdrücklich initialisiert wurden, werden jedoch automatisch ebenfalls mit dem Wert 0 besetzt.</p>
+<p>Dies kann aber noch ganz anders gelöst werden, und zwar unter Verwendung der folgenden Funktion:</p>
+<div class="listing"><pre class="prettyprint">/* Beschreibung der Funktion, siehe Abschnitt 20.8  */
+#include &lt;string.h&gt;
+
+void *memset(void *adres, int zeichen, size_t n);</pre></div>
+<p>Mit der Funktion <span class="clisting">memset()</span> wird der Wert von <span class="clisting">zeichen</span> in jedes der ersten <span class="clisting">n</span> Zeichen des Speicherbereichs mit der Adresse <span class="clisting">adres</span> geschrieben. Das sieht dann wie folgt aus:</p>
+<div class="listing"><pre class="prettyprint">int bigarray[1000];
+memset(bigarray, 0, sizeof(bigarray));</pre></div>
+<p>Wenn Sie das jetzt nicht nachvollziehen können: Ein paar Seiten später werden Sie es besser verstehen. Tatsächlich handelt es sich hier auch um einen Spezialfall der Verwendung von <span class="clisting">memset()</span>, da sich dieses Verfahren nur mit dem Wert 0 auf ein <span class="clisting">int</span>-Array anwenden lässt. Das liegt daran, dass <span class="clisting">memset()</span> bitweise arbeitet. Bei einem <span class="clisting">int</span>-Array auf einem 32-Bit-System würde dies bei 4 Bytes den Wert 16843009 bedeuten (alle Bits auf 1).</p>
+<p>Hier noch ein weiteres Beispiel zur Initialisierung von Arrays:</p>
+<div class="listing"><pre class="prettyprint">double inhalt[100] = { 2.4, 2.8, 9.45, 10.99 };</pre></div><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Internes</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext" rowspan="2">
+<p class="BStandard"><span class="clisting">memset()</span> kann unter  Umständen schneller sein als eine <span class="clisting">for</span>-Schleife, da <span class="clisting">memset()</span> viel näher an der Hardware operiert und eventuell deren Funktionalität ausbeuten kann (z. B. ist es viel sinnvoller, einen <span class="clisting">char[512]</span> mit 128 0-<span class="clisting">long</span>s zu belegen, anstatt 512-mal eine 0 zu speichern). <span class="clisting">memset()</span> funktioniert außerdem auch bei multidimensionalen Arrays ohne Pointer, z. B.:</p>
+<div class="listing"><pre class="prettyprint">char m_ar[10][10];
+memset(m_ar, 0, 100);</pre></div>
+</td>
+</tr>
+</table><br><p>Hiermit wurden folgende Werte initialisiert:</p>
+<div class="listing"><pre class="prettyprint">inhalt[0] = 2.4
+inhalt[1] = 2.8
+inhalt[2] = 9.45
+inhalt[3] = 10.99
+inhalt[4] = 0.0
+inhalt[5] = 0.0
+...
+inhalt[997] = 0.0
+inhalt[998] = 0.0
+inhalt[999] = 0.0</pre></div>
+<p>Ab <span class="clisting">inhalt[4]</span> bis <span class="clisting">inhalt[999]</span> werden alle Werte automatisch mit 0.0 initialisiert. Leider ist es nicht möglich, den Inhalt eines Arrays mit einem anderen konstanten Wert außer 0 zu initialisieren.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Manche Systeme vertragen keine lokalen, übergroß dimensionierten Arrays. Sollte das Programm bei Ihnen gleich nach dem Start abstürzen und verwenden Sie ein recht großes Array, dann könnte ein global definiertes Array Abhilfe schaffen.</p>
+</td>
+</tr>
+</table><br><a id="mj79e145f1f171660666f1ef3950e06b24" name="mj79e145f1f171660666f1ef3950e06b24"></a><a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t32"></a><h3 class="t3"><span class="cfett">11.2.1</span><span class="cfett"> Gültigkeitsbereich von Arrays</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Der Gültigkeitsbereich von Arrays richtet sich danach, ob es sich dabei um ein statisches, globales oder ein normales (lokales) Array handelt. Betrachten Sie zur Verdeutlichung ein kleines Beispielprogramm:</p>
+<div class="listing"><pre class="prettyprint">/* array4.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int wert_global[5];
+
+int main(void) {
+   static int wert_static[5];
+   int wert_auto[5];
+   int i;
+
+   for(i = 0; i &lt; 5; i++)
+      printf("%d:\t%10d\t%10d\t%10d\n",
+         i, wert_global[i], wert_static[i], wert_auto[i] );
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Abbildung 11.3. zeigt die Ausgabe des Programms am Bildschirm.</p>
+<div class="bildbox">
+<p><a name="IDAQZUQ"></a><a onClick="OpenWin('bilder/11_003.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein11_003.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 11.3    </strong>Gültigkeitsbereich von Variablen</p>
+<p>Das Programm gibt für das globale und für das mit dem Schlüsselwort <span class="clisting">static</span> deklarierte Array jeweils den Wert 0 aus. Das automatische Array <span class="clisting">wert_auto</span> hingegen gibt einen undefinierten Wert zurück. Daraus lässt sich schließen, dass globale und mit <span class="clisting">static</span> deklarierte Arrays automatisch mit 0 initialisiert werden.</p>
+<p>Das Verhalten des Programms ändert sich, wenn die Automatic-Variable (<span class="clisting">wert_auto</span>) mit mindestens einem Wert initialisiert wird:</p>
+<div class="listing"><pre class="prettyprint">/* array5.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int wert_global[5];
+
+int main(void) {
+   static int wert_static[5];
+   int wert_auto[5] = { 0 };  /* Array mit 0 initialisiert */
+   int i;
+
+   for(i = 0; i &lt; 5; i++)
+      printf("%d:\t%10d\t%10d\t%10d\n",
+         i, wert_global[i], wert_static[i], wert_auto[i] );
+  return EXIT_SUCCESS;
+}</pre></div>
+<p>Es wurde hier nur die Zeile</p>
+<div class="listing"><pre class="prettyprint">int wert_auto[5] = { 0 };</pre></div>
+<p>verändert und <span class="clisting">wert_auto[0]</span> mit dem Wert 0 initialisiert. Die Ausgabe des Programms zeigt jetzt (erwartungsgemäß) die initialisierten Werte.</p>
+<div class="bildbox">
+<p><a name="IDAC1UQ"></a><a onClick="OpenWin('bilder/11_004.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein11_004.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 11.4    </strong>Gültigkeitsbereich von Variablen</p><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/011_c_arrays_002.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="11.2 Initialisierung und Zugriff auf Arrays"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="011_c_arrays_001.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="011_c_arrays_003.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/011_c_arrays_002.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:45:36 GMT -->
+</html>

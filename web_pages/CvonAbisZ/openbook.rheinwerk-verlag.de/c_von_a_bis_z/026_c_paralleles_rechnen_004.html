@@ -1,0 +1,643 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/026_c_paralleles_rechnen_004.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:53:31 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 26.4 Mit den POSIX-Threads programmieren</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 26.4 Mit den POSIX-Threads programmieren">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 26.4 Mit den POSIX-Threads programmieren">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="026_c_paralleles_rechnen_003.html">
+<link rel="next" href="027_c_sicheres_programmieren_001.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="026_c_paralleles_rechnen_003.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="027_c_sicheres_programmieren_001.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6" class="navnav">26 Paralleles Rechnen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="026_c_paralleles_rechnen_001.html#mjb6bf5656cc8c044bc1fd91d014c8cee2" class="navnav">26.1 Parallelität</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="026_c_paralleles_rechnen_001.html#mjd75212c0e51887d044953922e25a9d0d" class="navnav">26.1.1 Single-Prozessorsysteme</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="026_c_paralleles_rechnen_001.html#mj27351b1c04684636d512ea80a80e2cbd" class="navnav">26.1.2 Hyperthreading</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="026_c_paralleles_rechnen_002.html#mja1694b52e414852e0e5b674bf95ec82a" class="navnav">26.2 Programmiertechniken der Parallelisierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="026_c_paralleles_rechnen_002.html#mj65a1affab63bc6a0ec9df312e5cf121a" class="navnav">26.2.1 Automatische Parallelisierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="026_c_paralleles_rechnen_002.html#mj80e0cef198b19481af8205c6d2696622" class="navnav">26.2.2 Halbautomatische Parallelisierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="026_c_paralleles_rechnen_002.html#mj2e1af3620fa3abe023d8aff2e1188b05" class="navnav">26.2.3 Echte Parallelisierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="026_c_paralleles_rechnen_003.html#mjb537a4926420c210f7b0237b7520fafe" class="navnav">26.3 Vom Prozess zum Thread</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mja2eda8d735b0159acdc76284d6c9eb57" class="navh">26.4 Mit den POSIX-Threads programmieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjda1e36529cbd626ff824ba1d3ff0754d" class="navh">26.4.1 Ein serielles Beispiel</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj720c6a8dfd3bc44ae8368371d78bf2ac" class="navh">26.4.2 Das Grundgerüst für ein Programm mit mehreren Threads</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj2c1b212eea5fef6525ebeaea140fcf60" class="navh">26.4.3 Zusammenfassung</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mja2eda8d735b0159acdc76284d6c9eb57" name="mja2eda8d735b0159acdc76284d6c9eb57"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">26.4</span><span class="cfett"> Mit den POSIX-Threads programmieren</span>  <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Um POSIX-Threads verwenden zu können, müssen Sie die <span class="ckursiv">Pthread</span>-Bibliothek erst einmal installieren. Unter Linux lässt sie sich bequem mit dem jeweiligen Paketmanager nachinstallieren. Auch für Windows lässt sich die <span class="ckursiv">Pthread</span>-Bibliothek ohne großen Aufwand nachinstallieren. Erste Anlaufstelle sollte hierbei die Webseite <a href="http://sourceware.org/pthreads-win32/">http://sourceware.org/pthreads-win32/</a> sein. Damit ich hier nicht mehrere Seiten für die Anleitung zur Installation und Verwendung der <span class="ckursiv">Pthread</span>-Bibliothek verschwende, finden Sie auf der Buch-CD eine Beschreibung, wie Sie Anwendungen mit der <span class="ckursiv">Pthread</span>-Bibliothek erstellen können. Dabei wird neben Linux auch auf die Verwendung von Pthreads mit Entwicklungsumgebungen wie <span class="ckursiv">Code::Blocks</span> und <span class="ckursiv">Visual C++</span> von Microsoft eingegangen.</p><a id="mjda1e36529cbd626ff824ba1d3ff0754d" name="mjda1e36529cbd626ff824ba1d3ff0754d"></a><a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t32"></a><h3 class="t3"><span class="cfett">26.4.1</span><span class="cfett"> Ein serielles Beispiel</span>  <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Um Ihnen die Threads zu demonstrieren, habe ich ein absolut einfaches Beispiel verwendet. Wir verwenden zwei <span class="clisting">int</span>-Arrays mit 100.000 Elementen mit absteigendem Wert &#8211; was bedeutet, dass alle Elemente der beiden Arrays sortiert werden müssen. Hierbei geht es mir nur darum, zwei CPU-rechenintensive Aufgaben zu beschleunigen. Als Sortieralgorithmus habe ich den etwas langsameren <span class="ckursiv">Bubblesort</span> verwendet. Folgendes Beispiel soll anschließend parallel erstellt werden:</p>
+<div class="listing"><pre class="prettyprint">/* bubblesort.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+/* 100000 Elemente */
+#define MAX 100000
+
+/* ein Array von großen zu kleinen Werten */
+int test_array1[MAX];
+int test_array2[MAX];
+
+/* in umgekehrter Reihenfolge erstellen */
+void init_test_array(int *array) {
+   int i, j;
+   for(i = MAX,j=0; i &gt;= 0; i--,j++)
+      array[j] = i;
+}
+
+static void *bubble1(void* val) {
+   int i, temp, elemente=MAX;
+   while(elemente--)
+      for(i = 1; i &lt;= elemente; i++)
+         if(test_array1[i-1] &gt; test_array1[i]) {
+            temp=test_array1[i];
+            test_array1[i]=test_array1[i-1];
+            test_array1[i-1]=temp;
+         }
+}
+
+static void *bubble2(void* val) {
+   int i, temp, elemente=MAX;
+   while(elemente--)
+      for(i = 1; i &lt;= elemente; i++)
+         if(test_array2[i-1] &gt; test_array2[i]) {
+            temp=test_array2[i];
+            test_array2[i]=test_array2[i-1];
+            test_array2[i-1]=temp;
+         }
+}
+
+int main (void) {
+   int i, j;
+   init_test_array(test_array1);
+   init_test_array(test_array2);
+
+   bubble1(NULL);
+   bubble2(NULL);
+
+   /* Ausgabe in eine Textdatei */
+   freopen("myoutput.txt", "w+", stdout);
+
+   for(i = 0; i &lt; MAX; i++)
+      printf("[%d-%d]", test_array1[i], test_array2[i]);
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Die sortierten Elemente finden Sie anschließend in der Datei <span class="ckursiv">myoutput.txt</span>, im selben Verzeichnis, in dem das Programm ausgeführt wird, wieder. Bei der Ausführung des Programms wird meine CPU (mit Dual-Core) ca. 50  % ausgelastet (siehe Abbildung 26.5). Neben der Anzeige der CPU-Auslastung wird auch noch der Verlauf beider CPUs bei der Auslastung angezeigt. Auch hieran kann man erkennen, dass nur eine CPU damit beschäftigt ist, das Array zu sortieren. Natürlich habe ich auch die einzelnen Prozesse überwacht, sodass mir nicht ein anderer Prozess mit einer rechenintensiven Anwendung dazwischenkommt.</p>
+<div class="bildbox">
+<p><a name="IDAWGUQ"></a><a onClick="OpenWin('bilder/26_005.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein26_005.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 26.5    </strong>»bubblesort.c« bei der Ausführung ohne Threads</p>
+<p>Bei mehrfacher Ausführung des Programms lag die durchschnittliche Ausführzeit immer zwischen 25 und 28 Sekunden (was natürlich auch von der Rechenleistung abhängt).</p>
+<p>Das Ziel dieses Beispiels soll es nun sein, mithilfe der POSIX-Thread-Bibliothek, die Sortierung der beiden Arrays parallel auszuführen &#8211; sprich, jede CPU soll hier die Sortierung eines Arrays durchführen. Hierdurch versprechen wir uns eine erheblich schnellere Ausführzeit des Programms.</p><a id="mj720c6a8dfd3bc44ae8368371d78bf2ac" name="mj720c6a8dfd3bc44ae8368371d78bf2ac"></a><a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t33"></a><h3 class="t3"><span class="cfett">26.4.2</span><span class="cfett"> Das Grundgerüst für ein Programm mit mehreren Threads</span>  <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Bevor Sie das Programm zum Sortieren der Arrays parallel machen werden, sollen hier die grundlegenden Funktionen von Pthreads etwas näher beschrieben werden, die dazu nötig sind.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Alle Funktionen der Pthread-Bibliothek geben bei Erfolg 0 und bei einem Fehler &#8211;1 zurück.</p>
+</td>
+</tr>
+</table><br><h4 class="t4"><span class="cfett">»pthread_create« &#8211; Einen neuen Thread erzeugen</span></h4>
+<p>Einen neuen Thread können Sie mit der Funktion <span class="clisting">pthread_create()</span> erzeugen:</p>
+<div class="listing"><pre class="prettyprint">#include &lt;pthread.h.&gt;
+int pthread_create( pthread_t *thread,
+                    const pthread_attr_t *attribute,
+                    void *(*funktion)(void *),
+                    void *argumente );</pre></div>
+<p>Jeder Thread hat eine eigene Identifikationsnummer vom Datentyp <span class="clisting">pthread_t</span>, die in der Adresse des ersten Parameters von <span class="clisting">pthread_create()</span> abgelegt wird. Attribute für den Thread können Sie mit dem zweiten Parameter vergeben. Wird hierfür <span class="clisting">NULL</span> angegeben, werden die Standard-Attribute verwendet. Auf die Attribute eines Threads wird gesondert eingegangen. Mit dem dritten Parameter geben Sie die »Funktion« für den Thread selbst an &#8211; hierbei handelt es sich um den eigentlichen neuen Thread. Hierzu muss die Anfangsadresse der Funktion angegeben werden. Die Argumente für den Thread vom dritten Parameter können Sie mit dem vierten Parameter übergeben. Gewöhnlich wird dieses Argument verwendet, um Daten an den Thread zu übergeben. In der Praxis handelt es sich hierbei meistens um eine Strukturvariable.</p>
+<h4 class="t4"><span class="cfett">Einen Thread beenden</span></h4>
+<p>Um einen Thread zu beenden, gibt es im Grunde zwei Möglichkeiten: Entweder man verwendet funktionstypisch <span class="clisting">return</span> oder die Funktion <span class="clisting">pthread_exit</span>. In beiden Fällen muss der Rückgabewert vom Typ <span class="clisting">void*</span> sein. Die Syntax zu <span class="clisting">pthread_exit()</span> sieht so aus:</p>
+<div class="listing"><pre class="prettyprint">#include &lt;pthread.h.&gt;
+void pthread_exit( void * wert );</pre></div>
+<p>Mit den beiden Möglichkeiten wird nur der jeweilige Thread beendet. Den Rückgabewert können Sie anschließend mit der Funktion <span class="clisting">pthread_join</span> abfragen.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">C-typisch darf der Rückgabewert eines Threads, wie schon bei den gewöhnlichen Funktionen, kein lokales Speicherobjekt sein, da auch hier der Speicher nach dem Beenden des Threads nicht mehr gültig ist.</p>
+</td>
+</tr>
+</table><br><p>Sollte allerdings irgendwo im Programm ein beliebiger Thread die Standard-Funktion <span class="clisting">exit()</span> aufrufen, so bedeutet dies das Ende aller Threads einschließlich des Haupt-Threads.</p>
+<p>Damit Sie sich nach der Beendigung eines Threads nicht noch um Reinigungsarbeiten wie das Freigeben der Ressourcen kümmern müssen, können Sie mit den Funktionen <span class="clisting">pthread_cleanup_push()</span> und <span class="clisting">pthread_cleanup_pop()</span> einen Exit-Handle einrichten. Ein solcher eingerichteter Handle wird dann immer ausgeführt, wenn ein Thread mit <span class="clisting">pthread_exit</span> oder <span class="clisting">return</span> beendet wurde. Im Grunde kann man diese Funktionen mit der Standardbibliotheksfunktion <span class="clisting">atexit()</span> vergleichen. Anhand der Endung <span class="clisting">_push</span> und <span class="clisting">_pop</span> kann man schon erahnen, dass auch hier das Prinzip des Stacks verwendet wird. Hier die Syntax der beiden Funktionen:</p>
+<div class="listing"><pre class="prettyprint">#include &lt;pthread.h.&gt;
+void pthread_cleanup_push( void (*function)(void *),
+                           void *arg );
+void pthread_cleanup_pop( int exec );</pre></div>
+<p>Mit <span class="clisting">pthread_cleanup_push()</span> richten Sie den Exit-Handle ein. Als ersten Parameter geben Sie die Funktion an, die ausgeführt werden soll. Für die Argumente, die Sie der Funktion übergeben wollen, wird der zweite Parameter verwendet. Den zuletzt eingerichteten Exit-Handle können Sie wieder mit der Funktion <span class="clisting">pthread_cleanup_pop()</span> vom Stack entfernen. Geben Sie allerdings einen Wert ungleich 0 als Parameter <span class="clisting">exec</span> an, so wird diese Funktion zuvor noch ausgeführt, was bei einer Angabe von 0 nicht gemacht wird.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard"><span class="clisting">pthread_cleanup_push()</span> und <span class="clisting">pthread_cleanup_pop()</span> sind als Makros implementiert. Dabei ist <span class="clisting">pthread_cleanup_push()</span> mit einer sich öffnenden und <span class="clisting">pthread_cleanup_pop()</span> mit einer sich schließenden geschweiften Klammer implementiert. Das bedeutet: Sie müssen beide Funktionen im selben Anweisungsblock ausführen. Daher müssen Sie immer ein <span class="clisting">_push</span> und ein <span class="clisting">_pop</span> verwenden, auch wenn Sie wissen, dass eine <span class="clisting">_pop</span>-Stelle nie erreicht wird.</p>
+</td>
+</tr>
+</table><br><h4 class="t4"><span class="cfett">»pthread_join« &#8211; Warten auf das Thread-Ende</span></h4>
+<p>Um aus dem Haupt-Thread auf das Ende und den Rückgabewert einzelner Threads zu warten, wird die Funktion <span class="clisting">pthread_join()</span> verwendet:</p>
+<div class="listing"><pre class="prettyprint">#include &lt;pthread.h.&gt;
+int pthread_join( pthread_t thread, void **thread_return );</pre></div>
+<p><span class="clisting">pthread_join()</span> hält den aufrufenden Thread (meistens den Haupt-Thread), der einen Thread mit <span class="clisting">pthread_create</span> erzeugt hat, so lange an, bis der Thread <span class="clisting">thread</span> vom Typ <span class="clisting">pthread_t</span> beendet wurde. Der Exit-Status (bzw. Rückgabewert) des Threads wird an die Adresse von <span class="clisting">thread_return</span> geschrieben. Sind Sie nicht am Rückgabewert interessiert, können Sie hier auch <span class="clisting">NULL</span> verwenden.</p>
+<p>Ein Thread, der sich beendet, wird eben so lange nicht »freigegeben« bzw. als beendeter Thread anerkannt, bis ein anderer Thread <span class="clisting">pthread_join</span> aufruft. Daher sollte man für jeden erzeugten Thread einmal <span class="clisting">pthread_join</span> aufrufen, es sei denn, man hat einen Thread mit <span class="clisting">pthread_detach</span> »abgehängt«.</p>
+<h4 class="t4"><span class="cfett">Ein paralleles Beispiel</span></h4>
+<p>Mit diesen wenigen Funktionen ist es nun möglich, eine echte parallele Anwendung zu erstellen. Hierzu folgt das Beispiel zum Sortieren der Arrays mit Bubblesort &#8211; mit dem Unterschied zum Beispiel zuvor, dass jetzt jede CPU ein Array zum Sortieren bekommt.</p>
+<div class="listing"><pre class="prettyprint">/* thread1.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;pthread.h&gt;
+/* 100000 Elemente */
+#define MAX 100000
+
+/* ein Array von großen zu kleinen Werten */
+int test_array1[MAX];
+int test_array2[MAX];
+
+/* in umgekehrter Reihenfolge erstellen */
+void init_test_array(int *array) {
+   int i, j;
+   for(i = MAX,j=0; i &gt;= 0; i--,j++)
+      array[j] = i;
+}
+<span class="cfett">
+// Thread 1</span>
+static void *bubble1(void* val) {
+   static int i, temp, elemente=MAX;
+   printf("Thread bubble1() wurde gestartet\n");
+   while(elemente--)
+      for(i = 1; i &lt;= elemente; i++)
+         if(test_array1[i-1] &gt; test_array1[i]) {
+            temp=test_array1[i];
+            test_array1[i]=test_array1[i-1];
+            test_array1[i-1]=temp;
+         }
+   printf("Thread bubble1() wurde beendet\n");
+   // Der Rückgabewert interessiert uns nicht.
+   return NULL;
+}
+<span class="cfett">
+// Thread 2</span>
+static void *bubble2(void* val) {
+   static int i, temp, elemente=MAX;
+   printf("Thread bubble2() wurde gestartet\n");
+   while(elemente--)
+      for(i = 1; i &lt;= elemente; i++)
+         if(test_array2[i-1] &gt; test_array2[i]) {
+            temp=test_array2[i];
+            test_array2[i]=test_array2[i-1];
+            test_array2[i-1]=temp;
+         }
+   printf("Thread bubble2() wurde beendet\n");
+   // Der Rückgabewert interessiert uns nicht.
+   return NULL;
+}
+
+
+int main (void) {
+    pthread_t thread1, thread2;
+    int i, rc;
+
+    // Ausgabe in eine Textdatei
+    freopen("myoutput.txt", "w+", stdout);
+
+    printf("Haupt-Thread main() wurde gestartet\n");
+    // beide Arrays mit Werten initialisieren
+    init_test_array(test_array1);
+    init_test_array(test_array2);
+    // Thread 1 erzeugen
+    rc =<span class="cfett"> pthread_create</span>( &amp;thread1, NULL, &amp;bubble1, NULL );
+    if( rc != 0 ) {
+        printf("Konnte Thread 1 nicht erzeugen\n");
+        return EXIT_FAILURE;
+    }
+    // Thread 2 erzeugen
+    rc =<span class="cfett"> pthread_create</span>( &amp;thread2, NULL, &amp;bubble2, NULL );
+    if( rc != 0 ) {
+        printf("Konnte Thread 2 nicht erzeugen\n");
+        return EXIT_FAILURE;
+    }
+    // Main-Thread wartet auf beide Threads.
+   <span class="cfett"> pthread_join</span>( thread1, NULL );
+   <span class="cfett"> pthread_join</span>( thread2, NULL );
+
+    // das Ergebnis der Sortierung in die Datei
+    // myoutput.txt schreiben
+    for(i = 0; i &lt; MAX; i++) {
+       printf("[%d-%d]", test_array1[i], test_array2[i]);
+    }
+    printf("\nHaupt-Thread main() wurde beendet\n");
+    return EXIT_SUCCESS;
+}</pre></div>
+<p>Die Ausführung des Programms an sich entspricht dem seriellen Beispiel. Die Arrays werden hier ebenfalls sortiert, und das Ergebnis wird in die Datei <span class="ckursiv">myoutput.txt</span> geschrieben. Uns interessiert hierbei allerdings eher die Auslastung der CPUs und natürlich die Zeit, die diese Sortierung mit der parallelen Version benötigt. Ein Blick auf die Auslastung der CPU zeigt jetzt das gewünschte Ergebnis. Die beiden CPUs sind beide parallel zu 100  % ausgelastet und verrichten auch gleichzeitig ihre Arbeit.</p>
+<div class="bildbox">
+<p><a name="IDA10UQ"></a><a onClick="OpenWin('bilder/26_006.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein26_006.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 26.6    </strong>Bubblesort bei der parallelen Ausführung</p>
+<p>Auch die Ausführzeit hat sich gewaltig verändert. Anstatt der bisher 25&#8211;28 Sekunden verrichtet unser Programm jetzt seine Arbeit in 11&#8211;14 Sekunden. Wir haben damit die Ausführzeit quasi halbiert.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Das Beispiel ließe sich sicherlich noch mehr optimieren. Es wurde nämlich noch nicht die Cacheline-Größe des Prozessors beachtet, die üblicherweise 128 Byte beträgt. Hierbei kann es beispielsweise passieren, dass Variablen von zwei verschiedenen Threads in einer Cacheline liegen. Verändert hierbei ein Thread den Wert seiner Variablen, wird das Invalid-Bit für den anderen Prozessor gesetzt. Dadurch muss der andere Prozessor den Wert erneut in den Cache laden. Dies kann die Performance der Anwendung erheblich bremsen.</p>
+</td>
+</tr>
+</table><br><a id="mj2c1b212eea5fef6525ebeaea140fcf60" name="mj2c1b212eea5fef6525ebeaea140fcf60"></a><a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t34"></a><h3 class="t3"><span class="cfett">26.4.3</span><span class="cfett"> Zusammenfassung</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Anhand dieser kurzen Einführung zu den POSIX-Threads lässt sich schon erkennen, wie brisant und aktuell das Thema ist. Dennoch soll gesagt werden, dass Threads wirklich nur da eingesetzt werden sollten, wo sie unbedingt benötigt werden. Lassen Sie sich von diesem Kapitel nicht täuschen: Threads sind nicht immer so einfach zu implementieren. Häufig sind Synchronisationsmechanismen zu implementieren, wenn mehrere Threads die Daten teilen. Weiß man hier nicht genau, was man tut, kann es passieren, dass die Threads Amok laufen oder dass es Datensalat gibt. Es gibt Probleme, die lassen sich sehr gut und einfach parallelisieren. Andere wiederum benötigen einfache Synchronisationsmechanismen, und wieder andere brauchen einen gewaltigen Verwaltungsaufwand, sodass sich ein Parallelisieren fast nicht lohnt.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+<td class="tabellenkopf"><span class="cfett">Hinweis</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p class="BStandard">Mehr zu den POSIX-Threads finden Sie auf der Buch-CD in einem Kapitel aus dem Buch »Linux-UNIX-Programmierung« vom selben Verlag (und aus meiner Feder ;-)). Die Beispiele lassen sich selbstverständlich auch unter Windows ausführen und verwenden, sofern Sie die Phtread-Bibliothek installiert haben. Wie dies geht, ist ebenfalls auf der Buch-CD beschrieben.</p>
+</td>
+</tr>
+</table><br><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/026_c_paralleles_rechnen_004.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="26.4 Mit den POSIX-Threads programmieren"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="026_c_paralleles_rechnen_003.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="027_c_sicheres_programmieren_001.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/026_c_paralleles_rechnen_004.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:53:37 GMT -->
+</html>

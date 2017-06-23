@@ -1,0 +1,1851 @@
+<html>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/022_c_algorithmen_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:49:21 GMT -->
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Rheinwerk Computing :: C von A bis Z &ndash; 22.3 Sortieralgorithmen</title>
+<meta name="title" content="Rheinwerk Computing :: C von A bis Z - 22.3 Sortieralgorithmen">
+<meta name="author" content="J&uuml;rgen Wolf ">
+<meta name="publisher" content="Rheinwerk Verlag GmbH 2009">
+<meta name="copyright" content="Rheinwerk Verlag GmbH 2009">
+<meta name="Description" content="C von A bis Z - Das umfassende Handbuch &ndash; 22.3 Sortieralgorithmen">
+<meta name="audience" content="Alle">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta http-equiv="content-language" content="de">
+<link rel="stylesheet" type="text/css" href="common/rw_open.css">
+<link rel="prev" href="022_c_algorithmen_002.html">
+<link rel="next" href="022_c_algorithmen_004.html"><script type="text/javascript"><!--
+    function OpenWin(url,name,height,width)
+    {
+      var InfoWin = window.open(url,name,"directories=0,height="+height+",width=" + width + ",hotkeys=0,location=0,menubar=0,resizable=1,screenX=150,screenY=10,left=150,top=10,scrollbars=1,status=1,titlebar=0,toolbar=0");
+      InfoWin.focus();
+    }
+    //--></script><link href="common/prettify.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="common/prettify.js"></script></head>
+<body vlink="#000099" link="#000099" alink="#000099" onload="prettyPrint()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00549d">
+<tr>
+<td height="74" valign="bottom" colspan="2"><a href="https://www.rheinwerk-verlag.de/katalog/openbook?GPP=opc3"><img src="common/rw_openbook.gif" width="200" height="56" border="0" alt="Rheinwerk Computing < openbook >" title="Rheinwerk Computing < openbook >"></a></td>
+<td width="80" height="74"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3"><img src="common/rw_computing.gif" border="0" alt="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger." title="Rheinwerk Computing - Professionelle Bücher. Auch für Einsteiger."></a></td>
+</tr>
+</table>
+<div align="right"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Professionelle Bücher. Auch für Einsteiger.</a></div><br><table class="tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="190" valign="top">
+<table class="tbl1" border="0" cellpadding="3" cellspacing="0" width="190" align="left">
+<tr>
+<td class="tbl2"><a class="nav" href="index-2.html#_top">Inhaltsverzeichnis</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_001.html#mj764cb3fd439d3b95d1843e7c7d17f235">Vorwort</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="000_c_vorwort_gutachter_001.html#mj3d41cb339c9b2fc1d6e99cdaa93c3860">Vorwort des Gutachters</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="001_c_einstieg_in_c_001.html#mja24d93ff97bb42dbebf4689160c45195">1 Einstieg in C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="002_c_das_erste_programm_001.html#mj2604a667cc98d3fa2178751273346b91">2 Das erste Programm</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="003_c_grundlagen_001.html#mj7ac54ba315b94149806c1de3fc89ee7f">3 Grundlagen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="004_c_ein_ausgabe_001.html#mj20c131820fbfb1497afd796ee443599e">4 Formatierte Ein-/Ausgabe mit »scanf()« und »printf()«</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="005_c_basisdatentypen_001.html#mjeda2957449ddc812dad62b400fe57752">5 Basisdatentypen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="006_c_operatoren_001.html#mjab3693b096d581607801a36ce88905fc">6 Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="007_c_typumwandlung_001.html#mj5c5e497ac2ab4367fe9df0ffd218cfca">7 Typumwandlung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="008_c_kontrollstrukturen_001.html#mjc7bf6f584a2fe20b4c5f6b16ba15d57d">8 Kontrollstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="009_c_funktionen_001.html#mj7893101be51aa469fe52334038acd465">9 Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="010_c_praeprozessor_001.html#mjacdd200a20163a4d3fa418b6cb95763e">10 Präprozessor-Direktiven</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="011_c_arrays_001.html#mje29de26c54a3884f7316cbbb2a073ad8">11 Arrays</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="012_c_zeiger_001.html#mjee28a882ef9125d2c4cc49121b2c65c1">12 Zeiger (Pointer)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="013_c_kommandozeilenargumente_001.html#mjf6a9e42fa3bc25b2b1e06270e7bf8f68">13 Kommandozeilenargumente</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="014_c_dyn_speicherverwaltung_001.html#mj8d062301d2449b13710f1484d499cd9b">14 Dynamische Speicherverwaltung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="015_c_strukturen_001.html#mj5e146ba18168113a5c645cd2d07c4ec8">15 Strukturen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="016_c_ein_ausgabe_funktionen_001.html#mj136f9ac6b5b7c440aafe5010411ef011">16 Ein-/Ausgabe-Funktionen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="017_c_dateien_verzeichnisse_001.html#mj9f81aea722a9edb8d0080df81eb9402c">17 Attribute von Dateien und das Arbeiten mit Verzeichnissen (nicht ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="018_c_stdarg_h_001.html#mj9d64febdc46a1375e5c4498b17154e30">18 Arbeiten mit variabel langen Argumentlisten &#8211; &lt;stdarg.h&gt;</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="019_c_zeitroutinen_001.html#mj0a8102e96a1297bd767ac7274e069f0f">19 Zeitroutinen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="020_c_headerdateien_001.html#mjf3caede8ebd504dc6b7454b297c251e8">20 Weitere Headerdateien und ihre Funktionen (ANSI C)</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="021_c_dyn_datenstrukturen_001.html#mja75ba2f4ab8f95e9e321d195c1e26d76">21 Dynamische Datenstrukturen</a></td>
+</tr>
+<tr>
+<td><a class="navh" href="##mj07afe6f332eab2e8168da2f69f7b31c4">22 Algorithmen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="023_c_cgi_001.html#mj6c4219b4e615fa24deaa57d5c3d04db8">23 CGI mit C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="024_c_mysql_001.html#mj12dab301033f9fd856aa739270c45e08">24 MySQL und C</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="025_c_netzwerkprogrammierung_001.html#mja8101c6e0e4cb2e6fd8312114dad30d7">25 Netzwerkprogrammierung und Cross&ndash;Plattform-Entwicklung</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="026_c_paralleles_rechnen_001.html#mj710dc0ad851d57e60533f8797ff9c1e6">26 Paralleles Rechnen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="027_c_sicheres_programmieren_001.html#mj13eba8f9d68ac8414bffaa3a1b24ec31">27 Sicheres Programmieren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="028_c_weiterfuehrendes_001.html#mj3e65f750149ade087925f303b3871af9">28 Wie geht&#8217;s jetzt weiter?</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="029_c_anhang_a_001.html#mjec9bf1c5e3fe2e46047c2f9c7aa9c531">A Operatoren</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="030_c_anhang_b_001.html#mj803443bb6e7546011c48e6e57fbdbb64">B Die C-Standard-Bibliothek</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="stichwort.html#_top">Stichwort</a></td>
+</tr>
+<!--<tr>
+<td><br><a href="http://download.galileo-press.de/openbook/c_von_a_bis_z/galileocomputing_c_von_a_bis_z.zip" class="navnav"><strong>Download:</strong><br>- ZIP, ca. 10,3 MB</a></td>
+</tr>-->
+<tr>
+<td><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav">Buch bestellen</a></td>
+</tr>
+<tr>
+<td><a class="navnav" href="#kommentar">Ihre Meinung?</a><br><br></td>
+</tr>
+</table>
+</td>
+<td width="10"><img src="common/spacer10.gif" width="10" height="10" alt="Spacer"></td>
+<td width="85%" valign="top" align="center"><div align="center">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="022_c_algorithmen_002.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="navnav">Rheinwerk Computing</a> / <a href="https://www.rheinwerk-verlag.de/openbook/?GPP=opc3" class="navnav">&lt;openbook&gt;</a> / <a href="index-2.html" class="navnav"> C von A bis Z</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="022_c_algorithmen_004.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" valign="top"><table width="100%" border="0" cellpadding="10" cellspacing="0" class="box">
+<tr>
+<td colspan="2"><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="buchtitel">C von A bis Z</a><span class="autor"> von J&uuml;rgen Wolf </span><br><span class="untertitel">Das umfassende Handbuch</span></td>
+</tr>
+<tr>
+<td valign="top" width="211"><dl>
+<dt><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3" class="navnav"><img src="common/9783836214117.gif" border="0" alt="Buch: C von A bis Z" title="Buch: C von A bis Z"></a></dt>
+<dd><br><a href="https://www.rheinwerk-verlag.de/2132/?GPP=opc3"><span class="autor"><strong>C von A bis Z</strong><br>3., aktualisierte und erweiterte Auflage, geb., mit CD und Referenzkarte<br>1.190 S., 39,90 Euro<br>Rheinwerk Computing<br>ISBN 978-3-8362-1411-7</span></a></dd>
+</dl></td>
+<td width="80%"><table border="0">
+<tr>
+<td valign="baseline"><img src="common/pfeil_u.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="3" class="kap"><strong><a href="022_c_algorithmen_001.html#mj07afe6f332eab2e8168da2f69f7b31c4" class="navnav">22 Algorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_001.html#mjad955691d6bbeab76c26bebeb46bfb5b" class="navnav">22.1 Was sind Algorithmen?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_002.html#mjdd65482f3fdbcd022155b3035e6f070c" class="navnav">22.2 Wie setze ich Algorithmen ein?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="#mja4d6cf19b9113d221e26e0a19eb4148c" class="navh">22.3 Sortieralgorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj1fdda2148808601a86a54a7701775bec" class="navh">22.3.1 »Selection Sort« &#8211; sortieren durch Auswählen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj925248949647af9ef7f16d215f433a8c" class="navh">22.3.2 Insertion Sort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mje2d240f1f56f6186232f65773fc37070" class="navh">22.3.3 Bubble Sort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj62f350471ff0f91a8910f6d0e6c5cf18" class="navh">22.3.4 Shellsort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mj035bded10a26be556df779f234784e89" class="navh">22.3.5 Quicksort</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mjde22312f4b61457b2efb0f9f17a7b269" class="navh">22.3.6 qsort()</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="#mje59f09c2df1dfa3ec926ae230eb00d31" class="navh">22.3.7 Zusammenfassung der Sortieralgorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_004.html#mje1108bedaa52e56c3a2231952efc760d" class="navnav">22.4 Suchalgorithmen &#8211; Grundlage zur Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjd215dedb31c115ea3fc6aa2a9f3b3377" class="navnav">22.4.1 Lineare Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjc74f9bee71009b607d837f401fab37e1" class="navnav">22.4.2 Binäre Suche</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj50e751f674a269097a8f867476f4e6ab" class="navnav">22.4.3 Binäre (Such-)Bäume</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj8a624d55f599e29effaab0089aa75a28" class="navnav">22.4.4 Elemente im binären Baum einordnen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj0a5e3b9745ce4405d8764546050bed3b" class="navnav">22.4.5 Binäre Bäume traversieren</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj4288fdcfb29e6adbcbf80c102c324f2f" class="navnav">22.4.6 Löschen eines Elements im binären Baum</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjfe709ec1d375f55e7805e53ce79c7880" class="navnav">22.4.7 Ein binärer Suchbaum in der Praxis</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjc0eebbc48d257496d83af8b5bcf3c5b9" class="navnav">22.4.8 Binäre Suchbäume mit Eltern-Zeiger und Threads</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mj86c6493733dadbfb1f7710f0a687b1ef" class="navnav">22.4.9 Ausgeglichene Binärbäume</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_004.html#mjc53ab8c9ed2dac1cd824c4d3f972f754" class="navnav">22.4.10 Algorithmen für ausgeglichene Bäume &#8211; eine Übersicht</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_005.html#mj0a40e081a9df138f149a2f446fb499fd" class="navnav">22.5 Hashing (Zerhacken)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjbd1d8614064df7a2d1f74b2322070197" class="navnav">22.5.1 Wann wird Hashing verwendet?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mj6b2e95378544d9975a8312b6bb884a8f" class="navnav">22.5.2 Was ist für das Hashing erforderlich?</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjffda6918d10dabde4c2d29ebb835e371" class="navnav">22.5.3 Hash-Funktion</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mj19e26fc27715d5ff46edac5940f4d5ff" class="navnav">22.5.4 Hashing mit direkter Adressierung</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_005.html#mjf182065dfeada5efe09d22e63762605f" class="navnav">22.5.5 Vergleich von Hashing mit binären Bäumen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_006.html#mj73dd4e072f6667a0f887c5a613a4691d" class="navnav">22.6 String-Matching</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_006.html#mjf7d6e5fb93d300365b9df366326bcc13" class="navnav">22.6.1 Brute-Force-Algorithmus</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_006.html#mjaaad91c95f148185e8ca3b36d2f7a8ca" class="navnav">22.6.2 Der Algorithmus von Knuth/Morris/Pratt (KMP)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_006.html#mj6e6634183f974a372635540c36053fdb" class="navnav">22.6.3 Weitere String-Matching-Algorithmen</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_007.html#mjf4e645bb4920a03ebda8385b7b013724" class="navnav">22.7 Pattern Matching (reguläre Ausdrücke)</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline" colspan="2"><strong><a href="022_c_algorithmen_008.html#mj949af93bc0dacf07baf688227fc46cbf" class="navnav">22.8 Backtracking</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_008.html#mj3bad29bcf42f5c904880c75110704913" class="navnav">22.8.1 Der Weg durch den Irrgarten</a></strong></td>
+</tr>
+<tr>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"> </td>
+<td valign="baseline" width="10"><img src="common/pfeil_rechts5.gif" width="10" height="10" border="0" alt="Pfeil"></td>
+<td valign="baseline"><strong><a href="022_c_algorithmen_008.html#mjdf73b2552404835ed8da47e6fc60f70c" class="navnav">22.8.2 Das 8-Dame-Problem</a></strong></td>
+</tr>
+</table><br></td>
+</tr>
+</table>
+<table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#eeeeee">
+<tr>
+<td><div class="main"><a id="mja4d6cf19b9113d221e26e0a19eb4148c" name="mja4d6cf19b9113d221e26e0a19eb4148c"></a><a name="t21"></a><a name="t2t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div>
+<h2 class="t2"><span class="cfett">22.3</span><span class="cfett"> Sortieralgorithmen</span>  <a href="#t2t32"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><img src="common/15x15leer.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></h2>
+<p>Viele Programme und Computer (Server) erledigen oft den lieben langen Tag nichts anderes, als Daten zu sortieren. Wenn Sie das Sortieren verstanden haben, wird es Ihnen nicht mehr schwerfallen, andere Algorithmen zu verstehen. Das Sortieren könnte man sozusagen auch als »Basics für Algorithmen« bezeichnen. Hier einige Typen von Sortieralgorithmen:</p>
+<ul class="gp">
+<li><span class="ckursiv">Internes Sortieren</span> &#8211; internes Sortieren findet innerhalb des RAMs (Arbeitsspeicher) statt. Dabei werden meist Daten an das Programm geschickt und werden sortiert wieder ausgegeben.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Externes Sortieren</span> &#8211; beim externen Sortieren werden externe Speicherquellen (Festplatte, Streamer, Tape, ...) verwendet. Während des externen Sortierens werden zahlreiche Lese- und Schreibzugriffe auf externe Quellen ausgeführt. Externes Sortieren wird genutzt, wenn die Daten zum Sortieren nicht auf einmal im RAM verarbeitet werden können.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Vergleichendes Sortieren</span> &#8211; dabei wird häufig ein Schlüssel zum Sortieren verwendet. Dieser Schlüssel besteht meist nur aus einem kleinen Teil der Daten, der das Sortieren steuert.</li>
+</ul>
+<ul class="gp">
+<li><span class="ckursiv">Stabiles Sortieren</span> &#8211; stabil wird sortiert, wenn z. B. eine Arbeitnehmerliste, die nach Alphabet sortiert ist, nach Gehalt sortiert wird, ohne dass dabei die alphabetische Liste durcheinandergerät.</li>
+</ul>
+<p>Im Folgenden werden häufig Arrays zum Sortieren verwendet. Diese sollten Sie sich als Schlüssel einer Datenstruktur vorstellen. Die Funktionen sind so aufgebaut, dass sie jederzeit mit ein wenig Tipparbeit an die eigenen Bedürfnisse angepasst werden können. Primär geht es darum, Ihnen die einzelnen Sortierverfahren näherzubringen, speziell deren Funktionen. Die Implementierung ist zumeist problemabhängig und richtet sich nach der Art der Daten, die es zu sortieren gilt.</p><a id="mj1fdda2148808601a86a54a7701775bec" name="mj1fdda2148808601a86a54a7701775bec"></a><a name="t31"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t32"></a><h3 class="t3"><span class="cfett">22.3.1</span><span class="cfett"> »Selection Sort« &#8211; sortieren durch Auswählen</span>  <a href="#t2t33"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t31"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Der erste Sortieralgorithmus ist <span class="ckursiv">Selection Sort</span>. Dieser Algorithmus sucht sich als Erstes das kleinste Element in der Liste, merkt es sich und tauscht es gegen das Element am Anfang aus, sodass sich dann das kleinste Element ganz am Anfang befindet. Als Nächstes wird das zweitkleinste Element in der Liste gesucht und wird gegen das an zweiter Stelle platzierte Element der Liste ausgetauscht usw.</p>
+<p>Auf diese Weise haben immer die Elemente auf der linken Seite der aktuellen Position einen festen Platz und werden nicht mehr geändert. Abbildung 22.1 verdeutlicht den Vorgang:</p>
+<div class="bildbox">
+<p><a name="IDAMHUQ"></a><a onClick="OpenWin('bilder/22_001.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_001.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.1    </strong>Sortieren durch Auswählen</p>
+<p>Der Quellcode dazu sieht so aus:</p>
+<div class="listing"><pre class="prettyprint">/* selektion.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void selection(int *array, int elemente) {
+   int index,index_klein,
+       wert, wert_klein;
+
+   /* Schleife wird von links nach rechts durchlaufen. */
+   for(index = 0; index &lt; elemente; index++) {
+      /* aktuelle Position */
+      wert=index;
+      /* Schleife läuft durch bis ein kleineres Element als
+       * die aktuelle Position gefunden wurde oder bis zum Ende,
+       * was bedeutet, die aktuelle Position ist schon
+       * das kleinste Element. */
+      for(index_klein = index+1; index_klein &lt;= elemente;
+        index_klein++) { /* Ein kleineres Element gefunden? */
+         if(array[index_klein] &lt; array[wert])
+            /* Neues kleinstes Element */
+            wert=index_klein;
+      }
+      /* kleinstes Element an die aktuelle
+       * Position falls nötig */
+      if(wert != index) {
+         wert_klein=array[wert];
+         array[wert]=array[index];
+         array[index]=wert_klein;
+      }
+   }
+}
+
+int main(void) {
+   int i;
+   /* das Array zum Sortieren */
+   int test_array[] = { 5, 2, 7, 9, 1, 4, 3, 8, 6 };
+   int N = sizeof(test_array)/sizeof(int);
+
+   selection(test_array, N-1);
+
+   for(i = 0; i &lt; N; i++)
+      printf("%d ", test_array[i]);
+   printf("\n");
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Natürlich können Sie mit <span class="ckursiv">Selection Sort</span> auch andersherum sortieren, also vom größten Element abwärts. In diesem Fall muss nur die <span class="clisting">if</span>-Abfrage geändert werden:</p>
+<div class="listing"><pre class="prettyprint">if(array[index_klein] &gt; array[wert])</pre></div>
+<p>Der Vorteil von <span class="ckursiv">Selection Sort</span> liegt darin, dass jedes Element höchstens einmal bewegt wird.</p><a id="mj925248949647af9ef7f16d215f433a8c" name="mj925248949647af9ef7f16d215f433a8c"></a><a name="t32"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t33"></a><h3 class="t3"><span class="cfett">22.3.2</span><span class="cfett"> Insertion Sort</span>  <a href="#t2t34"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t32"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Das Prinzip von <span class="ckursiv">Insertion Sort</span> (Sortieren durch direktes Einfügen) ist relativ einfach. Die einzelnen Elemente werden wieder von vorne nach hinten durchlaufen. Von der aktuellen Position aus wird jedes Element von rechts nach links weitergereicht &#8211; und das so lange, bis das bewegte Element größer oder gleich dem Element ist, das an der im Augenblick abgefragten Position liegt.</p>
+<p>Der Platz für das Element, das verschoben wird, ist frei. Diese Lücke wird mit dem entsprechenden Wert an der richtigen Stelle gefüllt. Bildlich können Sie sich <span class="ckursiv">Insertion Sort</span> folgendermaßen vorstellen:</p>
+<div class="bildbox">
+<p><a name="IDANTUQ"></a><a onClick="OpenWin('bilder/22_002.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_002.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.2    </strong>Insertion Sort</p>
+<p>Der folgende Quellcode soll diesen Algorithmus noch verständlicher machen:</p>
+<div class="listing"><pre class="prettyprint">/* insertion.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void insertion(int *array, int elemente) {
+   int index,index_klein,wert_klein;
+
+   /* Schleife von links-1 nach rechts */
+   for(index=1; index&lt;=elemente; index++) {
+      /* aktuelle Position zwischenspeichern */
+      wert_klein=array[index];
+      /* Kleineren Wert als wert_klein suchen. Schleife  läuft
+       * von aktueller Position von rechts nach links durch. */
+      for( index_klein=index;
+           array[index_klein-1] &gt; wert_klein&amp;&amp;index_klein &gt; 0;
+           index_klein-- )
+         /* wenn Vorgänger größer als aktuelles
+          * Element in wert_klein */
+         array[index_klein] = array[index_klein-1];
+      /* gespeichertes Element an neue Position -&gt;
+       * Lücke auffüllen */
+      array[index_klein]=wert_klein;
+   }
+}
+
+int main(void) {
+   int i;
+   /* das Array zum Sortieren */
+   int test_array[] = { 5, 2, 7, 9, 1, 4, 3, 8, 6 };
+   int N = sizeof(test_array)/sizeof(int);
+
+   insertion(test_array, N-1);
+
+   for(i = 0; i &lt; N; i++)
+      printf("%d ", test_array[i]);
+   printf("\n");
+   return EXIT_SUCCESS;
+}</pre></div>
+<div class="bildbox">
+<p><a name="IDA3VUQ"></a><a onClick="OpenWin('bilder/22_003.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_003.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.3    </strong>Geklammerte Werte symbolisieren den Elementetausch.</p>
+<p>Das aktuelle Element wird hier in <span class="clisting">wert_klein</span> gespeichert. Jetzt wird so lange umdisponiert, bis entweder ein Element kleiner als <span class="clisting">wert_klein</span> ist oder bis Sie am Anfang des Arrays (Index 0) angekommen sind (was bedeuten würde, dass <span class="clisting">wert_klein</span> das kleinste Element im Array ist).</p>
+<p>Wie auch schon bei <span class="ckursiv">Selection Sort</span> sind die Elemente bei <span class="ckursiv">Insertion Sort</span> auf der linken Seite sortiert; nur mit dem Unterschied, dass dies noch keine endgültige Stellung wie bei <span class="ckursiv">Selection Sort</span> bedeutet.</p><a id="mje2d240f1f56f6186232f65773fc37070" name="mje2d240f1f56f6186232f65773fc37070"></a><a name="t33"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t34"></a><h3 class="t3"><span class="cfett">22.3.3</span><span class="cfett"> Bubble Sort</span>  <a href="#t2t35"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t33"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p><span class="ckursiv">Bubble Sort</span> ist ein recht einfaches Sortierverfahren. Dabei wird das vollständige Array durchlaufen, und jedes Mal &#8211; wenn notwendig &#8211; werden die benachbarten Elemente miteinander vertauscht.</p>
+<p>Nach jedem Durchlauf bekommt immer das letzte Element einen festen Platz. Daher macht es auch Sinn, eine rückwärts zählende Schleife von dieser Position an einzusetzen. Hier sehen Sie den Quellcode zu <span class="ckursiv">Bubble Sort</span>:</p>
+<div class="listing"><pre class="prettyprint">/* bubble.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void bubble(int *array, int elemente) {
+   int i,temp;
+
+   while(elemente--)
+      for(i = 1; i &lt;= elemente; i++)
+         if(array[i-1] &gt; array[i]) {
+            temp=array[i];
+            array[i]=array[i-1];
+            array[i-1]=temp;
+         }
+}
+
+int main(void) {
+   int i;
+   /* das Array zum Sortieren */
+   int test_array[] = { 5, 2, 7, 9, 1, 4, 3, 8, 6 };
+   int N = sizeof(test_array)/sizeof(int);
+
+   bubble(test_array, N);
+
+   for(i = 0; i &lt; N; i++)
+      printf("%d ", test_array[i]);
+   printf("\n");
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Da nach jedem Durchlauf das größte Element ganz nach rechts geholt wird und dies nicht mehrmals verglichen werden sollte, wurde von dieser Position aus eine rückwärts zählende Schleife eingesetzt:</p>
+<div class="listing"><pre class="prettyprint">while(elemente--)</pre></div>
+<p>Abbildung 22.4 zeigt die Arbeitsweise von <span class="ckursiv">Bubble Sort</span>:</p>
+<div class="bildbox">
+<p><a name="IDAGZUQ"></a><a onClick="OpenWin('bilder/22_004.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_004.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.4    </strong>»Bubble Sort« in Aktion</p>
+<p>Auf die letzten Durchläufe wurde in der Darstellung verzichtet, da keine Daten mehr verschoben werden.</p><a id="mj62f350471ff0f91a8910f6d0e6c5cf18" name="mj62f350471ff0f91a8910f6d0e6c5cf18"></a><a name="t34"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t35"></a><h3 class="t3"><span class="cfett">22.3.4</span><span class="cfett"> Shellsort</span>  <a href="#t2t36"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t34"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p><span class="ckursiv">Shellsort</span> ist eine Erweiterung von <span class="ckursiv">Insertion Sort</span>. Anstatt jedes benachbarte Element wie bei <span class="ckursiv">Insertion Sort</span> zu vergleichen und zu sortieren, vergleicht <span class="ckursiv">Shellsort</span> jedes <span class="clisting">n</span>-te Element (bei beliebigem Anfangselement). Damit ist es möglich, Elemente zu sortieren, die in größeren Entfernungen voneinander liegen. Ist der Abstand für <span class="clisting">n</span> beispielsweise 4, dann setzen sich folgende Gruppen von Elementen mit dem Index 0, 4, 8, 12 … und 1, 5, 9, 13 … 2, 6, 10, 14 … 3, 7, 11, 15 … usw. zusammen. Diese Gruppen werden einzeln sortiert. Danach wird <span class="clisting">n</span> verringert, und dann werden die Gruppen <span class="clisting">n-1</span> sortiert. Dies geschieht so lange, bis <span class="clisting">n==1</span> ist und somit im letzten Durchlauf keine Unterteilung mehr stattfindet. Ist <span class="clisting">n</span> gleich von Anfang an 1, könnten Sie sich den Aufwand sparen, da dies dem »Insertion Sort«-Algorithmus entspräche.</p>
+<p>Natürlich hängt <span class="clisting">n</span> von den Werten ab, die sortiert werden. Man spricht dabei von Distanzfolgen. Je besser diese Folge ist, desto schneller werden die Daten sortiert. Die Suche nach der optimalen Folge ist Aufgabe des Programmierers. Hier sehen Sie den Quellcode zu <span class="ckursiv">Shellsort</span>:</p>
+<div class="listing"><pre class="prettyprint">/* shellsort.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void shellsort (int *array, int elemente) {
+  int i, j, temp, n;
+
+   /* Anfangswert für die Distanz errechnen */
+  for ( n = 1; n &lt;= elemente/9; n = 3*n+1);
+  for (; n &gt; 0; n /= 3) {
+     for (i = n; i &lt;= elemente; i++) {
+        temp = array[i];
+        /* Größer als temp und nicht elemente
+         * sowie &gt;= und nicht &gt; */
+        for(j = i;
+            j &gt;= n &amp;&amp; array[j-n] &gt; temp;
+            j -= n) {
+           array[j] = array[j-n];
+        }
+        array[j] = temp;
+     }
+  }
+}
+
+int main(void) {
+   int i;
+   /* das Array zum Sortieren */
+   int test_array[] = { 5, 0, 2, 7, 9, 1, 4, 3, 8, 6 };
+   int N = sizeof(test_array)/sizeof(int);
+
+   shellsort(test_array, N-1);
+
+   for(i = 0; i &lt; N; i++)
+      printf("%d ", test_array[i]);
+   printf("\n");
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Jetzt soll gezeigt werden, wie Sie die optimale Distanzfolge von Daten für <span class="ckursiv">Shellsort</span> ermitteln. Es wird ein Array mit 10 Millionen Elementen erstellt, das Zahlen in absteigender Reihenfolge enthält. In diesem Fall müssten alle Elemente bei der Sortierung ausgetauscht werden. Getestet wird mithilfe einer Schleife und den Distanzfolgen von 2 bis 10.</p>
+<p>Für das Profiling wird hierbei die Funktion <span class="clisting">clock()</span> verwendet, die für diesen Zweck vollkommen ausreichen dürfte (mehr zum Profiling entnehmen Sie bitte dem entsprechenden Abschnitt 19.2, »Laufzeitmessung (Profiling)«).</p>
+<p>Hier sehen Sie das Beispiel mit den verschiedenen Distanzfolgen:</p>
+<div class="listing"><pre class="prettyprint">/* profile_shellsort.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+#define MAX 10000000
+#define MAX_TEST 10
+
+/* das Array zum Sortieren */
+int test_array[MAX];
+
+void init_test_array(void) {
+   int i,j;
+   for(i = MAX, j = 0; i &gt;= 0; i--,j++)
+      test_array[j] = i;
+}
+
+void shellsort(int *array, int elemente, int distanz) {
+   int i, j, temp, n = elemente;
+
+   for(; n &gt; 0; n /= distanz)
+      for (i = n; i &lt;= elemente; i++) {
+         temp = array[i];
+         /* Größer als temp und nicht elemente
+          * sowie &gt;= und nicht &gt; */
+         for(j = i;
+             j &gt;= n &amp;&amp; array[j-n] &gt; temp;
+             j -= n) {
+            array[j] = array[j-n];
+         }
+         array[j] = temp;
+      }
+}
+
+int main(void) {
+   int distanz_folge;
+   float zeit;
+   clock_t start, ende;
+
+   for(distanz_folge =2;
+     distanz_folge &lt;= MAX_TEST; distanz_folge++) {
+      init_test_array();
+
+      start = clock();
+      shellsort(test_array, MAX-1, distanz_folge);
+      ende = clock();
+
+      /* Ergebnis der Laufzeitmessung in Sekunden */
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Die Laufzeitmessung der Distanzfolge "
+         " %d ergab %2.2f  Sekunden\n" ,distanz_folge,zeit);
+   }
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Je nach Power des Rechners erhalten Sie folgende Ausgabe (als Beispiel ein 1700&ndash;MHz-Pentium 4 mit 256 MB RAM):</p>
+<div class="bildbox">
+<p><a name="IDA0AVQ"></a><a onClick="OpenWin('bilder/22_005.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_005.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.5    </strong>Ermitteln der optimalen Distanzfolge von Shellsort</p>
+<p>In diesem Fall scheint eine Distanzfolge zwischen 3 und 6 das optimale Ergebnis zu liefern.</p>
+<p>Diese Tests der Laufzeitmessungen mit <span class="ckursiv">Shellsort</span> werden Sie wohl immer durchführen müssen, da bisher noch niemand in der Lage war, <span class="ckursiv">Shellsort</span> genau zu analysieren. Aber verglichen mit <span class="ckursiv">Insertion Sort</span> läuft <span class="ckursiv">Shellsort</span> immer schneller ab. Zum Vergleich kann hierbei <span class="ckursiv">Insertion Sort</span> (Distanzfolge = 1) mit eingebaut werden. Dabei sollte aber die Anzahl der Elemente reduziert werden, weil <span class="ckursiv">Insertion Sort</span> eine Weile mit ihnen beschäftigt sein wird.</p><a id="mj035bded10a26be556df779f234784e89" name="mj035bded10a26be556df779f234784e89"></a><a name="t35"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t36"></a><h3 class="t3"><span class="cfett">22.3.5</span><span class="cfett"> Quicksort</span>  <a href="#t2t37"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t35"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Ein oft eingesetzter Algorithmus ist <span class="ckursiv">Quicksort</span>, da seine Implementierung nicht allzu schwer ist. Aufgrund ihrer häufigen Verwendung wurde diese Funktion in die ANSI-C-Bibliothek mit aufgenommen (<span class="clisting">qsort</span>). <span class="ckursiv">Quicksort</span> funktioniert nach dem Prinzip »Teile und herrsche«, also rekursiv. Die Daten werden immer in zwei Teile zerlegt und wieder sortiert. Diese zwei Teile werden wiederum jeweils in zwei Teile zerlegt und sortiert usw., bis die Daten sortiert sind. Die Rekursion beendet sich, wenn das Teilstück aus nur noch einem Element besteht. Hier sehen Sie den Quellcode von <span class="ckursiv">Quicksort</span>:</p>
+<div class="listing"><pre class="prettyprint">/* quicksort.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+#define MAX 50000
+
+/* das Array zum Sortieren */
+int test_array[MAX];
+
+void my_qsort(int*, int*);
+
+void init_test_array(void) {
+   int i, j;
+   for(i = MAX,j=0; i &gt;= 0; i--,j++)
+      test_array[j] = i;
+}
+
+void print_test_array(void) {
+   int i;
+   for(i=0;i&lt;MAX; i++)
+
+      printf("%d ",test_array[i]);
+}
+
+/* Die Funktion erhält einen Zeiger auf das erste
+ * und einen zweiten Zeiger auf das letzte Element.
+ * Hier werden dazu die Namen »links« und »rechts« verwendet.
+ */
+void my_qsort(int *links, int *rechts) {
+   int *ptr1 = links;
+   int *ptr2 = rechts;
+   int w, x;
+   /* x bekommt die Anfangsadresse der
+    * Mitte von links und rechts.
+    * Anstatt der Bitverschiebung hätten Sie
+    * auch einfach »geteilt durch 2« rechnen können.
+    */
+   x = *(links + (rechts - links &gt;&gt; 1));
+   do {
+      while(*ptr1 &lt; x) ptr1++;
+      while(*ptr2 &gt; x) ptr2--;
+      if(ptr1 &gt; ptr2)
+         break;
+      w = *ptr1;
+      *ptr1 = *ptr2;
+      *ptr2 = w;
+   } while(++ptr1 &lt;= --ptr2);
+   if(links &lt; ptr2)  my_qsort(links, ptr2);
+   if(ptr1 &lt; rechts) my_qsort(ptr1, rechts);
+}
+
+int main(void) {
+   init_test_array();
+   my_qsort(test_array, test_array+MAX);
+   print_test_array();
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>Im Gegensatz zu den anderen bisher verwendeten Algorithmen sieht dieser schon ein wenig kryptischer aus. Daher soll er auch etwas genauer analysiert werden. Wir gehen von folgenden unsortierten Werten aus:</p>
+<div class="bildbox">
+<p><a name="IDAYFVQ"></a><a onClick="OpenWin('bilder/22_006.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_006.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.6    </strong>Werte sollen mit »Quicksort« sortiert werden.</p>
+<p>Aufgerufen wird die Funktion mit:</p>
+<div class="listing"><pre class="prettyprint">my_qsort(test_array, test_array+MAX);</pre></div>
+<p>Somit zeigt in der Funktion <span class="clisting">my_qsort()</span> der Zeiger <span class="clisting">links</span> auf die Anfangsadresse von <span class="clisting">test_array</span>, nämlich den Wert 20. Der rechte Zeiger verweist auf das Ende des Arrays, also den Wert 320. In der Funktion übernehmen zwei Zeiger diese Adressen:</p>
+<div class="listing"><pre class="prettyprint">int *ptr1 = links;
+int *ptr2 = rechts;</pre></div>
+<p>Durch die darauf folgende Berechnung</p>
+<div class="listing"><pre class="prettyprint">x = *(links + (rechts - links &gt;&gt; 1));</pre></div>
+<p>bekommt die Variable <span class="clisting">x</span> zunächst den Wert 100 zugewiesen. Denn im Klartext ergibt diese Rechnung auf Zahlen bezogen:</p>
+<div class="listing"><pre class="prettyprint">x = *(0 + (7 - 0 / 2));</pre></div>
+<p>Das Ergebnis dieser Berechnung beträgt 3, und die Zahl mit dem Index <span class="clisting">[3]</span> lautet 100. Weiter geht es mit folgender Zeile:</p>
+<div class="listing"><pre class="prettyprint">while(*ptr1 &lt; x) ptr1++;</pre></div>
+<p>Der Zeiger <span class="clisting">ptr1</span> wird jetzt so lange inkrementiert, bis er auf ein Element zeigt, das größer als oder gleich dem Element von <span class="clisting">x</span> ist. Im aktuellen Beispiel ist dies der Wert 400.</p>
+<div class="bildbox">
+<p><a name="IDAXGVQ"></a><a onClick="OpenWin('bilder/22_007.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_007.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.7    </strong>»ptr1« ist auf einen Wert gestoßen, der größer als »x« ist.</p>
+<p>Genauso verläuft dies mit dem Zeiger <span class="clisting">ptr2</span>:</p>
+<div class="listing"><pre class="prettyprint">while(*ptr2 &gt; x) ptr2--;</pre></div>
+<p>Dieser wird so lange dekrementiert, bis er auf ein Element zeigt, das kleiner als oder gleich dem von <span class="clisting">x</span> ist.</p>
+<div class="bildbox">
+<p><a name="IDACHVQ"></a><a onClick="OpenWin('bilder/22_008.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_008.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.8    </strong>»ptr2« ist auf einen Wert gestoßen, der kleiner als »x« ist.</p>
+<p>Als Nächstes wird überprüft, ob <span class="clisting">ptr1</span> schon weiter ist als <span class="clisting">ptr2</span>. Trifft dies zu, wird die <span class="clisting">do while</span>-Schleife abgebrochen. Hier stimmt dies aber nicht, und somit werden die beiden Elemente, auf die <span class="clisting">ptr1</span> und <span class="clisting">ptr2</span> zeigen, vertauscht:</p>
+<div class="listing"><pre class="prettyprint">w = *ptr1;
+*ptr1 = *ptr2;
+*ptr2 = w;</pre></div>
+<div class="bildbox">
+<p><a name="IDAWHVQ"></a><a onClick="OpenWin('bilder/22_009.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_009.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.9    </strong>Werte von »ptr1« und »ptr2« tauschen</p>
+<p>Jetzt bewegen sich die beiden Zeiger mit</p>
+<div class="listing"><pre class="prettyprint">++ptr1 &lt;= --ptr2</pre></div>
+<p>aufeinander zu.</p>
+<div class="bildbox">
+<p><a name="IDA3HVQ"></a><a onClick="OpenWin('bilder/22_010.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_010.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.10    </strong>Die Zeiger nähern sich einander.</p>
+<p>Danach folgen wieder:</p>
+<div class="listing"><pre class="prettyprint">while(*ptr1 &lt; x) ptr1++;
+while(*ptr2 &gt; x) ptr2--;</pre></div>
+<p>Die Bedingung für den Zeiger <span class="clisting">ptr1</span> trifft bereits nach der ersten Inkrementierung zu (<span class="clisting">100&lt;60</span>), und der zweite Zeiger wird gar nicht dekrementiert (<span class="clisting">70&gt;100</span>). So ergibt sich folgender Zustand:</p>
+<div class="bildbox">
+<p><a name="IDAPIVQ"></a><a onClick="OpenWin('bilder/22_011.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_011.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.11    </strong>Wieder wurden zwei Werte ausgemacht, wo »ptr1« 
+nicht kleiner und »ptr2« nicht größer als »x« sind.</p>
+<p>Jetzt werden wieder beide Elemente ausgetauscht:</p>
+<div class="bildbox">
+<p><a name="IDAWIVQ"></a><a onClick="OpenWin('bilder/22_012.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_012.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.12    </strong>»ptr1«und »ptr2« nach dem Wertetausch</p>
+<p>Danach werden beide Zeiger wieder aufeinander zu bewegt, sodass sich jetzt folgendes Bild ergibt (siehe Abbildung 22.13).</p>
+<div class="bildbox">
+<p><a name="IDA1IVQ"></a><a onClick="OpenWin('bilder/22_013.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_013.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.13    </strong>»ptr1« und »ptr2« treffen aufeinander.</p>
+<p>Nach den beiden Zeilen</p>
+<div class="listing"><pre class="prettyprint">while(*ptr1 &lt; x) ptr1++;
+while(*ptr2 &gt; x) ptr2--;</pre></div>
+<p>ist jetzt die <span class="clisting">if</span>-Bedingung (<span class="clisting">ptr1 &gt; ptr2</span>) wahr und bricht mit <span class="clisting">break</span> die <span class="clisting">do while</span>-Schleife ab. Folgender Zustand liegt dabei vor (siehe Abbildung 22.14).</p>
+<div class="bildbox">
+<p><a name="IDAMJVQ"></a><a onClick="OpenWin('bilder/22_014.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_014.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.14    </strong>Ein Teilungsprozess findet statt.</p>
+<p>Damit wurde der erste Teilungsprozess beendet. Daran lässt sich auch schon feststellen, dass alles, was sich links von der Teilungslinie befindet, größer, und alles, was rechts davon liegt, kleiner ist. Der Algorithmus funktioniert auch, wenn der Wert der Variablen <span class="clisting">x</span> beispielsweise einem Wert entspricht, der weiter außen liegt. Die optimale Bedingung ist eine Teilung in der Mitte.</p>
+<div class="bildbox">
+<p><a name="IDATJVQ"></a><a onClick="OpenWin('bilder/22_015.gif','Abbildung',800,800)"><img border="0" src="bilderklein/klein22_015.gif" alt="Abbildung"><br><span class="tabunter">Hier klicken, um das Bild zu vergrößern</span></a></p>
+</div>
+<p class="tabunter"><strong>Abbildung 22.15    </strong>Quicksort ist von der Anordnung der Daten abhängig.</p>
+<p>Nach der ersten Teilung sind nun weitere Schritte notwendig. Oder einfacher ausgedrückt: Im Prinzip sind nur noch zwei Schritte zu beachten: Es muss derselbe Vorgang für die linke und rechte Seite vorgenommen werden. In diesem Beispiel sind das die Zeilen:</p>
+<div class="listing"><pre class="prettyprint">if(links &lt; ptr2) my_qsort(links, ptr2);
+if(ptr1 &lt; rechts) my_qsort(ptr1, rechts);</pre></div>
+<p>Damit wird der weitere Vorgang rekursiv für beide Seiten ausgeführt &#8211; und zwar so lange, bis die Adresse <span class="clisting">links</span> kleiner als <span class="clisting">ptr2</span> und die Adresse <span class="clisting">rechts</span> größer als <span class="clisting">ptr1</span> ist. Einfach ausgedrückt ist dies der Fall, wenn kein Teilungsprozess mehr möglich ist.</p><a id="mjde22312f4b61457b2efb0f9f17a7b269" name="mjde22312f4b61457b2efb0f9f17a7b269"></a><a name="t36"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t37"></a><h3 class="t3"><span class="cfett">22.3.6</span><span class="cfett"> qsort()</span>  <a href="#t2t38"><img src="common/down.gif" width="15" height="15" border="0" alt="Zur nächsten Überschrift"></a><a href="#t2t36"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Sollten Sie in der Praxis vorhaben, den <span class="ckursiv">qsort()-Algorithmus</span> einzusetzen, können Sie auch den Quicksort-Algorithmus <span class="clisting">qsort()</span> verwenden, der in der Standard-Headerdatei <span class="ckursiv">&lt;stdlib.h&gt;</span> implementiert ist. Dieser läuft zumeist stabiler und sicherer ab als die Eigenkreation, da Fehler bei der Implementierung seltener sind. Die Syntax von <span class="clisting">qsort()</span> lautet:</p>
+<div class="listing"><pre class="prettyprint">void qsort(void *base, size_t num, size_t size,
+           int (*cmp)(void *elem1, void *elem2));</pre></div>
+<p><span class="clisting">base</span> ist die Adresse des ersten Elements in der Liste oder in einem Array, das es zu sortieren gilt. Die Anzahl der Elemente geben Sie mit <span class="clisting">num</span> und die Größe der einzelnen Elemente mit <span class="clisting">size</span> an. <span class="clisting">cmp</span> ist eine Adresse auf eine Vergleichsfunktion, die Sie selbst implementieren müssen. Schließlich kann <span class="clisting">qsort()</span> nicht von vornherein wissen, welche Art von Daten (Strukturen, Arrays, Strings …) Sie sortieren wollen. So bleibt <span class="clisting">qsort()</span> immer für den Allgemeingebrauch verfügbar. Hierzu zeige ich die Funktion <span class="clisting">qsort()</span> der Standard-Bibliothek im Zeitvergleich mit unserer Eigenkreation:</p>
+<div class="listing"><pre class="prettyprint">/* profile_quicksort.c */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+#define MAX 5000000
+
+/* das Array zum Sortieren */
+int test_array[MAX];
+
+void my_qsort(int*, int*);
+
+void init_test_array(void) {
+   int i, j;
+   for(i = MAX,j=0; i &gt;= 0; i--,j++)
+      test_array[j] = i;
+}
+
+/* Vergleichsfunktion für qsort() */
+int cmp_integer(const void *wert1, const void *wert2) {
+   return (*(int*)wert1 - *(int*)wert2);
+}
+
+/* Die Funktion erhält einen Zeiger auf das erste
+ * und einen zweiten Zeiger auf das letzte Element.
+ * Hier werden die Namen »links« und »rechts« verwendet.
+ */
+void my_qsort(int *links, int *rechts) {
+   int *ptr1 = links;
+   int *ptr2 = rechts;
+   int w, x;
+   /* x bekommt die Anfangsadresse der
+    * Mitte von »links« und »rechts«
+    * Statt der Bitverschiebung hätten Sie
+    * auch einfach »geteilt durch 2« rechnen können.
+    */
+   x = *(links + (rechts - links &gt;&gt; 1));
+   do {
+      while(*ptr1 &lt; x) ptr1++;
+      while(*ptr2 &gt; x) ptr2--;
+      if(ptr1 &gt; ptr2)
+         break;
+      w = *ptr1;
+      *ptr1 = *ptr2;
+      *ptr2 = w;
+   }while(++ptr1 &lt;= --ptr2);
+   if(links &lt; ptr2)  my_qsort(links, ptr2);
+   if(ptr1 &lt; rechts) my_qsort(ptr1, rechts);
+}
+
+int main(void) {
+   clock_t start,ende;
+
+   init_test_array();
+   start = clock();
+   qsort(test_array, MAX, sizeof(int), cmp_integer);
+   ende = clock();
+   printf("qsort() der Standard-Library: %.2f\n",
+      (float)(ende-start) / (float)CLOCKS_PER_SEC);
+
+   init_test_array();
+   start = clock();
+   my_qsort(test_array, test_array+MAX);
+   ende = clock();
+   printf("Selbst geschriebene Quicksort-Funktion %.2f\n",
+      (float)(ende-start) / (float)CLOCKS_PER_SEC);
+   return EXIT_SUCCESS;
+}</pre></div><a id="mje59f09c2df1dfa3ec926ae230eb00d31" name="mje59f09c2df1dfa3ec926ae230eb00d31"></a><a name="t37"></a><br><div align="center"><a href="#top"><img src="common/top.gif" border="0" alt="Rheinwerk Computing - Zum Seitenanfang"></a></div><a name="t2t38"></a><h3 class="t3"><span class="cfett">22.3.7</span><span class="cfett"> Zusammenfassung der Sortieralgorithmen</span>  <img src="common/15x15leer.gif" width="15" height="15" border="0" alt="top"><a href="#t2t37"><img src="common/top.gif" width="15" height="15" border="0" alt="Zur vorigen Überschrift"></a></h3>
+<p>Jetzt werden die Sortieralgorithmen ein wenig analysiert. Es soll ein Beispiel erstellt werden, mit dem drei verschiedene Zustände von Daten sortiert werden.</p>
+<ul class="gp">
+<li>Zuerst sollen Daten sortiert werden, bei denen das größte Element ganz am Anfang ist und absteigend das kleinste Element ganz am Ende.</li>
+</ul>
+<ul class="gp">
+<li>Anschließend sollen Daten sortiert werden, die bereits in sortierter Form vorliegen. Denn es kann ja immer mal vorkommen, dass Herr Meier die Daten sortiert hat und Herr Müller wieder mal nichts davon weiß und diese nochmals sortiert.</li>
+</ul>
+<ul class="gp">
+<li>Im letzten Beispiel werden Daten sortiert, die mit Zufallsdaten belegt werden.</li>
+</ul>
+<p>Die Anzahl der Elemente ist in einem solchen Fall natürlich auch entscheidend. Es werden dafür 1000, 10.000 und am Schluss 100.000 Elemente verwendet, die nach den vorhandenen Zuständen sortiert werden sollen.</p>
+<p>Das Programm wurde der Übersicht halber etwas zusammengepresst. Es ist nur die Ausgabe des Programms von Interesse. Leiten Sie die Standardausgabe am besten in eine Textdatei um, indem Sie im Programm noch vor der <span class="clisting">for</span>-Schleife in der <span class="clisting">main()</span>- Funktion Folgendes eingeben:</p>
+<div class="listing"><pre class="prettyprint">freopen("benchmark.txt", "a+", stdout);</pre></div>
+<p>Dies kann jetzt &#8211; abhängig vom Rechner &#8211; etwas dauern. Hier sehen Sie das kleine Benchmark dazu mit einigen Sortieralgorithmen:</p>
+<div class="listing"><pre class="prettyprint">/* sortbenchmark.c */
+#include &lt;stdio.h&gt;
+#include &lt;time.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAX 100000
+
+/* ein Array von großen zu kleinen Werten sortieren */
+int test_array[MAX];
+
+void init_test_array(int elements) {
+   int i, j;
+   for(i = elements,j=0; i &gt;= 0; i--,j++)
+      test_array[j] = i;
+}
+
+/* ein bereits sortiertes Array */
+void init_test_array2(int elements) {
+   int i;
+   for(i = 0; i &lt;= elements; i++)
+      test_array[i] = i;
+}
+
+/* ein Array mit (Pseudo)-Zufallszahlen */
+void init_test_array3(int elements) {
+   int i;
+   for(i = 0; i &lt;= elements; i++)
+      test_array[i] = rand();
+}
+
+/* Vergleichsfunktion für qsort() */
+int cmp_integer(const void *wert1, const void *wert2) {
+   return (*(int*)wert1 - *(int*)wert2);
+}
+
+/* Die Funktion erhält einen Zeiger auf das erste
+ * und einen zweiten Zeiger auf das letzte Element.
+ * Hier werden die Namen »links« und »rechts« verwendet.
+ */
+void my_qsort(int *links, int *rechts) {
+   int *ptr1 = links;
+   int *ptr2 = rechts;
+   int w, x;
+   /* x bekommt die Anfangsadresse der
+    * Mitte von »links« und »rechts«.
+    * Statt der Bitverschiebung hätten Sie
+    * auch einfach »geteilt durch 2« rechnen können.
+    */
+   x = *(links + (rechts - links &gt;&gt; 1));
+   do {
+      while(*ptr1 &lt; x) ptr1++;
+      while(*ptr2 &gt; x) ptr2--;
+      if(ptr1 &gt; ptr2)
+         break;
+      w = *ptr1;
+      *ptr1 = *ptr2;
+      *ptr2 = w;
+   } while(++ptr1 &lt;= --ptr2);
+   if(links &lt; ptr2) my_qsort(links, ptr2);
+   if(ptr1 &lt; rechts) my_qsort(ptr1, rechts);
+}
+
+void shellsort (int *array, int elemente) {
+  int i, j, temp, n;
+
+   /* Anfangswert für die Distanz errechnen */
+  for ( n = 1; n &lt;= elemente/9; n = 3*n+1);
+  for (; n &gt; 0; n /= 3) {
+     for (i = n; i &lt;= elemente; i++) {
+        temp = array[i];
+        /* Größer als temp und nicht elemente
+         * sowie &gt;= und nicht &gt; */
+        for(j = i;
+            j &gt;= n &amp;&amp; array[j-n] &gt; temp;
+            j -= n) {
+           array[j] = array[j-n];
+        }
+        array[j] = temp;
+     }
+  }
+}
+
+void selection(int *array, int elemente) {
+   int i, j, mini, temp;
+
+   for(i = 0; i &lt; elemente; i++) {
+      mini=i;
+      for(j=i+1; j &lt;= elemente; j++) {
+         if(array[j] &lt; array[mini])
+            mini=j;
+      }
+      temp=array[mini];
+      array[mini]=array[i];
+      array[i]=temp;
+   }
+}
+
+void insertion(int *array, int elemente) {
+   int i, j, temp;
+
+   for(i = 1; i &lt;= elemente; i++) {
+      temp=array[i];  /* aktuelles Element zwischenspeichern */
+      for(j=i; array[j-1] &gt; temp &amp;&amp; j &gt; 0; j--)
+         /* solange der Vorgänger größer ist als das
+          * aktuelle Element in temp ... */
+         array[j] = array[j-1];
+      /* gespeichertes Element an neue Position */
+      array[j]=temp;
+   }
+}
+
+void bubble(int *array, int elemente) {
+   int i, temp;
+
+   while(elemente--)
+      for(i = 1; i &lt;= elemente; i++)
+         if(array[i-1] &gt; array[i]) {
+            temp=array[i];
+            array[i]=array[i-1];
+            array[i-1]=temp;
+         }
+}
+
+int main(void) {
+   int i;
+   int elemente=1000;
+   float zeit;
+   clock_t start, ende;
+
+   /* freopen("log.txt","a+",stdout); */
+
+   for(i=1; i&lt;=3; i++, elemente*=10){
+      printf("\n\nSortieren von %d Elementen\n\n",elemente);
+      printf("\n%d. Versuch : alle %d Elemente muessen "
+             "sortiert werden\n\n",i,elemente);
+
+   /* Selectionsort */
+      init_test_array(elemente); start = clock();
+      selection(test_array, elemente-1); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Selectionsort: %.2f Sekunden\n",zeit);
+
+   /* Insertionsort */
+      init_test_array(elemente); start = clock();
+      insertion(test_array, elemente-1); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Insertionsort: %.2f Sekunden\n",zeit);
+
+   /* Bubblesort */
+      init_test_array(elemente); start = clock();
+      bubble(test_array, elemente); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Bubblesort   : %.2f Sekunden\n",zeit);
+
+   /* Shellsort */
+      init_test_array(elemente); start = clock();
+      shellsort(test_array, elemente-1); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Shellsort    : %.2f Sekunden\n",zeit);
+
+   /* Quicksort */
+      if(elemente &lt; 50000){
+         init_test_array(elemente); start = clock();
+         my_qsort(test_array, test_array+elemente);
+         ende = clock();
+         zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+         printf("Quicksort    : %.2f Sekunden\n",zeit);
+      }
+
+   /* qsort aus der Standard-Bibliothek &lt;stdlib.h&gt; */
+      init_test_array(elemente); start = clock();
+      qsort(test_array, elemente, sizeof(int), cmp_integer);
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("qsort        : %.2f Sekunden\n",zeit);
+
+   /* 2. Versuch, eine bereits sortierte Liste */
+      printf("\n%d. Versuch : keins der %d Elemente muss "
+             "sortiert werden\n\n",i,elemente);
+   /* Selectionsort */
+      init_test_array2(elemente); start = clock();
+      selection(test_array, elemente-1); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Selectionsort: %.2f Sekunden\n",zeit);
+
+   /* Insertionsort */
+      init_test_array2(elemente); start = clock();
+      insertion(test_array, elemente-1); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Insertionsort: %.2f Sekunden\n",zeit);
+
+   /* Bubblesort */
+      init_test_array2(elemente); start = clock();
+      bubble(test_array, elemente); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Bubblesort   : %.2f Sekunden\n",zeit);
+
+   /* Shellsort */
+      init_test_array2(elemente); start = clock();
+      shellsort(test_array, elemente-1); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Shellsort    : %.2f Sekunden\n",zeit);
+
+   /* Quicksort */
+      init_test_array2(elemente); start = clock();
+      my_qsort(test_array, test_array+elemente); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Quicksort    : %.2f Sekunden\n",zeit);
+
+   /* qsort aus der Standard-Bibliothek &lt;stdlib.h&gt; */
+      init_test_array2(elemente); start = clock();
+      qsort(test_array, elemente, sizeof(int), cmp_integer);
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("qsort        : %.2f Sekunden\n",zeit);
+
+   /* 3. Versuch Zufallsdaten */
+      printf("\n%d. Versuch : %d Zufallszahlen muessen"
+             "sortiert werden\n\n",i,elemente);
+
+   /* Selectionsort */
+      init_test_array3(elemente); start = clock();
+      selection(test_array, elemente-1); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Selectionsort: %.2f Sekunden\n",zeit);
+
+   /* Insertionsort */
+      init_test_array3(elemente); start = clock();
+      insertion(test_array, elemente-1); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Insertionsort: %.2f Sekunden\n",zeit);
+
+   /* Bubblesort */
+      init_test_array3(elemente); start = clock();
+      bubble(test_array, elemente); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Bubblesort   : %.2f Sekunden\n",zeit);
+   /* Shellsort */
+      init_test_array3(elemente); start = clock();
+      shellsort(test_array, elemente-1); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Shellsort    : %.2f Sekunden\n",zeit);
+
+   /* Quicksort */
+      init_test_array3(elemente); start = clock();
+      my_qsort(test_array,test_array+elemente); ende = clock();
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("Quicksort    : %.2f Sekunden\n",zeit);
+
+   /* qsort aus der Standard-Bibliothek &lt;stdlib.h&gt; */
+      init_test_array3(elemente); start = clock();
+      qsort(test_array, elemente, sizeof(int), cmp_integer);
+      zeit = (float)(ende-start) / (float)CLOCKS_PER_SEC;
+      printf("qsort        : %.2f Sekunden\n",zeit);
+   }/* Ende for */
+   return EXIT_SUCCESS;
+}</pre></div>
+<p>In Tabelle 22.1 finden Sie eine Analyse der einzelnen Sortierfunktionen. Bei einigen Algorithmen wurde die Anzahl der Elemente nochmals erhöht, da diese bei den Anforderungen eine kaum nennenswerte Zeit benötigen.</p><br><table width="100%" border="0" cellspacing="1" cellpadding="3">
+<caption class="tabunter"><p class="ptabunter"><strong>Tabelle 22.1    </strong>Grober Zeitvergleich einiger Sortieralgorithmen</p>
+</caption>
+<tr>
+<td class="tabellenkopf"><span class="cfett">Anzahl</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Zustand</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Selektion</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Insertion</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Bubble</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">Shell</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">my_qsort</span>
+</td>
+<td class="tabellenkopf"><span class="cfett">qsort()</span>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>1000</p>
+</td>
+<td class="tabellentext">
+<p>alle sortieren</p>
+</td>
+<td class="tabellentext">
+<p>0.03</p>
+</td>
+<td class="tabellentext">
+<p>0.04</p>
+</td>
+<td class="tabellentext">
+<p>0.02</p>
+</td>
+<td class="tabellentext">
+<p>0.06</p>
+</td>
+<td class="tabellentext">
+<p>0.11</p>
+</td>
+<td class="tabellentext">
+<p>0.12</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>1000</p>
+</td>
+<td class="tabellentext">
+<p>sortiert</p>
+</td>
+<td class="tabellentext">
+<p>0.04</p>
+</td>
+<td class="tabellentext">
+<p>0.04</p>
+</td>
+<td class="tabellentext">
+<p>0.03</p>
+</td>
+<td class="tabellentext">
+<p>0.05</p>
+</td>
+<td class="tabellentext">
+<p>0.10</p>
+</td>
+<td class="tabellentext">
+<p>0.11</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>1000</p>
+</td>
+<td class="tabellentext">
+<p>Zufall</p>
+</td>
+<td class="tabellentext">
+<p>0.03</p>
+</td>
+<td class="tabellentext">
+<p>0.04</p>
+</td>
+<td class="tabellentext">
+<p>0.04</p>
+</td>
+<td class="tabellentext">
+<p>0.06</p>
+</td>
+<td class="tabellentext">
+<p>0.11</p>
+</td>
+<td class="tabellentext">
+<p>0.11</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>10000</p>
+</td>
+<td class="tabellentext">
+<p>alle sortieren</p>
+</td>
+<td class="tabellentext">
+<p>0.34</p>
+</td>
+<td class="tabellentext">
+<p>0.53</p>
+</td>
+<td class="tabellentext">
+<p>1.04</p>
+</td>
+<td class="tabellentext">
+<p>0.15</p>
+</td>
+<td class="tabellentext">
+<p>0.13</p>
+</td>
+<td class="tabellentext">
+<p>0.14</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>10000</p>
+</td>
+<td class="tabellentext">
+<p>sortiert</p>
+</td>
+<td class="tabellentext">
+<p>0.36</p>
+</td>
+<td class="tabellentext">
+<p>0.07</p>
+</td>
+<td class="tabellentext">
+<p>0.45</p>
+</td>
+<td class="tabellentext">
+<p>0.04</p>
+</td>
+<td class="tabellentext">
+<p>0.15</p>
+</td>
+<td class="tabellentext">
+<p>0.13</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>10000</p>
+</td>
+<td class="tabellentext">
+<p>Zufall</p>
+</td>
+<td class="tabellentext">
+<p>0.36</p>
+</td>
+<td class="tabellentext">
+<p>0.27</p>
+</td>
+<td class="tabellentext">
+<p>1.09</p>
+</td>
+<td class="tabellentext">
+<p>0.11</p>
+</td>
+<td class="tabellentext">
+<p>0.15</p>
+</td>
+<td class="tabellentext">
+<p>0.14</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>25000</p>
+</td>
+<td class="tabellentext">
+<p>alle sortieren</p>
+</td>
+<td class="tabellentext">
+<p>2.32</p>
+</td>
+<td class="tabellentext">
+<p>3.79</p>
+</td>
+<td class="tabellentext">
+<p>7.74</p>
+</td>
+<td class="tabellentext">
+<p>0.13</p>
+</td>
+<td class="tabellentext">
+<p>0.16</p>
+</td>
+<td class="tabellentext">
+<p>0.15</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>25000</p>
+</td>
+<td class="tabellentext">
+<p>sortiert</p>
+</td>
+<td class="tabellentext">
+<p>3.03</p>
+</td>
+<td class="tabellentext">
+<p>0.09</p>
+</td>
+<td class="tabellentext">
+<p>2.77</p>
+</td>
+<td class="tabellentext">
+<p>0.16</p>
+</td>
+<td class="tabellentext">
+<p>0.13</p>
+</td>
+<td class="tabellentext">
+<p>0.14</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>25000</p>
+</td>
+<td class="tabellentext">
+<p>Zufall</p>
+</td>
+<td class="tabellentext">
+<p>2.84</p>
+</td>
+<td class="tabellentext">
+<p>1.71</p>
+</td>
+<td class="tabellentext">
+<p>7.10</p>
+</td>
+<td class="tabellentext">
+<p>0.15</p>
+</td>
+<td class="tabellentext">
+<p>0.16</p>
+</td>
+<td class="tabellentext">
+<p>0.15</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>50000</p>
+</td>
+<td class="tabellentext">
+<p>alle sortieren</p>
+</td>
+<td class="tabellentext">
+<p>9.79</p>
+</td>
+<td class="tabellentext">
+<p>14.84</p>
+</td>
+<td class="tabellentext">
+<p>27.79</p>
+</td>
+<td class="tabellentext">
+<p>0.17</p>
+</td>
+<td class="tabellentext">
+<p>0.17</p>
+</td>
+<td class="tabellentext">
+<p>0.16</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>50000</p>
+</td>
+<td class="tabellentext">
+<p>sortiert</p>
+</td>
+<td class="tabellentext">
+<p>10.15</p>
+</td>
+<td class="tabellentext">
+<p>0.10</p>
+</td>
+<td class="tabellentext">
+<p>10.01</p>
+</td>
+<td class="tabellentext">
+<p>0.18</p>
+</td>
+<td class="tabellentext">
+<p>0.18</p>
+</td>
+<td class="tabellentext">
+<p>0.17</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>50000</p>
+</td>
+<td class="tabellentext">
+<p>Zufall</p>
+</td>
+<td class="tabellentext">
+<p>9.82</p>
+</td>
+<td class="tabellentext">
+<p>6.60</p>
+</td>
+<td class="tabellentext">
+<p>28.74</p>
+</td>
+<td class="tabellentext">
+<p>0.17</p>
+</td>
+<td class="tabellentext">
+<p>0.19</p>
+</td>
+<td class="tabellentext">
+<p>0.17</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>100000</p>
+</td>
+<td class="tabellentext">
+<p>alle sortieren</p>
+</td>
+<td class="tabellentext">
+<p>33.55</p>
+</td>
+<td class="tabellentext">
+<p>52.39</p>
+</td>
+<td class="tabellentext">
+<p>97.87</p>
+</td>
+<td class="tabellentext">
+<p>0.19</p>
+</td>
+<td class="tabellentext">
+<p>0.19</p>
+</td>
+<td class="tabellentext">
+<p>0.18</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>100000</p>
+</td>
+<td class="tabellentext">
+<p>sortiert</p>
+</td>
+<td class="tabellentext">
+<p>32.51</p>
+</td>
+<td class="tabellentext">
+<p>0.04</p>
+</td>
+<td class="tabellentext">
+<p>32.81</p>
+</td>
+<td class="tabellentext">
+<p>0.18</p>
+</td>
+<td class="tabellentext">
+<p>0.19</p>
+</td>
+<td class="tabellentext">
+<p>0.18</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>100000</p>
+</td>
+<td class="tabellentext">
+<p>Zufall</p>
+</td>
+<td class="tabellentext">
+<p>32.60</p>
+</td>
+<td class="tabellentext">
+<p>27.40</p>
+</td>
+<td class="tabellentext">
+<p>119.58</p>
+</td>
+<td class="tabellentext">
+<p>0.19</p>
+</td>
+<td class="tabellentext">
+<p>0.18</p>
+</td>
+<td class="tabellentext">
+<p>0.19</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>1000000</p>
+</td>
+<td class="tabellentext">
+<p>alle sortieren</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>0.40</p>
+</td>
+<td class="tabellentext">
+<p>0.25</p>
+</td>
+<td class="tabellentext">
+<p>0.20</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>1000000</p>
+</td>
+<td class="tabellentext">
+<p>sortiert</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>0.31</p>
+</td>
+<td class="tabellentext">
+<p>0.19</p>
+</td>
+<td class="tabellentext">
+<p>0.19</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>1000000</p>
+</td>
+<td class="tabellentext">
+<p>Zufall</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>1.17</p>
+</td>
+<td class="tabellentext">
+<p>0.45</p>
+</td>
+<td class="tabellentext">
+<p>0.18</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>5000000</p>
+</td>
+<td class="tabellentext">
+<p>alle sortieren</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>2.10</p>
+</td>
+<td class="tabellentext">
+<p>0.60</p>
+</td>
+<td class="tabellentext">
+<p>0.32</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>5000000</p>
+</td>
+<td class="tabellentext">
+<p>sortiert</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>1.26</p>
+</td>
+<td class="tabellentext">
+<p>0.55</p>
+</td>
+<td class="tabellentext">
+<p>0.30</p>
+</td>
+</tr>
+<tr>
+<td class="tabellentext">
+<p>5000000</p>
+</td>
+<td class="tabellentext">
+<p>Zufall</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>&#8211;</p>
+</td>
+<td class="tabellentext">
+<p>9.75</p>
+</td>
+<td class="tabellentext">
+<p>2.10</p>
+</td>
+<td class="tabellentext">
+<p>0.40</p>
+</td>
+</tr>
+</table><br><p>Mithilfe dieser Analyse können Sie sich nun ein etwas detaillierteres Bild von der Effizienz der einzelnen Algorithmen machen. Natürlich sollten Sie diese Laufzeitmessung nicht allzu genau nehmen. Für eine exaktere und genauere Messung sollten Sie auf jeden Fall einen Profiler einsetzen. Denn das Programm zur Laufzeitmessung ist während der Ausführung sicherlich nicht das einzige Programm, das gerade auf Ihrem System läuft.</p>
+<p>Die Frage nach dem besten Algorithmus lässt sich allerdings auch mit solch einer Analyse nicht exakt klären. Diese ist auch sehr abhängig von der Verteilung und Art der Daten, die es zu sortieren gilt. Außerdem ist es auch möglich, die einzelnen Algorithmen weiter zu optimieren. Beim Thema Algorithmen kommen Sie nicht darum herum, weitere Literatur zurate zu ziehen.</p><br><hr><a name="kommentar"></a><h3>Ihr Kommentar</h3>
+                       Wie hat Ihnen das &lt;openbook&gt; gefallen? Wir freuen uns immer über Ihre freundlichen und kritischen Rückmeldungen.
+                       <!--<form action="http://www.galileo-press.de/feedback/openbook" method="post" style="text-align: center; margin-top: 10px;"><input type="hidden" name="openbookurl" value="http://openbook.galileocomputing.de/c_von_a_bis_z/022_c_algorithmen_003.htm"><input type="hidden" name="buchtitel" value="C von A bis Z"><input type="hidden" name="Kapitel" value="22.3 Sortieralgorithmen"><table border="0">
+<tr>
+<td><label for="name">Name</label><br></td>
+<td><input type="text" name="name" id="name" size="40"><br></td>
+</tr>
+<tr>
+<td><label for="email">E-Mail</label><br></td>
+<td><input type="text" name="email" id="email" size="40"><br></td>
+</tr>
+<tr>
+<td valign="top"><label for="comment">Ihr Kommentar</label><br></td>
+<td><textarea name="comment" id="comment" rows="10" cols="40"></textarea><br></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" value="Kommentar absenden"></td>
+</tr>
+</table>
+</form>--><a href="https://www.rheinwerk-verlag.de/feedback/produkt/2132/">>> Zum Feedback-Formular</a>
+</div></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td width="100%" class="start" colspan="1" height="22" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="25%"><a href="022_c_algorithmen_002.html" class="navnav"> &lt;&lt;   zurück</a></td>
+<td width="49%"><div align="center"><a class="navnav" href="#">&lt;top&gt;</a></div></td>
+<td align="right" width="25%"><div align="right"><a href="022_c_algorithmen_004.html" class="navnav">vor   &gt;&gt; </a></div></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div></td>
+<td width="10" valign="top">&nbsp;&nbsp;</td>
+<td width="160" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">
+&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav">
+<strong>Zum Katalog</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2">
+<img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><a href="https://www.rheinwerk-verlag.de/c-von-a-bis-z_2132/?GPP=opc3">
+	<img src="common/1411.gif" width="117" height="167" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C von A bis Z" title="Zum Katalog: C von A bis Z">
+<br /><br /><strong>&nbsp;C von A bis Z</strong><br /><img src="common/pfeil_rechts5.gif" border="0" alt="">Jetzt&nbsp;bestellen</a><br /><br />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><a href="#kommentar" class="nav"><strong>&nbsp;Ihre Meinung?</strong></a>
+</td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td>Wie hat Ihnen das &lt;openbook&gt; gefallen?<br /><a href="#kommentar"><img src="common/pfeil_rechts5.gif" border="0" alt="">Ihre Meinung</a>
+<br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2">&nbsp;<a href="https://www.rheinwerk-verlag.de/?GPP=opc3" class="nav"><strong>Buchtipps</strong></a></td>
+</tr>
+<tr> 
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/cc_3536/?GPP=opc3">
+<img src="common/2757.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C/C++" title="Zum Katalog: C/C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;C/C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/einstieg-in-c_3557/?GPP=opc3">
+<img src="common/2793.gif" width="74" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Einstieg in C" title="Zum Katalog: Einstieg in C"><br /><br /><br /><br /><br /><br /><br />&nbsp;Einstieg in C</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/schrodinger-programmiert-c_2853/?GPP=opc3">
+<img src="common/1756.gif" width="85" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: Schrödinger programmiert C++" title="Zum Katalog: Schrödinger programmiert C++"><br /><br /><br /><br /><br /><br /><br />&nbsp;Schrödinger<br />&nbsp;programmiert C++</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/c_3278/?GPP=opc3">
+<img src="common/2021.gif" width="69" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: C++ Handbuch" title="Zum Katalog: C++ Handbuch"><br /><br /><br /><br /><br /><br /><br />&nbsp;C++ Handbuch</a><br /><br /></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td><td valign="top">
+<a href="https://www.rheinwerk-verlag.de/it-handbuch-fur-fachinformatiker_3329/?GPP=opc3">
+<img src="common/2234.gif" width="78" height="100" border="0" align="left" hspace="4" vspace="8" alt="Zum Katalog: IT-Handbuch für Fachinformatiker" title="Zum Katalog: IT-Handbuch für Fachinformatiker"><br /><br /><br /><br /><br /><br /><br />&nbsp;IT-Handbuch für<br />&nbsp;Fachinformatiker</a><br /><br /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td><img src="common/leer.gif" height="2" width="1" border="0" /></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tbl2" height="20" colspan="2"><strong>&nbsp;Shopping</strong></td>
+</tr>
+<tr>
+<td valign="top" class="tbl2" width="2"><img src="common/leer.gif" border="0" height="1" width="1"></td>
+<td valign="top">
+<table cellspacing="3">
+<tr>
+<td><b>Versandkostenfrei</b> bestellen in Deutschland und &Ouml;sterreich<br /><a href="https://www.rheinwerk-verlag.de/hilfe/bestellung_6?GPP=opc3"><img src="common/pfeil_rechts5.gif" border="0" alt="Info">Info</a><br /><br /></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><br><br><hr width="70%" align="center">
+<div align="center">
+<p class="standard"><strong>Copyright © Rheinwerk Verlag GmbH 2009</strong><br>
+        Für Ihren privaten Gebrauch dürfen Sie die Online-Version natürlich ausdrucken.
+        Ansonsten unterliegt das &lt;openbook&gt; denselben Bestimmungen, wie die
+        gebundene Ausgabe: Das Werk einschließlich aller seiner Teile ist urheberrechtlich
+        geschützt. Alle Rechte vorbehalten einschließlich der Vervielfältigung, Übersetzung,
+        Mikroverfilmung sowie Einspeicherung und Verarbeitung in elektronischen Systemen.</p><br><a href="https://www.rheinwerk-verlag.de/">[Rheinwerk Computing]</a><br><br>
+      Rheinwerk Verlag GmbH, Rheinwerkallee 4, 53227 Bonn, Tel.: 0228.42150.0, Fax 0228.42150.77, <a href="mailto:service@rheinwerk-verlag.de">service@rheinwerk-verlag.de</a></div><br><br></body>
+
+<!-- Mirrored from openbook.rheinwerk-verlag.de/c_von_a_bis_z/022_c_algorithmen_003.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Jun 2017 19:49:53 GMT -->
+</html>
