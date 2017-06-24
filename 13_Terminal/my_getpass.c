@@ -4,9 +4,10 @@
 
 #define PASS 8
 
+static char passwort[PASS];
+
 static char *my_getpass(void) {
     struct termios origstate, changedstate, teststate;
-    char passwort[PASS];
     char *p = passwort;
     
     if (tcgetattr(0, &origstate) != 0)
