@@ -5,3 +5,5 @@ add_executable(my_eof my_eof.c)
 
 add_executable(my_getpass my_getpass.c)
 
+add_executable(keystroke keystroke.c)
+
