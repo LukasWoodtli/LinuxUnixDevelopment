@@ -9,3 +9,8 @@ add_executable(keystroke keystroke.c)
 
 add_executable(my_getch my_getch.c)
 
+add_executable(my_tty my_tty.c)
+add_test(my_tty my_tty)
+
+add_executable(sende sende.c)
+
