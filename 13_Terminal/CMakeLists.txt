@@ -7,3 +7,5 @@ add_executable(my_getpass my_getpass.c)
 
 add_executable(keystroke keystroke.c)
 
+add_executable(my_getch my_getch.c)
+
