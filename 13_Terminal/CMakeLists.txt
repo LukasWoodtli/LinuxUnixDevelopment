@@ -14,3 +14,5 @@ add_test(my_tty my_tty)
 
 add_executable(sende sende.c)
 
+add_executable(baud baud.c)
+
