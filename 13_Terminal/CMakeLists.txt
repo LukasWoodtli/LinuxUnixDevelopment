@@ -16,3 +16,5 @@ add_executable(sende sende.c)
 
 add_executable(baud baud.c)
 
+add_executable(setbaud setbaud.c)
+

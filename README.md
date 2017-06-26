@@ -31,7 +31,7 @@ I won't read all chapters.
 | 10 | Threads                                                 | ✓ |   -          |       ✓       |
 | 11 | Netzwerkprogrammierung                                  |   |  133         | client.c, server.c, addr.c, hostent.c, servent.c, servent2.c, server.c, client.c, pserver.c, multi_server.c, client.c, http_server.c, thserver.c, server.c, client.c, uds_server.c, uds_client.c, fullduplex.c, server.c, client.c, non_block.c |
 | 12 | MySQL und PostgreSQL                                    | ✗ |   -          |         |
-| 13 | Terminal E/A und Benutzerschnittstellen für die Konsole |   |   ?          | setbaud.c, terminfo.c, terminfo2.c, cur1.c, cur2.c, cur3.c, cur4.c, cur5.c, cur6.c, cur7.c, cur8.c, cur9.c, cur10.c, cur11.c, cur12.c, cur13.c, cur14.c, cur15.c |
+| 13 | Terminal E/A und Benutzerschnittstellen für die Konsole |   |   ?          | terminfo.c, terminfo2.c, cur1.c, cur2.c, cur3.c, cur4.c, cur5.c, cur6.c, cur7.c, cur8.c, cur9.c, cur10.c, cur11.c, cur12.c, cur13.c, cur14.c, cur15.c |
 | 14 | Xlib - X Window-Programmierung                          | ✗ |   -          |         |
 | 15 | GTK+                                                    | ✗ |   -          |         |
 | 16 | SDL                                                     | ✗ |   -          |         |
