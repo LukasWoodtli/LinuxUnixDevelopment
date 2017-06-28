@@ -20,6 +20,8 @@ add_executable(sende sende.c)
 
 add_executable(baud baud.c)
 
+add_executable(setbaud setbaud.c)
+
 add_executable(terminfo terminfo.c)
 target_link_libraries(terminfo ${CURSES_LIBRARIES})
 add_test(terminfo terminfo)
