@@ -25,3 +25,6 @@ add_executable(setbaud setbaud.c)
 add_executable(terminfo terminfo.c)
 target_link_libraries(terminfo ${CURSES_LIBRARIES})
 add_test(terminfo terminfo)
+
+add_executable(terminfo2 terminfo2.c)
+target_link_libraries(terminfo2 ${CURSES_LIBRARIES})
