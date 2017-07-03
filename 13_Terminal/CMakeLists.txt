@@ -28,3 +28,16 @@ add_test(terminfo terminfo)
 
 add_executable(terminfo2 terminfo2.c)
 target_link_libraries(terminfo2 ${CURSES_LIBRARIES})
+
+add_executable(cur2 cur2.c)
+target_link_libraries(cur2 ${CURSES_LIBRARIES})
+
+add_executable(cur3 cur3.c)
+target_link_libraries(cur3 ${CURSES_LIBRARIES})
+
+add_executable(cur4 cur4.c)
+target_link_libraries(cur4 ${CURSES_LIBRARIES})
+
+add_executable(cur5 cur5.c)
+target_link_libraries(cur5 ${CURSES_LIBRARIES})
+
