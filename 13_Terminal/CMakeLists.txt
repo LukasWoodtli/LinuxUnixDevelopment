@@ -53,4 +53,5 @@ build_with_ncurses(cur9)
 
 build_with_ncurses(cur10)
 
+build_with_ncurses(cur11)
 
