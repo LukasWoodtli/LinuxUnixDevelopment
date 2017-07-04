@@ -22,22 +22,25 @@ add_executable(baud baud.c)
 
 add_executable(setbaud setbaud.c)
 
-add_executable(terminfo terminfo.c)
-target_link_libraries(terminfo ${CURSES_LIBRARIES})
+
+
+function(build_with_ncurses name)
+	add_executable(${name} ${name}.c)
+	target_link_libraries(${name} ${CURSES_LIBRARIES})
+endfunction(build_with_ncurses)
+
+
+build_with_ncurses(terminfo)
 add_test(terminfo terminfo)
 
-add_executable(terminfo2 terminfo2.c)
-target_link_libraries(terminfo2 ${CURSES_LIBRARIES})
+build_with_ncurses(terminfo2)
 
-add_executable(cur2 cur2.c)
-target_link_libraries(cur2 ${CURSES_LIBRARIES})
+build_with_ncurses(cur2)
 
-add_executable(cur3 cur3.c)
-target_link_libraries(cur3 ${CURSES_LIBRARIES})
+build_with_ncurses(cur3)
 
-add_executable(cur4 cur4.c)
-target_link_libraries(cur4 ${CURSES_LIBRARIES})
+build_with_ncurses(cur4)
 
-add_executable(cur5 cur5.c)
-target_link_libraries(cur5 ${CURSES_LIBRARIES})
+build_with_ncurses(cur5)
 
+build_with_ncurses(cur6)
