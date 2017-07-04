@@ -45,6 +45,9 @@ int main (void) {
     halfdelay(20);
     
     c = getch();
+    
+    (void)c;
+
     endwin();
     
     return 0;
