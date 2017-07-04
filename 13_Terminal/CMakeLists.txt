@@ -44,3 +44,11 @@ build_with_ncurses(cur4)
 build_with_ncurses(cur5)
 
 build_with_ncurses(cur6)
+
+build_with_ncurses(cur7)
+
+build_with_ncurses(cur8)
+
+build_with_ncurses(cur9)
+
+
