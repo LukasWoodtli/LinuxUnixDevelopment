@@ -13,12 +13,12 @@
 
 
 static void show_all_pairs(void) {
-    int farbe1, farbe2, i=1, c;
+    int farbe1, farbe2, i=1;
     mvprintw(1, 1, "Darstellung aller Farbpaare: \n");
     if (has_colors() == TRUE) {
         start_color();
         for (farbe1 = weiss; farbe1 >= schwarz; --farbe1) {
-            for (farbe2 = schwarz; farbe2 <= weiss; ++farbe1) {
+            for (farbe2 = schwarz; farbe2 <= weiss; ++farbe2) {
                 init_pair(i, farbe1, farbe2);
                 attrset(COLOR_PAIR(i));
                 printw(" %d ", i++);
@@ -27,7 +27,7 @@ static void show_all_pairs(void) {
     }
     
     noecho();
-    c = getch();
+    getch();
 }
 
 
