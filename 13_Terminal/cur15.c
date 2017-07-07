@@ -68,7 +68,7 @@ int main (void) {
 
     noecho();
     keypad(stdscr, TRUE);
-
+    mousemask(BUTTON1_RELEASED | BUTTON1_PRESSED | BUTTON1_CLICKED, NULL);
     fenster = create_new_window(fenster, 10, 40,
                                 COLOR_RED, COLOR_BLUE,
                                 5, 15);
@@ -84,10 +84,9 @@ int main (void) {
     mvwprintw(fenster, 2, 10, "S=Fenster schliessen");
     mvwprintw(fenster, 6, 10, "M=Fenster maximieren");
     wrefresh(fenster);
-    
     while (1) {
         button = wgetch(stdscr);
-        if (button == KEY_MOUSE) {
+	if (button == KEY_MOUSE) {
             if (getmouse(&pos) == OK) {
                 where_clicked(stdscr, fenster, pos);
                 
