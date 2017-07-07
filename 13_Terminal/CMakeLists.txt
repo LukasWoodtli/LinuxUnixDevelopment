@@ -60,3 +60,6 @@ build_with_ncurses(cur12)
 build_with_ncurses(cur13)
 
 build_with_ncurses(cur14)
+
+build_with_ncurses(cur15)
+
