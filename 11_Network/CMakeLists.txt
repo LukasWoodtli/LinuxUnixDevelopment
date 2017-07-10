@@ -4,3 +4,5 @@ project (linux_threads)
 add_executable(client1 client1.c)
 
 add_executable(server1 server1.c)
+
+add_executable(addr addr.c)
