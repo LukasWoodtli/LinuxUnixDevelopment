@@ -13,3 +13,6 @@ add_executable(servent servent.c)
 
 add_executable(servent2 servent2.c)
 add_test(servent2 servent2)
+
+add_executable(server2 server2.c)
+
