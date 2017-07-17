@@ -41,7 +41,14 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
     
-    while ((connfd = accept(sockfd, (struct sockaddr*)&adresse, &addrlaenge)) > 0) {
+    printf("Server bereit und wartet ...\n");
+    
+    if (listen(sockfd, SOMAXCONN) != 0) {
+	    printf("Fehler bei listen() ... (%s)\n", strerror(errno));
+	    exit(EXIT_FAILURE);
+    }
+
+    while ((connfd = accept(sockfd, (struct sockaddr*)&adresse, &addrlaenge)) >= 0) {
         printf("... Daten empfangen\n");
         j = 0;
         while ((n = read(connfd, &puffer[j], 1)) > 0) {
@@ -91,7 +98,7 @@ int main(void) {
     }
     
     if (connfd < 0) {
-        printf("Fehler bei accept() ...\n");
+        printf("Fehler bei accept() ... (%s)\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
     
