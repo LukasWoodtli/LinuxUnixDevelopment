@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.8.7)
-project (linux_threads)
+project (linux_network)
 
 add_executable(client1 client1.c)
 
@@ -14,5 +14,4 @@ add_executable(servent servent.c)
 add_executable(servent2 servent2.c)
 add_test(servent2 servent2)
 
-add_executable(server2 server2.c)
-
+add_subdirectory(parallel_server)
