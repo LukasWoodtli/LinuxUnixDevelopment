@@ -4,3 +4,5 @@ project (linux_network)
 add_executable(server2 server2.c)
 
 add_executable(client2 client2.c)
+
+add_executable(pserver pserver.c)
