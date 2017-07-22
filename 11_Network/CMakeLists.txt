@@ -15,3 +15,6 @@ add_executable(servent2 servent2.c)
 add_test(servent2 servent2)
 
 add_subdirectory(parallel_server)
+
+add_subdirectory(select)
+
