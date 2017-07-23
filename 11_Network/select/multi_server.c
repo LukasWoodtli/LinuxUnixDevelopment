@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200112L
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
