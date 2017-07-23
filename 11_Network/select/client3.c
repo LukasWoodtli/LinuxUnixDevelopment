@@ -61,7 +61,7 @@ void connect_socket(socket_t *sock, char *serv_addr, unsigned short port) {
     server.sin_port = htons(port);
     
     if (connect(*sock, (struct sockaddr*)&server, sizeof(server)) < 0)
-        error_exit("Kann Socket nicht \"binden\": keine Verbindung zum Server");
+        error_exit("Kann Socket nicht \"binden\" (keine Verbindung zum Server)");
 }
 
 

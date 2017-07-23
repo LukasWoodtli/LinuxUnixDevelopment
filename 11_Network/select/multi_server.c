@@ -91,7 +91,7 @@ int main(void) {
     fd_set gesamt_sock, lese_sock;
     char *buffer = (char*)malloc(BUF);
     sock_max = sock1 = create_socket(AF_INET, SOCK_STREAM, 0);
-    bind_socket(&sock1, INADDR_ANY, 1500);
+    bind_socket(&sock1, INADDR_ANY, 15000);
     listen_socket(&sock1);
     
     for (i = 0; i < FD_SETSIZE; ++i) {
@@ -126,7 +126,7 @@ int main(void) {
             if (i > max)
                 max = i;
             
-            if (--ready >= 0)
+            if (--ready <= 0)
                 continue;
         }
         
