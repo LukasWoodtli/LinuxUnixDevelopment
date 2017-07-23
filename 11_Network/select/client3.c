@@ -1,3 +1,4 @@
+#define _BSD_SOURCE
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
