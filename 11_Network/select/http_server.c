@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200809L
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,9 +60,45 @@ static int GetToken(char* buf, int n, char *token, int toklen, char delim) {
 }
 
 
-/*static int SendBlock(int soc, unsigned char *buf, int size) {
-    //....
-}*/
+static int SendBlock(int soc, unsigned char *buf, int size) {
+    unsigned char *r;
+    int len = 0;
+    r = buf;
+    
+    while (size > 0) {
+	    if ((len = send(soc, r, size, 0)) == -1) {
+		    return -1;
+	    }
+	    
+	    size -= len;
+	    r += len;
+    }
+    return 0;
+}
+
+
+static int SendBuf(int soc, char *buf) {
+	char *r = NULL;
+	int len = 0;
+	int rlen = strlen(buf);
+	r = buf;
+	
+	while (rlen > 0) {
+		if ((len = send(soc, r, strlen(r), 0)) == -1) {
+			return -1;
+		}
+		
+		rlen -= len;
+		r += len;
+	}
+	
+	return 0;
+}
+
+
+static void SendHTTPHeader(int soc, int code, const char *phase, int length, time_t *pftime) {
+	// ...
+}
 
 
 
