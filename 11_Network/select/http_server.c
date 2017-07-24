@@ -96,8 +96,33 @@ static int SendBuf(int soc, char *buf) {
 }
 
 
-static void SendHTTPHeader(int soc, int code, const char *phase, int length, time_t *pftime) {
-	// ...
+static void SendHTTPHeader(int soc, int code, const char *phase,
+                           int length, time_t *pftime) {
+    char msg[255] = {0};
+    struct tm *ptm, *pftm;
+    time_t stime;
+    
+    sprintf(msg, "HTTP/1.1 %d %s\r\n", code, phase);
+    SendBuf(soc, msg);
+    time(&stime);
+    ptm = gmtime(&stime);
+    strftime(msg, 255, "Date: %a, %d %b %Y %H:%M:%S %Z\r\n", pftm);
+    
+    SendBuf(soc, msg);
+    SendBuf(soc, "Server: http_server 0.1\r\n");
+    
+    if (pftime != NULL) {
+        pftm = gmtime(pftime);
+        strftime(msg, 255, "Last-Modified: %a, %d %b %Y %H:%M:%S %Z\r\n", pftm);
+        SendBuf(soc, msg);
+    }
+    
+    SendBuf(soc, "Accept-Ranges: none\r\n");
+    sprintf(msg, "Content-Length: %d\r\n", length);
+    SendBuf(soc, msg);
+    SendBuf(soc, "Connection: Keep-Alive\r\n");
+    SendBuf(soc, "Content-Type text/html\r\n");
+    SendBuf(soc, "\r\n");
 }
 
 
