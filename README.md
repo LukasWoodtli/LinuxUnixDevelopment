@@ -29,7 +29,7 @@ I won't read all chapters.
 | 8  | Signale                                                 | ✓ |   -          |       ✓       |
 | 9  | IPC - Interprozesskommunikation                         | ✓ |   -          |       ✓       |
 | 10 | Threads                                                 | ✓ |   -          |       ✓       |
-| 11 | Netzwerkprogrammierung                                  |   |  58          | http_server.c, thserver.c, server.c, client.c, uds_server.c, uds_client.c, fullduplex.c, server.c, client.c, non_block.c |
+| 11 | Netzwerkprogrammierung                                  |   |  36          | thserver.c, server.c, client.c, uds_server.c, uds_client.c, fullduplex.c, server.c, client.c, non_block.c |
 | 12 | MySQL und PostgreSQL                                    | ✗ |   -          |         |
 | 13 | Terminal E/A und Benutzerschnittstellen für die Konsole | ✓ |   -          |    ✓    |
 | 14 | Xlib - X Window-Programmierung                          | ✗ |   -          |         |
