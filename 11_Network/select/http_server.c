@@ -100,7 +100,7 @@ static int SendBuf(int soc, char *buf) {
 static void SendHTTPHeader(int soc, int code, const char *phase,
                            int length, time_t *pftime) {
     char msg[255] = {0};
-    struct tm *ptm, *pftm;
+    struct tm *ptm = NULL, *pftm = NULL;
     time_t stime;
     
     sprintf(msg, "HTTP/1.1 %d %s\r\n", code, phase);
