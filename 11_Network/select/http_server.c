@@ -107,7 +107,7 @@ static void SendHTTPHeader(int soc, int code, const char *phase,
     SendBuf(soc, msg);
     time(&stime);
     ptm = gmtime(&stime);
-    strftime(msg, 255, "Date: %a, %d %b %Y %H:%M:%S %Z\r\n", pftm);
+    strftime(msg, 255, "Date: %a, %d %b %Y %H:%M:%S %Z\r\n", ptm);
     
     SendBuf(soc, msg);
     SendBuf(soc, "Server: http_server 0.1\r\n");
