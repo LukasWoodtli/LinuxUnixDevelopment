@@ -6,6 +6,7 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <signal.h>
@@ -226,6 +227,90 @@ static int httpd(int soc) {
 
 
 int main(void) {
- 
+    int soc, soc_cli;
+    socklen_t srv_len, cli_len;
+    int ret = -1;
+    struct sockaddr_in srv_addr, cli_addr;
+    const int y = 1;
+    
+    soc = socket(AF_INET, SOCK_STREAM, 0);
+    srv_addr.sin_family = AF_INET;
+    srv_addr.sin_addr.s_addr = htons(INADDR_ANY);
+    srv_addr.sin_port = htons(SERVER_PORT);
+    srv_len = sizeof(srv_addr);
+    setsockopt(soc, SOL_SOCKET, SO_REUSEADDR, &y, sizeof(int));
+    
+    ret = bind(soc, (struct sockaddr*)&srv_addr, srv_len);
+    if (ret != 0) {
+        printf("Fehler: binding server socket\r\n");
+        return EXIT_FAILURE;
+    }
+    
+    ret = listen(soc, 5);
+    if (ret != 0) {
+        printf("Fehler: listening server socket\r\n");
+        return EXIT_FAILURE;
+    }
+    
+    my_signal(SIGCHLD, SIG_IGN);
+    
+    while (1) {
+        int pid;
+        fd_set fdlist, testfd;
+        int result = 0;
+        int rlen = 0;
+        
+        printf("Warte auf Clientverbindung ... \r\n");
+        cli_len = sizeof(cli_addr);
+        soc_cli = accept(soc,  (struct sockaddr*)&cli_addr, (socklen_t*)&cli_len);
+        
+        pid = fork();
+        switch (pid) {
+            case 0:
+                if (soc_cli != -1) {
+                    printf("Client verbunden mit socket %d\r\n", soc_cli);
+                    FD_ZERO(&fdlist);
+                    FD_SET(soc_cli, &fdlist);
+                    
+                    while (1) {
+                        testfd = fdlist;
+                        
+                        result = select(FD_SETSIZE, &testfd, NULL, NULL, NULL);
+                        
+                        if (result <= 0) {
+                            break;
+                        }
+                        
+                        if (FD_ISSET(soc_cli, &testfd)) {
+                            ioctl(soc_cli, FIONREAD, &rlen);
+                            if (rlen == 0) {
+                                FD_CLR(soc_cli, &fdlist);
+                                break;
+                            }
+                            
+                            result = httpd(soc_cli);
+                            if (result < 0) {
+                                break;
+                            }
+                        }
+                    }
+                    printf("Client socket %d beendet\r\n", soc_cli);
+                    fflush(stdout);
+                    close(soc_cli);
+                }
+                else {
+                    printf("Fehler: accepting client's connection.\r\n");
+                }
+                exit(EXIT_SUCCESS);
+                break;
+            case -1:
+                printf("Fehler bie fork() (%s)\r\n", strerror(errno));
+                break;
+            default:
+                close(soc_cli);
+                break;
+        }
+    }
+    
     return EXIT_SUCCESS;
 }
