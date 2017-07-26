@@ -45,8 +45,13 @@ static int GetToken(char* buf, int n, char *token, int toklen, char delim) {
     for (k = 1; k <= n; ++k) {
         token[0] = 0;
         len = 0;
-        
-        while (buf[i] != delim && buf[i] != ' '  && buf[i] != '\0'  &&
+
+	while (buf[i] == delim || buf[i] == ' '  || buf[i] == 0  ||
+               buf[i] == '\t'  || buf[i] == '\r' || buf[i] == '\n') {
+		++i;
+	}
+
+	while (buf[i] != delim && buf[i] != ' '  && buf[i] != '\0'  &&
                buf[i] != '\t'  && buf[i] != 10  && buf[i] != 13) {
             token[len++] = buf[i++];
             
