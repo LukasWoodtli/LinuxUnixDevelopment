@@ -19,3 +19,5 @@ add_subdirectory(parallel_server)
 add_subdirectory(select)
 
 add_executable(thserver thserver.c)
+
+add_subdirectory(udp)
