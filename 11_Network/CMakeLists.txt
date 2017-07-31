@@ -21,3 +21,6 @@ add_subdirectory(select)
 add_executable(thserver thserver.c)
 
 add_subdirectory(udp)
+
+add_subdirectory(unix_domain_sockets)
+
