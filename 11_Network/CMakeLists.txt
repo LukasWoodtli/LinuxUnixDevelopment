@@ -24,3 +24,5 @@ add_subdirectory(udp)
 
 add_subdirectory(unix_domain_sockets)
 
+add_subdirectory(multicast)
+
