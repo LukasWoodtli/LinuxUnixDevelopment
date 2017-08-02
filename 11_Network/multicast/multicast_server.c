@@ -33,7 +33,7 @@ int main(void) {
     while (1) {
         if (sendto(socket_descriptor,
                    BROADCAST_TXT,
-                   sizeof(BROADCAST_TXT),
+                   strlen(BROADCAST_TXT),
                    0,
                    (struct sockaddr*)&address,
                    sizeof(address)) < 0) {

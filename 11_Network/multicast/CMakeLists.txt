@@ -3,3 +3,5 @@ project (linux_network)
 
 add_executable(multicast_server multicast_server.c)
 
+add_executable(multicast_client multicast_client.c)
+

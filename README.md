@@ -29,7 +29,7 @@ I won't read all chapters.
 | 8  | Signale                                                 | ✓ |   -          |       ✓       |
 | 9  | IPC - Interprozesskommunikation                         | ✓ |   -          |       ✓       |
 | 10 | Threads                                                 | ✓ |   -          |       ✓       |
-| 11 | Netzwerkprogrammierung                                  |   |   8          | client.c |
+| 11 | Netzwerkprogrammierung                                  | ✓ |   -          |       ✓       |
 | 12 | MySQL und PostgreSQL                                    | ✗ |   -          |         |
 | 13 | Terminal E/A und Benutzerschnittstellen für die Konsole | ✓ |   -          |    ✓    |
 | 14 | Xlib - X Window-Programmierung                          | ✗ |   -          |         |
