@@ -17,24 +17,24 @@ The chapters I read and implemented the examples (most of them).
 
 I won't read all chapters.
 
-| Chapter | Name                                               |   | # pages left | examples left |
-|---------|----------------------------------------------------|---|--------------|---------------|
-| 1  | Einführung                                              | ✓ |   -          |       ✓       |
-| 2  | E/A-Funktionen                                          | ✓ |   -          |       ✓       |
-| 3  | Attribute von Dateien und Verzeichnissen                | ✓ |   -          |       ✓       |
-| 4  | Zugriff auf Systeminformationen                         | ✓ |   -          |       ✓       |
-| 5  | Devices - eine einfache Verbindung zur Hardware         | ✓ |   -          |       ✓       |
-| 6  | System- und Benutzerdateien                             | ✓ |   -          |       ✓       |
-| 7  | Dämonen, Zombies und Prozesse                           | ✓ |   -          |       ✓       |
-| 8  | Signale                                                 | ✓ |   -          |       ✓       |
-| 9  | IPC - Interprozesskommunikation                         | ✓ |   -          |       ✓       |
-| 10 | Threads                                                 | ✓ |   -          |       ✓       |
-| 11 | Netzwerkprogrammierung                                  | ✓ |   -          |       ✓       |
-| 12 | MySQL und PostgreSQL                                    | ✗ |   -          |         |
-| 13 | Terminal E/A und Benutzerschnittstellen für die Konsole | ✓ |   -          |    ✓    |
-| 14 | Xlib - X Window-Programmierung                          | ✗ |   -          |         |
-| 15 | GTK+                                                    | ✗ |   -          |         |
-| 16 | SDL                                                     | ✗ |   -          |         |
-| 17 | Werkzeuge für Programmierer                             | ✓ |   -          |    ✓    |
-| A  | Sicherheit unter Linux                                  | ✓ |   -          |         |
-| B  | Funktionsreferenz                                       | ✓ |   -          |         |
+| Chapter | Name                                               |   |
+|---------|----------------------------------------------------|---|
+| 1  | Einführung                                              | ✓ |
+| 2  | E/A-Funktionen                                          | ✓ |
+| 3  | Attribute von Dateien und Verzeichnissen                | ✓ |
+| 4  | Zugriff auf Systeminformationen                         | ✓ |
+| 5  | Devices - eine einfache Verbindung zur Hardware         | ✓ |
+| 6  | System- und Benutzerdateien                             | ✓ |
+| 7  | Dämonen, Zombies und Prozesse                           | ✓ |
+| 8  | Signale                                                 | ✓ |
+| 9  | IPC - Interprozesskommunikation                         | ✓ |
+| 10 | Threads                                                 | ✓ |
+| 11 | Netzwerkprogrammierung                                  | ✓ |
+| 12 | MySQL und PostgreSQL                                    | ✗ |
+| 13 | Terminal E/A und Benutzerschnittstellen für die Konsole | ✓ |
+| 14 | Xlib - X Window-Programmierung                          | ✗ |
+| 15 | GTK+                                                    | ✗ |
+| 16 | SDL                                                     | ✗ |
+| 17 | Werkzeuge für Programmierer                             | ✓ |
+| A  | Sicherheit unter Linux                                  | ✓ |
+| B  | Funktionsreferenz                                       | ✓ |
