@@ -26,3 +26,4 @@ add_subdirectory(unix_domain_sockets)
 
 add_subdirectory(multicast)
 
+add_executable(non_block non_block.c)
